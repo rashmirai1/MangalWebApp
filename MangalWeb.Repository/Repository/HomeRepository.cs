@@ -9,12 +9,8 @@ namespace MangalWeb.Repository.Home
 {
     public class HomeRepository
     {
-        private readonly MangalDBNewEntities _context;
+        MangalDBNewEntities _context = new MangalDBNewEntities(); 
 
-        public HomeRepository(MangalDBNewEntities context)
-        {
-            _context = context;
-        }
         public List<tblBankMaster> GetAlltblBankMasters()
         {
             var list = _context.tblBankMasters.ToList();
