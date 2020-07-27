@@ -134,19 +134,49 @@
     <Compile Include="Entity\tblBankMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tblCityMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tblCompanyBranchMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tblCreateCompanyMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tblDocumentMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tblFinancialyear.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblINV_ItemMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tblItemMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tblLogin.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblPenaltySlabtMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblSchemeMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblSchemeTransMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblSchemeTransMonth.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblStateMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblZonemaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tbl_CountryMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tbl_GLChargeMaster_BasicInfo.cs">
@@ -266,6 +296,32 @@
     <Compile Include="Entity\UserTypeDetail.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Masters\AuditCheckListViewModel.cs" />
+    <Compile Include="Masters\BranchViewModel.cs" />
+    <Compile Include="Masters\ChargeDetailsViewModel.cs" />
+    <Compile Include="Masters\ChargeViewModel.cs" />
+    <Compile Include="Masters\CityViewModel.cs" />
+    <Compile Include="Masters\DeviationViewModel.cs" />
+    <Compile Include="Masters\DistanceDeviationDetailsVM.cs" />
+    <Compile Include="Masters\DocumentUploadViewModel.cs" />
+    <Compile Include="Masters\DocumentViewModel.cs" />
+    <Compile Include="Masters\FinancialViewModel.cs" />
+    <Compile Include="Masters\GstViewModel.cs" />
+    <Compile Include="Masters\HttpPostedFileBase.cs" />
+    <Compile Include="Masters\LTVDeviationDetailsVM.cs" />
+    <Compile Include="Masters\OrnamentViewModel.cs" />
+    <Compile Include="Masters\PenaltySlabViewModel.cs" />
+    <Compile Include="Masters\PincodeViewModel.cs" />
+    <Compile Include="Masters\ProductRateDetailsVM.cs" />
+    <Compile Include="Masters\ProductRateViewModel.cs" />
+    <Compile Include="Masters\ReasonViewModel.cs" />
+    <Compile Include="Masters\RoiDeviationDetailsVM.cs" />
+    <Compile Include="Masters\SanctionDeviationVM.cs" />
+    <Compile Include="Masters\SchemeViewModel.cs" />
+    <Compile Include="Masters\SourceofApplicationViewModel.cs" />
+    <Compile Include="Masters\StateViewModel.cs" />
+    <Compile Include="Masters\TenureDeviationVM.cs" />
+    <Compile Include="Masters\ZoneViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
