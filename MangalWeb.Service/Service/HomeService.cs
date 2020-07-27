@@ -16,6 +16,7 @@ namespace MangalWeb.Service
         {
             _homeRepository = homeRepository;
         }
+        //datetime
         public List<tblBankMaster> GetAlltblBankMasters()
         {
             var list = _homeRepository.GetAlltblBankMasters();
