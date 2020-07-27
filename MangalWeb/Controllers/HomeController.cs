@@ -9,11 +9,8 @@ namespace MangalWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly HomeService _homeService;
-        public HomeController(HomeService homeService)
-        {
-            _homeService = homeService;
-        }
+        HomeService _homeService = new HomeService();
+       
         public ActionResult Index()
         {
             var test = _homeService.GetAlltblBankMasters();
