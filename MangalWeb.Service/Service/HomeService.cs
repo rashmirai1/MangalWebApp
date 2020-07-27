@@ -11,8 +11,17 @@ namespace MangalWeb.Service
 
     public class HomeService
     {
+
         HomeRepository _homeRepository = new HomeRepository();
        
+
+        private readonly HomeRepository _homeRepository;
+        public HomeService(HomeRepository homeRepository)
+        {
+            _homeRepository = homeRepository;
+        }
+        //datetime
+
         public List<tblBankMaster> GetAlltblBankMasters()
         {
             var list = _homeRepository.GetAlltblBankMasters();
