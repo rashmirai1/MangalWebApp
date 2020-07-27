@@ -16,6 +16,7 @@ namespace MangalWeb.Service.Service
         public List<tblStateMaster> GetAllStateMaster()
         {
             var statelist = _stateRepository.GetAllStateMasters();
+
             return statelist;
         }
         public tblStateMaster GetStateById(int id)
