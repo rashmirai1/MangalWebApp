@@ -107,6 +107,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MangalEntity.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Mst_PinCode.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\M_Words.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>

@@ -31,6 +31,7 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
+
 <body class="dashboard-page sb-l-o sb-r-c">
     <!-- Start: Main -->
     <div id="main">
@@ -239,7 +240,8 @@
     <script type="text/javascript" src="~/Content/assets/admin-tools/admin-plugins/admin-panels/json2.js"></script>
     <script type="text/javascript" src="~/Content/assets/admin-tools/admin-plugins/admin-panels/jquery.ui.touch-punch.min.js"></script>
     <script type="text/javascript" src="~/Content/assets/admin-tools/admin-plugins/admin-panels/adminpanels.js"></script>
-
+@*@Styles.Render("~/Content/css")*@
+    
     <!-- Page Javascript -->
     <script type="text/javascript" src="~/Content/assets/js/pages/widgets.js"></script>
 
@@ -395,4 +397,5 @@
     @*@Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("javascriptsection", false)
 </body>
+
 </html>
