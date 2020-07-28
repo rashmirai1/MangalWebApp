@@ -124,6 +124,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PincodeController.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\ZoneController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2038,6 +2039,8 @@
     <Content Include="Views\City\_CityList.cshtml" />
     <Content Include="Views\Zone\_ZoneList.cshtml" />
     <Content Include="Views\Zone\Zone.cshtml" />
+    <Content Include="Views\Pincode\Pincode.cshtml" />
+    <Content Include="Views\Pincode\_PincodeList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

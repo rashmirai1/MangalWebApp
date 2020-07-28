@@ -76,6 +76,7 @@
     <Compile Include="Repository\CityRepository.cs" />
     <Compile Include="Repository\HomeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\PincodeRepository.cs" />
     <Compile Include="Repository\StateRepository.cs" />
     <Compile Include="Repository\ZoneRepository.cs" />
   </ItemGroup>
