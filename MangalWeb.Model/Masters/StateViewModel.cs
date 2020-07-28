@@ -23,9 +23,5 @@ namespace MangalWeb.Model.Masters
 
         public string operation { get; set; }
 
-        public int? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public int? UpdatedBy { get; set; }
-        public DateTime? UpdatedDate { get; set; }
     }
 }

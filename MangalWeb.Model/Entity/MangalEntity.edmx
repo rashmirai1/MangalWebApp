@@ -133,6 +133,20 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           <Property Name="WNumber" Type="int" />
           <Property Name="Wwords" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Mst_PinCode">
+          <Key>
+            <PropertyRef Name="Pc_Id" />
+          </Key>
+          <Property Name="Pc_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pc_Desc" Type="varchar" MaxLength="7" />
+          <Property Name="Pc_AreaName" Type="varchar" MaxLength="20" />
+          <Property Name="Pc_CityId" Type="int" Nullable="false" />
+          <Property Name="Pc_ZoneId" Type="int" Nullable="false" />
+          <Property Name="Pc_RecordCreated" Type="datetime" />
+          <Property Name="Pc_RecordUpdated" Type="datetime" />
+          <Property Name="Pc_RecordCreatedBy" Type="int" />
+          <Property Name="Pc_RecordUpdatedBy" Type="int" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.new1bharatTGLGoldStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="new1bharatTGLGoldStock">
@@ -1170,6 +1184,42 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="UserTypeID" Type="int" Nullable="false" />
           <Property Name="UserType" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_Mst_PinCode_Mst_PinCode">
+          <End Role="tblCityMaster" Type="Self.tblCityMaster" Multiplicity="1" />
+          <End Role="Mst_PinCode" Type="Self.Mst_PinCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCityMaster">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="Mst_PinCode">
+              <PropertyRef Name="Pc_CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mst_PinCode_Mst_PinCode1">
+          <End Role="Mst_PinCode" Type="Self.Mst_PinCode" Multiplicity="1" />
+          <End Role="Mst_PinCode1" Type="Self.Mst_PinCode" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_PinCode">
+              <PropertyRef Name="Pc_Id" />
+            </Principal>
+            <Dependent Role="Mst_PinCode1">
+              <PropertyRef Name="Pc_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblCityMaster_tblStateMaster">
+          <End Role="tblStateMaster" Type="Self.tblStateMaster" Multiplicity="1" />
+          <End Role="tblCityMaster" Type="Self.tblCityMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStateMaster">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="tblCityMaster">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblStateMaster_tbl_CountryMaster">
           <End Role="tbl_CountryMaster" Type="Self.tbl_CountryMaster" Multiplicity="1" />
           <End Role="tblStateMaster" Type="Self.tblStateMaster" Multiplicity="*" />
@@ -1183,6 +1233,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MangalDBNewModelStoreContainer">
+          <EntitySet Name="Mst_PinCode" EntityType="Self.Mst_PinCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_CountryMaster" EntityType="Self.tbl_CountryMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBankMaster" EntityType="Self.tblBankMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCityMaster" EntityType="Self.tblCityMaster" Schema="dbo" store:Type="Tables" />
@@ -1999,6 +2050,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
     [UserTypeDetails].[UserType] AS [UserType]
     FROM [dbo].[UserTypeDetails] AS [UserTypeDetails]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Mst_PinCode_Mst_PinCode" Association="Self.FK_Mst_PinCode_Mst_PinCode">
+            <End Role="tblCityMaster" EntitySet="tblCityMaster" />
+            <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mst_PinCode_Mst_PinCode1" Association="Self.FK_Mst_PinCode_Mst_PinCode1">
+            <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
+            <End Role="Mst_PinCode1" EntitySet="Mst_PinCode" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblCityMaster_tblStateMaster" Association="Self.FK_tblCityMaster_tblStateMaster">
+            <End Role="tblStateMaster" EntitySet="tblStateMaster" />
+            <End Role="tblCityMaster" EntitySet="tblCityMaster" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblStateMaster_tbl_CountryMaster" Association="Self.FK_tblStateMaster_tbl_CountryMaster">
             <End Role="tbl_CountryMaster" EntitySet="tbl_CountryMaster" />
             <End Role="tblStateMaster" EntitySet="tblStateMaster" />
@@ -3018,7 +3081,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             <Parameter Name="text" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="tbl_CountryMaster" EntityType="MangalDBNewModel.tbl_CountryMaster" />
-          <EntitySet Name="tblCityMasters" EntityType="MangalDBNewModel.tblCityMaster" />
           <EntitySet Name="tblDocumentMasters" EntityType="MangalDBNewModel.tblDocumentMaster" />
           <EntitySet Name="tblINV_ItemMaster" EntityType="MangalDBNewModel.tblINV_ItemMaster" />
           <EntitySet Name="tblPenaltySlabtMasters" EntityType="MangalDBNewModel.tblPenaltySlabtMaster" />
@@ -3031,6 +3093,20 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             <End Role="tbl_CountryMaster" EntitySet="tbl_CountryMaster" />
             <End Role="tblStateMaster" EntitySet="tblStateMasters" />
           </AssociationSet>
+          <EntitySet Name="tblCityMasters" EntityType="MangalDBNewModel.tblCityMaster" />
+          <AssociationSet Name="FK_tblCityMaster_tblStateMaster" Association="MangalDBNewModel.FK_tblCityMaster_tblStateMaster">
+            <End Role="tblStateMaster" EntitySet="tblStateMasters" />
+            <End Role="tblCityMaster" EntitySet="tblCityMasters" />
+          </AssociationSet>
+          <EntitySet Name="Mst_PinCode" EntityType="MangalDBNewModel.Mst_PinCode" />
+          <AssociationSet Name="FK_Mst_PinCode_Mst_PinCode" Association="MangalDBNewModel.FK_Mst_PinCode_Mst_PinCode">
+            <End Role="tblCityMaster" EntitySet="tblCityMasters" />
+            <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mst_PinCode_Mst_PinCode1" Association="MangalDBNewModel.FK_Mst_PinCode_Mst_PinCode1">
+            <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
+            <End Role="Mst_PinCode1" EntitySet="Mst_PinCode" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3040,16 +3116,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="CountryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CountryCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblStateMasters" Relationship="MangalDBNewModel.FK_tblStateMaster_tbl_CountryMaster" FromRole="tbl_CountryMaster" ToRole="tblStateMaster" />
-        </EntityType>
-        <EntityType Name="tblCityMaster">
-          <Key>
-            <PropertyRef Name="CityID" />
-          </Key>
-          <Property Name="CityID" Type="Int32" Nullable="false" />
-          <Property Name="CityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StateID" Type="Int32" Nullable="false" />
-          <Property Name="CityStdCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CityBlackListed" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="tblDocumentMaster">
           <Key>
@@ -3119,6 +3185,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="countryID" Type="Int32" Nullable="false" />
           <Property Name="StateCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tbl_CountryMaster" Relationship="MangalDBNewModel.FK_tblStateMaster_tbl_CountryMaster" FromRole="tblStateMaster" ToRole="tbl_CountryMaster" />
+          <NavigationProperty Name="tblCityMasters" Relationship="MangalDBNewModel.FK_tblCityMaster_tblStateMaster" FromRole="tblStateMaster" ToRole="tblCityMaster" />
         </EntityType>
         <EntityType Name="tblZonemaster">
           <Key>
@@ -3152,6 +3219,71 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             </Principal>
             <Dependent Role="tblStateMaster">
               <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblCityMaster">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="Int32" Nullable="false" />
+          <Property Name="CityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateID" Type="Int32" Nullable="false" />
+          <Property Name="CityStdCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityBlackListed" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="tblStateMaster" Relationship="MangalDBNewModel.FK_tblCityMaster_tblStateMaster" FromRole="tblCityMaster" ToRole="tblStateMaster" />
+          <NavigationProperty Name="Mst_PinCode" Relationship="MangalDBNewModel.FK_Mst_PinCode_Mst_PinCode" FromRole="tblCityMaster" ToRole="Mst_PinCode" />
+        </EntityType>
+        <Association Name="FK_tblCityMaster_tblStateMaster">
+          <End Type="MangalDBNewModel.tblStateMaster" Role="tblStateMaster" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tblCityMaster" Role="tblCityMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStateMaster">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="tblCityMaster">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Mst_PinCode">
+          <Key>
+            <PropertyRef Name="Pc_Id" />
+          </Key>
+          <Property Name="Pc_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pc_Desc" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="Pc_AreaName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Pc_CityId" Type="Int32" Nullable="false" />
+          <Property Name="Pc_ZoneId" Type="Int32" Nullable="false" />
+          <Property Name="Pc_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Pc_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Pc_RecordCreatedBy" Type="Int32" />
+          <Property Name="Pc_RecordUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="tblCityMaster" Relationship="MangalDBNewModel.FK_Mst_PinCode_Mst_PinCode" FromRole="Mst_PinCode" ToRole="tblCityMaster" />
+          <NavigationProperty Name="Mst_PinCode1" Relationship="MangalDBNewModel.FK_Mst_PinCode_Mst_PinCode1" FromRole="Mst_PinCode" ToRole="Mst_PinCode1" />
+          <NavigationProperty Name="Mst_PinCode2" Relationship="MangalDBNewModel.FK_Mst_PinCode_Mst_PinCode1" FromRole="Mst_PinCode1" ToRole="Mst_PinCode" />
+        </EntityType>
+        <Association Name="FK_Mst_PinCode_Mst_PinCode">
+          <End Type="MangalDBNewModel.tblCityMaster" Role="tblCityMaster" Multiplicity="1" />
+          <End Type="MangalDBNewModel.Mst_PinCode" Role="Mst_PinCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCityMaster">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="Mst_PinCode">
+              <PropertyRef Name="Pc_CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mst_PinCode_Mst_PinCode1">
+          <End Type="MangalDBNewModel.Mst_PinCode" Role="Mst_PinCode" Multiplicity="1" />
+          <End Type="MangalDBNewModel.Mst_PinCode" Role="Mst_PinCode1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_PinCode">
+              <PropertyRef Name="Pc_Id" />
+            </Principal>
+            <Dependent Role="Mst_PinCode1">
+              <PropertyRef Name="Pc_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4093,17 +4225,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblCityMasters">
-            <EntityTypeMapping TypeName="MangalDBNewModel.tblCityMaster">
-              <MappingFragment StoreEntitySet="tblCityMaster">
-                <ScalarProperty Name="CityBlackListed" ColumnName="CityBlackListed" />
-                <ScalarProperty Name="CityStdCode" ColumnName="CityStdCode" />
-                <ScalarProperty Name="StateID" ColumnName="StateID" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblDocumentMasters">
             <EntityTypeMapping TypeName="MangalDBNewModel.tblDocumentMaster">
               <MappingFragment StoreEntitySet="tblDocumentMaster">
@@ -4195,6 +4316,32 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
                 <ScalarProperty Name="MonthsTo" ColumnName="MonthsTo" />
                 <ScalarProperty Name="MonthsFrom" ColumnName="MonthsFrom" />
                 <ScalarProperty Name="SchemesID" ColumnName="SchemesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCityMasters">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblCityMaster">
+              <MappingFragment StoreEntitySet="tblCityMaster">
+                <ScalarProperty Name="CityBlackListed" ColumnName="CityBlackListed" />
+                <ScalarProperty Name="CityStdCode" ColumnName="CityStdCode" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_PinCode">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_PinCode">
+              <MappingFragment StoreEntitySet="Mst_PinCode">
+                <ScalarProperty Name="Pc_RecordUpdatedBy" ColumnName="Pc_RecordUpdatedBy" />
+                <ScalarProperty Name="Pc_RecordCreatedBy" ColumnName="Pc_RecordCreatedBy" />
+                <ScalarProperty Name="Pc_RecordUpdated" ColumnName="Pc_RecordUpdated" />
+                <ScalarProperty Name="Pc_RecordCreated" ColumnName="Pc_RecordCreated" />
+                <ScalarProperty Name="Pc_ZoneId" ColumnName="Pc_ZoneId" />
+                <ScalarProperty Name="Pc_CityId" ColumnName="Pc_CityId" />
+                <ScalarProperty Name="Pc_AreaName" ColumnName="Pc_AreaName" />
+                <ScalarProperty Name="Pc_Desc" ColumnName="Pc_Desc" />
+                <ScalarProperty Name="Pc_Id" ColumnName="Pc_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

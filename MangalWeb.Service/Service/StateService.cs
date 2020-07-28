@@ -19,6 +19,7 @@ namespace MangalWeb.Service.Service
 
             return statelist;
         }
+
         public tblStateMaster GetStateById(int id)
         {
             var state = _stateRepository.GetStateMasterById(id);
@@ -43,5 +44,20 @@ namespace MangalWeb.Service.Service
             return list;
         }
 
+        public int CheckCityExistsByStateId(int id)
+        {
+            var city = _stateRepository.CheckCityExistsByStateId(id);
+            return city;
+        }        
+
+        public void DeleteStateRecord(int id)
+        {
+            _stateRepository.DeleteRecord(id);
+        }
+
+        public void SaveUpdateRecord(StateViewModel model)
+        {
+            _stateRepository.SaveUpdateRecord(model);
+        }
     }
 }

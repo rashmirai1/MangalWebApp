@@ -125,6 +125,7 @@
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StateController.cs" />
+    <Compile Include="Controllers\ZoneController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -363,6 +364,35 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap4.css" />
+    <Content Include="Content\DataTables\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.foundation.css" />
+    <Content Include="Content\DataTables\css\dataTables.foundation.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.jqueryui.css" />
+    <Content Include="Content\DataTables\css\dataTables.jqueryui.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.semanticui.css" />
+    <Content Include="Content\DataTables\css\dataTables.semanticui.min.css" />
+    <Content Include="Content\DataTables\css\jquery.dataTables.css" />
+    <Content Include="Content\DataTables\css\jquery.dataTables.min.css" />
+    <Content Include="Content\DataTables\images\sort_asc.png" />
+    <Content Include="Content\DataTables\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTables\images\sort_both.png" />
+    <Content Include="Content\DataTables\images\sort_desc.png" />
+    <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap.js" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap4.js" />
+    <Content Include="Content\DataTables\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.foundation.js" />
+    <Content Include="Content\DataTables\js\dataTables.foundation.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.jqueryui.js" />
+    <Content Include="Content\DataTables\js\dataTables.jqueryui.min.js" />
+    <Content Include="Content\DataTables\js\dataTables.semanticui.js" />
+    <Content Include="Content\DataTables\js\dataTables.semanticui.min.js" />
+    <Content Include="Content\DataTables\js\jquery.dataTables.js" />
+    <Content Include="Content\DataTables\js\jquery.dataTables.min.js" />
     <Content Include="Content\vendor\editors\ckeditor\adapters\jquery.js" />
     <Content Include="Content\vendor\editors\ckeditor\build-config.js" />
     <Content Include="Content\vendor\editors\ckeditor\ckeditor.js" />
@@ -2004,6 +2034,10 @@
     <Content Include="Views\Base\Menu.cshtml" />
     <Content Include="Views\State\State.cshtml" />
     <Content Include="Views\City\City.cshtml" />
+    <Content Include="Views\State\_StateList.cshtml" />
+    <Content Include="Views\City\_CityList.cshtml" />
+    <Content Include="Views\Zone\_ZoneList.cshtml" />
+    <Content Include="Views\Zone\Zone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

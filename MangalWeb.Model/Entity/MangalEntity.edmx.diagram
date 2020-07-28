@@ -63,7 +63,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.UserModuleDetail" Width="1.5" PointX="20.75" PointY="21.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.UserTypeDetail" Width="1.5" PointX="22.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_CountryMaster" Width="1.5" PointX="23.375" PointY="4" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tblCityMaster" Width="1.5" PointX="13.375" PointY="22.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblDocumentMaster" Width="1.5" PointX="23.375" PointY="6.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblINV_ItemMaster" Width="1.5" PointX="23.375" PointY="9.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblPenaltySlabtMaster" Width="1.5" PointX="9.375" PointY="23.75" />
@@ -73,6 +72,11 @@
         <EntityTypeShape EntityType="MangalDBNewModel.tblZonemaster" Width="1.5" PointX="23.375" PointY="22.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblSchemeTransMonth" Width="1.5" PointX="15.375" PointY="24.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_tblStateMaster_tbl_CountryMaster" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tblCityMaster" Width="1.5" PointX="27.875" PointY="3.875" />
+        <AssociationConnector Association="MangalDBNewModel.FK_tblCityMaster_tblStateMaster" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Mst_PinCode" Width="1.5" PointX="30.125" PointY="3.375" />
+        <AssociationConnector Association="MangalDBNewModel.FK_Mst_PinCode_Mst_PinCode" />
+        <AssociationConnector Association="MangalDBNewModel.FK_Mst_PinCode_Mst_PinCode1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
