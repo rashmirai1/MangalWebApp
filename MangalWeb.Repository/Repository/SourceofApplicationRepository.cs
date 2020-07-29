@@ -20,7 +20,7 @@ namespace MangalWeb.Repository.Repository
 
         public Mst_SourceofApplication GetSourceofApplicationById(int id)
         {
-            var source = _context.Mst_SourceofApplication.Where(x => x.Soa_Id == id && x.Soa_Status==1).FirstOrDefault();
+            var source = _context.Mst_SourceofApplication.Where(x => x.Soa_Id == id && x.Soa_Status == 1).FirstOrDefault();
             return source;
         }
 
@@ -43,9 +43,9 @@ namespace MangalWeb.Repository.Repository
         public void SaveUpdateRecord(SourceofApplicationViewModel source)
         {
             Mst_SourceofApplication tblSource = new Mst_SourceofApplication();
-            source.ID = _context.Mst_SourceofApplication.Any() ? _context.Mst_SourceofApplication.Max(m => m.Soa_Id) + 1 : 1;
             if (source.EditID <= 0)
             {
+                source.ID = _context.Mst_SourceofApplication.Any() ? _context.Mst_SourceofApplication.Max(m => m.Soa_Id) + 1 : 1;
                 tblSource.Soa_Id = source.ID;
                 tblSource.Soa_RecordCreated = DateTime.Now;
                 tblSource.Soa_RecordCreatedBy = source.CreatedBy;
@@ -78,6 +78,23 @@ namespace MangalWeb.Repository.Repository
             source.SourceCategory = (short)tblsource.Soa_Category;
             source.SourceStatus = (short)tblsource.Soa_Status;
             return source;
+        }
+
+        public List<SourceofApplicationViewModel> SetDataofModalList()
+        {
+            var tablelist = _context.Mst_SourceofApplication.ToList();
+            List<SourceofApplicationViewModel> list = new List<SourceofApplicationViewModel>();
+            foreach (var item in tablelist)
+            {
+                var model = new SourceofApplicationViewModel();
+                 model.SourceName = item.Soa_Name;
+                 model.EditID = item.Soa_Id;
+                 model.ID = item.Soa_Id;
+                 model.SourceCategirystr = item.Soa_Category == 1 ? "Online" : "Offline";
+                 model.SourceStatusstr = item.Soa_Status == 1 ? "Active" : "Inactive";
+                 list.Add(model);
+            }
+            return list;
         }
     }
 }

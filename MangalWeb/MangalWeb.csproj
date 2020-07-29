@@ -2042,11 +2042,12 @@
     <Content Include="Views\Zone\Zone.cshtml" />
     <Content Include="Views\Pincode\Pincode.cshtml" />
     <Content Include="Views\Pincode\_PincodeList.cshtml" />
+    <Content Include="Views\SourceofApplication\_SourceApplicationList.cshtml" />
+    <Content Include="Views\SourceofApplication\SourceApplication.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\SourceofApplication\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

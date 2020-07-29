@@ -1,0 +1,30 @@
+﻿@model IList<MangalWeb.Model.Masters.SourceofApplicationViewModel>
+@using MangalWeb.Model.Masters
+<div class="modal-content">
+    <div class="modal-body" style="height:inherit; overflow:auto;">
+        <div class="panel-body panel-no-padding" style="height:inherit; overflow:auto;">
+            <div id="demo">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="example">
+                    <thead>
+                        <tr>
+                            <th>Source Name</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (SourceofApplicationViewModel item in Model)
+                        {
+                            <tr class="gradeX" onclick='window.document.location="/SourceofApplication/GetSourceApplicationById?ID=@item.ID"'>
+                                <td>@item.SourceName</td>
+                                <td>@item.SourceCategirystr</td>
+                                <td>@item.SourceStatusstr</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+
