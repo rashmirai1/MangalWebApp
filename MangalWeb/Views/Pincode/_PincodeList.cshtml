@@ -10,7 +10,6 @@
                                 <th>Pin Code</th>
                                 <th>Area Name</th>
                                 <th>City</th>
-                                <th>Zone</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -19,8 +18,7 @@
                             <tr class="gradeX" onclick='window.document.location="/Pincode/GetPincodeById?ID=@item.Pc_Id"'>
                                 <td>@item.Pc_Desc</td>
                                 <td>@item.Pc_AreaName</td>
-                                <td>@item.Mst_City.Ct_Desc</td>
-                                <td>@item.Mst_Zone.Zne_Desc</td>
+                                <td>@item.tblCityMaster.CityName</td>
                             </tr>
                             }
                         </tbody>

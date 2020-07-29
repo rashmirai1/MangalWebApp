@@ -96,6 +96,7 @@ namespace MangalWeb.Controllers
         {
             Session["Operation"] = Operation;
             //ButtonVisiblity(Operation);
+
             return PartialView("_PincodeList", _pincodeService.GetAllPincodeMaster());
         }
 
