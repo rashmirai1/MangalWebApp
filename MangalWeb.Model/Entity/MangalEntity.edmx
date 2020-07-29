@@ -147,6 +147,19 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           <Property Name="Pc_RecordCreatedBy" Type="int" />
           <Property Name="Pc_RecordUpdatedBy" Type="int" />
         </EntityType>
+        <EntityType Name="Mst_SourceofApplication">
+          <Key>
+            <PropertyRef Name="Soa_Id" />
+          </Key>
+          <Property Name="Soa_Id" Type="int" Nullable="false" />
+          <Property Name="Soa_Name" Type="varchar" MaxLength="30" />
+          <Property Name="Soa_Category" Type="smallint" />
+          <Property Name="Soa_Status" Type="smallint" />
+          <Property Name="Soa_RecordCreated" Type="datetime" />
+          <Property Name="Soa_RecordUpdated" Type="datetime" />
+          <Property Name="Soa_RecordCreatedBy" Type="int" />
+          <Property Name="Soa_RecordUpdatedBy" Type="int" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.new1bharatTGLGoldStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="new1bharatTGLGoldStock">
@@ -1234,6 +1247,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
         </Association>
         <EntityContainer Name="MangalDBNewModelStoreContainer">
           <EntitySet Name="Mst_PinCode" EntityType="Self.Mst_PinCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_SourceofApplication" EntityType="Self.Mst_SourceofApplication" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_CountryMaster" EntityType="Self.tbl_CountryMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBankMaster" EntityType="Self.tblBankMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCityMaster" EntityType="Self.tblCityMaster" Schema="dbo" store:Type="Tables" />
@@ -3107,6 +3121,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
             <End Role="Mst_PinCode1" EntitySet="Mst_PinCode" />
           </AssociationSet>
+          <EntitySet Name="Mst_SourceofApplication" EntityType="MangalDBNewModel.Mst_SourceofApplication" />
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3287,6 +3302,19 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Mst_SourceofApplication">
+          <Key>
+            <PropertyRef Name="Soa_Id" />
+          </Key>
+          <Property Name="Soa_Id" Type="Int32" Nullable="false" />
+          <Property Name="Soa_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Soa_Category" Type="Int16" />
+          <Property Name="Soa_Status" Type="Int16" />
+          <Property Name="Soa_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Soa_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Soa_RecordCreatedBy" Type="Int32" />
+          <Property Name="Soa_RecordUpdatedBy" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4342,6 +4370,20 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
                 <ScalarProperty Name="Pc_AreaName" ColumnName="Pc_AreaName" />
                 <ScalarProperty Name="Pc_Desc" ColumnName="Pc_Desc" />
                 <ScalarProperty Name="Pc_Id" ColumnName="Pc_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_SourceofApplication">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_SourceofApplication">
+              <MappingFragment StoreEntitySet="Mst_SourceofApplication">
+                <ScalarProperty Name="Soa_RecordUpdatedBy" ColumnName="Soa_RecordUpdatedBy" />
+                <ScalarProperty Name="Soa_RecordCreatedBy" ColumnName="Soa_RecordCreatedBy" />
+                <ScalarProperty Name="Soa_RecordUpdated" ColumnName="Soa_RecordUpdated" />
+                <ScalarProperty Name="Soa_RecordCreated" ColumnName="Soa_RecordCreated" />
+                <ScalarProperty Name="Soa_Status" ColumnName="Soa_Status" />
+                <ScalarProperty Name="Soa_Category" ColumnName="Soa_Category" />
+                <ScalarProperty Name="Soa_Name" ColumnName="Soa_Name" />
+                <ScalarProperty Name="Soa_Id" ColumnName="Soa_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

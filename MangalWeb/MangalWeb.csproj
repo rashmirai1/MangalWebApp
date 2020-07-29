@@ -125,6 +125,7 @@
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PincodeController.cs" />
+    <Compile Include="Controllers\SourceofApplicationController.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\ZoneController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2045,7 +2046,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Citty\" />
+    <Folder Include="Views\SourceofApplication\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
