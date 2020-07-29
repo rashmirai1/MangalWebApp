@@ -48,7 +48,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tblCompanyBranchMaster> tblCompanyBranchMasters { get; set; }
         public virtual DbSet<tblCreateCompanyMaster> tblCreateCompanyMasters { get; set; }
         public virtual DbSet<tblFinancialyear> tblFinancialyears { get; set; }
-        public virtual DbSet<tblItemMaster> tblItemMasters { get; set; }
         public virtual DbSet<tblLogin> tblLogins { get; set; }
         public virtual DbSet<TestDB> TestDBs { get; set; }
         public virtual DbSet<TGL_DefaultOSPercentage> TGL_DefaultOSPercentage { get; set; }
@@ -96,6 +95,21 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tblCityMaster> tblCityMasters { get; set; }
         public virtual DbSet<Mst_PinCode> Mst_PinCode { get; set; }
         public virtual DbSet<Mst_SourceofApplication> Mst_SourceofApplication { get; set; }
+        public virtual DbSet<Mst_DocumentType> Mst_DocumentType { get; set; }
+        public virtual DbSet<Mst_AuditCheckList> Mst_AuditCheckList { get; set; }
+        public virtual DbSet<Mst_ChildDeviation> Mst_ChildDeviation { get; set; }
+        public virtual DbSet<Mst_GstMaster> Mst_GstMaster { get; set; }
+        public virtual DbSet<Mst_ParentDeviation> Mst_ParentDeviation { get; set; }
+        public virtual DbSet<Mst_PenaltySlab> Mst_PenaltySlab { get; set; }
+        public virtual DbSet<Mst_ProductRate> Mst_ProductRate { get; set; }
+        public virtual DbSet<Mst_ProductRateDetails> Mst_ProductRateDetails { get; set; }
+        public virtual DbSet<Mst_PurityMaster> Mst_PurityMaster { get; set; }
+        public virtual DbSet<Mst_Reason> Mst_Reason { get; set; }
+        public virtual DbSet<Mst_SchemePurity> Mst_SchemePurity { get; set; }
+        public virtual DbSet<tblaccountmaster> tblaccountmasters { get; set; }
+        public virtual DbSet<tblGroupMaster> tblGroupMasters { get; set; }
+        public virtual DbSet<tblPrimaryGroup> tblPrimaryGroups { get; set; }
+        public virtual DbSet<tblItemMaster> tblItemMasters { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

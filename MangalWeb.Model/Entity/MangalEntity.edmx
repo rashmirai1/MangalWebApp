@@ -133,6 +133,77 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           <Property Name="WNumber" Type="int" />
           <Property Name="Wwords" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Mst_AuditCheckList">
+          <Key>
+            <PropertyRef Name="Acl_Id" />
+          </Key>
+          <Property Name="Acl_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Acl_EffectiveDate" Type="datetime" Nullable="false" />
+          <Property Name="Acl_Categoryofaudit" Type="smallint" Nullable="false" />
+          <Property Name="Acl_CheckPoint" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Acl_Status" Type="smallint" Nullable="false" />
+          <Property Name="Acl_RecordCreated" Type="datetime" />
+          <Property Name="Acl_RecordUpdated" Type="datetime" />
+          <Property Name="Acl_RecordCreatedBy" Type="int" />
+          <Property Name="Acl_RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_ChildDeviation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="ApproveDistanceLimit" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="MinRange" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="MaxRange" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="UserCategoryId" Type="int" />
+          <Property Name="ThreasoldLimit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="RecordCreated" Type="datetime" />
+          <Property Name="RecordUpdated" Type="datetime" />
+          <Property Name="RecordCreatedBy" Type="int" />
+          <Property Name="RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_DocumentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mst_GstMaster">
+          <Key>
+            <PropertyRef Name="Gst_RefId" />
+          </Key>
+          <Property Name="Gst_RefId" Type="int" Nullable="false" />
+          <Property Name="Gst_EffectiveFrom" Type="datetime" Nullable="false" />
+          <Property Name="Gst_CGST" Type="varchar" MaxLength="6" />
+          <Property Name="Gst_SGST" Type="varchar" MaxLength="6" />
+          <Property Name="Gst_IGST" Type="varchar" MaxLength="6" />
+          <Property Name="Gst_RecordCreated" Type="datetime" />
+          <Property Name="Gst_RecordUpdated" Type="datetime" />
+          <Property Name="Gst_RecordCreatedBy" Type="int" />
+          <Property Name="Gst_RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_ParentDeviation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mst_PenaltySlab">
+          <Key>
+            <PropertyRef Name="Ps_Id" />
+          </Key>
+          <Property Name="Ps_Id" Type="int" Nullable="false" />
+          <Property Name="Ps_Datewef" Type="datetime" Nullable="false" />
+          <Property Name="Ps_Penalty" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Ps_Accounthead" Type="int" Nullable="false" />
+          <Property Name="Ps_RecordCreated" Type="datetime" />
+          <Property Name="Ps_RecordUpdated" Type="datetime" />
+          <Property Name="Ps_RecordCreatedBy" Type="int" />
+          <Property Name="Ps_RecordUpdatedBy" Type="int" />
+        </EntityType>
         <EntityType Name="Mst_PinCode">
           <Key>
             <PropertyRef Name="Pc_Id" />
@@ -146,6 +217,62 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           <Property Name="Pc_RecordUpdated" Type="datetime" />
           <Property Name="Pc_RecordCreatedBy" Type="int" />
           <Property Name="Pc_RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_ProductRate">
+          <Key>
+            <PropertyRef Name="Pr_Id" />
+          </Key>
+          <Property Name="Pr_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pr_Date" Type="datetime" Nullable="false" />
+          <Property Name="Pr_Product" Type="smallint" Nullable="false" />
+          <Property Name="Pr_RecordCreated" Type="datetime" />
+          <Property Name="Pr_RecordUpdated" Type="datetime" />
+          <Property Name="Pr_RecordCreatedBy" Type="int" />
+          <Property Name="Pr_RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_ProductRateDetails">
+          <Key>
+            <PropertyRef Name="Prd_Id" />
+          </Key>
+          <Property Name="Prd_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Prd_FkId" Type="int" Nullable="false" />
+          <Property Name="Prd_Purity" Type="int" Nullable="false" />
+          <Property Name="Prd_GrossRate" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Prd_Deductions" Type="smallint" Nullable="false" />
+          <Property Name="Prd_DeductionsAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Prd_NetRate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Prd_RecordCreated" Type="datetime" />
+          <Property Name="Prd_RecordUpdated" Type="datetime" />
+          <Property Name="Prd_RecordCreatedBy" Type="int" />
+          <Property Name="Prd_RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_PurityMaster">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PurityName" Type="varchar" MaxLength="10" />
+          <Property Name="PurityType" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_Reason">
+          <Key>
+            <PropertyRef Name="Re_No" />
+          </Key>
+          <Property Name="Re_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Re_Desc" Type="varchar" MaxLength="150" />
+          <Property Name="Re_Status" Type="smallint" />
+          <Property Name="Re_RecordCreated" Type="datetime" />
+          <Property Name="Re_RecordUpdated" Type="datetime" />
+          <Property Name="Re_RecordCreatedBy" Type="int" />
+          <Property Name="Re_RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_SchemePurity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PurityId" Type="int" Nullable="false" />
+          <Property Name="SchemeId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Mst_SourceofApplication">
           <Key>
@@ -379,6 +506,33 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_UserLogin' does not have a pri
           <Property Name="CompID" Type="int" />
           <Property Name="BranchID" Type="int" />
         </EntityType>
+        <EntityType Name="tblaccountmaster">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Alies" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="GPID" Type="int" Nullable="false" />
+          <Property Name="OpeningBalance" Type="float" Nullable="false" />
+          <Property Name="DrCr" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PanNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="InterestRate" Type="float" Nullable="false" />
+          <Property Name="InterestMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GroupCompany" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="BankAcNo" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="MICRNo" Type="float" Nullable="false" />
+          <Property Name="AccountType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IFSNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="AreaID" Type="int" Nullable="false" />
+          <Property Name="Telephone" Type="nvarchar(max)" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Suspended" Type="nvarchar" MaxLength="50" />
+          <Property Name="GSTIN" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="tblBankMaster">
           <Key>
             <PropertyRef Name="BankID" />
@@ -437,8 +591,11 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblCreateCompanyMaster' does not h
           <Key>
             <PropertyRef Name="DocumentID" />
           </Key>
-          <Property Name="DocumentID" Type="int" Nullable="false" />
+          <Property Name="DocumentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DocumentName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DocumentType" Type="int" Nullable="false" />
+          <Property Name="ExpiryDateApplicable" Type="bit" Nullable="false" />
+          <Property Name="Status" Type="smallint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.tblFinancialyear' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -459,6 +616,19 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblFinancialyear' does not have a 
           <Property Name="Financialyear" Type="nvarchar" MaxLength="200" />
           <Property Name="CompID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblGroupMaster">
+          <Key>
+            <PropertyRef Name="GPID" />
+          </Key>
+          <Property Name="GPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GPName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GPType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PID" Type="int" Nullable="false" />
+          <Property Name="SID" Type="int" Nullable="false" />
+          <Property Name="PrintSchedule" Type="nvarchar" MaxLength="50" />
+          <Property Name="ScheduleNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="150" />
+        </EntityType>
         <EntityType Name="tblINV_ItemMaster">
           <Key>
             <PropertyRef Name="ItemCode" />
@@ -477,15 +647,14 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblFinancialyear' does not have a 
           <Property Name="FinancialYrID" Type="int" />
           <Property Name="HSNCode" Type="nvarchar" MaxLength="30" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.tblItemMaster' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblItemMaster">
           <Key>
             <PropertyRef Name="ItemID" />
-            <PropertyRef Name="ItemName" />
           </Key>
-          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Product" Type="smallint" Nullable="false" />
+          <Property Name="Status" Type="smallint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.tblLogin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -507,6 +676,13 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblLogin' does not have a primary 
           <Property Name="PenaltyType" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PenaltySlabName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Interest" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPrimaryGroup">
+          <Key>
+            <PropertyRef Name="PgID" />
+          </Key>
+          <Property Name="PgID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PgName" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="tblSchemeMaster">
           <Key>
@@ -1197,6 +1373,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="UserTypeID" Type="int" Nullable="false" />
           <Property Name="UserType" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_Mst_ChildDeviation_Mst_ParentDeviation">
+          <End Role="Mst_ParentDeviation" Type="Self.Mst_ParentDeviation" Multiplicity="1" />
+          <End Role="Mst_ChildDeviation" Type="Self.Mst_ChildDeviation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_ParentDeviation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mst_ChildDeviation">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Mst_PinCode_Mst_PinCode">
           <End Role="tblCityMaster" Type="Self.tblCityMaster" Multiplicity="1" />
           <End Role="Mst_PinCode" Type="Self.Mst_PinCode" Multiplicity="*" />
@@ -1221,6 +1409,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Mst_ProductRateDetails_Mst_ProductRate">
+          <End Role="Mst_ProductRate" Type="Self.Mst_ProductRate" Multiplicity="1" />
+          <End Role="Mst_ProductRateDetails" Type="Self.Mst_ProductRateDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_ProductRate">
+              <PropertyRef Name="Pr_Id" />
+            </Principal>
+            <Dependent Role="Mst_ProductRateDetails">
+              <PropertyRef Name="Prd_FkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblCityMaster_tblStateMaster">
           <End Role="tblStateMaster" Type="Self.tblStateMaster" Multiplicity="1" />
           <End Role="tblCityMaster" Type="Self.tblCityMaster" Multiplicity="*" />
@@ -1230,6 +1430,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             </Principal>
             <Dependent Role="tblCityMaster">
               <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDocumentMaster_Mst_DocumentType">
+          <End Role="Mst_DocumentType" Type="Self.Mst_DocumentType" Multiplicity="1" />
+          <End Role="tblDocumentMaster" Type="Self.tblDocumentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_DocumentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblDocumentMaster">
+              <PropertyRef Name="DocumentType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1246,14 +1458,29 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MangalDBNewModelStoreContainer">
+          <EntitySet Name="Mst_AuditCheckList" EntityType="Self.Mst_AuditCheckList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_ChildDeviation" EntityType="Self.Mst_ChildDeviation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_DocumentType" EntityType="Self.Mst_DocumentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_GstMaster" EntityType="Self.Mst_GstMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_ParentDeviation" EntityType="Self.Mst_ParentDeviation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_PenaltySlab" EntityType="Self.Mst_PenaltySlab" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_PinCode" EntityType="Self.Mst_PinCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_ProductRate" EntityType="Self.Mst_ProductRate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_ProductRateDetails" EntityType="Self.Mst_ProductRateDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_PurityMaster" EntityType="Self.Mst_PurityMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_Reason" EntityType="Self.Mst_Reason" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_SchemePurity" EntityType="Self.Mst_SchemePurity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_SourceofApplication" EntityType="Self.Mst_SourceofApplication" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_CountryMaster" EntityType="Self.tbl_CountryMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblaccountmaster" EntityType="Self.tblaccountmaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBankMaster" EntityType="Self.tblBankMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCityMaster" EntityType="Self.tblCityMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDocumentMaster" EntityType="Self.tblDocumentMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblGroupMaster" EntityType="Self.tblGroupMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblINV_ItemMaster" EntityType="Self.tblINV_ItemMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblItemMaster" EntityType="Self.tblItemMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPenaltySlabtMaster" EntityType="Self.tblPenaltySlabtMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPrimaryGroup" EntityType="Self.tblPrimaryGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSchemeMaster" EntityType="Self.tblSchemeMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSchemeTransMaster" EntityType="Self.tblSchemeTransMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStateMaster" EntityType="Self.tblStateMaster" Schema="dbo" store:Type="Tables" />
@@ -1540,12 +1767,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
     [tblFinancialyear].[Financialyear] AS [Financialyear], 
     [tblFinancialyear].[CompID] AS [CompID]
     FROM [dbo].[tblFinancialyear] AS [tblFinancialyear]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="tblItemMaster" EntityType="Self.tblItemMaster" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblItemMaster].[ItemID] AS [ItemID], 
-    [tblItemMaster].[ItemName] AS [ItemName]
-    FROM [dbo].[tblItemMaster] AS [tblItemMaster]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="tblLogin" EntityType="Self.tblLogin" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2064,6 +2285,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
     [UserTypeDetails].[UserType] AS [UserType]
     FROM [dbo].[UserTypeDetails] AS [UserTypeDetails]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Mst_ChildDeviation_Mst_ParentDeviation" Association="Self.FK_Mst_ChildDeviation_Mst_ParentDeviation">
+            <End Role="Mst_ParentDeviation" EntitySet="Mst_ParentDeviation" />
+            <End Role="Mst_ChildDeviation" EntitySet="Mst_ChildDeviation" />
+          </AssociationSet>
           <AssociationSet Name="FK_Mst_PinCode_Mst_PinCode" Association="Self.FK_Mst_PinCode_Mst_PinCode">
             <End Role="tblCityMaster" EntitySet="tblCityMaster" />
             <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
@@ -2072,9 +2297,17 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
             <End Role="Mst_PinCode1" EntitySet="Mst_PinCode" />
           </AssociationSet>
+          <AssociationSet Name="FK_Mst_ProductRateDetails_Mst_ProductRate" Association="Self.FK_Mst_ProductRateDetails_Mst_ProductRate">
+            <End Role="Mst_ProductRate" EntitySet="Mst_ProductRate" />
+            <End Role="Mst_ProductRateDetails" EntitySet="Mst_ProductRateDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblCityMaster_tblStateMaster" Association="Self.FK_tblCityMaster_tblStateMaster">
             <End Role="tblStateMaster" EntitySet="tblStateMaster" />
             <End Role="tblCityMaster" EntitySet="tblCityMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDocumentMaster_Mst_DocumentType" Association="Self.FK_tblDocumentMaster_Mst_DocumentType">
+            <End Role="Mst_DocumentType" EntitySet="Mst_DocumentType" />
+            <End Role="tblDocumentMaster" EntitySet="tblDocumentMaster" />
           </AssociationSet>
           <AssociationSet Name="FK_tblStateMaster_tbl_CountryMaster" Association="Self.FK_tblStateMaster_tbl_CountryMaster">
             <End Role="tbl_CountryMaster" EntitySet="tbl_CountryMaster" />
@@ -2450,14 +2683,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Financialyear" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CompID" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblItemMaster">
-          <Key>
-            <PropertyRef Name="ItemID" />
-            <PropertyRef Name="ItemName" />
-          </Key>
-          <Property Name="ItemID" Type="Int32" Nullable="false" />
-          <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="tblLogin">
           <Key>
@@ -3051,7 +3276,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySet Name="tblCompanyBranchMasters" EntityType="Self.tblCompanyBranchMaster" />
           <EntitySet Name="tblCreateCompanyMasters" EntityType="Self.tblCreateCompanyMaster" />
           <EntitySet Name="tblFinancialyears" EntityType="Self.tblFinancialyear" />
-          <EntitySet Name="tblItemMasters" EntityType="Self.tblItemMaster" />
           <EntitySet Name="tblLogins" EntityType="Self.tblLogin" />
           <EntitySet Name="TestDBs" EntityType="Self.TestDB" />
           <EntitySet Name="TGL_DefaultOSPercentage" EntityType="Self.TGL_DefaultOSPercentage" />
@@ -3122,6 +3346,33 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             <End Role="Mst_PinCode1" EntitySet="Mst_PinCode" />
           </AssociationSet>
           <EntitySet Name="Mst_SourceofApplication" EntityType="MangalDBNewModel.Mst_SourceofApplication" />
+          <EntitySet Name="Mst_DocumentType" EntityType="MangalDBNewModel.Mst_DocumentType" />
+          <AssociationSet Name="FK_tblDocumentMaster_Mst_DocumentType" Association="MangalDBNewModel.FK_tblDocumentMaster_Mst_DocumentType">
+            <End Role="Mst_DocumentType" EntitySet="Mst_DocumentType" />
+            <End Role="tblDocumentMaster" EntitySet="tblDocumentMasters" />
+          </AssociationSet>
+          <EntitySet Name="Mst_AuditCheckList" EntityType="MangalDBNewModel.Mst_AuditCheckList" />
+          <EntitySet Name="Mst_ChildDeviation" EntityType="MangalDBNewModel.Mst_ChildDeviation" />
+          <EntitySet Name="Mst_GstMaster" EntityType="MangalDBNewModel.Mst_GstMaster" />
+          <EntitySet Name="Mst_ParentDeviation" EntityType="MangalDBNewModel.Mst_ParentDeviation" />
+          <EntitySet Name="Mst_PenaltySlab" EntityType="MangalDBNewModel.Mst_PenaltySlab" />
+          <EntitySet Name="Mst_ProductRate" EntityType="MangalDBNewModel.Mst_ProductRate" />
+          <EntitySet Name="Mst_ProductRateDetails" EntityType="MangalDBNewModel.Mst_ProductRateDetails" />
+          <EntitySet Name="Mst_PurityMaster" EntityType="MangalDBNewModel.Mst_PurityMaster" />
+          <EntitySet Name="Mst_Reason" EntityType="MangalDBNewModel.Mst_Reason" />
+          <EntitySet Name="Mst_SchemePurity" EntityType="MangalDBNewModel.Mst_SchemePurity" />
+          <EntitySet Name="tblaccountmasters" EntityType="MangalDBNewModel.tblaccountmaster" />
+          <EntitySet Name="tblGroupMasters" EntityType="MangalDBNewModel.tblGroupMaster" />
+          <EntitySet Name="tblPrimaryGroups" EntityType="MangalDBNewModel.tblPrimaryGroup" />
+          <AssociationSet Name="FK_Mst_ChildDeviation_Mst_ParentDeviation" Association="MangalDBNewModel.FK_Mst_ChildDeviation_Mst_ParentDeviation">
+            <End Role="Mst_ParentDeviation" EntitySet="Mst_ParentDeviation" />
+            <End Role="Mst_ChildDeviation" EntitySet="Mst_ChildDeviation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mst_ProductRateDetails_Mst_ProductRate" Association="MangalDBNewModel.FK_Mst_ProductRateDetails_Mst_ProductRate">
+            <End Role="Mst_ProductRate" EntitySet="Mst_ProductRate" />
+            <End Role="Mst_ProductRateDetails" EntitySet="Mst_ProductRateDetails" />
+          </AssociationSet>
+          <EntitySet Name="tblItemMasters" EntityType="MangalDBNewModel.tblItemMaster" />
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3138,6 +3389,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           </Key>
           <Property Name="DocumentID" Type="Int32" Nullable="false" />
           <Property Name="DocumentName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentType" Type="Int32" Nullable="false" />
+          <Property Name="ExpiryDateApplicable" Type="Boolean" Nullable="false" />
+          <Property Name="Status" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Mst_DocumentType" Relationship="MangalDBNewModel.FK_tblDocumentMaster_Mst_DocumentType" FromRole="tblDocumentMaster" ToRole="Mst_DocumentType" />
         </EntityType>
         <EntityType Name="tblINV_ItemMaster">
           <Key>
@@ -3314,6 +3569,230 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="Soa_RecordUpdated" Type="DateTime" Precision="3" />
           <Property Name="Soa_RecordCreatedBy" Type="Int32" />
           <Property Name="Soa_RecordUpdatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Mst_DocumentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblDocumentMasters" Relationship="MangalDBNewModel.FK_tblDocumentMaster_Mst_DocumentType" FromRole="Mst_DocumentType" ToRole="tblDocumentMaster" />
+        </EntityType>
+        <Association Name="FK_tblDocumentMaster_Mst_DocumentType">
+          <End Type="MangalDBNewModel.Mst_DocumentType" Role="Mst_DocumentType" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tblDocumentMaster" Role="tblDocumentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_DocumentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblDocumentMaster">
+              <PropertyRef Name="DocumentType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Mst_AuditCheckList">
+          <Key>
+            <PropertyRef Name="Acl_Id" />
+          </Key>
+          <Property Name="Acl_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Acl_EffectiveDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Acl_Categoryofaudit" Type="Int16" Nullable="false" />
+          <Property Name="Acl_CheckPoint" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Acl_Status" Type="Int16" Nullable="false" />
+          <Property Name="Acl_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Acl_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Acl_RecordCreatedBy" Type="Int32" />
+          <Property Name="Acl_RecordUpdatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Mst_ChildDeviation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="ApproveDistanceLimit" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="MinRange" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="MaxRange" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="UserCategoryId" Type="Int32" />
+          <Property Name="ThreasoldLimit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="RecordCreatedBy" Type="Int32" />
+          <Property Name="RecordUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Mst_ParentDeviation" Relationship="MangalDBNewModel.FK_Mst_ChildDeviation_Mst_ParentDeviation" FromRole="Mst_ChildDeviation" ToRole="Mst_ParentDeviation" />
+        </EntityType>
+        <EntityType Name="Mst_GstMaster">
+          <Key>
+            <PropertyRef Name="Gst_RefId" />
+          </Key>
+          <Property Name="Gst_RefId" Type="Int32" Nullable="false" />
+          <Property Name="Gst_EffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Gst_CGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Gst_SGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Gst_IGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Gst_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Gst_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Gst_RecordCreatedBy" Type="Int32" />
+          <Property Name="Gst_RecordUpdatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Mst_ParentDeviation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Mst_ChildDeviation" Relationship="MangalDBNewModel.FK_Mst_ChildDeviation_Mst_ParentDeviation" FromRole="Mst_ParentDeviation" ToRole="Mst_ChildDeviation" />
+        </EntityType>
+        <EntityType Name="Mst_PenaltySlab">
+          <Key>
+            <PropertyRef Name="Ps_Id" />
+          </Key>
+          <Property Name="Ps_Id" Type="Int32" Nullable="false" />
+          <Property Name="Ps_Datewef" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ps_Penalty" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Ps_Accounthead" Type="Int32" Nullable="false" />
+          <Property Name="Ps_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Ps_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Ps_RecordCreatedBy" Type="Int32" />
+          <Property Name="Ps_RecordUpdatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Mst_ProductRate">
+          <Key>
+            <PropertyRef Name="Pr_Id" />
+          </Key>
+          <Property Name="Pr_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pr_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Pr_Product" Type="Int16" Nullable="false" />
+          <Property Name="Pr_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Pr_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Pr_RecordCreatedBy" Type="Int32" />
+          <Property Name="Pr_RecordUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Mst_ProductRateDetails" Relationship="MangalDBNewModel.FK_Mst_ProductRateDetails_Mst_ProductRate" FromRole="Mst_ProductRate" ToRole="Mst_ProductRateDetails" />
+        </EntityType>
+        <EntityType Name="Mst_ProductRateDetails">
+          <Key>
+            <PropertyRef Name="Prd_Id" />
+          </Key>
+          <Property Name="Prd_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Prd_FkId" Type="Int32" Nullable="false" />
+          <Property Name="Prd_Purity" Type="Int32" Nullable="false" />
+          <Property Name="Prd_GrossRate" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Prd_Deductions" Type="Int16" Nullable="false" />
+          <Property Name="Prd_DeductionsAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Prd_NetRate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Prd_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Prd_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Prd_RecordCreatedBy" Type="Int32" />
+          <Property Name="Prd_RecordUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Mst_ProductRate" Relationship="MangalDBNewModel.FK_Mst_ProductRateDetails_Mst_ProductRate" FromRole="Mst_ProductRateDetails" ToRole="Mst_ProductRate" />
+        </EntityType>
+        <EntityType Name="Mst_PurityMaster">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurityName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PurityType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Mst_Reason">
+          <Key>
+            <PropertyRef Name="Re_No" />
+          </Key>
+          <Property Name="Re_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Re_Desc" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Re_Status" Type="Int16" />
+          <Property Name="Re_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Re_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Re_RecordCreatedBy" Type="Int32" />
+          <Property Name="Re_RecordUpdatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Mst_SchemePurity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurityId" Type="Int32" Nullable="false" />
+          <Property Name="SchemeId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblaccountmaster">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Alies" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GPID" Type="Int32" Nullable="false" />
+          <Property Name="OpeningBalance" Type="Double" Nullable="false" />
+          <Property Name="DrCr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PanNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InterestRate" Type="Double" Nullable="false" />
+          <Property Name="InterestMethod" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GroupCompany" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="BankAcNo" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MICRNo" Type="Double" Nullable="false" />
+          <Property Name="AccountType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IFSNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AreaID" Type="Int32" Nullable="false" />
+          <Property Name="Telephone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Suspended" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GSTIN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblGroupMaster">
+          <Key>
+            <PropertyRef Name="GPID" />
+          </Key>
+          <Property Name="GPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GPName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GPType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PID" Type="Int32" Nullable="false" />
+          <Property Name="SID" Type="Int32" Nullable="false" />
+          <Property Name="PrintSchedule" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ScheduleNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblPrimaryGroup">
+          <Key>
+            <PropertyRef Name="PgID" />
+          </Key>
+          <Property Name="PgID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PgName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Mst_ChildDeviation_Mst_ParentDeviation">
+          <End Type="MangalDBNewModel.Mst_ParentDeviation" Role="Mst_ParentDeviation" Multiplicity="1" />
+          <End Type="MangalDBNewModel.Mst_ChildDeviation" Role="Mst_ChildDeviation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_ParentDeviation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mst_ChildDeviation">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mst_ProductRateDetails_Mst_ProductRate">
+          <End Type="MangalDBNewModel.Mst_ProductRate" Role="Mst_ProductRate" Multiplicity="1" />
+          <End Type="MangalDBNewModel.Mst_ProductRateDetails" Role="Mst_ProductRateDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_ProductRate">
+              <PropertyRef Name="Pr_Id" />
+            </Principal>
+            <Dependent Role="Mst_ProductRateDetails">
+              <PropertyRef Name="Prd_FkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblItemMaster">
+          <Key>
+            <PropertyRef Name="ItemID" />
+          </Key>
+          <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Product" Type="Int16" Nullable="false" />
+          <Property Name="Status" Type="Int16" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3655,14 +4134,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="Financialyear" ColumnName="Financialyear" />
                 <ScalarProperty Name="CompID" ColumnName="CompID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblItemMasters">
-            <EntityTypeMapping TypeName="MangalDBNewModel.tblItemMaster">
-              <MappingFragment StoreEntitySet="tblItemMaster">
-                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
-                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4256,6 +4727,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySetMapping Name="tblDocumentMasters">
             <EntityTypeMapping TypeName="MangalDBNewModel.tblDocumentMaster">
               <MappingFragment StoreEntitySet="tblDocumentMaster">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ExpiryDateApplicable" ColumnName="ExpiryDateApplicable" />
+                <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
                 <ScalarProperty Name="DocumentName" ColumnName="DocumentName" />
                 <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
               </MappingFragment>
@@ -4384,6 +4858,204 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
                 <ScalarProperty Name="Soa_Category" ColumnName="Soa_Category" />
                 <ScalarProperty Name="Soa_Name" ColumnName="Soa_Name" />
                 <ScalarProperty Name="Soa_Id" ColumnName="Soa_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_DocumentType">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_DocumentType">
+              <MappingFragment StoreEntitySet="Mst_DocumentType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_AuditCheckList">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_AuditCheckList">
+              <MappingFragment StoreEntitySet="Mst_AuditCheckList">
+                <ScalarProperty Name="Acl_RecordUpdatedBy" ColumnName="Acl_RecordUpdatedBy" />
+                <ScalarProperty Name="Acl_RecordCreatedBy" ColumnName="Acl_RecordCreatedBy" />
+                <ScalarProperty Name="Acl_RecordUpdated" ColumnName="Acl_RecordUpdated" />
+                <ScalarProperty Name="Acl_RecordCreated" ColumnName="Acl_RecordCreated" />
+                <ScalarProperty Name="Acl_Status" ColumnName="Acl_Status" />
+                <ScalarProperty Name="Acl_CheckPoint" ColumnName="Acl_CheckPoint" />
+                <ScalarProperty Name="Acl_Categoryofaudit" ColumnName="Acl_Categoryofaudit" />
+                <ScalarProperty Name="Acl_EffectiveDate" ColumnName="Acl_EffectiveDate" />
+                <ScalarProperty Name="Acl_Id" ColumnName="Acl_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_ChildDeviation">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_ChildDeviation">
+              <MappingFragment StoreEntitySet="Mst_ChildDeviation">
+                <ScalarProperty Name="RecordUpdatedBy" ColumnName="RecordUpdatedBy" />
+                <ScalarProperty Name="RecordCreatedBy" ColumnName="RecordCreatedBy" />
+                <ScalarProperty Name="RecordUpdated" ColumnName="RecordUpdated" />
+                <ScalarProperty Name="RecordCreated" ColumnName="RecordCreated" />
+                <ScalarProperty Name="ThreasoldLimit" ColumnName="ThreasoldLimit" />
+                <ScalarProperty Name="UserCategoryId" ColumnName="UserCategoryId" />
+                <ScalarProperty Name="MaxRange" ColumnName="MaxRange" />
+                <ScalarProperty Name="MinRange" ColumnName="MinRange" />
+                <ScalarProperty Name="ApproveDistanceLimit" ColumnName="ApproveDistanceLimit" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_GstMaster">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_GstMaster">
+              <MappingFragment StoreEntitySet="Mst_GstMaster">
+                <ScalarProperty Name="Gst_RecordUpdatedBy" ColumnName="Gst_RecordUpdatedBy" />
+                <ScalarProperty Name="Gst_RecordCreatedBy" ColumnName="Gst_RecordCreatedBy" />
+                <ScalarProperty Name="Gst_RecordUpdated" ColumnName="Gst_RecordUpdated" />
+                <ScalarProperty Name="Gst_RecordCreated" ColumnName="Gst_RecordCreated" />
+                <ScalarProperty Name="Gst_IGST" ColumnName="Gst_IGST" />
+                <ScalarProperty Name="Gst_SGST" ColumnName="Gst_SGST" />
+                <ScalarProperty Name="Gst_CGST" ColumnName="Gst_CGST" />
+                <ScalarProperty Name="Gst_EffectiveFrom" ColumnName="Gst_EffectiveFrom" />
+                <ScalarProperty Name="Gst_RefId" ColumnName="Gst_RefId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_ParentDeviation">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_ParentDeviation">
+              <MappingFragment StoreEntitySet="Mst_ParentDeviation">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_PenaltySlab">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_PenaltySlab">
+              <MappingFragment StoreEntitySet="Mst_PenaltySlab">
+                <ScalarProperty Name="Ps_RecordUpdatedBy" ColumnName="Ps_RecordUpdatedBy" />
+                <ScalarProperty Name="Ps_RecordCreatedBy" ColumnName="Ps_RecordCreatedBy" />
+                <ScalarProperty Name="Ps_RecordUpdated" ColumnName="Ps_RecordUpdated" />
+                <ScalarProperty Name="Ps_RecordCreated" ColumnName="Ps_RecordCreated" />
+                <ScalarProperty Name="Ps_Accounthead" ColumnName="Ps_Accounthead" />
+                <ScalarProperty Name="Ps_Penalty" ColumnName="Ps_Penalty" />
+                <ScalarProperty Name="Ps_Datewef" ColumnName="Ps_Datewef" />
+                <ScalarProperty Name="Ps_Id" ColumnName="Ps_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_ProductRate">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_ProductRate">
+              <MappingFragment StoreEntitySet="Mst_ProductRate">
+                <ScalarProperty Name="Pr_RecordUpdatedBy" ColumnName="Pr_RecordUpdatedBy" />
+                <ScalarProperty Name="Pr_RecordCreatedBy" ColumnName="Pr_RecordCreatedBy" />
+                <ScalarProperty Name="Pr_RecordUpdated" ColumnName="Pr_RecordUpdated" />
+                <ScalarProperty Name="Pr_RecordCreated" ColumnName="Pr_RecordCreated" />
+                <ScalarProperty Name="Pr_Product" ColumnName="Pr_Product" />
+                <ScalarProperty Name="Pr_Date" ColumnName="Pr_Date" />
+                <ScalarProperty Name="Pr_Id" ColumnName="Pr_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_ProductRateDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_ProductRateDetails">
+              <MappingFragment StoreEntitySet="Mst_ProductRateDetails">
+                <ScalarProperty Name="Prd_RecordUpdatedBy" ColumnName="Prd_RecordUpdatedBy" />
+                <ScalarProperty Name="Prd_RecordCreatedBy" ColumnName="Prd_RecordCreatedBy" />
+                <ScalarProperty Name="Prd_RecordUpdated" ColumnName="Prd_RecordUpdated" />
+                <ScalarProperty Name="Prd_RecordCreated" ColumnName="Prd_RecordCreated" />
+                <ScalarProperty Name="Prd_NetRate" ColumnName="Prd_NetRate" />
+                <ScalarProperty Name="Prd_DeductionsAmount" ColumnName="Prd_DeductionsAmount" />
+                <ScalarProperty Name="Prd_Deductions" ColumnName="Prd_Deductions" />
+                <ScalarProperty Name="Prd_GrossRate" ColumnName="Prd_GrossRate" />
+                <ScalarProperty Name="Prd_Purity" ColumnName="Prd_Purity" />
+                <ScalarProperty Name="Prd_FkId" ColumnName="Prd_FkId" />
+                <ScalarProperty Name="Prd_Id" ColumnName="Prd_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_PurityMaster">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_PurityMaster">
+              <MappingFragment StoreEntitySet="Mst_PurityMaster">
+                <ScalarProperty Name="PurityType" ColumnName="PurityType" />
+                <ScalarProperty Name="PurityName" ColumnName="PurityName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_Reason">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_Reason">
+              <MappingFragment StoreEntitySet="Mst_Reason">
+                <ScalarProperty Name="Re_RecordUpdatedBy" ColumnName="Re_RecordUpdatedBy" />
+                <ScalarProperty Name="Re_RecordCreatedBy" ColumnName="Re_RecordCreatedBy" />
+                <ScalarProperty Name="Re_RecordUpdated" ColumnName="Re_RecordUpdated" />
+                <ScalarProperty Name="Re_RecordCreated" ColumnName="Re_RecordCreated" />
+                <ScalarProperty Name="Re_Status" ColumnName="Re_Status" />
+                <ScalarProperty Name="Re_Desc" ColumnName="Re_Desc" />
+                <ScalarProperty Name="Re_No" ColumnName="Re_No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_SchemePurity">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_SchemePurity">
+              <MappingFragment StoreEntitySet="Mst_SchemePurity">
+                <ScalarProperty Name="SchemeId" ColumnName="SchemeId" />
+                <ScalarProperty Name="PurityId" ColumnName="PurityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblaccountmasters">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblaccountmaster">
+              <MappingFragment StoreEntitySet="tblaccountmaster">
+                <ScalarProperty Name="GSTIN" ColumnName="GSTIN" />
+                <ScalarProperty Name="Suspended" ColumnName="Suspended" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="IFSNo" ColumnName="IFSNo" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="MICRNo" ColumnName="MICRNo" />
+                <ScalarProperty Name="BankAcNo" ColumnName="BankAcNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="GroupCompany" ColumnName="GroupCompany" />
+                <ScalarProperty Name="InterestMethod" ColumnName="InterestMethod" />
+                <ScalarProperty Name="InterestRate" ColumnName="InterestRate" />
+                <ScalarProperty Name="PanNo" ColumnName="PanNo" />
+                <ScalarProperty Name="DrCr" ColumnName="DrCr" />
+                <ScalarProperty Name="OpeningBalance" ColumnName="OpeningBalance" />
+                <ScalarProperty Name="GPID" ColumnName="GPID" />
+                <ScalarProperty Name="Alies" ColumnName="Alies" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGroupMasters">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblGroupMaster">
+              <MappingFragment StoreEntitySet="tblGroupMaster">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ScheduleNo" ColumnName="ScheduleNo" />
+                <ScalarProperty Name="PrintSchedule" ColumnName="PrintSchedule" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="GPType" ColumnName="GPType" />
+                <ScalarProperty Name="GPName" ColumnName="GPName" />
+                <ScalarProperty Name="GPID" ColumnName="GPID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPrimaryGroups">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblPrimaryGroup">
+              <MappingFragment StoreEntitySet="tblPrimaryGroup">
+                <ScalarProperty Name="PgName" ColumnName="PgName" />
+                <ScalarProperty Name="PgID" ColumnName="PgID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblItemMasters">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblItemMaster">
+              <MappingFragment StoreEntitySet="tblItemMaster">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

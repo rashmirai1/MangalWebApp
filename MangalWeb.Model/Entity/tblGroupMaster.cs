@@ -12,14 +12,15 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class tblDocumentMaster
+    public partial class tblGroupMaster
     {
-        public int DocumentID { get; set; }
-        public string DocumentName { get; set; }
-        public int DocumentType { get; set; }
-        public bool ExpiryDateApplicable { get; set; }
-        public short Status { get; set; }
-    
-        public virtual Mst_DocumentType Mst_DocumentType { get; set; }
+        public int GPID { get; set; }
+        public string GPName { get; set; }
+        public string GPType { get; set; }
+        public int PID { get; set; }
+        public int SID { get; set; }
+        public string PrintSchedule { get; set; }
+        public string ScheduleNo { get; set; }
+        public string Remark { get; set; }
     }
 }

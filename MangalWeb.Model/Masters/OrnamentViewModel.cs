@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MangalWebProject.Models
+namespace MangalWeb.Model.Masters
 {
     public class OrnamentViewModel
     {
@@ -25,9 +25,5 @@ namespace MangalWebProject.Models
 
         public string operation { get; set; }
 
-        public int? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public int? UpdatedBy { get; set; }
-        public DateTime? UpdatedDate { get; set; }
     }
 }

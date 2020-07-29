@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MangalWebProject.Models
+namespace MangalWeb.Model.Masters
 {
     public class DocumentViewModel
     {
@@ -16,7 +16,7 @@ namespace MangalWebProject.Models
         public string DocumentName { get; set; }
 
         [Required(ErrorMessage = "Please Select Document Type")]
-        public short DocumentType { get; set; }
+        public int DocumentType { get; set; }
 
         public bool ExpiryDateApplicable { get; set; }
   
@@ -30,9 +30,5 @@ namespace MangalWebProject.Models
 
         public string operation { get; set; }
 
-        public int? CreatedBy { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public int? UpdatedBy { get; set; }
-        public DateTime? UpdatedDate { get; set; }
     }
 }

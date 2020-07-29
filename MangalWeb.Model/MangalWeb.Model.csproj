@@ -107,7 +107,40 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MangalEntity.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Mst_AuditCheckList.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_ChildDeviation.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_DocumentType.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_GstMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_ParentDeviation.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_PenaltySlab.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Mst_PinCode.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_ProductRate.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_ProductRateDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_PurityMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_Reason.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_SchemePurity.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Mst_SourceofApplication.cs">
@@ -137,6 +170,9 @@
     <Compile Include="Entity\SplitWords_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tblaccountmaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tblBankMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -155,6 +191,9 @@
     <Compile Include="Entity\tblFinancialyear.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tblGroupMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tblINV_ItemMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -165,6 +204,9 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tblPenaltySlabtMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblPrimaryGroup.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tblSchemeMaster.cs">
