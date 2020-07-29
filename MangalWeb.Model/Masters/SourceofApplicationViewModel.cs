@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MangalWebProject.Models
+namespace MangalWeb.Model.Masters
 {
     public class SourceofApplicationViewModel
     {

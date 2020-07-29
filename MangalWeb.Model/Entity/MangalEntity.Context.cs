@@ -95,6 +95,7 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tblSchemeTransMonth> tblSchemeTransMonths { get; set; }
         public virtual DbSet<tblCityMaster> tblCityMasters { get; set; }
         public virtual DbSet<Mst_PinCode> Mst_PinCode { get; set; }
+        public virtual DbSet<Mst_SourceofApplication> Mst_SourceofApplication { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
