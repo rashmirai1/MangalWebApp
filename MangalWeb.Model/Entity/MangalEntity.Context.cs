@@ -67,7 +67,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLInwardForm_BasicDetails> TGLInwardForm_BasicDetails { get; set; }
         public virtual DbSet<TGLInwardForm_DocDetails> TGLInwardForm_DocDetails { get; set; }
         public virtual DbSet<TGLInwardForm_GoldDetails> TGLInwardForm_GoldDetails { get; set; }
-        public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<TGLKYC_DocumentDetails> TGLKYC_DocumentDetails { get; set; }
         public virtual DbSet<TGLKYC_SourceOfApplication> TGLKYC_SourceOfApplication { get; set; }
         public virtual DbSet<TGLOutwardForm_BasicDetails> TGLOutwardForm_BasicDetails { get; set; }
@@ -96,6 +95,21 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tblCityMaster> tblCityMasters { get; set; }
         public virtual DbSet<Mst_PinCode> Mst_PinCode { get; set; }
         public virtual DbSet<Mst_SourceofApplication> Mst_SourceofApplication { get; set; }
+        public virtual DbSet<Mst_AuditCheckList> Mst_AuditCheckList { get; set; }
+        public virtual DbSet<Mst_ChildDeviation> Mst_ChildDeviation { get; set; }
+        public virtual DbSet<Mst_DocumentType> Mst_DocumentType { get; set; }
+        public virtual DbSet<Mst_GstMaster> Mst_GstMaster { get; set; }
+        public virtual DbSet<Mst_ParentDeviation> Mst_ParentDeviation { get; set; }
+        public virtual DbSet<Mst_PenaltySlab> Mst_PenaltySlab { get; set; }
+        public virtual DbSet<Mst_ProductRate> Mst_ProductRate { get; set; }
+        public virtual DbSet<Mst_ProductRateDetails> Mst_ProductRateDetails { get; set; }
+        public virtual DbSet<Mst_PurityMaster> Mst_PurityMaster { get; set; }
+        public virtual DbSet<Mst_Reason> Mst_Reason { get; set; }
+        public virtual DbSet<Mst_SchemePurity> Mst_SchemePurity { get; set; }
+        public virtual DbSet<tblaccountmaster> tblaccountmasters { get; set; }
+        public virtual DbSet<tblGroupMaster> tblGroupMasters { get; set; }
+        public virtual DbSet<tblPrimaryGroup> tblPrimaryGroups { get; set; }
+        public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -119,6 +133,30 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("text", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SplitWords_Result>("[MangalDBNewEntities].[SplitWords](@text)", textParameter);
+        }
+    
+        [DbFunction("MangalDBNewEntities", "SplitValue1")]
+        public virtual IQueryable<string> SplitValue1(string @string, string delimiter)
+        {
+            var stringParameter = @string != null ?
+                new ObjectParameter("String", @string) :
+                new ObjectParameter("String", typeof(string));
+    
+            var delimiterParameter = delimiter != null ?
+                new ObjectParameter("Delimiter", delimiter) :
+                new ObjectParameter("Delimiter", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<string>("[MangalDBNewEntities].[SplitValue1](@String, @Delimiter)", stringParameter, delimiterParameter);
+        }
+    
+        [DbFunction("MangalDBNewEntities", "SplitWords1")]
+        public virtual IQueryable<SplitWords1_Result> SplitWords1(string text)
+        {
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SplitWords1_Result>("[MangalDBNewEntities].[SplitWords1](@text)", textParameter);
         }
     }
 }

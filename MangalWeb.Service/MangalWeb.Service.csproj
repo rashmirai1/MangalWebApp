@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Service\KYCService.cs" />
     <Compile Include="Service\CityService.cs" />
     <Compile Include="Service\HomeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

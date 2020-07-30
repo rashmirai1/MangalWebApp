@@ -12,14 +12,10 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class tblDocumentMaster
+    public partial class Mst_PurityMaster
     {
-        public int DocumentID { get; set; }
-        public string DocumentName { get; set; }
-        public int DocumentType { get; set; }
-        public bool ExpiryDateApplicable { get; set; }
-        public short Status { get; set; }
-    
-        public virtual Mst_DocumentType Mst_DocumentType { get; set; }
+        public int id { get; set; }
+        public string PurityName { get; set; }
+        public Nullable<int> PurityType { get; set; }
     }
 }

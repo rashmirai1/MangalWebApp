@@ -10,16 +10,10 @@
 namespace MangalWeb.Model.Entity
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblDocumentMaster
+    public partial class SplitWords1_Result
     {
-        public int DocumentID { get; set; }
-        public string DocumentName { get; set; }
-        public int DocumentType { get; set; }
-        public bool ExpiryDateApplicable { get; set; }
-        public short Status { get; set; }
-    
-        public virtual Mst_DocumentType Mst_DocumentType { get; set; }
+        public short pos { get; set; }
+        public string value { get; set; }
     }
 }

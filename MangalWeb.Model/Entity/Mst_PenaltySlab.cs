@@ -12,14 +12,15 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class tblDocumentMaster
+    public partial class Mst_PenaltySlab
     {
-        public int DocumentID { get; set; }
-        public string DocumentName { get; set; }
-        public int DocumentType { get; set; }
-        public bool ExpiryDateApplicable { get; set; }
-        public short Status { get; set; }
-    
-        public virtual Mst_DocumentType Mst_DocumentType { get; set; }
+        public int Ps_Id { get; set; }
+        public System.DateTime Ps_Datewef { get; set; }
+        public decimal Ps_Penalty { get; set; }
+        public int Ps_Accounthead { get; set; }
+        public Nullable<System.DateTime> Ps_RecordCreated { get; set; }
+        public Nullable<System.DateTime> Ps_RecordUpdated { get; set; }
+        public Nullable<int> Ps_RecordCreatedBy { get; set; }
+        public Nullable<int> Ps_RecordUpdatedBy { get; set; }
     }
 }

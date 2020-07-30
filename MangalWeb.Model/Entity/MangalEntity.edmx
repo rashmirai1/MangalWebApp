@@ -90,6 +90,56 @@ warning 6002: The table/view 'MangalDBNew.dbo.bharatTGLGoldInOutDetails' does no
           <Property Name="isActive" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6013: The table/view 'MangalDBNew.dbo.Bhart01012017TGLSanctionDisburse_BasicDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Bhart01012017TGLSanctionDisburse_BasicDetails">
+          <Property Name="SDID" Type="int" />
+          <Property Name="RefType" Type="nvarchar" MaxLength="50" />
+          <Property Name="RefMon" Type="nvarchar" MaxLength="5" />
+          <Property Name="RefYr" Type="nvarchar" MaxLength="5" />
+          <Property Name="RefID" Type="int" />
+          <Property Name="LoanType" Type="nvarchar" MaxLength="20" />
+          <Property Name="LoanDate" Type="smalldatetime" />
+          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
+          <Property Name="KYCID" Type="int" />
+          <Property Name="OperatorID" Type="int" />
+          <Property Name="EligibleLoanAmt" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="NetLoanPayable" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="BankCashAccID" Type="int" />
+          <Property Name="CheqNEFTDD" Type="nvarchar" MaxLength="50" />
+          <Property Name="CheqNEFTDDNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="CheqNEFTDDDate" Type="smalldatetime" />
+          <Property Name="TotalGrossWeight" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="TotalNetWeight" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="TotalQuantity" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="Totalvalue" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="TotalRate" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="SID" Type="int" />
+          <Property Name="DueDate" Type="smalldatetime" />
+          <Property Name="OwnershipProofImagePath" Type="nvarchar" MaxLength="50" />
+          <Property Name="CIBILScore" Type="nvarchar" MaxLength="20" />
+          <Property Name="ItemImage" Type="image" />
+          <Property Name="BCPID" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="smalldatetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="smalldatetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="smalldatetime" />
+          <Property Name="FYID" Type="int" />
+          <Property Name="BranchID" Type="int" />
+          <Property Name="CMPID" Type="int" />
+          <Property Name="isActive" Type="nvarchar" MaxLength="100" />
+          <Property Name="CashInOutID" Type="int" />
+          <Property Name="GLInOutID" Type="int" />
+          <Property Name="CashOutWardById" Type="int" />
+          <Property Name="GoldInWardById" Type="int" />
+          <Property Name="CashAccID" Type="int" />
+          <Property Name="BankAmount" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="CashAmount" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.ImageKyc' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ImageKyc">
           <Key>
@@ -133,6 +183,77 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           <Property Name="WNumber" Type="int" />
           <Property Name="Wwords" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Mst_AuditCheckList">
+          <Key>
+            <PropertyRef Name="Acl_Id" />
+          </Key>
+          <Property Name="Acl_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Acl_EffectiveDate" Type="datetime" Nullable="false" />
+          <Property Name="Acl_Categoryofaudit" Type="smallint" Nullable="false" />
+          <Property Name="Acl_CheckPoint" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Acl_Status" Type="smallint" Nullable="false" />
+          <Property Name="Acl_RecordCreated" Type="datetime" />
+          <Property Name="Acl_RecordUpdated" Type="datetime" />
+          <Property Name="Acl_RecordCreatedBy" Type="int" />
+          <Property Name="Acl_RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_ChildDeviation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="ApproveDistanceLimit" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="MinRange" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="MaxRange" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="UserCategoryId" Type="int" />
+          <Property Name="ThreasoldLimit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="RecordCreated" Type="datetime" />
+          <Property Name="RecordUpdated" Type="datetime" />
+          <Property Name="RecordCreatedBy" Type="int" />
+          <Property Name="RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_DocumentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mst_GstMaster">
+          <Key>
+            <PropertyRef Name="Gst_RefId" />
+          </Key>
+          <Property Name="Gst_RefId" Type="int" Nullable="false" />
+          <Property Name="Gst_EffectiveFrom" Type="datetime" Nullable="false" />
+          <Property Name="Gst_CGST" Type="varchar" MaxLength="6" />
+          <Property Name="Gst_SGST" Type="varchar" MaxLength="6" />
+          <Property Name="Gst_IGST" Type="varchar" MaxLength="6" />
+          <Property Name="Gst_RecordCreated" Type="datetime" />
+          <Property Name="Gst_RecordUpdated" Type="datetime" />
+          <Property Name="Gst_RecordCreatedBy" Type="int" />
+          <Property Name="Gst_RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_ParentDeviation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mst_PenaltySlab">
+          <Key>
+            <PropertyRef Name="Ps_Id" />
+          </Key>
+          <Property Name="Ps_Id" Type="int" Nullable="false" />
+          <Property Name="Ps_Datewef" Type="datetime" Nullable="false" />
+          <Property Name="Ps_Penalty" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Ps_Accounthead" Type="int" Nullable="false" />
+          <Property Name="Ps_RecordCreated" Type="datetime" />
+          <Property Name="Ps_RecordUpdated" Type="datetime" />
+          <Property Name="Ps_RecordCreatedBy" Type="int" />
+          <Property Name="Ps_RecordUpdatedBy" Type="int" />
+        </EntityType>
         <EntityType Name="Mst_PinCode">
           <Key>
             <PropertyRef Name="Pc_Id" />
@@ -146,6 +267,62 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           <Property Name="Pc_RecordUpdated" Type="datetime" />
           <Property Name="Pc_RecordCreatedBy" Type="int" />
           <Property Name="Pc_RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_ProductRate">
+          <Key>
+            <PropertyRef Name="Pr_Id" />
+          </Key>
+          <Property Name="Pr_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pr_Date" Type="datetime" Nullable="false" />
+          <Property Name="Pr_Product" Type="smallint" Nullable="false" />
+          <Property Name="Pr_RecordCreated" Type="datetime" />
+          <Property Name="Pr_RecordUpdated" Type="datetime" />
+          <Property Name="Pr_RecordCreatedBy" Type="int" />
+          <Property Name="Pr_RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_ProductRateDetails">
+          <Key>
+            <PropertyRef Name="Prd_Id" />
+          </Key>
+          <Property Name="Prd_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Prd_FkId" Type="int" Nullable="false" />
+          <Property Name="Prd_Purity" Type="int" Nullable="false" />
+          <Property Name="Prd_GrossRate" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Prd_Deductions" Type="smallint" Nullable="false" />
+          <Property Name="Prd_DeductionsAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Prd_NetRate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Prd_RecordCreated" Type="datetime" />
+          <Property Name="Prd_RecordUpdated" Type="datetime" />
+          <Property Name="Prd_RecordCreatedBy" Type="int" />
+          <Property Name="Prd_RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_PurityMaster">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PurityName" Type="varchar" MaxLength="10" />
+          <Property Name="PurityType" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_Reason">
+          <Key>
+            <PropertyRef Name="Re_No" />
+          </Key>
+          <Property Name="Re_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Re_Desc" Type="varchar" MaxLength="150" />
+          <Property Name="Re_Status" Type="smallint" />
+          <Property Name="Re_RecordCreated" Type="datetime" />
+          <Property Name="Re_RecordUpdated" Type="datetime" />
+          <Property Name="Re_RecordCreatedBy" Type="int" />
+          <Property Name="Re_RecordUpdatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Mst_SchemePurity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PurityId" Type="int" Nullable="false" />
+          <Property Name="SchemeId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Mst_SourceofApplication">
           <Key>
@@ -272,6 +449,23 @@ warning 6002: The table/view 'MangalDBNew.dbo.newbharatTGLGoldStock' does not ha
           <Property Name="TotalRelease" Type="int" />
           <Property Name="ClosingBalance" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'MangalDBNew.dbo.Sheet2$' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Sheet2$">
+          <Property Name="GLInOutID" Type="nvarchar" MaxLength="255" />
+          <Property Name="RefType" Type="nvarchar" MaxLength="255" />
+          <Property Name="RefNo" Type="nvarchar" MaxLength="255" />
+          <Property Name="ReferenceType" Type="nvarchar" MaxLength="255" />
+          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="255" />
+          <Property Name="PouchNo" Type="nvarchar" MaxLength="255" />
+          <Property Name="GLInOutMode" Type="nvarchar" MaxLength="255" />
+          <Property Name="InOutLoc" Type="nvarchar" MaxLength="255" />
+          <Property Name="LocName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LocResiName" Type="nvarchar" MaxLength="255" />
+          <Property Name="LocDetails" Type="nvarchar" MaxLength="255" />
+          <Property Name="NarrationID" Type="nvarchar" MaxLength="255" />
+          <Property Name="InOutBy" Type="nvarchar" MaxLength="255" />
+        </EntityType>-->
         <EntityType Name="tbl_CountryMaster">
           <Key>
             <PropertyRef Name="CountryID" />
@@ -379,6 +573,33 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_UserLogin' does not have a pri
           <Property Name="CompID" Type="int" />
           <Property Name="BranchID" Type="int" />
         </EntityType>
+        <EntityType Name="tblaccountmaster">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Alies" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="GPID" Type="int" Nullable="false" />
+          <Property Name="OpeningBalance" Type="float" Nullable="false" />
+          <Property Name="DrCr" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PanNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="InterestRate" Type="float" Nullable="false" />
+          <Property Name="InterestMethod" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GroupCompany" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="BankAcNo" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="MICRNo" Type="float" Nullable="false" />
+          <Property Name="AccountType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IFSNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="AreaID" Type="int" Nullable="false" />
+          <Property Name="Telephone" Type="nvarchar(max)" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Suspended" Type="nvarchar" MaxLength="50" />
+          <Property Name="GSTIN" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="tblBankMaster">
           <Key>
             <PropertyRef Name="BankID" />
@@ -437,8 +658,11 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblCreateCompanyMaster' does not h
           <Key>
             <PropertyRef Name="DocumentID" />
           </Key>
-          <Property Name="DocumentID" Type="int" Nullable="false" />
+          <Property Name="DocumentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DocumentName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DocumentType" Type="int" Nullable="false" />
+          <Property Name="ExpiryDateApplicable" Type="bit" Nullable="false" />
+          <Property Name="Status" Type="smallint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.tblFinancialyear' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -459,6 +683,19 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblFinancialyear' does not have a 
           <Property Name="Financialyear" Type="nvarchar" MaxLength="200" />
           <Property Name="CompID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblGroupMaster">
+          <Key>
+            <PropertyRef Name="GPID" />
+          </Key>
+          <Property Name="GPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GPName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GPType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PID" Type="int" Nullable="false" />
+          <Property Name="SID" Type="int" Nullable="false" />
+          <Property Name="PrintSchedule" Type="nvarchar" MaxLength="50" />
+          <Property Name="ScheduleNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="150" />
+        </EntityType>
         <EntityType Name="tblINV_ItemMaster">
           <Key>
             <PropertyRef Name="ItemCode" />
@@ -477,15 +714,14 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblFinancialyear' does not have a 
           <Property Name="FinancialYrID" Type="int" />
           <Property Name="HSNCode" Type="nvarchar" MaxLength="30" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.tblItemMaster' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblItemMaster">
           <Key>
             <PropertyRef Name="ItemID" />
-            <PropertyRef Name="ItemName" />
           </Key>
-          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Product" Type="smallint" Nullable="false" />
+          <Property Name="Status" Type="smallint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.tblLogin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -507,6 +743,13 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblLogin' does not have a primary 
           <Property Name="PenaltyType" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PenaltySlabName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Interest" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPrimaryGroup">
+          <Key>
+            <PropertyRef Name="PgID" />
+          </Key>
+          <Property Name="PgID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PgName" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="tblSchemeMaster">
           <Key>
@@ -866,14 +1109,12 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInwardForm_GoldDetails' does no
           <Property Name="InwardFromLocation" Type="varchar" MaxLength="50" />
           <Property Name="StockLocation" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.TGLKYC_BasicDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TGLKYC_BasicDetails">
           <Key>
-            <PropertyRef Name="OperatorID" />
-            <PropertyRef Name="ExistingCustomerID" />
+            <PropertyRef Name="KYCID" />
           </Key>
-          <Property Name="KYCID" Type="int" />
+          <Property Name="KYCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KYCDate" Type="datetime" Nullable="false" />
           <Property Name="CustomerID" Type="nvarchar" MaxLength="20" />
           <Property Name="AppliedDate" Type="smalldatetime" />
           <Property Name="OperatorID" Type="int" Nullable="false" />
@@ -934,7 +1175,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLKYC_BasicDetails' does not have
           <Property Name="UpdatedDate" Type="smalldatetime" />
           <Property Name="DeletedBy" Type="int" />
           <Property Name="DeletedDate" Type="smalldatetime" />
-          <Property Name="isActive" Type="nvarchar" MaxLength="5" />
+          <Property Name="isActive" Type="bit" />
           <Property Name="SourceofApplicationID" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -1011,6 +1252,185 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLOutwardForm_GoldDetails' does n
           <Property Name="OutwardToLocation" Type="varchar" MaxLength="50" />
           <Property Name="StockLocation" Type="varchar" MaxLength="50" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'ReceiveTime' in the table 'MangalDBNew.dbo.TGlReceipt_BasicDetails' was excluded.
+warning 6013: The table/view 'MangalDBNew.dbo.TGlReceipt_BasicDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="TGlReceipt_BasicDetails">
+          <Property Name="RcptId" Type="int" />
+          <Property Name="SDID" Type="int" />
+          <Property Name="KYCID" Type="int" />
+          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="ReceiveDate" Type="smalldatetime" />
+          <Property Name="BalanceLoanPayable" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="BalanceLoanEligibility" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="ROI" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="ReceiptBookNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="ReceiptNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="ReceivedFrom" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentMode" Type="nvarchar" MaxLength="50" />
+          <Property Name="CLP" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="CLI" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="CLPI" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="CLC" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="CLO" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="RcvCLP" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="RecCLPAccID" Type="int" />
+          <Property Name="RecCLPNarID" Type="int" />
+          <Property Name="RcvCLI" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="RecCLIAccID" Type="int" />
+          <Property Name="RecCLINarID" Type="int" />
+          <Property Name="RcvCLPI" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="RecCLPIAccID" Type="int" />
+          <Property Name="RecCLPINarID" Type="int" />
+          <Property Name="RecCLC" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="RecCLCAccID" Type="int" />
+          <Property Name="RecCLCNarID" Type="int" />
+          <Property Name="RcvTotal" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="BankAccID" Type="int" />
+          <Property Name="CashAccID" Type="int" />
+          <Property Name="CollectedByID" Type="int" />
+          <Property Name="CashierID" Type="int" />
+          <Property Name="CashInOutID" Type="int" />
+          <Property Name="BCRID" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="smalldatetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="smalldatetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="smalldatetime" />
+          <Property Name="isActive" Type="varchar" MaxLength="2" />
+          <Property Name="FYID" Type="int" />
+          <Property Name="BranchId" Type="int" />
+          <Property Name="CMPID" Type="int" />
+          <Property Name="Finalize" Type="nchar" MaxLength="2" />
+          <Property Name="InterestFromDate" Type="smalldatetime" />
+          <Property Name="InterestToDate" Type="smalldatetime" />
+          <Property Name="OSPrincipal" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="OSInterest" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="OSDays" Type="int" />
+          <Property Name="IntrestRcvTillDate" Type="smalldatetime" />
+          <Property Name="LastROI" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="AdvInterestAmt" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="AdvInterestFromDate" Type="smalldatetime" />
+          <Property Name="AdvInterestToDate" Type="smalldatetime" />
+          <Property Name="AdvInterestAccID" Type="int" />
+          <Property Name="TotalAdvInterestAmount" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="OSAdvInterestAmount" Type="decimal" Precision="11" Scale="2" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'MangalDBNew.dbo.TGlReceipt_Cheque_Details' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="TGlReceipt_Cheque_Details">
+          <Property Name="ChequeId" Type="int" />
+          <Property Name="RcptId" Type="int" />
+          <Property Name="Serialno" Type="int" />
+          <Property Name="Chq_DD_NEFT" Type="varchar" MaxLength="50" />
+          <Property Name="ChequeNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="BankId" Type="int" />
+          <Property Name="BankName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Amount" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="ChequeDate" Type="varchar" MaxLength="12" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'MangalDBNew.dbo.TGlReceipt_Denomination_Details' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="TGlReceipt_Denomination_Details">
+          <Property Name="DenoId" Type="int" />
+          <Property Name="RcptId" Type="int" />
+          <Property Name="Serialno" Type="int" />
+          <Property Name="DenoRs" Type="nvarchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Total" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="NoteNos" Type="nvarchar" MaxLength="50" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_BasicDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="TGLSanctionDisburse_BasicDetails">
+          <Property Name="SDID" Type="int" />
+          <Property Name="RefType" Type="nvarchar" MaxLength="50" />
+          <Property Name="RefMon" Type="nvarchar" MaxLength="5" />
+          <Property Name="RefYr" Type="nvarchar" MaxLength="5" />
+          <Property Name="RefID" Type="int" />
+          <Property Name="LoanType" Type="nvarchar" MaxLength="20" />
+          <Property Name="LoanDate" Type="smalldatetime" />
+          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
+          <Property Name="KYCID" Type="int" />
+          <Property Name="OperatorID" Type="int" />
+          <Property Name="EligibleLoanAmt" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="NetLoanPayable" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="BankCashAccID" Type="int" />
+          <Property Name="CheqNEFTDD" Type="nvarchar" MaxLength="50" />
+          <Property Name="CheqNEFTDDNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="CheqNEFTDDDate" Type="smalldatetime" />
+          <Property Name="TotalGrossWeight" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="TotalNetWeight" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="TotalQuantity" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="Totalvalue" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="TotalRate" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="SID" Type="int" />
+          <Property Name="DueDate" Type="smalldatetime" />
+          <Property Name="OwnershipProofImagePath" Type="nvarchar" MaxLength="50" />
+          <Property Name="CIBILScore" Type="nvarchar" MaxLength="20" />
+          <Property Name="ItemImage" Type="image" />
+          <Property Name="BCPID" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="smalldatetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="smalldatetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="smalldatetime" />
+          <Property Name="FYID" Type="int" />
+          <Property Name="BranchID" Type="int" />
+          <Property Name="CMPID" Type="int" />
+          <Property Name="isActive" Type="nvarchar" MaxLength="100" />
+          <Property Name="CashInOutID" Type="int" />
+          <Property Name="GLInOutID" Type="int" />
+          <Property Name="CashOutWardById" Type="int" />
+          <Property Name="GoldInWardById" Type="int" />
+          <Property Name="CashAccID" Type="int" />
+          <Property Name="BankAmount" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="CashAmount" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_ChargesDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="TGLSanctionDisburse_ChargesDetails">
+          <Property Name="CHID" Type="int" />
+          <Property Name="SDID" Type="int" />
+          <Property Name="CID" Type="int" />
+          <Property Name="Serialno" Type="int" />
+          <Property Name="Charges" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="Amount" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="AccountID" Type="int" />
+          <Property Name="AccountName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID" Type="int" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_ChargesPostingDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="TGLSanctionDisburse_ChargesPostingDetails">
+          <Property Name="ID" Type="int" />
+          <Property Name="SDID" Type="int" />
+          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccID" Type="int" />
+          <Property Name="Debit" Type="float" />
+          <Property Name="Credit" Type="float" />
+          <Property Name="LedgerID" Type="int" />
+          <Property Name="FYID" Type="int" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_GoldItemDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="TGLSanctionDisburse_GoldItemDetails">
+          <Property Name="GID" Type="int" />
+          <Property Name="SDID" Type="int" />
+          <Property Name="Serialno" Type="int" />
+          <Property Name="ItemID" Type="int" />
+          <Property Name="GrossWeight" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="NetWeight" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="RateperGram" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="Value" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="Purity" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImgItemPath" Type="nvarchar" MaxLength="500" />
+        </EntityType>-->
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TGLSmsHistory">
@@ -1197,6 +1617,30 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="UserTypeID" Type="int" Nullable="false" />
           <Property Name="UserType" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="V_MonthlyJv">
+          <Property Name="RN" Type="bigint" />
+          <Property Name="SDID" Type="int" />
+          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
+          <Property Name="SID" Type="int" />
+          <Property Name="LoanDate" Type="smalldatetime" />
+          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CustName" Type="varchar" MaxLength="92" />
+          <Property Name="LoanDate1" Type="varchar" MaxLength="20" />
+        </EntityType>-->
+        <Association Name="FK_Mst_ChildDeviation_Mst_ParentDeviation">
+          <End Role="Mst_ParentDeviation" Type="Self.Mst_ParentDeviation" Multiplicity="1" />
+          <End Role="Mst_ChildDeviation" Type="Self.Mst_ChildDeviation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_ParentDeviation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mst_ChildDeviation">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Mst_PinCode_Mst_PinCode">
           <End Role="tblCityMaster" Type="Self.tblCityMaster" Multiplicity="1" />
           <End Role="Mst_PinCode" Type="Self.Mst_PinCode" Multiplicity="*" />
@@ -1221,6 +1665,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Mst_ProductRateDetails_Mst_ProductRate">
+          <End Role="Mst_ProductRate" Type="Self.Mst_ProductRate" Multiplicity="1" />
+          <End Role="Mst_ProductRateDetails" Type="Self.Mst_ProductRateDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_ProductRate">
+              <PropertyRef Name="Pr_Id" />
+            </Principal>
+            <Dependent Role="Mst_ProductRateDetails">
+              <PropertyRef Name="Prd_FkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblCityMaster_tblStateMaster">
           <End Role="tblStateMaster" Type="Self.tblStateMaster" Multiplicity="1" />
           <End Role="tblCityMaster" Type="Self.tblCityMaster" Multiplicity="*" />
@@ -1230,6 +1686,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             </Principal>
             <Dependent Role="tblCityMaster">
               <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDocumentMaster_Mst_DocumentType">
+          <End Role="Mst_DocumentType" Type="Self.Mst_DocumentType" Multiplicity="1" />
+          <End Role="tblDocumentMaster" Type="Self.tblDocumentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_DocumentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblDocumentMaster">
+              <PropertyRef Name="DocumentType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1245,19 +1713,64 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fnNumToWords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="Number" Type="numeric" Mode="In" />
+          <Parameter Name="CPaise" Type="char" Mode="In" />
+        </Function>
+        <Function Name="NumberSuffix" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="val" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SplitValue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="String" Type="varchar" Mode="In" />
+          <Parameter Name="Delimiter" Type="char" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="items" Type="varchar" MaxLength="8000" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="SplitWords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="text" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="pos" Type="smallint" Nullable="false" />
+                <Property Name="value" Type="varchar" MaxLength="8000" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <EntityContainer Name="MangalDBNewModelStoreContainer">
+          <EntitySet Name="Mst_AuditCheckList" EntityType="Self.Mst_AuditCheckList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_ChildDeviation" EntityType="Self.Mst_ChildDeviation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_DocumentType" EntityType="Self.Mst_DocumentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_GstMaster" EntityType="Self.Mst_GstMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_ParentDeviation" EntityType="Self.Mst_ParentDeviation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_PenaltySlab" EntityType="Self.Mst_PenaltySlab" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_PinCode" EntityType="Self.Mst_PinCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_ProductRate" EntityType="Self.Mst_ProductRate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_ProductRateDetails" EntityType="Self.Mst_ProductRateDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_PurityMaster" EntityType="Self.Mst_PurityMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_Reason" EntityType="Self.Mst_Reason" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_SchemePurity" EntityType="Self.Mst_SchemePurity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_SourceofApplication" EntityType="Self.Mst_SourceofApplication" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_CountryMaster" EntityType="Self.tbl_CountryMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblaccountmaster" EntityType="Self.tblaccountmaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBankMaster" EntityType="Self.tblBankMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCityMaster" EntityType="Self.tblCityMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDocumentMaster" EntityType="Self.tblDocumentMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblGroupMaster" EntityType="Self.tblGroupMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblINV_ItemMaster" EntityType="Self.tblINV_ItemMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblItemMaster" EntityType="Self.tblItemMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPenaltySlabtMaster" EntityType="Self.tblPenaltySlabtMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPrimaryGroup" EntityType="Self.tblPrimaryGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSchemeMaster" EntityType="Self.tblSchemeMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSchemeTransMaster" EntityType="Self.tblSchemeTransMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStateMaster" EntityType="Self.tblStateMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblZonemaster" EntityType="Self.tblZonemaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TGLKYC_BasicDetails" EntityType="Self.TGLKYC_BasicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bharat_tbl_SentJVCustHistory" EntityType="Self.Bharat_tbl_SentJVCustHistory" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Bharat_tbl_SentJVCustHistory].[SentCustJVID] AS [SentCustJVID], 
@@ -1541,12 +2054,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
     [tblFinancialyear].[CompID] AS [CompID]
     FROM [dbo].[tblFinancialyear] AS [tblFinancialyear]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="tblItemMaster" EntityType="Self.tblItemMaster" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblItemMaster].[ItemID] AS [ItemID], 
-    [tblItemMaster].[ItemName] AS [ItemName]
-    FROM [dbo].[tblItemMaster] AS [tblItemMaster]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="tblLogin" EntityType="Self.tblLogin" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [tblLogin].[UserType] AS [UserType], 
@@ -1809,73 +2316,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
     [TGLInwardForm_GoldDetails].[StockLocation] AS [StockLocation]
     FROM [dbo].[TGLInwardForm_GoldDetails] AS [TGLInwardForm_GoldDetails]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="TGLKYC_BasicDetails" EntityType="Self.TGLKYC_BasicDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLKYC_BasicDetails].[KYCID] AS [KYCID], 
-    [TGLKYC_BasicDetails].[CustomerID] AS [CustomerID], 
-    [TGLKYC_BasicDetails].[AppliedDate] AS [AppliedDate], 
-    [TGLKYC_BasicDetails].[OperatorID] AS [OperatorID], 
-    [TGLKYC_BasicDetails].[ExistingCustomerID] AS [ExistingCustomerID], 
-    [TGLKYC_BasicDetails].[ExistingPLCaseNo] AS [ExistingPLCaseNo], 
-    [TGLKYC_BasicDetails].[AppFName] AS [AppFName], 
-    [TGLKYC_BasicDetails].[AppMName] AS [AppMName], 
-    [TGLKYC_BasicDetails].[AppLName] AS [AppLName], 
-    [TGLKYC_BasicDetails].[AppPhotoPath] AS [AppPhotoPath], 
-    [TGLKYC_BasicDetails].[AppSignPath] AS [AppSignPath], 
-    [TGLKYC_BasicDetails].[AppPhoto] AS [AppPhoto], 
-    [TGLKYC_BasicDetails].[AppSign] AS [AppSign], 
-    [TGLKYC_BasicDetails].[Gender] AS [Gender], 
-    [TGLKYC_BasicDetails].[MaritalStatus] AS [MaritalStatus], 
-    [TGLKYC_BasicDetails].[BirthDate] AS [BirthDate], 
-    [TGLKYC_BasicDetails].[Age] AS [Age], 
-    [TGLKYC_BasicDetails].[Spouse] AS [Spouse], 
-    [TGLKYC_BasicDetails].[Children] AS [Children], 
-    [TGLKYC_BasicDetails].[PANNo] AS [PANNo], 
-    [TGLKYC_BasicDetails].[MobileNo] AS [MobileNo], 
-    [TGLKYC_BasicDetails].[VerificationCode] AS [VerificationCode], 
-    [TGLKYC_BasicDetails].[TelephoneNo] AS [TelephoneNo], 
-    [TGLKYC_BasicDetails].[EmailID] AS [EmailID], 
-    [TGLKYC_BasicDetails].[SourceofApplication] AS [SourceofApplication], 
-    [TGLKYC_BasicDetails].[SourceSpecification] AS [SourceSpecification], 
-    [TGLKYC_BasicDetails].[DealerID] AS [DealerID], 
-    [TGLKYC_BasicDetails].[BldgHouseName] AS [BldgHouseName], 
-    [TGLKYC_BasicDetails].[Road] AS [Road], 
-    [TGLKYC_BasicDetails].[BldgPlotNo] AS [BldgPlotNo], 
-    [TGLKYC_BasicDetails].[RoomBlockNo] AS [RoomBlockNo], 
-    [TGLKYC_BasicDetails].[StateID] AS [StateID], 
-    [TGLKYC_BasicDetails].[CityID] AS [CityID], 
-    [TGLKYC_BasicDetails].[AreaID] AS [AreaID], 
-    [TGLKYC_BasicDetails].[ZoneID] AS [ZoneID], 
-    [TGLKYC_BasicDetails].[Landmark] AS [Landmark], 
-    [TGLKYC_BasicDetails].[Occupation] AS [Occupation], 
-    [TGLKYC_BasicDetails].[OrganizationName] AS [OrganizationName], 
-    [TGLKYC_BasicDetails].[PresentIncome] AS [PresentIncome], 
-    [TGLKYC_BasicDetails].[OfficeAddress] AS [OfficeAddress], 
-    [TGLKYC_BasicDetails].[EmploymentType] AS [EmploymentType], 
-    [TGLKYC_BasicDetails].[SpecifyEmployment] AS [SpecifyEmployment], 
-    [TGLKYC_BasicDetails].[IndustriesType] AS [IndustriesType], 
-    [TGLKYC_BasicDetails].[SpecifyIndustries] AS [SpecifyIndustries], 
-    [TGLKYC_BasicDetails].[Designation] AS [Designation], 
-    [TGLKYC_BasicDetails].[NomFName] AS [NomFName], 
-    [TGLKYC_BasicDetails].[NomMName] AS [NomMName], 
-    [TGLKYC_BasicDetails].[NomLName] AS [NomLName], 
-    [TGLKYC_BasicDetails].[NomRelation] AS [NomRelation], 
-    [TGLKYC_BasicDetails].[NomAddress] AS [NomAddress], 
-    [TGLKYC_BasicDetails].[LoanpurposeID] AS [LoanpurposeID], 
-    [TGLKYC_BasicDetails].[SpecifyLoanPurpose] AS [SpecifyLoanPurpose], 
-    [TGLKYC_BasicDetails].[FYID] AS [FYID], 
-    [TGLKYC_BasicDetails].[CmpID] AS [CmpID], 
-    [TGLKYC_BasicDetails].[BranchID] AS [BranchID], 
-    [TGLKYC_BasicDetails].[CreatedBy] AS [CreatedBy], 
-    [TGLKYC_BasicDetails].[CreatedDate] AS [CreatedDate], 
-    [TGLKYC_BasicDetails].[UpdatedBy] AS [UpdatedBy], 
-    [TGLKYC_BasicDetails].[UpdatedDate] AS [UpdatedDate], 
-    [TGLKYC_BasicDetails].[DeletedBy] AS [DeletedBy], 
-    [TGLKYC_BasicDetails].[DeletedDate] AS [DeletedDate], 
-    [TGLKYC_BasicDetails].[isActive] AS [isActive], 
-    [TGLKYC_BasicDetails].[SourceofApplicationID] AS [SourceofApplicationID]
-    FROM [dbo].[TGLKYC_BasicDetails] AS [TGLKYC_BasicDetails]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="TGLKYC_DocumentDetails" EntityType="Self.TGLKYC_DocumentDetails" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [TGLKYC_DocumentDetails].[DID] AS [DID], 
@@ -2064,6 +2504,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
     [UserTypeDetails].[UserType] AS [UserType]
     FROM [dbo].[UserTypeDetails] AS [UserTypeDetails]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Mst_ChildDeviation_Mst_ParentDeviation" Association="Self.FK_Mst_ChildDeviation_Mst_ParentDeviation">
+            <End Role="Mst_ParentDeviation" EntitySet="Mst_ParentDeviation" />
+            <End Role="Mst_ChildDeviation" EntitySet="Mst_ChildDeviation" />
+          </AssociationSet>
           <AssociationSet Name="FK_Mst_PinCode_Mst_PinCode" Association="Self.FK_Mst_PinCode_Mst_PinCode">
             <End Role="tblCityMaster" EntitySet="tblCityMaster" />
             <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
@@ -2072,9 +2516,17 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
             <End Role="Mst_PinCode1" EntitySet="Mst_PinCode" />
           </AssociationSet>
+          <AssociationSet Name="FK_Mst_ProductRateDetails_Mst_ProductRate" Association="Self.FK_Mst_ProductRateDetails_Mst_ProductRate">
+            <End Role="Mst_ProductRate" EntitySet="Mst_ProductRate" />
+            <End Role="Mst_ProductRateDetails" EntitySet="Mst_ProductRateDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblCityMaster_tblStateMaster" Association="Self.FK_tblCityMaster_tblStateMaster">
             <End Role="tblStateMaster" EntitySet="tblStateMaster" />
             <End Role="tblCityMaster" EntitySet="tblCityMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDocumentMaster_Mst_DocumentType" Association="Self.FK_tblDocumentMaster_Mst_DocumentType">
+            <End Role="Mst_DocumentType" EntitySet="Mst_DocumentType" />
+            <End Role="tblDocumentMaster" EntitySet="tblDocumentMaster" />
           </AssociationSet>
           <AssociationSet Name="FK_tblStateMaster_tbl_CountryMaster" Association="Self.FK_tblStateMaster_tbl_CountryMaster">
             <End Role="tbl_CountryMaster" EntitySet="tbl_CountryMaster" />
@@ -2458,6 +2910,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           </Key>
           <Property Name="ItemID" Type="Int32" Nullable="false" />
           <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Product" Type="Int16" Nullable="false" />
+          <Property Name="Status" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="tblLogin">
           <Key>
@@ -2732,75 +3186,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="InwardFromLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StockLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="TGLKYC_BasicDetails">
-          <Key>
-            <PropertyRef Name="OperatorID" />
-            <PropertyRef Name="ExistingCustomerID" />
-          </Key>
-          <Property Name="KYCID" Type="Int32" />
-          <Property Name="CustomerID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AppliedDate" Type="DateTime" Precision="0" />
-          <Property Name="OperatorID" Type="Int32" Nullable="false" />
-          <Property Name="ExistingCustomerID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ExistingPLCaseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AppFName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AppMName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AppLName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AppPhotoPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AppSignPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AppPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="AppSign" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="MaritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="BirthDate" Type="DateTime" Precision="0" />
-          <Property Name="Age" Type="Int32" />
-          <Property Name="Spouse" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Children" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="PANNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="VerificationCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="TelephoneNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="EmailID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="SourceofApplication" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="SourceSpecification" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="DealerID" Type="Int32" />
-          <Property Name="BldgHouseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Road" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="BldgPlotNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="RoomBlockNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="StateID" Type="Int32" />
-          <Property Name="CityID" Type="Int32" />
-          <Property Name="AreaID" Type="Int32" />
-          <Property Name="ZoneID" Type="Int32" />
-          <Property Name="Landmark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Occupation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OrganizationName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PresentIncome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OfficeAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="EmploymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SpecifyEmployment" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="IndustriesType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="SpecifyIndustries" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Designation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="NomFName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="NomMName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="NomLName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="NomRelation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NomAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LoanpurposeID" Type="Int32" />
-          <Property Name="SpecifyLoanPurpose" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FYID" Type="Int32" />
-          <Property Name="CmpID" Type="Int32" />
-          <Property Name="BranchID" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <Property Name="DeletedBy" Type="Int32" />
-          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
-          <Property Name="isActive" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="SourceofApplicationID" Type="Int32" />
-        </EntityType>
         <EntityType Name="TGLKYC_DocumentDetails">
           <Key>
             <PropertyRef Name="DID" />
@@ -3070,7 +3455,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySet Name="TGLInwardForm_BasicDetails" EntityType="Self.TGLInwardForm_BasicDetails" />
           <EntitySet Name="TGLInwardForm_DocDetails" EntityType="Self.TGLInwardForm_DocDetails" />
           <EntitySet Name="TGLInwardForm_GoldDetails" EntityType="Self.TGLInwardForm_GoldDetails" />
-          <EntitySet Name="TGLKYC_BasicDetails" EntityType="Self.TGLKYC_BasicDetails" />
           <EntitySet Name="TGLKYC_DocumentDetails" EntityType="Self.TGLKYC_DocumentDetails" />
           <EntitySet Name="TGLKYC_SourceOfApplication" EntityType="Self.TGLKYC_SourceOfApplication" />
           <EntitySet Name="TGLOutwardForm_BasicDetails" EntityType="Self.TGLOutwardForm_BasicDetails" />
@@ -3122,6 +3506,40 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             <End Role="Mst_PinCode1" EntitySet="Mst_PinCode" />
           </AssociationSet>
           <EntitySet Name="Mst_SourceofApplication" EntityType="MangalDBNewModel.Mst_SourceofApplication" />
+          <EntitySet Name="Mst_AuditCheckList" EntityType="MangalDBNewModel.Mst_AuditCheckList" />
+          <EntitySet Name="Mst_ChildDeviation" EntityType="MangalDBNewModel.Mst_ChildDeviation" />
+          <EntitySet Name="Mst_DocumentType" EntityType="MangalDBNewModel.Mst_DocumentType" />
+          <EntitySet Name="Mst_GstMaster" EntityType="MangalDBNewModel.Mst_GstMaster" />
+          <EntitySet Name="Mst_ParentDeviation" EntityType="MangalDBNewModel.Mst_ParentDeviation" />
+          <EntitySet Name="Mst_PenaltySlab" EntityType="MangalDBNewModel.Mst_PenaltySlab" />
+          <EntitySet Name="Mst_ProductRate" EntityType="MangalDBNewModel.Mst_ProductRate" />
+          <EntitySet Name="Mst_ProductRateDetails" EntityType="MangalDBNewModel.Mst_ProductRateDetails" />
+          <EntitySet Name="Mst_PurityMaster" EntityType="MangalDBNewModel.Mst_PurityMaster" />
+          <EntitySet Name="Mst_Reason" EntityType="MangalDBNewModel.Mst_Reason" />
+          <EntitySet Name="Mst_SchemePurity" EntityType="MangalDBNewModel.Mst_SchemePurity" />
+          <EntitySet Name="tblaccountmasters" EntityType="MangalDBNewModel.tblaccountmaster" />
+          <EntitySet Name="tblGroupMasters" EntityType="MangalDBNewModel.tblGroupMaster" />
+          <EntitySet Name="tblPrimaryGroups" EntityType="MangalDBNewModel.tblPrimaryGroup" />
+          <AssociationSet Name="FK_Mst_ChildDeviation_Mst_ParentDeviation" Association="MangalDBNewModel.FK_Mst_ChildDeviation_Mst_ParentDeviation">
+            <End Role="Mst_ParentDeviation" EntitySet="Mst_ParentDeviation" />
+            <End Role="Mst_ChildDeviation" EntitySet="Mst_ChildDeviation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDocumentMaster_Mst_DocumentType" Association="MangalDBNewModel.FK_tblDocumentMaster_Mst_DocumentType">
+            <End Role="Mst_DocumentType" EntitySet="Mst_DocumentType" />
+            <End Role="tblDocumentMaster" EntitySet="tblDocumentMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mst_ProductRateDetails_Mst_ProductRate" Association="MangalDBNewModel.FK_Mst_ProductRateDetails_Mst_ProductRate">
+            <End Role="Mst_ProductRate" EntitySet="Mst_ProductRate" />
+            <End Role="Mst_ProductRateDetails" EntitySet="Mst_ProductRateDetails" />
+          </AssociationSet>
+          <FunctionImport Name="SplitValue1" IsComposable="true" ReturnType="Collection(String)">
+            <Parameter Name="String" Mode="In" Type="String" />
+            <Parameter Name="Delimiter" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SplitWords1" IsComposable="true" ReturnType="Collection(MangalDBNewModel.SplitWords1_Result)">
+          <Parameter Name="text" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3138,6 +3556,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           </Key>
           <Property Name="DocumentID" Type="Int32" Nullable="false" />
           <Property Name="DocumentName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentType" Type="Int32" Nullable="false" />
+          <Property Name="ExpiryDateApplicable" Type="Boolean" Nullable="false" />
+          <Property Name="Status" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Mst_DocumentType" Relationship="MangalDBNewModel.FK_tblDocumentMaster_Mst_DocumentType" FromRole="tblDocumentMaster" ToRole="Mst_DocumentType" />
         </EntityType>
         <EntityType Name="tblINV_ItemMaster">
           <Key>
@@ -3314,6 +3736,295 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="Soa_RecordUpdated" Type="DateTime" Precision="3" />
           <Property Name="Soa_RecordCreatedBy" Type="Int32" />
           <Property Name="Soa_RecordUpdatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Mst_AuditCheckList">
+          <Key>
+            <PropertyRef Name="Acl_Id" />
+          </Key>
+          <Property Name="Acl_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Acl_EffectiveDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Acl_Categoryofaudit" Type="Int16" Nullable="false" />
+          <Property Name="Acl_CheckPoint" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Acl_Status" Type="Int16" Nullable="false" />
+          <Property Name="Acl_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Acl_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Acl_RecordCreatedBy" Type="Int32" />
+          <Property Name="Acl_RecordUpdatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Mst_ChildDeviation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="ApproveDistanceLimit" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="MinRange" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="MaxRange" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="UserCategoryId" Type="Int32" />
+          <Property Name="ThreasoldLimit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="RecordCreatedBy" Type="Int32" />
+          <Property Name="RecordUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Mst_ParentDeviation" Relationship="MangalDBNewModel.FK_Mst_ChildDeviation_Mst_ParentDeviation" FromRole="Mst_ChildDeviation" ToRole="Mst_ParentDeviation" />
+        </EntityType>
+        <EntityType Name="Mst_DocumentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblDocumentMasters" Relationship="MangalDBNewModel.FK_tblDocumentMaster_Mst_DocumentType" FromRole="Mst_DocumentType" ToRole="tblDocumentMaster" />
+        </EntityType>
+        <EntityType Name="Mst_GstMaster">
+          <Key>
+            <PropertyRef Name="Gst_RefId" />
+          </Key>
+          <Property Name="Gst_RefId" Type="Int32" Nullable="false" />
+          <Property Name="Gst_EffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Gst_CGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Gst_SGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Gst_IGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Gst_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Gst_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Gst_RecordCreatedBy" Type="Int32" />
+          <Property Name="Gst_RecordUpdatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Mst_ParentDeviation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Mst_ChildDeviation" Relationship="MangalDBNewModel.FK_Mst_ChildDeviation_Mst_ParentDeviation" FromRole="Mst_ParentDeviation" ToRole="Mst_ChildDeviation" />
+        </EntityType>
+        <EntityType Name="Mst_PenaltySlab">
+          <Key>
+            <PropertyRef Name="Ps_Id" />
+          </Key>
+          <Property Name="Ps_Id" Type="Int32" Nullable="false" />
+          <Property Name="Ps_Datewef" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ps_Penalty" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Ps_Accounthead" Type="Int32" Nullable="false" />
+          <Property Name="Ps_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Ps_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Ps_RecordCreatedBy" Type="Int32" />
+          <Property Name="Ps_RecordUpdatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Mst_ProductRate">
+          <Key>
+            <PropertyRef Name="Pr_Id" />
+          </Key>
+          <Property Name="Pr_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pr_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Pr_Product" Type="Int16" Nullable="false" />
+          <Property Name="Pr_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Pr_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Pr_RecordCreatedBy" Type="Int32" />
+          <Property Name="Pr_RecordUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Mst_ProductRateDetails" Relationship="MangalDBNewModel.FK_Mst_ProductRateDetails_Mst_ProductRate" FromRole="Mst_ProductRate" ToRole="Mst_ProductRateDetails" />
+        </EntityType>
+        <EntityType Name="Mst_ProductRateDetails">
+          <Key>
+            <PropertyRef Name="Prd_Id" />
+          </Key>
+          <Property Name="Prd_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Prd_FkId" Type="Int32" Nullable="false" />
+          <Property Name="Prd_Purity" Type="Int32" Nullable="false" />
+          <Property Name="Prd_GrossRate" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Prd_Deductions" Type="Int16" Nullable="false" />
+          <Property Name="Prd_DeductionsAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Prd_NetRate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Prd_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Prd_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Prd_RecordCreatedBy" Type="Int32" />
+          <Property Name="Prd_RecordUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Mst_ProductRate" Relationship="MangalDBNewModel.FK_Mst_ProductRateDetails_Mst_ProductRate" FromRole="Mst_ProductRateDetails" ToRole="Mst_ProductRate" />
+        </EntityType>
+        <EntityType Name="Mst_PurityMaster">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurityName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PurityType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Mst_Reason">
+          <Key>
+            <PropertyRef Name="Re_No" />
+          </Key>
+          <Property Name="Re_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Re_Desc" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Re_Status" Type="Int16" />
+          <Property Name="Re_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Re_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Re_RecordCreatedBy" Type="Int32" />
+          <Property Name="Re_RecordUpdatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Mst_SchemePurity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurityId" Type="Int32" Nullable="false" />
+          <Property Name="SchemeId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblaccountmaster">
+          <Key>
+            <PropertyRef Name="AccountID" />
+          </Key>
+          <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Alies" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="GPID" Type="Int32" Nullable="false" />
+          <Property Name="OpeningBalance" Type="Double" Nullable="false" />
+          <Property Name="DrCr" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PanNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InterestRate" Type="Double" Nullable="false" />
+          <Property Name="InterestMethod" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GroupCompany" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="BankAcNo" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="MICRNo" Type="Double" Nullable="false" />
+          <Property Name="AccountType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IFSNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AreaID" Type="Int32" Nullable="false" />
+          <Property Name="Telephone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Suspended" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GSTIN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblGroupMaster">
+          <Key>
+            <PropertyRef Name="GPID" />
+          </Key>
+          <Property Name="GPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GPName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GPType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PID" Type="Int32" Nullable="false" />
+          <Property Name="SID" Type="Int32" Nullable="false" />
+          <Property Name="PrintSchedule" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ScheduleNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblPrimaryGroup">
+          <Key>
+            <PropertyRef Name="PgID" />
+          </Key>
+          <Property Name="PgID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PgName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Mst_ChildDeviation_Mst_ParentDeviation">
+          <End Type="MangalDBNewModel.Mst_ParentDeviation" Role="Mst_ParentDeviation" Multiplicity="1" />
+          <End Type="MangalDBNewModel.Mst_ChildDeviation" Role="Mst_ChildDeviation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_ParentDeviation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mst_ChildDeviation">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDocumentMaster_Mst_DocumentType">
+          <End Type="MangalDBNewModel.Mst_DocumentType" Role="Mst_DocumentType" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tblDocumentMaster" Role="tblDocumentMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_DocumentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblDocumentMaster">
+              <PropertyRef Name="DocumentType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mst_ProductRateDetails_Mst_ProductRate">
+          <End Type="MangalDBNewModel.Mst_ProductRate" Role="Mst_ProductRate" Multiplicity="1" />
+          <End Type="MangalDBNewModel.Mst_ProductRateDetails" Role="Mst_ProductRateDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_ProductRate">
+              <PropertyRef Name="Pr_Id" />
+            </Principal>
+            <Dependent Role="Mst_ProductRateDetails">
+              <PropertyRef Name="Prd_FkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SplitWords1_Result">
+          <Property Type="Int16" Name="pos" Nullable="false" />
+          <Property Type="String" Name="value" Nullable="true" MaxLength="8000" />
+        </ComplexType>
+        <EntityType Name="TGLKYC_BasicDetails">
+          <Key>
+            <PropertyRef Name="OperatorID" />
+            <PropertyRef Name="ExistingCustomerID" />
+          </Key>
+          <Property Name="KYCID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AppliedDate" Type="DateTime" Precision="0" />
+          <Property Name="OperatorID" Type="Int32" Nullable="false" />
+          <Property Name="ExistingCustomerID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ExistingPLCaseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppFName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AppMName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AppLName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AppPhotoPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AppSignPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AppPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="AppSign" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MaritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Spouse" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Children" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="PANNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="VerificationCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TelephoneNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="EmailID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SourceofApplication" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="SourceSpecification" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DealerID" Type="Int32" />
+          <Property Name="BldgHouseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Road" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="BldgPlotNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RoomBlockNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="StateID" Type="Int32" />
+          <Property Name="CityID" Type="Int32" />
+          <Property Name="AreaID" Type="Int32" />
+          <Property Name="ZoneID" Type="Int32" />
+          <Property Name="Landmark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Occupation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrganizationName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PresentIncome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OfficeAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmploymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SpecifyEmployment" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IndustriesType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SpecifyIndustries" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Designation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NomFName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NomMName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NomLName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NomRelation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NomAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LoanpurposeID" Type="Int32" />
+          <Property Name="SpecifyLoanPurpose" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FYID" Type="Int32" />
+          <Property Name="CmpID" Type="Int32" />
+          <Property Name="BranchID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="SourceofApplicationID" Type="Int32" />
+          <Property Name="KYCDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3661,6 +4372,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySetMapping Name="tblItemMasters">
             <EntityTypeMapping TypeName="MangalDBNewModel.tblItemMaster">
               <MappingFragment StoreEntitySet="tblItemMaster">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
               </MappingFragment>
@@ -3955,75 +4668,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TGLKYC_BasicDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
-              <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
-                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
-                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
-                <ScalarProperty Name="ExistingCustomerID" ColumnName="ExistingCustomerID" />
-                <ScalarProperty Name="ExistingPLCaseNo" ColumnName="ExistingPLCaseNo" />
-                <ScalarProperty Name="AppFName" ColumnName="AppFName" />
-                <ScalarProperty Name="AppMName" ColumnName="AppMName" />
-                <ScalarProperty Name="AppLName" ColumnName="AppLName" />
-                <ScalarProperty Name="AppPhotoPath" ColumnName="AppPhotoPath" />
-                <ScalarProperty Name="AppSignPath" ColumnName="AppSignPath" />
-                <ScalarProperty Name="AppPhoto" ColumnName="AppPhoto" />
-                <ScalarProperty Name="AppSign" ColumnName="AppSign" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="Spouse" ColumnName="Spouse" />
-                <ScalarProperty Name="Children" ColumnName="Children" />
-                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
-                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
-                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
-                <ScalarProperty Name="SourceofApplication" ColumnName="SourceofApplication" />
-                <ScalarProperty Name="SourceSpecification" ColumnName="SourceSpecification" />
-                <ScalarProperty Name="DealerID" ColumnName="DealerID" />
-                <ScalarProperty Name="BldgHouseName" ColumnName="BldgHouseName" />
-                <ScalarProperty Name="Road" ColumnName="Road" />
-                <ScalarProperty Name="BldgPlotNo" ColumnName="BldgPlotNo" />
-                <ScalarProperty Name="RoomBlockNo" ColumnName="RoomBlockNo" />
-                <ScalarProperty Name="StateID" ColumnName="StateID" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
-                <ScalarProperty Name="ZoneID" ColumnName="ZoneID" />
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
-                <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
-                <ScalarProperty Name="PresentIncome" ColumnName="PresentIncome" />
-                <ScalarProperty Name="OfficeAddress" ColumnName="OfficeAddress" />
-                <ScalarProperty Name="EmploymentType" ColumnName="EmploymentType" />
-                <ScalarProperty Name="SpecifyEmployment" ColumnName="SpecifyEmployment" />
-                <ScalarProperty Name="IndustriesType" ColumnName="IndustriesType" />
-                <ScalarProperty Name="SpecifyIndustries" ColumnName="SpecifyIndustries" />
-                <ScalarProperty Name="Designation" ColumnName="Designation" />
-                <ScalarProperty Name="NomFName" ColumnName="NomFName" />
-                <ScalarProperty Name="NomMName" ColumnName="NomMName" />
-                <ScalarProperty Name="NomLName" ColumnName="NomLName" />
-                <ScalarProperty Name="NomRelation" ColumnName="NomRelation" />
-                <ScalarProperty Name="NomAddress" ColumnName="NomAddress" />
-                <ScalarProperty Name="LoanpurposeID" ColumnName="LoanpurposeID" />
-                <ScalarProperty Name="SpecifyLoanPurpose" ColumnName="SpecifyLoanPurpose" />
-                <ScalarProperty Name="FYID" ColumnName="FYID" />
-                <ScalarProperty Name="CmpID" ColumnName="CmpID" />
-                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="SourceofApplicationID" ColumnName="SourceofApplicationID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TGLKYC_DocumentDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_DocumentDetails">
               <MappingFragment StoreEntitySet="TGLKYC_DocumentDetails">
@@ -4256,6 +4900,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySetMapping Name="tblDocumentMasters">
             <EntityTypeMapping TypeName="MangalDBNewModel.tblDocumentMaster">
               <MappingFragment StoreEntitySet="tblDocumentMaster">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ExpiryDateApplicable" ColumnName="ExpiryDateApplicable" />
+                <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
                 <ScalarProperty Name="DocumentName" ColumnName="DocumentName" />
                 <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
               </MappingFragment>
@@ -4384,6 +5031,273 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
                 <ScalarProperty Name="Soa_Category" ColumnName="Soa_Category" />
                 <ScalarProperty Name="Soa_Name" ColumnName="Soa_Name" />
                 <ScalarProperty Name="Soa_Id" ColumnName="Soa_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_AuditCheckList">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_AuditCheckList">
+              <MappingFragment StoreEntitySet="Mst_AuditCheckList">
+                <ScalarProperty Name="Acl_RecordUpdatedBy" ColumnName="Acl_RecordUpdatedBy" />
+                <ScalarProperty Name="Acl_RecordCreatedBy" ColumnName="Acl_RecordCreatedBy" />
+                <ScalarProperty Name="Acl_RecordUpdated" ColumnName="Acl_RecordUpdated" />
+                <ScalarProperty Name="Acl_RecordCreated" ColumnName="Acl_RecordCreated" />
+                <ScalarProperty Name="Acl_Status" ColumnName="Acl_Status" />
+                <ScalarProperty Name="Acl_CheckPoint" ColumnName="Acl_CheckPoint" />
+                <ScalarProperty Name="Acl_Categoryofaudit" ColumnName="Acl_Categoryofaudit" />
+                <ScalarProperty Name="Acl_EffectiveDate" ColumnName="Acl_EffectiveDate" />
+                <ScalarProperty Name="Acl_Id" ColumnName="Acl_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_ChildDeviation">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_ChildDeviation">
+              <MappingFragment StoreEntitySet="Mst_ChildDeviation">
+                <ScalarProperty Name="RecordUpdatedBy" ColumnName="RecordUpdatedBy" />
+                <ScalarProperty Name="RecordCreatedBy" ColumnName="RecordCreatedBy" />
+                <ScalarProperty Name="RecordUpdated" ColumnName="RecordUpdated" />
+                <ScalarProperty Name="RecordCreated" ColumnName="RecordCreated" />
+                <ScalarProperty Name="ThreasoldLimit" ColumnName="ThreasoldLimit" />
+                <ScalarProperty Name="UserCategoryId" ColumnName="UserCategoryId" />
+                <ScalarProperty Name="MaxRange" ColumnName="MaxRange" />
+                <ScalarProperty Name="MinRange" ColumnName="MinRange" />
+                <ScalarProperty Name="ApproveDistanceLimit" ColumnName="ApproveDistanceLimit" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_DocumentType">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_DocumentType">
+              <MappingFragment StoreEntitySet="Mst_DocumentType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_GstMaster">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_GstMaster">
+              <MappingFragment StoreEntitySet="Mst_GstMaster">
+                <ScalarProperty Name="Gst_RecordUpdatedBy" ColumnName="Gst_RecordUpdatedBy" />
+                <ScalarProperty Name="Gst_RecordCreatedBy" ColumnName="Gst_RecordCreatedBy" />
+                <ScalarProperty Name="Gst_RecordUpdated" ColumnName="Gst_RecordUpdated" />
+                <ScalarProperty Name="Gst_RecordCreated" ColumnName="Gst_RecordCreated" />
+                <ScalarProperty Name="Gst_IGST" ColumnName="Gst_IGST" />
+                <ScalarProperty Name="Gst_SGST" ColumnName="Gst_SGST" />
+                <ScalarProperty Name="Gst_CGST" ColumnName="Gst_CGST" />
+                <ScalarProperty Name="Gst_EffectiveFrom" ColumnName="Gst_EffectiveFrom" />
+                <ScalarProperty Name="Gst_RefId" ColumnName="Gst_RefId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_ParentDeviation">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_ParentDeviation">
+              <MappingFragment StoreEntitySet="Mst_ParentDeviation">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_PenaltySlab">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_PenaltySlab">
+              <MappingFragment StoreEntitySet="Mst_PenaltySlab">
+                <ScalarProperty Name="Ps_RecordUpdatedBy" ColumnName="Ps_RecordUpdatedBy" />
+                <ScalarProperty Name="Ps_RecordCreatedBy" ColumnName="Ps_RecordCreatedBy" />
+                <ScalarProperty Name="Ps_RecordUpdated" ColumnName="Ps_RecordUpdated" />
+                <ScalarProperty Name="Ps_RecordCreated" ColumnName="Ps_RecordCreated" />
+                <ScalarProperty Name="Ps_Accounthead" ColumnName="Ps_Accounthead" />
+                <ScalarProperty Name="Ps_Penalty" ColumnName="Ps_Penalty" />
+                <ScalarProperty Name="Ps_Datewef" ColumnName="Ps_Datewef" />
+                <ScalarProperty Name="Ps_Id" ColumnName="Ps_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_ProductRate">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_ProductRate">
+              <MappingFragment StoreEntitySet="Mst_ProductRate">
+                <ScalarProperty Name="Pr_RecordUpdatedBy" ColumnName="Pr_RecordUpdatedBy" />
+                <ScalarProperty Name="Pr_RecordCreatedBy" ColumnName="Pr_RecordCreatedBy" />
+                <ScalarProperty Name="Pr_RecordUpdated" ColumnName="Pr_RecordUpdated" />
+                <ScalarProperty Name="Pr_RecordCreated" ColumnName="Pr_RecordCreated" />
+                <ScalarProperty Name="Pr_Product" ColumnName="Pr_Product" />
+                <ScalarProperty Name="Pr_Date" ColumnName="Pr_Date" />
+                <ScalarProperty Name="Pr_Id" ColumnName="Pr_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_ProductRateDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_ProductRateDetails">
+              <MappingFragment StoreEntitySet="Mst_ProductRateDetails">
+                <ScalarProperty Name="Prd_RecordUpdatedBy" ColumnName="Prd_RecordUpdatedBy" />
+                <ScalarProperty Name="Prd_RecordCreatedBy" ColumnName="Prd_RecordCreatedBy" />
+                <ScalarProperty Name="Prd_RecordUpdated" ColumnName="Prd_RecordUpdated" />
+                <ScalarProperty Name="Prd_RecordCreated" ColumnName="Prd_RecordCreated" />
+                <ScalarProperty Name="Prd_NetRate" ColumnName="Prd_NetRate" />
+                <ScalarProperty Name="Prd_DeductionsAmount" ColumnName="Prd_DeductionsAmount" />
+                <ScalarProperty Name="Prd_Deductions" ColumnName="Prd_Deductions" />
+                <ScalarProperty Name="Prd_GrossRate" ColumnName="Prd_GrossRate" />
+                <ScalarProperty Name="Prd_Purity" ColumnName="Prd_Purity" />
+                <ScalarProperty Name="Prd_FkId" ColumnName="Prd_FkId" />
+                <ScalarProperty Name="Prd_Id" ColumnName="Prd_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_PurityMaster">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_PurityMaster">
+              <MappingFragment StoreEntitySet="Mst_PurityMaster">
+                <ScalarProperty Name="PurityType" ColumnName="PurityType" />
+                <ScalarProperty Name="PurityName" ColumnName="PurityName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_Reason">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_Reason">
+              <MappingFragment StoreEntitySet="Mst_Reason">
+                <ScalarProperty Name="Re_RecordUpdatedBy" ColumnName="Re_RecordUpdatedBy" />
+                <ScalarProperty Name="Re_RecordCreatedBy" ColumnName="Re_RecordCreatedBy" />
+                <ScalarProperty Name="Re_RecordUpdated" ColumnName="Re_RecordUpdated" />
+                <ScalarProperty Name="Re_RecordCreated" ColumnName="Re_RecordCreated" />
+                <ScalarProperty Name="Re_Status" ColumnName="Re_Status" />
+                <ScalarProperty Name="Re_Desc" ColumnName="Re_Desc" />
+                <ScalarProperty Name="Re_No" ColumnName="Re_No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_SchemePurity">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_SchemePurity">
+              <MappingFragment StoreEntitySet="Mst_SchemePurity">
+                <ScalarProperty Name="SchemeId" ColumnName="SchemeId" />
+                <ScalarProperty Name="PurityId" ColumnName="PurityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblaccountmasters">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblaccountmaster">
+              <MappingFragment StoreEntitySet="tblaccountmaster">
+                <ScalarProperty Name="GSTIN" ColumnName="GSTIN" />
+                <ScalarProperty Name="Suspended" ColumnName="Suspended" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="IFSNo" ColumnName="IFSNo" />
+                <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+                <ScalarProperty Name="MICRNo" ColumnName="MICRNo" />
+                <ScalarProperty Name="BankAcNo" ColumnName="BankAcNo" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="GroupCompany" ColumnName="GroupCompany" />
+                <ScalarProperty Name="InterestMethod" ColumnName="InterestMethod" />
+                <ScalarProperty Name="InterestRate" ColumnName="InterestRate" />
+                <ScalarProperty Name="PanNo" ColumnName="PanNo" />
+                <ScalarProperty Name="DrCr" ColumnName="DrCr" />
+                <ScalarProperty Name="OpeningBalance" ColumnName="OpeningBalance" />
+                <ScalarProperty Name="GPID" ColumnName="GPID" />
+                <ScalarProperty Name="Alies" ColumnName="Alies" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGroupMasters">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblGroupMaster">
+              <MappingFragment StoreEntitySet="tblGroupMaster">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ScheduleNo" ColumnName="ScheduleNo" />
+                <ScalarProperty Name="PrintSchedule" ColumnName="PrintSchedule" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="GPType" ColumnName="GPType" />
+                <ScalarProperty Name="GPName" ColumnName="GPName" />
+                <ScalarProperty Name="GPID" ColumnName="GPID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPrimaryGroups">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblPrimaryGroup">
+              <MappingFragment StoreEntitySet="tblPrimaryGroup">
+                <ScalarProperty Name="PgName" ColumnName="PgName" />
+                <ScalarProperty Name="PgID" ColumnName="PgID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SplitValue1" FunctionName="MangalDBNewModel.Store.SplitValue" />
+          <FunctionImportMapping FunctionImportName="SplitWords1" FunctionName="MangalDBNewModel.Store.SplitWords">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.SplitWords1_Result">
+                <ScalarProperty Name="pos" ColumnName="pos" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="TGLKYC_BasicDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
+              <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
+                <ScalarProperty Name="KYCDate" ColumnName="KYCDate" />
+                <ScalarProperty Name="SourceofApplicationID" ColumnName="SourceofApplicationID" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="CmpID" ColumnName="CmpID" />
+                <ScalarProperty Name="FYID" ColumnName="FYID" />
+                <ScalarProperty Name="SpecifyLoanPurpose" ColumnName="SpecifyLoanPurpose" />
+                <ScalarProperty Name="LoanpurposeID" ColumnName="LoanpurposeID" />
+                <ScalarProperty Name="NomAddress" ColumnName="NomAddress" />
+                <ScalarProperty Name="NomRelation" ColumnName="NomRelation" />
+                <ScalarProperty Name="NomLName" ColumnName="NomLName" />
+                <ScalarProperty Name="NomMName" ColumnName="NomMName" />
+                <ScalarProperty Name="NomFName" ColumnName="NomFName" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="SpecifyIndustries" ColumnName="SpecifyIndustries" />
+                <ScalarProperty Name="IndustriesType" ColumnName="IndustriesType" />
+                <ScalarProperty Name="SpecifyEmployment" ColumnName="SpecifyEmployment" />
+                <ScalarProperty Name="EmploymentType" ColumnName="EmploymentType" />
+                <ScalarProperty Name="OfficeAddress" ColumnName="OfficeAddress" />
+                <ScalarProperty Name="PresentIncome" ColumnName="PresentIncome" />
+                <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="ZoneID" ColumnName="ZoneID" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="RoomBlockNo" ColumnName="RoomBlockNo" />
+                <ScalarProperty Name="BldgPlotNo" ColumnName="BldgPlotNo" />
+                <ScalarProperty Name="Road" ColumnName="Road" />
+                <ScalarProperty Name="BldgHouseName" ColumnName="BldgHouseName" />
+                <ScalarProperty Name="DealerID" ColumnName="DealerID" />
+                <ScalarProperty Name="SourceSpecification" ColumnName="SourceSpecification" />
+                <ScalarProperty Name="SourceofApplication" ColumnName="SourceofApplication" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
+                <ScalarProperty Name="Children" ColumnName="Children" />
+                <ScalarProperty Name="Spouse" ColumnName="Spouse" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="AppSign" ColumnName="AppSign" />
+                <ScalarProperty Name="AppPhoto" ColumnName="AppPhoto" />
+                <ScalarProperty Name="AppSignPath" ColumnName="AppSignPath" />
+                <ScalarProperty Name="AppPhotoPath" ColumnName="AppPhotoPath" />
+                <ScalarProperty Name="AppLName" ColumnName="AppLName" />
+                <ScalarProperty Name="AppMName" ColumnName="AppMName" />
+                <ScalarProperty Name="AppFName" ColumnName="AppFName" />
+                <ScalarProperty Name="ExistingPLCaseNo" ColumnName="ExistingPLCaseNo" />
+                <ScalarProperty Name="ExistingCustomerID" ColumnName="ExistingCustomerID" />
+                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

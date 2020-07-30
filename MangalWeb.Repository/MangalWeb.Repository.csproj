@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Repository\KYCRepository.cs" />
     <Compile Include="Repository\CityRepository.cs" />
     <Compile Include="Repository\HomeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -124,6 +124,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KYCController.cs" />
     <Compile Include="Controllers\PincodeController.cs" />
     <Compile Include="Controllers\SourceofApplicationController.cs" />
     <Compile Include="Controllers\StateController.cs" />
@@ -2042,6 +2043,7 @@
     <Content Include="Views\Zone\Zone.cshtml" />
     <Content Include="Views\Pincode\Pincode.cshtml" />
     <Content Include="Views\Pincode\_PincodeList.cshtml" />
+    <Content Include="Views\KYC\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
