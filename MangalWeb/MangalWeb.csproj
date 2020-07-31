@@ -121,9 +121,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AuditCheckListController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ChargeController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
+    <Compile Include="Controllers\GSTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrnamentController.cs" />
     <Compile Include="Controllers\PincodeController.cs" />
@@ -2053,6 +2056,12 @@
     <Content Include="Views\Reason\_ReasonList.cshtml" />
     <Content Include="Views\Ornament\Ornament.cshtml" />
     <Content Include="Views\Ornament\_OrnamentList.cshtml" />
+    <Content Include="Views\AuditCheckList\AuditCheckList.cshtml" />
+    <Content Include="Views\AuditCheckList\_AuditCheckList.cshtml" />
+    <Content Include="Views\GST\_GSTList.cshtml" />
+    <Content Include="Views\GST\GST.cshtml" />
+    <Content Include="Views\Charge\Charge.cshtml" />
+    <Content Include="Views\Charge\_ChargePartialTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

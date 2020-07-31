@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fc080b8f0dcd4ead8cf66be6dcd2c195" Name="Diagram1" ZoomLevel="99">
+      <Diagram DiagramId="fc080b8f0dcd4ead8cf66be6dcd2c195" Name="Diagram1" ZoomLevel="23">
         <EntityTypeShape EntityType="MangalDBNewModel.tblBankMaster" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.Bharat_tbl_SentJVCustHistory" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.Bharat01012017tbl_SentJVCustHistory" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
@@ -18,8 +18,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.Newbharat" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.newbharatTGLGoldInOutDetail" Width="1.5" PointX="8.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.newbharatTGLGoldStock" Width="1.5" PointX="4.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tbl_GLChargeMaster_BasicInfo" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tbl_GLChargeMaster_Details" Width="1.5" PointX="10.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_GLDocumentMaster" Width="1.5" PointX="10.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_SentJVCustHistory" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_UserLogin" Width="1.5" PointX="10.75" PointY="11.75" IsExpanded="true" />
@@ -44,7 +42,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.TGLInwardForm_BasicDetails" Width="1.5" PointX="16.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLInwardForm_DocDetails" Width="1.5" PointX="18.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLInwardForm_GoldDetails" Width="1.5" PointX="18.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_BasicDetails" Width="1.5" PointX="4.75" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_DocumentDetails" Width="1.5" PointX="18.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_SourceOfApplication" Width="1.5" PointX="18.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLOutwardForm_BasicDetails" Width="1.5" PointX="18.75" PointY="15.75" IsExpanded="true" />
@@ -95,6 +92,9 @@
         <AssociationConnector Association="MangalDBNewModel.FK_Mst_ChildDeviation_Mst_ParentDeviation" />
         <AssociationConnector Association="MangalDBNewModel.FK_Mst_ProductRateDetails_Mst_ProductRate" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblItemMaster" Width="1.5" PointX="10.375" PointY="27.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_GLChargeMaster_BasicInfo" Width="1.5" PointX="12.375" PointY="29" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_GLChargeMaster_Details" Width="1.5" PointX="14.625" PointY="29.625" />
+        <AssociationConnector Association="MangalDBNewModel.FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -40,8 +40,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<Newbharat> Newbharats { get; set; }
         public virtual DbSet<newbharatTGLGoldInOutDetail> newbharatTGLGoldInOutDetails { get; set; }
         public virtual DbSet<newbharatTGLGoldStock> newbharatTGLGoldStocks { get; set; }
-        public virtual DbSet<tbl_GLChargeMaster_BasicInfo> tbl_GLChargeMaster_BasicInfo { get; set; }
-        public virtual DbSet<tbl_GLChargeMaster_Details> tbl_GLChargeMaster_Details { get; set; }
         public virtual DbSet<tbl_GLDocumentMaster> tbl_GLDocumentMaster { get; set; }
         public virtual DbSet<tbl_SentJVCustHistory> tbl_SentJVCustHistory { get; set; }
         public virtual DbSet<tbl_UserLogin> tbl_UserLogin { get; set; }
@@ -66,7 +64,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLInwardForm_BasicDetails> TGLInwardForm_BasicDetails { get; set; }
         public virtual DbSet<TGLInwardForm_DocDetails> TGLInwardForm_DocDetails { get; set; }
         public virtual DbSet<TGLInwardForm_GoldDetails> TGLInwardForm_GoldDetails { get; set; }
-        public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<TGLKYC_DocumentDetails> TGLKYC_DocumentDetails { get; set; }
         public virtual DbSet<TGLKYC_SourceOfApplication> TGLKYC_SourceOfApplication { get; set; }
         public virtual DbSet<TGLOutwardForm_BasicDetails> TGLOutwardForm_BasicDetails { get; set; }
@@ -110,6 +107,8 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tblGroupMaster> tblGroupMasters { get; set; }
         public virtual DbSet<tblPrimaryGroup> tblPrimaryGroups { get; set; }
         public virtual DbSet<tblItemMaster> tblItemMasters { get; set; }
+        public virtual DbSet<tbl_GLChargeMaster_BasicInfo> tbl_GLChargeMaster_BasicInfo { get; set; }
+        public virtual DbSet<tbl_GLChargeMaster_Details> tbl_GLChargeMaster_Details { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

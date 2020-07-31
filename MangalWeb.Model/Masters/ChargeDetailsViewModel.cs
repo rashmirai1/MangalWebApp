@@ -3,19 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MangalWebProject.Models
+namespace MangalWeb.Model.Masters
 {
     public class ChargeDetailsViewModel
     {
         public int ID { get; set; }
         public int ChargeRefId { get; set; }
 
-        public decimal LoanAmountGreaterthan { get; set; }
-        public decimal LoanAmountLessthan { get; set; }
-        public decimal ChargeAmount { get; set; }
-        public short ChargeType { get; set; }
-
-        public string ChargeTypeStr { get; set; }
-
+        public double LoanAmountGreaterthan { get; set; }
+        public double LoanAmountLessthan { get; set; }
+        public double ChargeAmount { get; set; }
+        public string ChargeType { get; set; }
     }
 }

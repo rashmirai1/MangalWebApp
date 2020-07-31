@@ -1,0 +1,555 @@
+﻿@model MangalWeb.Model.Masters.ChargeViewModel
+@{
+    ViewBag.Title = "Charge";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+@using (Ajax.BeginForm("CreateEdit", "Charge", new AjaxOptions { OnSuccess = "OnSuccess" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
+    <header id="topbar" class="affix">
+        <div class="col-md-5 col-sm-4 col-xs-12">
+            <div class="topbar-left">
+                <h4>Charge Master</h4>
+            </div><!--end of topbar-left-->
+        </div><!--end of col-md-5-->
+        <div class="col-md-7 col-sm-8 col-xs-12">
+            <div class="topbar-right" id="headerbutton" @TempData["headerbutton"]>
+                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
+                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
+                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
+                <button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]" type="button" data-toggle="modal">
+                    <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
+                </button>
+                <a href="@Html.Raw(@Url.Action("Charge", "Charge"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+            </div><!--end of topbar-right-->
+        </div><!--end of col-md-7-->
+    </header>
+    <!-- Begin: Content -->
+    <section id="content" class="animated fadeIn content_height">
+        <!-- Dashboard Tiles -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel1 panel-primary">
+                    <div class="admin-form">
+                        <div class="panel-body">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Charge Name<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>
+                                                <span class="text-danger" id="CustomErrr"> </span>
+                                                @Html.EditorFor(model => model.ChargeName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Charge Name", @maxlength = "20",@autofocus = "autofocus" } })
+                                                @*@Html.ValidationMessageFor(model => model.ChargeName, "", new { @class = "text-danger" })*@
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Reference Date<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>
+                                                @Html.EditorFor(model => model.ReferenceDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Reference Date" } })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @{
+                                                            var statuslist = new SelectList(new[]
+                                                            {
+                                                                    new SelectListItem { Text = "Select Status"},
+                                                                    new SelectListItem { Text = "Active", Value = "Active"},
+                                                                    new SelectListItem { Text = "Inactive", Value = "Inactive"}
+                                                                    }, "Value", "Text");
+                                                        }
+                                                        @Html.DropDownListFor(m => m.Status, statuslist)
+                                                        @*<span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>*@
+                                                            <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
+                            <hr style="margin-top:0px;" />
+                            <label><b>Charge Details</b></label><br /><br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label"> Loan Amount >= <span class="text-danger"> * </span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <div class="section">
+                                                @Html.EditorFor(model => model.chargeDetailsViewModel.LoanAmountGreaterthan, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Loan Amount >=" , @maxlength = "10" } })
+                                                @*<span class="text-danger">@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.LoanAmountGreaterthan)</span>*@
+                                                <i class="arrow"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label" id="lblSerialNumber"> Loan Amount<= <span class="text-danger"> * </span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            @Html.EditorFor(model => model.chargeDetailsViewModel.LoanAmountLessthan, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Loan Amount <=", @maxlength = "10" } })
+                                            @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.LoanAmountLessthan, "", new { @class = "text-danger" })*@
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label"> Charges<span class="text-danger"> * </span> </label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            @Html.EditorFor(model => model.chargeDetailsViewModel.ChargeAmount, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Charges", @maxlength = "10" } })
+                                            @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Charge Type<span class="text-danger"> * </span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <div class="section">
+                                                <label class="field select">
+                                                    @{
+                                                        var expiryApplicablelist = new SelectList(new[]
+                                                        {
+                                                                    new SelectListItem { Text = "Amount", Value = "Amount"},
+                                                                    new SelectListItem { Text = "Percentage", Value = "Percentage"}
+                                                                    }, "Value", "Text");
+                                                    }
+                                                    @Html.DropDownListFor(model => model.chargeDetailsViewModel.ChargeType, expiryApplicablelist)
+                                                    @*<span class="text-danger">@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeType)</span>*@
+                                                    <i class="arrow"></i>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <input type="button" style="margin-top: -5px;" value="Add" class="btn btn-sm btn-primary" id="btnAddChargeDetails" />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="panel-body panel-no-padding">
+                                <div id="divChargeDetails">
+                                    <table cellpadding="0" style="width:90%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblChargeDetails">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-sm-2" style="width:2%">Sr.No.</th>
+                                                <th style="text-align:left">Loan Amount>=</th>
+                                                <th style="text-align:left">Loan Amount<=</th>
+                                                <th style="text-align:left">Charges</th>
+                                                <th style="text-align:left">Charge Type</th>
+                                                <th class="text-center" style="width:8%">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{int j = 1;}
+                                            @foreach (var item in Model.chargeDetailsCollection)
+                                            {
+                                                <tr id="@item.ID">
+                                                    <td>@j</td>
+                                                    <td>@item.LoanAmountGreaterthan</td>
+                                                    <td>@item.LoanAmountLessthan</td>
+                                                    <td>@item.ChargeAmount</td>
+                                                    <td id="@item.ChargeType">@item.ChargeType</td>
+                                                    <td>
+                                                        <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                                j++;
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+                                                }
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@section javascriptsection{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#ReferenceDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
+
+            $("#divChargeDetails").hide();
+
+            if (@Model.chargeDetailsCollection.Count() > 0) {
+                $("#divChargeDetails").show();
+            }
+
+            $("#ChargeName").on('input', function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("doesChargeNameExist", "Charge")',
+                    data: '{ChargeName: "' + $("#ChargeName").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "") {
+                            $("#CustomErr").empty();
+                            $("#btn_save").removeAttr('disabled')
+                        }
+                        else {
+                            $("#CustomErr").text(result);
+                            $("#btn_save").attr('disabled', true)
+                            return false;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(error);
+                    }
+                });
+            });
+
+            var sr_no = 0;
+            var trid = 0;
+            currentRow = null;
+            $("#tblChargeDetails TBODY TR").on("click", ".edit", function () {
+                debugger;
+                var tr = $(this).closest('tr');
+                currentRow= $(this).parents('tr');
+                sr_no = tr.find('td:eq(0)').html();
+                trid =tr.attr('id'); // table row ID 
+                //sr_no =$('tr').attr('id'); // table row ID 
+                var LoanAmountGreaterThan =  tr.find('td:eq(1)').html();
+                var LoanAmountLessThan = tr.find('td:eq(2)').html();
+                var Charges = tr.find('td:eq(3)').html();
+                var ChargeType =tr.find("td").eq(4).attr('id');
+
+                $("#chargeDetailsViewModel_LoanAmountGreaterthan").val(LoanAmountGreaterThan);
+                $("#chargeDetailsViewModel_LoanAmountLessthan").val(LoanAmountLessThan);
+                $("#chargeDetailsViewModel_ChargeAmount").val(Charges);
+                $("#chargeDetailsViewModel_ChargeType").val(ChargeType);
+            })
+
+            $("#tblChargeDetails TBODY TR").on("click", ".delete", function () {
+                if(confirm('Are you sure to remove?'))
+                {
+                    //var tr = $(this).closest('tr');
+                    //tr.remove();
+                    $(this).parents('tr').remove();
+                    return false;
+                }
+            })
+
+            $("#btnAddChargeDetails").click(function () {
+                $("#CustomErrr").text("");
+                $('[data-toggle="tooltip"]').tooltip();
+                var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+                var index = $("#tblChargeDetails tbody tr:last").index();
+                debugger;
+                var srno = 0;
+                var newtrno=trid;
+                if (sr_no == 0) {
+                    srno = index + 2;
+                    newtrno=0;
+                }
+                else {
+                    srno = sr_no;
+                    //var no = parseInt(srno) - 1;
+                    //$("#tblChargeDetails tbody tr:eq(" + no + ")").remove();
+                }
+                sr_no = 0;
+                trid=0;
+                var LoanAmountGr = $("#chargeDetailsViewModel_LoanAmountGreaterthan").val();
+                var LoanAmountLe = $("#chargeDetailsViewModel_LoanAmountLessthan").val();
+                var ChargeAmount = $("#chargeDetailsViewModel_ChargeAmount").val();
+                var ChargeTypeId = $("#chargeDetailsViewModel_ChargeType").val();
+                var ChargeType = $("#chargeDetailsViewModel_ChargeType option:selected").text();
+                
+                if (parseFloat(LoanAmountGr) >= parseFloat(LoanAmountLe)) {
+                    alert('Loan Amount(>=) Should Be Less Than Loan Amount(<=) ');
+                    return false;
+                }
+                debugger;
+                var row = '<tr id=' + newtrno + '>' +
+                    '<td width="10%">' + srno + '</td>' +
+                    '<td width="30%">' + LoanAmountGr + '</td>' +
+                    '<td width="20%">' + LoanAmountLe + '</td>' +
+                    '<td width="20%">' + ChargeAmount + '</td>' +
+                    '<td width="20%" id="'+ChargeTypeId+'">' + ChargeType+'</td>' +
+                    '<td id=' + srno + '' + actions + '</td>' +
+                    '</tr>';
+                if(currentRow){
+                    $("#tblChargeDetails tbody").find($(currentRow)).replaceWith(row);
+                    $("#chargeDetailsViewModel_LoanAmountGreaterthan").val("");
+                    $("#chargeDetailsViewModel_LoanAmountLessthan").val("");
+                    $("#chargeDetailsViewModel_ChargeAmount").val("");
+                    currentRow = null;
+                }
+                else
+                {
+                    if (LoanAmountGr!="" && LoanAmountLe!="") {
+                        $("#tblChargeDetails tbody").append(row);
+                        $("#chargeDetailsViewModel_LoanAmountGreaterthan").val("");
+                        $("#chargeDetailsViewModel_LoanAmountLessthan").val("");
+                        $("#chargeDetailsViewModel_ChargeAmount").val("");
+                        $("#divChargeDetails").show();
+                    }
+                }
+                $("#tblChargeDetails TBODY TR").on("click", ".edit", function () {
+                    debugger;
+                    var tr = $(this).closest('tr');
+                    currentRow= $(this).parents('tr');
+                    debugger;
+                    sr_no = tr.find('td:eq(0)').html();
+                    trid =tr.attr('id'); // table row ID 
+                    var LoanAmountGreaterThan =  tr.find('td:eq(1)').html();
+                    var LoanAmountLessThan = tr.find('td:eq(2)').html();
+                    var Charges = tr.find('td:eq(3)').html();
+                    var ChargeType =tr.find("td").eq(4).attr('id');
+
+                    $("#chargeDetailsViewModel_LoanAmountGreaterthan").val(LoanAmountGreaterThan);
+                    $("#chargeDetailsViewModel_LoanAmountLessthan").val(LoanAmountLessThan);
+                    $("#chargeDetailsViewModel_ChargeAmount").val(Charges);
+                    $("#chargeDetailsViewModel_ChargeType").val(ChargeType);
+                })
+
+                $("#tblChargeDetails TBODY TR").on("click", ".delete", function () {
+                    if(confirm('Are you sure to remove?'))
+                    {
+                        //var tr = $(this).closest('tr');
+                        //tr.remove();
+                        $(this).parents('tr').remove();
+                        return false;
+                    }
+                })
+            })
+        });
+
+        $("#chargeDetailsViewModel_LoanAmountGreaterthan").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                e.preventDefault();
+                //$("#errmsg").html("Only Number field allow").show().fadeOut("slow");
+                return false;
+            }
+        });
+
+        $("#chargeDetailsViewModel_LoanAmountLessthan").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                e.preventDefault();
+                //$("#errmsg").html("Only Number field allow").show().fadeOut("slow");
+                return false;
+            }
+        });
+        
+        $("#chargeDetailsViewModel_ChargeAmount").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                e.preventDefault();
+                //$("#errmsg").html("Only Number field allow").show().fadeOut("slow");
+                return false;
+            }
+        });
+
+        $("#btn_save").click(function () {
+            SaveCharge();
+        });
+
+        function SaveCharge() {
+            debugger;
+            var ChargeName = $("#ChargeName").val();
+            if (ChargeName == "") {
+                $("#CustomErrr").text("Please Enter Charge Name");
+                $("#ChargeName").focus();
+                return;
+            }
+
+            var Status = $("#Status").val();
+            if (Status == "") {
+                $("#CustomErrr").text("Please Select Status");
+                $("#Status").focus();
+                return;
+            }
+            debugger;
+            if ($('#tblChargeDetails tbody tr').length == 0) {
+                var chargegreater= $("#chargeDetailsViewModel_LoanAmountGreaterthan").val();
+                if (chargegreater == "") {
+                    $("#CustomErrr").text("Please Enter Loan Amount >=");
+                    $("#chargeDetailsViewModel_LoanAmountGreaterthan").focus();
+                    return;
+                }
+                var chargeless= $("#chargeDetailsViewModel_LoanAmountLessthan").val();
+                if (chargeless == "") {
+                    $("#CustomErrr").text("Please Enter Loan Amount<=");
+                    $("#chargeDetailsViewModel_LoanAmountLessthan").focus();
+                    return;
+                }
+                var chargegreater= $("#chargeDetailsViewModel_ChargeAmount").val();
+                if (chargegreater == "") {
+                    $("#CustomErrr").text("Please Enter Charge Amount");
+                    $("#chargeDetailsViewModel_ChargeAmount").focus();
+                    return;
+                }
+            }
+            var length=$('#tblChargeDetails tbody tr').length;
+            if(length==0)
+            {
+                $("#CustomErrr").text("Please Click Add button then save record");
+                $("#tblChargeDetails").focus();
+                return true;
+            }
+
+            $("#btn_save").prop("disabled", true);
+            var ChargeViewModel = {};
+            var lstChargeTrn = [];
+
+            $("#tblChargeDetails TBODY TR").each(function () {
+                var row = $(this);
+                var rowChargeTrn = {};
+                debugger;
+                rowChargeTrn.ID = row.attr('id');
+                rowChargeTrn.LoanAmountGreaterthan = row.find("TD").eq(1).html();
+                rowChargeTrn.LoanAmountLessthan = row.find("TD").eq(2).html();
+                rowChargeTrn.ChargeAmount = row.find("TD").eq(3).html();
+                rowChargeTrn.ChargeType = row.find("td").eq(4).attr('id');
+                lstChargeTrn.push(rowChargeTrn);
+            });
+
+            ChargeViewModel.chargeDetailsCollection = lstChargeTrn;
+
+            ChargeViewModel.ID = $('#ItemID').val();
+            ChargeViewModel.ChargeName = $('#ChargeName').val();
+            ChargeViewModel.ReferenceDate = $('#ReferenceDate').val();
+            ChargeViewModel.Status = $('#Status').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Charge/Insert",
+                data: JSON.stringify(ChargeViewModel),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    debugger;
+                    if (r == 1) {
+                        $("#saveModal").modal('show');
+                        $(document).click(function () {
+                            window.location.href = urlRedirect;
+                        });
+                    }
+                    else if(r==2){
+                        $("#saveModal").modal('show');
+                        $(document).click(function () {
+                            window.location.href = urlRedirect;
+                        });
+                    }
+                    else
+                    {   $("#CustomErr").text(r);
+                        $("#btn_save").prop("disabled", false);
+                        return false;
+                    }
+                }
+            });
+        }
+
+        function ShowEditTableList() {
+            $('#divviewfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetChargeTable", "Charge")',
+                dataType: "html",
+                data: { Operation: "Edit" },
+                success: function (data) {
+                    $('#diveditfilldata').empty();
+                    $('#diveditfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+
+        function ShowViewTableList() {
+            $('#diveditfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetChargeTable", "Charge")',
+                dataType: "html",
+                data: { Operation: "View" },
+                success: function (data) {
+                    $('#divviewfilldata').empty();
+                    $('#divviewfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+
+        var urlRedirect = '@Html.Raw(@Url.Action("Charge", "Charge"))';
+
+        function OnSuccess(response) {
+            $("#saveModal").modal('show');
+            $(document).click(function () {
+                window.location.href = urlRedirect;
+            });
+        }
+
+        function OnFailure(response) {
+            alert('Error Occured');
+        }
+
+        $(function () {
+            var url = '@Html.Raw(@Url.Action("Delete", "Charge"))';
+            $("#btnDelete").click(function () {
+                $("#deleteModal").modal('show');
+            });
+            $("#btnDeleteConfirm").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: '{id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != "") {
+                            $("#CustomErr").text(data);
+                            return false;
+                        }
+                        else {
+                            $("#CustomErr").empty();
+                            $("#DeleteSuccessModal").modal('show');
+
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            });
+        });
+    </script>
+}

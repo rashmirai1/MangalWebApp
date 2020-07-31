@@ -14,6 +14,12 @@ namespace MangalWeb.Model.Entity
     
     public partial class tbl_GLChargeMaster_BasicInfo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tbl_GLChargeMaster_BasicInfo()
+        {
+            this.tbl_GLChargeMaster_Details = new HashSet<tbl_GLChargeMaster_Details>();
+        }
+    
         public int CID { get; set; }
         public string ChargeName { get; set; }
         public System.DateTime ReferenceDate { get; set; }
@@ -27,5 +33,8 @@ namespace MangalWeb.Model.Entity
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_GLChargeMaster_Details> tbl_GLChargeMaster_Details { get; set; }
     }
 }
