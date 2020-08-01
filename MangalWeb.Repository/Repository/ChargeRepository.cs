@@ -148,11 +148,6 @@ namespace MangalWeb.Repository.Repository
             return list;
         }
 
-        public string CheckZoneNameExists(string Name)
-        {
-            var zone = _context.tblZonemasters.Where(x => x.Zone == Name).Select(x => x.Zone).FirstOrDefault();
-            return zone;
-        }
 
         public ChargeViewModel SetRecordinEdit(int ID)
         {

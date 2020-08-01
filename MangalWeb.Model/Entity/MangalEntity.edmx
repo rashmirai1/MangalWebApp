@@ -197,7 +197,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           </Key>
           <Property Name="Ps_Id" Type="int" Nullable="false" />
           <Property Name="Ps_Datewef" Type="datetime" Nullable="false" />
-          <Property Name="Ps_Penalty" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Ps_Penalty" Type="float" Nullable="false" />
           <Property Name="Ps_Accounthead" Type="int" Nullable="false" />
           <Property Name="Ps_RecordCreated" Type="datetime" />
           <Property Name="Ps_RecordUpdated" Type="datetime" />
@@ -583,18 +583,11 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblCreateCompanyMaster' does not h
           <Property Name="ExpiryDateApplicable" Type="bit" Nullable="false" />
           <Property Name="Status" Type="smallint" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.tblFinancialyear' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblFinancialyear">
           <Key>
             <PropertyRef Name="FinancialyearID" />
-            <PropertyRef Name="Financialyearfrom" />
-            <PropertyRef Name="Financialyearto" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="EndDate" />
-            <PropertyRef Name="CompID" />
           </Key>
-          <Property Name="FinancialyearID" Type="int" Nullable="false" />
+          <Property Name="FinancialyearID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Financialyearfrom" Type="smalldatetime" Nullable="false" />
           <Property Name="Financialyearto" Type="smalldatetime" Nullable="false" />
           <Property Name="StartDate" Type="smalldatetime" Nullable="false" />
@@ -1405,6 +1398,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySet Name="tblBankMaster" EntityType="Self.tblBankMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCityMaster" EntityType="Self.tblCityMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDocumentMaster" EntityType="Self.tblDocumentMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFinancialyear" EntityType="Self.tblFinancialyear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGroupMaster" EntityType="Self.tblGroupMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblINV_ItemMaster" EntityType="Self.tblINV_ItemMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblItemMaster" EntityType="Self.tblItemMaster" Schema="dbo" store:Type="Tables" />
@@ -1658,17 +1652,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
     [tblCreateCompanyMaster].[Phone] AS [Phone], 
     [tblCreateCompanyMaster].[Financialyear] AS [Financialyear]
     FROM [dbo].[tblCreateCompanyMaster] AS [tblCreateCompanyMaster]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="tblFinancialyear" EntityType="Self.tblFinancialyear" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblFinancialyear].[FinancialyearID] AS [FinancialyearID], 
-    [tblFinancialyear].[Financialyearfrom] AS [Financialyearfrom], 
-    [tblFinancialyear].[Financialyearto] AS [Financialyearto], 
-    [tblFinancialyear].[StartDate] AS [StartDate], 
-    [tblFinancialyear].[EndDate] AS [EndDate], 
-    [tblFinancialyear].[Financialyear] AS [Financialyear], 
-    [tblFinancialyear].[CompID] AS [CompID]
-    FROM [dbo].[tblFinancialyear] AS [tblFinancialyear]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="tblLogin" EntityType="Self.tblLogin" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2467,23 +2450,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="Phone" Type="Int32" />
           <Property Name="Financialyear" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="tblFinancialyear">
-          <Key>
-            <PropertyRef Name="FinancialyearID" />
-            <PropertyRef Name="Financialyearfrom" />
-            <PropertyRef Name="Financialyearto" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="EndDate" />
-            <PropertyRef Name="CompID" />
-          </Key>
-          <Property Name="FinancialyearID" Type="Int32" Nullable="false" />
-          <Property Name="Financialyearfrom" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Financialyearto" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Financialyear" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CompID" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="tblLogin">
           <Key>
             <PropertyRef Name="UserType" />
@@ -3004,7 +2970,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySet Name="tbl_UserLogin" EntityType="Self.tbl_UserLogin" />
           <EntitySet Name="tblCompanyBranchMasters" EntityType="Self.tblCompanyBranchMaster" />
           <EntitySet Name="tblCreateCompanyMasters" EntityType="Self.tblCreateCompanyMaster" />
-          <EntitySet Name="tblFinancialyears" EntityType="Self.tblFinancialyear" />
           <EntitySet Name="tblLogins" EntityType="Self.tblLogin" />
           <EntitySet Name="TestDBs" EntityType="Self.TestDB" />
           <EntitySet Name="TGL_DefaultOSPercentage" EntityType="Self.TGL_DefaultOSPercentage" />
@@ -3083,7 +3048,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySet Name="Mst_ChildDeviation" EntityType="MangalDBNewModel.Mst_ChildDeviation" />
           <EntitySet Name="Mst_GstMaster" EntityType="MangalDBNewModel.Mst_GstMaster" />
           <EntitySet Name="Mst_ParentDeviation" EntityType="MangalDBNewModel.Mst_ParentDeviation" />
-          <EntitySet Name="Mst_PenaltySlab" EntityType="MangalDBNewModel.Mst_PenaltySlab" />
           <EntitySet Name="Mst_ProductRate" EntityType="MangalDBNewModel.Mst_ProductRate" />
           <EntitySet Name="Mst_ProductRateDetails" EntityType="MangalDBNewModel.Mst_ProductRateDetails" />
           <EntitySet Name="Mst_PurityMaster" EntityType="MangalDBNewModel.Mst_PurityMaster" />
@@ -3107,6 +3071,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             <End Role="tbl_GLChargeMaster_BasicInfo" EntitySet="tbl_GLChargeMaster_BasicInfo" />
             <End Role="tbl_GLChargeMaster_Details" EntitySet="tbl_GLChargeMaster_Details" />
           </AssociationSet>
+          <EntitySet Name="tblFinancialyears" EntityType="MangalDBNewModel.tblFinancialyear" />
+          <EntitySet Name="Mst_PenaltySlab" EntityType="MangalDBNewModel.Mst_PenaltySlab" />
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3377,19 +3343,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Mst_ChildDeviation" Relationship="MangalDBNewModel.FK_Mst_ChildDeviation_Mst_ParentDeviation" FromRole="Mst_ParentDeviation" ToRole="Mst_ChildDeviation" />
         </EntityType>
-        <EntityType Name="Mst_PenaltySlab">
-          <Key>
-            <PropertyRef Name="Ps_Id" />
-          </Key>
-          <Property Name="Ps_Id" Type="Int32" Nullable="false" />
-          <Property Name="Ps_Datewef" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Ps_Penalty" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="Ps_Accounthead" Type="Int32" Nullable="false" />
-          <Property Name="Ps_RecordCreated" Type="DateTime" Precision="3" />
-          <Property Name="Ps_RecordUpdated" Type="DateTime" Precision="3" />
-          <Property Name="Ps_RecordCreatedBy" Type="Int32" />
-          <Property Name="Ps_RecordUpdatedBy" Type="Int32" />
-        </EntityType>
         <EntityType Name="Mst_ProductRate">
           <Key>
             <PropertyRef Name="Pr_Id" />
@@ -3571,6 +3524,31 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tblFinancialyear">
+          <Key>
+            <PropertyRef Name="FinancialyearID" />
+          </Key>
+          <Property Name="FinancialyearID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Financialyearfrom" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Financialyearto" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Financialyear" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CompID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mst_PenaltySlab">
+          <Key>
+            <PropertyRef Name="Ps_Id" />
+          </Key>
+          <Property Name="Ps_Id" Type="Int32" Nullable="false" />
+          <Property Name="Ps_Datewef" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ps_Penalty" Type="Double" Nullable="false" />
+          <Property Name="Ps_Accounthead" Type="Int32" Nullable="false" />
+          <Property Name="Ps_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Ps_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Ps_RecordCreatedBy" Type="Int32" />
+          <Property Name="Ps_RecordUpdatedBy" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3867,19 +3845,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Financialyear" ColumnName="Financialyear" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblFinancialyears">
-            <EntityTypeMapping TypeName="MangalDBNewModel.tblFinancialyear">
-              <MappingFragment StoreEntitySet="tblFinancialyear">
-                <ScalarProperty Name="FinancialyearID" ColumnName="FinancialyearID" />
-                <ScalarProperty Name="Financialyearfrom" ColumnName="Financialyearfrom" />
-                <ScalarProperty Name="Financialyearto" ColumnName="Financialyearto" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="Financialyear" ColumnName="Financialyear" />
-                <ScalarProperty Name="CompID" ColumnName="CompID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4601,20 +4566,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Mst_PenaltySlab">
-            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_PenaltySlab">
-              <MappingFragment StoreEntitySet="Mst_PenaltySlab">
-                <ScalarProperty Name="Ps_RecordUpdatedBy" ColumnName="Ps_RecordUpdatedBy" />
-                <ScalarProperty Name="Ps_RecordCreatedBy" ColumnName="Ps_RecordCreatedBy" />
-                <ScalarProperty Name="Ps_RecordUpdated" ColumnName="Ps_RecordUpdated" />
-                <ScalarProperty Name="Ps_RecordCreated" ColumnName="Ps_RecordCreated" />
-                <ScalarProperty Name="Ps_Accounthead" ColumnName="Ps_Accounthead" />
-                <ScalarProperty Name="Ps_Penalty" ColumnName="Ps_Penalty" />
-                <ScalarProperty Name="Ps_Datewef" ColumnName="Ps_Datewef" />
-                <ScalarProperty Name="Ps_Id" ColumnName="Ps_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Mst_ProductRate">
             <EntityTypeMapping TypeName="MangalDBNewModel.Mst_ProductRate">
               <MappingFragment StoreEntitySet="Mst_ProductRate">
@@ -4764,6 +4715,33 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
                 <ScalarProperty Name="LoanAmtFrom" ColumnName="LoanAmtFrom" />
                 <ScalarProperty Name="CID" ColumnName="CID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFinancialyears">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblFinancialyear">
+              <MappingFragment StoreEntitySet="tblFinancialyear">
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="Financialyear" ColumnName="Financialyear" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Financialyearto" ColumnName="Financialyearto" />
+                <ScalarProperty Name="Financialyearfrom" ColumnName="Financialyearfrom" />
+                <ScalarProperty Name="FinancialyearID" ColumnName="FinancialyearID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_PenaltySlab">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_PenaltySlab">
+              <MappingFragment StoreEntitySet="Mst_PenaltySlab">
+                <ScalarProperty Name="Ps_RecordUpdatedBy" ColumnName="Ps_RecordUpdatedBy" />
+                <ScalarProperty Name="Ps_RecordCreatedBy" ColumnName="Ps_RecordCreatedBy" />
+                <ScalarProperty Name="Ps_RecordUpdated" ColumnName="Ps_RecordUpdated" />
+                <ScalarProperty Name="Ps_RecordCreated" ColumnName="Ps_RecordCreated" />
+                <ScalarProperty Name="Ps_Accounthead" ColumnName="Ps_Accounthead" />
+                <ScalarProperty Name="Ps_Penalty" ColumnName="Ps_Penalty" />
+                <ScalarProperty Name="Ps_Datewef" ColumnName="Ps_Datewef" />
+                <ScalarProperty Name="Ps_Id" ColumnName="Ps_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

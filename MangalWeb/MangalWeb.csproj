@@ -126,10 +126,13 @@
     <Compile Include="Controllers\ChargeController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
+    <Compile Include="Controllers\FinancialYearController.cs" />
     <Compile Include="Controllers\GSTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrnamentController.cs" />
+    <Compile Include="Controllers\PenaltySlabController.cs" />
     <Compile Include="Controllers\PincodeController.cs" />
+    <Compile Include="Controllers\ProductRateController.cs" />
     <Compile Include="Controllers\ReasonController.cs" />
     <Compile Include="Controllers\SourceofApplicationController.cs" />
     <Compile Include="Controllers\StateController.cs" />
@@ -2062,6 +2065,12 @@
     <Content Include="Views\GST\GST.cshtml" />
     <Content Include="Views\Charge\Charge.cshtml" />
     <Content Include="Views\Charge\_ChargePartialTable.cshtml" />
+    <Content Include="Views\FinancialYear\FinancialYear.cshtml" />
+    <Content Include="Views\FinancialYear\_FinancialYearList.cshtml" />
+    <Content Include="Views\ProductRate\ProductRate.cshtml" />
+    <Content Include="Views\ProductRate\_ProductRateList.cshtml" />
+    <Content Include="Views\PenaltySlab\PenaltySlab.cshtml" />
+    <Content Include="Views\PenaltySlab\_PenaltySlablist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

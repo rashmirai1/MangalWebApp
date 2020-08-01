@@ -23,7 +23,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_UserLogin" Width="1.5" PointX="10.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblCompanyBranchMaster" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblCreateCompanyMaster" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tblFinancialyear" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblLogin" Width="1.5" PointX="12.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TestDB" Width="1.5" PointX="12.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGL_DefaultOSPercentage" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
@@ -80,7 +79,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_ChildDeviation" Width="1.5" PointX="28" PointY="13" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_GstMaster" Width="1.5" PointX="25.75" PointY="17.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_ParentDeviation" Width="1.5" PointX="25.75" PointY="13.875" />
-        <EntityTypeShape EntityType="MangalDBNewModel.Mst_PenaltySlab" Width="1.5" PointX="25.75" PointY="21.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_ProductRate" Width="1.5" PointX="25.75" PointY="8.375" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_ProductRateDetails" Width="1.5" PointX="28" PointY="8" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_PurityMaster" Width="1.5" PointX="25.75" PointY="0.75" />
@@ -95,6 +93,8 @@
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_GLChargeMaster_BasicInfo" Width="1.5" PointX="12.375" PointY="29" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_GLChargeMaster_Details" Width="1.5" PointX="14.625" PointY="29.625" />
         <AssociationConnector Association="MangalDBNewModel.FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tblFinancialyear" Width="1.5" PointX="11.375" PointY="3.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Mst_PenaltySlab" Width="1.5" PointX="3.375" PointY="20.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

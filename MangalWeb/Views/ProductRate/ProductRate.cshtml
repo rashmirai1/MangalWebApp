@@ -1,0 +1,551 @@
+﻿@model MangalWeb.Model.Masters.ProductRateViewModel
+@{
+    ViewBag.Title = "ProductRate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+@using (Ajax.BeginForm("", "", new AjaxOptions { }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
+    <header id="topbar" class="affix">
+        <div class="col-md-5 col-sm-4 col-xs-12">
+            <div class="topbar-left">
+                <h4>Product Rate Master</h4>
+            </div><!--end of topbar-left-->
+        </div><!--end of col-md-5-->
+        <div class="col-md-7 col-sm-8 col-xs-12">
+            <div class="topbar-right" id="headerbutton" @TempData["headerbutton"]>
+                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
+                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
+                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
+                <button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]" type="button" data-toggle="modal">
+                    <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
+                </button>
+                <a href="@Html.Raw(@Url.Action("ProductRate", "ProductRate"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+            </div><!--end of topbar-right-->
+        </div><!--end of col-md-7-->
+    </header>
+    <!-- Begin: Content -->
+    <section id="content" class="animated fadeIn content_height">
+        <!-- Dashboard Tiles -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel1 panel-primary">
+                    <div class="admin-form">
+                        <div class="panel-body">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Date<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>
+                                                @Html.EditorFor(model => model.ProductRateDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Date", @autocomplete = "Off" } })
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Product<span class="text-danger"> * </span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            @{
+                                                                var productList = new SelectList(new[]
+                                                                {
+                                                                new SelectListItem { Text = "Select Product"},
+                                                                new SelectListItem { Text = "Gold" , Value = "1"},
+                                                                    new SelectListItem { Text = "Diamond", Value = "2"},
+                                                                    }, "Value", "Text");
+                                                            }
+                                                            @Html.DropDownListFor(m => m.Product, productList)
+                                                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Product)</span>
+                                                            <i class="arrow"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
+                            <hr style="margin-top:0px;" />
+                            <label><b>Product Rate Details</b></label><br /><br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label"> Purity <span class="text-danger"> * </span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <div class="section">
+                                                <label class="field select">
+                                                    @Html.DropDownListFor(m => m.ProductDetailsViewModel.Purity, (SelectList)ViewBag.PurityList, "--Select Purity--", htmlAttributes: new { @class = "form-control" })
+                                                    <span class="text-danger small">@Html.ValidationMessageFor(m => m.ProductDetailsViewModel.Purity)</span>
+                                                    <i class="arrow"></i>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label" id="lblSerialNumber"> Gross Rate <span class="text-danger"> * </span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            @Html.EditorFor(model => model.ProductDetailsViewModel.GrossRate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Gross Rate", @maxlength = "8",
+                                               @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                            @Html.ValidationMessageFor(model => model.ProductDetailsViewModel.GrossRate, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Charge Type<span class="text-danger"> * </span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <div class="section">
+                                                <label class="field select">
+                                                    @{
+                                                            var AmountList = new SelectList(new[]
+                                                            {
+                                                                    new SelectListItem { Text = "Amount", Value = "1"},
+                                                                    new SelectListItem { Text = "Percentage", Value = "2"}
+                                                                    }, "Value", "Text");
+                                                    }
+                                                    @Html.DropDownListFor(model => model.ProductDetailsViewModel.DeductionsType, AmountList)
+                                                    <span class="text-danger">@Html.ValidationMessageFor(model => model.ProductDetailsViewModel.DeductionsType)</span>
+                                                    <i class="arrow"></i>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Deduction Amount<span class="text-danger"> * </span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            @Html.EditorFor(model => model.ProductDetailsViewModel.DeductionAmount, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Deduction Amount",
+                                               @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @maxlength = "9" } })
+                                            @Html.ValidationMessageFor(model => model.ProductDetailsViewModel.DeductionAmount, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Net Rate</label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            @Html.EditorFor(model => model.ProductDetailsViewModel.NetRate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Net Rate", @maxlength = "9",@readonly=true } })
+                                            @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <input type="button" style="margin-top: -5px;" value="Add" class="btn btn-sm btn-primary" id="btnAdd" />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="panel-body panel-no-padding">
+                                <div id="divProductRate">
+                                    <table cellpadding="0" style="width:90%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblProductRateDetails">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:left">Sr. No.</th>
+                                                <th style="text-align:left">Purity</th>
+                                                <th style="text-align:left">Gross Rate</th>
+                                                <th style="text-align:left">Deduction Type</th>
+                                                <th style="text-align:left">Deduction Amount</th>
+                                                <th style="text-align:left">Net Rate</th>
+                                                <th class="text-center" style="width:8%">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{int j = 1;}
+                                            @foreach (var item in Model.ProductRateList)
+                                                {
+                                                <tr id="@item.ID">
+                                                    <td>@j</td>
+                                                    <td id="@item.Purity">@item.PurityStr</td>
+                                                    <td>@item.GrossRate</td>
+                                                    <td id="@item.DeductionsType">@item.DeductionTypeStr</td>
+                                                    <td>@item.DeductionAmount</td>
+                                                    <td>@item.NetRate</td>
+                                                    <td>
+                                                        <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                                    j++;
+                                                }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+                                                }
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@section javascriptsection{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (document.URL.indexOf("ID") != -1) {
+                $("#ProductDetailsViewModel_Purity").removeAttr('disabled')
+            }
+            else {
+                $("#ProductDetailsViewModel_Purity").attr('disabled', 'disabled')
+            }
+            $("#ProductRateDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
+
+            $("#divProductRate").hide();
+
+            if (@Model.ProductRateList.Count() > 0) {
+                $("#divProductRate").show();
+            }
+            var trid = 0;
+            var sr_no = 0;
+            currentRow = null;
+            $("#tblProductRateDetails TBODY TR").on("click", ".edit", function () {
+                debugger;
+                var tr = $(this).closest('tr');
+                currentRow = $(this).parents('tr');
+                sr_no = tr.find('td:eq(0)').html();
+                trid =tr.attr('id'); // table row ID 
+                var purityNo = tr.find("td").eq(1).attr('id');
+                var grossRate = tr.find('td:eq(2)').html();
+                var deductionType = tr.find("td").eq(3).attr('id');
+                var deductionAmount = tr.find('td:eq(4)').html();
+                var netRate = tr.find('td:eq(5)').html();
+
+                $("#ProductDetailsViewModel_Purity").val(purityNo);
+                $("#ProductDetailsViewModel_GrossRate").val(grossRate);
+                $("#ProductDetailsViewModel_DeductionsType").val(deductionType);
+                $("#ProductDetailsViewModel_DeductionAmount").val(deductionAmount);
+                $("#ProductDetailsViewModel_NetRate").val(netRate);
+            })
+
+            $("#tblProductRateDetails TBODY TR").on("click", ".delete", function () {
+                if (confirm('Are you sure to remove?')) {
+                    $(this).parents('tr').remove();
+                    return false;
+                }
+            })
+
+            
+            $("#ProductDetailsViewModel_GrossRate").on('change', function () {
+                var getRate = $("#ProductDetailsViewModel_GrossRate").val();
+                var getDeductions = $("#ProductDetailsViewModel_DeductionAmount").val();
+                var NetRate = getRate - getDeductions;
+                $("#ProductDetailsViewModel_NetRate").val(parseFloat(NetRate.toFixed(2)));
+                if ($("#ProductDetailsViewModel_DeductionsType").val() == 2) {
+                    var NetRate =parseFloat(getRate * getDeductions / 100);
+                    $("#ProductDetailsViewModel_NetRate").val(parseFloat(NetRate.toFixed(2)));
+                }
+            });
+
+            $("#ProductDetailsViewModel_DeductionsType").on('change', function () {
+                var getRate = $("#ProductDetailsViewModel_GrossRate").val();
+                var getDeductions = $("#ProductDetailsViewModel_DeductionAmount").val();
+                var NetRate = getRate - getDeductions;
+                $("#ProductDetailsViewModel_NetRate").val(parseFloat(NetRate.toFixed(2)));
+                if ($("#ProductDetailsViewModel_DeductionsType").val() == 2) {
+                    var NetRate =parseFloat(getRate * getDeductions / 100);
+                    $("#ProductDetailsViewModel_NetRate").val(parseFloat(NetRate.toFixed(2)));
+                }
+            });
+
+            $("#ProductDetailsViewModel_DeductionAmount").on('change', function () {
+                debugger;
+                var getRate = $("#ProductDetailsViewModel_GrossRate").val();
+                var getDeductions = $("#ProductDetailsViewModel_DeductionAmount").val();
+                var NetRate = getRate - getDeductions;
+                $("#ProductDetailsViewModel_NetRate").val(parseFloat(NetRate.toFixed(2)));
+                if ($("#ProductDetailsViewModel_DeductionsType").val() == 2) {
+                    var NetRate =parseFloat(getRate * getDeductions / 100);
+                    $("#ProductDetailsViewModel_NetRate").val(parseFloat(NetRate.toFixed(2)));
+                }
+            });
+
+            //Dropdownlist Selectedchange event
+            $("#Product").change(function () {
+                $("#ProductDetailsViewModel_Purity").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetPurity","ProductRate")', // we are calling json method
+                    dataType: 'json',
+                    data: { id: $("#Product").val() },
+                    // here we are get value of selected country and passing same value
+                    //as inputto json method GetStates.
+                    success: function (data) {
+                        var purity = "<select id='ProductDetailsViewModel_Purity'>";
+                        purity = purity + '<option value="">--Select Purity--</option>';
+                        for (var i = 0; i < data.length; i++) {
+                            purity = purity + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                        }
+                        purity = purity + '</select>';
+                        $('#ProductDetailsViewModel_Purity').html(purity);
+                        $("#ProductDetailsViewModel_Purity").removeAttr('disabled')
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            })
+
+            //Add event handler.
+            $("#btnAdd").click(function () {
+                $("#CustomErrr").text("");
+                $('[data-toggle="tooltip"]').tooltip();
+                var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+                var index = $("#tblProductRateDetails tbody tr:last").index();
+                debugger;
+                var srno = 0;
+                var newtrno=trid;
+                if (sr_no == 0) {
+                    srno = index + 2;
+                    newtrno=0;
+                }
+                else {
+                    srno = sr_no;
+                }
+                sr_no = 0;
+                trid=0;
+                var PurityNo = $("#ProductDetailsViewModel_Purity").val();
+                var PurityName = $("#ProductDetailsViewModel_Purity option:selected").text();
+                var GrossRate = $("#ProductDetailsViewModel_GrossRate").val();
+                var DeductionTypeNo = $("#ProductDetailsViewModel_DeductionsType").val();
+                var DeductionTypeName = $("#ProductDetailsViewModel_DeductionsType option:selected").text();
+                var DeductionAmt = $("#ProductDetailsViewModel_DeductionAmount").val();
+                var NetRate = $("#ProductDetailsViewModel_NetRate").val();
+                debugger;
+                var row = '<tr id=' + newtrno + '>' +
+                    '<td width="10%">' + srno + '</td>' +
+                    '<td width="10%" id="' + PurityNo + '">' + PurityName + '</td>' +
+                    '<td width="10%">' + GrossRate + '</td>' +
+                    '<td width="20%" id="' + DeductionTypeNo + '">' + DeductionTypeName + '</td>' +
+                    '<td width="20%">' + DeductionAmt + '</td>' +
+                    '<td width="20%">' + NetRate + '</td>' +
+                    '<td id=' + srno + '' + actions + '</td>' +
+                    '</tr>';
+                if (currentRow) {
+                    $("#tblProductRateDetails tbody").find($(currentRow)).replaceWith(row);
+                    $("#ProductDetailsViewModel_Purity").val("");
+                    $("#ProductDetailsViewModel_GrossRate").val("");
+                    $("#ProductDetailsViewModel_DeductionAmount").val("");
+                    $("#ProductDetailsViewModel_NetRate").val("");
+                    currentRow = null;
+                }
+                else {
+                    if (PurityName != "" && DeductionTypeName != "") {
+                        $("#tblProductRateDetails tbody").append(row);
+                        $("#ProductDetailsViewModel_Purity").val("");
+                        $("#ProductDetailsViewModel_GrossRate").val("");
+                        $("#ProductDetailsViewModel_DeductionAmount").val("");
+                        $("#ProductDetailsViewModel_NetRate").val("");
+                        $("#divProductRate").show();
+                    }
+                }
+                $("#tblProductRateDetails TBODY TR").on("click", ".edit", function () {
+                    debugger;
+                    var tr = $(this).closest('tr');
+                    currentRow = $(this).parents('tr');
+                    debugger;
+                    //sr_no = tr.find('td:eq(0)').html();
+                    sr_no = tr.find('td:eq(0)').html();
+                    trid =tr.attr('id'); // table row ID 
+                    var purityNo = tr.find("td").eq(1).attr('id');
+                    var grossRate = tr.find('td:eq(2)').html();
+                    var deductionType = tr.find("td").eq(3).attr('id');
+                    var deductionAmount = tr.find('td:eq(4)').html();
+                    var netRate = tr.find('td:eq(5)').html();
+
+                    $("#ProductDetailsViewModel_Purity").val(purityNo);
+                    $("#ProductDetailsViewModel_GrossRate").val(grossRate);
+                    $("#ProductDetailsViewModel_DeductionsType").val(deductionType);
+                    $("#ProductDetailsViewModel_DeductionAmount").val(deductionAmount);
+                    $("#ProductDetailsViewModel_NetRate").val(netRate);
+                })
+
+                $("#tblProductRateDetails TBODY TR").on("click", ".delete", function () {
+                    if (confirm('Are you sure to remove?')) {
+                        $(this).parents('tr').remove();
+                        return false;
+                    }
+                })
+            })
+        });
+
+
+        $("#btn_save").click(function () {
+            SaveProductRate();
+        });
+
+        function SaveProductRate() {
+            debugger;
+            if ($('#tblProductRateDetails tbody tr').length == 0) {
+                var Purity = $("#ProductDetailsViewModel_Purity").val();
+                if (Purity == "") {
+                    $("#CustomErr").text("Please Select Purity");
+                    $("#ProductDetailsViewModel_Purity").focus();
+                    return;
+                }
+                var GrossRate = $("#ProductDetailsViewModel_GrossRate").val();
+                if (GrossRate == "0.00" || GrossRate=="") {
+                    $("#CustomErr").text("Please Enter Gross Rate");
+                    $("#ProductDetailsViewModel_GrossRate").focus();
+                    return;
+                }
+                var DeductionType = $("#ProductDetailsViewModel_DeductionsType").val();
+                if (DeductionType == "") {
+                    $("#CustomErr").text("Please Select Deductions");
+                    $("#ProductDetailsViewModel_DeductionsType").focus();
+                    return;
+                }
+                var DeductionAmount = $("#ProductDetailsViewModel_DeductionAmount").val();
+                if (DeductionAmount == "") {
+                    $("#CustomErr").text("Please Enter Deduction Amount");
+                    $("#ProductDetailsViewModel_DeductionAmount").focus();
+                    return;
+                }
+            }
+            var length = $('#tblProductRateDetails tbody tr').length;
+            if (length == 0) {
+                $("#CustomErr").text("Please fill child record");
+                $("#tblProductRateDetails").focus();
+                return true;
+            }
+
+            $("#btn_save").prop("disabled", true);
+            var ProductRateViewModel = {};
+            var lstProductRateTrn = [];
+
+            $("#tblProductRateDetails TBODY TR").each(function () {
+                var row = $(this);
+                var rowProductRateTrn = {};
+                rowProductRateTrn.ID = row.attr('id');
+                rowProductRateTrn.Purity =row.find("td").eq(1).attr('id');
+                rowProductRateTrn.GrossRate = row.find("TD").eq(2).html();
+                rowProductRateTrn.DeductionsType = row.find("td").eq(3).attr('id');
+                rowProductRateTrn.DeductionAmount = row.find("TD").eq(4).html();
+                rowProductRateTrn.NetRate = row.find("TD").eq(5).html();
+                lstProductRateTrn.push(rowProductRateTrn);
+            });
+
+            ProductRateViewModel.ProductRateList = lstProductRateTrn;
+
+            ProductRateViewModel.ID = $('#ItemID').val();
+            ProductRateViewModel.ProductRateDate = $('#ProductRateDate').val();
+            ProductRateViewModel.Product = $('#Product').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/ProductRate/Insert",
+                data: JSON.stringify(ProductRateViewModel),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    debugger;
+                    if (r == 1) {
+                        $("#saveModal").modal('show');
+                        $(document).click(function () {
+                            window.location.href = urlRedirect;
+                        });
+                    }
+                    else if (r == 2) {
+                        $("#saveModal").modal('show');
+                        $(document).click(function () {
+                            window.location.href = urlRedirect;
+                        });
+                    }
+                    else {
+                        $("#CustomErr").text(r);
+                        $("#btn_save").prop("disabled", false);
+                        return false;
+                    }
+                }
+            });
+        }
+
+        function ShowEditTableList() {
+            $('#divviewfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetProductRateTable", "ProductRate")',
+                dataType: "html",
+                data: { Operation: "Edit" },
+                success: function (data) {
+                    $('#diveditfilldata').empty();
+                    $('#diveditfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+
+        function ShowViewTableList() {
+            $('#diveditfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetProductRateTable", "ProductRate")',
+                dataType: "html",
+                data: { Operation: "View" },
+                success: function (data) {
+                    $('#divviewfilldata').empty();
+                    $('#divviewfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+
+        var urlRedirect = '@Html.Raw(@Url.Action("ProductRate", "ProductRate"))';
+
+        function OnSuccess(response) {
+            $("#saveModal").modal('show');
+            $(document).click(function () {
+                window.location.href = urlRedirect;
+            });
+        }
+
+        $(function () {
+            var url = '@Html.Raw(@Url.Action("Delete", "ProductRate"))';
+            $("#btnDelete").click(function () {
+                $("#deleteModal").modal('show');
+            });
+            $("#btnDeleteConfirm").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: '{id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != "") {
+                            $("#CustomErr").text(data);
+                            return false;
+                        }
+                        else {
+                            $("#CustomErr").empty();
+                            $("#DeleteSuccessModal").modal('show');
+
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            });
+        });
+    </script>
+}

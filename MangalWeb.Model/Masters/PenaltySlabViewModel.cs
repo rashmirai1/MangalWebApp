@@ -17,7 +17,7 @@ namespace MangalWeb.Model.Masters
         public string Datewef { get; set; }
 
         [Required(ErrorMessage = "Please Enter Penalty")]
-        public decimal PenaltyAmount { get; set; }
+        public double PenaltyAmount { get; set; }
 
         [Required(ErrorMessage = "Please Select Status")]
         public int AccountHead { get; set; }

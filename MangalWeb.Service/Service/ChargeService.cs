@@ -12,7 +12,6 @@ namespace MangalWeb.Service.Service
     {
         ChargeRepository _chargeRepository = new ChargeRepository();
 
-
         public ChargeViewModel GetChargeById(int id)
         {
             var charge = _chargeRepository.SetRecordinEdit(id);

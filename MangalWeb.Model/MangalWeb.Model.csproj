@@ -284,9 +284,6 @@
     <Compile Include="Entity\TGLInwardForm_GoldDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\TGLKYC_BasicDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\TGLKYC_DocumentDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -353,9 +350,8 @@
     <Compile Include="Masters\DistanceDeviationDetailsVM.cs" />
     <Compile Include="Masters\DocumentUploadViewModel.cs" />
     <Compile Include="Masters\DocumentViewModel.cs" />
-    <Compile Include="Masters\FinancialViewModel.cs" />
+    <Compile Include="Masters\FinancialYearViewModel.cs" />
     <Compile Include="Masters\GstViewModel.cs" />
-    <Compile Include="Masters\HttpPostedFileBase.cs" />
     <Compile Include="Masters\LTVDeviationDetailsVM.cs" />
     <Compile Include="Masters\OrnamentViewModel.cs" />
     <Compile Include="Masters\PenaltySlabViewModel.cs" />
