@@ -74,6 +74,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\Bharat01012017tbl_SentJVCustHistory.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\bharatTGLGoldInOutDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Bharat_tbl_SentJVCustHistory.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\ImageKyc.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Imagestore.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\KycImageStore.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\MangalEntity.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -89,6 +107,246 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MangalEntity.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Mst_AuditCategory.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_AuditCheckList.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_ChildDeviation.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_DocumentType.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_GstMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_ParentDeviation.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_PenaltySlab.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_PinCode.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_Product.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_ProductRate.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_ProductRateDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_PurityMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_Reason.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_SchemePurity.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_SourceofApplication.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\M_Words.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\new1bharatTGLGoldStock.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\newauthorize.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Newbharat.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\newbharatTGLGoldInOutDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\newbharatTGLGoldStock.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\SplitValue_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\SplitWords_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblaccountmaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblBankMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblCityMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblCompanyBranchMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblCreateCompanyMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblDocumentMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblFinancialyear.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblGroupMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblINV_ItemMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblItemMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblLogin.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblPenaltySlabtMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblPrimaryGroup.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblSchemeMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblSchemeTransMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblSchemeTransMonth.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblStateMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblZonemaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tbl_CountryMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tbl_GLChargeMaster_BasicInfo.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tbl_GLChargeMaster_Details.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tbl_GLDocumentMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tbl_SentJVCustHistory.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tbl_UserLogin.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TestDB.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLCashAuth_BasicDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLCashAuth_Denomination_Details.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLCashAuth_ReceiptDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLCashInOutDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLCash_Denomination_Details.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLDefault_OSLevel.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLExcessAmount_Login.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLGoldInOutDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLGoldStock.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLInterest_Details.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLInwardForm_BasicDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLInwardForm_DocDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLInwardForm_GoldDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLKYC_DocumentDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLKYC_SourceOfApplication.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLOutwardForm_BasicDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLOutwardForm_DocDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLOutwardForm_GoldDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLSmsHistory.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGL_DefaultOSPercentage.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGL_FormAuthorizationDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGL_FormDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TSchemeMaster_BasicDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TSchemeMaster_EffectiveROI.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\UserDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\UserFormAuthentication.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\UserFormAuthorisationDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\UserFormDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\UserMenuDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\UserModuleAuthentication.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\UserModuleDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\UserTypeDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Masters\AuditCheckListViewModel.cs" />
     <Compile Include="Masters\BranchViewModel.cs" />
     <Compile Include="Masters\ChargeDetailsViewModel.cs" />
@@ -98,9 +356,8 @@
     <Compile Include="Masters\DistanceDeviationDetailsVM.cs" />
     <Compile Include="Masters\DocumentUploadViewModel.cs" />
     <Compile Include="Masters\DocumentViewModel.cs" />
-    <Compile Include="Masters\FinancialViewModel.cs" />
+    <Compile Include="Masters\FinancialYearViewModel.cs" />
     <Compile Include="Masters\GstViewModel.cs" />
-    <Compile Include="Masters\HttpPostedFileBase.cs" />
     <Compile Include="Masters\LTVDeviationDetailsVM.cs" />
     <Compile Include="Masters\OrnamentViewModel.cs" />
     <Compile Include="Masters\PenaltySlabViewModel.cs" />
@@ -116,7 +373,6 @@
     <Compile Include="Masters\TenureDeviationVM.cs" />
     <Compile Include="Masters\ZoneViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Transaction\KYCBasciDetailsVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -146,7 +402,6 @@
       <LastGenOutput>MangalEntity.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

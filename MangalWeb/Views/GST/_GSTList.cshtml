@@ -1,0 +1,31 @@
+﻿@model IList<MangalWeb.Model.Entity.Mst_GstMaster>
+@using MangalWeb.Model.Entity
+<div class="modal-content">
+    <div class="modal-body" style="height:inherit; overflow:auto;">
+        <div class="panel-body panel-no-padding" style="height:inherit; overflow:auto;">
+            <div id="demo">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="example">
+                    <thead>
+                        <tr>
+                            <th>Effective From</th>
+                            <th>CGST</th>
+                            <th>SGST</th>
+                            <th>IGST</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Mst_GstMaster item in Model)
+                        {
+                            <tr class="gradeX" onclick='window.document.location="/GST/GetGSTById?ID=@item.Gst_RefId"'>
+                                <td>@item.Gst_EffectiveFrom.ToString("dd/MM/yyyy")</td>
+                                <td>@item.Gst_CGST</td>
+                                <td>@item.Gst_SGST</td>
+                                <td>@item.Gst_IGST</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->

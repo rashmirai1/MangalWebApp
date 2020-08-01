@@ -30,7 +30,7 @@ namespace MangalWebProject.Models
         [Required(ErrorMessage = "Date is Required")]
         public string ExpiryDate { get; set; }
         public string UploadDocName { get; set; }
-        public HttpPostedFileBase UploadedFile { get; set; }
+        public string UploadedFile { get; set; }
         public string Comments { get; set; }
         public int BranchId { get; set; }
         public int FinancialYearId { get; set; }

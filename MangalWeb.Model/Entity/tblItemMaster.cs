@@ -16,7 +16,9 @@ namespace MangalWeb.Model.Entity
     {
         public int ItemID { get; set; }
         public string ItemName { get; set; }
-        public short Product { get; set; }
-        public short Status { get; set; }
+        public int Product { get; set; }
+        public string Status { get; set; }
+    
+        public virtual Mst_Product Mst_Product { get; set; }
     }
 }

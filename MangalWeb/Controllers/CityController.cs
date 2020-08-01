@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace MangalWeb.Controllers
 {
-    public class CitytController : BaseController
+    public class CityController : BaseController
     {
         CityService _cityService = new CityService();
 

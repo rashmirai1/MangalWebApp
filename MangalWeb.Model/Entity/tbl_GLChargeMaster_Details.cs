@@ -20,5 +20,7 @@ namespace MangalWeb.Model.Entity
         public double LoanAmtTo { get; set; }
         public double Charges { get; set; }
         public string ChargeType { get; set; }
+    
+        public virtual tbl_GLChargeMaster_BasicInfo tbl_GLChargeMaster_BasicInfo { get; set; }
     }
 }

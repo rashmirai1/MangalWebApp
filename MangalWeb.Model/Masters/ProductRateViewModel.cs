@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MangalWebProject.Models
+namespace MangalWeb.Model.Masters
 {
     public class ProductRateViewModel
     {
@@ -16,7 +16,7 @@ namespace MangalWebProject.Models
         public string ProductRateDate { get; set; }
 
         [Required(ErrorMessage = "Please Select Product")]
-        public short Product { get; set; }
+        public int Product { get; set; }
         public string ProductStr { get; set; }
 
         public string operation { get; set; }

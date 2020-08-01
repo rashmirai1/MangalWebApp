@@ -22,12 +22,13 @@ namespace MangalWeb.Model.Entity
     
         public int Pr_Id { get; set; }
         public System.DateTime Pr_Date { get; set; }
-        public short Pr_Product { get; set; }
+        public int Pr_Product { get; set; }
         public Nullable<System.DateTime> Pr_RecordCreated { get; set; }
         public Nullable<System.DateTime> Pr_RecordUpdated { get; set; }
         public Nullable<int> Pr_RecordCreatedBy { get; set; }
         public Nullable<int> Pr_RecordUpdatedBy { get; set; }
     
+        public virtual Mst_Product Mst_Product { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mst_ProductRateDetails> Mst_ProductRateDetails { get; set; }
     }
