@@ -81,6 +81,19 @@ namespace MangalWeb.Repository.Repository
                 tGLKYC_Basic.VerificationCode = model.VerificationCode;
                 tGLKYC_Basic.ZoneID = model.ZoneID;
                 tGLKYC_Basic.KYCDate = DateTime.Now;
+                tGLKYC_Basic.AdhaarNo = model.AdhaarNo;
+                tGLKYC_Basic.ApplicationNo = model.ApplicationNo;
+                tGLKYC_Basic.SourceofApplicationID = model.SourceofApplicationID;
+                tGLKYC_Basic.ApplicantPrefix = model.ApplicantPrefix;
+                tGLKYC_Basic.MotherName = model.MotherName;
+                tGLKYC_Basic.Father_Spouse = model.Father_Spouse;
+                tGLKYC_Basic.CKYCNo = model.CKYCNo;
+                tGLKYC_Basic.SourceType = model.SourceType;
+                tGLKYC_Basic.OccupationOther = model.OccupationOther;
+                tGLKYC_Basic.IndustryOther = model.IndustryOther;
+                tGLKYC_Basic.NomineeMobileNo = model.NomineeMobileNo;
+                tGLKYC_Basic.NomineePanNo = model.NomineePanNo;
+                tGLKYC_Basic.AdhaarNo = model.AdhaarNo;
                 _context.TGLKYC_BasicDetails.Add(tGLKYC_Basic);
 
                 _context.SaveChanges();

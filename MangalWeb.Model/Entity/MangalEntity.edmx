@@ -1114,14 +1114,13 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInwardForm_GoldDetails' does no
             <PropertyRef Name="KYCID" />
           </Key>
           <Property Name="KYCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="KYCDate" Type="datetime" Nullable="false" />
           <Property Name="CustomerID" Type="nvarchar" MaxLength="20" />
           <Property Name="AppliedDate" Type="smalldatetime" />
           <Property Name="OperatorID" Type="int" Nullable="false" />
           <Property Name="ExistingCustomerID" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="ExistingPLCaseNo" Type="nvarchar" MaxLength="50" />
           <Property Name="AppFName" Type="varchar" MaxLength="30" />
-          <Property Name="AppMName" Type="varchar" MaxLength="30" />
+          <Property Name="AppMName" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="AppLName" Type="varchar" MaxLength="30" />
           <Property Name="AppPhotoPath" Type="nvarchar" MaxLength="100" />
           <Property Name="AppSignPath" Type="nvarchar" MaxLength="100" />
@@ -1177,6 +1176,19 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInwardForm_GoldDetails' does no
           <Property Name="DeletedDate" Type="smalldatetime" />
           <Property Name="isActive" Type="bit" />
           <Property Name="SourceofApplicationID" Type="int" />
+          <Property Name="KYCDate" Type="datetime" />
+          <Property Name="ApplicationNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="AdhaarNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="ApplicantPrefix" Type="nvarchar" MaxLength="20" />
+          <Property Name="MotherName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Father_Spouse" Type="nvarchar" MaxLength="50" />
+          <Property Name="CKYCNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="SourceType" Type="nvarchar" MaxLength="50" />
+          <Property Name="OccupationOther" Type="nvarchar" MaxLength="50" />
+          <Property Name="IndustryOther" Type="nvarchar" MaxLength="50" />
+          <Property Name="NomineeMobileNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="NomineePanNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="NomineeAdharNo" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.TGLKYC_DocumentDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -3958,17 +3970,16 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
         </ComplexType>
         <EntityType Name="TGLKYC_BasicDetails">
           <Key>
-            <PropertyRef Name="OperatorID" />
-            <PropertyRef Name="ExistingCustomerID" />
+            <PropertyRef Name="KYCID" />
           </Key>
-          <Property Name="KYCID" Type="Int32" Nullable="false" />
+          <Property Name="KYCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="AppliedDate" Type="DateTime" Precision="0" />
           <Property Name="OperatorID" Type="Int32" Nullable="false" />
           <Property Name="ExistingCustomerID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="ExistingPLCaseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AppFName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AppMName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AppMName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="AppLName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="AppPhotoPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AppSignPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -4024,7 +4035,19 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="DeletedDate" Type="DateTime" Precision="0" />
           <Property Name="isActive" Type="Boolean" />
           <Property Name="SourceofApplicationID" Type="Int32" />
-          <Property Name="KYCDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="KYCDate" Type="DateTime" Precision="3" />
+          <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AdhaarNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicantPrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MotherName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Father_Spouse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CKYCNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SourceType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OccupationOther" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IndustryOther" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NomineeMobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NomineePanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NomineeAdharNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5234,6 +5257,18 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <EntitySetMapping Name="TGLKYC_BasicDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
               <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
+                <ScalarProperty Name="NomineeAdharNo" ColumnName="NomineeAdharNo" />
+                <ScalarProperty Name="NomineePanNo" ColumnName="NomineePanNo" />
+                <ScalarProperty Name="NomineeMobileNo" ColumnName="NomineeMobileNo" />
+                <ScalarProperty Name="IndustryOther" ColumnName="IndustryOther" />
+                <ScalarProperty Name="OccupationOther" ColumnName="OccupationOther" />
+                <ScalarProperty Name="SourceType" ColumnName="SourceType" />
+                <ScalarProperty Name="CKYCNo" ColumnName="CKYCNo" />
+                <ScalarProperty Name="Father_Spouse" ColumnName="Father_Spouse" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="ApplicantPrefix" ColumnName="ApplicantPrefix" />
+                <ScalarProperty Name="AdhaarNo" ColumnName="AdhaarNo" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
                 <ScalarProperty Name="KYCDate" ColumnName="KYCDate" />
                 <ScalarProperty Name="SourceofApplicationID" ColumnName="SourceofApplicationID" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
