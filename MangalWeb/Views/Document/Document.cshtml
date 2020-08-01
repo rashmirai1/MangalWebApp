@@ -1,0 +1,244 @@
+﻿@model MangalWeb.Model.Masters.DocumentViewModel
+@{
+    ViewBag.Title = "ShowDocument";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+
+@using (Ajax.BeginForm("CreateEdit", "Document", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
+    <header id="topbar" class="affix">
+        <div class="col-md-5 col-sm-4 col-xs-12">
+            <div class="topbar-left">
+                <h4>Document Master</h4>
+            </div><!--end of topbar-left-->
+        </div><!--end of col-md-5-->
+        <div class="col-md-7 col-sm-8 col-xs-12">
+            <div class="topbar-right" id="headerbutton">
+                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal" class="btn btn-warning btn-sm light fw600 ml10"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
+                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
+                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
+                <button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]"
+                        type="button" data-toggle="modal">
+                    <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
+                </button>
+                <a href="@Html.Raw(@Url.Action("Document", "Document"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+            </div><!--end of topbar-right-->
+
+        </div><!--end of col-md-7-->
+    </header>
+
+    <section id="content" class="animated fadeIn">
+        <!-- Start: Topbar -->
+        <!-- End: Topbar -->
+        <!-- Begin: Content -->
+        <!-- Dashboard Tiles -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel1 panel-primary">
+                    <div class="admin-form">
+                        <div class="panel-body">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Document Name<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>
+                                                @Html.EditorFor(model => model.DocumentName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Document Name", @autofocus = "autofocus" } })
+                                                @Html.ValidationMessageFor(model => model.DocumentName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Document Type<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.DocumentType, (SelectList)ViewBag.DocumentTypeList, "--Select Document Type --", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.DocumentType)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Expiry Date Applicable<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @{
+                                                            var expiryApplicablelist = new SelectList(new[]
+                                                            {
+                                                                    new SelectListItem { Text = "Select Expiry Date Applicable"},
+                                                                    new SelectListItem { Text = "Yes", Value = "Yes"},
+                                                                    new SelectListItem { Text = "No", Value = "No"}
+                                                                    }, "Value", "Text");
+                                                        }
+                                                        @Html.DropDownListFor(m => m.ExpiryApplicableStr, expiryApplicablelist)
+                                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.ExpiryApplicableStr)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @{
+                                                            var statuslist = new SelectList(new[]
+                                                            {
+                                                                    new SelectListItem { Text = "Select Status"},
+                                                                    new SelectListItem { Text = "Active", Value = "1"},
+                                                                    new SelectListItem { Text = "Inactive", Value = "2"}
+                                                                    }, "Value", "Text");
+                                                        }
+                                                        @Html.DropDownListFor(m => m.DocumentStatus, statuslist)
+                                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.DocumentStatus)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
+    </section>
+                                                            }
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@section javascriptsection{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //if (document.URL.indexOf("ID") == -1) {
+                $("#DocumentName").on('input', function () {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("doesDocumentNameExist", "Document")',
+                        data: '{DocumentName: "' + $("#DocumentName").val() + '" }',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "") {
+                                $("#CustomErr").empty();
+                                $("#btn_save").removeAttr('disabled')
+                            }
+                            else {
+                                $("#CustomErr").text(result);
+                                $("#btn_save").attr('disabled', true)
+                                return false;
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            //alert(error);
+                        }
+                    });
+                });
+            //}
+        });
+
+        function ShowEditTableList() {
+            $('#divviewfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetDocumentTable", "Document")',
+                dataType: "html",
+                data: { Operation: "Edit" },
+                success: function (data) {
+                    $('#diveditfilldata').empty();
+                    $('#diveditfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+
+        function ShowViewTableList() {
+            $('#diveditfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetDocumentTable", "Document")',
+                dataType: "html",
+                data: { Operation: "View" },
+                success: function (data) {
+                    $('#divviewfilldata').empty();
+                    $('#divviewfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+
+        var urlRedirect = '@Html.Raw(@Url.Action("Document", "Document"))';
+        function OnSuccess(response) {
+
+            $("#saveModal").modal('show');
+            $(document).click(function () {
+                window.location.href = urlRedirect;
+            });
+        }
+
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+
+        $(function () {
+            var url = '@Html.Raw(@Url.Action("Delete", "Document"))';
+            $("#btnDelete").click(function () {
+                $("#deleteModal").modal('show');
+            });
+            $("#btnDeleteConfirm").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: '{id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != "") {
+                            $("#CustomErr").text(data);
+                            return false;
+                        }
+                        else {
+                            $("#CustomErr").empty();
+                            $("#DeleteSuccessModal").modal('show');
+
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            });
+        });
+    </script>
+}
+

@@ -90,22 +90,7 @@ namespace MangalWeb.Controllers
         public ActionResult GetSourceApplicationTable(string Operation)
         {
             Session["Operation"] = Operation;
-            //ButtonVisiblity(Operation);
-            List<SourceofApplicationViewModel> list = new List<SourceofApplicationViewModel>();
-            var model = new SourceofApplicationViewModel();
-            //var tablelist = dd._context.Mst_SourceofApplication.ToList();
-            int onlinecategory = 1;
-            int status = 1;
-            //foreach (var item in tablelist)
-            //{
-            //    model = new SourceofApplicationViewModel();
-            //    model.SourceName = item.Soa_Name;
-            //    model.EditID = item.Soa_Id;
-            //    model.ID = item.Soa_Id;
-            //    model.SourceCategirystr = item.Soa_Category == onlinecategory ? "Online" : "Offline";
-            //    model.SourceStatusstr = item.Soa_Status == status ? "Active" : "Inactive";
-            //    list.Add(model);
-            //}
+            var list=_sourceofApplicationService.SetDataofModalList();
             return PartialView("_SourceApplicationList", list);
         }
     }

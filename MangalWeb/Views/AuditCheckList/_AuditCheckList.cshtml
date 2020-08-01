@@ -1,0 +1,32 @@
+﻿@model IList<MangalWeb.Model.Masters.AuditCheckListViewModel>
+@using MangalWeb.Model.Masters
+<div class="modal-content">
+    <div class="modal-body" style="height:inherit; overflow:auto;">
+        <div class="panel-body panel-no-padding" style="height:inherit; overflow:auto;">
+            <div id="demo">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="example">
+                    <thead>
+                        <tr>
+                            <th>Effective Date</th>
+                            <th>Category Audit</th>
+                            <th>Audit CheckPoint</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (AuditCheckListViewModel item in Model)
+                        {
+                            <tr class="gradeX" onclick='window.document.location="/AuditCheckList/GetAuditCheckListById?ID=@item.ID"'>
+                                <td>@item.EffectiveDate.ToString("dd/MM/yyyy")</td>
+                                <td>@item.CategoryAuditStr</td>
+                                <td>@item.AuditCheckPoint</td>
+                                <td>@item.Status</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+

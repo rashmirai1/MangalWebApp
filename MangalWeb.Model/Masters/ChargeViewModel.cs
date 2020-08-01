@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MangalWebProject.Models
+namespace MangalWeb.Model.Masters
 {
     public class ChargeViewModel
     {
@@ -21,8 +21,7 @@ namespace MangalWebProject.Models
         public DateTime ReferenceDate { get; set; }
 
         [Required(ErrorMessage ="Please Select Status")]
-        public short Status { get; set; }
-        public string StatusStr { get; set; }
+        public string Status { get; set; }
 
         public string operation { get; set; }
 

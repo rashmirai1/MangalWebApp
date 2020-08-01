@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MangalWebProject.Models
+namespace MangalWeb.Model.Masters
 {
     public class AuditCheckListViewModel
     {
@@ -16,16 +16,14 @@ namespace MangalWebProject.Models
         public DateTime EffectiveDate { get; set; }
 
         [Required(ErrorMessage = "Please Select Category Audit")]
-        public short CategoryAudit { get; set; }
+        public int CategoryAudit { get; set; }
+        public string CategoryAuditStr { get; set; }
 
         [Required(ErrorMessage = "Audit CheckPoint is Required")]
         public string AuditCheckPoint { get; set; }
 
         [Required(ErrorMessage = "Please Select Status")]
-        public short Status { get; set; }
-
-        public string CategoryAuditStr { get; set; }
-        public string StatusStr { get; set; }
+        public string Status { get; set; }
 
         public string operation { get; set; }
 

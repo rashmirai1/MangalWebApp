@@ -121,11 +121,20 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AuditCheckListController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BranchController.cs" />
+    <Compile Include="Controllers\ChargeController.cs" />
     <Compile Include="Controllers\CityController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
+    <Compile Include="Controllers\FinancialYearController.cs" />
+    <Compile Include="Controllers\GSTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\KYCController.cs" />
+    <Compile Include="Controllers\OrnamentController.cs" />
+    <Compile Include="Controllers\PenaltySlabController.cs" />
     <Compile Include="Controllers\PincodeController.cs" />
+    <Compile Include="Controllers\ProductRateController.cs" />
+    <Compile Include="Controllers\ReasonController.cs" />
     <Compile Include="Controllers\SourceofApplicationController.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\ZoneController.cs" />
@@ -2043,12 +2052,31 @@
     <Content Include="Views\Zone\Zone.cshtml" />
     <Content Include="Views\Pincode\Pincode.cshtml" />
     <Content Include="Views\Pincode\_PincodeList.cshtml" />
-    <Content Include="Views\KYC\Index.cshtml" />
+    <Content Include="Views\SourceofApplication\_SourceApplicationList.cshtml" />
+    <Content Include="Views\SourceofApplication\SourceApplication.cshtml" />
+    <Content Include="Views\Document\Document.cshtml" />
+    <Content Include="Views\Document\_DocumentList.cshtml" />
+    <Content Include="Views\Reason\Reason.cshtml" />
+    <Content Include="Views\Reason\_ReasonList.cshtml" />
+    <Content Include="Views\Ornament\_OrnamentList.cshtml" />
+    <Content Include="Views\AuditCheckList\AuditCheckList.cshtml" />
+    <Content Include="Views\AuditCheckList\_AuditCheckList.cshtml" />
+    <Content Include="Views\GST\_GSTList.cshtml" />
+    <Content Include="Views\GST\GST.cshtml" />
+    <Content Include="Views\Charge\Charge.cshtml" />
+    <Content Include="Views\Charge\_ChargePartialTable.cshtml" />
+    <Content Include="Views\FinancialYear\FinancialYear.cshtml" />
+    <Content Include="Views\FinancialYear\_FinancialYearList.cshtml" />
+    <Content Include="Views\ProductRate\ProductRate.cshtml" />
+    <Content Include="Views\ProductRate\_ProductRateList.cshtml" />
+    <Content Include="Views\PenaltySlab\PenaltySlab.cshtml" />
+    <Content Include="Views\PenaltySlab\_PenaltySlablist.cshtml" />
+    <Content Include="Views\Ornament\Ornament.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\SourceofApplication\" />
+    <Folder Include="Views\Branch\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

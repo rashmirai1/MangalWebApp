@@ -1,0 +1,242 @@
+﻿@model MangalWeb.Model.Masters.GstViewModel
+@{
+    ViewBag.Title = "ShowGST";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+
+@using (Ajax.BeginForm("CreateEdit", "GST", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
+    @Html.HiddenFor(m => m.EditID)
+    <header id="topbar" class="affix">
+        <div class="col-md-5 col-sm-4 col-xs-12">
+            <div class="topbar-left">
+                <h4>GST Master</h4>
+            </div><!--end of topbar-left-->
+        </div><!--end of col-md-5-->
+        <div class="col-md-7 col-sm-8 col-xs-12">
+            <div class="topbar-right" id="headerbutton">
+                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal" class="btn btn-warning btn-sm light fw600 ml10"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
+                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
+                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
+                <button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]"
+                        type="button" data-toggle="modal">
+                    <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
+                </button>
+                <a href="@Html.Raw(@Url.Action("GST", "GST"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+            </div><!--end of topbar-right-->
+
+        </div><!--end of col-md-7-->
+    </header>
+
+    <section id="content" class="animated fadeIn">
+        <!-- Start: Topbar -->
+        <!-- End: Topbar -->
+        <!-- Begin: Content -->
+        <!-- Dashboard Tiles -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel1 panel-primary">
+                    <div class="admin-form">
+                        <div class="panel-body">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Ref Id</label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>
+                                                @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ref ID", @disabled = true } })
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Effective From<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.EffectiveFrom, new { htmlAttributes = new { @class = "form-control", @placeholder = "Effective From", @autocomplete = "Off" } })
+                                                <span class="text-danger" id="CustomErrr"> </span>
+                                                @*@Html.ValidationMessageFor(model => model.EffectiveFrom, "", new { @class = "text-danger" })*@
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">CGST<span class="text-danger">  </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.CGST, new { htmlAttributes = new { @class = "form-control", @maxlength="4", @placeholder = "CGST" } })
+                                                @Html.ValidationMessageFor(model => model.CGST, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">SGST<span class="text-danger">  </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.SGST, new { htmlAttributes = new { @class = "form-control", @maxlength = "4", @placeholder = "SGST" } })
+                                                @Html.ValidationMessageFor(model => model.SGST, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">IGST<span class="text-danger"> </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.IGST, new { htmlAttributes = new { @class = "form-control", @maxlength = "4", @placeholder = "IGST"} })
+                                                @Html.ValidationMessageFor(model => model.IGST, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
+    </section>
+                                                            }
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+@section javascriptsection{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+<link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#EffectiveFrom").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
+        });
+
+
+        $("#btn_save").click(function () {
+            SaveAuditCheckList();
+        });
+
+        function SaveAuditCheckList() {
+            debugger;
+            var EffectiveFrom = $("#EffectiveFrom").val();
+            if (EffectiveFrom == "") {
+                $("#CustomErrr").text("Please Enter Effective From");
+                $("#EffectiveDate").focus();
+                return;
+            }
+            $("#btn_save").prop("disabled", true);
+            var GSTViewModel = {};
+            GSTViewModel.ID = $('#ItemID').val();
+            GSTViewModel.EditID = $('#EditID').val();
+            GSTViewModel.EffectiveFrom = $('#EffectiveFrom').val();
+            GSTViewModel.CGST = $('#CGST').val();
+            GSTViewModel.SGST = $('#SGST').val();
+            GSTViewModel.IGST = $('#IGST').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/GST/Insert",
+                data: JSON.stringify(GSTViewModel),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    if (r == 1) {
+                        OnSuccess("Success");
+                    }
+                    else {
+                        OnSuccess("Success");
+                    }
+                    $("#btn_save").prop("disabled", false);
+                }
+            });
+        }
+
+        function ShowEditTableList() {
+            $('#divviewfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetGSTTable", "GST")',
+                dataType: "html",
+                data: { Operation: "Edit" },
+                success: function (data) {
+                    $('#diveditfilldata').empty();
+                    $('#diveditfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+
+        function ShowViewTableList() {
+            $('#diveditfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetGSTTable", "GST")',
+                dataType: "html",
+                data: { Operation: "View" },
+                success: function (data) {
+                    $('#divviewfilldata').empty();
+                    $('#divviewfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+        var urlRedirect = '@Html.Raw(@Url.Action("GST", "GST"))';
+        function OnSuccess(response) {
+
+            $("#saveModal").modal('show');
+            $(document).click(function () {
+                window.location.href = urlRedirect;
+            });
+        }
+
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+
+        $(function () {
+            var url = '@Html.Raw(@Url.Action("Delete", "GST"))';
+            $("#btnDelete").click(function () {
+                $("#deleteModal").modal('show');
+            });
+            $("#btnDeleteConfirm").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: '{id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != "") {
+                            $("#CustomErr").text(data);
+                            return false;
+                        }
+                        else {
+                            $("#CustomErr").empty();
+                            $("#DeleteSuccessModal").modal('show');
+
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            });
+        });
+    </script>
+}
+

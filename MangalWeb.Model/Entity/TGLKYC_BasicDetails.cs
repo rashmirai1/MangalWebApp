@@ -17,7 +17,7 @@ namespace MangalWeb.Model.Entity
         public int KYCID { get; set; }
         public string CustomerID { get; set; }
         public Nullable<System.DateTime> AppliedDate { get; set; }
-        public int OperatorID { get; set; }
+        public Nullable<int> OperatorID { get; set; }
         public string ExistingCustomerID { get; set; }
         public string ExistingPLCaseNo { get; set; }
         public string AppFName { get; set; }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MangalWebProject.Models
+namespace MangalWeb.Model.Masters
 {
     public class ProductRateDetailsVM
     {
@@ -19,8 +19,7 @@ namespace MangalWebProject.Models
         public decimal GrossRate { get; set; }
 
         [Required(ErrorMessage = "Please Select Deduction Type")]
-        public short DeductionsType { get; set; }
-        public string DeductionTypeStr { get; set; }
+        public string DeductionsType { get; set; }
 
         [Required(ErrorMessage = "Deduction Amount is Required")]
         public decimal DeductionAmount { get; set; }

@@ -52,5 +52,11 @@ namespace MangalWeb.Service.Service
         {
             _sourceRepository.SaveUpdateRecord(model);
         }
+
+        public List<SourceofApplicationViewModel> SetDataofModalList()
+        {
+            var sourcelist = _sourceRepository.SetDataofModalList();
+            return sourcelist;
+        }
     }
 }
