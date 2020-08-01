@@ -19,6 +19,12 @@ namespace MangalWeb.Repository.Repository
             return list;
         }
 
+        public List<Mst_Product> GetProductList()
+        {
+            var list = _context.Mst_Product.ToList();
+            return list;
+        }
+
         public tblItemMaster GetOrnamentById(int id)
         {
             var ornament = _context.tblItemMasters.Where(x => x.ItemID == id).FirstOrDefault();
@@ -64,8 +70,8 @@ namespace MangalWeb.Repository.Repository
             OrnamentViewModel ornament = new OrnamentViewModel();
             ornament.ID = tblOrnament.ItemID;
             ornament.OrnamentName = tblOrnament.ItemName;
-            ornament.Product = (short)tblOrnament.Product;
-            ornament.Status = (short)tblOrnament.Status;
+            ornament.Product = tblOrnament.Product;
+            ornament.Status =tblOrnament.Status;
             return ornament;
         }
 
@@ -79,31 +85,12 @@ namespace MangalWeb.Repository.Repository
                 model = new OrnamentViewModel();
                 model.ID = item.ItemID;
                 model.OrnamentName = item.ItemName;
-                model.ProductStr = item.Product == 1 ? "Gold Loan" : "Diamond Loan";
-                model.StatusStr = GetStatus((short)item.Status);
+                model.ProductStr = _context.Mst_Product.Where(x => x.Id == item.Product).Select(x => x.Name).FirstOrDefault();
+                model.Status = item.Status;
                 list.Add(model);
             }
             return list;
         }
 
-        public string GetStatus(short statusid)
-        {
-            string statusstr = "";
-            switch (statusid)
-            {
-                case 1:
-                    statusstr = "Allowed";
-                    break;
-                case 2:
-                    statusstr = "Not allowed";
-                    break;
-                case 3:
-                    statusstr = "Prohibited";
-                    break;
-                default:
-                    break;
-            }
-            return statusstr;
-        }
     }
 }

@@ -25,6 +25,12 @@ namespace MangalWeb.Service.Service
             return audit;
         }
 
+        public List<Mst_AuditCategory> GetAuditCategoryList()
+        {
+            var list = _auditRepository.GetAuditCategoryList();
+            return list;
+        }
+
         public AuditCheckListViewModel SetDataOnEdit(Mst_AuditCheckList tblAudit)
         {
             var item = _auditRepository.SetRecordinEdit(tblAudit);

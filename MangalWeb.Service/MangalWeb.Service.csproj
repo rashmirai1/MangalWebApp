@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Service\AuditChecklistService.cs" />
+    <Compile Include="Service\BranchService.cs" />
     <Compile Include="Service\ChargeService.cs" />
     <Compile Include="Service\CityService.cs" />
     <Compile Include="Service\DocumentService.cs" />

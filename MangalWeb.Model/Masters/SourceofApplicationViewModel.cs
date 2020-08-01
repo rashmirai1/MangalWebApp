@@ -18,13 +18,10 @@ namespace MangalWeb.Model.Masters
         public string SourceName { get; set; }
 
         [Required(ErrorMessage = "Please Select Category")]
-        public short SourceCategory { get; set; }
+        public string SourceCategory { get; set; }
 
         [Required(ErrorMessage = "Please Select Status")]
-        public short SourceStatus { get; set; }
-
-        public string SourceCategirystr { get; set; }
-        public string SourceStatusstr { get; set; }
+        public string SourceStatus { get; set; }
 
         public string operation { get; set; }
 

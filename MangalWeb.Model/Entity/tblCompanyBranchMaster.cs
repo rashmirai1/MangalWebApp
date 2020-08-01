@@ -17,5 +17,21 @@ namespace MangalWeb.Model.Entity
         public int BID { get; set; }
         public string BranchName { get; set; }
         public int CompID { get; set; }
+        public string BranchCode { get; set; }
+        public short BranchType { get; set; }
+        public System.DateTime InceptionDate { get; set; }
+        public Nullable<System.DateTime> RentPeriodAgreed { get; set; }
+        public string Address { get; set; }
+        public int Pincode { get; set; }
+        public string ContactPerson { get; set; }
+        public string MobileNo { get; set; }
+        public string InTime { get; set; }
+        public string OutTime { get; set; }
+        public Nullable<System.DateTime> DateWEF { get; set; }
+        public Nullable<short> Status { get; set; }
+        public Nullable<System.DateTime> RecordCreated { get; set; }
+        public Nullable<System.DateTime> RecordUpdated { get; set; }
+        public Nullable<int> RecordCreatedBy { get; set; }
+        public Nullable<int> RecordUpdatedBy { get; set; }
     }
 }

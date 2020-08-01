@@ -18,6 +18,12 @@ namespace MangalWeb.Repository.Repository
             return list;
         }
 
+        public List<Mst_AuditCategory> GetAuditCategoryList()
+        {
+            var list = _context.Mst_AuditCategory.ToList();
+            return list;
+        }
+
         public Mst_AuditCheckList GetAuditCheckListById(int id)
         {
             var audit = _context.Mst_AuditCheckList.Where(x => x.Acl_Id == id).FirstOrDefault();
@@ -83,52 +89,12 @@ namespace MangalWeb.Repository.Repository
                 model = new AuditCheckListViewModel();
                 model.ID = item.Acl_Id;
                 model.EffectiveDate = item.Acl_EffectiveDate;
-                model.CategoryAuditStr = GetCategoryAudit(item.Acl_Categoryofaudit);
+                model.CategoryAuditStr = _context.Mst_AuditCategory.Where(x => x.Id == item.Acl_Categoryofaudit).Select(x=>x.Name).FirstOrDefault();
                 model.AuditCheckPoint = item.Acl_CheckPoint;
-                model.StatusStr = item.Acl_Status == 1 ? "Active" : "Inacitve";
+                model.Status = item.Acl_Status;
                 list.Add(model);
             }
             return list;
-        }
-        public string GetCategoryAudit(short auditid)
-        {
-            string categorystr = "";
-            switch (auditid)
-            {
-                case 1:
-                    categorystr = "Branch Status";
-                    break;
-                case 2:
-                    categorystr = "Gold Status";
-                    break;
-                case 3:
-                    categorystr = "Cash Status";
-                    break;
-                case 4:
-                    categorystr = "ADMIN RELATED/COMPLAINCE";
-                    break;
-                case 5:
-                    categorystr = "REGISTERS";
-                    break;
-                case 6:
-                    categorystr = "RISKS";
-                    break;
-                case 7:
-                    categorystr = "Legal";
-                    break;
-                case 8:
-                    categorystr = "Process";
-                    break;
-                case 9:
-                    categorystr = "Security";
-                    break;
-                case 10:
-                    categorystr = "Grading";
-                    break;
-                default:
-                    break;
-            }
-            return categorystr;
         }
     }
 }

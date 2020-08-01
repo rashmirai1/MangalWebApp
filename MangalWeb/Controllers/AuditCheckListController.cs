@@ -69,6 +69,7 @@ namespace MangalWeb.Controllers
                 audit = _auditService.SetDataOnEdit(tblAudit);
             }
             audit.operation = operation;
+            ViewBag.AuditCategoryList = new SelectList(_auditService.GetAuditCategoryList(), "Id", "Name");
             return View("AuditCheckList", audit);
         }
 
@@ -82,6 +83,7 @@ namespace MangalWeb.Controllers
         public ActionResult AuditCheckList()
         {
             ButtonVisiblity("Index");
+            ViewBag.AuditCategoryList = new SelectList(_auditService.GetAuditCategoryList(), "Id", "Name");
             return View();
         }
 

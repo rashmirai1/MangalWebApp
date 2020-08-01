@@ -19,8 +19,7 @@ namespace MangalWeb.Model.Masters
         public decimal GrossRate { get; set; }
 
         [Required(ErrorMessage = "Please Select Deduction Type")]
-        public short DeductionsType { get; set; }
-        public string DeductionTypeStr { get; set; }
+        public string DeductionsType { get; set; }
 
         [Required(ErrorMessage = "Deduction Amount is Required")]
         public decimal DeductionAmount { get; set; }

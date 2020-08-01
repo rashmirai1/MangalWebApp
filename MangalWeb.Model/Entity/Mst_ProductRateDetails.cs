@@ -18,7 +18,7 @@ namespace MangalWeb.Model.Entity
         public int Prd_FkId { get; set; }
         public int Prd_Purity { get; set; }
         public decimal Prd_GrossRate { get; set; }
-        public short Prd_Deductions { get; set; }
+        public string Prd_Deductions { get; set; }
         public decimal Prd_DeductionsAmount { get; set; }
         public decimal Prd_NetRate { get; set; }
         public Nullable<System.DateTime> Prd_RecordCreated { get; set; }

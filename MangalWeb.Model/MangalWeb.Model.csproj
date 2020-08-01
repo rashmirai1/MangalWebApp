@@ -107,6 +107,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MangalEntity.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Mst_AuditCategory.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Mst_AuditCheckList.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -126,6 +129,9 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Mst_PinCode.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_Product.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Mst_ProductRate.cs">

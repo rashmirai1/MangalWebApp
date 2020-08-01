@@ -73,8 +73,8 @@
                                                             var selectList = new SelectList(new[]
                                                             {
                                                                 new SelectListItem { Text = "Select Category"},
-                                                                new SelectListItem { Text = "Online", Value = "1"},
-                                                                    new SelectListItem { Text = "Offline", Value = "2"}
+                                                                new SelectListItem { Text = "Online", Value = "Online"},
+                                                                    new SelectListItem { Text = "Offline", Value = "Offline"}
                                                                     }, "Value", "Text");
                                                         }
                                                         @Html.DropDownListFor(m => m.SourceCategory, selectList)
@@ -96,8 +96,8 @@
                                                             var statuslist = new SelectList(new[]
                                                             {
                                                                     new SelectListItem { Text = "Select Status"},
-                                                                    new SelectListItem { Text = "Active", Value = "1"},
-                                                                    new SelectListItem { Text = "Inactive", Value = "2"}
+                                                                    new SelectListItem { Text = "Active", Value = "Active"},
+                                                                    new SelectListItem { Text = "Inactive", Value = "Inactive"}
                                                                     }, "Value", "Text");
                                                         }
                                                         @Html.DropDownListFor(m => m.SourceStatus, statuslist)

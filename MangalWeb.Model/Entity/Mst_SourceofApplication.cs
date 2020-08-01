@@ -16,8 +16,8 @@ namespace MangalWeb.Model.Entity
     {
         public int Soa_Id { get; set; }
         public string Soa_Name { get; set; }
-        public Nullable<short> Soa_Category { get; set; }
-        public Nullable<short> Soa_Status { get; set; }
+        public string Soa_Category { get; set; }
+        public string Soa_Status { get; set; }
         public Nullable<System.DateTime> Soa_RecordCreated { get; set; }
         public Nullable<System.DateTime> Soa_RecordUpdated { get; set; }
         public Nullable<int> Soa_RecordCreatedBy { get; set; }

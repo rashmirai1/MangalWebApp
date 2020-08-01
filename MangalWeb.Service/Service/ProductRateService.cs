@@ -19,6 +19,12 @@ namespace MangalWeb.Service.Service
             return product;
         }
 
+        public List<Mst_Product> GetProductList()
+        {
+            var list = _productRateRepository.GetProductList();
+            return list;
+        }
+
         public List<Mst_PurityMaster> GetPurityById(int id)
         {
             var purity = _productRateRepository.GetPurityMasterById(id);

@@ -20,7 +20,7 @@ namespace MangalWeb.Repository.Repository
 
         public Mst_SourceofApplication GetSourceofApplicationById(int id)
         {
-            var source = _context.Mst_SourceofApplication.Where(x => x.Soa_Id == id && x.Soa_Status == 1).FirstOrDefault();
+            var source = _context.Mst_SourceofApplication.Where(x => x.Soa_Id == id && x.Soa_Status == "Active").FirstOrDefault();
             return source;
         }
 
@@ -76,8 +76,8 @@ namespace MangalWeb.Repository.Repository
             source.ID = tblsource.Soa_Id;
             source.EditID = tblsource.Soa_Id;
             source.SourceName = tblsource.Soa_Name;
-            source.SourceCategory = (short)tblsource.Soa_Category;
-            source.SourceStatus = (short)tblsource.Soa_Status;
+            source.SourceCategory = tblsource.Soa_Category;
+            source.SourceStatus = tblsource.Soa_Status;
             return source;
         }
 
@@ -91,8 +91,8 @@ namespace MangalWeb.Repository.Repository
                  model.SourceName = item.Soa_Name;
                  model.EditID = item.Soa_Id;
                  model.ID = item.Soa_Id;
-                 model.SourceCategirystr = item.Soa_Category == 1 ? "Online" : "Offline";
-                 model.SourceStatusstr = item.Soa_Status == 1 ? "Active" : "Inactive";
+                 model.SourceCategory = item.Soa_Category;
+                 model.SourceStatus = item.Soa_Status;
                  list.Add(model);
             }
             return list;

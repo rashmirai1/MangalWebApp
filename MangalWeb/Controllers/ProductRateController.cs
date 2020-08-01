@@ -64,6 +64,7 @@ namespace MangalWeb.Controllers
             ButtonVisiblity(operation);
             var productRatevm = _productrateService.GetProductRateById(ID);
             ViewBag.PurityList = new SelectList(_productrateService.GetPurityById(productRatevm.Product), "Id", "PurityName");
+            ViewBag.ProductList = new SelectList(_productrateService.GetProductList(), "Id", "Name");
             return View("ProductRate", productRatevm);
         }
 
@@ -80,6 +81,7 @@ namespace MangalWeb.Controllers
             var model = new ProductRateViewModel();
             model.ProductRateList = new List<ProductRateDetailsVM>();
             ViewBag.PurityList = new SelectList(_productrateService.GetAllPurityMaster(), "Id", "PurityName");
+            ViewBag.ProductList = new SelectList(_productrateService.GetProductList(), "Id", "Name");
             return View(model);
         }
 

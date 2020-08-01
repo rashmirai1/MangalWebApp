@@ -47,6 +47,7 @@ namespace MangalWeb.Controllers
                 ornament = _ornamentService.SetDataOnEdit(tblOrnament);
             }
             ornament.operation = operation;
+            ViewBag.ProductList = new SelectList(_ornamentService.GetProductList(), "Id", "Name");
             return View("Ornament", ornament);
         }
 
@@ -79,6 +80,7 @@ namespace MangalWeb.Controllers
         public ActionResult Ornament()
         {
             ButtonVisiblity("Index");
+            ViewBag.ProductList = new SelectList(_ornamentService.GetProductList(), "Id", "Name");
             return View();
         }
 

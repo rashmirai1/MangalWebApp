@@ -46,21 +46,12 @@
                                             <div class="form-group">
                                                 <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Product<span class="text-danger"> * </span></label>
                                                 <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                                                    <div class="section">
-                                                        <label class="field select">
-                                                            @{
-                                                                var productList = new SelectList(new[]
-                                                                {
-                                                                new SelectListItem { Text = "Select Product"},
-                                                                new SelectListItem { Text = "Gold" , Value = "1"},
-                                                                    new SelectListItem { Text = "Diamond", Value = "2"},
-                                                                    }, "Value", "Text");
-                                                            }
-                                                            @Html.DropDownListFor(m => m.Product, productList)
-                                                            <span class="text-danger">@Html.ValidationMessageFor(m => m.Product)</span>
-                                                            <i class="arrow"></i>
-                                                        </label>
-                                                    </div>
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.Product, (SelectList)ViewBag.ProductList, "--Select Product --", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.Product)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -87,8 +78,16 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label" id="lblSerialNumber"> Gross Rate <span class="text-danger"> * </span></label>
                                         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                            @Html.EditorFor(model => model.ProductDetailsViewModel.GrossRate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Gross Rate", @maxlength = "8",
-                                               @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                            @Html.EditorFor(model => model.ProductDetailsViewModel.GrossRate, new
+                                       {
+                                           htmlAttributes = new
+                                           {
+                                               @class = "form-control input-sm",
+                                               @placeholder = "Gross Rate",
+                                               @maxlength = "8",
+                                               @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)"
+                                           }
+                                       })
                                             @Html.ValidationMessageFor(model => model.ProductDetailsViewModel.GrossRate, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -100,10 +99,10 @@
                                             <div class="section">
                                                 <label class="field select">
                                                     @{
-                                                            var AmountList = new SelectList(new[]
-                                                            {
-                                                                    new SelectListItem { Text = "Amount", Value = "1"},
-                                                                    new SelectListItem { Text = "Percentage", Value = "2"}
+                                                        var AmountList = new SelectList(new[]
+                                                        {
+                                                                    new SelectListItem { Text = "Amount", Value = "Amount"},
+                                                                    new SelectListItem { Text = "Percentage", Value = "Percentage"}
                                                                     }, "Value", "Text");
                                                     }
                                                     @Html.DropDownListFor(model => model.ProductDetailsViewModel.DeductionsType, AmountList)
@@ -117,8 +116,16 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">Deduction Amount<span class="text-danger"> * </span></label>
                                         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                            @Html.EditorFor(model => model.ProductDetailsViewModel.DeductionAmount, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Deduction Amount",
-                                               @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @maxlength = "9" } })
+                                            @Html.EditorFor(model => model.ProductDetailsViewModel.DeductionAmount, new
+                                       {
+                                           htmlAttributes = new
+                                           {
+                                               @class = "form-control input-sm",
+                                               @placeholder = "Deduction Amount",
+                                               @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)",
+                                               @maxlength = "9"
+                                           }
+                                       })
                                             @Html.ValidationMessageFor(model => model.ProductDetailsViewModel.DeductionAmount, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -127,7 +134,7 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">Net Rate</label>
                                         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                            @Html.EditorFor(model => model.ProductDetailsViewModel.NetRate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Net Rate", @maxlength = "9",@readonly=true } })
+                                            @Html.EditorFor(model => model.ProductDetailsViewModel.NetRate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Net Rate", @maxlength = "9", @readonly = true } })
                                             @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
                                         </div>
                                     </div>
@@ -157,20 +164,20 @@
                                         <tbody>
                                             @{int j = 1;}
                                             @foreach (var item in Model.ProductRateList)
-                                                {
+                                            {
                                                 <tr id="@item.ID">
                                                     <td>@j</td>
                                                     <td id="@item.Purity">@item.PurityStr</td>
                                                     <td>@item.GrossRate</td>
-                                                    <td id="@item.DeductionsType">@item.DeductionTypeStr</td>
+                                                    <td id="@item.DeductionsType">@item.DeductionsType</td>
                                                     <td>@item.DeductionAmount</td>
                                                     <td>@item.NetRate</td>
                                                     <td>
                                                         <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
                                                     </td>
                                                 </tr>
-                                                    j++;
-                                                }
+                                                j++;
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
@@ -213,7 +220,7 @@
                 var tr = $(this).closest('tr');
                 currentRow = $(this).parents('tr');
                 sr_no = tr.find('td:eq(0)').html();
-                trid =tr.attr('id'); // table row ID 
+                trid =tr.attr('id'); // table row ID
                 var purityNo = tr.find("td").eq(1).attr('id');
                 var grossRate = tr.find('td:eq(2)').html();
                 var deductionType = tr.find("td").eq(3).attr('id');
@@ -234,13 +241,13 @@
                 }
             })
 
-            
+
             $("#ProductDetailsViewModel_GrossRate").on('change', function () {
                 var getRate = $("#ProductDetailsViewModel_GrossRate").val();
                 var getDeductions = $("#ProductDetailsViewModel_DeductionAmount").val();
                 var NetRate = getRate - getDeductions;
                 $("#ProductDetailsViewModel_NetRate").val(parseFloat(NetRate.toFixed(2)));
-                if ($("#ProductDetailsViewModel_DeductionsType").val() == 2) {
+                if ($("#ProductDetailsViewModel_DeductionsType").val() == "Percentage") {
                     var NetRate =parseFloat(getRate * getDeductions / 100);
                     $("#ProductDetailsViewModel_NetRate").val(parseFloat(NetRate.toFixed(2)));
                 }
@@ -251,7 +258,7 @@
                 var getDeductions = $("#ProductDetailsViewModel_DeductionAmount").val();
                 var NetRate = getRate - getDeductions;
                 $("#ProductDetailsViewModel_NetRate").val(parseFloat(NetRate.toFixed(2)));
-                if ($("#ProductDetailsViewModel_DeductionsType").val() == 2) {
+                if ($("#ProductDetailsViewModel_DeductionsType").val() == "Percentage") {
                     var NetRate =parseFloat(getRate * getDeductions / 100);
                     $("#ProductDetailsViewModel_NetRate").val(parseFloat(NetRate.toFixed(2)));
                 }
@@ -263,7 +270,7 @@
                 var getDeductions = $("#ProductDetailsViewModel_DeductionAmount").val();
                 var NetRate = getRate - getDeductions;
                 $("#ProductDetailsViewModel_NetRate").val(parseFloat(NetRate.toFixed(2)));
-                if ($("#ProductDetailsViewModel_DeductionsType").val() == 2) {
+                if ($("#ProductDetailsViewModel_DeductionsType").val() == "Percentage") {
                     var NetRate =parseFloat(getRate * getDeductions / 100);
                     $("#ProductDetailsViewModel_NetRate").val(parseFloat(NetRate.toFixed(2)));
                 }
@@ -356,7 +363,7 @@
                     debugger;
                     //sr_no = tr.find('td:eq(0)').html();
                     sr_no = tr.find('td:eq(0)').html();
-                    trid =tr.attr('id'); // table row ID 
+                    trid =tr.attr('id'); // table row ID
                     var purityNo = tr.find("td").eq(1).attr('id');
                     var grossRate = tr.find('td:eq(2)').html();
                     var deductionType = tr.find("td").eq(3).attr('id');

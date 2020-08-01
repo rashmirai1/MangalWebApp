@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Repository\AuditChecklistRepository.cs" />
+    <Compile Include="Repository\BranchRepository.cs" />
     <Compile Include="Repository\ChargeRepository.cs" />
     <Compile Include="Repository\DocumentRepository.cs" />
     <Compile Include="Repository\FinancialYearRepository.cs" />

@@ -189,13 +189,18 @@ namespace MangalWeb.Repository.Repository
                 rateTrnViewModel.PurityStr = puritystr;
                 rateTrnViewModel.GrossRate = c.Prd_GrossRate;
                 rateTrnViewModel.DeductionsType = c.Prd_Deductions;
-                rateTrnViewModel.DeductionTypeStr = c.Prd_Deductions == 1 ? "Amount" : "Diamond";
                 rateTrnViewModel.DeductionAmount = c.Prd_DeductionsAmount;
                 rateTrnViewModel.NetRate = c.Prd_NetRate;
                 ProductTrnViewModelList.Add(rateTrnViewModel);
             }
             rateviewmodel.ProductRateList = ProductTrnViewModelList;
             return rateviewmodel;
+        }
+
+        public List<Mst_Product> GetProductList()
+        {
+            var list = _context.Mst_Product.ToList();
+            return list;
         }
     }
 }

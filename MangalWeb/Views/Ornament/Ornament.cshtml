@@ -59,17 +59,8 @@
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 <div class="section">
                                                     <label class="field select">
-                                                        @{
-                                                            var productList = new SelectList(new[]
-                                                            {
-                                                                new SelectListItem { Text = "Select Product"},
-                                                                new SelectListItem { Text = "Gold Loan", Value = "1"},
-                                                                    new SelectListItem { Text = "Diamond Loan", Value = "2"},
-                                                                    }, "Value", "Text");
-                                                        }
-                                                        @Html.DropDownListFor(m => m.Product, productList)
-
-                                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.Product)</span>
+                                                        @Html.DropDownListFor(m => m.Product, (SelectList)ViewBag.ProductList, "--Select Product --", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.Product)</span>
                                                         <i class="arrow"></i>
                                                     </label>
                                                 </div>
@@ -86,9 +77,9 @@
                                                             var statuslist = new SelectList(new[]
                                                             {
                                                                     new SelectListItem { Text = "Select Status"},
-                                                                    new SelectListItem { Text = "Allowed", Value = "1"},
-                                                                    new SelectListItem { Text = "Not allowed", Value = "2"},
-                                                                    new SelectListItem { Text = "Prohibited", Value = "3"}
+                                                                    new SelectListItem { Text = "Allowed", Value = "Allowed"},
+                                                                    new SelectListItem { Text = "Not allowed", Value = "Not allowed"},
+                                                                    new SelectListItem { Text = "Prohibited", Value = "Prohibited"}
                                                                     }, "Value", "Text");
                                                         }
                                                         @Html.DropDownListFor(m => m.Status, statuslist)

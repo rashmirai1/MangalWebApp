@@ -16,12 +16,14 @@ namespace MangalWeb.Model.Entity
     {
         public int Acl_Id { get; set; }
         public System.DateTime Acl_EffectiveDate { get; set; }
-        public short Acl_Categoryofaudit { get; set; }
+        public int Acl_Categoryofaudit { get; set; }
         public string Acl_CheckPoint { get; set; }
-        public short Acl_Status { get; set; }
+        public string Acl_Status { get; set; }
         public Nullable<System.DateTime> Acl_RecordCreated { get; set; }
         public Nullable<System.DateTime> Acl_RecordUpdated { get; set; }
         public Nullable<int> Acl_RecordCreatedBy { get; set; }
         public Nullable<int> Acl_RecordUpdatedBy { get; set; }
+    
+        public virtual Mst_AuditCategory Mst_AuditCategory { get; set; }
     }
 }

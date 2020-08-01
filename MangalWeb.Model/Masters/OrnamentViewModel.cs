@@ -15,13 +15,12 @@ namespace MangalWeb.Model.Masters
         public string OrnamentName { get; set; }
 
         [Required(ErrorMessage = "Please Select Product")]
-        public short Product { get; set; }
+        public int Product { get; set; }
 
         [Required(ErrorMessage = "Please Select Status")]
-        public short Status { get; set; }
+        public string Status { get; set; }
 
         public string ProductStr { get; set; }
-        public string StatusStr { get; set; }
 
         public string operation { get; set; }
 

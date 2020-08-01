@@ -46,7 +46,7 @@
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Effective Date<span class="text-danger">*</span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 <span class="text-danger" id="CustomErr"> </span>
-                                                @Html.EditorFor(model => model.EffectiveDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Effective Date",@autocomplete="Off" } })
+                                                @Html.EditorFor(model => model.EffectiveDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Effective Date", @autocomplete = "Off" } })
                                                 <span class="text-danger" id="CustomErrr"> </span>
                                                 @*@Html.ValidationMessageFor(model => model.EffectiveDate, "", new { @class = "text-danger" })*@
                                             </div>
@@ -59,62 +59,45 @@
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 <div class="section">
                                                     <label class="field select">
-                                                        @{
-                                                            var categoryList = new SelectList(new[]
-                                                            {
-                                                                new SelectListItem { Text = "Select Category of Audit"},
-                                                                new SelectListItem { Text = "Branch Status", Value = "1"},
-                                                                    new SelectListItem { Text = "Gold Status", Value = "2"},
-                                                                    new SelectListItem { Text = "Cash Status", Value = "3"},
-                                                                    new SelectListItem { Text = "ADMIN RELATED/COMPLAINCE", Value = "4"},
-                                                                    new SelectListItem { Text = "REGISTERS", Value = "5"},
-                                                                    new SelectListItem { Text = "RISKS", Value = "6"},
-                                                                    new SelectListItem { Text = "Legal", Value = "7"},
-                                                                    new SelectListItem { Text = "Process", Value = "8"},
-                                                                    new SelectListItem { Text = "Security", Value = "9"},
-                                                                    new SelectListItem { Text = "Grading", Value = "10"},
-                                                                    }, "Value", "Text");
-                                                        }
-                                                        @Html.DropDownListFor(m => m.CategoryAudit, categoryList)
-                                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.CategoryAudit)</span>
+                                                        @Html.DropDownListFor(m => m.CategoryAudit, (SelectList)ViewBag.AuditCategoryList, "--Select Category of Audit--", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.CategoryAudit)</span>
                                                         <i class="arrow"></i>
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:10px;">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Audit CheckPoint<span class="text-danger">*</span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
-                                                @Html.TextAreaFor(model => model.AuditCheckPoint, new { @class = "form-control", @placeholder = "Audit CheckPoint" })
-                                                @Html.ValidationMessageFor(model => model.AuditCheckPoint, "", new { @class = "text-danger" })
-                                            </div>
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:10px;">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Audit CheckPoint<span class="text-danger">*</span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <span class="text-danger" id="CustomErr"> </span>
+                                            @Html.TextAreaFor(model => model.AuditCheckPoint, new { @class = "form-control", @placeholder = "Audit CheckPoint" })
+                                            @Html.ValidationMessageFor(model => model.AuditCheckPoint, "", new { @class = "text-danger" })
                                         </div>
-                                        <br />
                                     </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
-                                                        @{
-                                                            var statuslist = new SelectList(new[]
-                                                            {
+                                    <br />
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <div class="section">
+                                                <label class="field select">
+                                                    @{
+                                                        var statuslist = new SelectList(new[]
+                                                        {
                                                                     new SelectListItem { Text = "Select Status"},
-                                                                    new SelectListItem { Text = "Active", Value = "1"},
-                                                                    new SelectListItem { Text = "Inactive", Value = "2"},
+                                                                    new SelectListItem { Text = "Active", Value = "Active"},
+                                                                    new SelectListItem { Text = "Inactive", Value = "Inactive"},
                                                                     }, "Value", "Text");
-                                                        }
-                                                        @Html.DropDownListFor(m => m.Status, statuslist)
-                                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
-
+                                                    }
+                                                    @Html.DropDownListFor(m => m.Status, statuslist)
+                                                    <span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>
+                                                    <i class="arrow"></i>
+                                                </label>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -124,9 +107,10 @@
                 </div>
             </div>
         </div>
-        <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
-    </section>
-                                                            }
+            </div>
+                                                        <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
+                                                    </section>
+                                                        }
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -134,7 +118,7 @@
 @section javascriptsection{
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-<link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/jquery.validate.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -162,7 +146,7 @@
             //    $("#CategoryAudit").focus();
             //    return;
             //}
-            
+
             //var auditcheckpoint = $("#AuditCheckPoint").val();
             //if (auditcheckpoint == "") {
             //    $("#CustomErr").text('Please Enter Audit CheckPoint');

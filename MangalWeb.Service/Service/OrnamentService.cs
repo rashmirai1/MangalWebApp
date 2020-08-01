@@ -19,6 +19,12 @@ namespace MangalWeb.Service.Service
             return list;
         }
 
+        public List<Mst_Product> GetProductList()
+        {
+            var list = _ornamentRepository.GetProductList();
+            return list;
+        }
+
         public tblItemMaster GetOrnamentById(int id)
         {
             var ornament = _ornamentRepository.GetOrnamentById(id);
