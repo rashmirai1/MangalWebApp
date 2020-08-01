@@ -14,7 +14,8 @@ namespace MangalWeb.Model.Transaction
         public string ApplicantPrefix { get; set; }
         public string CustomerID { get; set; }
         public Nullable<System.DateTime> AppliedDate { get; set; }
-        public int OperatorID { get; set; }
+        public Nullable<System.DateTime> KYCDate { get; set; }
+        public int? OperatorID { get; set; }
         public string ExistingCustomerID { get; set; }
         public string ExistingPLCaseNo { get; set; }
         public string AppFName { get; set; }
@@ -84,5 +85,7 @@ namespace MangalWeb.Model.Transaction
         public string NomineeMobileNo { get; set; }
         public string NomineePanNo { get; set; }
         public string NomineeAdharNo { get; set; }
+
+        public Boolean isPanAdharExist { get; set; }
     }
 }
