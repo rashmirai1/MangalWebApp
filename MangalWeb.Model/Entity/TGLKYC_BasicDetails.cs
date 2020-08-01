@@ -77,6 +77,18 @@ namespace MangalWeb.Model.Entity
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public Nullable<bool> isActive { get; set; }
         public Nullable<int> SourceofApplicationID { get; set; }
-        public System.DateTime KYCDate { get; set; }
+        public Nullable<System.DateTime> KYCDate { get; set; }
+        public string ApplicationNo { get; set; }
+        public string AdhaarNo { get; set; }
+        public string ApplicantPrefix { get; set; }
+        public string MotherName { get; set; }
+        public string Father_Spouse { get; set; }
+        public string CKYCNo { get; set; }
+        public string SourceType { get; set; }
+        public string OccupationOther { get; set; }
+        public string IndustryOther { get; set; }
+        public string NomineeMobileNo { get; set; }
+        public string NomineePanNo { get; set; }
+        public string NomineeAdharNo { get; set; }
     }
 }
