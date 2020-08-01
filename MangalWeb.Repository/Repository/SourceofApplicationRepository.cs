@@ -75,7 +75,7 @@ namespace MangalWeb.Repository.Repository
             source.ID = tblsource.Soa_Id;
             source.EditID = tblsource.Soa_Id;
             source.SourceName = tblsource.Soa_Name;
-            source.SourceCategory = (short)tblsource.Soa_Category;
+            source.SourceCategory = tblsource.Soa_Category;
             source.SourceStatus = (short)tblsource.Soa_Status;
             return source;
         }

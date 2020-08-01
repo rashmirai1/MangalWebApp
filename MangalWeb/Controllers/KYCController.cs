@@ -12,8 +12,7 @@ namespace MangalWeb.Controllers
         public ActionResult Index()
         {
             ButtonVisiblity("Index");
-            // var model = new CityViewModel();
-            //  ViewBag.StateList = new SelectList(_cityService.GetStateList(), "StateID", "StateName");
+            ViewBag.SourceList = new SelectList(_kycService.GetSourceOfApplicationList(), "Soa_Name", "Soa_Name");
             return View();
         }
 
@@ -22,12 +21,40 @@ namespace MangalWeb.Controllers
             try
             {
                 _kycService.SaveRecord(model);
+                return Json(model);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-            return Json(model);
+        }
+
+        public JsonResult doesPanExist(string PanNo)
+        {
+            try
+            {
+              var model= _kycService.doesPanExist(PanNo);
+              return Json(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            
+        }
+
+        public JsonResult doesAdharExist(string AdharNo)
+        {
+            try
+            {
+                var model = _kycService.doesAdharExist(AdharNo);
+                return Json(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
         }
     }
 }

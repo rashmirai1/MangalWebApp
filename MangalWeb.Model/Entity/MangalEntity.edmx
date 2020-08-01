@@ -183,15 +183,22 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           <Property Name="WNumber" Type="int" />
           <Property Name="Wwords" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Mst_AuditCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
         <EntityType Name="Mst_AuditCheckList">
           <Key>
             <PropertyRef Name="Acl_Id" />
           </Key>
           <Property Name="Acl_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Acl_EffectiveDate" Type="datetime" Nullable="false" />
-          <Property Name="Acl_Categoryofaudit" Type="smallint" Nullable="false" />
+          <Property Name="Acl_Categoryofaudit" Type="int" Nullable="false" />
           <Property Name="Acl_CheckPoint" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Acl_Status" Type="smallint" Nullable="false" />
+          <Property Name="Acl_Status" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Acl_RecordCreated" Type="datetime" />
           <Property Name="Acl_RecordUpdated" Type="datetime" />
           <Property Name="Acl_RecordCreatedBy" Type="int" />
@@ -247,7 +254,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           </Key>
           <Property Name="Ps_Id" Type="int" Nullable="false" />
           <Property Name="Ps_Datewef" Type="datetime" Nullable="false" />
-          <Property Name="Ps_Penalty" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Ps_Penalty" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Ps_Accounthead" Type="int" Nullable="false" />
           <Property Name="Ps_RecordCreated" Type="datetime" />
           <Property Name="Ps_RecordUpdated" Type="datetime" />
@@ -268,13 +275,20 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           <Property Name="Pc_RecordCreatedBy" Type="int" />
           <Property Name="Pc_RecordUpdatedBy" Type="int" />
         </EntityType>
+        <EntityType Name="Mst_Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
         <EntityType Name="Mst_ProductRate">
           <Key>
             <PropertyRef Name="Pr_Id" />
           </Key>
           <Property Name="Pr_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Pr_Date" Type="datetime" Nullable="false" />
-          <Property Name="Pr_Product" Type="smallint" Nullable="false" />
+          <Property Name="Pr_Product" Type="int" Nullable="false" />
           <Property Name="Pr_RecordCreated" Type="datetime" />
           <Property Name="Pr_RecordUpdated" Type="datetime" />
           <Property Name="Pr_RecordCreatedBy" Type="int" />
@@ -288,7 +302,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           <Property Name="Prd_FkId" Type="int" Nullable="false" />
           <Property Name="Prd_Purity" Type="int" Nullable="false" />
           <Property Name="Prd_GrossRate" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="Prd_Deductions" Type="smallint" Nullable="false" />
+          <Property Name="Prd_Deductions" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Prd_DeductionsAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Prd_NetRate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Prd_RecordCreated" Type="datetime" />
@@ -330,8 +344,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           </Key>
           <Property Name="Soa_Id" Type="int" Nullable="false" />
           <Property Name="Soa_Name" Type="varchar" MaxLength="30" />
-          <Property Name="Soa_Category" Type="smallint" />
-          <Property Name="Soa_Status" Type="smallint" />
+          <Property Name="Soa_Category" Type="nvarchar" MaxLength="50" />
+          <Property Name="Soa_Status" Type="nvarchar" MaxLength="50" />
           <Property Name="Soa_RecordCreated" Type="datetime" />
           <Property Name="Soa_RecordUpdated" Type="datetime" />
           <Property Name="Soa_RecordCreatedBy" Type="int" />
@@ -474,18 +488,11 @@ warning 6013: The table/view 'MangalDBNew.dbo.Sheet2$' does not have a primary k
           <Property Name="CountryName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CountryCode" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLChargeMaster_BasicInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tbl_GLChargeMaster_BasicInfo">
           <Key>
             <PropertyRef Name="CID" />
-            <PropertyRef Name="ChargeName" />
-            <PropertyRef Name="ReferenceDate" />
-            <PropertyRef Name="Status" />
-            <PropertyRef Name="FYID" />
-            <PropertyRef Name="BranchID" />
           </Key>
-          <Property Name="CID" Type="int" Nullable="false" />
+          <Property Name="CID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ChargeName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ReferenceDate" Type="smalldatetime" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="10" Nullable="false" />
@@ -499,18 +506,11 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLChargeMaster_BasicInfo' does
           <Property Name="DeletedBy" Type="int" />
           <Property Name="DeletedDate" Type="smalldatetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLChargeMaster_Details' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tbl_GLChargeMaster_Details">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="CID" />
-            <PropertyRef Name="LoanAmtFrom" />
-            <PropertyRef Name="LoanAmtTo" />
-            <PropertyRef Name="Charges" />
-            <PropertyRef Name="ChargeType" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CID" Type="int" Nullable="false" />
           <Property Name="LoanAmtFrom" Type="float" Nullable="false" />
           <Property Name="LoanAmtTo" Type="float" Nullable="false" />
@@ -623,17 +623,29 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_UserLogin' does not have a pri
           <Property Name="CityStdCode" Type="nvarchar" MaxLength="50" />
           <Property Name="CityBlackListed" Type="nchar" MaxLength="10" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.tblCompanyBranchMaster' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblCompanyBranchMaster">
           <Key>
             <PropertyRef Name="BID" />
-            <PropertyRef Name="BranchName" />
-            <PropertyRef Name="CompID" />
           </Key>
-          <Property Name="BID" Type="int" Nullable="false" />
-          <Property Name="BranchName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchName" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="CompID" Type="int" Nullable="false" />
+          <Property Name="BranchCode" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="BranchType" Type="smallint" Nullable="false" />
+          <Property Name="InceptionDate" Type="datetime" Nullable="false" />
+          <Property Name="RentPeriodAgreed" Type="datetime" />
+          <Property Name="Address" Type="varchar" MaxLength="100" />
+          <Property Name="Pincode" Type="int" Nullable="false" />
+          <Property Name="ContactPerson" Type="varchar" MaxLength="50" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="10" />
+          <Property Name="InTime" Type="varchar" MaxLength="10" />
+          <Property Name="OutTime" Type="varchar" MaxLength="10" />
+          <Property Name="DateWEF" Type="datetime" />
+          <Property Name="Status" Type="smallint" />
+          <Property Name="RecordCreated" Type="datetime" />
+          <Property Name="RecordUpdated" Type="datetime" />
+          <Property Name="RecordCreatedBy" Type="int" />
+          <Property Name="RecordUpdatedBy" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.tblCreateCompanyMaster' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -659,23 +671,16 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblCreateCompanyMaster' does not h
             <PropertyRef Name="DocumentID" />
           </Key>
           <Property Name="DocumentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DocumentName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DocumentName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="DocumentType" Type="int" Nullable="false" />
           <Property Name="ExpiryDateApplicable" Type="bit" Nullable="false" />
           <Property Name="Status" Type="smallint" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.tblFinancialyear' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblFinancialyear">
           <Key>
             <PropertyRef Name="FinancialyearID" />
-            <PropertyRef Name="Financialyearfrom" />
-            <PropertyRef Name="Financialyearto" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="EndDate" />
-            <PropertyRef Name="CompID" />
           </Key>
-          <Property Name="FinancialyearID" Type="int" Nullable="false" />
+          <Property Name="FinancialyearID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Financialyearfrom" Type="smalldatetime" Nullable="false" />
           <Property Name="Financialyearto" Type="smalldatetime" Nullable="false" />
           <Property Name="StartDate" Type="smalldatetime" Nullable="false" />
@@ -720,8 +725,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblFinancialyear' does not have a 
           </Key>
           <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Product" Type="smallint" Nullable="false" />
-          <Property Name="Status" Type="smallint" Nullable="false" />
+          <Property Name="Product" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.tblLogin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1116,11 +1121,11 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInwardForm_GoldDetails' does no
           <Property Name="KYCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerID" Type="nvarchar" MaxLength="20" />
           <Property Name="AppliedDate" Type="smalldatetime" />
-          <Property Name="OperatorID" Type="int" Nullable="false" />
-          <Property Name="ExistingCustomerID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="OperatorID" Type="int" />
+          <Property Name="ExistingCustomerID" Type="nvarchar" MaxLength="20" />
           <Property Name="ExistingPLCaseNo" Type="nvarchar" MaxLength="50" />
           <Property Name="AppFName" Type="varchar" MaxLength="30" />
-          <Property Name="AppMName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="AppMName" Type="varchar" MaxLength="30" />
           <Property Name="AppLName" Type="varchar" MaxLength="30" />
           <Property Name="AppPhotoPath" Type="nvarchar" MaxLength="100" />
           <Property Name="AppSignPath" Type="nvarchar" MaxLength="100" />
@@ -1641,6 +1646,18 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="CustName" Type="varchar" MaxLength="92" />
           <Property Name="LoanDate1" Type="varchar" MaxLength="20" />
         </EntityType>-->
+        <Association Name="FK_Mst_AuditCheckList_Mst_AuditCategory">
+          <End Role="Mst_AuditCategory" Type="Self.Mst_AuditCategory" Multiplicity="1" />
+          <End Role="Mst_AuditCheckList" Type="Self.Mst_AuditCheckList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_AuditCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mst_AuditCheckList">
+              <PropertyRef Name="Acl_Categoryofaudit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Mst_ChildDeviation_Mst_ParentDeviation">
           <End Role="Mst_ParentDeviation" Type="Self.Mst_ParentDeviation" Multiplicity="1" />
           <End Role="Mst_ChildDeviation" Type="Self.Mst_ChildDeviation" Multiplicity="*" />
@@ -1677,6 +1694,18 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Mst_ProductRate_Mst_Product">
+          <End Role="Mst_Product" Type="Self.Mst_Product" Multiplicity="1" />
+          <End Role="Mst_ProductRate" Type="Self.Mst_ProductRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mst_ProductRate">
+              <PropertyRef Name="Pr_Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Mst_ProductRateDetails_Mst_ProductRate">
           <End Role="Mst_ProductRate" Type="Self.Mst_ProductRate" Multiplicity="1" />
           <End Role="Mst_ProductRateDetails" Type="Self.Mst_ProductRateDetails" Multiplicity="*" />
@@ -1686,6 +1715,18 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             </Principal>
             <Dependent Role="Mst_ProductRateDetails">
               <PropertyRef Name="Prd_FkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo">
+          <End Role="tbl_GLChargeMaster_BasicInfo" Type="Self.tbl_GLChargeMaster_BasicInfo" Multiplicity="1" />
+          <End Role="tbl_GLChargeMaster_Details" Type="Self.tbl_GLChargeMaster_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_GLChargeMaster_BasicInfo">
+              <PropertyRef Name="CID" />
+            </Principal>
+            <Dependent Role="tbl_GLChargeMaster_Details">
+              <PropertyRef Name="CID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1713,6 +1754,18 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblItemMaster_Mst_Product">
+          <End Role="Mst_Product" Type="Self.Mst_Product" Multiplicity="1" />
+          <End Role="tblItemMaster" Type="Self.tblItemMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblItemMaster">
+              <PropertyRef Name="Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblStateMaster_tbl_CountryMaster">
           <End Role="tbl_CountryMaster" Type="Self.tbl_CountryMaster" Multiplicity="1" />
           <End Role="tblStateMaster" Type="Self.tblStateMaster" Multiplicity="*" />
@@ -1729,6 +1782,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Parameter Name="Number" Type="numeric" Mode="In" />
           <Parameter Name="CPaise" Type="char" Mode="In" />
         </Function>
+        <Function Name="generateFinancialYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="NumberSuffix" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="val" Type="int" Mode="In" />
         </Function>
@@ -1755,6 +1809,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           </ReturnType>
         </Function>
         <EntityContainer Name="MangalDBNewModelStoreContainer">
+          <EntitySet Name="Mst_AuditCategory" EntityType="Self.Mst_AuditCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_AuditCheckList" EntityType="Self.Mst_AuditCheckList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_ChildDeviation" EntityType="Self.Mst_ChildDeviation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_DocumentType" EntityType="Self.Mst_DocumentType" Schema="dbo" store:Type="Tables" />
@@ -1762,6 +1817,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <EntitySet Name="Mst_ParentDeviation" EntityType="Self.Mst_ParentDeviation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_PenaltySlab" EntityType="Self.Mst_PenaltySlab" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_PinCode" EntityType="Self.Mst_PinCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_Product" EntityType="Self.Mst_Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_ProductRate" EntityType="Self.Mst_ProductRate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_ProductRateDetails" EntityType="Self.Mst_ProductRateDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_PurityMaster" EntityType="Self.Mst_PurityMaster" Schema="dbo" store:Type="Tables" />
@@ -1769,10 +1825,14 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <EntitySet Name="Mst_SchemePurity" EntityType="Self.Mst_SchemePurity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_SourceofApplication" EntityType="Self.Mst_SourceofApplication" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_CountryMaster" EntityType="Self.tbl_CountryMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GLChargeMaster_BasicInfo" EntityType="Self.tbl_GLChargeMaster_BasicInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_GLChargeMaster_Details" EntityType="Self.tbl_GLChargeMaster_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblaccountmaster" EntityType="Self.tblaccountmaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBankMaster" EntityType="Self.tblBankMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCityMaster" EntityType="Self.tblCityMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCompanyBranchMaster" EntityType="Self.tblCompanyBranchMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDocumentMaster" EntityType="Self.tblDocumentMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFinancialyear" EntityType="Self.tblFinancialyear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGroupMaster" EntityType="Self.tblGroupMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblINV_ItemMaster" EntityType="Self.tblINV_ItemMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblItemMaster" EntityType="Self.tblItemMaster" Schema="dbo" store:Type="Tables" />
@@ -1970,33 +2030,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
     [newbharatTGLGoldStock].[ClosingBalance] AS [ClosingBalance]
     FROM [dbo].[newbharatTGLGoldStock] AS [newbharatTGLGoldStock]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="tbl_GLChargeMaster_BasicInfo" EntityType="Self.tbl_GLChargeMaster_BasicInfo" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tbl_GLChargeMaster_BasicInfo].[CID] AS [CID], 
-    [tbl_GLChargeMaster_BasicInfo].[ChargeName] AS [ChargeName], 
-    [tbl_GLChargeMaster_BasicInfo].[ReferenceDate] AS [ReferenceDate], 
-    [tbl_GLChargeMaster_BasicInfo].[Status] AS [Status], 
-    [tbl_GLChargeMaster_BasicInfo].[FYID] AS [FYID], 
-    [tbl_GLChargeMaster_BasicInfo].[BranchID] AS [BranchID], 
-    [tbl_GLChargeMaster_BasicInfo].[CMPId] AS [CMPId], 
-    [tbl_GLChargeMaster_BasicInfo].[CreatedBy] AS [CreatedBy], 
-    [tbl_GLChargeMaster_BasicInfo].[CreatedDate] AS [CreatedDate], 
-    [tbl_GLChargeMaster_BasicInfo].[UpdatedBy] AS [UpdatedBy], 
-    [tbl_GLChargeMaster_BasicInfo].[UpdatedDate] AS [UpdatedDate], 
-    [tbl_GLChargeMaster_BasicInfo].[DeletedBy] AS [DeletedBy], 
-    [tbl_GLChargeMaster_BasicInfo].[DeletedDate] AS [DeletedDate]
-    FROM [dbo].[tbl_GLChargeMaster_BasicInfo] AS [tbl_GLChargeMaster_BasicInfo]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="tbl_GLChargeMaster_Details" EntityType="Self.tbl_GLChargeMaster_Details" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tbl_GLChargeMaster_Details].[ID] AS [ID], 
-    [tbl_GLChargeMaster_Details].[CID] AS [CID], 
-    [tbl_GLChargeMaster_Details].[LoanAmtFrom] AS [LoanAmtFrom], 
-    [tbl_GLChargeMaster_Details].[LoanAmtTo] AS [LoanAmtTo], 
-    [tbl_GLChargeMaster_Details].[Charges] AS [Charges], 
-    [tbl_GLChargeMaster_Details].[ChargeType] AS [ChargeType]
-    FROM [dbo].[tbl_GLChargeMaster_Details] AS [tbl_GLChargeMaster_Details]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="tbl_GLDocumentMaster" EntityType="Self.tbl_GLDocumentMaster" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [tbl_GLDocumentMaster].[DocumentID] AS [DocumentID], 
@@ -2033,13 +2066,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
     [tbl_UserLogin].[BranchID] AS [BranchID]
     FROM [dbo].[tbl_UserLogin] AS [tbl_UserLogin]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="tblCompanyBranchMaster" EntityType="Self.tblCompanyBranchMaster" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblCompanyBranchMaster].[BID] AS [BID], 
-    [tblCompanyBranchMaster].[BranchName] AS [BranchName], 
-    [tblCompanyBranchMaster].[CompID] AS [CompID]
-    FROM [dbo].[tblCompanyBranchMaster] AS [tblCompanyBranchMaster]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="tblCreateCompanyMaster" EntityType="Self.tblCreateCompanyMaster" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [tblCreateCompanyMaster].[CompID] AS [CompID], 
@@ -2054,17 +2080,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
     [tblCreateCompanyMaster].[Phone] AS [Phone], 
     [tblCreateCompanyMaster].[Financialyear] AS [Financialyear]
     FROM [dbo].[tblCreateCompanyMaster] AS [tblCreateCompanyMaster]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="tblFinancialyear" EntityType="Self.tblFinancialyear" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblFinancialyear].[FinancialyearID] AS [FinancialyearID], 
-    [tblFinancialyear].[Financialyearfrom] AS [Financialyearfrom], 
-    [tblFinancialyear].[Financialyearto] AS [Financialyearto], 
-    [tblFinancialyear].[StartDate] AS [StartDate], 
-    [tblFinancialyear].[EndDate] AS [EndDate], 
-    [tblFinancialyear].[Financialyear] AS [Financialyear], 
-    [tblFinancialyear].[CompID] AS [CompID]
-    FROM [dbo].[tblFinancialyear] AS [tblFinancialyear]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="tblLogin" EntityType="Self.tblLogin" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2516,6 +2531,10 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
     [UserTypeDetails].[UserType] AS [UserType]
     FROM [dbo].[UserTypeDetails] AS [UserTypeDetails]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Mst_AuditCheckList_Mst_AuditCategory" Association="Self.FK_Mst_AuditCheckList_Mst_AuditCategory">
+            <End Role="Mst_AuditCategory" EntitySet="Mst_AuditCategory" />
+            <End Role="Mst_AuditCheckList" EntitySet="Mst_AuditCheckList" />
+          </AssociationSet>
           <AssociationSet Name="FK_Mst_ChildDeviation_Mst_ParentDeviation" Association="Self.FK_Mst_ChildDeviation_Mst_ParentDeviation">
             <End Role="Mst_ParentDeviation" EntitySet="Mst_ParentDeviation" />
             <End Role="Mst_ChildDeviation" EntitySet="Mst_ChildDeviation" />
@@ -2528,9 +2547,17 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
             <End Role="Mst_PinCode1" EntitySet="Mst_PinCode" />
           </AssociationSet>
+          <AssociationSet Name="FK_Mst_ProductRate_Mst_Product" Association="Self.FK_Mst_ProductRate_Mst_Product">
+            <End Role="Mst_Product" EntitySet="Mst_Product" />
+            <End Role="Mst_ProductRate" EntitySet="Mst_ProductRate" />
+          </AssociationSet>
           <AssociationSet Name="FK_Mst_ProductRateDetails_Mst_ProductRate" Association="Self.FK_Mst_ProductRateDetails_Mst_ProductRate">
             <End Role="Mst_ProductRate" EntitySet="Mst_ProductRate" />
             <End Role="Mst_ProductRateDetails" EntitySet="Mst_ProductRateDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo" Association="Self.FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo">
+            <End Role="tbl_GLChargeMaster_BasicInfo" EntitySet="tbl_GLChargeMaster_BasicInfo" />
+            <End Role="tbl_GLChargeMaster_Details" EntitySet="tbl_GLChargeMaster_Details" />
           </AssociationSet>
           <AssociationSet Name="FK_tblCityMaster_tblStateMaster" Association="Self.FK_tblCityMaster_tblStateMaster">
             <End Role="tblStateMaster" EntitySet="tblStateMaster" />
@@ -2539,6 +2566,10 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <AssociationSet Name="FK_tblDocumentMaster_Mst_DocumentType" Association="Self.FK_tblDocumentMaster_Mst_DocumentType">
             <End Role="Mst_DocumentType" EntitySet="Mst_DocumentType" />
             <End Role="tblDocumentMaster" EntitySet="tblDocumentMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblItemMaster_Mst_Product" Association="Self.FK_tblItemMaster_Mst_Product">
+            <End Role="Mst_Product" EntitySet="Mst_Product" />
+            <End Role="tblItemMaster" EntitySet="tblItemMaster" />
           </AssociationSet>
           <AssociationSet Name="FK_tblStateMaster_tbl_CountryMaster" Association="Self.FK_tblStateMaster_tbl_CountryMaster">
             <End Role="tbl_CountryMaster" EntitySet="tbl_CountryMaster" />
@@ -2804,6 +2835,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
           <Property Name="DeletedBy" Type="Int32" />
           <Property Name="DeletedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tbl_GLChargeMaster_Details" Relationship="MangalDBNewModel.FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo" FromRole="tbl_GLChargeMaster_BasicInfo" ToRole="tbl_GLChargeMaster_Details" />
         </EntityType>
         <EntityType Name="tbl_GLChargeMaster_Details">
           <Key>
@@ -2820,6 +2852,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="LoanAmtTo" Type="Double" Nullable="false" />
           <Property Name="Charges" Type="Double" Nullable="false" />
           <Property Name="ChargeType" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tbl_GLChargeMaster_BasicInfo" Relationship="MangalDBNewModel.FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo" FromRole="tbl_GLChargeMaster_Details" ToRole="tbl_GLChargeMaster_BasicInfo" />
         </EntityType>
         <EntityType Name="tbl_GLDocumentMaster">
           <Key>
@@ -2878,8 +2911,24 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             <PropertyRef Name="CompID" />
           </Key>
           <Property Name="BID" Type="Int32" Nullable="false" />
-          <Property Name="BranchName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BranchName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CompID" Type="Int32" Nullable="false" />
+          <Property Name="BranchCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BranchType" Type="Int16" Nullable="false" />
+          <Property Name="InceptionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RentPeriodAgreed" Type="DateTime" Precision="3" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Pincode" Type="Int32" Nullable="false" />
+          <Property Name="ContactPerson" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="InTime" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OutTime" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DateWEF" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int16" />
+          <Property Name="RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="RecordCreatedBy" Type="Int32" />
+          <Property Name="RecordUpdatedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblCreateCompanyMaster">
           <Key>
@@ -2924,6 +2973,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Product" Type="Int16" Nullable="false" />
           <Property Name="Status" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Mst_Product" Relationship="MangalDBNewModel.FK_tblItemMaster_Mst_Product" FromRole="tblItemMaster" ToRole="Mst_Product" />
         </EntityType>
         <EntityType Name="tblLogin">
           <Key>
@@ -3552,6 +3602,25 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Parameter Name="text" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
+          <AssociationSet Name="FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo" Association="MangalDBNewModel.FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo">
+            <End Role="tbl_GLChargeMaster_BasicInfo" EntitySet="tbl_GLChargeMaster_BasicInfo" />
+            <End Role="tbl_GLChargeMaster_Details" EntitySet="tbl_GLChargeMaster_Details" />
+          </AssociationSet>
+          <EntitySet Name="Mst_AuditCategory" EntityType="MangalDBNewModel.Mst_AuditCategory" />
+          <EntitySet Name="Mst_Product" EntityType="MangalDBNewModel.Mst_Product" />
+          <AssociationSet Name="FK_Mst_AuditCheckList_Mst_AuditCategory" Association="MangalDBNewModel.FK_Mst_AuditCheckList_Mst_AuditCategory">
+            <End Role="Mst_AuditCategory" EntitySet="Mst_AuditCategory" />
+            <End Role="Mst_AuditCheckList" EntitySet="Mst_AuditCheckList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Mst_ProductRate_Mst_Product" Association="MangalDBNewModel.FK_Mst_ProductRate_Mst_Product">
+            <End Role="Mst_Product" EntitySet="Mst_Product" />
+            <End Role="Mst_ProductRate" EntitySet="Mst_ProductRate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblItemMaster_Mst_Product" Association="MangalDBNewModel.FK_tblItemMaster_Mst_Product">
+            <End Role="Mst_Product" EntitySet="Mst_Product" />
+            <End Role="tblItemMaster" EntitySet="tblItemMasters" />
+          </AssociationSet>
+          <FunctionImport Name="generateFinancialYear" />
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3567,7 +3636,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             <PropertyRef Name="DocumentID" />
           </Key>
           <Property Name="DocumentID" Type="Int32" Nullable="false" />
-          <Property Name="DocumentName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DocumentType" Type="Int32" Nullable="false" />
           <Property Name="ExpiryDateApplicable" Type="Boolean" Nullable="false" />
           <Property Name="Status" Type="Int16" Nullable="false" />
@@ -3762,6 +3831,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="Acl_RecordUpdated" Type="DateTime" Precision="3" />
           <Property Name="Acl_RecordCreatedBy" Type="Int32" />
           <Property Name="Acl_RecordUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Mst_AuditCategory" Relationship="MangalDBNewModel.FK_Mst_AuditCheckList_Mst_AuditCategory" FromRole="Mst_AuditCheckList" ToRole="Mst_AuditCategory" />
         </EntityType>
         <EntityType Name="Mst_ChildDeviation">
           <Key>
@@ -3816,7 +3886,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           </Key>
           <Property Name="Ps_Id" Type="Int32" Nullable="false" />
           <Property Name="Ps_Datewef" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Ps_Penalty" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Ps_Penalty" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="Ps_Accounthead" Type="Int32" Nullable="false" />
           <Property Name="Ps_RecordCreated" Type="DateTime" Precision="3" />
           <Property Name="Ps_RecordUpdated" Type="DateTime" Precision="3" />
@@ -3835,6 +3905,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="Pr_RecordCreatedBy" Type="Int32" />
           <Property Name="Pr_RecordUpdatedBy" Type="Int32" />
           <NavigationProperty Name="Mst_ProductRateDetails" Relationship="MangalDBNewModel.FK_Mst_ProductRateDetails_Mst_ProductRate" FromRole="Mst_ProductRate" ToRole="Mst_ProductRateDetails" />
+          <NavigationProperty Name="Mst_Product" Relationship="MangalDBNewModel.FK_Mst_ProductRate_Mst_Product" FromRole="Mst_ProductRate" ToRole="Mst_Product" />
         </EntityType>
         <EntityType Name="Mst_ProductRateDetails">
           <Key>
@@ -3975,11 +4046,11 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="KYCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="AppliedDate" Type="DateTime" Precision="0" />
-          <Property Name="OperatorID" Type="Int32" Nullable="false" />
-          <Property Name="ExistingCustomerID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OperatorID" Type="Int32" />
+          <Property Name="ExistingCustomerID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="ExistingPLCaseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AppFName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AppMName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AppMName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="AppLName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="AppPhotoPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AppSignPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -4049,6 +4120,71 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="NomineePanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NomineeAdharNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <Association Name="FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo">
+          <End Type="MangalDBNewModel.tbl_GLChargeMaster_BasicInfo" Role="tbl_GLChargeMaster_BasicInfo" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tbl_GLChargeMaster_Details" Role="tbl_GLChargeMaster_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_GLChargeMaster_BasicInfo">
+              <PropertyRef Name="CID" />
+            </Principal>
+            <Dependent Role="tbl_GLChargeMaster_Details">
+              <PropertyRef Name="CID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Mst_AuditCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Mst_AuditCheckList" Relationship="MangalDBNewModel.FK_Mst_AuditCheckList_Mst_AuditCategory" FromRole="Mst_AuditCategory" ToRole="Mst_AuditCheckList" />
+        </EntityType>
+        <EntityType Name="Mst_Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Mst_ProductRate" Relationship="MangalDBNewModel.FK_Mst_ProductRate_Mst_Product" FromRole="Mst_Product" ToRole="Mst_ProductRate" />
+          <NavigationProperty Name="tblItemMasters" Relationship="MangalDBNewModel.FK_tblItemMaster_Mst_Product" FromRole="Mst_Product" ToRole="tblItemMaster" />
+        </EntityType>
+        <Association Name="FK_Mst_AuditCheckList_Mst_AuditCategory">
+          <End Type="MangalDBNewModel.Mst_AuditCategory" Role="Mst_AuditCategory" Multiplicity="1" />
+          <End Type="MangalDBNewModel.Mst_AuditCheckList" Role="Mst_AuditCheckList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_AuditCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mst_AuditCheckList">
+              <PropertyRef Name="Acl_Categoryofaudit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Mst_ProductRate_Mst_Product">
+          <End Type="MangalDBNewModel.Mst_Product" Role="Mst_Product" Multiplicity="1" />
+          <End Type="MangalDBNewModel.Mst_ProductRate" Role="Mst_ProductRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mst_ProductRate">
+              <PropertyRef Name="Pr_Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblItemMaster_Mst_Product">
+          <End Type="MangalDBNewModel.Mst_Product" Role="Mst_Product" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tblItemMaster" Role="tblItemMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblItemMaster">
+              <PropertyRef Name="Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4356,6 +4492,22 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <EntitySetMapping Name="tblCompanyBranchMasters">
             <EntityTypeMapping TypeName="MangalDBNewModel.tblCompanyBranchMaster">
               <MappingFragment StoreEntitySet="tblCompanyBranchMaster">
+                <ScalarProperty Name="RecordUpdatedBy" ColumnName="RecordUpdatedBy" />
+                <ScalarProperty Name="RecordCreatedBy" ColumnName="RecordCreatedBy" />
+                <ScalarProperty Name="RecordUpdated" ColumnName="RecordUpdated" />
+                <ScalarProperty Name="RecordCreated" ColumnName="RecordCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DateWEF" ColumnName="DateWEF" />
+                <ScalarProperty Name="OutTime" ColumnName="OutTime" />
+                <ScalarProperty Name="InTime" ColumnName="InTime" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="RentPeriodAgreed" ColumnName="RentPeriodAgreed" />
+                <ScalarProperty Name="InceptionDate" ColumnName="InceptionDate" />
+                <ScalarProperty Name="BranchType" ColumnName="BranchType" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
                 <ScalarProperty Name="BID" ColumnName="BID" />
                 <ScalarProperty Name="BranchName" ColumnName="BranchName" />
                 <ScalarProperty Name="CompID" ColumnName="CompID" />
@@ -5336,6 +5488,23 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Mst_AuditCategory">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_AuditCategory">
+              <MappingFragment StoreEntitySet="Mst_AuditCategory">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_Product">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_Product">
+              <MappingFragment StoreEntitySet="Mst_Product">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="generateFinancialYear" FunctionName="MangalDBNewModel.Store.generateFinancialYear" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

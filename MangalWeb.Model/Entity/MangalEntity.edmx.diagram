@@ -95,6 +95,12 @@
         <AssociationConnector Association="MangalDBNewModel.FK_tblDocumentMaster_Mst_DocumentType" />
         <AssociationConnector Association="MangalDBNewModel.FK_Mst_ProductRateDetails_Mst_ProductRate" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_BasicDetails" Width="1.5" PointX="3.375" PointY="20.75" />
+        <AssociationConnector Association="MangalDBNewModel.FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Mst_AuditCategory" Width="1.5" PointX="17.75" PointY="28.375" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Mst_Product" Width="1.5" PointX="0.75" PointY="10.625" />
+        <AssociationConnector Association="MangalDBNewModel.FK_Mst_AuditCheckList_Mst_AuditCategory" />
+        <AssociationConnector Association="MangalDBNewModel.FK_Mst_ProductRate_Mst_Product" />
+        <AssociationConnector Association="MangalDBNewModel.FK_tblItemMaster_Mst_Product" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

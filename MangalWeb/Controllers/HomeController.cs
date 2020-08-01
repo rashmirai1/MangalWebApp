@@ -13,9 +13,8 @@ namespace MangalWeb.Controllers
        
         public ActionResult Index()
         {
-           // var test = _homeService.GetAlltblBankMasters();
             return View();
-        }
+        }   
 
         public ActionResult About()
         {
