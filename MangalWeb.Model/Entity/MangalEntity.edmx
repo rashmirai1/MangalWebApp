@@ -90,56 +90,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.bharatTGLGoldInOutDetails' does no
           <Property Name="isActive" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.Bhart01012017TGLSanctionDisburse_BasicDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Bhart01012017TGLSanctionDisburse_BasicDetails">
-          <Property Name="SDID" Type="int" />
-          <Property Name="RefType" Type="nvarchar" MaxLength="50" />
-          <Property Name="RefMon" Type="nvarchar" MaxLength="5" />
-          <Property Name="RefYr" Type="nvarchar" MaxLength="5" />
-          <Property Name="RefID" Type="int" />
-          <Property Name="LoanType" Type="nvarchar" MaxLength="20" />
-          <Property Name="LoanDate" Type="smalldatetime" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
-          <Property Name="KYCID" Type="int" />
-          <Property Name="OperatorID" Type="int" />
-          <Property Name="EligibleLoanAmt" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanPayable" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="BankCashAccID" Type="int" />
-          <Property Name="CheqNEFTDD" Type="nvarchar" MaxLength="50" />
-          <Property Name="CheqNEFTDDNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="CheqNEFTDDDate" Type="smalldatetime" />
-          <Property Name="TotalGrossWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalNetWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalQuantity" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Totalvalue" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalRate" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="SID" Type="int" />
-          <Property Name="DueDate" Type="smalldatetime" />
-          <Property Name="OwnershipProofImagePath" Type="nvarchar" MaxLength="50" />
-          <Property Name="CIBILScore" Type="nvarchar" MaxLength="20" />
-          <Property Name="ItemImage" Type="image" />
-          <Property Name="BCPID" Type="int" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedDate" Type="smalldatetime" />
-          <Property Name="UpdatedBy" Type="int" />
-          <Property Name="UpdatedDate" Type="smalldatetime" />
-          <Property Name="DeletedBy" Type="int" />
-          <Property Name="DeletedDate" Type="smalldatetime" />
-          <Property Name="FYID" Type="int" />
-          <Property Name="BranchID" Type="int" />
-          <Property Name="CMPID" Type="int" />
-          <Property Name="isActive" Type="nvarchar" MaxLength="100" />
-          <Property Name="CashInOutID" Type="int" />
-          <Property Name="GLInOutID" Type="int" />
-          <Property Name="CashOutWardById" Type="int" />
-          <Property Name="GoldInWardById" Type="int" />
-          <Property Name="CashAccID" Type="int" />
-          <Property Name="BankAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CashAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.ImageKyc' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ImageKyc">
           <Key>
@@ -463,23 +413,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.newbharatTGLGoldStock' does not ha
           <Property Name="TotalRelease" Type="int" />
           <Property Name="ClosingBalance" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.Sheet2$' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Sheet2$">
-          <Property Name="GLInOutID" Type="nvarchar" MaxLength="255" />
-          <Property Name="RefType" Type="nvarchar" MaxLength="255" />
-          <Property Name="RefNo" Type="nvarchar" MaxLength="255" />
-          <Property Name="ReferenceType" Type="nvarchar" MaxLength="255" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="255" />
-          <Property Name="PouchNo" Type="nvarchar" MaxLength="255" />
-          <Property Name="GLInOutMode" Type="nvarchar" MaxLength="255" />
-          <Property Name="InOutLoc" Type="nvarchar" MaxLength="255" />
-          <Property Name="LocName" Type="nvarchar" MaxLength="255" />
-          <Property Name="LocResiName" Type="nvarchar" MaxLength="255" />
-          <Property Name="LocDetails" Type="nvarchar" MaxLength="255" />
-          <Property Name="NarrationID" Type="nvarchar" MaxLength="255" />
-          <Property Name="InOutBy" Type="nvarchar" MaxLength="255" />
-        </EntityType>-->
         <EntityType Name="tbl_CountryMaster">
           <Key>
             <PropertyRef Name="CountryID" />
@@ -1270,185 +1203,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLOutwardForm_GoldDetails' does n
           <Property Name="StockLocation" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'ReceiveTime' in the table 'MangalDBNew.dbo.TGlReceipt_BasicDetails' was excluded.
-warning 6013: The table/view 'MangalDBNew.dbo.TGlReceipt_BasicDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGlReceipt_BasicDetails">
-          <Property Name="RcptId" Type="int" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="KYCID" Type="int" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="ReceiveDate" Type="smalldatetime" />
-          <Property Name="BalanceLoanPayable" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="BalanceLoanEligibility" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="ROI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="ReceiptBookNo" Type="nvarchar" MaxLength="10" />
-          <Property Name="ReceiptNo" Type="nvarchar" MaxLength="10" />
-          <Property Name="ReceivedFrom" Type="nvarchar" MaxLength="50" />
-          <Property Name="PaymentMode" Type="nvarchar" MaxLength="50" />
-          <Property Name="CLP" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CLI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CLPI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CLC" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CLO" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RcvCLP" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RecCLPAccID" Type="int" />
-          <Property Name="RecCLPNarID" Type="int" />
-          <Property Name="RcvCLI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RecCLIAccID" Type="int" />
-          <Property Name="RecCLINarID" Type="int" />
-          <Property Name="RcvCLPI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RecCLPIAccID" Type="int" />
-          <Property Name="RecCLPINarID" Type="int" />
-          <Property Name="RecCLC" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RecCLCAccID" Type="int" />
-          <Property Name="RecCLCNarID" Type="int" />
-          <Property Name="RcvTotal" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="BankAccID" Type="int" />
-          <Property Name="CashAccID" Type="int" />
-          <Property Name="CollectedByID" Type="int" />
-          <Property Name="CashierID" Type="int" />
-          <Property Name="CashInOutID" Type="int" />
-          <Property Name="BCRID" Type="int" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedDate" Type="smalldatetime" />
-          <Property Name="UpdatedBy" Type="int" />
-          <Property Name="UpdatedDate" Type="smalldatetime" />
-          <Property Name="DeletedBy" Type="int" />
-          <Property Name="DeletedDate" Type="smalldatetime" />
-          <Property Name="isActive" Type="varchar" MaxLength="2" />
-          <Property Name="FYID" Type="int" />
-          <Property Name="BranchId" Type="int" />
-          <Property Name="CMPID" Type="int" />
-          <Property Name="Finalize" Type="nchar" MaxLength="2" />
-          <Property Name="InterestFromDate" Type="smalldatetime" />
-          <Property Name="InterestToDate" Type="smalldatetime" />
-          <Property Name="OSPrincipal" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="OSInterest" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="OSDays" Type="int" />
-          <Property Name="IntrestRcvTillDate" Type="smalldatetime" />
-          <Property Name="LastROI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="AdvInterestAmt" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="AdvInterestFromDate" Type="smalldatetime" />
-          <Property Name="AdvInterestToDate" Type="smalldatetime" />
-          <Property Name="AdvInterestAccID" Type="int" />
-          <Property Name="TotalAdvInterestAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="OSAdvInterestAmount" Type="decimal" Precision="11" Scale="2" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGlReceipt_Cheque_Details' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGlReceipt_Cheque_Details">
-          <Property Name="ChequeId" Type="int" />
-          <Property Name="RcptId" Type="int" />
-          <Property Name="Serialno" Type="int" />
-          <Property Name="Chq_DD_NEFT" Type="varchar" MaxLength="50" />
-          <Property Name="ChequeNo" Type="nvarchar" MaxLength="100" />
-          <Property Name="BankId" Type="int" />
-          <Property Name="BankName" Type="nvarchar" MaxLength="100" />
-          <Property Name="Amount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="ChequeDate" Type="varchar" MaxLength="12" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGlReceipt_Denomination_Details' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGlReceipt_Denomination_Details">
-          <Property Name="DenoId" Type="int" />
-          <Property Name="RcptId" Type="int" />
-          <Property Name="Serialno" Type="int" />
-          <Property Name="DenoRs" Type="nvarchar" MaxLength="50" />
-          <Property Name="Quantity" Type="int" />
-          <Property Name="Total" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="NoteNos" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_BasicDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGLSanctionDisburse_BasicDetails">
-          <Property Name="SDID" Type="int" />
-          <Property Name="RefType" Type="nvarchar" MaxLength="50" />
-          <Property Name="RefMon" Type="nvarchar" MaxLength="5" />
-          <Property Name="RefYr" Type="nvarchar" MaxLength="5" />
-          <Property Name="RefID" Type="int" />
-          <Property Name="LoanType" Type="nvarchar" MaxLength="20" />
-          <Property Name="LoanDate" Type="smalldatetime" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
-          <Property Name="KYCID" Type="int" />
-          <Property Name="OperatorID" Type="int" />
-          <Property Name="EligibleLoanAmt" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanPayable" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="BankCashAccID" Type="int" />
-          <Property Name="CheqNEFTDD" Type="nvarchar" MaxLength="50" />
-          <Property Name="CheqNEFTDDNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="CheqNEFTDDDate" Type="smalldatetime" />
-          <Property Name="TotalGrossWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalNetWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalQuantity" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Totalvalue" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalRate" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="SID" Type="int" />
-          <Property Name="DueDate" Type="smalldatetime" />
-          <Property Name="OwnershipProofImagePath" Type="nvarchar" MaxLength="50" />
-          <Property Name="CIBILScore" Type="nvarchar" MaxLength="20" />
-          <Property Name="ItemImage" Type="image" />
-          <Property Name="BCPID" Type="int" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedDate" Type="smalldatetime" />
-          <Property Name="UpdatedBy" Type="int" />
-          <Property Name="UpdatedDate" Type="smalldatetime" />
-          <Property Name="DeletedBy" Type="int" />
-          <Property Name="DeletedDate" Type="smalldatetime" />
-          <Property Name="FYID" Type="int" />
-          <Property Name="BranchID" Type="int" />
-          <Property Name="CMPID" Type="int" />
-          <Property Name="isActive" Type="nvarchar" MaxLength="100" />
-          <Property Name="CashInOutID" Type="int" />
-          <Property Name="GLInOutID" Type="int" />
-          <Property Name="CashOutWardById" Type="int" />
-          <Property Name="GoldInWardById" Type="int" />
-          <Property Name="CashAccID" Type="int" />
-          <Property Name="BankAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CashAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_ChargesDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGLSanctionDisburse_ChargesDetails">
-          <Property Name="CHID" Type="int" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="CID" Type="int" />
-          <Property Name="Serialno" Type="int" />
-          <Property Name="Charges" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Amount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="AccountID" Type="int" />
-          <Property Name="AccountName" Type="nvarchar" MaxLength="50" />
-          <Property Name="ID" Type="int" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_ChargesPostingDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGLSanctionDisburse_ChargesPostingDetails">
-          <Property Name="ID" Type="int" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="AccID" Type="int" />
-          <Property Name="Debit" Type="float" />
-          <Property Name="Credit" Type="float" />
-          <Property Name="LedgerID" Type="int" />
-          <Property Name="FYID" Type="int" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_GoldItemDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGLSanctionDisburse_GoldItemDetails">
-          <Property Name="GID" Type="int" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="Serialno" Type="int" />
-          <Property Name="ItemID" Type="int" />
-          <Property Name="GrossWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Quantity" Type="int" />
-          <Property Name="NetWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RateperGram" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Value" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Purity" Type="nvarchar" MaxLength="50" />
-          <Property Name="ImgItemPath" Type="nvarchar" MaxLength="500" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TGLSmsHistory">
           <Key>
@@ -1634,18 +1388,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="UserTypeID" Type="int" Nullable="false" />
           <Property Name="UserType" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="V_MonthlyJv">
-          <Property Name="RN" Type="bigint" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
-          <Property Name="SID" Type="int" />
-          <Property Name="LoanDate" Type="smalldatetime" />
-          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="CustName" Type="varchar" MaxLength="92" />
-          <Property Name="LoanDate1" Type="varchar" MaxLength="20" />
-        </EntityType>-->
         <Association Name="FK_Mst_AuditCheckList_Mst_AuditCategory">
           <End Role="Mst_AuditCategory" Type="Self.Mst_AuditCategory" Multiplicity="1" />
           <End Role="Mst_AuditCheckList" Type="Self.Mst_AuditCheckList" Multiplicity="*" />
@@ -3517,15 +3259,15 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             <End Role="Mst_Product" EntitySet="Mst_Product" />
             <End Role="tblItemMaster" EntitySet="tblItemMasters" />
           </AssociationSet>
-          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
           <FunctionImport Name="generateFinancialYear" />
           <FunctionImport Name="SplitValue1" IsComposable="true" ReturnType="Collection(String)">
             <Parameter Name="String" Mode="In" Type="String" />
             <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SplitWords1" IsComposable="true" ReturnType="Collection(MangalDBNewModel.SplitWords1_Result)">
-            <Parameter Name="text" Mode="In" Type="String" />
+          <Parameter Name="text" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -4082,6 +3824,10 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="SplitWords1_Result">
+          <Property Type="Int16" Name="pos" Nullable="false" />
+          <Property Type="String" Name="value" Nullable="true" MaxLength="8000" />
+        </ComplexType>
         <EntityType Name="TGLKYC_BasicDetails">
           <Key>
             <PropertyRef Name="KYCID" />
@@ -4163,10 +3909,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="NomineePanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NomineeAdharNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <ComplexType Name="SplitWords1_Result">
-          <Property Type="Int16" Name="pos" Nullable="false" />
-          <Property Type="String" Name="value" Nullable="true" MaxLength="8000" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5395,6 +5137,16 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="generateFinancialYear" FunctionName="MangalDBNewModel.Store.generateFinancialYear" />
+          <FunctionImportMapping FunctionImportName="SplitValue1" FunctionName="MangalDBNewModel.Store.SplitValue" />
+          <FunctionImportMapping FunctionImportName="SplitWords1" FunctionName="MangalDBNewModel.Store.SplitWords">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.SplitWords1_Result">
+                <ScalarProperty Name="pos" ColumnName="pos" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="TGLKYC_BasicDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
               <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
@@ -5477,16 +5229,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="generateFinancialYear" FunctionName="MangalDBNewModel.Store.generateFinancialYear" />
-          <FunctionImportMapping FunctionImportName="SplitValue1" FunctionName="MangalDBNewModel.Store.SplitValue" />
-          <FunctionImportMapping FunctionImportName="SplitWords1" FunctionName="MangalDBNewModel.Store.SplitWords">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MangalDBNewModel.SplitWords1_Result">
-                <ScalarProperty Name="pos" ColumnName="pos" />
-                <ScalarProperty Name="value" ColumnName="value" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -73,7 +73,7 @@ namespace MangalWeb.Model.Transaction
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
-        public string isActive { get; set; }
+        public Boolean isActive { get; set; }
         public Nullable<int> SourceofApplicationID { get; set; }
         public string MotherName { get; set; }
         public string Father_Spouse { get; set; }
