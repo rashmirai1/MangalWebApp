@@ -80,6 +80,7 @@
     <Compile Include="Repository\DocumentRepository.cs" />
     <Compile Include="Repository\FinancialYearRepository.cs" />
     <Compile Include="Repository\GSTRepository.cs" />
+    <Compile Include="Repository\KYCRepository.cs" />
     <Compile Include="Repository\ProductRateRepository.cs" />
     <Compile Include="Repository\ReasonRepository.cs" />
     <Compile Include="Repository\CityRepository.cs" />

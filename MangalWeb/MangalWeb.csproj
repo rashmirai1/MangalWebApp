@@ -130,6 +130,7 @@
     <Compile Include="Controllers\FinancialYearController.cs" />
     <Compile Include="Controllers\GSTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KYCController.cs" />
     <Compile Include="Controllers\OrnamentController.cs" />
     <Compile Include="Controllers\PenaltySlabController.cs" />
     <Compile Include="Controllers\PincodeController.cs" />
@@ -2072,6 +2073,7 @@
     <Content Include="Views\PenaltySlab\PenaltySlab.cshtml" />
     <Content Include="Views\PenaltySlab\_PenaltySlablist.cshtml" />
     <Content Include="Views\Ornament\Ornament.cshtml" />
+    <Content Include="Views\KYC\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
