@@ -1,0 +1,427 @@
+﻿@model MangalWeb.Model.Masters.SchemeViewModel
+@{
+    ViewBag.Title = "ShowScheme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+
+@using (Ajax.BeginForm("CreateEdit", "Scheme", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.SchemeId, new { @id = "ItemID" })
+    @Html.HiddenFor(model => model.EditID)
+    <header id="topbar" class="affix">
+        <div class="col-md-5 col-sm-4 col-xs-12">
+            <div class="topbar-left">
+                <h4>Scheme Master</h4>
+            </div><!--end of topbar-left-->
+        </div><!--end of col-md-5-->
+        <div class="col-md-7 col-sm-8 col-xs-12">
+            <div class="topbar-right" id="headerbutton">
+                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
+                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
+                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
+                <button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]"
+                        type="button" data-toggle="modal">
+                    <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
+                </button>
+                <a href="@Html.Raw(@Url.Action("Scheme", "Scheme"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+            </div><!--end of topbar-right-->
+
+        </div><!--end of col-md-7-->
+    </header>
+
+    <section id="content" class="animated fadeIn">
+        <!-- Start: Topbar -->
+        <!-- End: Topbar -->
+        <!-- Begin: Content -->
+        <!-- Dashboard Tiles -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel1 panel-primary">
+                    <div class="admin-form">
+                        <div class="panel-body">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Scheme Id</label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>
+                                                @Html.EditorFor(model => model.SchemeId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Scheme ID", @disabled = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Scheme Name<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.SchemeName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Scheme Name", @autofocus = "autofocus", @maxlength = "30" } })
+                                                @Html.ValidationMessageFor(model => model.SchemeName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Product<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.Product, (SelectList)ViewBag.ProductList, "--Select Product --", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.Product)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Purity<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @*@Html.DropDownListFor(model => model.Purity, (SelectList)ViewBag.PurityList, "--Select Purity--", new { @class = "form-control", multiple = "multiple" })*@
+                                                @Html.ListBoxFor(model => model.Purity, (SelectList)ViewBag.PurityList, new { @class = "form-control", id = "Purity", multiple = "multiple" })
+                                                <span class="text-danger">@Html.ValidationMessageFor(m => m.Product)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Scheme Type<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @{
+                                                            var typelist = new SelectList(new[]
+                                                            {
+                                                                    new SelectListItem { Text = "Select Scheme Type"},
+                                                                    new SelectListItem { Text = "Slabwise", Value = "Slabwise"},
+                                                                    }, "Value", "Text");
+                                                        }
+                                                        @Html.DropDownListFor(m => m.SchemeType, typelist)
+                                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.SchemeType)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label" style="margin-top: 10px;">Frequency<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @{
+                                                            var frequencylist = new SelectList(new[]
+                                                            {
+                                                                    new SelectListItem { Text = "Select Frequency"},
+                                                                    new SelectListItem { Text = "Monthly", Value = "Monthly"},
+                                                                    }, "Value", "Text");
+                                                        }
+                                                        @Html.DropDownListFor(m => m.Frequency, frequencylist)
+                                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.Frequency)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Min Tenure<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.MinTenure, new { htmlAttributes = new { @class = "form-control", @placeholder = "Min Tenure", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", @maxlength = "3" } })
+                                                @Html.ValidationMessageFor(model => model.MinTenure, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Max Tenure<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.MaxTenure, new { htmlAttributes = new { @class = "form-control", @placeholder = "Max Tenure", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", @maxlength = "3" } })
+                                                @Html.ValidationMessageFor(model => model.MaxTenure, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Min Loan Amount<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.MinLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Min Loan Amount", @maxlength = "9", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.ValidationMessageFor(model => model.MinLoanAmount, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Max Loan Amount<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.MaxLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Max Loan Amount", @maxlength = "9", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.ValidationMessageFor(model => model.MaxLoanAmount, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Min LTV %<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.MinLTVPerc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Min LTV %", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @maxlength = "5" } })
+                                                @Html.ValidationMessageFor(model => model.MinLTVPerc, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Max LTV %<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.MaxLTVPerc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Max LTV %", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @maxlength = "5" } })
+                                                @Html.ValidationMessageFor(model => model.MaxLTVPerc, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Min ROI %<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.MinROIPerc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Min ROI %", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @maxlength = "5" } })
+                                                @Html.ValidationMessageFor(model => model.MinROIPerc, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Max ROI %<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.MaxROIPerc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Max ROI %", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @maxlength = "5" } })
+                                                @Html.ValidationMessageFor(model => model.MaxROIPerc, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Grace Period (days)<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.GracePeriod, new { htmlAttributes = new { @class = "form-control", @placeholder = "Grace Period (in days)", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", @maxlength = "4" } })
+                                                @Html.ValidationMessageFor(model => model.GracePeriod, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Effective ROI %<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.EffectiveROIPerc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Effective ROI %", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @maxlength = "5" } })
+                                                @Html.ValidationMessageFor(model => model.EffectiveROIPerc, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Lock in Period (days)<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.LockInPeriod, new { htmlAttributes = new { @class = "form-control", @placeholder = "Lock in Period (in days)", @maxlength = "2", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57" } })
+                                                @Html.ValidationMessageFor(model => model.LockInPeriod, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Processing Fees<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @{
+                                                            var processingfeelist = new SelectList(new[]
+                                                            {
+                                                                    new SelectListItem { Text = "Amount", Value = "Amount"},
+                                                                    new SelectListItem { Text = "Percentage", Value = "Percentage"}
+                                                                    }, "Value", "Text");
+                                                        }
+                                                        @Html.DropDownListFor(model => model.ProcessingFeeType, processingfeelist)
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Processing Charges<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.ProcessingCharges, new { htmlAttributes = new { @class = "form-control", @placeholder = "Maximum processing Charges", @maxlength = "5" } })
+                                                @Html.ValidationMessageFor(model => model.ProcessingCharges, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Maximum processing Charges<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.MaxProcessingCharge, new { htmlAttributes = new { @class = "form-control", @placeholder = "Maximum processing Charges", @maxlength = "5" } })
+                                                @Html.ValidationMessageFor(model => model.MaxProcessingCharge, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <div class="section">
+                                                <label class="field select">
+                                                    @{
+                                                        var statuslist = new SelectList(new[]
+                                                        {
+                                                    new SelectListItem { Text = "Select Status"},
+                                                    new SelectListItem { Text = "Active", Value = "Active"},
+                                                    new SelectListItem { Text = "Inactive", Value = "Inactive"},
+                                                    }, "Value", "Text");
+                                                    }
+                                                    @Html.DropDownListFor(m => m.Status, statuslist)
+                                                    <span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>
+                                                    <i class="arrow"></i>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
+    </section>
+                                                        }
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@section javascriptsection{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <link href="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/css/bootstrap-multiselect.css"
+          rel="stylesheet" type="text/css" />
+    <script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js"
+            type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if (document.URL.indexOf("ID") != -1) {
+                $("#Purity").removeAttr('disabled')
+            }
+            else {
+                $("#Purity").attr('disabled', 'disabled')
+            }
+            $("#SchemeName").on('input', function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("doesSourceNameExist", "Scheme")',
+                    data: '{SchemeName: "' + $("#SchemeName").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "") {
+                            $("#CustomErr").empty();
+                            $("#btn_save").removeAttr('disabled')
+                        }
+                        else {
+                            $("#CustomErr").text(result);
+                            $("#btn_save").attr('disabled', true)
+                            return false;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(error);
+                    }
+                });
+            });
+        });
+
+
+        //Dropdownlist Selectedchange event
+        $("#Product").change(function () {
+            $("#Purity").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetPurity")', // we are calling json method
+                dataType: 'json',
+                data: { id: $("#Product").val() },
+                // here we are get value of selected country and passing same value
+                //as inputto json method GetStates.
+                success: function (data) {
+                    var purity = "<select id='Purity'>";
+                    purity = purity + '<option value="">--Select Purity--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        purity = purity + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                    }
+                    purity = purity + '</select>';
+                    $('#Purity').html(purity);
+                    $("#Purity").removeAttr('disabled')
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+
+        function ShowEditTableList() {
+            $('#divviewfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetSchemeTable", "Scheme")',
+                dataType: "html",
+                data: { Operation: "Edit" },
+                success: function (data) {
+                    $('#diveditfilldata').empty();
+                    $('#diveditfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+
+        function ShowViewTableList() {
+            $('#diveditfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetSchemeTable", "Scheme")',
+                dataType: "html",
+                data: { Operation: "View" },
+                success: function (data) {
+                    $('#divviewfilldata').empty();
+                    $('#divviewfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+
+        var urlRedirect = '@Html.Raw(@Url.Action("Scheme", "Scheme"))';
+        function OnSuccess(response) {
+
+            $("#saveModal").modal('show');
+            $(document).click(function () {
+                window.location.href = urlRedirect;
+            });
+        }
+
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+
+        $(function () {
+            var url = '@Html.Raw(@Url.Action("Delete", "Scheme"))';
+            $("#btnDelete").click(function () {
+                $("#deleteModal").modal('show');
+            });
+            $("#btnDeleteConfirm").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: '{id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != "") {
+                            $("#CustomErr").text(data);
+                            return false;
+                        }
+                        else {
+                            $("#CustomErr").empty();
+                            $("#DeleteSuccessModal").modal('show');
+
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            });
+        });
+
+        //$(function () {
+        //    $('#Purity').multiselect({
+        //        includeSelectAllOption: true,
+        //        numberDisplayed: 3
+        //    });
+        //});
+
+    </script>
+
+}
+

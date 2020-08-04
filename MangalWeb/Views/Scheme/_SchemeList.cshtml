@@ -1,0 +1,34 @@
+﻿@model IList<MangalWeb.Model.Masters.SchemeViewModel>
+@using MangalWeb.Model.Masters
+<div class="modal-content">
+    <div class="modal-body" style="height:inherit; overflow:auto;">
+        <div class="panel-body panel-no-padding" style="height:inherit; overflow:auto;">
+            <div id="demo">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="example">
+                    <thead>
+                        <tr>
+                            <th>Scheme Name</th>
+                            <th>Product</th>
+                            <th>Scheme Type</th>
+                            <th>Frequency</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (SchemeViewModel item in Model)
+                        {
+                            <tr class="gradeX" onclick='window.document.location="/Scheme/GetSchemeById?ID=@item.SchemeId"'>
+                                <td>@item.SchemeName</td>
+                                <td>@item.ProductStr</td>
+                                <td>@item.SchemeType</td>
+                                <td>@item.Frequency</td>
+                                <td>@item.Status</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+
