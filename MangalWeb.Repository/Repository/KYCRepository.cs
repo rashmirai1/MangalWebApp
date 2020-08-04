@@ -3,6 +3,7 @@ using MangalWeb.Model.Transaction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 namespace MangalWeb.Repository.Repository
 {
@@ -94,8 +95,16 @@ namespace MangalWeb.Repository.Repository
                     tGLKYC_Basic.NomineePanNo = model.NomineePanNo;
                     tGLKYC_Basic.NomineeAdharNo = model.NomineeAdharNo;
                     _context.TGLKYC_BasicDetails.Add(tGLKYC_Basic);
-
                     _context.SaveChanges();
+
+                    if (model.KycPhoto != null)
+                    {
+                        KycImageStore kycImageStore = new KycImageStore();
+                        kycImageStore.KycPhoto = model.KycPhoto;
+                        kycImageStore.Operation = "Save";
+                        kycImageStore.Refno = Convert.ToString(tGLKYC_Basic.KYCID);
+                        _context.SaveChanges();
+                    }
                 }
 
 

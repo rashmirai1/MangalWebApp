@@ -87,5 +87,6 @@ namespace MangalWeb.Model.Transaction
         public string NomineeAdharNo { get; set; }
 
         public Boolean isPanAdharExist { get; set; }
+        public byte[] KycPhoto { get; set; }
     }
 }

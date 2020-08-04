@@ -1,6 +1,8 @@
 ﻿using MangalWeb.Model.Transaction;
 using MangalWeb.Service.Service;
 using System;
+using System.IO;
+using System.Web;
 using System.Web.Mvc;
 
 namespace MangalWeb.Controllers
@@ -21,10 +23,16 @@ namespace MangalWeb.Controllers
             return View(kycVM);
         }
 
-        public JsonResult CreateEdit(KYCBasicDetailsVM model)
+        public JsonResult CreateEdit(KYCBasicDetailsVM model, HttpPostedFileBase uploadFile)
         {
             try
             {
+                if (uploadFile != null)
+                {
+                    Stream fs1 = uploadFile.InputStream;
+                    BinaryReader br1 = new BinaryReader(fs1);
+                    model.KycPhoto = br1.ReadBytes((Int32)fs1.Length);
+                }
                 _kycService.SaveRecord(model);
                 return Json(model);
             }
