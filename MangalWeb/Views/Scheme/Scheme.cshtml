@@ -220,7 +220,7 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Processing Charges<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.ProcessingCharges, new { htmlAttributes = new { @class = "form-control", @placeholder = "Maximum processing Charges", @maxlength = "5" } })
+                                                @Html.EditorFor(model => model.ProcessingCharges, new { htmlAttributes = new { @class = "form-control", @placeholder = "Processing Charges", @maxlength = "5" } })
                                                 @Html.ValidationMessageFor(model => model.ProcessingCharges, "", new { @class = "text-danger" })
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Maximum processing Charges<span class="text-danger"> * </span></label>
@@ -282,7 +282,7 @@
             $("#SchemeName").on('input', function () {
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("doesSourceNameExist", "Scheme")',
+                    url: '@Url.Action("doesSchemeNameExist", "Scheme")',
                     data: '{SchemeName: "' + $("#SchemeName").val() + '" }',
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",

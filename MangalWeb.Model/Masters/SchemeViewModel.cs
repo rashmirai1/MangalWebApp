@@ -11,18 +11,18 @@ namespace MangalWeb.Model.Masters
         public int SchemeId { get; set; }
 
         [Required(ErrorMessage = "Please Select Product")]
-        public short Product { get; set; }
+        public int Product { get; set; }
         public string ProductStr { get; set; }
 
         [Required(ErrorMessage = "Please Select Purity")]
         public List<int> Purity { get; set; }
 
         [Required(ErrorMessage = "Please Select Scheme Type")]
-        public short SchemeType { get; set; }
+        public string SchemeType { get; set; }
         public string SchemeTypeStr { get; set; }
 
         [Required(ErrorMessage = "Please Select Frequency")]
-        public short Frequency { get; set; }
+        public string Frequency { get; set; }
         public string FrequencyStr { get; set; }
 
         public int EditID { get; set; }
@@ -65,14 +65,16 @@ namespace MangalWeb.Model.Masters
         public int? LockInPeriod { get; set; }
 
         [Required(ErrorMessage = "ProcessingFeeType is Required")]
-        public short? ProcessingFeeType { get; set; }
+        public string ProcessingFeeType { get; set; }
 
         [Required(ErrorMessage = "Processing Charges is Required")]
         public decimal? ProcessingCharges { get; set; }
 
+        [Required(ErrorMessage = "Max Processing Charges is Required")]
+        public decimal? MaxProcessingCharge { get; set; }
+
         [Required(ErrorMessage = "Status is Required")]
-        public short? Status { get; set; }
-        public string Statusstr { get; set; }
+        public string Status { get; set; }
 
         public string operation { get; set; }
 

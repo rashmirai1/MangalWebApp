@@ -39,5 +39,14 @@ namespace MangalWeb.Model.Entity
         public string isActive { get; set; }
         public Nullable<decimal> AmtLmtTo { get; set; }
         public Nullable<decimal> ServiceTax { get; set; }
+        public int Product { get; set; }
+        public int MaxTenure { get; set; }
+        public Nullable<decimal> MaxLtv { get; set; }
+        public Nullable<decimal> MaxRoi { get; set; }
+        public Nullable<int> GracePeriod { get; set; }
+        public Nullable<decimal> EffectiveRoiPerc { get; set; }
+        public Nullable<int> LockInPeriod { get; set; }
+    
+        public virtual Mst_Product Mst_Product { get; set; }
     }
 }

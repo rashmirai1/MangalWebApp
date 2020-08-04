@@ -1,4 +1,5 @@
 ﻿using MangalWeb.Model.Masters;
+using MangalWeb.Service;
 using MangalWeb.Service.Service;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,6 @@ namespace MangalWeb.Controllers
     public class DeviationController : BaseController
     {
         DeviationService _deviationService = new DeviationService();
-
-        public DeviationViewModel GetAllCityMaster()
-        {
-            var list = _deviationService.GetAllDeviation();
-            return list;
-        }
 
         [HttpPost]
         public JsonResult Insert(DeviationViewModel model)
@@ -69,7 +64,7 @@ namespace MangalWeb.Controllers
 
         public ActionResult Deviation()
         {
-            ButtonVisiblity("Index");
+            ButtonVisiblity("Edit");
             var model = new DeviationViewModel();
             ViewBag.RoiUserList = new SelectList(_deviationService.GetUserCategoryList(), "refId", "Name");
             ViewBag.DistanceUserList = new SelectList(_deviationService.GetUserCategoryList(), "refId", "Name");
