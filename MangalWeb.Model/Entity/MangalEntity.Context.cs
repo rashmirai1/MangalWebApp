@@ -68,7 +68,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLOutwardForm_DocDetails> TGLOutwardForm_DocDetails { get; set; }
         public virtual DbSet<TGLOutwardForm_GoldDetails> TGLOutwardForm_GoldDetails { get; set; }
         public virtual DbSet<TGLSmsHistory> TGLSmsHistories { get; set; }
-        public virtual DbSet<TSchemeMaster_BasicDetails> TSchemeMaster_BasicDetails { get; set; }
         public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<UserFormAuthentication> UserFormAuthentications { get; set; }
@@ -111,6 +110,8 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<Mst_ProductRate> Mst_ProductRate { get; set; }
         public virtual DbSet<Mst_ProductRateDetails> Mst_ProductRateDetails { get; set; }
         public virtual DbSet<tblItemMaster> tblItemMasters { get; set; }
+        public virtual DbSet<TSchemeMaster_BasicDetails> TSchemeMaster_BasicDetails { get; set; }
+        public virtual DbSet<tbl_UserCategory> tbl_UserCategory { get; set; }
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]

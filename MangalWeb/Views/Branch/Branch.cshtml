@@ -164,6 +164,21 @@
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Out Time<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.TextBoxFor(model => model.OutTime, new { @class = "form-control", @placeholder = "Out Time", @autocomplete = "Off" })
+                                                @Html.ValidationMessageFor(model => model.OutTime, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">In Time<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.TextBoxFor(model => model.InTime, new { @class = "form-control", @placeholder = "In Time", @autocomplete = "Off" })
+                                                @Html.ValidationMessageFor(model => model.InTime, "", new { @class = "text-danger" })
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 <div class="section">
@@ -181,22 +196,7 @@
                                                         <i class="arrow"></i>
                                                     </label>
                                                 </div>
-                                            </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">In Time<span class="text-danger"> * </span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.TextBoxFor(model => model.InTime, new { @class = "form-control", @placeholder = "In Time", @autocomplete = "Off" })
-                                                @Html.ValidationMessageFor(model => model.InTime, "", new { @class = "text-danger" })
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Out Time<span class="text-danger"> * </span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.TextBoxFor(model => model.OutTime, new { @class = "form-control", @placeholder = "Out Time", @autocomplete = "Off" })
-                                                @Html.ValidationMessageFor(model => model.OutTime, "", new { @class = "text-danger" })
-                                            </div>
+                                            </div>                                            
                                         </div>
                                     </div>
                                 </div>

@@ -1,0 +1,1126 @@
+﻿@model MangalWeb.Model.Masters.DeviationViewModel
+@{
+    ViewBag.Title = "Deviation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    input {
+        display: inline;
+        width: 100px;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+@using (Ajax.BeginForm("", "", new AjaxOptions { }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
+    <header id="topbar" class="affix">
+        <div class="col-md-5 col-sm-4 col-xs-12">
+            <div class="topbar-left">
+                <h4>Deviation Master</h4>
+            </div><!--end of topbar-left-->
+        </div><!--end of col-md-5-->
+        <div class="col-md-7 col-sm-8 col-xs-12">
+            <div class="topbar-right" id="headerbutton" @TempData["headerbutton"]>
+                @*<button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal" class="btn btn-warning btn-sm light fw600 ml10"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>*@
+                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
+                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
+                <a href="@Html.Raw(@Url.Action("Deviation", "Deviation"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+            </div><!--end of topbar-right-->
+        </div><!--end of col-md-7-->
+    </header>
+    <!-- Begin: Content -->
+    <section id="content" class="animated fadeIn content_height">
+        <!-- Dashboard Tiles -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel1 panel-primary">
+                    <div class="admin-form">
+                        <div class="panel-body" style="border:1px solid black;">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <label><span class="text-danger" id="CustomErr"> </span></label>
+                                        <div class="form-group">
+                                            <h5>ROI Deviation Master</h5>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-4 control-label">Range of ROI<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-3 col-md-3 col-sm-2 col-xs-4">
+                                                @Html.EditorFor(model => model.roiDeviationDetailsVM.RoiMinRange, new { htmlAttributes = new { @class = "form-control", @placeholder = "Min Range", @maxlength = "6", @autofocus = "autofocus", @style = "display:inline;width:100px;", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.roiDeviationDetailsVM.RoiMaxRange, new { htmlAttributes = new { @class = "form-control", @placeholder = "Max Range", @maxlength = "6", @style = "display:inline;width:100px;", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                            </div>
+                                            <label class="col-lg-1 col-md-2 col-sm-3 col-xs-4 control-label">User<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.roiDeviationDetailsVM.RoiUserNo, (SelectList)ViewBag.RoiUserList, "-- Select User Category --", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.roiDeviationDetailsVM.RoiUserNo)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnRoiAddDetails" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
+                            <div class="panel-body panel-no-padding">
+                                <div id="divRoiDetails">
+                                    <table cellpadding="0" style="width:90%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblRoiDetails">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-sm-2" style="width:2%">Sr.No.</th>
+                                                <th style="text-align:left">Min Range</th>
+                                                <th style="text-align:left">Max Range</th>
+                                                <th style="text-align:left">User Category</th>
+                                                <th class="text-center" style="width:8%">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{int j = 1;}
+                                            @foreach (var item in Model.roiDeviationDetailsList)
+                                            {
+                                            <tr id="@item.ID">
+                                                <td>@j</td>
+                                                <td>@item.RoiMinRange</td>
+                                                <td>@item.RoiMaxRange</td>
+                                                <td id="@item.RoiUserNo">@item.RoiUserName</td>
+                                                <td>
+                                                    <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                                j++;
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="border:1px solid black;">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <h5>Distance</h5>                                            
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Range of Distance<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-3 col-md-3 col-sm-2 col-xs-4">
+                                                @Html.EditorFor(model => model.distanceDeviationDetailsVM.DistanceMinRange, new { htmlAttributes = new { @class = "form-control", @placeholder = "Min Range", @maxlength = "6", @autofocus = "autofocus", @style = "display:inline;width:100px;", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.distanceDeviationDetailsVM.DistanceMaxRange, new { htmlAttributes = new { @class = "form-control", @placeholder = "Max Range", @maxlength = "6", @style = "display:inline;width:100px;", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                            </div>
+                                            <label class="col-lg-1 col-md-2 col-sm-3 col-xs-12 control-label">User<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.distanceDeviationDetailsVM.DistanceUserNo, (SelectList)ViewBag.DistanceUserList, "-- Select User Category --", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.distanceDeviationDetailsVM.DistanceUserNo)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnDistanceAddDetails" />
+                                            </div>
+                                        </div>
+                                        <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Approval Distance Limit<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="margin-left:-81px;">
+                                                @Html.EditorFor(model => model.ApproveDistanceLimit, new { htmlAttributes = new { @class = "form-control", @placeholder = "Approval Distance Limit", @maxlength = "10", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                <label><h4>This value will not add in the below table</h4></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body panel-no-padding">
+                                <div id="divDistanceDetails">
+                                    <table cellpadding="0" style="width:90%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblDistanceDetails">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-sm-2" style="width:2%">Sr.No.</th>
+                                                <th style="text-align:left">Min Range</th>
+                                                <th style="text-align:left">Max Range</th>
+                                                <th style="text-align:left">User Category</th>
+                                                <th class="text-center" style="width:8%">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{int j2 = 1;}
+                                            @foreach (var item in Model.distanceDeviationDetailsList)
+                                                    {
+                                                    <tr id="@item.ID">
+                                                        <td>@j2</td>
+                                                        <td>@item.DistanceMinRange</td>
+                                                        <td>@item.DistanceMaxRange</td>
+                                                        <td id="@item.DistanceUserNo">@item.DistanceUserNanme</td>
+                                                        <td>
+                                                            <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                        j2++;
+                                                    }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="border:1px solid black;">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <h5>Ornament (Prohibited)</h5>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">User<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.OrnamentUserNo, (SelectList)ViewBag.OrnamentUserList, "-- Select User Category --", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.OrnamentUserNo)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="border:1px solid black;">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label><span class="text-danger" id="CustomErrr"> </span></label>
+                                            <h5>Sanctioned Limit Deviation</h5>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Range of Amount <span class="text-danger"> * </span></label>
+                                            <div class="col-lg-3 col-md-3 col-sm-2 col-xs-4">
+                                                @Html.EditorFor(model => model.sanctionDeviationVM.SanctionMinRange, new { htmlAttributes = new { @class = "form-control", @placeholder = "Min Range", @maxlength = "9", @autofocus = "autofocus", @style = "display:inline;width:110px;", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.sanctionDeviationVM.SanctionMaxRange, new { htmlAttributes = new { @class = "form-control", @placeholder = "Max Range", @maxlength = "9", @style = "display:inline;width:110px;", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                            </div>
+                                            <label class="col-lg-1 col-md-2 col-sm-3 col-xs-6 control-label">User<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.sanctionDeviationVM.SanctionedUserNo, (SelectList)ViewBag.SanctionedUserList, "-- Select User Category --", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.sanctionDeviationVM.SanctionedUserNo)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnSanctionAddDetails" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
+                            <div class="panel-body panel-no-padding">
+                                <div id="divSanctionDetails">
+                                    <table cellpadding="0" style="width:90%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblSanctionDetails">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-sm-2" style="width:2%">Sr.No.</th>
+                                                <th style="text-align:left">Min Range</th>
+                                                <th style="text-align:left">Max Range</th>
+                                                <th style="text-align:left">User Category</th>
+                                                <th class="text-center" style="width:8%">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{int j3 = 1;}
+                                            @foreach (var item in Model.sanctionDeviationList)
+                                                {
+                                            <tr id="@item.ID">
+                                                <td>@j3</td>
+                                                <td>@item.SanctionMinRange</td>
+                                                <td>@item.SanctionMaxRange</td>
+                                                <td id="@item.SanctionedUserNo">@item.SanctionedUserName</td>
+                                                <td>
+                                                    <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                                    j3++;
+                                                }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="border:1px solid black;">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label><span class="text-danger" id="CustomErrrr"> </span></label>
+                                            <h5>Tenure Deviation Master</h5>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Range of Tenure <span class="text-danger"> * </span></label>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                                @Html.EditorFor(model => model.tenureDeviationVM.TenureMinRange, new { htmlAttributes = new { @class = "form-control", @placeholder = "Min Range", @maxlength = "6", @autofocus = "autofocus", @style = "display:inline;width:100px;", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.tenureDeviationVM.TenureMaxRange, new { htmlAttributes = new { @class = "form-control", @placeholder = "Max Range", @maxlength = "6", @style = "display:inline;width:100px;", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                            </div>
+                                            <label class="col-lg-1 col-md-2 col-sm-3 col-xs-6 control-label">User<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.tenureDeviationVM.TenureUserNo, (SelectList)ViewBag.TenureUserList, "-- Select User Category --", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.tenureDeviationVM.TenureUserNo)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnTenureAddDetails" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
+                            <div class="panel-body panel-no-padding">
+                                <div id="divTenureDetails">
+                                    <table cellpadding="0" style="width:90%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblTenureDetails">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-sm-2" style="width:2%">Sr.No.</th>
+                                                <th style="text-align:left">Min Range</th>
+                                                <th style="text-align:left">Max Range</th>
+                                                <th style="text-align:left">User Category</th>
+                                                <th class="text-center" style="width:8%">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{int j4 = 1;}
+                                            @foreach (var item in Model.tenureDeviationList)
+                                                {
+                                            <tr id="@item.ID">
+                                                <td>@j4</td>
+                                                <td>@item.TenureMinRange</td>
+                                                <td>@item.TenureMaxRange</td>
+                                                <td id="@item.TenureUserNo">@item.TenureUserName</td>
+                                                <td>
+                                                    <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                                    j4++;
+                                                }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="border:1px solid black;">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <h5>Exposure of Loan (Prohibited)</h5>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Threashold limit  <span class="text-danger"> * </span></label>
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                                                @Html.EditorFor(model => model.ThresholdLimit, new { htmlAttributes = new { @class = "form-control", @placeholder = "Threashold limit ", @maxlength = "10", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="border:1px solid black;">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label><span class="text-danger" id="CustomErrrr"> </span></label>
+                                            <h5>LTV % Master</h5>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Range of LTV <span class="text-danger"> * </span></label>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                                @Html.EditorFor(model => model.lTVDeviationDetailsVM.LTVMinRange, new { htmlAttributes = new { @class = "form-control", @placeholder = "Min Range", @maxlength = "6", @style = "display:inline;width:100px;", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.lTVDeviationDetailsVM.LTVMaxRange, new { htmlAttributes = new { @class = "form-control", @placeholder = "Max Range", @maxlength = "6", @style = "display:inline;width:100px;", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                            </div>
+                                            <label class="col-lg-1 col-md-2 col-sm-3 col-xs-12 control-label">User<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.lTVDeviationDetailsVM.LTVUserNo, (SelectList)ViewBag.LTVUserList, "-- Select User Category --", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.lTVDeviationDetailsVM.LTVUserNo)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnLtvAddDetails" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
+                            <div class="panel-body panel-no-padding">
+                                <div id="divLTVDetails">
+                                    <table cellpadding="0" style="width:90%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblLTVDetails">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-sm-2" style="width:2%">Sr.No.</th>
+                                                <th style="text-align:left">Min Range</th>
+                                                <th style="text-align:left">Max Range</th>
+                                                <th style="text-align:left">User Category</th>
+                                                <th class="text-center" style="width:8%">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{int j5 = 1;}
+                                            @foreach (var item in Model.lTVDeviationDetailsList)
+                                                {
+                                            <tr id="@item.ID">
+                                                <td>@j5</td>
+                                                <td>@item.LTVMinRange</td>
+                                                <td>@item.LTVMaxRange</td>
+                                                <td id="@item.LTVUserNo">@item.LTVUserName</td>
+                                                <td>
+                                                    <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                                    j5++;
+                                                }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+                                                }
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@section javascriptsection{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#divRoiDetails").hide();
+            $("#divDistanceDetails").hide();
+            $("#divSanctionDetails").hide();
+            $("#divTenureDetails").hide();
+            $("#divLTVDetails").hide();
+
+            if (@Model.roiDeviationDetailsList.Count() > 0) {
+                $("#divRoiDetails").show();
+            }
+            if (@Model.distanceDeviationDetailsList.Count() > 0) {
+                $("#divDistanceDetails").show();
+            }
+            if (@Model.sanctionDeviationList.Count() > 0) {
+                $("#divSanctionDetails").show();
+            }
+            if (@Model.tenureDeviationList.Count() > 0) {
+                $("#divTenureDetails").show();
+            }
+            if (@Model.lTVDeviationDetailsList.Count() > 0) {
+                $("#divLTVDetails").show();
+            }
+
+            var sr_no = 0;
+            var trid = 0;
+            currentRow = null;
+            $("#tblRoiDetails TBODY TR").on("click", ".edit", function () {
+                debugger;
+                var tr = $(this).closest('tr');
+                currentRow = $(this).parents('tr');
+                debugger;
+                sr_no = tr.find('td:eq(0)').html();
+                trid = tr.attr('id'); // table row ID
+                var RoiMinRange = tr.find('td:eq(1)').html();
+                var RoiMaxRange = tr.find('td:eq(2)').html();
+                var RoiUserNo = tr.find("td").eq(3).attr('id');
+
+                $("#roiDeviationDetailsVM_RoiMinRange").val(RoiMinRange);
+                $("#roiDeviationDetailsVM_RoiMaxRange").val(RoiMaxRange);
+                $("#roiDeviationDetailsVM_RoiUserNo").val(RoiUserNo);
+            })
+
+            $("#tblRoiDetails TBODY TR").on("click", ".delete", function () {
+                if (confirm('Are you sure to remove?')) {
+                    //var tr = $(this).closest('tr');
+                    //tr.remove();
+                    $(this).parents('tr').remove();
+                    return false;
+                }
+            })
+
+            $("#btnRoiAddDetails").click(function () {
+                $("#CustomErr").text("");
+                $('[data-toggle="tooltip"]').tooltip();
+                var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+                var index = $("#tblRoiDetails tbody tr:last").index();
+                debugger;
+                var srno = 0;
+                var newtrno = trid;
+                if (sr_no == 0) {
+                    srno = index + 2;
+                    newtrno = 0;
+                }
+                else {
+                    srno = sr_no;
+                    //var no = parseInt(srno) - 1;
+                    //$("#tblChargeDetails tbody tr:eq(" + no + ")").remove();
+                }
+                sr_no = 0;
+                trid = 0;
+                var RoiMinRange = $("#roiDeviationDetailsVM_RoiMinRange").val();
+                var RoiMaxRange = $("#roiDeviationDetailsVM_RoiMaxRange").val();
+                var RoiUserNo = $("#roiDeviationDetailsVM_RoiUserNo").val();
+                var RoiUserText = $("#roiDeviationDetailsVM_RoiUserNo option:selected").text();
+                debugger;
+                var row = '<tr id=' + newtrno + '>' +
+                    '<td width="10%">' + srno + '</td>' +
+                    '<td width="30%">' + RoiMinRange + '</td>' +
+                    '<td width="20%">' + RoiMaxRange + '</td>' +
+                    '<td width="20%" id="' + RoiUserNo + '">' + RoiUserText + '</td>' +
+                    '<td id=' + srno + '' + actions + '</td>' +
+                    '</tr>';
+                if (currentRow) {
+                    $("#tblRoiDetails tbody").find($(currentRow)).replaceWith(row);
+                    $("#roiDeviationDetailsVM_RoiMinRange").val("");
+                    $("#roiDeviationDetailsVM_RoiMaxRange").val("");
+                    $("#roiDeviationDetailsVM_RoiUserNo").val("");
+                    currentRow = null;
+                }
+                else {
+                    if (RoiMinRange != "" && RoiMaxRange != "" && RoiUserNo!="") {
+                        $("#tblRoiDetails tbody").append(row);
+                        $("#roiDeviationDetailsVM_RoiMinRange").val("");
+                        $("#roiDeviationDetailsVM_RoiMaxRange").val("");
+                        $("#roiDeviationDetailsVM_RoiUserNo").val("");
+                        $("#divRoiDetails").show();
+                    }
+                }
+                $("#tblRoiDetails TBODY TR").on("click", ".edit", function () {
+                    debugger;
+                    var tr = $(this).closest('tr');
+                    currentRow = $(this).parents('tr');
+                    debugger;
+                    sr_no = tr.find('td:eq(0)').html();
+                    trid = tr.attr('id'); // table row ID
+                    var RoiMinRange = tr.find('td:eq(1)').html();
+                    var RoiMaxRange = tr.find('td:eq(2)').html();
+                    var RoiUserNo = tr.find("td").eq(3).attr('id');
+
+                    $("#roiDeviationDetailsVM_RoiMinRange").val(RoiMinRange);
+                    $("#roiDeviationDetailsVM_RoiMaxRange").val(RoiMaxRange);
+                    $("#roiDeviationDetailsVM_RoiUserNo").val(RoiUserNo);
+                })
+
+                $("#tblRoiDetails TBODY TR").on("click", ".delete", function () {
+                    if (confirm('Are you sure to remove?')) {
+                        //var tr = $(this).closest('tr');
+                        //tr.remove();
+                        $(this).parents('tr').remove();
+                        return false;
+                    }
+                })
+            })
+
+            // distation deviation details
+            var sr_no=0;
+            var trid=0;
+            currentRow = null;
+            $("#tblDistanceDetails TBODY TR").on("click", ".edit", function () {
+                debugger;
+                var tr = $(this).closest('tr');
+                currentRow = $(this).parents('tr');
+                sr_no = tr.find('td:eq(0)').html();
+                trid = tr.attr('id'); // table row ID
+                var DistanceMinRange = tr.find('td:eq(1)').html();
+                var DistanceMaxRange = tr.find('td:eq(2)').html();
+                var DistanceUserNo = tr.find("td").eq(3).attr('id');
+
+                $("#distanceDeviationDetailsVM_DistanceMinRange").val(DistanceMinRange);
+                $("#distanceDeviationDetailsVM_DistanceMaxRange").val(DistanceMaxRange);
+                $("#distanceDeviationDetailsVM_DistanceUserNo").val(DistanceUserNo);
+            })
+
+            $("#tblDistanceDetails TBODY TR").on("click", ".delete", function () {
+                if (confirm('Are you sure to remove?')) {
+                    //var tr = $(this).closest('tr');
+                    //tr.remove();
+                    $(this).parents('tr').remove();
+                    return false;
+                }
+            })
+
+            $("#btnDistanceAddDetails").click(function () {
+                $("#CustomErr").text("");
+                $('[data-toggle="tooltip"]').tooltip();
+                var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+                var index = $("#tblDistanceDetails tbody tr:last").index();
+                debugger;
+                var srno = 0;
+                var newtrno = trid;
+                if (sr_no == 0) {
+                    srno = index + 2;
+                    newtrno = 0;
+                }
+                else {
+                    srno = sr_no;
+                    //var no = parseInt(srno) - 1;
+                    //$("#tblChargeDetails tbody tr:eq(" + no + ")").remove();
+                }
+                sr_no = 0;
+                trid = 0;
+                var DistanceMinRange = $("#distanceDeviationDetailsVM_DistanceMinRange").val();
+                var DistanceMaxRange = $("#distanceDeviationDetailsVM_DistanceMaxRange").val();
+                var DistanceUserNo = $("#distanceDeviationDetailsVM_DistanceUserNo").val();
+                var DistanceUserText = $("#distanceDeviationDetailsVM_DistanceUserNo option:selected").text();
+                debugger;
+                var row = '<tr id=' + newtrno + '>' +
+                    '<td width="10%">' + srno + '</td>' +
+                    '<td width="30%">' + DistanceMinRange + '</td>' +
+                    '<td width="20%">' + DistanceMaxRange + '</td>' +
+                    '<td width="20%" id="' + DistanceUserNo + '">' + DistanceUserText + '</td>' +
+                    '<td id=' + srno + '' + actions + '</td>' +
+                    '</tr>';
+                if (currentRow) {
+                    $("#tblDistanceDetails tbody").find($(currentRow)).replaceWith(row);
+                    $("#distanceDeviationDetailsVM_DistanceMinRange").val("");
+                    $("#distanceDeviationDetailsVM_DistanceMaxRange").val("");
+                    $("#distanceDeviationDetailsVM_DistanceUserNo").val("");
+                    currentRow = null;
+                }
+                else {
+                    if (DistanceMinRange != "" && DistanceMaxRange != "" && DistanceUserNo!="") {
+                        $("#tblDistanceDetails tbody").append(row);
+                        $("#distanceDeviationDetailsVM_DistanceMinRange").val("");
+                        $("#distanceDeviationDetailsVM_DistanceMaxRange").val("");
+                        $("#distanceDeviationDetailsVM_DistanceUserNo").val("");
+                        $("#divDistanceDetails").show();
+                    }
+                }
+                $("#tblDistanceDetails TBODY TR").on("click", ".edit", function () {
+                    debugger;
+                    var tr = $(this).closest('tr');
+                    currentRow = $(this).parents('tr');
+                    debugger;
+                    sr_no = tr.find('td:eq(0)').html();
+                    trid = tr.attr('id'); // table row ID
+                    var DistanceMinRange = tr.find('td:eq(1)').html();
+                    var DistanceMaxRange = tr.find('td:eq(2)').html();
+                    var DistanceUserNo = tr.find("td").eq(3).attr('id');
+
+                    $("#distanceDeviationDetailsVM_DistanceMinRange").val(DistanceMinRange);
+                    $("#distanceDeviationDetailsVM_DistanceMaxRange").val(DistanceMaxRange);
+                    $("#distanceDeviationDetailsVM_DistanceUserNo").val(DistanceUserNo);
+                })
+
+                $("#tblDistanceDetails TBODY TR").on("click", ".delete", function () {
+                    if (confirm('Are you sure to remove?')) {
+                        //var tr = $(this).closest('tr');
+                        //tr.remove();
+                        $(this).parents('tr').remove();
+                        return false;
+                    }
+                })
+            })
+        });
+
+        // sanction deviation details
+        var sr_no=0;
+        var trid=0;
+        currentRow = null;
+        $("#tblSanctionDetails TBODY TR").on("click", ".edit", function () {
+            debugger;
+            var tr = $(this).closest('tr');
+            currentRow = $(this).parents('tr');
+            sr_no = tr.find('td:eq(0)').html();
+            trid = tr.attr('id'); // table row ID
+            var sanctionMinRange = tr.find('td:eq(1)').html();
+            var sanctionMaxRange = tr.find('td:eq(2)').html();
+            var sanctionUserNo = tr.find("td").eq(3).attr('id');
+
+            $("#sanctionDeviationVM_SanctionMinRange").val(sanctionMinRange);
+            $("#sanctionDeviationVM_SanctionMaxRange").val(sanctionMaxRange);
+            $("#sanctionDeviationVM_SanctionedUserNo").val(sanctionUserNo);
+        })
+
+        $("#tblSanctionDetails TBODY TR").on("click", ".delete", function () {
+            if (confirm('Are you sure to remove?')) {
+                $(this).parents('tr').remove();
+                return false;
+            }
+        })
+        $("#btnSanctionAddDetails").click(function () {
+            $("#CustomErr").text("");
+            $('[data-toggle="tooltip"]').tooltip();
+            var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+            var index = $("#tblSanctionDetails tbody tr:last").index();
+            debugger;
+            var srno = 0;
+            var newtrno = trid;
+            if (sr_no == 0) {
+                srno = index + 2;
+                newtrno = 0;
+            }
+            else {
+                srno = sr_no;
+                //var no = parseInt(srno) - 1;
+                //$("#tblChargeDetails tbody tr:eq(" + no + ")").remove();
+            }
+            sr_no = 0;
+            trid = 0;
+            var sanctionMinRange = $("#sanctionDeviationVM_SanctionMinRange").val();
+            var sanctionMaxRange = $("#sanctionDeviationVM_SanctionMaxRange").val();
+            var sanctionUserNo = $("#sanctionDeviationVM_SanctionedUserNo").val();
+            var sanctionUserText = $("#sanctionDeviationVM_SanctionedUserNo option:selected").text();
+            debugger;
+            var row = '<tr id=' + newtrno + '>' +
+                '<td width="10%">' + srno + '</td>' +
+                '<td width="30%">' + sanctionMinRange + '</td>' +
+                '<td width="20%">' + sanctionMaxRange + '</td>' +
+                '<td width="20%" id="' + sanctionUserNo + '">' + sanctionUserText + '</td>' +
+                '<td id=' + srno + '' + actions + '</td>' +
+                '</tr>';
+            if (currentRow) {
+                $("#tblSanctionDetails tbody").find($(currentRow)).replaceWith(row);
+                $("#sanctionDeviationVM_SanctionMinRange").val("");
+                $("#sanctionDeviationVM_SanctionMaxRange").val("");
+                $("#sanctionDeviationVM_SanctionedUserNo").val("");
+                currentRow = null;
+            }
+            else {
+                if (sanctionMinRange != "" && sanctionMaxRange != "" && sanctionUserNo!="") {
+                    $("#tblSanctionDetails tbody").append(row);
+                    $("#sanctionDeviationVM_SanctionMinRange").val("");
+                    $("#sanctionDeviationVM_SanctionMaxRange").val("");
+                    $("#sanctionDeviationVM_SanctionedUserNo").val("");
+                    $("#divSanctionDetails").show();
+                }
+            }
+            $("#tblSanctionDetails TBODY TR").on("click", ".edit", function () {
+                debugger;
+                var tr = $(this).closest('tr');
+                currentRow = $(this).parents('tr');
+                sr_no = tr.find('td:eq(0)').html();
+                trid = tr.attr('id'); // table row ID
+                var sanctionMinRange = tr.find('td:eq(1)').html();
+                var sanctionMaxRange = tr.find('td:eq(2)').html();
+                var sanctionUserNo = tr.find("td").eq(3).attr('id');
+
+                $("#sanctionDeviationVM_SanctionMinRange").val(sanctionMinRange);
+                $("#sanctionDeviationVM_SanctionMaxRange").val(sanctionMaxRange);
+                $("#sanctionDeviationVM_SanctionedUserNo").val(sanctionUserNo);
+            })
+
+            $("#tblSanctionDetails TBODY TR").on("click", ".delete", function () {
+                if (confirm('Are you sure to remove?')) {
+                    //var tr = $(this).closest('tr');
+                    //tr.remove();
+                    $(this).parents('tr').remove();
+                    return false;
+                }
+            })
+        })
+
+        // Tenure deviation details
+        var sr_no=0;
+        var trid=0;
+        currentRow = null;
+        $("#tblTenureDetails TBODY TR").on("click", ".edit", function () {
+            debugger;
+            var tr = $(this).closest('tr');
+            currentRow = $(this).parents('tr');
+            sr_no = tr.find('td:eq(0)').html();
+            trid = tr.attr('id'); // table row ID
+            var TenureMinRange = tr.find('td:eq(1)').html();
+            var TenureMaxRange = tr.find('td:eq(2)').html();
+            var TenureUserNo = tr.find("td").eq(3).attr('id');
+            $("#tenureDeviationVM_TenureMinRange").val(TenureMinRange);
+            $("#tenureDeviationVM_TenureMaxRange").val(TenureMaxRange);
+            $("#tenureDeviationVM_TenureUserNo").val(TenureUserNo);
+        })
+
+        $("#tblTenureDetails TBODY TR").on("click", ".delete", function () {
+            if (confirm('Are you sure to remove?')) {
+                $(this).parents('tr').remove();
+                return false;
+            }
+        })
+        $("#btnTenureAddDetails").click(function () {
+            $("#CustomErr").text("");
+            $('[data-toggle="tooltip"]').tooltip();
+            var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+            var index = $("#tblTenureDetails tbody tr:last").index();
+            debugger;
+            var srno = 0;
+            var newtrno = trid;
+            if (sr_no == 0) {
+                srno = index + 2;
+                newtrno = 0;
+            }
+            else {
+                srno = sr_no;
+                //var no = parseInt(srno) - 1;
+                //$("#tblChargeDetails tbody tr:eq(" + no + ")").remove();
+            }
+            sr_no = 0;
+            trid = 0;
+            var tenureMinRange = $("#tenureDeviationVM_TenureMinRange").val();
+            var tenureMaxRange = $("#tenureDeviationVM_TenureMaxRange").val();
+            var tenureUserNo = $("#tenureDeviationVM_TenureUserNo").val();
+            var tenureUserText = $("#tenureDeviationVM_TenureUserNo option:selected").text();
+            debugger;
+            var row = '<tr id=' + newtrno + '>' +
+                '<td width="10%">' + srno + '</td>' +
+                '<td width="30%">' + tenureMinRange + '</td>' +
+                '<td width="20%">' + tenureMaxRange + '</td>' +
+                '<td width="20%" id="' + tenureUserNo + '">' + tenureUserText + '</td>' +
+                '<td id=' + srno + '' + actions + '</td>' +
+                '</tr>';
+            if (currentRow) {
+                $("#tblTenureDetails tbody").find($(currentRow)).replaceWith(row);
+                $("#tenureDeviationVM_TenureMinRange").val("");
+                $("#tenureDeviationVM_TenureMaxRange").val("");
+                $("#tenureDeviationVM_TenureUserNo").val("");
+                currentRow = null;
+            }
+            else {
+                if (tenureMinRange != "" && tenureMaxRange != "" && tenureUserNo!="") {
+                    $("#tblTenureDetails tbody").append(row);
+                    $("#tenureDeviationVM_TenureMinRange").val("");
+                    $("#tenureDeviationVM_TenureMaxRange").val("");
+                    $("#tenureDeviationVM_TenureUserNo").val("");
+                    $("#divTenureDetails").show();
+                }
+            }
+            $("#tblTenureDetails TBODY TR").on("click", ".edit", function () {
+                debugger;
+                var tr = $(this).closest('tr');
+                currentRow = $(this).parents('tr');
+                sr_no = tr.find('td:eq(0)').html();
+                trid = tr.attr('id'); // table row ID
+                var TenureMinRange = tr.find('td:eq(1)').html();
+                var TenureMaxRange = tr.find('td:eq(2)').html();
+                var TenureUserNo = tr.find("td").eq(3).attr('id');
+                $("#tenureDeviationVM_TenureMinRange").val(TenureMinRange);
+                $("#tenureDeviationVM_TenureMaxRange").val(TenureMaxRange);
+                $("#tenureDeviationVM_TenureUserNo").val(TenureUserNo);
+            })
+
+            $("#tblTenureDetails TBODY TR").on("click", ".delete", function () {
+                if (confirm('Are you sure to remove?')) {
+                    $(this).parents('tr').remove();
+                    return false;
+                }
+            })
+        })
+        // Tenure deviation details
+        var sr_no=0;
+        var trid=0;
+        currentRow = null;
+        $("#tblLTVDetails TBODY TR").on("click", ".edit", function () {
+            debugger;var tr = $(this).closest('tr');
+            currentRow = $(this).parents('tr');
+            debugger;
+            sr_no = tr.find('td:eq(0)').html();
+            trid = tr.attr('id'); // table row ID
+            var ltvMinRange = tr.find('td:eq(1)').html();
+            var ltvMaxRange = tr.find('td:eq(2)').html();
+            var ltvUserNo = tr.find("td").eq(3).attr('id');
+
+            $("#lTVDeviationDetailsVM_LTVMinRange").val(ltvMinRange);
+            $("#lTVDeviationDetailsVM_LTVMaxRange").val(ltvMaxRange);
+            $("#lTVDeviationDetailsVM_LTVUserNo").val(ltvUserNo);
+        })
+
+        $("#tblLTVDetails TBODY TR").on("click", ".delete", function () {
+            if (confirm('Are you sure to remove?')) {
+                $(this).parents('tr').remove();
+                return false;
+            }
+        })
+        $("#btnLtvAddDetails").click(function () {
+            $("#CustomErr").text("");
+            $('[data-toggle="tooltip"]').tooltip();
+            var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+            var index = $("#tblLTVDetails tbody tr:last").index();
+            debugger;
+            var srno = 0;
+            var newtrno = trid;
+            if (sr_no == 0) {
+                srno = index + 2;
+                newtrno = 0;
+            }
+            else {
+                srno = sr_no;
+                //var no = parseInt(srno) - 1;
+                //$("#tblChargeDetails tbody tr:eq(" + no + ")").remove();
+            }
+            sr_no = 0;
+            trid = 0;
+            var ltvMinRange = $("#lTVDeviationDetailsVM_LTVMinRange").val();
+            var ltvMaxRange = $("#lTVDeviationDetailsVM_LTVMaxRange").val();
+            var ltvUserNo = $("#lTVDeviationDetailsVM_LTVUserNo").val();
+            var ltvUserText = $("#lTVDeviationDetailsVM_LTVUserNo option:selected").text();
+            debugger;
+            var row = '<tr id=' + newtrno + '>' +
+                '<td width="10%">' + srno + '</td>' +
+                '<td width="30%">' + ltvMinRange + '</td>' +
+                '<td width="20%">' + ltvMaxRange + '</td>' +
+                '<td width="20%" id="' + ltvUserNo + '">' + ltvUserText + '</td>' +
+                '<td id=' + srno + '' + actions + '</td>' +
+                '</tr>';
+            if (currentRow) {
+                $("#tblLTVDetails tbody").find($(currentRow)).replaceWith(row);
+                $("#lTVDeviationDetailsVM_LTVMinRange").val("");
+                $("#lTVDeviationDetailsVM_LTVMaxRange").val("");
+                $("#lTVDeviationDetailsVM_LTVUserNo").val("");
+                currentRow = null;
+            }
+            else {
+                if (ltvMinRange != "" && ltvMaxRange != "" && ltvUserNo!="") {
+                    $("#tblLTVDetails tbody").append(row);
+                    $("#lTVDeviationDetailsVM_LTVMinRange").val("");
+                    $("#lTVDeviationDetailsVM_LTVMaxRange").val("");
+                    $("#lTVDeviationDetailsVM_LTVUserNo").val("");
+                    $("#divLTVDetails").show();
+                }
+            }
+            $("#tblLTVDetails TBODY TR").on("click", ".edit", function () {
+                debugger;
+                var tr = $(this).closest('tr');
+                currentRow = $(this).parents('tr');
+                debugger;
+                sr_no = tr.find('td:eq(0)').html();
+                trid = tr.attr('id'); // table row ID
+                var ltvMinRange = tr.find('td:eq(1)').html();
+                var ltvMaxRange = tr.find('td:eq(2)').html();
+                var ltvUserNo = tr.find("td").eq(3).attr('id');
+
+                $("#lTVDeviationDetailsVM_LTVMinRange").val(ltvMinRange);
+                $("#lTVDeviationDetailsVM_LTVMaxRange").val(ltvMaxRange);
+                $("#lTVDeviationDetailsVM_LTVUserNo").val(ltvUserNo);
+            })
+
+            $("#tblLTVDetails TBODY TR").on("click", ".delete", function () {
+                if (confirm('Are you sure to remove?')) {
+                    //var tr = $(this).closest('tr');
+                    //tr.remove();
+                    $(this).parents('tr').remove();
+                    return false;
+                }
+            })
+        })
+
+        $("#btn_save").click(function () {
+            SaveDeviation();
+        });
+
+        function SaveDeviation() {
+            debugger;
+            var length = $('#tblRoiDetails tbody tr').length;
+            if (length == 0) {
+                $("#CustomErr").text("Please Click on Roi Add button then save record");
+                $("#tblRoiDetails").focus();
+                return true;
+            }
+            length = $('#tblDistanceDetails tbody tr').length;
+            if (length == 0) {
+                $("#CustomErr").text("Please Click on Distance Add button then save record");
+                $("#tblDistanceDetails").focus();
+                return true;
+            }
+            $("#CustomErrr").text("");
+            $("#CustomErrr").text("");
+            $("#CustomErrrr").text("");
+            length = $('#tblSanctionDetails tbody tr').length;
+            if (length == 0) {
+                $("#CustomErrr").text("Please Click on Sanction Add button then save record");
+                $("#tblSanctionDetails").focus();
+                return true;
+            }
+            length = $('#tblTenureDetails tbody tr').length;
+            if (length == 0) {
+                $("#CustomErrrr").text("Please Click on Tenure Add button then save record");
+                $("#tblTenureDetails").focus();
+                return true;
+            }
+            length = $('#tblLTVDetails tbody tr').length;
+            if (length == 0) {
+                $("#CustomErrrr").text("Please Click on LTV Add button then save record");
+                $("#tblLTVDetails").focus();
+                return true;
+            }
+
+            $("#btn_save").prop("disabled", true);
+            var DeviationViewModel = {};
+            var lstRoiTrn = [];
+            var lstDistanceTrn = [];
+            var lstSanctionTrn=[];
+            var lstTenureTrn=[];
+            var lstLTVTrn=[];
+
+            $("#tblRoiDetails TBODY TR").each(function () {
+                var row = $(this);
+                var rowRoiTrn = {};
+                debugger;
+                rowRoiTrn.ID = row.attr('id');
+                rowRoiTrn.RoiMinRange = row.find("TD").eq(1).html();
+                rowRoiTrn.RoiMaxRange = row.find("TD").eq(2).html();
+                rowRoiTrn.RoiUserNo = row.find("td").eq(3).attr('id');
+                lstRoiTrn.push(rowRoiTrn);
+            });
+
+            $("#tblDistanceDetails TBODY TR").each(function () {
+                var row = $(this);
+                var rowDistanceTrn = {};
+                debugger;
+                rowDistanceTrn.ID = row.attr('id');
+                rowDistanceTrn.DistanceMinRange = row.find("TD").eq(1).html();
+                rowDistanceTrn.DistanceMaxRange = row.find("TD").eq(2).html();
+                rowDistanceTrn.DistanceUserNo = row.find("td").eq(3).attr('id');
+                lstDistanceTrn.push(rowDistanceTrn);
+            });
+
+            $("#tblSanctionDetails TBODY TR").each(function () {
+                var row = $(this);
+                var rowSanctionTrn = {};
+                debugger;
+                rowSanctionTrn.ID = row.attr('id');
+                rowSanctionTrn.SanctionMinRange = row.find("TD").eq(1).html();
+                rowSanctionTrn.SanctionMaxRange = row.find("TD").eq(2).html();
+                rowSanctionTrn.SanctionedUserNo = row.find("td").eq(3).attr('id');
+                lstSanctionTrn.push(rowSanctionTrn);
+            });
+
+            $("#tblTenureDetails TBODY TR").each(function () {
+                var row = $(this);
+                var rowTenureTrn = {};
+                debugger;
+                rowTenureTrn.ID = row.attr('id');
+                rowTenureTrn.TenureMinRange = row.find("TD").eq(1).html();
+                rowTenureTrn.TenureMaxRange = row.find("TD").eq(2).html();
+                rowTenureTrn.TenureUserNo = row.find("td").eq(3).attr('id');
+                lstTenureTrn.push(rowTenureTrn);
+            });
+
+            $("#tblLTVDetails TBODY TR").each(function () {
+                var row = $(this);
+                var rowLTVTrn = {};
+                debugger;
+                rowLTVTrn.ID = row.attr('id');
+                rowLTVTrn.LTVMinRange = row.find("TD").eq(1).html();
+                rowLTVTrn.LTVMaxRange = row.find("TD").eq(2).html();
+                rowLTVTrn.LTVUserNo = row.find("td").eq(3).attr('id');
+                lstLTVTrn.push(rowLTVTrn);
+            });
+
+            if($("#OrnamentUserNo").val()=="")
+            {
+                $("#CustomErr").text("Please Select User Category from Ornament Section");
+                $("#OrnamentUserNo").focus();
+                return true;
+            }
+            if($("#ThresholdLimit").val()=="")
+            {
+                $("#CustomErr").text("Please Enter Threshold Limit from Exposure of Loan Section");
+                $("#ThresholdLimit").focus();
+                return true;
+            }
+            if($("#ApproveDistanceLimit").val()=="")
+            {
+                $("#CustomErr").text("Please Enter Approve Distance Limit from Distance Section");
+                $("#ApproveDistanceLimit").focus();
+                return true;
+            }
+            DeviationViewModel.roiDeviationDetailsList = lstRoiTrn;
+            DeviationViewModel.distanceDeviationDetailsList = lstDistanceTrn;
+            DeviationViewModel.sanctionDeviationList = lstSanctionTrn;
+            DeviationViewModel.tenureDeviationList = lstTenureTrn;
+            DeviationViewModel.lTVDeviationDetailsList = lstLTVTrn;
+            DeviationViewModel.OrnamentUserNo=$("#OrnamentUserNo").val();
+            DeviationViewModel.ID = $('#ItemID').val();
+            DeviationViewModel.ThresholdLimit = $('#ThresholdLimit').val();
+            DeviationViewModel.ApproveDistanceLimit = $('#ApproveDistanceLimit').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Deviation/Insert",
+                data: JSON.stringify(DeviationViewModel),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    debugger;
+                    if (r == 1) {
+                        $("#saveModal").modal('show');
+                        $(document).click(function () {
+                            window.location.href = urlRedirect;
+                        });
+                    }
+                    else if (r == 2) {
+                        $("#saveModal").modal('show');
+                        $(document).click(function () {
+                            window.location.href = urlRedirect;
+                        });
+                    }
+                    else {
+                        $("#CustomErr").text(r);
+                        $("#btn_save").prop("disabled", false);
+                        return false;
+                    }
+                }
+            });
+        }
+
+        var urlRedirect = '@Html.Raw(@Url.Action("Deviation", "Deviation"))';
+
+        function OnSuccess(response) {
+            $("#saveModal").modal('show');
+            $(document).click(function () {
+                window.location.href = urlRedirect;
+            });
+        }
+
+        function OnFailure(response) {
+            alert('Error Occured');
+        }
+
+        $(function () {
+            var url = '@Html.Raw(@Url.Action("Delete", "Deviation"))';
+            $("#btnDelete").click(function () {
+                $("#deleteModal").modal('show');
+            });
+            $("#btnDeleteConfirm").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: '{id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != "") {
+                            $("#CustomErr").text(data);
+                            return false;
+                        }
+                        else {
+                            $("#CustomErr").empty();
+                            $("#DeleteSuccessModal").modal('show');
+
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            });
+        });
+    </script>
+}
