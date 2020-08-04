@@ -2072,11 +2072,12 @@
     <Content Include="Views\PenaltySlab\PenaltySlab.cshtml" />
     <Content Include="Views\PenaltySlab\_PenaltySlablist.cshtml" />
     <Content Include="Views\Ornament\Ornament.cshtml" />
+    <Content Include="Views\Branch\Branch.cshtml" />
+    <Content Include="Views\Branch\_BranchList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Branch\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
