@@ -1,12 +1,8 @@
 ﻿using MangalWeb.Model.Entity;
-using MangalWeb.Model.Masters;
 using MangalWeb.Model.Transaction;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MangalWeb.Repository.Repository
 {
@@ -297,6 +293,11 @@ namespace MangalWeb.Repository.Repository
                 kycVm.isPanAdharExist = false;
             }
             return kycVm;
+        }
+
+        public int GenerateApplicationNo()
+        {
+            return _context.TGLKYC_BasicDetails.ToList().Count();
         }
     }
 }

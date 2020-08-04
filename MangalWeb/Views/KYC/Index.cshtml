@@ -52,6 +52,8 @@
                                                     @Html.EditorFor(model => model.PANNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "PAN No.", @autofocus = "autofocus" } })
                                                     @Html.ValidationMessageFor(model => model.PANNo, "", new { @class = "text-danger" })
                                                 </div>
+
+                                                <button id="btnUpdate" type="button" class="mb -xs mt-xs mr-xs btn btn-primary" style="padding: 5px;"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Update Details</span></button>
                                             </div>
                                             <br />
                                         </div>
@@ -102,7 +104,6 @@
                                                         @Html.EditorFor(model => model.AppliedDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Application Date", @autofocus = "autofocus" } })
                                                         @Html.ValidationMessageFor(model => model.AppliedDate, "", new { @class = "text-danger" })
                                                     </div>
-                                                    <button id="btnUpdate" type="button" class="mb -xs mt-xs mr-xs btn btn-primary" style="padding: 5px;"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Update Details</span></button>
                                                 </div>
                                                 <br />
                                             </div>
@@ -687,8 +688,8 @@ new { @class= "form-control" })
                 $("#CKYCNo").attr("disabled", true);
             });
 
-            $("PANNo").on('input', function () {
-                var pan = $("PANNo").val();
+            $("#PANNo").on('input', function () {
+                var pan = $("#PANNo").val();
                 CheckPanAvailable(pan);
                 $("#CustomerID").attr("disabled", true);
                 $("#ApplicationNo").attr("disabled", true);
@@ -721,7 +722,7 @@ new { @class= "form-control" })
                         else {
                             $("#negativeCustomerErr").text("");
                             $.each(result, function (key, value) {
-                                if (key == "ApplicationDate" || key == "BirthDate" || key == "Expirydate") {
+                                if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
                                     value = new Date(parseInt(value.replace('/Date(', '')));
                                     var day = value.getDate();
                                     var month = value.getMonth() + 1;

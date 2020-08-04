@@ -13,7 +13,12 @@ namespace MangalWeb.Controllers
         {
             ButtonVisiblity("Index");
             ViewBag.SourceList = new SelectList(_kycService.GetSourceOfApplicationList(), "Soa_Name", "Soa_Name");
-            return View();
+            KYCBasicDetailsVM kycVM = new KYCBasicDetailsVM();
+            Random rand = new Random(100);
+            int cid = rand.Next(000000000, 999999999) + 1;
+            kycVM.CustomerID = "C" + cid.ToString();
+            kycVM.ApplicationNo = _kycService.GenerateApplicationNo();
+            return View(kycVM);
         }
 
         public JsonResult CreateEdit(KYCBasicDetailsVM model)

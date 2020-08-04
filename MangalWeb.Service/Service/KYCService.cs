@@ -31,5 +31,20 @@ namespace MangalWeb.Service.Service
             var kycVm = _kycRepository.doesAdharExist(AdharNo);
             return kycVm;
         }
+
+        public string GenerateApplicationNo()
+        {
+            int count = _kycRepository.GenerateApplicationNo();
+            string AppNo = string.Empty;
+            if (count > 0)
+            {
+                AppNo = (count + 1).ToString();
+            }
+            else
+            {
+                AppNo = "1";
+            }
+            return AppNo;
+        }
     }
 }
