@@ -76,6 +76,7 @@
     <Compile Include="Service\BranchService.cs" />
     <Compile Include="Service\ChargeService.cs" />
     <Compile Include="Service\CityService.cs" />
+    <Compile Include="Service\DeviationService.cs" />
     <Compile Include="Service\DocumentService.cs" />
     <Compile Include="Service\FinancialYearService.cs" />
     <Compile Include="Service\GSTService.cs" />

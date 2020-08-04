@@ -12,7 +12,6 @@ namespace MangalWeb.Controllers
     {
         BranchService _branchService = new BranchService();
 
-
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public JsonResult CreateEdit(BranchViewModel branch)
