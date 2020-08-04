@@ -12,24 +12,18 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class Mst_Product
+    public partial class Mst_BranchType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Mst_Product()
+        public Mst_BranchType()
         {
-            this.Mst_ProductRate = new HashSet<Mst_ProductRate>();
-            this.tblItemMasters = new HashSet<tblItemMaster>();
-            this.TSchemeMaster_BasicDetails = new HashSet<TSchemeMaster_BasicDetails>();
+            this.tblCompanyBranchMasters = new HashSet<tblCompanyBranchMaster>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Mst_ProductRate> Mst_ProductRate { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblItemMaster> tblItemMasters { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TSchemeMaster_BasicDetails> TSchemeMaster_BasicDetails { get; set; }
+        public virtual ICollection<tblCompanyBranchMaster> tblCompanyBranchMasters { get; set; }
     }
 }

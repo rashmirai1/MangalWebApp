@@ -248,6 +248,9 @@
     <Compile Include="Entity\tbl_SentJVCustHistory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tbl_UserCategory.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tbl_UserLogin.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>

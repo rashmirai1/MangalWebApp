@@ -33,5 +33,7 @@ namespace MangalWeb.Model.Entity
         public Nullable<System.DateTime> RecordUpdated { get; set; }
         public Nullable<int> RecordCreatedBy { get; set; }
         public Nullable<int> RecordUpdatedBy { get; set; }
+    
+        public virtual Mst_PinCode Mst_PinCode { get; set; }
     }
 }

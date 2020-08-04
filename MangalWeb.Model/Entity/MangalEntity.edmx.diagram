@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fc080b8f0dcd4ead8cf66be6dcd2c195" Name="Diagram1" ZoomLevel="66">
+      <Diagram DiagramId="fc080b8f0dcd4ead8cf66be6dcd2c195" Name="Diagram1" ZoomLevel="75">
         <EntityTypeShape EntityType="MangalDBNewModel.tblBankMaster" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.Bharat_tbl_SentJVCustHistory" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.Bharat01012017tbl_SentJVCustHistory" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
@@ -46,7 +46,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.TGLOutwardForm_DocDetails" Width="1.5" PointX="14.75" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLOutwardForm_GoldDetails" Width="1.5" PointX="20.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLSmsHistory" Width="1.5" PointX="0.75" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MangalDBNewModel.TSchemeMaster_BasicDetails" Width="1.5" PointX="20.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TSchemeMaster_EffectiveROI" Width="1.5" PointX="10.75" PointY="20.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.UserDetail" Width="1.5" PointX="20.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.UserFormAuthentication" Width="1.5" PointX="20.75" PointY="14.75" IsExpanded="true" />
@@ -100,6 +99,10 @@
         <AssociationConnector Association="MangalDBNewModel.FK_Mst_ProductRateDetails_Mst_ProductRate" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblItemMaster" Width="1.5" PointX="27.625" PointY="21.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_tblItemMaster_Mst_Product" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TSchemeMaster_BasicDetails" Width="1.5" PointX="27.625" PointY="28.125" />
+        <AssociationConnector Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_PinCode" />
+        <AssociationConnector Association="MangalDBNewModel.FK_TSchemeMaster_BasicDetails_Mst_Product" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_UserCategory" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_BasicDetails" Width="1.5" PointX="28.375" PointY="24.75" />
       </Diagram>
     </edmx:Diagrams>
