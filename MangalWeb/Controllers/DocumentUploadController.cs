@@ -100,11 +100,15 @@ namespace MangalWeb.Controllers
             string DocumentId = Request.Form["DocumentId"];
             string ExpiryDate = Request.Form["ExpiryDate"];
             string base64String = "";
+            string pFileName = "";
+            string pFileExtension = "";
             HttpFileCollectionBase files = Request.Files;
             for (int i = 0; i < files.Count; i++)
             {
                 HttpPostedFileBase file = files[i];
                 Stream fs = file.InputStream;
+                pFileName = file.FileName;
+                pFileExtension = file.ContentType;
                 BinaryReader br = new BinaryReader(fs);
                 Byte[] bytes = br.ReadBytes((Int32)fs.Length);
                 base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
@@ -122,6 +126,8 @@ namespace MangalWeb.Controllers
             docupload.DocumentId = Convert.ToInt32(DocumentId);
             docupload.ExpiryDate =Convert.ToDateTime(ExpiryDate);
             docupload.UploadDocName = base64String;
+            docupload.FileName = pFileName;
+            docupload.FileExtension = pFileExtension;
             Session["sub"] = sessionlist;
             return Json(1, JsonRequestBehavior.AllowGet);
         }
@@ -157,6 +163,25 @@ namespace MangalWeb.Controllers
 
         #endregion Insert Data
 
+        //public ActionResult DocumentUpload(int id)
+        //{
+        //    byte[] cover = GetImageFromDataBase(id);
+        //    if (cover != null)
+        //    {
+        //        return File(cover, "image/jpg");
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
+        //public byte[] GetImageFromDataBase(int Id)
+        //{
+        //    var q = _documentUploadService.getuploaddocuments(Id);
+        //    byte[] cover = q;
+        //    return cover;
+        //}
+
         #region GetDcoument
         public JsonResult GetDcoument(int id)
         {
@@ -179,10 +204,9 @@ namespace MangalWeb.Controllers
         {
             try
             {
-                DocumentUploadViewModel documentUploadViewModel = new DocumentUploadViewModel();
                 string operation = Session["Operation"].ToString();
                 //get document upload table
-                var productRatevm = _documentUploadService.GetUploadDocumentById(ID);
+                var documentUploadViewModel = _documentUploadService.GetUploadDocumentById(ID);
                 documentUploadViewModel.operation = operation;
                 ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
                 ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");

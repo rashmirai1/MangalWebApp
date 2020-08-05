@@ -53,6 +53,11 @@ namespace MangalWeb.Service.Service
             _documentUploadRepository.SaveUpdateRecord(model);
         }
 
+        //public string getuploaddocuments(int id)
+        //{
+        //   //return _documentUploadRepository.getuploaddocuments(id);
+        //}
+
         public void DeleteRecord(int id)
         {
             _documentUploadRepository.DeleteRecord(id);
