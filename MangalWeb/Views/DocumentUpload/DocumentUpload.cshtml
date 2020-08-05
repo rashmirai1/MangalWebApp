@@ -152,9 +152,9 @@
                                                     <td>@item.DocumentTypeName</td>
                                                     <td>@item.DocumentName</td>
                                                     <td>@item.ExpiryDate</td>
-                                                    <td><img src="@item.UploadDocName" /></td>
+                                                    <td><a href="/DocumentUpload/Download?@item.DocumentId" target=_blank>@item.FileName</a></td>
                                                     <td>
-                                                        <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                        <a class="delete"><i class="fa fa-trash"></i></a>
                                                     </td>
                                                 </tr>
                                                 j++;

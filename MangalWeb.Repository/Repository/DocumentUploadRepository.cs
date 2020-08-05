@@ -66,14 +66,20 @@ namespace MangalWeb.Repository.Repository
 
         public void DeleteRecord(int id)
         {
-            var trndata = _context.Trn_DocumentUpload.Where(x => x.TransactionId == id).ToList();
+            var ratetrndata = _context.Trn_DocUploadDetails.Where(x => x.DocUploadId == id).ToList();
             //Delete the data from Installation Type Data
-            if (trndata != null)
+            if (ratetrndata != null)
             {
-                foreach (var doctrn in trndata)
+                foreach (var ratetrn in ratetrndata)
                 {
-                    _context.Trn_DocumentUpload.Remove(doctrn);
+                    _context.Trn_DocUploadDetails.Remove(ratetrn);
                 }
+                _context.SaveChanges();
+            }
+            var deleterecord = _context.Trn_DocumentUpload.Where(x => x.DocId == id).FirstOrDefault();
+            if (deleterecord != null)
+            {
+                _context.Trn_DocumentUpload.Remove(deleterecord);
                 _context.SaveChanges();
             }
         }
@@ -117,6 +123,8 @@ namespace MangalWeb.Repository.Repository
                             DocumentTypeId = p.DocumentTypeId,
                             DocumentId = p.DocumentId,
                             ExpiryDate = p.ExpiryDate,
+                            FileName=p.FileName,
+                            FileExtension=p.FileExtension,
                             UploadFileBase64 = p.UploadDocName,
                         };
                         _context.Trn_DocUploadDetails.Add(docuptrn);
@@ -239,6 +247,8 @@ namespace MangalWeb.Repository.Repository
                     DocumentId = (int)c.DocumentId,
                     ExpiryDate = c.ExpiryDate,
                     UploadDocName = c.UploadFileBase64,
+                    FileName=c.FileName,
+                    FileExtension=c.FileExtension
                 };
                 DocTrnViewModelList.Add(TrnViewModel);
             }
@@ -254,7 +264,7 @@ namespace MangalWeb.Repository.Repository
             foreach (var item in tablelist)
             {
                 model = new DocumentUploadViewModel();
-                model.ID = item.TransactionId;
+                model.ID = item.DocId;
                 model.TransactionId = item.TransactionId;
                 model.TransactionNumber = item.TransactionNumber;
                 model.DocDate = Convert.ToDateTime(item.DocDate).ToShortDateString();
@@ -265,5 +275,12 @@ namespace MangalWeb.Repository.Repository
             }
             return list;
         }
+
+        //public byte[] getuploaddocuments(int id)
+        //{
+        //    var q= from temp in _context.Trn_DocUploadDetails where temp.Id == id select temp.UploadFileBase64;
+        //   // byte[] cover = q.FirstOrDefault();
+        //   // return cover;
+        //}
     }
 }
