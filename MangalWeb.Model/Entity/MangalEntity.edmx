@@ -1761,6 +1761,18 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblCompanyBranchMaster_Mst_PinCode">
+          <End Role="Mst_PinCode" Type="Self.Mst_PinCode" Multiplicity="1" />
+          <End Role="tblCompanyBranchMaster" Type="Self.tblCompanyBranchMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_PinCode">
+              <PropertyRef Name="Pc_Id" />
+            </Principal>
+            <Dependent Role="tblCompanyBranchMaster">
+              <PropertyRef Name="Pincode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblCompanyBranchMaster_Mst_BranchType">
           <End Role="Mst_BranchType" Type="Self.Mst_BranchType" Multiplicity="1" />
           <End Role="tblCompanyBranchMaster" Type="Self.tblCompanyBranchMaster" Multiplicity="*" />
@@ -2586,6 +2598,10 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           </AssociationSet>
           <AssociationSet Name="FK_tblCompanyBranchMaster_Mst_BranchType" Association="Self.FK_tblCompanyBranchMaster_Mst_BranchType">
             <End Role="Mst_BranchType" EntitySet="Mst_BranchType" />
+            <End Role="tblCompanyBranchMaster" EntitySet="tblCompanyBranchMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblCompanyBranchMaster_Mst_PinCode" Association="Self.FK_tblCompanyBranchMaster_Mst_PinCode">
+            <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
             <End Role="tblCompanyBranchMaster" EntitySet="tblCompanyBranchMaster" />
           </AssociationSet>
           <AssociationSet Name="FK_tblCompanyBranchMaster_Mst_PinCode" Association="Self.FK_tblCompanyBranchMaster_Mst_PinCode">
@@ -3464,7 +3480,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <EntitySet Name="TGLOutwardForm_DocDetails" EntityType="Self.TGLOutwardForm_DocDetails" />
           <EntitySet Name="TGLOutwardForm_GoldDetails" EntityType="Self.TGLOutwardForm_GoldDetails" />
           <EntitySet Name="TGLSmsHistories" EntityType="Self.TGLSmsHistory" />
-          <EntitySet Name="TSchemeMaster_BasicDetails" EntityType="Self.TSchemeMaster_BasicDetails" />
           <EntitySet Name="TSchemeMaster_EffectiveROI" EntityType="Self.TSchemeMaster_EffectiveROI" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
           <EntitySet Name="UserFormAuthentications" EntityType="Self.UserFormAuthentication" />
@@ -3967,6 +3982,31 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="Financialyear" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CompID" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblCompanyBranchMaster">
+          <Key>
+            <PropertyRef Name="BID" />
+          </Key>
+          <Property Name="BID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CompID" Type="Int32" Nullable="false" />
+          <Property Name="BranchCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BranchType" Type="Int16" Nullable="false" />
+          <Property Name="InceptionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RentPeriodAgreed" Type="DateTime" Precision="3" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Pincode" Type="Int32" Nullable="false" />
+          <Property Name="ContactPerson" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="InTime" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OutTime" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DateWEF" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int16" />
+          <Property Name="RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="RecordCreatedBy" Type="Int32" />
+          <Property Name="RecordUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Mst_PinCode" Relationship="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_PinCode" FromRole="tblCompanyBranchMaster" ToRole="Mst_PinCode" />
+        </EntityType>
         <EntityType Name="Mst_PenaltySlab">
           <Key>
             <PropertyRef Name="Ps_Id" />
@@ -4119,6 +4159,77 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Type="Int16" Name="pos" Nullable="false" />
           <Property Type="String" Name="value" Nullable="true" MaxLength="8000" />
         </ComplexType>
+        <EntityType Name="TSchemeMaster_BasicDetails">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SchemeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SchemeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MinLoanAmt" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Tenure" Type="Int32" />
+          <Property Name="MaxLoanAmt" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Ltv" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="CalMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ROI" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="ProChargeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMI" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ProCharge" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="PenalInterest" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="CMPId" Type="Int32" />
+          <Property Name="BranchId" Type="Int32" />
+          <Property Name="FYId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
+          <Property Name="isActive" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AmtLmtTo" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="ServiceTax" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="Product" Type="Int32" Nullable="false" />
+          <Property Name="MaxTenure" Type="Int32" Nullable="false" />
+          <Property Name="MaxLtv" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="MaxRoi" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="GracePeriod" Type="Int32" />
+          <Property Name="EffectiveRoiPerc" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="LockInPeriod" Type="Int32" />
+          <NavigationProperty Name="Mst_Product" Relationship="MangalDBNewModel.FK_TSchemeMaster_BasicDetails_Mst_Product" FromRole="TSchemeMaster_BasicDetails" ToRole="Mst_Product" />
+        </EntityType>
+        <Association Name="FK_tblCompanyBranchMaster_Mst_PinCode">
+          <End Type="MangalDBNewModel.Mst_PinCode" Role="Mst_PinCode" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tblCompanyBranchMaster" Role="tblCompanyBranchMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_PinCode">
+              <PropertyRef Name="Pc_Id" />
+            </Principal>
+            <Dependent Role="tblCompanyBranchMaster">
+              <PropertyRef Name="Pincode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TSchemeMaster_BasicDetails_Mst_Product">
+          <End Type="MangalDBNewModel.Mst_Product" Role="Mst_Product" Multiplicity="1" />
+          <End Type="MangalDBNewModel.TSchemeMaster_BasicDetails" Role="TSchemeMaster_BasicDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TSchemeMaster_BasicDetails">
+              <PropertyRef Name="Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_UserCategory">
+          <Key>
+            <PropertyRef Name="refid" />
+          </Key>
+          <Property Name="refid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Organhieraechyid" Type="Int32" />
+          <Property Name="status1" Type="Boolean" />
+        </EntityType>
         <EntityType Name="TGLKYC_BasicDetails">
           <Key>
             <PropertyRef Name="KYCID" />
@@ -4985,8 +5096,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
                 <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
                 <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="AmtLmtTo" ColumnName="AmtLmtTo" />
-                <ScalarProperty Name="ServiceTax" ColumnName="ServiceTax" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5486,6 +5595,54 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
                 <ScalarProperty Name="Product" ColumnName="Product" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TSchemeMaster_BasicDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TSchemeMaster_BasicDetails">
+              <MappingFragment StoreEntitySet="TSchemeMaster_BasicDetails">
+                <ScalarProperty Name="LockInPeriod" ColumnName="LockInPeriod" />
+                <ScalarProperty Name="EffectiveRoiPerc" ColumnName="EffectiveRoiPerc" />
+                <ScalarProperty Name="GracePeriod" ColumnName="GracePeriod" />
+                <ScalarProperty Name="MaxRoi" ColumnName="MaxRoi" />
+                <ScalarProperty Name="MaxLtv" ColumnName="MaxLtv" />
+                <ScalarProperty Name="MaxTenure" ColumnName="MaxTenure" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="ServiceTax" ColumnName="ServiceTax" />
+                <ScalarProperty Name="AmtLmtTo" ColumnName="AmtLmtTo" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="FYId" ColumnName="FYId" />
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="CMPId" ColumnName="CMPId" />
+                <ScalarProperty Name="PenalInterest" ColumnName="PenalInterest" />
+                <ScalarProperty Name="ProCharge" ColumnName="ProCharge" />
+                <ScalarProperty Name="EMI" ColumnName="EMI" />
+                <ScalarProperty Name="ProChargeType" ColumnName="ProChargeType" />
+                <ScalarProperty Name="ROI" ColumnName="ROI" />
+                <ScalarProperty Name="CalMethod" ColumnName="CalMethod" />
+                <ScalarProperty Name="Ltv" ColumnName="Ltv" />
+                <ScalarProperty Name="MaxLoanAmt" ColumnName="MaxLoanAmt" />
+                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
+                <ScalarProperty Name="MinLoanAmt" ColumnName="MinLoanAmt" />
+                <ScalarProperty Name="SchemeType" ColumnName="SchemeType" />
+                <ScalarProperty Name="SchemeName" ColumnName="SchemeName" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_UserCategory">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_UserCategory">
+              <MappingFragment StoreEntitySet="tbl_UserCategory">
+                <ScalarProperty Name="status1" ColumnName="status1" />
+                <ScalarProperty Name="Organhieraechyid" ColumnName="Organhieraechyid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="refid" ColumnName="refid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

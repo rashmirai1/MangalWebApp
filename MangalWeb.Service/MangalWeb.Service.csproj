@@ -89,8 +89,10 @@
     <Compile Include="Service\PincodeService.cs" />
     <Compile Include="Service\ProductRateService.cs" />
     <Compile Include="Service\ReasonService.cs" />
+    <Compile Include="Service\SchemeService.cs" />
     <Compile Include="Service\SourcefApplicationService.cs" />
     <Compile Include="Service\StateService.cs" />
+    <Compile Include="Service\tbl_UserCategory.cs" />
     <Compile Include="Service\ZoneService.cs" />
   </ItemGroup>
   <ItemGroup>

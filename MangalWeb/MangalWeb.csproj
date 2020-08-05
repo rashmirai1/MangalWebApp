@@ -126,6 +126,7 @@
     <Compile Include="Controllers\BranchController.cs" />
     <Compile Include="Controllers\ChargeController.cs" />
     <Compile Include="Controllers\CityController.cs" />
+    <Compile Include="Controllers\DeviationController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\FinancialYearController.cs" />
     <Compile Include="Controllers\GSTController.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Controllers\PincodeController.cs" />
     <Compile Include="Controllers\ProductRateController.cs" />
     <Compile Include="Controllers\ReasonController.cs" />
+    <Compile Include="Controllers\SchemeController.cs" />
     <Compile Include="Controllers\SourceofApplicationController.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\ZoneController.cs" />
@@ -2075,6 +2077,9 @@
     <Content Include="Views\Ornament\Ornament.cshtml" />
     <Content Include="Views\Branch\Branch.cshtml" />
     <Content Include="Views\Branch\_BranchList.cshtml" />
+    <Content Include="Views\Deviation\Deviation.cshtml" />
+    <Content Include="Views\Scheme\Scheme.cshtml" />
+    <Content Include="Views\Scheme\_SchemeList.cshtml" />
     <Content Include="Views\KYC\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

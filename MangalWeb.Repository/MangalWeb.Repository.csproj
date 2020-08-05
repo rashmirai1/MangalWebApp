@@ -91,6 +91,7 @@
     <Compile Include="Repository\OrnamentRepository.cs" />
     <Compile Include="Repository\PenaltySlabRepository.cs" />
     <Compile Include="Repository\PincodeRepository.cs" />
+    <Compile Include="Repository\SchemeRepository.cs" />
     <Compile Include="Repository\SourceofApplicationRepository.cs" />
     <Compile Include="Repository\StateRepository.cs" />
     <Compile Include="Repository\ZoneRepository.cs" />
