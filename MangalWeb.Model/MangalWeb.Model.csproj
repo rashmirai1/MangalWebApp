@@ -392,9 +392,6 @@
     <Compile Include="Masters\TenureDeviationVM.cs" />
     <Compile Include="Masters\ZoneViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Transaction\KYCBasciDetailsVM.cs" />
-    <Compile Include="Transaction\DocumentUploadDetailsVM.cs" />
-    <Compile Include="Transaction\DocumentUploadViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -423,6 +420,9 @@
       <DependentUpon>MangalEntity.edmx</DependentUpon>
       <LastGenOutput>MangalEntity.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Transaction\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
