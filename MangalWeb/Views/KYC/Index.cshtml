@@ -5,7 +5,7 @@
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
 
-@using (Ajax.BeginForm("CreateEdit", "KYC", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { enctype = "multipart/form-data" }))
+@using (Ajax.BeginForm("CreateEdit", "KYC", new AjaxOptions {  }, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.KYCID, new { @id = "ItemID" })
@@ -681,6 +681,11 @@ new { @class= "form-control" })
                     xhr.open(form.method, form.action);
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState == 4 && xhr.status == 200) {
+
+                            $("#saveModal").modal('show');
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
                             if (form.dataset.ajaxUpdate) {
                                 var updateTarget = document.querySelector(form.dataset.ajaxUpdate);
                                 if (updateTarget) {
@@ -710,39 +715,39 @@ new { @class= "form-control" })
             });
             var pan = $("#PANNo").val();
             var adhar = $("#AdhaarNo").val();
-            $('#disabledFields').find(':input').prop('disabled', true);
-            $("#btnUpdate").prop('disabled', false);
+            $('#disabledFields').find(':input').prop('readOnly', true);
+            $("#btnUpdate").prop('readOnly', false);
             $("#btnUpdate").hide();
 
-            $("#CustomerID").attr("disabled", true);
-            $("#ApplicationNo").attr("disabled", true);
-        $("#ApplicationDate").attr("disabled", true);
-        $("#CKYCNo").attr("disabled", true);
+            $("#CustomerID").attr('readOnly', true);
+            $("#ApplicationNo").attr('readOnly', true);
+        $("#ApplicationDate").attr('readOnly', true);
+        $("#CKYCNo").attr('readOnly', true);
 
             $("#btnUpdate").click(function () {
-                $('#disabledFields').find(':input').prop('disabled', false);
-                $("#CustomerID").attr("disabled", true);
-                $("#ApplicationNo").attr("disabled", true);
-                $("#ApplicationDate").attr("disabled", true);
-                $("#CKYCNo").attr("disabled", true);
+                $('#disabledFields').find(':input').prop('readOnly', false);
+                $("#CustomerID").attr('readOnly', true);
+                $("#ApplicationNo").attr('readOnly', true);
+                $("#ApplicationDate").attr('readOnly', true);
+                $("#CKYCNo").attr('readOnly', true);
             });
 
             $("#PANNo").on('input', function () {
                 var pan = $("#PANNo").val();
                 CheckPanAvailable(pan);
-                $("#CustomerID").attr("disabled", true);
-                $("#ApplicationNo").attr("disabled", true);
-                $("#ApplicationDate").attr("disabled", true);
-                $("#CKYCNo").attr("disabled", true);
+                $("#CustomerID").attr('readOnly', true);
+                $("#ApplicationNo").attr('readOnly', true);
+                $("#ApplicationDate").attr('readOnly', true);
+                $("#CKYCNo").attr('readOnly', true);
             });
 
             $("#AdhaarNo").on('input', function () {
                 var adhar = $("#AdhaarNo").val();
                 CheckAdharAvailable(adhar);
-                $("#CustomerID").attr("disabled", true);
-                $("#ApplicationNo").attr("disabled", true);
-                $("#ApplicationDate").attr("disabled", true);
-                $("#CKYCNo").attr("disabled", true);
+                $("#CustomerID").attr('readOnly', true);
+                $("#ApplicationNo").attr('readOnly', true);
+                $("#ApplicationDate").attr('readOnly', true);
+                $("#CKYCNo").attr('readOnly', true);
             });
 
         function CheckPanAvailable(pan) {
@@ -770,19 +775,19 @@ new { @class= "form-control" })
                                 }
                                 $("#" + key + "").val(value);
                             });
-                            $('#disabledFields').find(':input').prop('disabled', true);
+                            $('#disabledFields').find(':input').prop('readOnly', true);
                             $("#disabledFields").show();
                             $("#btnUpdate").show();
-                            $("#btnUpdate").attr("disabled", false);
+                            $("#btnUpdate").attr('readOnly', false);
                         }
 
                     }
                     else {
-                        $('#disabledFields').find(':input').prop('disabled', false);
-                        $("#CustomerID").attr("disabled", true);
-                        $("#ApplicationNo").attr("disabled", true);
-                        $("#ApplicationDate").attr("disabled", true);
-                        $("#CKYCNo").attr("disabled", true);
+                        $('#disabledFields').find(':input').prop('readOnly', false);
+                        $("#CustomerID").attr('readOnly', true);
+                        $("#ApplicationNo").attr('readOnly', true);
+                        $("#ApplicationDate").attr('readOnly', true);
+                        $("#CKYCNo").attr('readOnly', true);
                         var adhar = $("#AdhaarNo").val();
                         CheckAdharAvailable(adhar);
                     }
@@ -816,18 +821,18 @@ new { @class= "form-control" })
                                 }
                                 $("#" + key + "").val(value);
                             });
-                            $('#disabledFields').find(':input').prop('disabled', true);
+                            $('#disabledFields').find(':input').prop('readOnly', true);
                             $("#btnUpdate").show();
-                            $("#btnUpdate").attr("disabled", false);
+                            $("#btnUpdate").attr('readOnly', false);
 
                         }
                     }
                     else {
-                        $('#disabledFields').find(':input').prop('disabled', false);
-                        $("#CustomerID").attr("disabled", true);
-                        $("#ApplicationNo").attr("disabled", true);
-                        $("#ApplicationDate").attr("disabled", true);
-                        $("#CKYCNo").attr("disabled", true);
+                        $('#disabledFields').find(':input').prop('readOnly', false);
+                        $("#CustomerID").attr('readOnly', true);
+                        $("#ApplicationNo").attr('readOnly', true);
+                        $("#ApplicationDate").attr('readOnly', true);
+                        $("#CKYCNo").attr('readOnly', true);
                         var pan = $("#PANNo").val();
                         CheckPanAvailable(pan);
                     }
@@ -874,17 +879,7 @@ new { @class= "form-control" })
             });
         }
         var urlRedirect = '@Html.Raw(@Url.Action("Index", "KYC"))';
-        function OnSuccess(response) {
-
-            $("#saveModal").modal('show');
-            $(document).click(function () {
-                window.location.href = urlRedirect;
-            });
-        }
-
-        function OnFailure(response) {
-            alert("Error occured.");
-        }
+      
 
         $(function () {
             var url = '@Html.Raw(@Url.Action("Delete", "KYC"))';

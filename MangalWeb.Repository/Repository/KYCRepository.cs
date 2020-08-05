@@ -103,6 +103,7 @@ namespace MangalWeb.Repository.Repository
                         kycImageStore.KycPhoto = model.KycPhoto;
                         kycImageStore.Operation = "Save";
                         kycImageStore.Refno = Convert.ToString(tGLKYC_Basic.KYCID);
+                        _context.KycImageStores.Add(kycImageStore);
                         _context.SaveChanges();
                     }
                 }

@@ -86,7 +86,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_GLChargeMaster_Details" Width="1.5" PointX="14.625" PointY="29.625" />
         <AssociationConnector Association="MangalDBNewModel.FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblFinancialyear" Width="1.5" PointX="11.375" PointY="3.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tblCompanyBranchMaster" Width="1.5" PointX="3.375" PointY="24.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_PenaltySlab" Width="1.5" PointX="3.375" PointY="20.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_SourceofApplication" Width="1.5" PointX="11.375" PointY="23.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_AuditCategory" Width="1.5" PointX="28.375" PointY="18.625" />
@@ -100,13 +99,16 @@
         <EntityTypeShape EntityType="MangalDBNewModel.tblItemMaster" Width="1.5" PointX="27.625" PointY="21.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_tblItemMaster_Mst_Product" />
         <EntityTypeShape EntityType="MangalDBNewModel.TSchemeMaster_BasicDetails" Width="1.5" PointX="27.625" PointY="28.125" />
-        <AssociationConnector Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_PinCode" />
         <AssociationConnector Association="MangalDBNewModel.FK_TSchemeMaster_BasicDetails_Mst_Product" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_UserCategory" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_BasicDetails" Width="1.5" PointX="19.375" PointY="29.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocumentUpload" Width="1.5" PointX="21.375" PointY="30.125" />
         <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocUploadDetails" Width="1.5" PointX="23.625" PointY="31.125" />
         <AssociationConnector Association="MangalDBNewModel.FK_Trn_DocUploadDetails_Trn_DocumentUpload" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Mst_BranchType" Width="1.5" PointX="30.125" PointY="0.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tblCompanyBranchMaster" Width="1.5" PointX="32.375" PointY="3" />
+        <AssociationConnector Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType" />
+        <AssociationConnector Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_PinCode" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
