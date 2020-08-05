@@ -110,8 +110,10 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<Mst_ProductRateDetails> Mst_ProductRateDetails { get; set; }
         public virtual DbSet<tblItemMaster> tblItemMasters { get; set; }
         public virtual DbSet<TSchemeMaster_BasicDetails> TSchemeMaster_BasicDetails { get; set; }
-        public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<tbl_UserCategory> tbl_UserCategory { get; set; }
+        public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
+        public virtual DbSet<Trn_DocumentUpload> Trn_DocumentUpload { get; set; }
+        public virtual DbSet<Trn_DocUploadDetails> Trn_DocUploadDetails { get; set; }
         public virtual DbSet<Mst_BranchType> Mst_BranchType { get; set; }
         public virtual DbSet<tblCompanyBranchMaster> tblCompanyBranchMasters { get; set; }
     

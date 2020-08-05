@@ -128,6 +128,7 @@
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\DeviationController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
+    <Compile Include="Controllers\DocumentUploadController.cs" />
     <Compile Include="Controllers\FinancialYearController.cs" />
     <Compile Include="Controllers\GSTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2080,6 +2081,8 @@
     <Content Include="Views\Deviation\Deviation.cshtml" />
     <Content Include="Views\Scheme\Scheme.cshtml" />
     <Content Include="Views\Scheme\_SchemeList.cshtml" />
+    <Content Include="Views\DocumentUpload\DocumentUpload.cshtml" />
+    <Content Include="Views\DocumentUpload\_CustomerDetails.cshtml" />
     <Content Include="Views\KYC\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2102,6 +2105,10 @@
     <ProjectReference Include="..\MangalWeb.Model\MangalWeb.Model.csproj">
       <Project>{c7a91fb3-5143-44e7-a749-bea4cabed72e}</Project>
       <Name>MangalWeb.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MangalWeb.Repository\MangalWeb.Repository.csproj">
+      <Project>{72487520-BC13-4BE8-8AC8-4A28442E59BD}</Project>
+      <Name>MangalWeb.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\MangalWeb.Service\MangalWeb.Service.csproj">
       <Project>{56467b2f-2ec9-4b07-986f-a0fb7f3efad5}</Project>
