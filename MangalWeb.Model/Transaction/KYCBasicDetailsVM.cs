@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MangalWeb.Model.Transaction
 {
@@ -14,6 +15,7 @@ namespace MangalWeb.Model.Transaction
         public int? OperatorID { get; set; }
         public string ExistingCustomerID { get; set; }
         public string ExistingPLCaseNo { get; set; }
+        [Required]
         public string AppFName { get; set; }
         public string AppMName { get; set; }
         public string AppLName { get; set; }
