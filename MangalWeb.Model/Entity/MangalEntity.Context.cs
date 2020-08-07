@@ -139,5 +139,15 @@ namespace MangalWeb.Model.Entity
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SplitWords_Result>("[MangalDBNewEntities].[SplitWords](@text)", textParameter);
         }
+    
+        public virtual int generateFinancialYear()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("generateFinancialYear");
+        }
+    
+        public virtual ObjectResult<GetKYCDetailsForDocument_Result> GetKYCDetailsForDocument()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetKYCDetailsForDocument_Result>("GetKYCDetailsForDocument");
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MangalWeb.Model.Transaction;
+using MangalWeb.Repository;
 using MangalWeb.Service.Service;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace MangalWeb.Controllers
         public ActionResult DocumentUpload()
         {
             ButtonVisiblity("Index");
+            Session["sub"] = null;
             var model = _documentUploadService.GetAllDocumentUpload();
             ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
             ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
@@ -92,55 +94,6 @@ namespace MangalWeb.Controllers
         }
         #endregion Insert
 
-        [HttpPost]
-        public JsonResult AddDocument()
-        {
-            string Id = Request.Form["Id"];
-            string DocumentTypeId = Request.Form["DocumentTypeId"];
-            string DocumentId = Request.Form["DocumentId"];
-            string ExpiryDate = Request.Form["ExpiryDate"];
-            string base64String = "";
-            string pFileName = "";
-            string pFileExtension = "";
-            HttpFileCollectionBase files = Request.Files;
-            for (int i = 0; i < files.Count; i++)
-            {
-                HttpPostedFileBase file = files[i];
-                Stream fs = file.InputStream;
-                pFileName = file.FileName;
-                pFileExtension = file.ContentType;
-                BinaryReader br = new BinaryReader(fs);
-                Byte[] bytes = br.ReadBytes((Int32)fs.Length);
-                base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
-            }
-            DocumentUploadDetailsVM docupload = null;
-            var sessionlist = (List<DocumentUploadDetailsVM>)Session["sub"];
-            if (sessionlist == null)
-            {
-                sessionlist = new List<DocumentUploadDetailsVM>();
-            }
-            docupload = new DocumentUploadDetailsVM();
-            sessionlist.Add(docupload);
-            docupload.ID = Convert.ToInt32(Id);
-            docupload.DocumentTypeId = Convert.ToInt32(DocumentTypeId);
-            docupload.DocumentId = Convert.ToInt32(DocumentId);
-            docupload.ExpiryDate =Convert.ToDateTime(ExpiryDate);
-            docupload.UploadDocName = base64String;
-            docupload.FileName = pFileName;
-            docupload.FileExtension = pFileExtension;
-            Session["sub"] = sessionlist;
-            return Json(1, JsonRequestBehavior.AllowGet);
-        }
-
-
-        public ActionResult Remove(int id)
-        {
-            var list = (List<DocumentUploadDetailsVM>)Session["sub"];
-            list.Remove(list.Where(x => x.ID == id).FirstOrDefault());
-            Session["sub"] = list;
-            return Json(1, JsonRequestBehavior.AllowGet);
-        }
-
         #region Insert Data
 
         public bool InsertData(DocumentUploadViewModel DocUploadViewModel)
@@ -163,29 +116,73 @@ namespace MangalWeb.Controllers
 
         #endregion Insert Data
 
-        //public ActionResult DocumentUpload(int id)
-        //{
-        //    byte[] cover = GetImageFromDataBase(id);
-        //    if (cover != null)
-        //    {
-        //        return File(cover, "image/jpg");
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //}
-        //public byte[] GetImageFromDataBase(int Id)
-        //{
-        //    var q = _documentUploadService.getuploaddocuments(Id);
-        //    byte[] cover = q;
-        //    return cover;
-        //}
+
+        [HttpPost]
+        public JsonResult AddDocument()
+        {
+            int Id =Convert.ToInt32(Request.Form["Id"]);
+            int DocumentTypeId =Convert.ToInt32(Request.Form["DocumentTypeId"]);
+            int DocumentId =Convert.ToInt32(Request.Form["DocumentId"]);
+            DateTime? ExpiryDate = null;
+            if (Request.Form["ExpiryDate"].ToString() != "")
+            {
+                ExpiryDate = Convert.ToDateTime(Request.Form["ExpiryDate"]);
+            }
+            HttpFileCollectionBase files = Request.Files;
+            string pFileName = "";
+            string pFileExtension = "";
+            HttpPostedFileBase postedFile = files[0];
+            Stream fs = postedFile.InputStream;
+            pFileName = postedFile.FileName;
+            pFileExtension = postedFile.ContentType;
+            BinaryReader br = new BinaryReader(fs);
+            Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
+            //base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
+            DocumentUploadDetailsVM docupload = null;
+            var sessionlist =(List<DocumentUploadDetailsVM>)Session["sub"];
+            if (sessionlist == null)
+            {
+                sessionlist = new List<DocumentUploadDetailsVM>();
+            }
+            docupload = new DocumentUploadDetailsVM();
+            docupload.ID = Id;
+            docupload.DocumentTypeId = DocumentTypeId;
+            docupload.DocumentId = DocumentId;
+            docupload.ExpiryDate = ExpiryDate;
+            docupload.UploadDocName = bytes;
+            docupload.FileName = pFileName;
+            docupload.FileExtension = pFileExtension;
+            sessionlist.Add(docupload);
+            Session["sub"] = sessionlist;
+            return Json(docupload, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Remove(int id)
+        {
+            var list = (List<DocumentUploadDetailsVM>)Session["sub"];
+            list.Remove(list.Where(x => x.ID == id).FirstOrDefault());
+            Session["sub"] = list;
+            return Json(1, JsonRequestBehavior.AllowGet);
+        }
+
+        public FileResult Download(int id)
+        {
+            var file = _documentUploadService.GetUploadDocuments(id);
+            return File(file.UploadFile, file.ContentType);
+        }
 
         #region GetDcoument
         public JsonResult GetDcoument(int id)
         {
-            var data = new SelectList(_documentUploadService.GetDocumentMasterById(id),"DocumentID", "DocumentName");
+            var data = new SelectList(_documentUploadService.GetDocumentMasterById(id), "DocumentID", "DocumentName");
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region GetExpiryDate
+        public JsonResult GetExpiryDate(int id)
+        {
+            bool data = _documentUploadService.GetExpiryDate(id);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -208,6 +205,7 @@ namespace MangalWeb.Controllers
                 //get document upload table
                 var documentUploadViewModel = _documentUploadService.GetUploadDocumentById(ID);
                 documentUploadViewModel.operation = operation;
+                Session["sub"] = documentUploadViewModel.DocumentUploadList;
                 ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
                 ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
                 return View("DocumentUpload", documentUploadViewModel);

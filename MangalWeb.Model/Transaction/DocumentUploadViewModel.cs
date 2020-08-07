@@ -12,6 +12,7 @@ namespace MangalWeb.Model.Transaction
         public int ID { get; set; }
 
         public int TransactionId { get; set; }
+        public int KycId { get; set; }
         public string TransactionNumber { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
@@ -26,10 +27,6 @@ namespace MangalWeb.Model.Transaction
         public int BranchId { get; set; }
         public int FinancialYearId { get; set; }
         public int CompanyId { get; set; }
-        public int VerifiedBy { get; set; }
-        public string Status { get; set; }
-        public string ReasonForRejection { get; set; }
-        public string VerifyComment { get; set; }
 
         public string operation { get; set; }
 

@@ -8,6 +8,8 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
+    @Html.HiddenFor(x => x.TransactionId)
+    @Html.HiddenFor(x => x.KycId)
     <header id="topbar" class="affix">
         <div class="col-md-5 col-sm-4 col-xs-12">
             <div class="topbar-left">
@@ -113,7 +115,7 @@
                                     <br />
                                     <br />
                                     <div class="form-group">
-                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Expiry Date<span class="text-danger"> * </span></label>
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Expiry Date</label>
                                         <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
                                             @Html.EditorFor(model => model.DocumentUploadVM.ExpiryDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Expiry Date", @autocomplete = "Off" } })
                                             <span class="text-danger small">@Html.ValidationMessageFor(m => m.DocumentUploadVM.ExpiryDate)</span>
@@ -152,7 +154,7 @@
                                                     <td>@item.DocumentTypeName</td>
                                                     <td>@item.DocumentName</td>
                                                     <td>@item.ExpiryDate</td>
-                                                    <td><a href="/DocumentUpload/Download?@item.DocumentId" target=_blank>@item.FileName</a></td>
+                                                    <td><a href="/DocumentUpload/Download/@item.ID" target=_blank>@item.FileName</a></td>
                                                     <td>
                                                         <a class="delete"><i class="fa fa-trash"></i></a>
                                                     </td>
@@ -267,17 +269,17 @@
             $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
                 if(confirm('Are you sure to remove?'))
                 {
-                    //$(this).parents('tr').remove();
-                    //return false;
+                    var tr = $(this).closest('tr');
+                    trid =tr.attr('id'); // table row ID
+                    var tr = $(this).closest('tr');
+                    tr.remove();
                     $.ajax({
-                        url: '/DocumentUpload/Remove',
+                        url: '/DocumentUpload/Remove?id='+trid,
                         type: "POST",
-                        contentType: false, // Not to set any content header
-                        processData: false, // Not to process data
-                        data: fileData,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
                         success: function (result) {
-                            var tr = $(this).closest('tr');
-                            tr.remove();
+                            //$(this).parents('tr').remove();
                         },
                         error: function (err) {
                             alert(err.statusText);
@@ -326,6 +328,7 @@
                 else
                 {
                     if (DocumentTypeId!="" && DocumentId!="") {
+
                         var fileUpload = $("#UploadedFile").get(0);
                         var files = fileUpload.files;
                         // Create FormData object
@@ -334,6 +337,16 @@
                         for (var i = 0; i < files.length; i++) {
                             fileData.append("UploadedFile", files[i]);
                         }
+                        var row = '<tr id=' + newtrno + '>' +
+                      '<td width="10%">' + srno + '</td>' +
+                      '<td width="20%" id="'+DocumentTypeId+'">' + DocumentTypeName+'</td>' +
+                      '<td width="20%" id="'+DocumentId+'">' + DocumentName+'</td>' +
+                      '<td width="20%">' + ExpiryDate + '</td>' +
+                      '<td width="20%"><a href="#">'+files[0].name+'</a></td>"' +
+                      '<td id=' + srno +'' + actions + '</td>' +
+                      '</tr>';
+                        $("#tblDocumentDetails tbody").append(row);
+
                         // Adding one more key to FormData object
                         fileData.append('Id', srno);
                         fileData.append('DocumentTypeId', DocumentTypeId);
@@ -346,18 +359,9 @@
                             processData: false, // Not to process data
                             data: fileData,
                             success: function (result) {
-                                var row = '<tr id=' + newtrno + '>' +
-                   '<td width="10%">' + srno + '</td>' +
-                   '<td width="20%" id="'+DocumentTypeId+'">' + DocumentTypeName+'</td>' +
-                   '<td width="20%" id="'+DocumentId+'">' + DocumentName+'</td>' +
-                   '<td width="20%">' + ExpiryDate + '</td>' +
-                   '<td width="20%"><a href="/DocumentUpload/Download" target=_blank>'+result.FileName+'</a></td>"' +
-                   '<td id=' + srno + '' + actions + '</td>' +
-                   '</tr>';
-                                $("#tblDocumentDetails tbody").append(row);
                             },
                             error: function (err) {
-                                alert(err.statusText);
+                                //alert(err.statusText);
                             }
                         });
 
@@ -392,13 +396,13 @@
                     if(confirm('Are you sure to remove?'))
                     {
                         var tr = $(this).closest('tr');
+                        trid =tr.find('td:eq(0)').html();
                         tr.remove();
                         $.ajax({
-                            url: '/DocumentUpload/Remove',
+                            url: '/DocumentUpload/Remove?id='+trid,
                             type: "POST",
-                            contentType: false, // Not to set any content header
-                            processData: false, // Not to process data
-                            data: fileData,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
                             success: function (result) {
                                 //$(this).parents('tr').remove();
                             },
@@ -432,10 +436,12 @@
             debugger;
             var tr = $(this).closest('tr');
             var CustomerId =tr.find('td:eq(0)').html();
+            var KycId =tr.find("td").eq(0).attr('id');
             var ApplicationNo =tr.find('td:eq(1)').html();
             var LoanAccountNo =tr.find('td:eq(2)').html();
 
             $("#CustomerId").val(CustomerId);
+            $("#KycId").val(KycId);
             $("#ApplicationNo").val(ApplicationNo);
             $("#LoanAccountNo").val(LoanAccountNo);
             $("#editModal").hide();
@@ -535,7 +541,7 @@
             DocUploadViewModel.ApplicationNo = $('#ApplicationNo').val();
             DocUploadViewModel.LoanAccountNo = $('#LoanAccountNo').val();
             DocUploadViewModel.Comments = $('#Comments').val();
-
+            DocUploadViewModel.KycId=$("#KycId").val();
             //var fileUpload = $("#UploadedFile").get(0);
             //var files = fileUpload.files;
             //// Create FormData object
@@ -604,11 +610,35 @@
                     $("#DocumentUploadVM_DocumentId").removeAttr('disabled')
                 },
                 error: function (ex) {
-                    alert('Failed to retrieve states.' + ex);
+                    alert('Failed to retrieve data.' + ex);
                 }
             });
             return false;
         })
+
+        $("#DocumentUploadVM_DocumentId").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetExpiryDate")', // we are calling json method
+                dataType: 'json',
+                data: { id: $("#DocumentUploadVM_DocumentId").val() },
+                // here we are get value of selected country and passing same value
+                //as inputto json method GetStates.
+                success: function (data) {
+                    debugger;
+                    $("#DocumentUploadVM_ExpiryDate").attr('disabled','disabled')
+                    if(data==true)
+                    {
+                        $("#DocumentUploadVM_ExpiryDate").removeAttr('disabled')
+                    }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+            return false;
+        })
+
         function ShowEditTableList() {
             $('#divviewfilldata').empty();
             $.ajax({

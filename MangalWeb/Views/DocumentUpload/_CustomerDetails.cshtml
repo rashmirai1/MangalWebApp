@@ -1,5 +1,5 @@
-﻿@model IList<MangalWeb.Model.Entity.TGLKYC_BasicDetails>
-@using MangalWeb.Model.Entity
+﻿@model IList<MangalWeb.Model.Transaction.DocumentUploadViewModel>
+@using MangalWeb.Model.Transaction
 <div class="modal-content">
     <div class="modal-body" style="height:inherit; overflow:auto;">
         <div class="panel-body panel-no-padding" style="height:inherit; overflow:auto;">
@@ -13,12 +13,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (TGLKYC_BasicDetails item in Model)
+                        @foreach (DocumentUploadViewModel item in Model)
                         {
                             <tr class="gradeX" style="cursor:pointer;">
-                                <td>@item.CustomerID</td>
+                                <td id="@item.KycId">@item.CustomerId</td>
                                 <td>@item.ApplicationNo</td>
-                                <td>0</td>
+                                <td>@item.LoanAccountNo</td>
                             </tr>
                         }
                     </tbody>

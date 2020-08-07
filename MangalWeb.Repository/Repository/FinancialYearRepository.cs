@@ -42,16 +42,7 @@ namespace MangalWeb.Repository.Repository
             tblfinancial = _context.tblFinancialyears.Where(x => x.FinancialyearID == financial.ID).FirstOrDefault();
             if (tblfinancial != null)
             {
-                string cnnString = System.Configuration.ConfigurationManager.ConnectionStrings["c1"].ConnectionString;
-                SqlConnection cnn = new SqlConnection(cnnString);
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = cnn;
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.CommandText = "generateFinancialYear";
-                //add any parameters the stored procedure might require
-                cnn.Open();
-                object o = cmd.ExecuteNonQuery();
-                cnn.Close();
+                var financialyear = _context.Database.SqlQuery<FinancialYearViewModel>("generatefinancialyear").ToList();
             }
             else
             {

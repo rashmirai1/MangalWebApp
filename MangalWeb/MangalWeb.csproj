@@ -2082,6 +2082,7 @@
     <Content Include="Views\Scheme\_SchemeList.cshtml" />
     <Content Include="Views\DocumentUpload\DocumentUpload.cshtml" />
     <Content Include="Views\DocumentUpload\_CustomerDetails.cshtml" />
+    <Content Include="Views\DocumentUpload\_DocumentUploadList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
