@@ -52,23 +52,17 @@ namespace MangalWeb.Repository.Repository
 
         public DocumentUploadViewModel GetCustomerById(int id)
         {
-            var tblkyc = _context.TGLKYC_BasicDetails.Where(x => x.KYCID == id).FirstOrDefault();
+            //var tblkyc = _context.TGLKYC_BasicDetails.Where(x => x.KYCID == id).FirstOrDefault();
+            var tblkyc = _context.Database.SqlQuery<DocumentUploadViewModel>("GetKYCDetailsForDocumentById @id",id).FirstOrDefault();
             var model = new DocumentUploadViewModel();
-            model.CustomerId = tblkyc.CustomerID;
+            model.CustomerId = tblkyc.CustomerId;
             model.ApplicationNo = tblkyc.ApplicationNo;
-            model.LoanAccountNo = "0";
+            model.LoanAccountNo = tblkyc.LoanAccountNo;
             model.DocumentUploadList = new List<DocumentUploadDetailsVM>();
             var transactionid = _context.Trn_DocumentUpload.Any() ? _context.Trn_DocumentUpload.Max(x => x.TransactionId) + 1 : 1;
             model.TransactionNumber = "D0000" + transactionid;
             model.DocDate = DateTime.Now.ToShortDateString();
             return model;
-        }
-
-
-        public List<tblStateMaster> GetStateMasterList()
-        {
-            var statelist = _context.tblStateMasters.ToList();
-            return statelist;
         }
 
         public void DeleteRecord(int id)
@@ -264,6 +258,7 @@ namespace MangalWeb.Repository.Repository
             return model;
         }
         #endregion
+
         public List<DocumentUploadViewModel> SetModalList()
         {
             List<DocumentUploadViewModel> list = new List<DocumentUploadViewModel>();

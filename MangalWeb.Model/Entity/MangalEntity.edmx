@@ -1595,6 +1595,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
         </Association>
         <Function Name="generateFinancialYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetKYCDetailsForDocument" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetKYCDetailsForDocumentById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="MangalDBNewModelStoreContainer">
           <EntitySet Name="KycImageStore" EntityType="Self.KycImageStore" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_AuditCategory" EntityType="Self.Mst_AuditCategory" Schema="dbo" store:Type="Tables" />
@@ -3263,6 +3266,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySet Name="Trn_DocUploadDetails" EntityType="MangalDBNewModel.Trn_DocUploadDetails" />
           <FunctionImport Name="generateFinancialYear" />
           <FunctionImport Name="GetKYCDetailsForDocument" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForDocument_Result)" />
+          <FunctionImport Name="GetKYCDetailsForDocumentById" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForDocumentById_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -4012,6 +4018,12 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="ReasonForRejection" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="GetKYCDetailsForDocument_Result">
+          <Property Type="Int32" Name="KycId" Nullable="false" />
+          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
+        </ComplexType>
+        <ComplexType Name="GetKYCDetailsForDocumentById_Result">
           <Property Type="Int32" Name="KycId" Nullable="false" />
           <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
@@ -5387,6 +5399,16 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <FunctionImportMapping FunctionImportName="GetKYCDetailsForDocument" FunctionName="MangalDBNewModel.Store.GetKYCDetailsForDocument">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MangalDBNewModel.GetKYCDetailsForDocument_Result">
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetKYCDetailsForDocumentById" FunctionName="MangalDBNewModel.Store.GetKYCDetailsForDocumentById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.GetKYCDetailsForDocumentById_Result">
                 <ScalarProperty Name="KycId" ColumnName="KycId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />

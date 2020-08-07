@@ -24,7 +24,7 @@ namespace MangalWeb.Model.Transaction
         public string FileName { get; set; }
         public string FileExtension { get; set; }
         public HttpPostedFileBase UploadedFile { get; set; }
-        public int VerifiedBy { get; set; }
+        public int? VerifiedBy { get; set; }
         public string Status { get; set; }
         public string ReasonForRejection { get; set; }
     }
