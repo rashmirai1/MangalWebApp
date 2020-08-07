@@ -183,52 +183,6 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            $("#UploadedFile").change(function()
-            {
-                debugger;
-                var File=this.files;
-                if(File && File[0])
-                {
-                    //ReadImage(File[0]);
-                }
-            })
-            var ReadImage=function(file)
-            {
-                var reader=new FileReader;
-                var image=new Image
-
-                reader.readAsDataURL(file);
-                reader.onload=function(_file)
-                {
-                    image.src=_file.target.result;
-                    image.onload=function()
-                    {
-                        debugger;
-                        //converts the file size from bytes to MB
-                        var fileSize = ~~(file.size/1024/1024);
-                        //gets the full file name including the extension
-                        var fileName = file.name;
-                        //finds where the extension starts
-                        var dotPosition = fileName.lastIndexOf(".");
-                        //gets only the extension
-                        var fileExt = fileName.substring(dotPosition);
-                        //checks whether the file is .png and less than 1 MB
-                        if (fileSize <=  1 && fileExt == ".png") {
-                            //successfully validated
-                        }
-                        debugger;
-                        var height=this.height;
-                        var width=this.width;
-                        var type=_file.type;
-                        var name=_file.name;
-
-                        var size=~~(file.size/1024)+"KB";
-                        //$("#targetImg").attr('src',_file.target.result);
-                        $("#targetImg").val(fileName);
-                    }
-                }
-            }
-
             if (document.URL.indexOf("ID") != -1) {
                 $("#DocumentUploadVM_DocumentId").removeAttr('disabled')
             }
