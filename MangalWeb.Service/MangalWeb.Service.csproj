@@ -78,7 +78,6 @@
     <Compile Include="Service\ChargeService.cs" />
     <Compile Include="Service\CityService.cs" />
     <Compile Include="Service\DeviationService.cs" />
-    <Compile Include="Service\DocumentService.cs" />
     <Compile Include="Service\DocumentUploadService.cs" />
     <Compile Include="Service\DocumentVerificationService.cs" />
     <Compile Include="Service\FinancialYearService.cs" />
