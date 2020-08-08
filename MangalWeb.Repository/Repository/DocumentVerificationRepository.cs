@@ -12,9 +12,9 @@ namespace MangalWeb.Repository.Repository
     {
         MangalDBNewEntities _context = new MangalDBNewEntities();
 
-        public List<Trn_DocumentUpload> DocumentUploadList()
+        public List<DocumentUploadViewModel> DocumentUploadList()
         {
-            return _context.Trn_DocumentUpload.ToList();
+            return _context.Database.SqlQuery<DocumentUploadViewModel>("GetDocumentUpload").ToList();
         }
 
         public void SaveUpdateRecord(DocumentUploadViewModel DocUploadViewModel)
@@ -42,7 +42,7 @@ namespace MangalWeb.Repository.Repository
         {
             DocumentUploadViewModel documentUploadViewModel = new DocumentUploadViewModel();
             //get document upload table
-            var docupload = _context.Trn_DocumentUpload.Where(x => x.DocId == id).FirstOrDefault();
+            var docupload = _context.Trn_DocumentUpload.Where(x => x.KycId == id).FirstOrDefault();
             var docuploaddetails = _context.Trn_DocUploadDetails.Where(x => x.KycId == docupload.KycId).ToList();
             documentUploadViewModel = ToViewModelDocUpload(docupload, docuploaddetails);
             return documentUploadViewModel;
