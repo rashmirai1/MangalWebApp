@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MangalDBNewModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MangalDBNewModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.Bharat_tbl_SentJVCustHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Bharat_tbl_SentJVCustHistory">
@@ -90,56 +90,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.bharatTGLGoldInOutDetails' does no
           <Property Name="isActive" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.Bhart01012017TGLSanctionDisburse_BasicDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Bhart01012017TGLSanctionDisburse_BasicDetails">
-          <Property Name="SDID" Type="int" />
-          <Property Name="RefType" Type="nvarchar" MaxLength="50" />
-          <Property Name="RefMon" Type="nvarchar" MaxLength="5" />
-          <Property Name="RefYr" Type="nvarchar" MaxLength="5" />
-          <Property Name="RefID" Type="int" />
-          <Property Name="LoanType" Type="nvarchar" MaxLength="20" />
-          <Property Name="LoanDate" Type="smalldatetime" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
-          <Property Name="KYCID" Type="int" />
-          <Property Name="OperatorID" Type="int" />
-          <Property Name="EligibleLoanAmt" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanPayable" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="BankCashAccID" Type="int" />
-          <Property Name="CheqNEFTDD" Type="nvarchar" MaxLength="50" />
-          <Property Name="CheqNEFTDDNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="CheqNEFTDDDate" Type="smalldatetime" />
-          <Property Name="TotalGrossWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalNetWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalQuantity" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Totalvalue" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalRate" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="SID" Type="int" />
-          <Property Name="DueDate" Type="smalldatetime" />
-          <Property Name="OwnershipProofImagePath" Type="nvarchar" MaxLength="50" />
-          <Property Name="CIBILScore" Type="nvarchar" MaxLength="20" />
-          <Property Name="ItemImage" Type="image" />
-          <Property Name="BCPID" Type="int" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedDate" Type="smalldatetime" />
-          <Property Name="UpdatedBy" Type="int" />
-          <Property Name="UpdatedDate" Type="smalldatetime" />
-          <Property Name="DeletedBy" Type="int" />
-          <Property Name="DeletedDate" Type="smalldatetime" />
-          <Property Name="FYID" Type="int" />
-          <Property Name="BranchID" Type="int" />
-          <Property Name="CMPID" Type="int" />
-          <Property Name="isActive" Type="nvarchar" MaxLength="100" />
-          <Property Name="CashInOutID" Type="int" />
-          <Property Name="GLInOutID" Type="int" />
-          <Property Name="CashOutWardById" Type="int" />
-          <Property Name="GoldInWardById" Type="int" />
-          <Property Name="CashAccID" Type="int" />
-          <Property Name="BankAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CashAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.ImageKyc' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ImageKyc">
           <Key>
@@ -201,13 +151,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           <Property Name="Acl_RecordUpdated" Type="datetime" />
           <Property Name="Acl_RecordCreatedBy" Type="int" />
           <Property Name="Acl_RecordUpdatedBy" Type="int" />
-        </EntityType>
-        <EntityType Name="Mst_BranchType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Mst_ChildDeviation">
           <Key>
@@ -468,23 +411,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.newbharatTGLGoldStock' does not ha
           <Property Name="TotalRelease" Type="int" />
           <Property Name="ClosingBalance" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.Sheet2$' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Sheet2$">
-          <Property Name="GLInOutID" Type="nvarchar" MaxLength="255" />
-          <Property Name="RefType" Type="nvarchar" MaxLength="255" />
-          <Property Name="RefNo" Type="nvarchar" MaxLength="255" />
-          <Property Name="ReferenceType" Type="nvarchar" MaxLength="255" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="255" />
-          <Property Name="PouchNo" Type="nvarchar" MaxLength="255" />
-          <Property Name="GLInOutMode" Type="nvarchar" MaxLength="255" />
-          <Property Name="InOutLoc" Type="nvarchar" MaxLength="255" />
-          <Property Name="LocName" Type="nvarchar" MaxLength="255" />
-          <Property Name="LocResiName" Type="nvarchar" MaxLength="255" />
-          <Property Name="LocDetails" Type="nvarchar" MaxLength="255" />
-          <Property Name="NarrationID" Type="nvarchar" MaxLength="255" />
-          <Property Name="InOutBy" Type="nvarchar" MaxLength="255" />
-        </EntityType>-->
         <EntityType Name="tbl_CountryMaster">
           <Key>
             <PropertyRef Name="CountryID" />
@@ -1284,185 +1210,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLOutwardForm_GoldDetails' does n
           <Property Name="StockLocation" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'ReceiveTime' in the table 'MangalDBNew.dbo.TGlReceipt_BasicDetails' was excluded.
-warning 6013: The table/view 'MangalDBNew.dbo.TGlReceipt_BasicDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGlReceipt_BasicDetails">
-          <Property Name="RcptId" Type="int" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="KYCID" Type="int" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="ReceiveDate" Type="smalldatetime" />
-          <Property Name="BalanceLoanPayable" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="BalanceLoanEligibility" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="ROI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="ReceiptBookNo" Type="nvarchar" MaxLength="10" />
-          <Property Name="ReceiptNo" Type="nvarchar" MaxLength="10" />
-          <Property Name="ReceivedFrom" Type="nvarchar" MaxLength="50" />
-          <Property Name="PaymentMode" Type="nvarchar" MaxLength="50" />
-          <Property Name="CLP" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CLI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CLPI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CLC" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CLO" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RcvCLP" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RecCLPAccID" Type="int" />
-          <Property Name="RecCLPNarID" Type="int" />
-          <Property Name="RcvCLI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RecCLIAccID" Type="int" />
-          <Property Name="RecCLINarID" Type="int" />
-          <Property Name="RcvCLPI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RecCLPIAccID" Type="int" />
-          <Property Name="RecCLPINarID" Type="int" />
-          <Property Name="RecCLC" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RecCLCAccID" Type="int" />
-          <Property Name="RecCLCNarID" Type="int" />
-          <Property Name="RcvTotal" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="BankAccID" Type="int" />
-          <Property Name="CashAccID" Type="int" />
-          <Property Name="CollectedByID" Type="int" />
-          <Property Name="CashierID" Type="int" />
-          <Property Name="CashInOutID" Type="int" />
-          <Property Name="BCRID" Type="int" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedDate" Type="smalldatetime" />
-          <Property Name="UpdatedBy" Type="int" />
-          <Property Name="UpdatedDate" Type="smalldatetime" />
-          <Property Name="DeletedBy" Type="int" />
-          <Property Name="DeletedDate" Type="smalldatetime" />
-          <Property Name="isActive" Type="varchar" MaxLength="2" />
-          <Property Name="FYID" Type="int" />
-          <Property Name="BranchId" Type="int" />
-          <Property Name="CMPID" Type="int" />
-          <Property Name="Finalize" Type="nchar" MaxLength="2" />
-          <Property Name="InterestFromDate" Type="smalldatetime" />
-          <Property Name="InterestToDate" Type="smalldatetime" />
-          <Property Name="OSPrincipal" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="OSInterest" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="OSDays" Type="int" />
-          <Property Name="IntrestRcvTillDate" Type="smalldatetime" />
-          <Property Name="LastROI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="AdvInterestAmt" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="AdvInterestFromDate" Type="smalldatetime" />
-          <Property Name="AdvInterestToDate" Type="smalldatetime" />
-          <Property Name="AdvInterestAccID" Type="int" />
-          <Property Name="TotalAdvInterestAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="OSAdvInterestAmount" Type="decimal" Precision="11" Scale="2" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGlReceipt_Cheque_Details' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGlReceipt_Cheque_Details">
-          <Property Name="ChequeId" Type="int" />
-          <Property Name="RcptId" Type="int" />
-          <Property Name="Serialno" Type="int" />
-          <Property Name="Chq_DD_NEFT" Type="varchar" MaxLength="50" />
-          <Property Name="ChequeNo" Type="nvarchar" MaxLength="100" />
-          <Property Name="BankId" Type="int" />
-          <Property Name="BankName" Type="nvarchar" MaxLength="100" />
-          <Property Name="Amount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="ChequeDate" Type="varchar" MaxLength="12" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGlReceipt_Denomination_Details' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGlReceipt_Denomination_Details">
-          <Property Name="DenoId" Type="int" />
-          <Property Name="RcptId" Type="int" />
-          <Property Name="Serialno" Type="int" />
-          <Property Name="DenoRs" Type="nvarchar" MaxLength="50" />
-          <Property Name="Quantity" Type="int" />
-          <Property Name="Total" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="NoteNos" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_BasicDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGLSanctionDisburse_BasicDetails">
-          <Property Name="SDID" Type="int" />
-          <Property Name="RefType" Type="nvarchar" MaxLength="50" />
-          <Property Name="RefMon" Type="nvarchar" MaxLength="5" />
-          <Property Name="RefYr" Type="nvarchar" MaxLength="5" />
-          <Property Name="RefID" Type="int" />
-          <Property Name="LoanType" Type="nvarchar" MaxLength="20" />
-          <Property Name="LoanDate" Type="smalldatetime" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
-          <Property Name="KYCID" Type="int" />
-          <Property Name="OperatorID" Type="int" />
-          <Property Name="EligibleLoanAmt" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanPayable" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="BankCashAccID" Type="int" />
-          <Property Name="CheqNEFTDD" Type="nvarchar" MaxLength="50" />
-          <Property Name="CheqNEFTDDNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="CheqNEFTDDDate" Type="smalldatetime" />
-          <Property Name="TotalGrossWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalNetWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalQuantity" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Totalvalue" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalRate" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="SID" Type="int" />
-          <Property Name="DueDate" Type="smalldatetime" />
-          <Property Name="OwnershipProofImagePath" Type="nvarchar" MaxLength="50" />
-          <Property Name="CIBILScore" Type="nvarchar" MaxLength="20" />
-          <Property Name="ItemImage" Type="image" />
-          <Property Name="BCPID" Type="int" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedDate" Type="smalldatetime" />
-          <Property Name="UpdatedBy" Type="int" />
-          <Property Name="UpdatedDate" Type="smalldatetime" />
-          <Property Name="DeletedBy" Type="int" />
-          <Property Name="DeletedDate" Type="smalldatetime" />
-          <Property Name="FYID" Type="int" />
-          <Property Name="BranchID" Type="int" />
-          <Property Name="CMPID" Type="int" />
-          <Property Name="isActive" Type="nvarchar" MaxLength="100" />
-          <Property Name="CashInOutID" Type="int" />
-          <Property Name="GLInOutID" Type="int" />
-          <Property Name="CashOutWardById" Type="int" />
-          <Property Name="GoldInWardById" Type="int" />
-          <Property Name="CashAccID" Type="int" />
-          <Property Name="BankAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CashAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_ChargesDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGLSanctionDisburse_ChargesDetails">
-          <Property Name="CHID" Type="int" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="CID" Type="int" />
-          <Property Name="Serialno" Type="int" />
-          <Property Name="Charges" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Amount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="AccountID" Type="int" />
-          <Property Name="AccountName" Type="nvarchar" MaxLength="50" />
-          <Property Name="ID" Type="int" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_ChargesPostingDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGLSanctionDisburse_ChargesPostingDetails">
-          <Property Name="ID" Type="int" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="AccID" Type="int" />
-          <Property Name="Debit" Type="float" />
-          <Property Name="Credit" Type="float" />
-          <Property Name="LedgerID" Type="int" />
-          <Property Name="FYID" Type="int" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_GoldItemDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGLSanctionDisburse_GoldItemDetails">
-          <Property Name="GID" Type="int" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="Serialno" Type="int" />
-          <Property Name="ItemID" Type="int" />
-          <Property Name="GrossWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Quantity" Type="int" />
-          <Property Name="NetWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RateperGram" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Value" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Purity" Type="nvarchar" MaxLength="50" />
-          <Property Name="ImgItemPath" Type="nvarchar" MaxLength="500" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TGLSmsHistory">
           <Key>
@@ -1690,18 +1437,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="UserTypeID" Type="int" Nullable="false" />
           <Property Name="UserType" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="V_MonthlyJv">
-          <Property Name="RN" Type="bigint" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
-          <Property Name="SID" Type="int" />
-          <Property Name="LoanDate" Type="smalldatetime" />
-          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="CustName" Type="varchar" MaxLength="92" />
-          <Property Name="LoanDate1" Type="varchar" MaxLength="20" />
-        </EntityType>-->
         <Association Name="FK_Mst_AuditCheckList_Mst_AuditCategory">
           <End Role="Mst_AuditCategory" Type="Self.Mst_AuditCategory" Multiplicity="1" />
           <End Role="Mst_AuditCheckList" Type="Self.Mst_AuditCheckList" Multiplicity="*" />
@@ -1798,18 +1533,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblCompanyBranchMaster_Mst_BranchType">
-          <End Role="Mst_BranchType" Type="Self.Mst_BranchType" Multiplicity="1" />
-          <End Role="tblCompanyBranchMaster" Type="Self.tblCompanyBranchMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Mst_BranchType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="tblCompanyBranchMaster">
-              <PropertyRef Name="BranchType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblCompanyBranchMaster_Mst_PinCode">
           <End Role="Mst_PinCode" Type="Self.Mst_PinCode" Multiplicity="1" />
           <End Role="tblCompanyBranchMaster" Type="Self.tblCompanyBranchMaster" Multiplicity="*" />
@@ -1870,41 +1593,16 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fnNumToWords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
-          <Parameter Name="Number" Type="numeric" Mode="In" />
-          <Parameter Name="CPaise" Type="char" Mode="In" />
-        </Function>
         <Function Name="generateFinancialYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="NumberSuffix" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
-          <Parameter Name="val" Type="int" Mode="In" />
-        </Function>
-        <Function Name="SplitValue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="String" Type="varchar" Mode="In" />
-          <Parameter Name="Delimiter" Type="char" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="items" Type="varchar" MaxLength="8000" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="SplitWords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="text" Type="varchar" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="pos" Type="smallint" Nullable="false" />
-                <Property Name="value" Type="varchar" MaxLength="8000" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
+        <Function Name="GetDocumentUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetKYCDetailsForDocument" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetKYCDetailsForDocumentById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="MangalDBNewModelStoreContainer">
           <EntitySet Name="KycImageStore" EntityType="Self.KycImageStore" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_AuditCategory" EntityType="Self.Mst_AuditCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_AuditCheckList" EntityType="Self.Mst_AuditCheckList" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Mst_BranchType" EntityType="Self.Mst_BranchType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_ChildDeviation" EntityType="Self.Mst_ChildDeviation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_DocumentType" EntityType="Self.Mst_DocumentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_GstMaster" EntityType="Self.Mst_GstMaster" Schema="dbo" store:Type="Tables" />
@@ -1942,654 +1640,752 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <EntitySet Name="Trn_DocUploadDetails" EntityType="Self.Trn_DocUploadDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TSchemeMaster_BasicDetails" EntityType="Self.TSchemeMaster_BasicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bharat_tbl_SentJVCustHistory" EntityType="Self.Bharat_tbl_SentJVCustHistory" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Bharat_tbl_SentJVCustHistory].[SentCustJVID] AS [SentCustJVID], 
-    [Bharat_tbl_SentJVCustHistory].[SDID] AS [SDID], 
-    [Bharat_tbl_SentJVCustHistory].[GoldLoanNo] AS [GoldLoanNo], 
-    [Bharat_tbl_SentJVCustHistory].[LoanAmount] AS [LoanAmount], 
-    [Bharat_tbl_SentJVCustHistory].[InterestAmount] AS [InterestAmount], 
-    [Bharat_tbl_SentJVCustHistory].[BalanceLoanAmount] AS [BalanceLoanAmount], 
-    [Bharat_tbl_SentJVCustHistory].[JVSentDate] AS [JVSentDate], 
-    [Bharat_tbl_SentJVCustHistory].[CreatedBy] AS [CreatedBy], 
-    [Bharat_tbl_SentJVCustHistory].[CreatedDate] AS [CreatedDate], 
-    [Bharat_tbl_SentJVCustHistory].[UpdatedBy] AS [UpdatedBy], 
-    [Bharat_tbl_SentJVCustHistory].[UpdatedDate] AS [UpdatedDate]
-    FROM [dbo].[Bharat_tbl_SentJVCustHistory] AS [Bharat_tbl_SentJVCustHistory]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [Bharat_tbl_SentJVCustHistory].[SentCustJVID] AS [SentCustJVID],
+              [Bharat_tbl_SentJVCustHistory].[SDID] AS [SDID],
+              [Bharat_tbl_SentJVCustHistory].[GoldLoanNo] AS [GoldLoanNo],
+              [Bharat_tbl_SentJVCustHistory].[LoanAmount] AS [LoanAmount],
+              [Bharat_tbl_SentJVCustHistory].[InterestAmount] AS [InterestAmount],
+              [Bharat_tbl_SentJVCustHistory].[BalanceLoanAmount] AS [BalanceLoanAmount],
+              [Bharat_tbl_SentJVCustHistory].[JVSentDate] AS [JVSentDate],
+              [Bharat_tbl_SentJVCustHistory].[CreatedBy] AS [CreatedBy],
+              [Bharat_tbl_SentJVCustHistory].[CreatedDate] AS [CreatedDate],
+              [Bharat_tbl_SentJVCustHistory].[UpdatedBy] AS [UpdatedBy],
+              [Bharat_tbl_SentJVCustHistory].[UpdatedDate] AS [UpdatedDate]
+              FROM [dbo].[Bharat_tbl_SentJVCustHistory] AS [Bharat_tbl_SentJVCustHistory]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="Bharat01012017tbl_SentJVCustHistory" EntityType="Self.Bharat01012017tbl_SentJVCustHistory" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Bharat01012017tbl_SentJVCustHistory].[SentCustJVID] AS [SentCustJVID], 
-    [Bharat01012017tbl_SentJVCustHistory].[SDID] AS [SDID], 
-    [Bharat01012017tbl_SentJVCustHistory].[GoldLoanNo] AS [GoldLoanNo], 
-    [Bharat01012017tbl_SentJVCustHistory].[LoanAmount] AS [LoanAmount], 
-    [Bharat01012017tbl_SentJVCustHistory].[InterestAmount] AS [InterestAmount], 
-    [Bharat01012017tbl_SentJVCustHistory].[BalanceLoanAmount] AS [BalanceLoanAmount], 
-    [Bharat01012017tbl_SentJVCustHistory].[JVSentDate] AS [JVSentDate], 
-    [Bharat01012017tbl_SentJVCustHistory].[CreatedBy] AS [CreatedBy], 
-    [Bharat01012017tbl_SentJVCustHistory].[CreatedDate] AS [CreatedDate], 
-    [Bharat01012017tbl_SentJVCustHistory].[UpdatedBy] AS [UpdatedBy], 
-    [Bharat01012017tbl_SentJVCustHistory].[UpdatedDate] AS [UpdatedDate]
-    FROM [dbo].[Bharat01012017tbl_SentJVCustHistory] AS [Bharat01012017tbl_SentJVCustHistory]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [Bharat01012017tbl_SentJVCustHistory].[SentCustJVID] AS [SentCustJVID],
+              [Bharat01012017tbl_SentJVCustHistory].[SDID] AS [SDID],
+              [Bharat01012017tbl_SentJVCustHistory].[GoldLoanNo] AS [GoldLoanNo],
+              [Bharat01012017tbl_SentJVCustHistory].[LoanAmount] AS [LoanAmount],
+              [Bharat01012017tbl_SentJVCustHistory].[InterestAmount] AS [InterestAmount],
+              [Bharat01012017tbl_SentJVCustHistory].[BalanceLoanAmount] AS [BalanceLoanAmount],
+              [Bharat01012017tbl_SentJVCustHistory].[JVSentDate] AS [JVSentDate],
+              [Bharat01012017tbl_SentJVCustHistory].[CreatedBy] AS [CreatedBy],
+              [Bharat01012017tbl_SentJVCustHistory].[CreatedDate] AS [CreatedDate],
+              [Bharat01012017tbl_SentJVCustHistory].[UpdatedBy] AS [UpdatedBy],
+              [Bharat01012017tbl_SentJVCustHistory].[UpdatedDate] AS [UpdatedDate]
+              FROM [dbo].[Bharat01012017tbl_SentJVCustHistory] AS [Bharat01012017tbl_SentJVCustHistory]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="bharatTGLGoldInOutDetails" EntityType="Self.bharatTGLGoldInOutDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [bharatTGLGoldInOutDetails].[GLInOutID] AS [GLInOutID], 
-    [bharatTGLGoldInOutDetails].[RefType] AS [RefType], 
-    [bharatTGLGoldInOutDetails].[RefNo] AS [RefNo], 
-    [bharatTGLGoldInOutDetails].[ReferenceType] AS [ReferenceType], 
-    [bharatTGLGoldInOutDetails].[Date_time] AS [Date_time], 
-    [bharatTGLGoldInOutDetails].[SDID] AS [SDID], 
-    [bharatTGLGoldInOutDetails].[KYCID] AS [KYCID], 
-    [bharatTGLGoldInOutDetails].[GoldLoanNo] AS [GoldLoanNo], 
-    [bharatTGLGoldInOutDetails].[PouchNo] AS [PouchNo], 
-    [bharatTGLGoldInOutDetails].[GLInOutMode] AS [GLInOutMode], 
-    [bharatTGLGoldInOutDetails].[InOutLoc] AS [InOutLoc], 
-    [bharatTGLGoldInOutDetails].[LocName] AS [LocName], 
-    [bharatTGLGoldInOutDetails].[LocResiName] AS [LocResiName], 
-    [bharatTGLGoldInOutDetails].[LocDetails] AS [LocDetails], 
-    [bharatTGLGoldInOutDetails].[NarrationID] AS [NarrationID], 
-    [bharatTGLGoldInOutDetails].[InOutBy] AS [InOutBy], 
-    [bharatTGLGoldInOutDetails].[CreatedBy] AS [CreatedBy], 
-    [bharatTGLGoldInOutDetails].[CreatedDate] AS [CreatedDate], 
-    [bharatTGLGoldInOutDetails].[UpdatedBy] AS [UpdatedBy], 
-    [bharatTGLGoldInOutDetails].[UpdatedDate] AS [UpdatedDate], 
-    [bharatTGLGoldInOutDetails].[DeletedBy] AS [DeletedBy], 
-    [bharatTGLGoldInOutDetails].[DeletedDate] AS [DeletedDate], 
-    [bharatTGLGoldInOutDetails].[FYID] AS [FYID], 
-    [bharatTGLGoldInOutDetails].[BranchID] AS [BranchID], 
-    [bharatTGLGoldInOutDetails].[CMPID] AS [CMPID], 
-    [bharatTGLGoldInOutDetails].[isActive] AS [isActive]
-    FROM [dbo].[bharatTGLGoldInOutDetails] AS [bharatTGLGoldInOutDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [bharatTGLGoldInOutDetails].[GLInOutID] AS [GLInOutID],
+              [bharatTGLGoldInOutDetails].[RefType] AS [RefType],
+              [bharatTGLGoldInOutDetails].[RefNo] AS [RefNo],
+              [bharatTGLGoldInOutDetails].[ReferenceType] AS [ReferenceType],
+              [bharatTGLGoldInOutDetails].[Date_time] AS [Date_time],
+              [bharatTGLGoldInOutDetails].[SDID] AS [SDID],
+              [bharatTGLGoldInOutDetails].[KYCID] AS [KYCID],
+              [bharatTGLGoldInOutDetails].[GoldLoanNo] AS [GoldLoanNo],
+              [bharatTGLGoldInOutDetails].[PouchNo] AS [PouchNo],
+              [bharatTGLGoldInOutDetails].[GLInOutMode] AS [GLInOutMode],
+              [bharatTGLGoldInOutDetails].[InOutLoc] AS [InOutLoc],
+              [bharatTGLGoldInOutDetails].[LocName] AS [LocName],
+              [bharatTGLGoldInOutDetails].[LocResiName] AS [LocResiName],
+              [bharatTGLGoldInOutDetails].[LocDetails] AS [LocDetails],
+              [bharatTGLGoldInOutDetails].[NarrationID] AS [NarrationID],
+              [bharatTGLGoldInOutDetails].[InOutBy] AS [InOutBy],
+              [bharatTGLGoldInOutDetails].[CreatedBy] AS [CreatedBy],
+              [bharatTGLGoldInOutDetails].[CreatedDate] AS [CreatedDate],
+              [bharatTGLGoldInOutDetails].[UpdatedBy] AS [UpdatedBy],
+              [bharatTGLGoldInOutDetails].[UpdatedDate] AS [UpdatedDate],
+              [bharatTGLGoldInOutDetails].[DeletedBy] AS [DeletedBy],
+              [bharatTGLGoldInOutDetails].[DeletedDate] AS [DeletedDate],
+              [bharatTGLGoldInOutDetails].[FYID] AS [FYID],
+              [bharatTGLGoldInOutDetails].[BranchID] AS [BranchID],
+              [bharatTGLGoldInOutDetails].[CMPID] AS [CMPID],
+              [bharatTGLGoldInOutDetails].[isActive] AS [isActive]
+              FROM [dbo].[bharatTGLGoldInOutDetails] AS [bharatTGLGoldInOutDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="ImageKyc" EntityType="Self.ImageKyc" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ImageKyc].[ImgId] AS [ImgId], 
-    [ImageKyc].[KycPhoto] AS [KycPhoto], 
-    [ImageKyc].[CreatedBy] AS [CreatedBy]
-    FROM [dbo].[ImageKyc] AS [ImageKyc]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [ImageKyc].[ImgId] AS [ImgId],
+              [ImageKyc].[KycPhoto] AS [KycPhoto],
+              [ImageKyc].[CreatedBy] AS [CreatedBy]
+              FROM [dbo].[ImageKyc] AS [ImageKyc]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="Imagestore" EntityType="Self.Imagestore" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Imagestore].[ImgId] AS [ImgId], 
-    [Imagestore].[Imagepath] AS [Imagepath], 
-    [Imagestore].[Operation] AS [Operation], 
-    [Imagestore].[Refno] AS [Refno], 
-    [Imagestore].[CreatedBy] AS [CreatedBy]
-    FROM [dbo].[Imagestore] AS [Imagestore]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [Imagestore].[ImgId] AS [ImgId],
+              [Imagestore].[Imagepath] AS [Imagepath],
+              [Imagestore].[Operation] AS [Operation],
+              [Imagestore].[Refno] AS [Refno],
+              [Imagestore].[CreatedBy] AS [CreatedBy]
+              FROM [dbo].[Imagestore] AS [Imagestore]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="M_Words" EntityType="Self.M_Words" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [M_Words].[Code] AS [Code], 
-    [M_Words].[WNumber] AS [WNumber], 
-    [M_Words].[Wwords] AS [Wwords]
-    FROM [dbo].[M_Words] AS [M_Words]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [M_Words].[Code] AS [Code],
+              [M_Words].[WNumber] AS [WNumber],
+              [M_Words].[Wwords] AS [Wwords]
+              FROM [dbo].[M_Words] AS [M_Words]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="new1bharatTGLGoldStock" EntityType="Self.new1bharatTGLGoldStock" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [new1bharatTGLGoldStock].[StockId] AS [StockId], 
-    [new1bharatTGLGoldStock].[Date_Time] AS [Date_Time], 
-    [new1bharatTGLGoldStock].[OpeningBalance] AS [OpeningBalance], 
-    [new1bharatTGLGoldStock].[TotalDeposit] AS [TotalDeposit], 
-    [new1bharatTGLGoldStock].[TotalRelease] AS [TotalRelease], 
-    [new1bharatTGLGoldStock].[ClosingBalance] AS [ClosingBalance]
-    FROM [dbo].[new1bharatTGLGoldStock] AS [new1bharatTGLGoldStock]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [new1bharatTGLGoldStock].[StockId] AS [StockId],
+              [new1bharatTGLGoldStock].[Date_Time] AS [Date_Time],
+              [new1bharatTGLGoldStock].[OpeningBalance] AS [OpeningBalance],
+              [new1bharatTGLGoldStock].[TotalDeposit] AS [TotalDeposit],
+              [new1bharatTGLGoldStock].[TotalRelease] AS [TotalRelease],
+              [new1bharatTGLGoldStock].[ClosingBalance] AS [ClosingBalance]
+              FROM [dbo].[new1bharatTGLGoldStock] AS [new1bharatTGLGoldStock]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="newauthorize" EntityType="Self.newauthorize" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [newauthorize].[FormAuthID] AS [FormAuthID], 
-    [newauthorize].[UserID] AS [UserID], 
-    [newauthorize].[FormID] AS [FormID], 
-    [newauthorize].[ParentID] AS [ParentID], 
-    [newauthorize].[IsVisible] AS [IsVisible], 
-    [newauthorize].[IsView] AS [IsView], 
-    [newauthorize].[IsSave] AS [IsSave], 
-    [newauthorize].[IsEdit] AS [IsEdit], 
-    [newauthorize].[IsDelete] AS [IsDelete], 
-    [newauthorize].[CreatedBy] AS [CreatedBy], 
-    [newauthorize].[CreatedDate] AS [CreatedDate]
-    FROM [dbo].[newauthorize] AS [newauthorize]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [newauthorize].[FormAuthID] AS [FormAuthID],
+              [newauthorize].[UserID] AS [UserID],
+              [newauthorize].[FormID] AS [FormID],
+              [newauthorize].[ParentID] AS [ParentID],
+              [newauthorize].[IsVisible] AS [IsVisible],
+              [newauthorize].[IsView] AS [IsView],
+              [newauthorize].[IsSave] AS [IsSave],
+              [newauthorize].[IsEdit] AS [IsEdit],
+              [newauthorize].[IsDelete] AS [IsDelete],
+              [newauthorize].[CreatedBy] AS [CreatedBy],
+              [newauthorize].[CreatedDate] AS [CreatedDate]
+              FROM [dbo].[newauthorize] AS [newauthorize]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="Newbharat" EntityType="Self.Newbharat" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Newbharat].[GLInOutID] AS [GLInOutID], 
-    [Newbharat].[RefType] AS [RefType], 
-    [Newbharat].[RefNo] AS [RefNo], 
-    [Newbharat].[ReferenceType] AS [ReferenceType], 
-    [Newbharat].[Date_time] AS [Date_time], 
-    [Newbharat].[SDID] AS [SDID], 
-    [Newbharat].[KYCID] AS [KYCID], 
-    [Newbharat].[GoldLoanNo] AS [GoldLoanNo], 
-    [Newbharat].[PouchNo] AS [PouchNo], 
-    [Newbharat].[GLInOutMode] AS [GLInOutMode], 
-    [Newbharat].[InOutLoc] AS [InOutLoc], 
-    [Newbharat].[LocName] AS [LocName], 
-    [Newbharat].[LocResiName] AS [LocResiName], 
-    [Newbharat].[LocDetails] AS [LocDetails], 
-    [Newbharat].[NarrationID] AS [NarrationID], 
-    [Newbharat].[InOutBy] AS [InOutBy], 
-    [Newbharat].[CreatedBy] AS [CreatedBy], 
-    [Newbharat].[CreatedDate] AS [CreatedDate], 
-    [Newbharat].[UpdatedBy] AS [UpdatedBy], 
-    [Newbharat].[UpdatedDate] AS [UpdatedDate], 
-    [Newbharat].[DeletedBy] AS [DeletedBy], 
-    [Newbharat].[DeletedDate] AS [DeletedDate], 
-    [Newbharat].[FYID] AS [FYID], 
-    [Newbharat].[BranchID] AS [BranchID], 
-    [Newbharat].[CMPID] AS [CMPID], 
-    [Newbharat].[isActive] AS [isActive]
-    FROM [dbo].[Newbharat] AS [Newbharat]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [Newbharat].[GLInOutID] AS [GLInOutID],
+              [Newbharat].[RefType] AS [RefType],
+              [Newbharat].[RefNo] AS [RefNo],
+              [Newbharat].[ReferenceType] AS [ReferenceType],
+              [Newbharat].[Date_time] AS [Date_time],
+              [Newbharat].[SDID] AS [SDID],
+              [Newbharat].[KYCID] AS [KYCID],
+              [Newbharat].[GoldLoanNo] AS [GoldLoanNo],
+              [Newbharat].[PouchNo] AS [PouchNo],
+              [Newbharat].[GLInOutMode] AS [GLInOutMode],
+              [Newbharat].[InOutLoc] AS [InOutLoc],
+              [Newbharat].[LocName] AS [LocName],
+              [Newbharat].[LocResiName] AS [LocResiName],
+              [Newbharat].[LocDetails] AS [LocDetails],
+              [Newbharat].[NarrationID] AS [NarrationID],
+              [Newbharat].[InOutBy] AS [InOutBy],
+              [Newbharat].[CreatedBy] AS [CreatedBy],
+              [Newbharat].[CreatedDate] AS [CreatedDate],
+              [Newbharat].[UpdatedBy] AS [UpdatedBy],
+              [Newbharat].[UpdatedDate] AS [UpdatedDate],
+              [Newbharat].[DeletedBy] AS [DeletedBy],
+              [Newbharat].[DeletedDate] AS [DeletedDate],
+              [Newbharat].[FYID] AS [FYID],
+              [Newbharat].[BranchID] AS [BranchID],
+              [Newbharat].[CMPID] AS [CMPID],
+              [Newbharat].[isActive] AS [isActive]
+              FROM [dbo].[Newbharat] AS [Newbharat]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="newbharatTGLGoldInOutDetails" EntityType="Self.newbharatTGLGoldInOutDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [newbharatTGLGoldInOutDetails].[GLInOutID] AS [GLInOutID], 
-    [newbharatTGLGoldInOutDetails].[RefType] AS [RefType], 
-    [newbharatTGLGoldInOutDetails].[RefNo] AS [RefNo], 
-    [newbharatTGLGoldInOutDetails].[ReferenceType] AS [ReferenceType], 
-    [newbharatTGLGoldInOutDetails].[Date_time] AS [Date_time], 
-    [newbharatTGLGoldInOutDetails].[SDID] AS [SDID], 
-    [newbharatTGLGoldInOutDetails].[KYCID] AS [KYCID], 
-    [newbharatTGLGoldInOutDetails].[GoldLoanNo] AS [GoldLoanNo], 
-    [newbharatTGLGoldInOutDetails].[PouchNo] AS [PouchNo], 
-    [newbharatTGLGoldInOutDetails].[GLInOutMode] AS [GLInOutMode], 
-    [newbharatTGLGoldInOutDetails].[InOutLoc] AS [InOutLoc], 
-    [newbharatTGLGoldInOutDetails].[LocName] AS [LocName], 
-    [newbharatTGLGoldInOutDetails].[LocResiName] AS [LocResiName], 
-    [newbharatTGLGoldInOutDetails].[LocDetails] AS [LocDetails], 
-    [newbharatTGLGoldInOutDetails].[NarrationID] AS [NarrationID], 
-    [newbharatTGLGoldInOutDetails].[InOutBy] AS [InOutBy], 
-    [newbharatTGLGoldInOutDetails].[CreatedBy] AS [CreatedBy], 
-    [newbharatTGLGoldInOutDetails].[CreatedDate] AS [CreatedDate], 
-    [newbharatTGLGoldInOutDetails].[UpdatedBy] AS [UpdatedBy], 
-    [newbharatTGLGoldInOutDetails].[UpdatedDate] AS [UpdatedDate], 
-    [newbharatTGLGoldInOutDetails].[DeletedBy] AS [DeletedBy], 
-    [newbharatTGLGoldInOutDetails].[DeletedDate] AS [DeletedDate], 
-    [newbharatTGLGoldInOutDetails].[FYID] AS [FYID], 
-    [newbharatTGLGoldInOutDetails].[BranchID] AS [BranchID], 
-    [newbharatTGLGoldInOutDetails].[CMPID] AS [CMPID], 
-    [newbharatTGLGoldInOutDetails].[isActive] AS [isActive]
-    FROM [dbo].[newbharatTGLGoldInOutDetails] AS [newbharatTGLGoldInOutDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [newbharatTGLGoldInOutDetails].[GLInOutID] AS [GLInOutID],
+              [newbharatTGLGoldInOutDetails].[RefType] AS [RefType],
+              [newbharatTGLGoldInOutDetails].[RefNo] AS [RefNo],
+              [newbharatTGLGoldInOutDetails].[ReferenceType] AS [ReferenceType],
+              [newbharatTGLGoldInOutDetails].[Date_time] AS [Date_time],
+              [newbharatTGLGoldInOutDetails].[SDID] AS [SDID],
+              [newbharatTGLGoldInOutDetails].[KYCID] AS [KYCID],
+              [newbharatTGLGoldInOutDetails].[GoldLoanNo] AS [GoldLoanNo],
+              [newbharatTGLGoldInOutDetails].[PouchNo] AS [PouchNo],
+              [newbharatTGLGoldInOutDetails].[GLInOutMode] AS [GLInOutMode],
+              [newbharatTGLGoldInOutDetails].[InOutLoc] AS [InOutLoc],
+              [newbharatTGLGoldInOutDetails].[LocName] AS [LocName],
+              [newbharatTGLGoldInOutDetails].[LocResiName] AS [LocResiName],
+              [newbharatTGLGoldInOutDetails].[LocDetails] AS [LocDetails],
+              [newbharatTGLGoldInOutDetails].[NarrationID] AS [NarrationID],
+              [newbharatTGLGoldInOutDetails].[InOutBy] AS [InOutBy],
+              [newbharatTGLGoldInOutDetails].[CreatedBy] AS [CreatedBy],
+              [newbharatTGLGoldInOutDetails].[CreatedDate] AS [CreatedDate],
+              [newbharatTGLGoldInOutDetails].[UpdatedBy] AS [UpdatedBy],
+              [newbharatTGLGoldInOutDetails].[UpdatedDate] AS [UpdatedDate],
+              [newbharatTGLGoldInOutDetails].[DeletedBy] AS [DeletedBy],
+              [newbharatTGLGoldInOutDetails].[DeletedDate] AS [DeletedDate],
+              [newbharatTGLGoldInOutDetails].[FYID] AS [FYID],
+              [newbharatTGLGoldInOutDetails].[BranchID] AS [BranchID],
+              [newbharatTGLGoldInOutDetails].[CMPID] AS [CMPID],
+              [newbharatTGLGoldInOutDetails].[isActive] AS [isActive]
+              FROM [dbo].[newbharatTGLGoldInOutDetails] AS [newbharatTGLGoldInOutDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="newbharatTGLGoldStock" EntityType="Self.newbharatTGLGoldStock" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [newbharatTGLGoldStock].[StockId] AS [StockId], 
-    [newbharatTGLGoldStock].[Date_Time] AS [Date_Time], 
-    [newbharatTGLGoldStock].[OpeningBalance] AS [OpeningBalance], 
-    [newbharatTGLGoldStock].[TotalDeposit] AS [TotalDeposit], 
-    [newbharatTGLGoldStock].[TotalRelease] AS [TotalRelease], 
-    [newbharatTGLGoldStock].[ClosingBalance] AS [ClosingBalance]
-    FROM [dbo].[newbharatTGLGoldStock] AS [newbharatTGLGoldStock]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [newbharatTGLGoldStock].[StockId] AS [StockId],
+              [newbharatTGLGoldStock].[Date_Time] AS [Date_Time],
+              [newbharatTGLGoldStock].[OpeningBalance] AS [OpeningBalance],
+              [newbharatTGLGoldStock].[TotalDeposit] AS [TotalDeposit],
+              [newbharatTGLGoldStock].[TotalRelease] AS [TotalRelease],
+              [newbharatTGLGoldStock].[ClosingBalance] AS [ClosingBalance]
+              FROM [dbo].[newbharatTGLGoldStock] AS [newbharatTGLGoldStock]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="tbl_GLDocumentMaster" EntityType="Self.tbl_GLDocumentMaster" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tbl_GLDocumentMaster].[DocumentID] AS [DocumentID], 
-    [tbl_GLDocumentMaster].[DocumentName] AS [DocumentName]
-    FROM [dbo].[tbl_GLDocumentMaster] AS [tbl_GLDocumentMaster]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [tbl_GLDocumentMaster].[DocumentID] AS [DocumentID],
+              [tbl_GLDocumentMaster].[DocumentName] AS [DocumentName]
+              FROM [dbo].[tbl_GLDocumentMaster] AS [tbl_GLDocumentMaster]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="tbl_SentJVCustHistory" EntityType="Self.tbl_SentJVCustHistory" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tbl_SentJVCustHistory].[SentCustJVID] AS [SentCustJVID], 
-    [tbl_SentJVCustHistory].[SDID] AS [SDID], 
-    [tbl_SentJVCustHistory].[GoldLoanNo] AS [GoldLoanNo], 
-    [tbl_SentJVCustHistory].[LoanAmount] AS [LoanAmount], 
-    [tbl_SentJVCustHistory].[InterestAmount] AS [InterestAmount], 
-    [tbl_SentJVCustHistory].[BalanceLoanAmount] AS [BalanceLoanAmount], 
-    [tbl_SentJVCustHistory].[JVSentDate] AS [JVSentDate], 
-    [tbl_SentJVCustHistory].[CreatedBy] AS [CreatedBy], 
-    [tbl_SentJVCustHistory].[CreatedDate] AS [CreatedDate], 
-    [tbl_SentJVCustHistory].[UpdatedBy] AS [UpdatedBy], 
-    [tbl_SentJVCustHistory].[UpdatedDate] AS [UpdatedDate]
-    FROM [dbo].[tbl_SentJVCustHistory] AS [tbl_SentJVCustHistory]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [tbl_SentJVCustHistory].[SentCustJVID] AS [SentCustJVID],
+              [tbl_SentJVCustHistory].[SDID] AS [SDID],
+              [tbl_SentJVCustHistory].[GoldLoanNo] AS [GoldLoanNo],
+              [tbl_SentJVCustHistory].[LoanAmount] AS [LoanAmount],
+              [tbl_SentJVCustHistory].[InterestAmount] AS [InterestAmount],
+              [tbl_SentJVCustHistory].[BalanceLoanAmount] AS [BalanceLoanAmount],
+              [tbl_SentJVCustHistory].[JVSentDate] AS [JVSentDate],
+              [tbl_SentJVCustHistory].[CreatedBy] AS [CreatedBy],
+              [tbl_SentJVCustHistory].[CreatedDate] AS [CreatedDate],
+              [tbl_SentJVCustHistory].[UpdatedBy] AS [UpdatedBy],
+              [tbl_SentJVCustHistory].[UpdatedDate] AS [UpdatedDate]
+              FROM [dbo].[tbl_SentJVCustHistory] AS [tbl_SentJVCustHistory]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="tbl_UserLogin" EntityType="Self.tbl_UserLogin" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tbl_UserLogin].[LoginID] AS [LoginID], 
-    [tbl_UserLogin].[LoginUserType] AS [LoginUserType], 
-    [tbl_UserLogin].[LoginUser] AS [LoginUser], 
-    [tbl_UserLogin].[LoginDate] AS [LoginDate], 
-    [tbl_UserLogin].[LoginTime] AS [LoginTime], 
-    [tbl_UserLogin].[LogoutTime] AS [LogoutTime], 
-    [tbl_UserLogin].[TotalTime] AS [TotalTime], 
-    [tbl_UserLogin].[HostName] AS [HostName], 
-    [tbl_UserLogin].[HostIPAddr] AS [HostIPAddr], 
-    [tbl_UserLogin].[CompID] AS [CompID], 
-    [tbl_UserLogin].[BranchID] AS [BranchID]
-    FROM [dbo].[tbl_UserLogin] AS [tbl_UserLogin]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [tbl_UserLogin].[LoginID] AS [LoginID],
+              [tbl_UserLogin].[LoginUserType] AS [LoginUserType],
+              [tbl_UserLogin].[LoginUser] AS [LoginUser],
+              [tbl_UserLogin].[LoginDate] AS [LoginDate],
+              [tbl_UserLogin].[LoginTime] AS [LoginTime],
+              [tbl_UserLogin].[LogoutTime] AS [LogoutTime],
+              [tbl_UserLogin].[TotalTime] AS [TotalTime],
+              [tbl_UserLogin].[HostName] AS [HostName],
+              [tbl_UserLogin].[HostIPAddr] AS [HostIPAddr],
+              [tbl_UserLogin].[CompID] AS [CompID],
+              [tbl_UserLogin].[BranchID] AS [BranchID]
+              FROM [dbo].[tbl_UserLogin] AS [tbl_UserLogin]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="tblCreateCompanyMaster" EntityType="Self.tblCreateCompanyMaster" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblCreateCompanyMaster].[CompID] AS [CompID], 
-    [tblCreateCompanyMaster].[Name] AS [Name], 
-    [tblCreateCompanyMaster].[MailingName] AS [MailingName], 
-    [tblCreateCompanyMaster].[Address] AS [Address], 
-    [tblCreateCompanyMaster].[State] AS [State], 
-    [tblCreateCompanyMaster].[PinCode] AS [PinCode], 
-    [tblCreateCompanyMaster].[PANNo] AS [PANNo], 
-    [tblCreateCompanyMaster].[TANNo] AS [TANNo], 
-    [tblCreateCompanyMaster].[Email] AS [Email], 
-    [tblCreateCompanyMaster].[Phone] AS [Phone], 
-    [tblCreateCompanyMaster].[Financialyear] AS [Financialyear]
-    FROM [dbo].[tblCreateCompanyMaster] AS [tblCreateCompanyMaster]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [tblCreateCompanyMaster].[CompID] AS [CompID],
+              [tblCreateCompanyMaster].[Name] AS [Name],
+              [tblCreateCompanyMaster].[MailingName] AS [MailingName],
+              [tblCreateCompanyMaster].[Address] AS [Address],
+              [tblCreateCompanyMaster].[State] AS [State],
+              [tblCreateCompanyMaster].[PinCode] AS [PinCode],
+              [tblCreateCompanyMaster].[PANNo] AS [PANNo],
+              [tblCreateCompanyMaster].[TANNo] AS [TANNo],
+              [tblCreateCompanyMaster].[Email] AS [Email],
+              [tblCreateCompanyMaster].[Phone] AS [Phone],
+              [tblCreateCompanyMaster].[Financialyear] AS [Financialyear]
+              FROM [dbo].[tblCreateCompanyMaster] AS [tblCreateCompanyMaster]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="tblLogin" EntityType="Self.tblLogin" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblLogin].[UserType] AS [UserType], 
-    [tblLogin].[UserID] AS [UserID], 
-    [tblLogin].[Password] AS [Password]
-    FROM [dbo].[tblLogin] AS [tblLogin]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [tblLogin].[UserType] AS [UserType],
+              [tblLogin].[UserID] AS [UserID],
+              [tblLogin].[Password] AS [Password]
+              FROM [dbo].[tblLogin] AS [tblLogin]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="tblSchemeTransMonths" EntityType="Self.tblSchemeTransMonths" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblSchemeTransMonths].[SchemesID] AS [SchemesID], 
-    [tblSchemeTransMonths].[MonthsFrom] AS [MonthsFrom], 
-    [tblSchemeTransMonths].[MonthsTo] AS [MonthsTo], 
-    [tblSchemeTransMonths].[TotalMonths] AS [TotalMonths], 
-    [tblSchemeTransMonths].[EMI] AS [EMI]
-    FROM [dbo].[tblSchemeTransMonths] AS [tblSchemeTransMonths]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [tblSchemeTransMonths].[SchemesID] AS [SchemesID],
+              [tblSchemeTransMonths].[MonthsFrom] AS [MonthsFrom],
+              [tblSchemeTransMonths].[MonthsTo] AS [MonthsTo],
+              [tblSchemeTransMonths].[TotalMonths] AS [TotalMonths],
+              [tblSchemeTransMonths].[EMI] AS [EMI]
+              FROM [dbo].[tblSchemeTransMonths] AS [tblSchemeTransMonths]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TestDB" EntityType="Self.TestDB" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TestDB].[AreaID] AS [AreaID], 
-    [TestDB].[Area] AS [Area], 
-    [TestDB].[Pincode] AS [Pincode]
-    FROM [dbo].[TestDB] AS [TestDB]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TestDB].[AreaID] AS [AreaID],
+              [TestDB].[Area] AS [Area],
+              [TestDB].[Pincode] AS [Pincode]
+              FROM [dbo].[TestDB] AS [TestDB]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGL_DefaultOSPercentage" EntityType="Self.TGL_DefaultOSPercentage" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGL_DefaultOSPercentage].[DefOsID] AS [DefOsID], 
-    [TGL_DefaultOSPercentage].[OSLevel] AS [OSLevel]
-    FROM [dbo].[TGL_DefaultOSPercentage] AS [TGL_DefaultOSPercentage]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGL_DefaultOSPercentage].[DefOsID] AS [DefOsID],
+              [TGL_DefaultOSPercentage].[OSLevel] AS [OSLevel]
+              FROM [dbo].[TGL_DefaultOSPercentage] AS [TGL_DefaultOSPercentage]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGL_FormAuthorizationDetails" EntityType="Self.TGL_FormAuthorizationDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGL_FormAuthorizationDetails].[FormAuthID] AS [FormAuthID], 
-    [TGL_FormAuthorizationDetails].[UserID] AS [UserID], 
-    [TGL_FormAuthorizationDetails].[FormID] AS [FormID], 
-    [TGL_FormAuthorizationDetails].[ParentID] AS [ParentID], 
-    [TGL_FormAuthorizationDetails].[IsVisible] AS [IsVisible], 
-    [TGL_FormAuthorizationDetails].[IsView] AS [IsView], 
-    [TGL_FormAuthorizationDetails].[IsSave] AS [IsSave], 
-    [TGL_FormAuthorizationDetails].[IsEdit] AS [IsEdit], 
-    [TGL_FormAuthorizationDetails].[IsDelete] AS [IsDelete], 
-    [TGL_FormAuthorizationDetails].[CreatedBy] AS [CreatedBy], 
-    [TGL_FormAuthorizationDetails].[CreatedDate] AS [CreatedDate]
-    FROM [dbo].[TGL_FormAuthorizationDetails] AS [TGL_FormAuthorizationDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGL_FormAuthorizationDetails].[FormAuthID] AS [FormAuthID],
+              [TGL_FormAuthorizationDetails].[UserID] AS [UserID],
+              [TGL_FormAuthorizationDetails].[FormID] AS [FormID],
+              [TGL_FormAuthorizationDetails].[ParentID] AS [ParentID],
+              [TGL_FormAuthorizationDetails].[IsVisible] AS [IsVisible],
+              [TGL_FormAuthorizationDetails].[IsView] AS [IsView],
+              [TGL_FormAuthorizationDetails].[IsSave] AS [IsSave],
+              [TGL_FormAuthorizationDetails].[IsEdit] AS [IsEdit],
+              [TGL_FormAuthorizationDetails].[IsDelete] AS [IsDelete],
+              [TGL_FormAuthorizationDetails].[CreatedBy] AS [CreatedBy],
+              [TGL_FormAuthorizationDetails].[CreatedDate] AS [CreatedDate]
+              FROM [dbo].[TGL_FormAuthorizationDetails] AS [TGL_FormAuthorizationDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGL_FormDetails" EntityType="Self.TGL_FormDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGL_FormDetails].[FormID] AS [FormID], 
-    [TGL_FormDetails].[FormName] AS [FormName], 
-    [TGL_FormDetails].[FormPath] AS [FormPath], 
-    [TGL_FormDetails].[ParentID] AS [ParentID], 
-    [TGL_FormDetails].[ToolTip] AS [ToolTip], 
-    [TGL_FormDetails].[DisplayOrder] AS [DisplayOrder]
-    FROM [dbo].[TGL_FormDetails] AS [TGL_FormDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGL_FormDetails].[FormID] AS [FormID],
+              [TGL_FormDetails].[FormName] AS [FormName],
+              [TGL_FormDetails].[FormPath] AS [FormPath],
+              [TGL_FormDetails].[ParentID] AS [ParentID],
+              [TGL_FormDetails].[ToolTip] AS [ToolTip],
+              [TGL_FormDetails].[DisplayOrder] AS [DisplayOrder]
+              FROM [dbo].[TGL_FormDetails] AS [TGL_FormDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLCash_Denomination_Details" EntityType="Self.TGLCash_Denomination_Details" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLCash_Denomination_Details].[DenoId] AS [DenoId], 
-    [TGLCash_Denomination_Details].[InOutId] AS [InOutId], 
-    [TGLCash_Denomination_Details].[Serialno] AS [Serialno], 
-    [TGLCash_Denomination_Details].[DenoRs] AS [DenoRs], 
-    [TGLCash_Denomination_Details].[Quantity] AS [Quantity], 
-    [TGLCash_Denomination_Details].[Total] AS [Total], 
-    [TGLCash_Denomination_Details].[NoteNos] AS [NoteNos]
-    FROM [dbo].[TGLCash_Denomination_Details] AS [TGLCash_Denomination_Details]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLCash_Denomination_Details].[DenoId] AS [DenoId],
+              [TGLCash_Denomination_Details].[InOutId] AS [InOutId],
+              [TGLCash_Denomination_Details].[Serialno] AS [Serialno],
+              [TGLCash_Denomination_Details].[DenoRs] AS [DenoRs],
+              [TGLCash_Denomination_Details].[Quantity] AS [Quantity],
+              [TGLCash_Denomination_Details].[Total] AS [Total],
+              [TGLCash_Denomination_Details].[NoteNos] AS [NoteNos]
+              FROM [dbo].[TGLCash_Denomination_Details] AS [TGLCash_Denomination_Details]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLCashAuth_BasicDetails" EntityType="Self.TGLCashAuth_BasicDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLCashAuth_BasicDetails].[CAUTHID] AS [CAUTHID], 
-    [TGLCashAuth_BasicDetails].[RefType] AS [RefType], 
-    [TGLCashAuth_BasicDetails].[RefNo] AS [RefNo], 
-    [TGLCashAuth_BasicDetails].[ReferenceType] AS [ReferenceType], 
-    [TGLCashAuth_BasicDetails].[Ref_date] AS [Ref_date], 
-    [TGLCashAuth_BasicDetails].[TotalAmount] AS [TotalAmount], 
-    [TGLCashAuth_BasicDetails].[CreatedBy] AS [CreatedBy], 
-    [TGLCashAuth_BasicDetails].[CreatedDate] AS [CreatedDate], 
-    [TGLCashAuth_BasicDetails].[UpdatedBy] AS [UpdatedBy], 
-    [TGLCashAuth_BasicDetails].[UpdatedDate] AS [UpdatedDate], 
-    [TGLCashAuth_BasicDetails].[DeletedBy] AS [DeletedBy], 
-    [TGLCashAuth_BasicDetails].[DeletedDate] AS [DeletedDate], 
-    [TGLCashAuth_BasicDetails].[isActive] AS [isActive], 
-    [TGLCashAuth_BasicDetails].[FYID] AS [FYID], 
-    [TGLCashAuth_BasicDetails].[BranchId] AS [BranchId], 
-    [TGLCashAuth_BasicDetails].[CMPID] AS [CMPID]
-    FROM [dbo].[TGLCashAuth_BasicDetails] AS [TGLCashAuth_BasicDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLCashAuth_BasicDetails].[CAUTHID] AS [CAUTHID],
+              [TGLCashAuth_BasicDetails].[RefType] AS [RefType],
+              [TGLCashAuth_BasicDetails].[RefNo] AS [RefNo],
+              [TGLCashAuth_BasicDetails].[ReferenceType] AS [ReferenceType],
+              [TGLCashAuth_BasicDetails].[Ref_date] AS [Ref_date],
+              [TGLCashAuth_BasicDetails].[TotalAmount] AS [TotalAmount],
+              [TGLCashAuth_BasicDetails].[CreatedBy] AS [CreatedBy],
+              [TGLCashAuth_BasicDetails].[CreatedDate] AS [CreatedDate],
+              [TGLCashAuth_BasicDetails].[UpdatedBy] AS [UpdatedBy],
+              [TGLCashAuth_BasicDetails].[UpdatedDate] AS [UpdatedDate],
+              [TGLCashAuth_BasicDetails].[DeletedBy] AS [DeletedBy],
+              [TGLCashAuth_BasicDetails].[DeletedDate] AS [DeletedDate],
+              [TGLCashAuth_BasicDetails].[isActive] AS [isActive],
+              [TGLCashAuth_BasicDetails].[FYID] AS [FYID],
+              [TGLCashAuth_BasicDetails].[BranchId] AS [BranchId],
+              [TGLCashAuth_BasicDetails].[CMPID] AS [CMPID]
+              FROM [dbo].[TGLCashAuth_BasicDetails] AS [TGLCashAuth_BasicDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLCashAuth_Denomination_Details" EntityType="Self.TGLCashAuth_Denomination_Details" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLCashAuth_Denomination_Details].[DenoId] AS [DenoId], 
-    [TGLCashAuth_Denomination_Details].[CAUTHID] AS [CAUTHID], 
-    [TGLCashAuth_Denomination_Details].[Serialno] AS [Serialno], 
-    [TGLCashAuth_Denomination_Details].[DenoRs] AS [DenoRs], 
-    [TGLCashAuth_Denomination_Details].[Quantity] AS [Quantity], 
-    [TGLCashAuth_Denomination_Details].[Total] AS [Total], 
-    [TGLCashAuth_Denomination_Details].[NoteNos] AS [NoteNos]
-    FROM [dbo].[TGLCashAuth_Denomination_Details] AS [TGLCashAuth_Denomination_Details]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLCashAuth_Denomination_Details].[DenoId] AS [DenoId],
+              [TGLCashAuth_Denomination_Details].[CAUTHID] AS [CAUTHID],
+              [TGLCashAuth_Denomination_Details].[Serialno] AS [Serialno],
+              [TGLCashAuth_Denomination_Details].[DenoRs] AS [DenoRs],
+              [TGLCashAuth_Denomination_Details].[Quantity] AS [Quantity],
+              [TGLCashAuth_Denomination_Details].[Total] AS [Total],
+              [TGLCashAuth_Denomination_Details].[NoteNos] AS [NoteNos]
+              FROM [dbo].[TGLCashAuth_Denomination_Details] AS [TGLCashAuth_Denomination_Details]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLCashAuth_ReceiptDetails" EntityType="Self.TGLCashAuth_ReceiptDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLCashAuth_ReceiptDetails].[CARCPTID] AS [CARCPTID], 
-    [TGLCashAuth_ReceiptDetails].[RcptID] AS [RcptID], 
-    [TGLCashAuth_ReceiptDetails].[CAUTHID] AS [CAUTHID], 
-    [TGLCashAuth_ReceiptDetails].[SDID] AS [SDID], 
-    [TGLCashAuth_ReceiptDetails].[KYCID] AS [KYCID], 
-    [TGLCashAuth_ReceiptDetails].[GoldLoanNo] AS [GoldLoanNo], 
-    [TGLCashAuth_ReceiptDetails].[Name] AS [Name], 
-    [TGLCashAuth_ReceiptDetails].[ReceiptDate] AS [ReceiptDate], 
-    [TGLCashAuth_ReceiptDetails].[PaymentMode] AS [PaymentMode], 
-    [TGLCashAuth_ReceiptDetails].[Receivedcash] AS [Receivedcash], 
-    [TGLCashAuth_ReceiptDetails].[ReceiptAmount] AS [ReceiptAmount], 
-    [TGLCashAuth_ReceiptDetails].[ReceiptNo] AS [ReceiptNo], 
-    [TGLCashAuth_ReceiptDetails].[Principal] AS [Principal], 
-    [TGLCashAuth_ReceiptDetails].[Interest] AS [Interest], 
-    [TGLCashAuth_ReceiptDetails].[PenalInterest] AS [PenalInterest], 
-    [TGLCashAuth_ReceiptDetails].[Charges] AS [Charges], 
-    [TGLCashAuth_ReceiptDetails].[Finalized] AS [Finalized]
-    FROM [dbo].[TGLCashAuth_ReceiptDetails] AS [TGLCashAuth_ReceiptDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLCashAuth_ReceiptDetails].[CARCPTID] AS [CARCPTID],
+              [TGLCashAuth_ReceiptDetails].[RcptID] AS [RcptID],
+              [TGLCashAuth_ReceiptDetails].[CAUTHID] AS [CAUTHID],
+              [TGLCashAuth_ReceiptDetails].[SDID] AS [SDID],
+              [TGLCashAuth_ReceiptDetails].[KYCID] AS [KYCID],
+              [TGLCashAuth_ReceiptDetails].[GoldLoanNo] AS [GoldLoanNo],
+              [TGLCashAuth_ReceiptDetails].[Name] AS [Name],
+              [TGLCashAuth_ReceiptDetails].[ReceiptDate] AS [ReceiptDate],
+              [TGLCashAuth_ReceiptDetails].[PaymentMode] AS [PaymentMode],
+              [TGLCashAuth_ReceiptDetails].[Receivedcash] AS [Receivedcash],
+              [TGLCashAuth_ReceiptDetails].[ReceiptAmount] AS [ReceiptAmount],
+              [TGLCashAuth_ReceiptDetails].[ReceiptNo] AS [ReceiptNo],
+              [TGLCashAuth_ReceiptDetails].[Principal] AS [Principal],
+              [TGLCashAuth_ReceiptDetails].[Interest] AS [Interest],
+              [TGLCashAuth_ReceiptDetails].[PenalInterest] AS [PenalInterest],
+              [TGLCashAuth_ReceiptDetails].[Charges] AS [Charges],
+              [TGLCashAuth_ReceiptDetails].[Finalized] AS [Finalized]
+              FROM [dbo].[TGLCashAuth_ReceiptDetails] AS [TGLCashAuth_ReceiptDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLCashInOutDetails" EntityType="Self.TGLCashInOutDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLCashInOutDetails].[InOutID] AS [InOutID], 
-    [TGLCashInOutDetails].[RefType] AS [RefType], 
-    [TGLCashInOutDetails].[RefNo] AS [RefNo], 
-    [TGLCashInOutDetails].[ReferenceType] AS [ReferenceType], 
-    [TGLCashInOutDetails].[FName] AS [FName], 
-    [TGLCashInOutDetails].[Date_time] AS [Date_time], 
-    [TGLCashInOutDetails].[InOutMode] AS [InOutMode], 
-    [TGLCashInOutDetails].[InOutTo] AS [InOutTo], 
-    [TGLCashInOutDetails].[InOutToID] AS [InOutToID], 
-    [TGLCashInOutDetails].[InOutFrom] AS [InOutFrom], 
-    [TGLCashInOutDetails].[InOutFromID] AS [InOutFromID], 
-    [TGLCashInOutDetails].[InOutBy] AS [InOutBy], 
-    [TGLCashInOutDetails].[FYID] AS [FYID], 
-    [TGLCashInOutDetails].[CmpID] AS [CmpID], 
-    [TGLCashInOutDetails].[BranchId] AS [BranchId], 
-    [TGLCashInOutDetails].[CreatedBy] AS [CreatedBy], 
-    [TGLCashInOutDetails].[CreatedDate] AS [CreatedDate], 
-    [TGLCashInOutDetails].[UpdatedBy] AS [UpdatedBy], 
-    [TGLCashInOutDetails].[UpdatedDate] AS [UpdatedDate], 
-    [TGLCashInOutDetails].[DeletedBy] AS [DeletedBy], 
-    [TGLCashInOutDetails].[DeletedDate] AS [DeletedDate], 
-    [TGLCashInOutDetails].[isActive] AS [isActive], 
-    [TGLCashInOutDetails].[TotalCash] AS [TotalCash]
-    FROM [dbo].[TGLCashInOutDetails] AS [TGLCashInOutDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLCashInOutDetails].[InOutID] AS [InOutID],
+              [TGLCashInOutDetails].[RefType] AS [RefType],
+              [TGLCashInOutDetails].[RefNo] AS [RefNo],
+              [TGLCashInOutDetails].[ReferenceType] AS [ReferenceType],
+              [TGLCashInOutDetails].[FName] AS [FName],
+              [TGLCashInOutDetails].[Date_time] AS [Date_time],
+              [TGLCashInOutDetails].[InOutMode] AS [InOutMode],
+              [TGLCashInOutDetails].[InOutTo] AS [InOutTo],
+              [TGLCashInOutDetails].[InOutToID] AS [InOutToID],
+              [TGLCashInOutDetails].[InOutFrom] AS [InOutFrom],
+              [TGLCashInOutDetails].[InOutFromID] AS [InOutFromID],
+              [TGLCashInOutDetails].[InOutBy] AS [InOutBy],
+              [TGLCashInOutDetails].[FYID] AS [FYID],
+              [TGLCashInOutDetails].[CmpID] AS [CmpID],
+              [TGLCashInOutDetails].[BranchId] AS [BranchId],
+              [TGLCashInOutDetails].[CreatedBy] AS [CreatedBy],
+              [TGLCashInOutDetails].[CreatedDate] AS [CreatedDate],
+              [TGLCashInOutDetails].[UpdatedBy] AS [UpdatedBy],
+              [TGLCashInOutDetails].[UpdatedDate] AS [UpdatedDate],
+              [TGLCashInOutDetails].[DeletedBy] AS [DeletedBy],
+              [TGLCashInOutDetails].[DeletedDate] AS [DeletedDate],
+              [TGLCashInOutDetails].[isActive] AS [isActive],
+              [TGLCashInOutDetails].[TotalCash] AS [TotalCash]
+              FROM [dbo].[TGLCashInOutDetails] AS [TGLCashInOutDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLDefault_OSLevel" EntityType="Self.TGLDefault_OSLevel" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLDefault_OSLevel].[InsDefOsID] AS [InsDefOsID], 
-    [TGLDefault_OSLevel].[DefOsID] AS [DefOsID], 
-    [TGLDefault_OSLevel].[DefOSLevel] AS [DefOSLevel], 
-    [TGLDefault_OSLevel].[CreatedBy] AS [CreatedBy], 
-    [TGLDefault_OSLevel].[CreatedDate] AS [CreatedDate], 
-    [TGLDefault_OSLevel].[UpdatedBy] AS [UpdatedBy], 
-    [TGLDefault_OSLevel].[UpdatedDate] AS [UpdatedDate], 
-    [TGLDefault_OSLevel].[FYID] AS [FYID], 
-    [TGLDefault_OSLevel].[BranchID] AS [BranchID], 
-    [TGLDefault_OSLevel].[isActive] AS [isActive]
-    FROM [dbo].[TGLDefault_OSLevel] AS [TGLDefault_OSLevel]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLDefault_OSLevel].[InsDefOsID] AS [InsDefOsID],
+              [TGLDefault_OSLevel].[DefOsID] AS [DefOsID],
+              [TGLDefault_OSLevel].[DefOSLevel] AS [DefOSLevel],
+              [TGLDefault_OSLevel].[CreatedBy] AS [CreatedBy],
+              [TGLDefault_OSLevel].[CreatedDate] AS [CreatedDate],
+              [TGLDefault_OSLevel].[UpdatedBy] AS [UpdatedBy],
+              [TGLDefault_OSLevel].[UpdatedDate] AS [UpdatedDate],
+              [TGLDefault_OSLevel].[FYID] AS [FYID],
+              [TGLDefault_OSLevel].[BranchID] AS [BranchID],
+              [TGLDefault_OSLevel].[isActive] AS [isActive]
+              FROM [dbo].[TGLDefault_OSLevel] AS [TGLDefault_OSLevel]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLExcessAmount_Login" EntityType="Self.TGLExcessAmount_Login" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLExcessAmount_Login].[ExcessLoginID] AS [ExcessLoginID], 
-    [TGLExcessAmount_Login].[GoldLoanNo] AS [GoldLoanNo], 
-    [TGLExcessAmount_Login].[UserID] AS [UserID], 
-    [TGLExcessAmount_Login].[FormID] AS [FormID], 
-    [TGLExcessAmount_Login].[CreatedDate] AS [CreatedDate], 
-    [TGLExcessAmount_Login].[CreatedBy] AS [CreatedBy], 
-    [TGLExcessAmount_Login].[ExcessLoanAmount] AS [ExcessLoanAmount], 
-    [TGLExcessAmount_Login].[SanctionStatus] AS [SanctionStatus]
-    FROM [dbo].[TGLExcessAmount_Login] AS [TGLExcessAmount_Login]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLExcessAmount_Login].[ExcessLoginID] AS [ExcessLoginID],
+              [TGLExcessAmount_Login].[GoldLoanNo] AS [GoldLoanNo],
+              [TGLExcessAmount_Login].[UserID] AS [UserID],
+              [TGLExcessAmount_Login].[FormID] AS [FormID],
+              [TGLExcessAmount_Login].[CreatedDate] AS [CreatedDate],
+              [TGLExcessAmount_Login].[CreatedBy] AS [CreatedBy],
+              [TGLExcessAmount_Login].[ExcessLoanAmount] AS [ExcessLoanAmount],
+              [TGLExcessAmount_Login].[SanctionStatus] AS [SanctionStatus]
+              FROM [dbo].[TGLExcessAmount_Login] AS [TGLExcessAmount_Login]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLGoldInOutDetails" EntityType="Self.TGLGoldInOutDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLGoldInOutDetails].[GLInOutID] AS [GLInOutID], 
-    [TGLGoldInOutDetails].[RefType] AS [RefType], 
-    [TGLGoldInOutDetails].[RefNo] AS [RefNo], 
-    [TGLGoldInOutDetails].[ReferenceType] AS [ReferenceType], 
-    [TGLGoldInOutDetails].[Date_time] AS [Date_time], 
-    [TGLGoldInOutDetails].[SDID] AS [SDID], 
-    [TGLGoldInOutDetails].[KYCID] AS [KYCID], 
-    [TGLGoldInOutDetails].[GoldLoanNo] AS [GoldLoanNo], 
-    [TGLGoldInOutDetails].[PouchNo] AS [PouchNo], 
-    [TGLGoldInOutDetails].[GLInOutMode] AS [GLInOutMode], 
-    [TGLGoldInOutDetails].[InOutLoc] AS [InOutLoc], 
-    [TGLGoldInOutDetails].[LocName] AS [LocName], 
-    [TGLGoldInOutDetails].[LocResiName] AS [LocResiName], 
-    [TGLGoldInOutDetails].[LocDetails] AS [LocDetails], 
-    [TGLGoldInOutDetails].[NarrationID] AS [NarrationID], 
-    [TGLGoldInOutDetails].[InOutBy] AS [InOutBy], 
-    [TGLGoldInOutDetails].[CreatedBy] AS [CreatedBy], 
-    [TGLGoldInOutDetails].[CreatedDate] AS [CreatedDate], 
-    [TGLGoldInOutDetails].[UpdatedBy] AS [UpdatedBy], 
-    [TGLGoldInOutDetails].[UpdatedDate] AS [UpdatedDate], 
-    [TGLGoldInOutDetails].[DeletedBy] AS [DeletedBy], 
-    [TGLGoldInOutDetails].[DeletedDate] AS [DeletedDate], 
-    [TGLGoldInOutDetails].[FYID] AS [FYID], 
-    [TGLGoldInOutDetails].[BranchID] AS [BranchID], 
-    [TGLGoldInOutDetails].[CMPID] AS [CMPID], 
-    [TGLGoldInOutDetails].[isActive] AS [isActive]
-    FROM [dbo].[TGLGoldInOutDetails] AS [TGLGoldInOutDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLGoldInOutDetails].[GLInOutID] AS [GLInOutID],
+              [TGLGoldInOutDetails].[RefType] AS [RefType],
+              [TGLGoldInOutDetails].[RefNo] AS [RefNo],
+              [TGLGoldInOutDetails].[ReferenceType] AS [ReferenceType],
+              [TGLGoldInOutDetails].[Date_time] AS [Date_time],
+              [TGLGoldInOutDetails].[SDID] AS [SDID],
+              [TGLGoldInOutDetails].[KYCID] AS [KYCID],
+              [TGLGoldInOutDetails].[GoldLoanNo] AS [GoldLoanNo],
+              [TGLGoldInOutDetails].[PouchNo] AS [PouchNo],
+              [TGLGoldInOutDetails].[GLInOutMode] AS [GLInOutMode],
+              [TGLGoldInOutDetails].[InOutLoc] AS [InOutLoc],
+              [TGLGoldInOutDetails].[LocName] AS [LocName],
+              [TGLGoldInOutDetails].[LocResiName] AS [LocResiName],
+              [TGLGoldInOutDetails].[LocDetails] AS [LocDetails],
+              [TGLGoldInOutDetails].[NarrationID] AS [NarrationID],
+              [TGLGoldInOutDetails].[InOutBy] AS [InOutBy],
+              [TGLGoldInOutDetails].[CreatedBy] AS [CreatedBy],
+              [TGLGoldInOutDetails].[CreatedDate] AS [CreatedDate],
+              [TGLGoldInOutDetails].[UpdatedBy] AS [UpdatedBy],
+              [TGLGoldInOutDetails].[UpdatedDate] AS [UpdatedDate],
+              [TGLGoldInOutDetails].[DeletedBy] AS [DeletedBy],
+              [TGLGoldInOutDetails].[DeletedDate] AS [DeletedDate],
+              [TGLGoldInOutDetails].[FYID] AS [FYID],
+              [TGLGoldInOutDetails].[BranchID] AS [BranchID],
+              [TGLGoldInOutDetails].[CMPID] AS [CMPID],
+              [TGLGoldInOutDetails].[isActive] AS [isActive]
+              FROM [dbo].[TGLGoldInOutDetails] AS [TGLGoldInOutDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLGoldStock" EntityType="Self.TGLGoldStock" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLGoldStock].[StockId] AS [StockId], 
-    [TGLGoldStock].[Date_Time] AS [Date_Time], 
-    [TGLGoldStock].[OpeningBalance] AS [OpeningBalance], 
-    [TGLGoldStock].[TotalDeposit] AS [TotalDeposit], 
-    [TGLGoldStock].[TotalRelease] AS [TotalRelease], 
-    [TGLGoldStock].[ClosingBalance] AS [ClosingBalance]
-    FROM [dbo].[TGLGoldStock] AS [TGLGoldStock]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLGoldStock].[StockId] AS [StockId],
+              [TGLGoldStock].[Date_Time] AS [Date_Time],
+              [TGLGoldStock].[OpeningBalance] AS [OpeningBalance],
+              [TGLGoldStock].[TotalDeposit] AS [TotalDeposit],
+              [TGLGoldStock].[TotalRelease] AS [TotalRelease],
+              [TGLGoldStock].[ClosingBalance] AS [ClosingBalance]
+              FROM [dbo].[TGLGoldStock] AS [TGLGoldStock]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLInterest_Details" EntityType="Self.TGLInterest_Details" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLInterest_Details].[InterestDetID] AS [InterestDetID], 
-    [TGLInterest_Details].[ReceiptID] AS [ReceiptID], 
-    [TGLInterest_Details].[FromDate] AS [FromDate], 
-    [TGLInterest_Details].[ToDate] AS [ToDate], 
-    [TGLInterest_Details].[LoanAmount] AS [LoanAmount], 
-    [TGLInterest_Details].[TotalDays] AS [TotalDays], 
-    [TGLInterest_Details].[AllDaysTillDate] AS [AllDaysTillDate], 
-    [TGLInterest_Details].[ROI] AS [ROI], 
-    [TGLInterest_Details].[InterestAmount] AS [InterestAmount], 
-    [TGLInterest_Details].[PrevOSInterest] AS [PrevOSInterest], 
-    [TGLInterest_Details].[ROIRowID] AS [ROIRowID]
-    FROM [dbo].[TGLInterest_Details] AS [TGLInterest_Details]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLInterest_Details].[InterestDetID] AS [InterestDetID],
+              [TGLInterest_Details].[ReceiptID] AS [ReceiptID],
+              [TGLInterest_Details].[FromDate] AS [FromDate],
+              [TGLInterest_Details].[ToDate] AS [ToDate],
+              [TGLInterest_Details].[LoanAmount] AS [LoanAmount],
+              [TGLInterest_Details].[TotalDays] AS [TotalDays],
+              [TGLInterest_Details].[AllDaysTillDate] AS [AllDaysTillDate],
+              [TGLInterest_Details].[ROI] AS [ROI],
+              [TGLInterest_Details].[InterestAmount] AS [InterestAmount],
+              [TGLInterest_Details].[PrevOSInterest] AS [PrevOSInterest],
+              [TGLInterest_Details].[ROIRowID] AS [ROIRowID]
+              FROM [dbo].[TGLInterest_Details] AS [TGLInterest_Details]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLInwardForm_BasicDetails" EntityType="Self.TGLInwardForm_BasicDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLInwardForm_BasicDetails].[InwordID] AS [InwordID], 
-    [TGLInwardForm_BasicDetails].[Ref_No] AS [Ref_No], 
-    [TGLInwardForm_BasicDetails].[GLCaseNo] AS [GLCaseNo], 
-    [TGLInwardForm_BasicDetails].[InwardType] AS [InwardType], 
-    [TGLInwardForm_BasicDetails].[InwardBy] AS [InwardBy], 
-    [TGLInwardForm_BasicDetails].[CMPId] AS [CMPId], 
-    [TGLInwardForm_BasicDetails].[BranchId] AS [BranchId], 
-    [TGLInwardForm_BasicDetails].[FYId] AS [FYId], 
-    [TGLInwardForm_BasicDetails].[CreatedBy] AS [CreatedBy], 
-    [TGLInwardForm_BasicDetails].[CreatedDate] AS [CreatedDate], 
-    [TGLInwardForm_BasicDetails].[UpdatedBy] AS [UpdatedBy], 
-    [TGLInwardForm_BasicDetails].[UpdatedDate] AS [UpdatedDate], 
-    [TGLInwardForm_BasicDetails].[DeletedBy] AS [DeletedBy], 
-    [TGLInwardForm_BasicDetails].[DeletedDate] AS [DeletedDate]
-    FROM [dbo].[TGLInwardForm_BasicDetails] AS [TGLInwardForm_BasicDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLInwardForm_BasicDetails].[InwordID] AS [InwordID],
+              [TGLInwardForm_BasicDetails].[Ref_No] AS [Ref_No],
+              [TGLInwardForm_BasicDetails].[GLCaseNo] AS [GLCaseNo],
+              [TGLInwardForm_BasicDetails].[InwardType] AS [InwardType],
+              [TGLInwardForm_BasicDetails].[InwardBy] AS [InwardBy],
+              [TGLInwardForm_BasicDetails].[CMPId] AS [CMPId],
+              [TGLInwardForm_BasicDetails].[BranchId] AS [BranchId],
+              [TGLInwardForm_BasicDetails].[FYId] AS [FYId],
+              [TGLInwardForm_BasicDetails].[CreatedBy] AS [CreatedBy],
+              [TGLInwardForm_BasicDetails].[CreatedDate] AS [CreatedDate],
+              [TGLInwardForm_BasicDetails].[UpdatedBy] AS [UpdatedBy],
+              [TGLInwardForm_BasicDetails].[UpdatedDate] AS [UpdatedDate],
+              [TGLInwardForm_BasicDetails].[DeletedBy] AS [DeletedBy],
+              [TGLInwardForm_BasicDetails].[DeletedDate] AS [DeletedDate]
+              FROM [dbo].[TGLInwardForm_BasicDetails] AS [TGLInwardForm_BasicDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLInwardForm_DocDetails" EntityType="Self.TGLInwardForm_DocDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLInwardForm_DocDetails].[DocInwardID] AS [DocInwardID], 
-    [TGLInwardForm_DocDetails].[InwordID] AS [InwordID], 
-    [TGLInwardForm_DocDetails].[DocID] AS [DocID], 
-    [TGLInwardForm_DocDetails].[StockLocation] AS [StockLocation]
-    FROM [dbo].[TGLInwardForm_DocDetails] AS [TGLInwardForm_DocDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLInwardForm_DocDetails].[DocInwardID] AS [DocInwardID],
+              [TGLInwardForm_DocDetails].[InwordID] AS [InwordID],
+              [TGLInwardForm_DocDetails].[DocID] AS [DocID],
+              [TGLInwardForm_DocDetails].[StockLocation] AS [StockLocation]
+              FROM [dbo].[TGLInwardForm_DocDetails] AS [TGLInwardForm_DocDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLInwardForm_GoldDetails" EntityType="Self.TGLInwardForm_GoldDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLInwardForm_GoldDetails].[GoldInwardID] AS [GoldInwardID], 
-    [TGLInwardForm_GoldDetails].[InwordID] AS [InwordID], 
-    [TGLInwardForm_GoldDetails].[ItemID] AS [ItemID], 
-    [TGLInwardForm_GoldDetails].[InwardStage] AS [InwardStage], 
-    [TGLInwardForm_GoldDetails].[Inwardfrom] AS [Inwardfrom], 
-    [TGLInwardForm_GoldDetails].[InwardFromLocation] AS [InwardFromLocation], 
-    [TGLInwardForm_GoldDetails].[StockLocation] AS [StockLocation]
-    FROM [dbo].[TGLInwardForm_GoldDetails] AS [TGLInwardForm_GoldDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLInwardForm_GoldDetails].[GoldInwardID] AS [GoldInwardID],
+              [TGLInwardForm_GoldDetails].[InwordID] AS [InwordID],
+              [TGLInwardForm_GoldDetails].[ItemID] AS [ItemID],
+              [TGLInwardForm_GoldDetails].[InwardStage] AS [InwardStage],
+              [TGLInwardForm_GoldDetails].[Inwardfrom] AS [Inwardfrom],
+              [TGLInwardForm_GoldDetails].[InwardFromLocation] AS [InwardFromLocation],
+              [TGLInwardForm_GoldDetails].[StockLocation] AS [StockLocation]
+              FROM [dbo].[TGLInwardForm_GoldDetails] AS [TGLInwardForm_GoldDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLKYC_DocumentDetails" EntityType="Self.TGLKYC_DocumentDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLKYC_DocumentDetails].[DID] AS [DID], 
-    [TGLKYC_DocumentDetails].[KYCID] AS [KYCID], 
-    [TGLKYC_DocumentDetails].[Serialno] AS [Serialno], 
-    [TGLKYC_DocumentDetails].[DocumentID] AS [DocumentID], 
-    [TGLKYC_DocumentDetails].[OtherDoc] AS [OtherDoc], 
-    [TGLKYC_DocumentDetails].[DocName] AS [DocName], 
-    [TGLKYC_DocumentDetails].[ImagePath] AS [ImagePath], 
-    [TGLKYC_DocumentDetails].[VerifiedBy] AS [VerifiedBy], 
-    [TGLKYC_DocumentDetails].[Empld] AS [Empld], 
-    [TGLKYC_DocumentDetails].[NameOnDoc] AS [NameOnDoc], 
-    [TGLKYC_DocumentDetails].[ImageUrl] AS [ImageUrl], 
-    [TGLKYC_DocumentDetails].[ImageName] AS [ImageName]
-    FROM [dbo].[TGLKYC_DocumentDetails] AS [TGLKYC_DocumentDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLKYC_DocumentDetails].[DID] AS [DID],
+              [TGLKYC_DocumentDetails].[KYCID] AS [KYCID],
+              [TGLKYC_DocumentDetails].[Serialno] AS [Serialno],
+              [TGLKYC_DocumentDetails].[DocumentID] AS [DocumentID],
+              [TGLKYC_DocumentDetails].[OtherDoc] AS [OtherDoc],
+              [TGLKYC_DocumentDetails].[DocName] AS [DocName],
+              [TGLKYC_DocumentDetails].[ImagePath] AS [ImagePath],
+              [TGLKYC_DocumentDetails].[VerifiedBy] AS [VerifiedBy],
+              [TGLKYC_DocumentDetails].[Empld] AS [Empld],
+              [TGLKYC_DocumentDetails].[NameOnDoc] AS [NameOnDoc],
+              [TGLKYC_DocumentDetails].[ImageUrl] AS [ImageUrl],
+              [TGLKYC_DocumentDetails].[ImageName] AS [ImageName]
+              FROM [dbo].[TGLKYC_DocumentDetails] AS [TGLKYC_DocumentDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLKYC_SourceOfApplication" EntityType="Self.TGLKYC_SourceOfApplication" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLKYC_SourceOfApplication].[SourceofApplicationID] AS [SourceofApplicationID], 
-    [TGLKYC_SourceOfApplication].[SourceofApplication] AS [SourceofApplication]
-    FROM [dbo].[TGLKYC_SourceOfApplication] AS [TGLKYC_SourceOfApplication]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLKYC_SourceOfApplication].[SourceofApplicationID] AS [SourceofApplicationID],
+              [TGLKYC_SourceOfApplication].[SourceofApplication] AS [SourceofApplication]
+              FROM [dbo].[TGLKYC_SourceOfApplication] AS [TGLKYC_SourceOfApplication]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLOutwardForm_BasicDetails" EntityType="Self.TGLOutwardForm_BasicDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLOutwardForm_BasicDetails].[OutwordID] AS [OutwordID], 
-    [TGLOutwardForm_BasicDetails].[Ref_No] AS [Ref_No], 
-    [TGLOutwardForm_BasicDetails].[GLCaseNo] AS [GLCaseNo], 
-    [TGLOutwardForm_BasicDetails].[InwardType] AS [InwardType], 
-    [TGLOutwardForm_BasicDetails].[OutwardBy] AS [OutwardBy], 
-    [TGLOutwardForm_BasicDetails].[CMPId] AS [CMPId], 
-    [TGLOutwardForm_BasicDetails].[BranchId] AS [BranchId], 
-    [TGLOutwardForm_BasicDetails].[FYId] AS [FYId], 
-    [TGLOutwardForm_BasicDetails].[CreatedBy] AS [CreatedBy], 
-    [TGLOutwardForm_BasicDetails].[CreatedDate] AS [CreatedDate], 
-    [TGLOutwardForm_BasicDetails].[UpdatedBy] AS [UpdatedBy], 
-    [TGLOutwardForm_BasicDetails].[UpdatedDate] AS [UpdatedDate], 
-    [TGLOutwardForm_BasicDetails].[DeletedBy] AS [DeletedBy], 
-    [TGLOutwardForm_BasicDetails].[DeletedDate] AS [DeletedDate]
-    FROM [dbo].[TGLOutwardForm_BasicDetails] AS [TGLOutwardForm_BasicDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLOutwardForm_BasicDetails].[OutwordID] AS [OutwordID],
+              [TGLOutwardForm_BasicDetails].[Ref_No] AS [Ref_No],
+              [TGLOutwardForm_BasicDetails].[GLCaseNo] AS [GLCaseNo],
+              [TGLOutwardForm_BasicDetails].[InwardType] AS [InwardType],
+              [TGLOutwardForm_BasicDetails].[OutwardBy] AS [OutwardBy],
+              [TGLOutwardForm_BasicDetails].[CMPId] AS [CMPId],
+              [TGLOutwardForm_BasicDetails].[BranchId] AS [BranchId],
+              [TGLOutwardForm_BasicDetails].[FYId] AS [FYId],
+              [TGLOutwardForm_BasicDetails].[CreatedBy] AS [CreatedBy],
+              [TGLOutwardForm_BasicDetails].[CreatedDate] AS [CreatedDate],
+              [TGLOutwardForm_BasicDetails].[UpdatedBy] AS [UpdatedBy],
+              [TGLOutwardForm_BasicDetails].[UpdatedDate] AS [UpdatedDate],
+              [TGLOutwardForm_BasicDetails].[DeletedBy] AS [DeletedBy],
+              [TGLOutwardForm_BasicDetails].[DeletedDate] AS [DeletedDate]
+              FROM [dbo].[TGLOutwardForm_BasicDetails] AS [TGLOutwardForm_BasicDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLOutwardForm_DocDetails" EntityType="Self.TGLOutwardForm_DocDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLOutwardForm_DocDetails].[DocOutwardID] AS [DocOutwardID], 
-    [TGLOutwardForm_DocDetails].[OutwordID] AS [OutwordID], 
-    [TGLOutwardForm_DocDetails].[DocID] AS [DocID], 
-    [TGLOutwardForm_DocDetails].[StockLocation] AS [StockLocation]
-    FROM [dbo].[TGLOutwardForm_DocDetails] AS [TGLOutwardForm_DocDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLOutwardForm_DocDetails].[DocOutwardID] AS [DocOutwardID],
+              [TGLOutwardForm_DocDetails].[OutwordID] AS [OutwordID],
+              [TGLOutwardForm_DocDetails].[DocID] AS [DocID],
+              [TGLOutwardForm_DocDetails].[StockLocation] AS [StockLocation]
+              FROM [dbo].[TGLOutwardForm_DocDetails] AS [TGLOutwardForm_DocDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLOutwardForm_GoldDetails" EntityType="Self.TGLOutwardForm_GoldDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLOutwardForm_GoldDetails].[GoldOutwardID] AS [GoldOutwardID], 
-    [TGLOutwardForm_GoldDetails].[OutwordID] AS [OutwordID], 
-    [TGLOutwardForm_GoldDetails].[ItemID] AS [ItemID], 
-    [TGLOutwardForm_GoldDetails].[InwardRefNo] AS [InwardRefNo], 
-    [TGLOutwardForm_GoldDetails].[OutwardTo] AS [OutwardTo], 
-    [TGLOutwardForm_GoldDetails].[OutwardToLocation] AS [OutwardToLocation], 
-    [TGLOutwardForm_GoldDetails].[StockLocation] AS [StockLocation]
-    FROM [dbo].[TGLOutwardForm_GoldDetails] AS [TGLOutwardForm_GoldDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLOutwardForm_GoldDetails].[GoldOutwardID] AS [GoldOutwardID],
+              [TGLOutwardForm_GoldDetails].[OutwordID] AS [OutwordID],
+              [TGLOutwardForm_GoldDetails].[ItemID] AS [ItemID],
+              [TGLOutwardForm_GoldDetails].[InwardRefNo] AS [InwardRefNo],
+              [TGLOutwardForm_GoldDetails].[OutwardTo] AS [OutwardTo],
+              [TGLOutwardForm_GoldDetails].[OutwardToLocation] AS [OutwardToLocation],
+              [TGLOutwardForm_GoldDetails].[StockLocation] AS [StockLocation]
+              FROM [dbo].[TGLOutwardForm_GoldDetails] AS [TGLOutwardForm_GoldDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLSmsHistory" EntityType="Self.TGLSmsHistory" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLSmsHistory].[HistoryID] AS [HistoryID], 
-    [TGLSmsHistory].[Date_details] AS [Date_details], 
-    [TGLSmsHistory].[SDID] AS [SDID], 
-    [TGLSmsHistory].[GoldLoanNo] AS [GoldLoanNo], 
-    [TGLSmsHistory].[KYCID] AS [KYCID], 
-    [TGLSmsHistory].[Outstanding] AS [Outstanding], 
-    [TGLSmsHistory].[Interest] AS [Interest], 
-    [TGLSmsHistory].[LastReceivedDate] AS [LastReceivedDate], 
-    [TGLSmsHistory].[RemainderType] AS [RemainderType], 
-    [TGLSmsHistory].[Checked] AS [Checked], 
-    [TGLSmsHistory].[SmsText] AS [SmsText], 
-    [TGLSmsHistory].[MobileNo] AS [MobileNo], 
-    [TGLSmsHistory].[DueDate] AS [DueDate], 
-    [TGLSmsHistory].[FYID] AS [FYID], 
-    [TGLSmsHistory].[CmpID] AS [CmpID], 
-    [TGLSmsHistory].[BranchID] AS [BranchID], 
-    [TGLSmsHistory].[CreatedBy] AS [CreatedBy], 
-    [TGLSmsHistory].[CreatedDate] AS [CreatedDate], 
-    [TGLSmsHistory].[isActive] AS [isActive]
-    FROM [dbo].[TGLSmsHistory] AS [TGLSmsHistory]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TGLSmsHistory].[HistoryID] AS [HistoryID],
+              [TGLSmsHistory].[Date_details] AS [Date_details],
+              [TGLSmsHistory].[SDID] AS [SDID],
+              [TGLSmsHistory].[GoldLoanNo] AS [GoldLoanNo],
+              [TGLSmsHistory].[KYCID] AS [KYCID],
+              [TGLSmsHistory].[Outstanding] AS [Outstanding],
+              [TGLSmsHistory].[Interest] AS [Interest],
+              [TGLSmsHistory].[LastReceivedDate] AS [LastReceivedDate],
+              [TGLSmsHistory].[RemainderType] AS [RemainderType],
+              [TGLSmsHistory].[Checked] AS [Checked],
+              [TGLSmsHistory].[SmsText] AS [SmsText],
+              [TGLSmsHistory].[MobileNo] AS [MobileNo],
+              [TGLSmsHistory].[DueDate] AS [DueDate],
+              [TGLSmsHistory].[FYID] AS [FYID],
+              [TGLSmsHistory].[CmpID] AS [CmpID],
+              [TGLSmsHistory].[BranchID] AS [BranchID],
+              [TGLSmsHistory].[CreatedBy] AS [CreatedBy],
+              [TGLSmsHistory].[CreatedDate] AS [CreatedDate],
+              [TGLSmsHistory].[isActive] AS [isActive]
+              FROM [dbo].[TGLSmsHistory] AS [TGLSmsHistory]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="TSchemeMaster_EffectiveROI" EntityType="Self.TSchemeMaster_EffectiveROI" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TSchemeMaster_EffectiveROI].[ROIID] AS [ROIID], 
-    [TSchemeMaster_EffectiveROI].[SID] AS [SID], 
-    [TSchemeMaster_EffectiveROI].[NoofDefaultMonths] AS [NoofDefaultMonths], 
-    [TSchemeMaster_EffectiveROI].[EffROI] AS [EffROI]
-    FROM [dbo].[TSchemeMaster_EffectiveROI] AS [TSchemeMaster_EffectiveROI]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [TSchemeMaster_EffectiveROI].[ROIID] AS [ROIID],
+              [TSchemeMaster_EffectiveROI].[SID] AS [SID],
+              [TSchemeMaster_EffectiveROI].[NoofDefaultMonths] AS [NoofDefaultMonths],
+              [TSchemeMaster_EffectiveROI].[EffROI] AS [EffROI]
+              FROM [dbo].[TSchemeMaster_EffectiveROI] AS [TSchemeMaster_EffectiveROI]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserDetails].[UserID] AS [UserID], 
-    [UserDetails].[UserTypeID] AS [UserTypeID], 
-    [UserDetails].[UserName] AS [UserName], 
-    [UserDetails].[Password] AS [Password], 
-    [UserDetails].[CreatedBy] AS [CreatedBy]
-    FROM [dbo].[UserDetails] AS [UserDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [UserDetails].[UserID] AS [UserID],
+              [UserDetails].[UserTypeID] AS [UserTypeID],
+              [UserDetails].[UserName] AS [UserName],
+              [UserDetails].[Password] AS [Password],
+              [UserDetails].[CreatedBy] AS [CreatedBy]
+              FROM [dbo].[UserDetails] AS [UserDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserFormAuthentication" EntityType="Self.UserFormAuthentication" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserFormAuthentication].[FormAuthID] AS [FormAuthID], 
-    [UserFormAuthentication].[UserTypeID] AS [UserTypeID], 
-    [UserFormAuthentication].[FormID] AS [FormID], 
-    [UserFormAuthentication].[Visible] AS [Visible], 
-    [UserFormAuthentication].[CanADD] AS [CanADD], 
-    [UserFormAuthentication].[CanEDIT] AS [CanEDIT], 
-    [UserFormAuthentication].[CanSave] AS [CanSave], 
-    [UserFormAuthentication].[CanDelete] AS [CanDelete], 
-    [UserFormAuthentication].[CanView] AS [CanView], 
-    [UserFormAuthentication].[CanFinalize] AS [CanFinalize]
-    FROM [dbo].[UserFormAuthentication] AS [UserFormAuthentication]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [UserFormAuthentication].[FormAuthID] AS [FormAuthID],
+              [UserFormAuthentication].[UserTypeID] AS [UserTypeID],
+              [UserFormAuthentication].[FormID] AS [FormID],
+              [UserFormAuthentication].[Visible] AS [Visible],
+              [UserFormAuthentication].[CanADD] AS [CanADD],
+              [UserFormAuthentication].[CanEDIT] AS [CanEDIT],
+              [UserFormAuthentication].[CanSave] AS [CanSave],
+              [UserFormAuthentication].[CanDelete] AS [CanDelete],
+              [UserFormAuthentication].[CanView] AS [CanView],
+              [UserFormAuthentication].[CanFinalize] AS [CanFinalize]
+              FROM [dbo].[UserFormAuthentication] AS [UserFormAuthentication]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserFormAuthorisationDetails" EntityType="Self.UserFormAuthorisationDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserFormAuthorisationDetails].[ID] AS [ID], 
-    [UserFormAuthorisationDetails].[FormID] AS [FormID], 
-    [UserFormAuthorisationDetails].[RecordID] AS [RecordID], 
-    [UserFormAuthorisationDetails].[Usr] AS [Usr], 
-    [UserFormAuthorisationDetails].[Admin] AS [Admin], 
-    [UserFormAuthorisationDetails].[Supervisor] AS [Supervisor], 
-    [UserFormAuthorisationDetails].[FinancialYrID] AS [FinancialYrID]
-    FROM [dbo].[UserFormAuthorisationDetails] AS [UserFormAuthorisationDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [UserFormAuthorisationDetails].[ID] AS [ID],
+              [UserFormAuthorisationDetails].[FormID] AS [FormID],
+              [UserFormAuthorisationDetails].[RecordID] AS [RecordID],
+              [UserFormAuthorisationDetails].[Usr] AS [Usr],
+              [UserFormAuthorisationDetails].[Admin] AS [Admin],
+              [UserFormAuthorisationDetails].[Supervisor] AS [Supervisor],
+              [UserFormAuthorisationDetails].[FinancialYrID] AS [FinancialYrID]
+              FROM [dbo].[UserFormAuthorisationDetails] AS [UserFormAuthorisationDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserFormDetails" EntityType="Self.UserFormDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserFormDetails].[FormID] AS [FormID], 
-    [UserFormDetails].[FormName] AS [FormName], 
-    [UserFormDetails].[MTR] AS [MTR], 
-    [UserFormDetails].[ToolStripName] AS [ToolStripName]
-    FROM [dbo].[UserFormDetails] AS [UserFormDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [UserFormDetails].[FormID] AS [FormID],
+              [UserFormDetails].[FormName] AS [FormName],
+              [UserFormDetails].[MTR] AS [MTR],
+              [UserFormDetails].[ToolStripName] AS [ToolStripName]
+              FROM [dbo].[UserFormDetails] AS [UserFormDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserMenuDetails" EntityType="Self.UserMenuDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserMenuDetails].[MenuDetailsID] AS [MenuDetailsID], 
-    [UserMenuDetails].[ModuleID] AS [ModuleID], 
-    [UserMenuDetails].[FormID] AS [FormID]
-    FROM [dbo].[UserMenuDetails] AS [UserMenuDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [UserMenuDetails].[MenuDetailsID] AS [MenuDetailsID],
+              [UserMenuDetails].[ModuleID] AS [ModuleID],
+              [UserMenuDetails].[FormID] AS [FormID]
+              FROM [dbo].[UserMenuDetails] AS [UserMenuDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserModuleAuthentication" EntityType="Self.UserModuleAuthentication" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserModuleAuthentication].[ModuleAuthID] AS [ModuleAuthID], 
-    [UserModuleAuthentication].[UserTypeID] AS [UserTypeID], 
-    [UserModuleAuthentication].[ModuleID] AS [ModuleID], 
-    [UserModuleAuthentication].[Visible] AS [Visible]
-    FROM [dbo].[UserModuleAuthentication] AS [UserModuleAuthentication]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [UserModuleAuthentication].[ModuleAuthID] AS [ModuleAuthID],
+              [UserModuleAuthentication].[UserTypeID] AS [UserTypeID],
+              [UserModuleAuthentication].[ModuleID] AS [ModuleID],
+              [UserModuleAuthentication].[Visible] AS [Visible]
+              FROM [dbo].[UserModuleAuthentication] AS [UserModuleAuthentication]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserModuleDetails" EntityType="Self.UserModuleDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserModuleDetails].[ModuleID] AS [ModuleID], 
-    [UserModuleDetails].[ModuleName] AS [ModuleName]
-    FROM [dbo].[UserModuleDetails] AS [UserModuleDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [UserModuleDetails].[ModuleID] AS [ModuleID],
+              [UserModuleDetails].[ModuleName] AS [ModuleName]
+              FROM [dbo].[UserModuleDetails] AS [UserModuleDetails]
+            </DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserTypeDetails" EntityType="Self.UserTypeDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserTypeDetails].[UserTypeID] AS [UserTypeID], 
-    [UserTypeDetails].[UserType] AS [UserType]
-    FROM [dbo].[UserTypeDetails] AS [UserTypeDetails]</DefiningQuery>
+            <DefiningQuery>
+              SELECT
+              [UserTypeDetails].[UserTypeID] AS [UserTypeID],
+              [UserTypeDetails].[UserType] AS [UserType]
+              FROM [dbo].[UserTypeDetails] AS [UserTypeDetails]
+            </DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Mst_AuditCheckList_Mst_AuditCategory" Association="Self.FK_Mst_AuditCheckList_Mst_AuditCategory">
             <End Role="Mst_AuditCategory" EntitySet="Mst_AuditCategory" />
@@ -2623,10 +2419,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             <End Role="tblStateMaster" EntitySet="tblStateMaster" />
             <End Role="tblCityMaster" EntitySet="tblCityMaster" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblCompanyBranchMaster_Mst_BranchType" Association="Self.FK_tblCompanyBranchMaster_Mst_BranchType">
-            <End Role="Mst_BranchType" EntitySet="Mst_BranchType" />
-            <End Role="tblCompanyBranchMaster" EntitySet="tblCompanyBranchMaster" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblCompanyBranchMaster_Mst_PinCode" Association="Self.FK_tblCompanyBranchMaster_Mst_PinCode">
             <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
             <End Role="tblCompanyBranchMaster" EntitySet="tblCompanyBranchMaster" />
@@ -2648,7 +2440,8 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MangalDBNewModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -3533,6 +3326,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             <End Role="tbl_GLChargeMaster_Details" EntitySet="tbl_GLChargeMaster_Details" />
           </AssociationSet>
           <EntitySet Name="tblFinancialyears" EntityType="MangalDBNewModel.tblFinancialyear" />
+          <EntitySet Name="tblCompanyBranchMasters" EntityType="MangalDBNewModel.tblCompanyBranchMaster" />
           <EntitySet Name="Mst_PenaltySlab" EntityType="MangalDBNewModel.Mst_PenaltySlab" />
           <EntitySet Name="Mst_SourceofApplication" EntityType="MangalDBNewModel.Mst_SourceofApplication" />
           <EntitySet Name="Mst_AuditCategory" EntityType="MangalDBNewModel.Mst_AuditCategory" />
@@ -3558,6 +3352,10 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             <End Role="tblItemMaster" EntitySet="tblItemMasters" />
           </AssociationSet>
           <EntitySet Name="TSchemeMaster_BasicDetails" EntityType="MangalDBNewModel.TSchemeMaster_BasicDetails" />
+          <AssociationSet Name="FK_tblCompanyBranchMaster_Mst_PinCode" Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_PinCode">
+            <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
+            <End Role="tblCompanyBranchMaster" EntitySet="tblCompanyBranchMasters" />
+          </AssociationSet>
           <AssociationSet Name="FK_TSchemeMaster_BasicDetails_Mst_Product" Association="MangalDBNewModel.FK_TSchemeMaster_BasicDetails_Mst_Product">
             <End Role="Mst_Product" EntitySet="Mst_Product" />
             <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
@@ -3570,14 +3368,8 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <FunctionImport Name="GetKYCDetailsForDocument" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForDocument_Result)" />
           <FunctionImport Name="GetKYCDetailsForDocumentById" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForDocumentById_Result)">
             <Parameter Name="id" Mode="In" Type="Int32" />
-          <FunctionImport Name="SplitValue1" IsComposable="true" ReturnType="Collection(String)">
-            <Parameter Name="String" Mode="In" Type="String" />
-            <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SplitWords1" IsComposable="true" ReturnType="Collection(MangalDBNewModel.SplitWords1_Result)">
-          <Parameter Name="text" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
+          <FunctionImport Name="GetDocumentUpload" ReturnType="Collection(MangalDBNewModel.GetDocumentUpload_Result)" />
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3964,6 +3756,31 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="Financialyear" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CompID" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblCompanyBranchMaster">
+          <Key>
+            <PropertyRef Name="BID" />
+          </Key>
+          <Property Name="BID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CompID" Type="Int32" Nullable="false" />
+          <Property Name="BranchCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BranchType" Type="Int16" Nullable="false" />
+          <Property Name="InceptionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RentPeriodAgreed" Type="DateTime" Precision="3" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Pincode" Type="Int32" Nullable="false" />
+          <Property Name="ContactPerson" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="InTime" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OutTime" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DateWEF" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int16" />
+          <Property Name="RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="RecordCreatedBy" Type="Int32" />
+          <Property Name="RecordUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Mst_PinCode" Relationship="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_PinCode" FromRole="tblCompanyBranchMaster" ToRole="Mst_PinCode" />
+        </EntityType>
         <EntityType Name="Mst_PenaltySlab">
           <Key>
             <PropertyRef Name="Ps_Id" />
@@ -4150,6 +3967,18 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="LockInPeriod" Type="Int32" />
           <NavigationProperty Name="Mst_Product" Relationship="MangalDBNewModel.FK_TSchemeMaster_BasicDetails_Mst_Product" FromRole="TSchemeMaster_BasicDetails" ToRole="Mst_Product" />
         </EntityType>
+        <Association Name="FK_tblCompanyBranchMaster_Mst_PinCode">
+          <End Type="MangalDBNewModel.Mst_PinCode" Role="Mst_PinCode" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tblCompanyBranchMaster" Role="tblCompanyBranchMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_PinCode">
+              <PropertyRef Name="Pc_Id" />
+            </Principal>
+            <Dependent Role="tblCompanyBranchMaster">
+              <PropertyRef Name="Pincode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TSchemeMaster_BasicDetails_Mst_Product">
           <End Type="MangalDBNewModel.Mst_Product" Role="Mst_Product" Multiplicity="1" />
           <End Type="MangalDBNewModel.TSchemeMaster_BasicDetails" Role="TSchemeMaster_BasicDetails" Multiplicity="*" />
@@ -4296,6 +4125,12 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
         </ComplexType>
         <ComplexType Name="GetKYCDetailsForDocumentById_Result">
+          <Property Type="Int32" Name="KycId" Nullable="false" />
+          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
+        </ComplexType>
+        <ComplexType Name="GetDocumentUpload_Result">
           <Property Type="Int32" Name="KycId" Nullable="false" />
           <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
@@ -5374,6 +5209,31 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblCompanyBranchMasters">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblCompanyBranchMaster">
+              <MappingFragment StoreEntitySet="tblCompanyBranchMaster">
+                <ScalarProperty Name="RecordUpdatedBy" ColumnName="RecordUpdatedBy" />
+                <ScalarProperty Name="RecordCreatedBy" ColumnName="RecordCreatedBy" />
+                <ScalarProperty Name="RecordUpdated" ColumnName="RecordUpdated" />
+                <ScalarProperty Name="RecordCreated" ColumnName="RecordCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DateWEF" ColumnName="DateWEF" />
+                <ScalarProperty Name="OutTime" ColumnName="OutTime" />
+                <ScalarProperty Name="InTime" ColumnName="InTime" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="RentPeriodAgreed" ColumnName="RentPeriodAgreed" />
+                <ScalarProperty Name="InceptionDate" ColumnName="InceptionDate" />
+                <ScalarProperty Name="BranchType" ColumnName="BranchType" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BID" ColumnName="BID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Mst_PenaltySlab">
             <EntityTypeMapping TypeName="MangalDBNewModel.Mst_PenaltySlab">
               <MappingFragment StoreEntitySet="Mst_PenaltySlab">
@@ -5663,7 +5523,17 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="GetDocumentUpload" FunctionName="MangalDBNewModel.Store.GetDocumentUpload">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.GetDocumentUpload_Result">
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
