@@ -10,16 +10,10 @@
 namespace MangalWeb.Model.Entity
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class KycImageStore
+    public partial class SplitWords1_Result
     {
-        public int ImgId { get; set; }
-        public byte[] KycPhoto { get; set; }
-        public string Operation { get; set; }
-        public string Refno { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public string ImageName { get; set; }
-        public string ContentType { get; set; }
+        public short pos { get; set; }
+        public string value { get; set; }
     }
 }

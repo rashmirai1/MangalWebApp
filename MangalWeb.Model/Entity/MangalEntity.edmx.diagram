@@ -106,6 +106,10 @@
         <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_BasicDetails" Width="1.5" PointX="19.375" PointY="29.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocumentUpload" Width="1.5" PointX="21.375" PointY="29.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocUploadDetails" Width="1.5" PointX="23.375" PointY="29.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Mst_BranchType" Width="1.5" PointX="5.375" PointY="18.875" />
+        <EntityTypeShape EntityType="MangalDBNewModel.User_Category" Width="1.5" PointX="28.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.User_Category_Hierarchy" Width="1.5" PointX="28.375" PointY="24.75" />
+        <AssociationConnector Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

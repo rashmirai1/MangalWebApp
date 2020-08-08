@@ -115,6 +115,9 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<Trn_DocumentUpload> Trn_DocumentUpload { get; set; }
         public virtual DbSet<Trn_DocUploadDetails> Trn_DocUploadDetails { get; set; }
+        public virtual DbSet<Mst_BranchType> Mst_BranchType { get; set; }
+        public virtual DbSet<User_Category> User_Category { get; set; }
+        public virtual DbSet<User_Category_Hierarchy> User_Category_Hierarchy { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -162,6 +165,30 @@ namespace MangalWeb.Model.Entity
         public virtual ObjectResult<GetDocumentUpload_Result> GetDocumentUpload()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDocumentUpload_Result>("GetDocumentUpload");
+        }
+    
+        [DbFunction("MangalDBNewEntities", "SplitValue1")]
+        public virtual IQueryable<string> SplitValue1(string @string, string delimiter)
+        {
+            var stringParameter = @string != null ?
+                new ObjectParameter("String", @string) :
+                new ObjectParameter("String", typeof(string));
+    
+            var delimiterParameter = delimiter != null ?
+                new ObjectParameter("Delimiter", delimiter) :
+                new ObjectParameter("Delimiter", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<string>("[MangalDBNewEntities].[SplitValue1](@String, @Delimiter)", stringParameter, delimiterParameter);
+        }
+    
+        [DbFunction("MangalDBNewEntities", "SplitWords1")]
+        public virtual IQueryable<SplitWords1_Result> SplitWords1(string text)
+        {
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SplitWords1_Result>("[MangalDBNewEntities].[SplitWords1](@text)", textParameter);
         }
     }
 }
