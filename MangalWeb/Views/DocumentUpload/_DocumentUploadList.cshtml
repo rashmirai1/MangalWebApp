@@ -1,0 +1,34 @@
+﻿@model List<MangalWeb.Model.Transaction.DocumentUploadViewModel>
+@using MangalWeb.Model.Transaction
+<div class="modal-content">
+    <div class="modal-body" style="height:inherit; overflow:auto;">
+        <div class="panel-body panel-no-padding" style="height:inherit; overflow:auto;">
+            <div id="demo">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="example">
+                    <thead>
+                        <tr>
+                            <th>Transaction Number</th>
+                            <th>Doc Date </th>
+                            <th>Customer Id</th>
+                            <th>Application No</th>
+                            <th>Loan Account No</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DocumentUploadViewModel item in Model)
+                        {
+                            <tr class="gradeX" onclick='window.document.location="/DocumentUpload/GetDocUploadDetailsById?ID=@item.ID"'>
+                                <td>@item.TransactionNumber</td>
+                                <td>@item.DocDate</td>
+                                <td>@item.CustomerId</td>
+                                <td>@item.ApplicationNo</td>
+                                <td>@item.LoanAccountNo</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+

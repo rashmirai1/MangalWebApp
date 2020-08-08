@@ -48,6 +48,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -81,6 +82,12 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Bharat_tbl_SentJVCustHistory.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\GetKYCDetailsForDocumentById_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\GetKYCDetailsForDocument_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\ImageKyc.cs">
@@ -326,6 +333,12 @@
     <Compile Include="Entity\TGL_FormDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Trn_DocumentUpload.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Trn_DocUploadDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\TSchemeMaster_BasicDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -382,6 +395,8 @@
     <Compile Include="Masters\TenureDeviationVM.cs" />
     <Compile Include="Masters\ZoneViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transaction\DocumentUploadDetailsVM.cs" />
+    <Compile Include="Transaction\DocumentUploadViewModel.cs" />
     <Compile Include="Transaction\KYCBasciDetailsVM.cs" />
   </ItemGroup>
   <ItemGroup>
