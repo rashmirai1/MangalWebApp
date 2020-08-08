@@ -159,5 +159,10 @@ namespace MangalWeb.Model.Entity
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetKYCDetailsForDocumentById_Result>("GetKYCDetailsForDocumentById", idParameter);
         }
+    
+        public virtual ObjectResult<GetDocumentUpload_Result> GetDocumentUpload()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDocumentUpload_Result>("GetDocumentUpload");
+        }
     }
 }
