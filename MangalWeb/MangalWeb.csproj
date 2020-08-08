@@ -127,6 +127,9 @@
     <Compile Include="Controllers\ChargeController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\DeviationController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
+    <Compile Include="Controllers\DocumentUploadController.cs" />
+    <Compile Include="Controllers\DocumentVerificationController.cs" />
     <Compile Include="Controllers\FinancialYearController.cs" />
     <Compile Include="Controllers\GSTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2081,6 +2084,9 @@
     <Content Include="Views\Scheme\_SchemeList.cshtml" />
     <Content Include="Views\DocumentUpload\DocumentUpload.cshtml" />
     <Content Include="Views\DocumentUpload\_CustomerDetails.cshtml" />
+    <Content Include="Views\DocumentUpload\_DocumentUploadList.cshtml" />
+    <Content Include="Views\DocumentVerification\DocumentVerification.cshtml" />
+    <Content Include="Views\DocumentVerification\_CustomerDetails.cshtml" />
     <Content Include="Views\KYC\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,297 @@
+﻿@model MangalWeb.Model.Transaction.DocumentUploadViewModel
+@{
+    ViewBag.Title = "DocumentVerification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+@using (Ajax.BeginForm("Insert", "DocumentVerification", new AjaxOptions { }, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
+    @Html.HiddenFor(x => x.TransactionId)
+    @Html.HiddenFor(x => x.KycId)
+    <header id="topbar" class="affix">
+        <div class="col-md-5 col-sm-4 col-xs-12">
+            <div class="topbar-left">
+                <h4>Document Verification Form</h4>
+            </div><!--end of topbar-left-->
+        </div><!--end of col-md-5-->
+        <div class="col-md-7 col-sm-8 col-xs-12">
+            <div class="topbar-right" id="headerbutton" @TempData["headerbutton"]>
+                @*<button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>*@
+                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
+                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
+                @*<button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]" type="button" data-toggle="modal">
+                        <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
+                    </button>*@
+                <a href="@Html.Raw(@Url.Action("DocumentVerification", "DocumentVerification"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+            </div><!--end of topbar-right-->
+        </div><!--end of col-md-7-->
+
+    </header>
+    <!-- Begin: Content -->
+    <section id="content" class="animated fadeIn content_height">
+        <!-- Dashboard Tiles -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel1 panel-primary">
+                    <div class="admin-form">
+                        <div class="panel-body">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Customer Id<span class="text-danger">*</span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.CustomerId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Id", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
+                                                <div class="input-group-btn" style="display:inline;">
+                                                    <button type="button" data-toggle="modal" data-target="#editModal" onclick="ShowClientTableList();" class="btn btn-info btn_info1">...</button>
+                                                    @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Application No<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.ApplicationNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Application No", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Transaction Id<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>
+                                                @Html.EditorFor(model => model.TransactionNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Id", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Date<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                @Html.EditorFor(model => model.DocDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Doc Date", @autocomplete = "Off" } })
+                                                @Html.ValidationMessageFor(model => model.DocDate, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Loan Account No<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.LoanAccountNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Loan Account No", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Comments<span class="text-danger">*</span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Comments", @cols = "20", @rows = "2" })
+                                                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="margin-top:0px;" />
+                            <div class="panel-body panel-no-padding">
+                                <div id="divDocumentDetails">
+                                    <label><b>Document Details</b></label><br />
+                                    <table cellpadding="0" style="width:100%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblDocumentDetails">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-sm-2" style="width:4%">Sr. No.</th>
+                                                <th style="text-align:left">Document Type</th>
+                                                <th style="text-align:left">Document Name</th>
+                                                <th style="text-align:left">Expiry Date</th>
+                                                <th style="text-align:left">Upload File</th>
+                                                <th style="text-align:left">Verify By</th>
+                                                <th style="text-align:left">Status</th>
+                                                <th style="text-align:left">Reason for Rejection</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{int j = 1;}
+                                            @for (var i = 0; i < Model.DocumentUploadList.Count; i++)
+                                            {
+                                                <tr id="@Model.DocumentUploadList[i].ID">
+                                                    <td>@j</td>
+                                                    <td>@Model.DocumentUploadList[i].DocumentTypeName</td>
+                                                    <td>@Model.DocumentUploadList[i].DocumentName</td>
+                                                    <td>
+                                                        @{
+                                                            string parameterValue =Convert.ToDateTime(Model.DocumentUploadList[i].ExpiryDate).ToString("dd/MM/yyyy");
+                                                        }
+                                                        @Html.DisplayFor(x => parameterValue)
+                                                    </td>
+                                                    <td><a href="/DocumentUpload/Download/@Model.DocumentUploadList[i].ID" target=_blank>@Model.DocumentUploadList[i].FileName</a></td>
+                                                    <td style="width:10%;">
+                                                        <span>Admin</span>
+                                                    </td>
+                                                    <td>
+                                                        @Html.DropDownListFor(m => m.DocumentUploadList[i].Status, new SelectList(ViewBag.StatusList, "Value", "Text", Model.DocumentUploadList[i].Status), new { @class = "form-control select2", style = "width:165px;" })
+                                                        @Html.ValidationMessageFor(model => model.DocumentUploadList[i].Status, "", new { @class = "text-danger" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextAreaFor(model => model.DocumentUploadList[i].ReasonForRejection, new { @class = "form-control", @style = "width:160px",@cols=2,@rows=2 })
+                                                        @Html.ValidationMessageFor(model => model.DocumentUploadList[i].ReasonForRejection, "", new { @class = "text-danger" })
+                                                    </td>
+                                                </tr>
+                                                j++;
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+                                                }
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@section javascriptsection{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#divDocumentDetails").hide();
+
+            if (@Model.DocumentUploadList.Count() > 0) {
+                $("#divDocumentDetails").show();
+            }
+        });
+
+        function ShowClientTableList() {
+            $('#divviewfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetCustomerDetails", "DocumentVerification")',
+                // dataType: "html",
+                success: function (data) {
+                    $('#diveditfilldata').empty();
+                    $('#diveditfilldata').html(data);
+                    $('#CustomerDetailsTable').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+
+        $("#diveditfilldata").on("click", "tr", function () {
+            debugger;
+            var tr = $(this).closest('tr');
+            var CustomerId =tr.find('td:eq(0)').html();
+            var TransactionNumber =tr.find("td").eq(1).attr('id');
+            var DocDate =tr.find("td").eq(2).attr('id');
+            var KycId =tr.find("td").eq(0).attr('id');
+            var ApplicationNo =tr.find('td:eq(1)').html();
+            var LoanAccountNo =tr.find('td:eq(2)').html();
+
+            $("#CustomerId").val(CustomerId);
+            $("#TransactionNumber").val(TransactionNumber);
+            $("#DocDate").val(DocDate);
+            $("#CustomerId").val(CustomerId);
+            $("#KycId").val(KycId);
+            $("#ApplicationNo").val(ApplicationNo);
+            $("#LoanAccountNo").val(LoanAccountNo);
+            $("#editModal").hide();
+        })
+
+        $("#btn_save").click(function () {
+            SaveDocument();
+        });
+
+        function SaveDocument() {
+            debugger;
+
+            var DocUploadViewModel = {};
+            var lstDocUploadTrn = [];
+
+            $("#tblDocumentDetails TBODY TR").each(function () {
+                var row = $(this);
+                var rowDocUploadTrn = {};
+                debugger;
+                rowDocUploadTrn.ID = row.attr('id');
+                rowDocUploadTrn.Status = row.find("td").eq(6).find(":input").val();
+                rowDocUploadTrn.ReasonForRejection = row.find("td").eq(7).find(":input").val();
+                lstDocUploadTrn.push(rowDocUploadTrn);
+            });
+            DocUploadViewModel.KycId=$("#KycId").val();
+            DocUploadViewModel.DocumentUploadList = lstDocUploadTrn;
+
+            $.ajax({
+                type: "POST",
+                url: "/DocumentVerification/Insert",
+                data: JSON.stringify(DocUploadViewModel),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    debugger;
+                    if (r == 1) {
+                        $("#saveModal").modal('show');
+                        $(document).click(function () {
+                            window.location.href = urlRedirect;
+                        });
+                    }
+                    else if(r==2){
+                        $("#saveModal").modal('show');
+                        $(document).click(function () {
+                            window.location.href = urlRedirect;
+                        });
+                    }
+                    else
+                    {   $("#CustomErr").text(r);
+                        $("#btn_save").prop("disabled", false);
+                        return false;
+                    }
+                }
+            });
+        }
+
+        var urlRedirect = '@Html.Raw(@Url.Action("DocumentVerification", "DocumentVerification"))';
+
+        function OnSuccess(response) {
+            $("#saveModal").modal('show');
+            $(document).click(function () {
+                window.location.href = urlRedirect;
+            });
+        }
+
+        function OnFailure(response) {
+            alert('Error Occured');
+        }
+
+        $(function () {
+            var url = '@Html.Raw(@Url.Action("Delete", "DocumentUpload"))';
+            $("#btnDelete").click(function () {
+                $("#deleteModal").modal('show');
+            });
+            $("#btnDeleteConfirm").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: '{id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != "") {
+                            $("#CustomErr").text(data);
+                            return false;
+                        }
+                        else {
+                            $("#CustomErr").empty();
+                            $("#DeleteSuccessModal").modal('show');
+
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            });
+        });
+    </script>
+}

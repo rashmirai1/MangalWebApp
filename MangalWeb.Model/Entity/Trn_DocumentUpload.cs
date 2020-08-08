@@ -14,16 +14,11 @@ namespace MangalWeb.Model.Entity
     
     public partial class Trn_DocumentUpload
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Trn_DocumentUpload()
-        {
-            this.Trn_DocUploadDetails = new HashSet<Trn_DocUploadDetails>();
-        }
-    
         public int DocId { get; set; }
         public int TransactionId { get; set; }
         public string TransactionNumber { get; set; }
         public System.DateTime DocDate { get; set; }
+        public int KycId { get; set; }
         public string CustomerId { get; set; }
         public string ApplicationNo { get; set; }
         public string LoanAccountNo { get; set; }
@@ -31,16 +26,9 @@ namespace MangalWeb.Model.Entity
         public Nullable<int> BranchId { get; set; }
         public Nullable<int> FinancialYearId { get; set; }
         public Nullable<int> CompId { get; set; }
-        public Nullable<int> VerifiedBy { get; set; }
-        public string Status { get; set; }
-        public string ReasonForRejection { get; set; }
-        public string VerifyComment { get; set; }
         public Nullable<System.DateTime> RecordCreated { get; set; }
         public Nullable<System.DateTime> RecordUpdated { get; set; }
         public Nullable<int> RecordCreatedBy { get; set; }
         public Nullable<int> RecordUpdatedBy { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Trn_DocUploadDetails> Trn_DocUploadDetails { get; set; }
     }
 }
