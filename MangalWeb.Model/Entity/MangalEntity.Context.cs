@@ -145,28 +145,18 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("generateFinancialYear");
         }
     
-        [DbFunction("MangalDBNewEntities", "SplitValue1")]
-        public virtual IQueryable<string> SplitValue1(string @string, string delimiter)
+        public virtual ObjectResult<GetKYCDetailsForDocument_Result> GetKYCDetailsForDocument()
         {
-            var stringParameter = @string != null ?
-                new ObjectParameter("String", @string) :
-                new ObjectParameter("String", typeof(string));
-    
-            var delimiterParameter = delimiter != null ?
-                new ObjectParameter("Delimiter", delimiter) :
-                new ObjectParameter("Delimiter", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<string>("[MangalDBNewEntities].[SplitValue1](@String, @Delimiter)", stringParameter, delimiterParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetKYCDetailsForDocument_Result>("GetKYCDetailsForDocument");
         }
     
-        [DbFunction("MangalDBNewEntities", "SplitWords1")]
-        public virtual IQueryable<SplitWords1_Result> SplitWords1(string text)
+        public virtual ObjectResult<GetKYCDetailsForDocumentById_Result> GetKYCDetailsForDocumentById(Nullable<int> id)
         {
-            var textParameter = text != null ?
-                new ObjectParameter("text", text) :
-                new ObjectParameter("text", typeof(string));
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SplitWords1_Result>("[MangalDBNewEntities].[SplitWords1](@text)", textParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetKYCDetailsForDocumentById_Result>("GetKYCDetailsForDocumentById", idParameter);
         }
     }
 }

@@ -104,9 +104,8 @@
         <AssociationConnector Association="MangalDBNewModel.FK_TSchemeMaster_BasicDetails_Mst_Product" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_UserCategory" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_BasicDetails" Width="1.5" PointX="19.375" PointY="29.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocumentUpload" Width="1.5" PointX="21.375" PointY="30.125" />
-        <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocUploadDetails" Width="1.5" PointX="23.625" PointY="31.125" />
-        <AssociationConnector Association="MangalDBNewModel.FK_Trn_DocUploadDetails_Trn_DocumentUpload" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocumentUpload" Width="1.5" PointX="21.375" PointY="29.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocUploadDetails" Width="1.5" PointX="23.375" PointY="29.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

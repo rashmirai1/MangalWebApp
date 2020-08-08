@@ -84,6 +84,12 @@
     <Compile Include="Entity\Bharat_tbl_SentJVCustHistory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\GetKYCDetailsForDocumentById_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\GetKYCDetailsForDocument_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\ImageKyc.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>

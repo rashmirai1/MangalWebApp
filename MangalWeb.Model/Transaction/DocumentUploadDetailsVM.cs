@@ -11,6 +11,7 @@ namespace MangalWeb.Model.Transaction
     public class DocumentUploadDetailsVM
     {
         public int ID { get; set; }
+        public int KycId { get; set; }
         public int DocumentTypeId { get; set; }
         public int DocumentId { get; set; }
         public string DocumentTypeName { get; set; }
@@ -19,9 +20,12 @@ namespace MangalWeb.Model.Transaction
         [DataType(DataType.DateTime)]
         [Required(ErrorMessage = "Date is Required")]
         public DateTime? ExpiryDate { get; set; }
-        public string UploadDocName { get; set; }
+        public byte[] UploadDocName { get; set; }
         public string FileName { get; set; }
         public string FileExtension { get; set; }
         public HttpPostedFileBase UploadedFile { get; set; }
+        public int? VerifiedBy { get; set; }
+        public string Status { get; set; }
+        public string ReasonForRejection { get; set; }
     }
 }

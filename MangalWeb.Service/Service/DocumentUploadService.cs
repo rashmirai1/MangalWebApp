@@ -28,12 +28,17 @@ namespace MangalWeb.Service.Service
             return _documentUploadRepository.GetDocumentMasterById(id);
         }
 
+        public bool GetExpiryDate(int id)
+        {
+            return _documentUploadRepository.GetExpiryDate(id);
+        }
+
         public List<tblDocumentMaster> GetDocumentMasterList()
         {
             return _documentUploadRepository.GetDocumentMasterList();
         }
 
-        public List<TGLKYC_BasicDetails> GetKYCList()
+        public List<DocumentUploadViewModel> GetKYCList()
         {
             return _documentUploadRepository.GetKYCList();
         }
@@ -53,10 +58,10 @@ namespace MangalWeb.Service.Service
             _documentUploadRepository.SaveUpdateRecord(model);
         }
 
-        //public string getuploaddocuments(int id)
-        //{
-        //   //return _documentUploadRepository.getuploaddocuments(id);
-        //}
+        public Trn_DocUploadDetails GetUploadDocuments(int id)
+        {
+            return _documentUploadRepository.GetUploadDocuments(id);
+        }
 
         public void DeleteRecord(int id)
         {
@@ -67,6 +72,11 @@ namespace MangalWeb.Service.Service
         {
             var product = _documentUploadRepository.SetRecordinEdit(id);
             return product;
+        }
+
+        public DocumentUploadDetailsVM AddDocumentinSession(DocumentUploadDetailsVM documentUploadDetailsVM)
+        {
+            return _documentUploadRepository.AddDocumentinSession(documentUploadDetailsVM);
         }
 
     }
