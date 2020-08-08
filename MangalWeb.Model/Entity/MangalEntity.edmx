@@ -3665,7 +3665,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="BranchName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CompID" Type="Int32" Nullable="false" />
           <Property Name="BranchCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="BranchType" Type="Int16" Nullable="false" />
+          <Property Name="BranchType" Type="Int32" Nullable="false" />
           <Property Name="InceptionDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RentPeriodAgreed" Type="DateTime" Precision="3" />
           <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
