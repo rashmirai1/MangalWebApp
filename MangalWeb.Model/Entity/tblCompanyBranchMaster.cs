@@ -18,7 +18,7 @@ namespace MangalWeb.Model.Entity
         public string BranchName { get; set; }
         public int CompID { get; set; }
         public string BranchCode { get; set; }
-        public int BranchType { get; set; }
+        public short BranchType { get; set; }
         public System.DateTime InceptionDate { get; set; }
         public Nullable<System.DateTime> RentPeriodAgreed { get; set; }
         public string Address { get; set; }
@@ -34,7 +34,6 @@ namespace MangalWeb.Model.Entity
         public Nullable<int> RecordCreatedBy { get; set; }
         public Nullable<int> RecordUpdatedBy { get; set; }
     
-        public virtual Mst_BranchType Mst_BranchType { get; set; }
         public virtual Mst_PinCode Mst_PinCode { get; set; }
     }
 }

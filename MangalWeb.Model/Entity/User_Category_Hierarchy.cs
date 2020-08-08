@@ -10,10 +10,11 @@
 namespace MangalWeb.Model.Entity
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SplitWords1_Result
+    public partial class User_Category_Hierarchy
     {
-        public short pos { get; set; }
-        public string value { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
     }
 }
