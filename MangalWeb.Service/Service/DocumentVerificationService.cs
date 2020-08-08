@@ -22,7 +22,7 @@ namespace MangalWeb.Service.Service
             _documentVerificationRepository.SaveUpdateRecord(DocUploadViewModel);
         }
 
-        public List<Trn_DocumentUpload> GetDocumentUploadList()
+        public List<DocumentUploadViewModel> GetDocumentUploadList()
         {
             return _documentVerificationRepository.DocumentUploadList();
         }

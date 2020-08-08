@@ -1,5 +1,5 @@
-﻿@model IList<MangalWeb.Model.Entity.Trn_DocumentUpload>
-@using MangalWeb.Model.Entity
+﻿@model IList<MangalWeb.Model.Transaction.DocumentUploadViewModel>
+@using MangalWeb.Model.Transaction
 <div class="modal-content">
     <div class="modal-body" style="height:inherit; overflow:auto;">
         <div class="panel-body panel-no-padding" style="height:inherit; overflow:auto;">
@@ -13,9 +13,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (Trn_DocumentUpload item in Model)
+                        @foreach (DocumentUploadViewModel item in Model)
                         {
-                            <tr class="gradeX" style="cursor:pointer;" onclick='window.document.location="/DocumentVerification/GetDoumentUploadById?Id=@item.DocId"'>
+                            <tr class="gradeX" style="cursor:pointer;" onclick='window.document.location="/DocumentVerification/GetDoumentUploadById?Id=@item.ID"'>
                                 <td id="@item.KycId">@item.CustomerId</td>
                                 <td id="@item.TransactionNumber">@item.ApplicationNo</td>
                                 <td id="@item.DocDate">@item.LoanAccountNo</td>
