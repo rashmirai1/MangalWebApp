@@ -10,17 +10,17 @@
 namespace MangalWeb.Model.Entity
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class KycImageStore
+    public partial class GetDocumentUploadById_Result
     {
-        public int ImgId { get; set; }
-        public byte[] KycPhoto { get; set; }
-        public string Operation { get; set; }
-        public string Refno { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public string ImageName { get; set; }
-        public string ContentType { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public int KycId { get; set; }
+        public string CustomerId { get; set; }
+        public string ApplicationNo { get; set; }
+        public string LoanAccountNo { get; set; }
+        public string TransactionNumber { get; set; }
+        public int TransactionId { get; set; }
+        public int DocId { get; set; }
+        public Nullable<System.DateTime> DocDate { get; set; }
+        public string Comments { get; set; }
     }
 }

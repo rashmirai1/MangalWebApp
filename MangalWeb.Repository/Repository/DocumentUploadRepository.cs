@@ -2,6 +2,7 @@
 using MangalWeb.Model.Transaction;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -53,7 +54,7 @@ namespace MangalWeb.Repository.Repository
         public DocumentUploadViewModel GetCustomerById(int id)
         {
             //var tblkyc = _context.TGLKYC_BasicDetails.Where(x => x.KYCID == id).FirstOrDefault();
-            var tblkyc = _context.Database.SqlQuery<DocumentUploadViewModel>("GetKYCDetailsForDocumentById @id",id).FirstOrDefault();
+            var tblkyc = _context.Database.SqlQuery<DocumentUploadViewModel>("GetKYCDetailsForDocumentById @id",new SqlParameter("@id", id)).FirstOrDefault();
             var model = new DocumentUploadViewModel();
             model.CustomerId = tblkyc.CustomerId;
             model.ApplicationNo = tblkyc.ApplicationNo;

@@ -119,7 +119,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Property Name="KycPhoto" Type="image" />
           <Property Name="Operation" Type="varchar" MaxLength="100" />
           <Property Name="Refno" Type="varchar" MaxLength="100" />
+          <Property Name="ImageName" Type="varchar" MaxLength="100" />
+          <Property Name="ContentType" Type="varchar" MaxLength="50" />
           <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1134,6 +1137,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInwardForm_GoldDetails' does no
           <Property Name="NomineeMobileNo" Type="nvarchar" MaxLength="50" />
           <Property Name="NomineePanNo" Type="nvarchar" MaxLength="50" />
           <Property Name="NomineeAdharNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Distance" Type="nvarchar" MaxLength="50" />
+          <Property Name="PinCode" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.TGLKYC_DocumentDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1595,6 +1600,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
         </Association>
         <Function Name="generateFinancialYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetDocumentUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetDocumentUploadById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetKYCDetailsForDocument" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetKYCDetailsForDocumentById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -2470,6 +2478,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="Operation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Refno" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ImageName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="M_Words">
           <Key>
@@ -3271,6 +3282,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetDocumentUpload" ReturnType="Collection(MangalDBNewModel.GetDocumentUpload_Result)" />
+          <FunctionImport Name="GetDocumentUploadById" ReturnType="Collection(MangalDBNewModel.GetDocumentUploadById_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3981,6 +3995,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="NomineeMobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NomineePanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NomineeAdharNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Distance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PinCode" Type="Int32" />
         </EntityType>
         <EntityType Name="Trn_DocumentUpload">
           <Key>
@@ -4036,6 +4052,17 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
+        </ComplexType>
+        <ComplexType Name="GetDocumentUploadById_Result">
+          <Property Type="Int32" Name="KycId" Nullable="false" />
+          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TransactionNumber" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="TransactionId" Nullable="false" />
+          <Property Type="Int32" Name="DocId" Nullable="false" />
+          <Property Type="DateTime" Name="DocDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Comments" Nullable="false" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4146,6 +4173,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySetMapping Name="KycImageStores">
             <EntityTypeMapping TypeName="MangalDBNewModel.KycImageStore">
               <MappingFragment StoreEntitySet="KycImageStore">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
                 <ScalarProperty Name="ImgId" ColumnName="ImgId" />
                 <ScalarProperty Name="KycPhoto" ColumnName="KycPhoto" />
                 <ScalarProperty Name="Operation" ColumnName="Operation" />
@@ -5285,6 +5315,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySetMapping Name="TGLKYC_BasicDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
               <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
                 <ScalarProperty Name="NomineeAdharNo" ColumnName="NomineeAdharNo" />
                 <ScalarProperty Name="NomineePanNo" ColumnName="NomineePanNo" />
                 <ScalarProperty Name="NomineeMobileNo" ColumnName="NomineeMobileNo" />
@@ -5431,6 +5463,21 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
                 <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetDocumentUploadById" FunctionName="MangalDBNewModel.Store.GetDocumentUploadById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.GetDocumentUploadById_Result">
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
+                <ScalarProperty Name="TransactionNumber" ColumnName="TransactionNumber" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="DocId" ColumnName="DocId" />
+                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

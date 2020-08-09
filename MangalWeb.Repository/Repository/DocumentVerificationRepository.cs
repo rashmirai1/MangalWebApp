@@ -2,6 +2,7 @@
 using MangalWeb.Model.Transaction;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,27 +43,28 @@ namespace MangalWeb.Repository.Repository
         {
             DocumentUploadViewModel documentUploadViewModel = new DocumentUploadViewModel();
             //get document upload table
-            var docupload = _context.Trn_DocumentUpload.Where(x => x.KycId == id).FirstOrDefault();
+            //var docupload = _context.Trn_DocumentUpload.Where(x => x.KycId == id).FirstOrDefault();
+            var docupload = _context.Database.SqlQuery<DocumentUploadViewModel>("GetDocumentUploadById @id", new SqlParameter("@id", id)).FirstOrDefault();
             var docuploaddetails = _context.Trn_DocUploadDetails.Where(x => x.KycId == docupload.KycId).ToList();
             documentUploadViewModel = ToViewModelDocUpload(docupload, docuploaddetails);
             return documentUploadViewModel;
         }
 
         #region ToViewModelDocUpload
-        public DocumentUploadViewModel ToViewModelDocUpload(Trn_DocumentUpload docupload, List<Trn_DocUploadDetails> DocUploadTrnList)
+        public DocumentUploadViewModel ToViewModelDocUpload(DocumentUploadViewModel model, List<Trn_DocUploadDetails> DocUploadTrnList)
         {
-            var model = new DocumentUploadViewModel
-            {
-                KycId = docupload.KycId,
-                TransactionNumber = docupload.TransactionNumber,
-                DocDate = Convert.ToDateTime(docupload.DocDate).ToShortDateString(),
-                CustomerId = docupload.CustomerId,
-                ApplicationNo = docupload.ApplicationNo,
-                LoanAccountNo = docupload.LoanAccountNo,
-                TransactionId = docupload.TransactionId,
-                ID = docupload.DocId,
-                Comments = docupload.Comments
-            };
+            //var model = new DocumentUploadViewModel
+            //{
+            //    KycId = docupload.KycId,
+            //    TransactionNumber = docupload.TransactionNumber,
+            //    DocDate = Convert.ToDateTime(docupload.DocDate).ToShortDateString(),
+            //    CustomerId = docupload.CustomerId,
+            //    ApplicationNo = docupload.ApplicationNo,
+            //    LoanAccountNo = docupload.LoanAccountNo,
+            //    TransactionId = docupload.TransactionId,
+            //    ID = docupload.DocId,
+            //    Comments = docupload.Comments
+            //};
 
             List<DocumentUploadDetailsVM> DocTrnViewModelList = new List<DocumentUploadDetailsVM>();
             foreach (var c in DocUploadTrnList)
@@ -82,7 +84,6 @@ namespace MangalWeb.Repository.Repository
                     Status=c.Status,
                     VerifiedBy=c.VerifiedBy,
                     ReasonForRejection=c.ReasonForRejection
-
                 };
                 DocTrnViewModelList.Add(TrnViewModel);
             }
