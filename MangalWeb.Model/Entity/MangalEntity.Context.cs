@@ -111,11 +111,11 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<Mst_ProductRate> Mst_ProductRate { get; set; }
         public virtual DbSet<Mst_ProductRateDetails> Mst_ProductRateDetails { get; set; }
         public virtual DbSet<tblItemMaster> tblItemMasters { get; set; }
-        public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<Trn_DocumentUpload> Trn_DocumentUpload { get; set; }
         public virtual DbSet<Trn_DocUploadDetails> Trn_DocUploadDetails { get; set; }
         public virtual DbSet<User_Category> User_Category { get; set; }
         public virtual DbSet<tbl_UserCategory> tbl_UserCategory { get; set; }
+        public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

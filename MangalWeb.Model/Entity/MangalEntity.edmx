@@ -3342,7 +3342,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <FunctionImport Name="SplitWords1" IsComposable="true" ReturnType="Collection(MangalDBNewModel.SplitWords1_Result)">
           <Parameter Name="text" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
           <EntitySet Name="Trn_DocumentUpload" EntityType="MangalDBNewModel.Trn_DocumentUpload" />
           <EntitySet Name="Trn_DocUploadDetails" EntityType="MangalDBNewModel.Trn_DocUploadDetails" />
           <EntitySet Name="User_Category" EntityType="MangalDBNewModel.User_Category" />
@@ -3355,6 +3354,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
           </AssociationSet>
           <EntitySet Name="tbl_UserCategory" EntityType="MangalDBNewModel.tbl_UserCategory" />
+          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3918,6 +3918,85 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Type="Int16" Name="pos" Nullable="false" />
           <Property Type="String" Name="value" Nullable="true" MaxLength="8000" />
         </ComplexType>
+        <EntityType Name="Trn_DocumentUpload">
+          <Key>
+            <PropertyRef Name="DocId" />
+          </Key>
+          <Property Name="DocId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="Int32" Nullable="false" />
+          <Property Name="TransactionNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DocDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="KycId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LoanAccountNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BranchId" Type="Int32" />
+          <Property Name="FinancialYearId" Type="Int32" />
+          <Property Name="CompId" Type="Int32" />
+          <Property Name="RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="RecordCreatedBy" Type="Int32" />
+          <Property Name="RecordUpdatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Trn_DocUploadDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KycId" Type="Int32" Nullable="false" />
+          <Property Name="DocumentTypeId" Type="Int32" Nullable="false" />
+          <Property Name="DocumentId" Type="Int32" Nullable="false" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ContentType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UploadFile" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="VerifiedBy" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ReasonForRejection" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="User_Category">
+          <Key>
+            <PropertyRef Name="usercateid" />
+          </Key>
+          <Property Name="usercateid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="hierarchyid" Type="Int32" />
+          <Property Name="status" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_tblCompanyBranchMaster_Mst_PinCode">
+          <End Type="MangalDBNewModel.Mst_PinCode" Role="Mst_PinCode" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tblCompanyBranchMaster" Role="tblCompanyBranchMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_PinCode">
+              <PropertyRef Name="Pc_Id" />
+            </Principal>
+            <Dependent Role="tblCompanyBranchMaster">
+              <PropertyRef Name="Pincode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TSchemeMaster_BasicDetails_Mst_Product">
+          <End Type="MangalDBNewModel.Mst_Product" Role="Mst_Product" Multiplicity="1" />
+          <End Type="MangalDBNewModel.TSchemeMaster_BasicDetails" Role="TSchemeMaster_BasicDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TSchemeMaster_BasicDetails">
+              <PropertyRef Name="Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_UserCategory">
+          <Key>
+            <PropertyRef Name="refid" />
+          </Key>
+          <Property Name="refid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Organhieraechyid" Type="Int32" />
+          <Property Name="status1" Type="Boolean" />
+        </EntityType>
         <EntityType Name="TGLKYC_BasicDetails">
           <Key>
             <PropertyRef Name="KYCID" />
@@ -4001,85 +4080,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="Distance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PinCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Trn_DocumentUpload">
-          <Key>
-            <PropertyRef Name="DocId" />
-          </Key>
-          <Property Name="DocId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TransactionId" Type="Int32" Nullable="false" />
-          <Property Name="TransactionNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="DocDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="KycId" Type="Int32" Nullable="false" />
-          <Property Name="CustomerId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LoanAccountNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="BranchId" Type="Int32" />
-          <Property Name="FinancialYearId" Type="Int32" />
-          <Property Name="CompId" Type="Int32" />
-          <Property Name="RecordCreated" Type="DateTime" Precision="3" />
-          <Property Name="RecordUpdated" Type="DateTime" Precision="3" />
-          <Property Name="RecordCreatedBy" Type="Int32" />
-          <Property Name="RecordUpdatedBy" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Trn_DocUploadDetails">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="KycId" Type="Int32" Nullable="false" />
-          <Property Name="DocumentTypeId" Type="Int32" Nullable="false" />
-          <Property Name="DocumentId" Type="Int32" Nullable="false" />
-          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
-          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ContentType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="UploadFile" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="VerifiedBy" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ReasonForRejection" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="User_Category">
-          <Key>
-            <PropertyRef Name="usercateid" />
-          </Key>
-          <Property Name="usercateid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="hierarchyid" Type="Int32" />
-          <Property Name="status" Type="Int32" />
-        </EntityType>
-        <Association Name="FK_tblCompanyBranchMaster_Mst_PinCode">
-          <End Type="MangalDBNewModel.Mst_PinCode" Role="Mst_PinCode" Multiplicity="1" />
-          <End Type="MangalDBNewModel.tblCompanyBranchMaster" Role="tblCompanyBranchMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Mst_PinCode">
-              <PropertyRef Name="Pc_Id" />
-            </Principal>
-            <Dependent Role="tblCompanyBranchMaster">
-              <PropertyRef Name="Pincode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TSchemeMaster_BasicDetails_Mst_Product">
-          <End Type="MangalDBNewModel.Mst_Product" Role="Mst_Product" Multiplicity="1" />
-          <End Type="MangalDBNewModel.TSchemeMaster_BasicDetails" Role="TSchemeMaster_BasicDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Mst_Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TSchemeMaster_BasicDetails">
-              <PropertyRef Name="Product" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="tbl_UserCategory">
-          <Key>
-            <PropertyRef Name="refid" />
-          </Key>
-          <Property Name="refid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Organhieraechyid" Type="Int32" />
-          <Property Name="status1" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5329,6 +5329,65 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Trn_DocumentUpload">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Trn_DocumentUpload">
+              <MappingFragment StoreEntitySet="Trn_DocumentUpload">
+                <ScalarProperty Name="RecordUpdatedBy" ColumnName="RecordUpdatedBy" />
+                <ScalarProperty Name="RecordCreatedBy" ColumnName="RecordCreatedBy" />
+                <ScalarProperty Name="RecordUpdated" ColumnName="RecordUpdated" />
+                <ScalarProperty Name="RecordCreated" ColumnName="RecordCreated" />
+                <ScalarProperty Name="CompId" ColumnName="CompId" />
+                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
+                <ScalarProperty Name="TransactionNumber" ColumnName="TransactionNumber" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="DocId" ColumnName="DocId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trn_DocUploadDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Trn_DocUploadDetails">
+              <MappingFragment StoreEntitySet="Trn_DocUploadDetails">
+                <ScalarProperty Name="ReasonForRejection" ColumnName="ReasonForRejection" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="VerifiedBy" ColumnName="VerifiedBy" />
+                <ScalarProperty Name="UploadFile" ColumnName="UploadFile" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
+                <ScalarProperty Name="DocumentTypeId" ColumnName="DocumentTypeId" />
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Category">
+            <EntityTypeMapping TypeName="MangalDBNewModel.User_Category">
+              <MappingFragment StoreEntitySet="User_Category">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="hierarchyid" ColumnName="hierarchyid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="usercateid" ColumnName="usercateid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_UserCategory">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_UserCategory">
+              <MappingFragment StoreEntitySet="tbl_UserCategory">
+                <ScalarProperty Name="status1" ColumnName="status1" />
+                <ScalarProperty Name="Organhieraechyid" ColumnName="Organhieraechyid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="refid" ColumnName="refid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TGLKYC_BasicDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
               <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
@@ -5411,65 +5470,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
                 <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="KYCID" ColumnName="KYCID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Trn_DocumentUpload">
-            <EntityTypeMapping TypeName="MangalDBNewModel.Trn_DocumentUpload">
-              <MappingFragment StoreEntitySet="Trn_DocumentUpload">
-                <ScalarProperty Name="RecordUpdatedBy" ColumnName="RecordUpdatedBy" />
-                <ScalarProperty Name="RecordCreatedBy" ColumnName="RecordCreatedBy" />
-                <ScalarProperty Name="RecordUpdated" ColumnName="RecordUpdated" />
-                <ScalarProperty Name="RecordCreated" ColumnName="RecordCreated" />
-                <ScalarProperty Name="CompId" ColumnName="CompId" />
-                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
-                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
-                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="KycId" ColumnName="KycId" />
-                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
-                <ScalarProperty Name="TransactionNumber" ColumnName="TransactionNumber" />
-                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
-                <ScalarProperty Name="DocId" ColumnName="DocId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Trn_DocUploadDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.Trn_DocUploadDetails">
-              <MappingFragment StoreEntitySet="Trn_DocUploadDetails">
-                <ScalarProperty Name="ReasonForRejection" ColumnName="ReasonForRejection" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="VerifiedBy" ColumnName="VerifiedBy" />
-                <ScalarProperty Name="UploadFile" ColumnName="UploadFile" />
-                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
-                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
-                <ScalarProperty Name="DocumentTypeId" ColumnName="DocumentTypeId" />
-                <ScalarProperty Name="KycId" ColumnName="KycId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="User_Category">
-            <EntityTypeMapping TypeName="MangalDBNewModel.User_Category">
-              <MappingFragment StoreEntitySet="User_Category">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="hierarchyid" ColumnName="hierarchyid" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="usercateid" ColumnName="usercateid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_UserCategory">
-            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_UserCategory">
-              <MappingFragment StoreEntitySet="tbl_UserCategory">
-                <ScalarProperty Name="status1" ColumnName="status1" />
-                <ScalarProperty Name="Organhieraechyid" ColumnName="Organhieraechyid" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="refid" ColumnName="refid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
