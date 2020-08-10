@@ -1138,7 +1138,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInwardForm_GoldDetails' does no
           <Property Name="NomineePanNo" Type="nvarchar" MaxLength="50" />
           <Property Name="NomineeAdharNo" Type="nvarchar" MaxLength="50" />
           <Property Name="Distance" Type="nvarchar" MaxLength="50" />
-          <Property Name="PinCode" Type="int" />
+          <Property Name="PinCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Area" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.TGLKYC_DocumentDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1324,6 +1325,15 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="SID" Type="int" />
           <Property Name="NoofDefaultMonths" Type="int" />
           <Property Name="EffROI" Type="decimal" Precision="11" Scale="2" />
+        </EntityType>
+        <EntityType Name="User_Category">
+          <Key>
+            <PropertyRef Name="usercateid" />
+          </Key>
+          <Property Name="usercateid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+          <Property Name="hierarchyid" Type="int" />
+          <Property Name="status" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.UserDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1598,14 +1608,35 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="generateFinancialYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetDocumentUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetDocumentUploadById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id" Type="int" Mode="In" />
+        <Function Name="fnNumToWords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="Number" Type="numeric" Mode="In" />
+          <Parameter Name="CPaise" Type="char" Mode="In" />
         </Function>
-        <Function Name="GetKYCDetailsForDocument" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetKYCDetailsForDocumentById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="id" Type="int" Mode="In" />
+        <Function Name="generateFinancialYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="NumberSuffix" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+          <Parameter Name="val" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SplitValue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="String" Type="varchar" Mode="In" />
+          <Parameter Name="Delimiter" Type="char" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="items" Type="varchar" MaxLength="8000" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="SplitWords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="text" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="pos" Type="smallint" Nullable="false" />
+                <Property Name="value" Type="varchar" MaxLength="8000" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
         </Function>
         <EntityContainer Name="MangalDBNewModelStoreContainer">
           <EntitySet Name="KycImageStore" EntityType="Self.KycImageStore" Schema="dbo" store:Type="Tables" />
@@ -1647,6 +1678,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySet Name="Trn_DocumentUpload" EntityType="Self.Trn_DocumentUpload" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trn_DocUploadDetails" EntityType="Self.Trn_DocUploadDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TSchemeMaster_BasicDetails" EntityType="Self.TSchemeMaster_BasicDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Category" EntityType="Self.User_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bharat_tbl_SentJVCustHistory" EntityType="Self.Bharat_tbl_SentJVCustHistory" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Bharat_tbl_SentJVCustHistory].[SentCustJVID] AS [SentCustJVID], 
@@ -3018,6 +3050,44 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="CreatedDate" Type="DateTime" Precision="0" />
           <Property Name="isActive" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="TSchemeMaster_BasicDetails">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" />
+          <Property Name="SchemeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SchemeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MinLoanAmt" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Tenure" Type="Int32" />
+          <Property Name="MaxLoanAmt" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Ltv" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="CalMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ROI" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="ProChargeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EMI" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ProCharge" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="PenalInterest" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="CMPId" Type="Int32" />
+          <Property Name="BranchId" Type="Int32" />
+          <Property Name="FYId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
+          <Property Name="isActive" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AmtLmtTo" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="ServiceTax" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="Product" Type="Int32" Nullable="false" />
+          <Property Name="MaxTenure" Type="Int32" Nullable="false" />
+          <Property Name="MaxLtv" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="MaxRoi" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="GracePeriod" Type="Int32" />
+          <Property Name="EffectiveRoiPerc" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="LockInPeriod" Type="Int32" />
+          <NavigationProperty Name="Mst_Product" Relationship="MangalDBNewModel.FK_TSchemeMaster_BasicDetails_Mst_Product" FromRole="TSchemeMaster_BasicDetails" ToRole="Mst_Product" />
+        </EntityType>
         <EntityType Name="TSchemeMaster_EffectiveROI">
           <Key>
             <PropertyRef Name="ROIID" />
@@ -3170,6 +3240,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySet Name="TGLOutwardForm_DocDetails" EntityType="Self.TGLOutwardForm_DocDetails" />
           <EntitySet Name="TGLOutwardForm_GoldDetails" EntityType="Self.TGLOutwardForm_GoldDetails" />
           <EntitySet Name="TGLSmsHistories" EntityType="Self.TGLSmsHistory" />
+          <EntitySet Name="TSchemeMaster_BasicDetails" EntityType="Self.TSchemeMaster_BasicDetails" />
           <EntitySet Name="TSchemeMaster_EffectiveROI" EntityType="Self.TSchemeMaster_EffectiveROI" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
           <EntitySet Name="UserFormAuthentications" EntityType="Self.UserFormAuthentication" />
@@ -3263,7 +3334,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             <End Role="Mst_Product" EntitySet="Mst_Product" />
             <End Role="tblItemMaster" EntitySet="tblItemMasters" />
           </AssociationSet>
-          <EntitySet Name="TSchemeMaster_BasicDetails" EntityType="MangalDBNewModel.TSchemeMaster_BasicDetails" />
+          <FunctionImport Name="generateFinancialYear" />
+          <FunctionImport Name="SplitValue1" IsComposable="true" ReturnType="Collection(String)">
+            <Parameter Name="String" Mode="In" Type="String" />
+            <Parameter Name="Delimiter" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SplitWords1" IsComposable="true" ReturnType="Collection(MangalDBNewModel.SplitWords1_Result)">
+          <Parameter Name="text" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
+          <EntitySet Name="Trn_DocumentUpload" EntityType="MangalDBNewModel.Trn_DocumentUpload" />
+          <EntitySet Name="Trn_DocUploadDetails" EntityType="MangalDBNewModel.Trn_DocUploadDetails" />
+          <EntitySet Name="User_Category" EntityType="MangalDBNewModel.User_Category" />
           <AssociationSet Name="FK_tblCompanyBranchMaster_Mst_PinCode" Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_PinCode">
             <End Role="Mst_PinCode" EntitySet="Mst_PinCode" />
             <End Role="tblCompanyBranchMaster" EntitySet="tblCompanyBranchMasters" />
@@ -3273,18 +3355,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
           </AssociationSet>
           <EntitySet Name="tbl_UserCategory" EntityType="MangalDBNewModel.tbl_UserCategory" />
-          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
-          <EntitySet Name="Trn_DocumentUpload" EntityType="MangalDBNewModel.Trn_DocumentUpload" />
-          <EntitySet Name="Trn_DocUploadDetails" EntityType="MangalDBNewModel.Trn_DocUploadDetails" />
-          <FunctionImport Name="generateFinancialYear" />
-          <FunctionImport Name="GetKYCDetailsForDocument" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForDocument_Result)" />
-          <FunctionImport Name="GetKYCDetailsForDocumentById" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForDocumentById_Result)">
-          <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetDocumentUpload" ReturnType="Collection(MangalDBNewModel.GetDocumentUpload_Result)" />
-          <FunctionImport Name="GetDocumentUploadById" ReturnType="Collection(MangalDBNewModel.GetDocumentUploadById_Result)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3844,77 +3914,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="TSchemeMaster_BasicDetails">
-          <Key>
-            <PropertyRef Name="SID" />
-          </Key>
-          <Property Name="SID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SchemeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SchemeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MinLoanAmt" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Tenure" Type="Int32" />
-          <Property Name="MaxLoanAmt" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Ltv" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="CalMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ROI" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="ProChargeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EMI" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ProCharge" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="PenalInterest" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="CMPId" Type="Int32" />
-          <Property Name="BranchId" Type="Int32" />
-          <Property Name="FYId" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <Property Name="DeletedBy" Type="Int32" />
-          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
-          <Property Name="isActive" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AmtLmtTo" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="ServiceTax" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="Product" Type="Int32" Nullable="false" />
-          <Property Name="MaxTenure" Type="Int32" Nullable="false" />
-          <Property Name="MaxLtv" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="MaxRoi" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="GracePeriod" Type="Int32" />
-          <Property Name="EffectiveRoiPerc" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="LockInPeriod" Type="Int32" />
-          <NavigationProperty Name="Mst_Product" Relationship="MangalDBNewModel.FK_TSchemeMaster_BasicDetails_Mst_Product" FromRole="TSchemeMaster_BasicDetails" ToRole="Mst_Product" />
-        </EntityType>
-        <Association Name="FK_tblCompanyBranchMaster_Mst_PinCode">
-          <End Type="MangalDBNewModel.Mst_PinCode" Role="Mst_PinCode" Multiplicity="1" />
-          <End Type="MangalDBNewModel.tblCompanyBranchMaster" Role="tblCompanyBranchMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Mst_PinCode">
-              <PropertyRef Name="Pc_Id" />
-            </Principal>
-            <Dependent Role="tblCompanyBranchMaster">
-              <PropertyRef Name="Pincode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TSchemeMaster_BasicDetails_Mst_Product">
-          <End Type="MangalDBNewModel.Mst_Product" Role="Mst_Product" Multiplicity="1" />
-          <End Type="MangalDBNewModel.TSchemeMaster_BasicDetails" Role="TSchemeMaster_BasicDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Mst_Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TSchemeMaster_BasicDetails">
-              <PropertyRef Name="Product" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="tbl_UserCategory">
-          <Key>
-            <PropertyRef Name="refid" />
-          </Key>
-          <Property Name="refid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Organhieraechyid" Type="Int32" />
-          <Property Name="status1" Type="Boolean" />
-        </EntityType>
+        <ComplexType Name="SplitWords1_Result">
+          <Property Type="Int16" Name="pos" Nullable="false" />
+          <Property Type="String" Name="value" Nullable="true" MaxLength="8000" />
+        </ComplexType>
         <EntityType Name="TGLKYC_BasicDetails">
           <Key>
             <PropertyRef Name="KYCID" />
@@ -3996,7 +3999,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="NomineePanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NomineeAdharNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Distance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PinCode" Type="Int32" />
+          <Property Name="PinCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Trn_DocumentUpload">
           <Key>
@@ -4035,35 +4039,48 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ReasonForRejection" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
-        <ComplexType Name="GetKYCDetailsForDocument_Result">
-          <Property Type="Int32" Name="KycId" Nullable="false" />
-          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
-        </ComplexType>
-        <ComplexType Name="GetKYCDetailsForDocumentById_Result">
-          <Property Type="Int32" Name="KycId" Nullable="false" />
-          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
-        </ComplexType>
-        <ComplexType Name="GetDocumentUpload_Result">
-          <Property Type="Int32" Name="KycId" Nullable="false" />
-          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
-        </ComplexType>
-        <ComplexType Name="GetDocumentUploadById_Result">
-          <Property Type="Int32" Name="KycId" Nullable="false" />
-          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
-          <Property Type="String" Name="TransactionNumber" Nullable="false" MaxLength="20" />
-          <Property Type="Int32" Name="TransactionId" Nullable="false" />
-          <Property Type="Int32" Name="DocId" Nullable="false" />
-          <Property Type="DateTime" Name="DocDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="Comments" Nullable="false" MaxLength="100" />
-        </ComplexType>
+        <EntityType Name="User_Category">
+          <Key>
+            <PropertyRef Name="usercateid" />
+          </Key>
+          <Property Name="usercateid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="hierarchyid" Type="Int32" />
+          <Property Name="status" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_tblCompanyBranchMaster_Mst_PinCode">
+          <End Type="MangalDBNewModel.Mst_PinCode" Role="Mst_PinCode" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tblCompanyBranchMaster" Role="tblCompanyBranchMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_PinCode">
+              <PropertyRef Name="Pc_Id" />
+            </Principal>
+            <Dependent Role="tblCompanyBranchMaster">
+              <PropertyRef Name="Pincode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TSchemeMaster_BasicDetails_Mst_Product">
+          <End Type="MangalDBNewModel.Mst_Product" Role="Mst_Product" Multiplicity="1" />
+          <End Type="MangalDBNewModel.TSchemeMaster_BasicDetails" Role="TSchemeMaster_BasicDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TSchemeMaster_BasicDetails">
+              <PropertyRef Name="Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_UserCategory">
+          <Key>
+            <PropertyRef Name="refid" />
+          </Key>
+          <Property Name="refid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Organhieraechyid" Type="Int32" />
+          <Property Name="status1" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4740,6 +4757,44 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TSchemeMaster_BasicDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TSchemeMaster_BasicDetails">
+              <MappingFragment StoreEntitySet="TSchemeMaster_BasicDetails">
+                <ScalarProperty Name="LockInPeriod" ColumnName="LockInPeriod" />
+                <ScalarProperty Name="EffectiveRoiPerc" ColumnName="EffectiveRoiPerc" />
+                <ScalarProperty Name="GracePeriod" ColumnName="GracePeriod" />
+                <ScalarProperty Name="MaxRoi" ColumnName="MaxRoi" />
+                <ScalarProperty Name="MaxLtv" ColumnName="MaxLtv" />
+                <ScalarProperty Name="MaxTenure" ColumnName="MaxTenure" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="SchemeName" ColumnName="SchemeName" />
+                <ScalarProperty Name="SchemeType" ColumnName="SchemeType" />
+                <ScalarProperty Name="MinLoanAmt" ColumnName="MinLoanAmt" />
+                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
+                <ScalarProperty Name="MaxLoanAmt" ColumnName="MaxLoanAmt" />
+                <ScalarProperty Name="Ltv" ColumnName="Ltv" />
+                <ScalarProperty Name="CalMethod" ColumnName="CalMethod" />
+                <ScalarProperty Name="ROI" ColumnName="ROI" />
+                <ScalarProperty Name="ProChargeType" ColumnName="ProChargeType" />
+                <ScalarProperty Name="EMI" ColumnName="EMI" />
+                <ScalarProperty Name="ProCharge" ColumnName="ProCharge" />
+                <ScalarProperty Name="PenalInterest" ColumnName="PenalInterest" />
+                <ScalarProperty Name="CMPId" ColumnName="CMPId" />
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="FYId" ColumnName="FYId" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="AmtLmtTo" ColumnName="AmtLmtTo" />
+                <ScalarProperty Name="ServiceTax" ColumnName="ServiceTax" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TSchemeMaster_EffectiveROI">
             <EntityTypeMapping TypeName="MangalDBNewModel.TSchemeMaster_EffectiveROI">
               <MappingFragment StoreEntitySet="TSchemeMaster_EffectiveROI">
@@ -5264,57 +5319,20 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TSchemeMaster_BasicDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.TSchemeMaster_BasicDetails">
-              <MappingFragment StoreEntitySet="TSchemeMaster_BasicDetails">
-                <ScalarProperty Name="LockInPeriod" ColumnName="LockInPeriod" />
-                <ScalarProperty Name="EffectiveRoiPerc" ColumnName="EffectiveRoiPerc" />
-                <ScalarProperty Name="GracePeriod" ColumnName="GracePeriod" />
-                <ScalarProperty Name="MaxRoi" ColumnName="MaxRoi" />
-                <ScalarProperty Name="MaxLtv" ColumnName="MaxLtv" />
-                <ScalarProperty Name="MaxTenure" ColumnName="MaxTenure" />
-                <ScalarProperty Name="Product" ColumnName="Product" />
-                <ScalarProperty Name="ServiceTax" ColumnName="ServiceTax" />
-                <ScalarProperty Name="AmtLmtTo" ColumnName="AmtLmtTo" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="FYId" ColumnName="FYId" />
-                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
-                <ScalarProperty Name="CMPId" ColumnName="CMPId" />
-                <ScalarProperty Name="PenalInterest" ColumnName="PenalInterest" />
-                <ScalarProperty Name="ProCharge" ColumnName="ProCharge" />
-                <ScalarProperty Name="EMI" ColumnName="EMI" />
-                <ScalarProperty Name="ProChargeType" ColumnName="ProChargeType" />
-                <ScalarProperty Name="ROI" ColumnName="ROI" />
-                <ScalarProperty Name="CalMethod" ColumnName="CalMethod" />
-                <ScalarProperty Name="Ltv" ColumnName="Ltv" />
-                <ScalarProperty Name="MaxLoanAmt" ColumnName="MaxLoanAmt" />
-                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
-                <ScalarProperty Name="MinLoanAmt" ColumnName="MinLoanAmt" />
-                <ScalarProperty Name="SchemeType" ColumnName="SchemeType" />
-                <ScalarProperty Name="SchemeName" ColumnName="SchemeName" />
-                <ScalarProperty Name="SID" ColumnName="SID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_UserCategory">
-            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_UserCategory">
-              <MappingFragment StoreEntitySet="tbl_UserCategory">
-                <ScalarProperty Name="status1" ColumnName="status1" />
-                <ScalarProperty Name="Organhieraechyid" ColumnName="Organhieraechyid" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="refid" ColumnName="refid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="generateFinancialYear" FunctionName="MangalDBNewModel.Store.generateFinancialYear" />
+          <FunctionImportMapping FunctionImportName="SplitValue1" FunctionName="MangalDBNewModel.Store.SplitValue" />
+          <FunctionImportMapping FunctionImportName="SplitWords1" FunctionName="MangalDBNewModel.Store.SplitWords">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.SplitWords1_Result">
+                <ScalarProperty Name="pos" ColumnName="pos" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="TGLKYC_BasicDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
               <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
+                <ScalarProperty Name="Area" ColumnName="Area" />
                 <ScalarProperty Name="PinCode" ColumnName="PinCode" />
                 <ScalarProperty Name="Distance" ColumnName="Distance" />
                 <ScalarProperty Name="NomineeAdharNo" ColumnName="NomineeAdharNo" />
@@ -5435,52 +5453,26 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="generateFinancialYear" FunctionName="MangalDBNewModel.Store.generateFinancialYear" />
-          <FunctionImportMapping FunctionImportName="GetKYCDetailsForDocument" FunctionName="MangalDBNewModel.Store.GetKYCDetailsForDocument">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MangalDBNewModel.GetKYCDetailsForDocument_Result">
-                <ScalarProperty Name="KycId" ColumnName="KycId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
-                <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetKYCDetailsForDocumentById" FunctionName="MangalDBNewModel.Store.GetKYCDetailsForDocumentById">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MangalDBNewModel.GetKYCDetailsForDocumentById_Result">
-                <ScalarProperty Name="KycId" ColumnName="KycId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
-                <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetDocumentUpload" FunctionName="MangalDBNewModel.Store.GetDocumentUpload">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MangalDBNewModel.GetDocumentUpload_Result">
-                <ScalarProperty Name="KycId" ColumnName="KycId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
-                <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetDocumentUploadById" FunctionName="MangalDBNewModel.Store.GetDocumentUploadById">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MangalDBNewModel.GetDocumentUploadById_Result">
-                <ScalarProperty Name="KycId" ColumnName="KycId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
-                <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
-                <ScalarProperty Name="TransactionNumber" ColumnName="TransactionNumber" />
-                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
-                <ScalarProperty Name="DocId" ColumnName="DocId" />
-                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <EntitySetMapping Name="User_Category">
+            <EntityTypeMapping TypeName="MangalDBNewModel.User_Category">
+              <MappingFragment StoreEntitySet="User_Category">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="hierarchyid" ColumnName="hierarchyid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="usercateid" ColumnName="usercateid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_UserCategory">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_UserCategory">
+              <MappingFragment StoreEntitySet="tbl_UserCategory">
+                <ScalarProperty Name="status1" ColumnName="status1" />
+                <ScalarProperty Name="Organhieraechyid" ColumnName="Organhieraechyid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="refid" ColumnName="refid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

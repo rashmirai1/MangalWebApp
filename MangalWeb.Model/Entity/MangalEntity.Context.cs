@@ -68,6 +68,7 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLOutwardForm_DocDetails> TGLOutwardForm_DocDetails { get; set; }
         public virtual DbSet<TGLOutwardForm_GoldDetails> TGLOutwardForm_GoldDetails { get; set; }
         public virtual DbSet<TGLSmsHistory> TGLSmsHistories { get; set; }
+        public virtual DbSet<TSchemeMaster_BasicDetails> TSchemeMaster_BasicDetails { get; set; }
         public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<UserFormAuthentication> UserFormAuthentications { get; set; }
@@ -110,11 +111,11 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<Mst_ProductRate> Mst_ProductRate { get; set; }
         public virtual DbSet<Mst_ProductRateDetails> Mst_ProductRateDetails { get; set; }
         public virtual DbSet<tblItemMaster> tblItemMasters { get; set; }
-        public virtual DbSet<TSchemeMaster_BasicDetails> TSchemeMaster_BasicDetails { get; set; }
-        public virtual DbSet<tbl_UserCategory> tbl_UserCategory { get; set; }
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<Trn_DocumentUpload> Trn_DocumentUpload { get; set; }
         public virtual DbSet<Trn_DocUploadDetails> Trn_DocUploadDetails { get; set; }
+        public virtual DbSet<User_Category> User_Category { get; set; }
+        public virtual DbSet<tbl_UserCategory> tbl_UserCategory { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -145,32 +146,28 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("generateFinancialYear");
         }
     
-        public virtual ObjectResult<GetKYCDetailsForDocument_Result> GetKYCDetailsForDocument()
+        [DbFunction("MangalDBNewEntities", "SplitValue1")]
+        public virtual IQueryable<string> SplitValue1(string @string, string delimiter)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetKYCDetailsForDocument_Result>("GetKYCDetailsForDocument");
+            var stringParameter = @string != null ?
+                new ObjectParameter("String", @string) :
+                new ObjectParameter("String", typeof(string));
+    
+            var delimiterParameter = delimiter != null ?
+                new ObjectParameter("Delimiter", delimiter) :
+                new ObjectParameter("Delimiter", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<string>("[MangalDBNewEntities].[SplitValue1](@String, @Delimiter)", stringParameter, delimiterParameter);
         }
     
-        public virtual ObjectResult<GetKYCDetailsForDocumentById_Result> GetKYCDetailsForDocumentById(Nullable<int> id)
+        [DbFunction("MangalDBNewEntities", "SplitWords1")]
+        public virtual IQueryable<SplitWords1_Result> SplitWords1(string text)
         {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetKYCDetailsForDocumentById_Result>("GetKYCDetailsForDocumentById", idParameter);
-        }
-    
-        public virtual ObjectResult<GetDocumentUpload_Result> GetDocumentUpload()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDocumentUpload_Result>("GetDocumentUpload");
-        }
-    
-        public virtual ObjectResult<GetDocumentUploadById_Result> GetDocumentUploadById(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDocumentUploadById_Result>("GetDocumentUploadById", idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SplitWords1_Result>("[MangalDBNewEntities].[SplitWords1](@text)", textParameter);
         }
     }
 }

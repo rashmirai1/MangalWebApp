@@ -1,6 +1,5 @@
 ﻿using MangalWeb.Model.Masters;
 using MangalWeb.Service.Service;
-using MangalWebProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

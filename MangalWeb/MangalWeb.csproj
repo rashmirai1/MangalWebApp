@@ -133,6 +133,7 @@
     <Compile Include="Controllers\FinancialYearController.cs" />
     <Compile Include="Controllers\GSTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KYCController.cs" />
     <Compile Include="Controllers\OrnamentController.cs" />
     <Compile Include="Controllers\PenaltySlabController.cs" />
     <Compile Include="Controllers\PincodeController.cs" />
@@ -2076,20 +2077,20 @@
     <Content Include="Views\PenaltySlab\PenaltySlab.cshtml" />
     <Content Include="Views\PenaltySlab\_PenaltySlablist.cshtml" />
     <Content Include="Views\Ornament\Ornament.cshtml" />
-    <Content Include="Views\Branch\Branch.cshtml" />
-    <Content Include="Views\Branch\_BranchList.cshtml" />
-    <Content Include="Views\Deviation\Deviation.cshtml" />
-    <Content Include="Views\Scheme\Scheme.cshtml" />
-    <Content Include="Views\Scheme\_SchemeList.cshtml" />
+    <Content Include="Views\KYC\Index.cshtml" />
     <Content Include="Views\DocumentUpload\DocumentUpload.cshtml" />
     <Content Include="Views\DocumentUpload\_CustomerDetails.cshtml" />
     <Content Include="Views\DocumentUpload\_DocumentUploadList.cshtml" />
     <Content Include="Views\DocumentVerification\DocumentVerification.cshtml" />
     <Content Include="Views\DocumentVerification\_CustomerDetails.cshtml" />
+    <Content Include="Views\Deviation\Deviation.cshtml" />
+    <Content Include="Views\Scheme\Scheme.cshtml" />
+    <Content Include="Views\Scheme\_SchemeList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Branch\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -2107,10 +2108,6 @@
     <ProjectReference Include="..\MangalWeb.Model\MangalWeb.Model.csproj">
       <Project>{c7a91fb3-5143-44e7-a749-bea4cabed72e}</Project>
       <Name>MangalWeb.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MangalWeb.Repository\MangalWeb.Repository.csproj">
-      <Project>{72487520-BC13-4BE8-8AC8-4A28442E59BD}</Project>
-      <Name>MangalWeb.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\MangalWeb.Service\MangalWeb.Service.csproj">
       <Project>{56467b2f-2ec9-4b07-986f-a0fb7f3efad5}</Project>

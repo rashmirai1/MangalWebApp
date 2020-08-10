@@ -84,18 +84,10 @@
     <Compile Include="Entity\Bharat_tbl_SentJVCustHistory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\GetDocumentUploadById_Result.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\GetDocumentUpload_Result.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\GetKYCDetailsForDocumentById_Result.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\GetKYCDetailsForDocument_Result.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Entity\GetDocumentUploadById_Result.cs" />
+    <Compile Include="Entity\GetDocumentUpload_Result.cs" />
+    <Compile Include="Entity\GetKYCDetailsForDocumentById_Result.cs" />
+    <Compile Include="Entity\GetKYCDetailsForDocument_Result.cs" />
     <Compile Include="Entity\ImageKyc.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -184,6 +176,9 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\SplitValue_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\SplitWords1_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\SplitWords_Result.cs">
@@ -372,6 +367,9 @@
     <Compile Include="Entity\UserTypeDetail.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\User_Category.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Masters\AuditCheckListViewModel.cs" />
     <Compile Include="Masters\BranchViewModel.cs" />
     <Compile Include="Masters\ChargeDetailsViewModel.cs" />
@@ -379,7 +377,6 @@
     <Compile Include="Masters\CityViewModel.cs" />
     <Compile Include="Masters\DeviationViewModel.cs" />
     <Compile Include="Masters\DistanceDeviationDetailsVM.cs" />
-    <Compile Include="Masters\DocumentUploadViewModel.cs" />
     <Compile Include="Masters\DocumentViewModel.cs" />
     <Compile Include="Masters\FinancialYearViewModel.cs" />
     <Compile Include="Masters\GstViewModel.cs" />
@@ -400,6 +397,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transaction\DocumentUploadDetailsVM.cs" />
     <Compile Include="Transaction\DocumentUploadViewModel.cs" />
+    <Compile Include="Transaction\KYCBasciDetailsVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

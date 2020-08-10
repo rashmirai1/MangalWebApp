@@ -1,0 +1,885 @@
+﻿@model MangalWeb.Model.Transaction.KYCBasicDetailsVM
+@{
+    ViewBag.Title = "ShowCity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+
+@using (Ajax.BeginForm("CreateEdit", "KYC", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.KYCID, new { @id = "ItemID" })
+
+    <header id="topbar" class="affix">
+        <div class="col-md-5 col-sm-4 col-xs-12">
+            <div class="topbar-left">
+                <h4>KYC</h4>
+            </div><!--end of topbar-left-->
+        </div><!--end of col-md-5-->
+        <div class="col-md-7 col-sm-8 col-xs-12">
+            <div class="topbar-right" id="headerbutton">
+                @*<button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>*@
+                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
+                @*<button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>*@
+                @*<button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]"
+                        type="button" data-toggle="modal">
+                    <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
+                </button>*@
+                <a href="@Html.Raw(@Url.Action("Index", "KYC"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+            </div><!--end of topbar-right-->
+
+        </div><!--end of col-md-7-->
+    </header>
+
+    <section id="content" class="animated fadeIn">
+        <!-- Start: Topbar -->
+        <!-- End: Topbar -->
+        <!-- Begin: Content -->
+        <!-- Dashboard Tiles -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel1 panel-primary">
+                    <div class="admin-form">
+                        <div class="panel-body">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">PAN No.</label>
+                                                <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                    <span class="text-danger" id="CustomErr"> </span>
+                                                    @Html.EditorFor(model => model.PANNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "PAN No.", @autofocus = "autofocus" } })
+                                                    @Html.ValidationMessageFor(model => model.PANNo, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Adhaar No.</label>
+                                                <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                    <span class="text-danger" id="CustomErr"> </span>
+                                                    @Html.EditorFor(model => model.AdhaarNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Adhaar No", @autofocus = "autofocus" } })
+                                                    @Html.ValidationMessageFor(model => model.AdhaarNo, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                        <label id="negativeCustomerErr" class="text-danger"></label>
+                                    </div>
+                                    <div id="disabledFields">
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Customer ID<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.CustomerID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer ID", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Application No<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.ApplicationNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Application No", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.ApplicationNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Application Date<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.AppliedDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Application Date", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.AppliedDate, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <button id="btnUpdate" type="button" class="mb -xs mt-xs mr-xs btn btn-primary" style="padding: 5px;"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Update Details</span></button>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Applicant Prefix<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.ApplicantPrefix,
+new List<SelectListItem> {
+new SelectListItem { Value = "Mr" , Text = "Mr" },
+new SelectListItem { Value = "Ms" , Text = "Ms" },
+new SelectListItem { Value = "Mrs" , Text = "Mrs" }
+},
+new { @class= "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.ApplicantPrefix, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Applicant Name<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.AppFName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Applicant Name", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.AppFName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Middle Name<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.AppMName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Middle Name", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.AppMName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Last Name<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.AppLName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Last Name", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.AppLName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Mother Name<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.MotherName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mother Name", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.MotherName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Father / Spouse<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.DropDownListFor(model => model.Father_Spouse,
+                                                                new List<SelectListItem> {
+                                                                new SelectListItem { Value = "01" , Text = "Father" },
+                                                                new SelectListItem { Value = "02" , Text = "Spouse" }
+                                                                },
+                                                                        new { @class= "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.Father_Spouse, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Father / Spouse FirstName<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.Spouse, new { htmlAttributes = new { @class = "form-control", @placeholder = "Father / Spouse FirstName", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.Spouse, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Gender<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.DropDownListFor(model => model.Gender,
+                                                                new List<SelectListItem> {
+                                                                new SelectListItem { Value = "1" , Text = "Female" },
+                                                                new SelectListItem { Value = "2" , Text = "Male" },
+                                                                new SelectListItem { Value = "3" , Text = "Transgender" }
+                                                                },
+                                                                        new { @class= "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Birth Date<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "DD/MM/YYYY", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Age</label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control", @placeholder = "Age", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">CKYCNo<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.CKYCNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "CKYCNo", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.CKYCNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Marital Status<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.MaritalStatus,
+new List<SelectListItem> {
+new SelectListItem { Value = "01" , Text = "Married" },
+new SelectListItem { Value = "02" , Text = "Unmarried" },
+new SelectListItem { Value = "03" , Text = "Divorced" },
+new SelectListItem { Value = "03" , Text = "Widowed" },
+new SelectListItem { Value = "03" , Text = "Engaged" },
+new SelectListItem { Value = "03" , Text = "Separated" },
+new SelectListItem { Value = "03" , Text = "cohabitating" }
+},
+new { @class= "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.MaritalStatus, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Telephone No</label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.TelephoneNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Telephone No", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.TelephoneNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Mobile No<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mobile No", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Email id<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email id", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Source Of Application<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.DropDownListFor(m => m.SourceofApplication, (SelectList)ViewBag.SourceList, "--Select Source--", htmlAttributes: new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.SourceofApplication, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Source Type<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.SourceType, new { htmlAttributes = new { @class = "form-control", @placeholder = "Source Type", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.SourceType, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Existing PL Case No<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.ExistingPLCaseNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "ExistingPLCaseNo", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.ExistingPLCaseNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Present Annual Income<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.PresentIncome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Present Annual Income", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.PresentIncome, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Occupation Type<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.Occupation,
+new List<SelectListItem> {
+new SelectListItem { Value = "01" , Text = "Salaried" },
+new SelectListItem { Value = "02" , Text = "Self Employed Professional" },
+new SelectListItem { Value = "03" , Text = "Self Employed" },
+new SelectListItem { Value = "04" , Text = "Others" }
+},
+new { @class= "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.Occupation, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Specify if Other<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.OccupationOther, new { htmlAttributes = new { @class = "form-control", @placeholder = "Occupation Other", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.OccupationOther, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Designation<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control", @placeholder = "ExistingPLCaseNo", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Name of Organization<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.OrganizationName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name of Organization", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.OrganizationName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Industry type<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.IndustriesType,
+new List<SelectListItem> {
+new SelectListItem { Value = "Agriculture" , Text = "Agriculture" },
+new SelectListItem { Value = "consultancy" , Text = "consultancy" },
+new SelectListItem { Value = "Banking" , Text = "Banking" },
+new SelectListItem { Value = "Freelancer" , Text = "Freelancer" },
+
+new SelectListItem { Value = "health" , Text = "health" },
+new SelectListItem { Value = "conract worker" , Text = "conract worker" },
+new SelectListItem { Value = "manufacturing" , Text = "manufacturing" },
+new SelectListItem { Value = "professional" , Text = "professional" },
+
+new SelectListItem { Value = "retail trading" , Text = "retail trading" },
+new SelectListItem { Value = "small scale industries" , Text = "small scale industries" },
+new SelectListItem { Value = "software" , Text = "software" },
+new SelectListItem { Value = "transport" , Text = "transport" },
+
+new SelectListItem { Value = "others" , Text = "others" }
+},
+new { @class= "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.IndustriesType, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Specify If Other<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.IndustryOther, new { htmlAttributes = new { @class = "form-control", @placeholder = "Industry Other", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.IndustryOther, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Nominee Name<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.NomFName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee First Name", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.NomFName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Nominee Name<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.NomMName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Last Name", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.NomMName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Nominee Name<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.NomLName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Middle Name", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.NomLName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Nominee Address<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.TextAreaFor(model => model.NomAddress, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Address", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.NomAddress, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Nominee Mobile No<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.NomineeMobileNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Mobile No", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.NomineeMobileNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Nominee Relationship<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.NomRelation,
+new List<SelectListItem> {
+new SelectListItem { Value = "Aunt" , Text = "Aunt" },
+new SelectListItem { Value = "Brother" , Text = "Brother" },
+new SelectListItem { Value = "Cousin" , Text = "Cousin" },
+new SelectListItem { Value = "Daughter" , Text = "Daughter" },
+
+new SelectListItem { Value = "Father" , Text = "Father" },
+new SelectListItem { Value = "Grandchildren" , Text = "Grandchildren" },
+new SelectListItem { Value = "Granddaughter" , Text = "Granddaughter" },
+new SelectListItem { Value = " Grandfather" , Text = " Grandfather" },
+
+new SelectListItem { Value = "Grandmother" , Text = "Grandmother" },
+new SelectListItem { Value = "Grandson" , Text = "Grandson" },
+new SelectListItem { Value = "husband" , Text = "husband" },
+new SelectListItem { Value = "Mother" , Text = "Mother" },
+
+new SelectListItem { Value = "Nephew" , Text = "Nephew" },
+new SelectListItem { Value = "Son" , Text = "Son" },
+new SelectListItem { Value = "Self" , Text = "Self" },
+new SelectListItem { Value = "Sister" , Text = "Sister" },
+
+new SelectListItem { Value = "Uncle" , Text = "Uncle" },
+new SelectListItem { Value = "Wife" , Text = "Wife" },
+
+new SelectListItem { Value = "others" , Text = "others" }
+},
+new { @class= "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.NomRelation, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Nominee Pan No<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.NomineePanNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Pan No", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.NomineePanNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Nominee Adhar No</label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.NomineeAdharNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Adhar No", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.NomineeAdharNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        @*<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Document Name<span class="text-danger"> * </span></label>
+                                                        <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                            <span class="text-danger" id="CustomErr"> </span> @Html.DropDownListFor(m => m.DocumentName, (SelectList)ViewBag.DocumentList, "--Select Document--", htmlAttributes: new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.DocumentName, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                        Specify if other
+                                                    </label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.DocumentOther, new { htmlAttributes = new { @class = "form-control", @placeholder = "Document Other", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.DocumentOther, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Name on document<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.Nameondocument, new { htmlAttributes = new { @class = "form-control", @placeholder = "ExistingPLCaseNo", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.Nameondocument, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Expiry date<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.Expirydate, new { htmlAttributes = new { @class = "form-control", @placeholder = "DD/MM/YYYY", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.Expirydate, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                        upload document
+                                                        <span class="text-danger"> * </span>
+                                                    </label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.DocumentURL, new { htmlAttributes = new { @class = "form-control", @placeholder = "Document URL", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.DocumentURL, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+
+                                        </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
+    </section>
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@section javascriptsection{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type=datetime]').datepicker({
+                dateFormat: "dd/M/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-60:+0",
+                onClose: function (date) {
+                    var dob = new Date($("#BirthDate").val());
+                    var today = new Date();
+                    var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+                    $("#Age").val(age);
+                }
+            })
+            });
+            var pan = $("#PANNo").val();
+            var adhar = $("#AdhaarNo").val();
+            $('#disabledFields').find(':input').prop('disabled', true);
+            $("#btnUpdate").prop('disabled', false);
+            $("#btnUpdate").hide();
+
+            $("#CustomerID").attr("disabled", true);
+            $("#ApplicationNo").attr("disabled", true);
+        $("#ApplicationDate").attr("disabled", true);
+        $("#CKYCNo").attr("disabled", true);
+
+            $("#btnUpdate").click(function () {
+                $('#disabledFields').find(':input').prop('disabled', false);
+                $("#CustomerID").attr("disabled", true);
+                $("#ApplicationNo").attr("disabled", true);
+                $("#ApplicationDate").attr("disabled", true);
+                $("#CKYCNo").attr("disabled", true);
+            });
+
+            $("PANNo").on('input', function () {
+                var pan = $("PANNo").val();
+                CheckPanAvailable(pan);
+                $("#CustomerID").attr("disabled", true);
+                $("#ApplicationNo").attr("disabled", true);
+                $("#ApplicationDate").attr("disabled", true);
+                $("#CKYCNo").attr("disabled", true);
+            });
+
+            $("#AdhaarNo").on('input', function () {
+                var adhar = $("#AdhaarNo").val();
+                CheckAdharAvailable(adhar);
+                $("#CustomerID").attr("disabled", true);
+                $("#ApplicationNo").attr("disabled", true);
+                $("#ApplicationDate").attr("disabled", true);
+                $("#CKYCNo").attr("disabled", true);
+            });
+
+        function CheckPanAvailable(pan) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("doesPanExist", "KYC")',
+                data: '{PanNo: "' + pan + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result.isPanAdharExist == true) {
+                        if (result.isNegativeCustomer) {
+                            $("#negativeCustomerErr").text("Your account has been blocked ! Please contact customer care for further details");
+                            $("#disabledFields").hide();
+                        }
+                        else {
+                            $("#negativeCustomerErr").text("");
+                            $.each(result, function (key, value) {
+                                if (key == "ApplicationDate" || key == "BirthDate" || key == "Expirydate") {
+                                    value = new Date(parseInt(value.replace('/Date(', '')));
+                                    var day = value.getDate();
+                                    var month = value.getMonth() + 1;
+                                    var year = value.getFullYear();
+                                    value = day + "/" + month + "/" + year;
+                                }
+                                $("#" + key + "").val(value);
+                            });
+                            $('#disabledFields').find(':input').prop('disabled', true);
+                            $("#disabledFields").show();
+                            $("#btnUpdate").show();
+                            $("#btnUpdate").attr("disabled", false);
+                        }
+
+                    }
+                    else {
+                        $('#disabledFields').find(':input').prop('disabled', false);
+                        $("#CustomerID").attr("disabled", true);
+                        $("#ApplicationNo").attr("disabled", true);
+                        $("#ApplicationDate").attr("disabled", true);
+                        $("#CKYCNo").attr("disabled", true);
+                        var adhar = $("#AdhaarNo").val();
+                        CheckAdharAvailable(adhar);
+                    }
+                },
+                error: function (xhr, status, error) {
+                }
+            });
+        }
+
+        function CheckAdharAvailable(adhar) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("doesAdharExist", "KYC")',
+                data: '{AdharNo: "' + adhar + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result.isPanAdharExist == true) {
+                        if (result.isNegativeCustomer) {
+                            $("#negativeCustomerErr").text("Your account has been blocked ! Please contact customer care for further details");
+                            $("#disabledFields").hide();
+                        }
+                        else {
+                            $.each(result, function (key, value) {
+                                if (key == "ApplicationDate" || key == "BirthDate" || key == "Expirydate") {
+                                    value = new Date(parseInt(value.replace('/Date(', '')));
+                                    var day = value.getDate();
+                                    var month = value.getMonth() + 1;
+                                    var year = value.getFullYear();
+                                    value = day + "/" + month + "/" + year;
+                                }
+                                $("#" + key + "").val(value);
+                            });
+                            $('#disabledFields').find(':input').prop('disabled', true);
+                            $("#btnUpdate").show();
+                            $("#btnUpdate").attr("disabled", false);
+
+                        }
+                    }
+                    else {
+                        $('#disabledFields').find(':input').prop('disabled', false);
+                        $("#CustomerID").attr("disabled", true);
+                        $("#ApplicationNo").attr("disabled", true);
+                        $("#ApplicationDate").attr("disabled", true);
+                        $("#CKYCNo").attr("disabled", true);
+                        var pan = $("#PANNo").val();
+                        CheckPanAvailable(pan);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    //alert(error);
+                }
+            });
+        }
+
+        function ShowEditTableList() {
+            $('#divviewfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetCityTable", "City")',
+                dataType: "html",
+                data: { Operation: "Edit" },
+                success: function (data) {
+                    $('#diveditfilldata').empty();
+                    $('#diveditfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+
+        function ShowViewTableList() {
+            $('#diveditfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetCityTable", "City")',
+                dataType: "html",
+                data: { Operation: "View" },
+                success: function (data) {
+                    $('#divviewfilldata').empty();
+                    $('#divviewfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+        var urlRedirect = '@Html.Raw(@Url.Action("Index", "KYC"))';
+        function OnSuccess(response) {
+
+            $("#saveModal").modal('show');
+            $(document).click(function () {
+                window.location.href = urlRedirect;
+            });
+        }
+
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+
+        $(function () {
+            var url = '@Html.Raw(@Url.Action("Delete", "KYC"))';
+            $("#btnDelete").click(function () {
+                $("#deleteModal").modal('show');
+            });
+            $("#btnDeleteConfirm").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: '{id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != "") {
+                            $("#CustomErr").text(data);
+                            return false;
+                        }
+                        else {
+                            $("#CustomErr").empty();
+                            $("#DeleteSuccessModal").modal('show');
+
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
+
