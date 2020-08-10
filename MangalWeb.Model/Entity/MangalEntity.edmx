@@ -172,6 +172,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Property Name="ImageName" Type="varchar" MaxLength="100" />
           <Property Name="ContentType" Type="varchar" MaxLength="50" />
           <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -533,6 +534,16 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           </Key>
           <Property Name="DocumentID" Type="int" Nullable="false" />
           <Property Name="DocumentName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_KYCMobileOTP">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="OTP" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.tbl_SentJVCustHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1210,6 +1221,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInwardForm_GoldDetails' does no
           <Property Name="NomineeMobileNo" Type="nvarchar" MaxLength="50" />
           <Property Name="NomineePanNo" Type="nvarchar" MaxLength="50" />
           <Property Name="NomineeAdharNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Distance" Type="nvarchar" MaxLength="50" />
+          <Property Name="PinCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Area" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.TGLKYC_DocumentDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1894,6 +1908,9 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
         </Function>
         <Function Name="generateFinancialYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetDocumentUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetDocumentUploadById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetKYCDetailsForDocument" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetKYCDetailsForDocumentById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -1944,6 +1961,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <EntitySet Name="tbl_CountryMaster" EntityType="Self.tbl_CountryMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_GLChargeMaster_BasicInfo" EntityType="Self.tbl_GLChargeMaster_BasicInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_GLChargeMaster_Details" EntityType="Self.tbl_GLChargeMaster_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_KYCMobileOTP" EntityType="Self.tbl_KYCMobileOTP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserCategory" EntityType="Self.tbl_UserCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblaccountmaster" EntityType="Self.tblaccountmaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBankMaster" EntityType="Self.tblBankMaster" Schema="dbo" store:Type="Tables" />
@@ -2803,6 +2821,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="ImageName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="M_Words">
           <Key>
@@ -3595,7 +3614,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
           </AssociationSet>
           <EntitySet Name="tbl_UserCategory" EntityType="MangalDBNewModel.tbl_UserCategory" />
-          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
           <EntitySet Name="Trn_DocumentUpload" EntityType="MangalDBNewModel.Trn_DocumentUpload" />
           <EntitySet Name="Trn_DocUploadDetails" EntityType="MangalDBNewModel.Trn_DocUploadDetails" />
           <FunctionImport Name="generateFinancialYear" />
@@ -3616,7 +3634,12 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SplitWords1" IsComposable="true" ReturnType="Collection(MangalDBNewModel.SplitWords1_Result)">
-            <Parameter Name="text" Mode="In" Type="String" />
+          <Parameter Name="text" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="tbl_KYCMobileOTP" EntityType="MangalDBNewModel.tbl_KYCMobileOTP" />
+          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
+          <FunctionImport Name="GetDocumentUploadById" ReturnType="Collection(MangalDBNewModel.GetDocumentUploadById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
@@ -4249,87 +4272,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="Organhieraechyid" Type="Int32" />
           <Property Name="status1" Type="Boolean" />
         </EntityType>
-        <EntityType Name="TGLKYC_BasicDetails">
-          <Key>
-            <PropertyRef Name="KYCID" />
-          </Key>
-          <Property Name="KYCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AppliedDate" Type="DateTime" Precision="0" />
-          <Property Name="OperatorID" Type="Int32" />
-          <Property Name="ExistingCustomerID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="ExistingPLCaseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AppFName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AppMName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AppLName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="AppPhotoPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AppSignPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="AppPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="AppSign" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="MaritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="BirthDate" Type="DateTime" Precision="0" />
-          <Property Name="Age" Type="Int32" />
-          <Property Name="Spouse" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Children" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="PANNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="VerificationCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="TelephoneNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
-          <Property Name="EmailID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="SourceofApplication" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="SourceSpecification" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="DealerID" Type="Int32" />
-          <Property Name="BldgHouseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Road" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="BldgPlotNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="RoomBlockNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="StateID" Type="Int32" />
-          <Property Name="CityID" Type="Int32" />
-          <Property Name="AreaID" Type="Int32" />
-          <Property Name="ZoneID" Type="Int32" />
-          <Property Name="Landmark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Occupation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OrganizationName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PresentIncome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OfficeAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="EmploymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SpecifyEmployment" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="IndustriesType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="SpecifyIndustries" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Designation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="NomFName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="NomMName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="NomLName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="NomRelation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NomAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LoanpurposeID" Type="Int32" />
-          <Property Name="SpecifyLoanPurpose" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FYID" Type="Int32" />
-          <Property Name="CmpID" Type="Int32" />
-          <Property Name="BranchID" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <Property Name="DeletedBy" Type="Int32" />
-          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
-          <Property Name="isActive" Type="Boolean" />
-          <Property Name="SourceofApplicationID" Type="Int32" />
-          <Property Name="KYCDate" Type="DateTime" Precision="3" />
-          <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AdhaarNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ApplicantPrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="MotherName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Father_Spouse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CKYCNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SourceType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OccupationOther" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IndustryOther" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NomineeMobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NomineePanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NomineeAdharNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Trn_DocumentUpload">
           <Key>
             <PropertyRef Name="DocId" />
@@ -4424,6 +4366,111 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
         <ComplexType Name="SplitWords1_Result">
           <Property Type="Int16" Name="pos" Nullable="false" />
           <Property Type="String" Name="value" Nullable="true" MaxLength="8000" />
+        </ComplexType>
+        <EntityType Name="tbl_KYCMobileOTP">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="OTP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TGLKYC_BasicDetails">
+          <Key>
+            <PropertyRef Name="KYCID" />
+          </Key>
+          <Property Name="KYCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AppliedDate" Type="DateTime" Precision="0" />
+          <Property Name="OperatorID" Type="Int32" />
+          <Property Name="ExistingCustomerID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ExistingPLCaseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppFName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AppMName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AppLName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="AppPhotoPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AppSignPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="AppPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="AppSign" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="MaritalStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Spouse" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Children" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="PANNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="VerificationCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TelephoneNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="EmailID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SourceofApplication" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="SourceSpecification" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DealerID" Type="Int32" />
+          <Property Name="BldgHouseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Road" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="BldgPlotNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RoomBlockNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="StateID" Type="Int32" />
+          <Property Name="CityID" Type="Int32" />
+          <Property Name="AreaID" Type="Int32" />
+          <Property Name="ZoneID" Type="Int32" />
+          <Property Name="Landmark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Occupation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrganizationName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PresentIncome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OfficeAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmploymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SpecifyEmployment" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IndustriesType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SpecifyIndustries" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Designation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NomFName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NomMName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NomLName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NomRelation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NomAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LoanpurposeID" Type="Int32" />
+          <Property Name="SpecifyLoanPurpose" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FYID" Type="Int32" />
+          <Property Name="CmpID" Type="Int32" />
+          <Property Name="BranchID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="SourceofApplicationID" Type="Int32" />
+          <Property Name="KYCDate" Type="DateTime" Precision="3" />
+          <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AdhaarNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicantPrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="MotherName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Father_Spouse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CKYCNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SourceType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OccupationOther" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IndustryOther" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NomineeMobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NomineePanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NomineeAdharNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Distance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PinCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="GetDocumentUploadById_Result">
+          <Property Type="Int32" Name="KycId" Nullable="false" />
+          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TransactionNumber" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="TransactionId" Nullable="false" />
+          <Property Type="Int32" Name="DocId" Nullable="false" />
+          <Property Type="String" Name="DocDate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Comments" Nullable="false" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4534,6 +4581,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <EntitySetMapping Name="KycImageStores">
             <EntityTypeMapping TypeName="MangalDBNewModel.KycImageStore">
               <MappingFragment StoreEntitySet="KycImageStore">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ContentType" ColumnName="ContentType" />
                 <ScalarProperty Name="ImageName" ColumnName="ImageName" />
                 <ScalarProperty Name="ImgId" ColumnName="ImgId" />
@@ -5672,88 +5720,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TGLKYC_BasicDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
-              <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
-                <ScalarProperty Name="NomineeAdharNo" ColumnName="NomineeAdharNo" />
-                <ScalarProperty Name="NomineePanNo" ColumnName="NomineePanNo" />
-                <ScalarProperty Name="NomineeMobileNo" ColumnName="NomineeMobileNo" />
-                <ScalarProperty Name="IndustryOther" ColumnName="IndustryOther" />
-                <ScalarProperty Name="OccupationOther" ColumnName="OccupationOther" />
-                <ScalarProperty Name="SourceType" ColumnName="SourceType" />
-                <ScalarProperty Name="CKYCNo" ColumnName="CKYCNo" />
-                <ScalarProperty Name="Father_Spouse" ColumnName="Father_Spouse" />
-                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
-                <ScalarProperty Name="ApplicantPrefix" ColumnName="ApplicantPrefix" />
-                <ScalarProperty Name="AdhaarNo" ColumnName="AdhaarNo" />
-                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
-                <ScalarProperty Name="KYCDate" ColumnName="KYCDate" />
-                <ScalarProperty Name="SourceofApplicationID" ColumnName="SourceofApplicationID" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
-                <ScalarProperty Name="CmpID" ColumnName="CmpID" />
-                <ScalarProperty Name="FYID" ColumnName="FYID" />
-                <ScalarProperty Name="SpecifyLoanPurpose" ColumnName="SpecifyLoanPurpose" />
-                <ScalarProperty Name="LoanpurposeID" ColumnName="LoanpurposeID" />
-                <ScalarProperty Name="NomAddress" ColumnName="NomAddress" />
-                <ScalarProperty Name="NomRelation" ColumnName="NomRelation" />
-                <ScalarProperty Name="NomLName" ColumnName="NomLName" />
-                <ScalarProperty Name="NomMName" ColumnName="NomMName" />
-                <ScalarProperty Name="NomFName" ColumnName="NomFName" />
-                <ScalarProperty Name="Designation" ColumnName="Designation" />
-                <ScalarProperty Name="SpecifyIndustries" ColumnName="SpecifyIndustries" />
-                <ScalarProperty Name="IndustriesType" ColumnName="IndustriesType" />
-                <ScalarProperty Name="SpecifyEmployment" ColumnName="SpecifyEmployment" />
-                <ScalarProperty Name="EmploymentType" ColumnName="EmploymentType" />
-                <ScalarProperty Name="OfficeAddress" ColumnName="OfficeAddress" />
-                <ScalarProperty Name="PresentIncome" ColumnName="PresentIncome" />
-                <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
-                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="ZoneID" ColumnName="ZoneID" />
-                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-                <ScalarProperty Name="StateID" ColumnName="StateID" />
-                <ScalarProperty Name="RoomBlockNo" ColumnName="RoomBlockNo" />
-                <ScalarProperty Name="BldgPlotNo" ColumnName="BldgPlotNo" />
-                <ScalarProperty Name="Road" ColumnName="Road" />
-                <ScalarProperty Name="BldgHouseName" ColumnName="BldgHouseName" />
-                <ScalarProperty Name="DealerID" ColumnName="DealerID" />
-                <ScalarProperty Name="SourceSpecification" ColumnName="SourceSpecification" />
-                <ScalarProperty Name="SourceofApplication" ColumnName="SourceofApplication" />
-                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
-                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
-                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
-                <ScalarProperty Name="Children" ColumnName="Children" />
-                <ScalarProperty Name="Spouse" ColumnName="Spouse" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="AppSign" ColumnName="AppSign" />
-                <ScalarProperty Name="AppPhoto" ColumnName="AppPhoto" />
-                <ScalarProperty Name="AppSignPath" ColumnName="AppSignPath" />
-                <ScalarProperty Name="AppPhotoPath" ColumnName="AppPhotoPath" />
-                <ScalarProperty Name="AppLName" ColumnName="AppLName" />
-                <ScalarProperty Name="AppMName" ColumnName="AppMName" />
-                <ScalarProperty Name="AppFName" ColumnName="AppFName" />
-                <ScalarProperty Name="ExistingPLCaseNo" ColumnName="ExistingPLCaseNo" />
-                <ScalarProperty Name="ExistingCustomerID" ColumnName="ExistingCustomerID" />
-                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
-                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Trn_DocumentUpload">
             <EntityTypeMapping TypeName="MangalDBNewModel.Trn_DocumentUpload">
               <MappingFragment StoreEntitySet="Trn_DocumentUpload">
@@ -5856,6 +5822,117 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
               <ComplexTypeMapping TypeName="MangalDBNewModel.SplitWords1_Result">
                 <ScalarProperty Name="pos" ColumnName="pos" />
                 <ScalarProperty Name="value" ColumnName="value" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="tbl_KYCMobileOTP">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_KYCMobileOTP">
+              <MappingFragment StoreEntitySet="tbl_KYCMobileOTP">
+                <ScalarProperty Name="OTP" ColumnName="OTP" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TGLKYC_BasicDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
+              <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="NomineeAdharNo" ColumnName="NomineeAdharNo" />
+                <ScalarProperty Name="NomineePanNo" ColumnName="NomineePanNo" />
+                <ScalarProperty Name="NomineeMobileNo" ColumnName="NomineeMobileNo" />
+                <ScalarProperty Name="IndustryOther" ColumnName="IndustryOther" />
+                <ScalarProperty Name="OccupationOther" ColumnName="OccupationOther" />
+                <ScalarProperty Name="SourceType" ColumnName="SourceType" />
+                <ScalarProperty Name="CKYCNo" ColumnName="CKYCNo" />
+                <ScalarProperty Name="Father_Spouse" ColumnName="Father_Spouse" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="ApplicantPrefix" ColumnName="ApplicantPrefix" />
+                <ScalarProperty Name="AdhaarNo" ColumnName="AdhaarNo" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="KYCDate" ColumnName="KYCDate" />
+                <ScalarProperty Name="SourceofApplicationID" ColumnName="SourceofApplicationID" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="CmpID" ColumnName="CmpID" />
+                <ScalarProperty Name="FYID" ColumnName="FYID" />
+                <ScalarProperty Name="SpecifyLoanPurpose" ColumnName="SpecifyLoanPurpose" />
+                <ScalarProperty Name="LoanpurposeID" ColumnName="LoanpurposeID" />
+                <ScalarProperty Name="NomAddress" ColumnName="NomAddress" />
+                <ScalarProperty Name="NomRelation" ColumnName="NomRelation" />
+                <ScalarProperty Name="NomLName" ColumnName="NomLName" />
+                <ScalarProperty Name="NomMName" ColumnName="NomMName" />
+                <ScalarProperty Name="NomFName" ColumnName="NomFName" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="SpecifyIndustries" ColumnName="SpecifyIndustries" />
+                <ScalarProperty Name="IndustriesType" ColumnName="IndustriesType" />
+                <ScalarProperty Name="SpecifyEmployment" ColumnName="SpecifyEmployment" />
+                <ScalarProperty Name="EmploymentType" ColumnName="EmploymentType" />
+                <ScalarProperty Name="OfficeAddress" ColumnName="OfficeAddress" />
+                <ScalarProperty Name="PresentIncome" ColumnName="PresentIncome" />
+                <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="ZoneID" ColumnName="ZoneID" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="RoomBlockNo" ColumnName="RoomBlockNo" />
+                <ScalarProperty Name="BldgPlotNo" ColumnName="BldgPlotNo" />
+                <ScalarProperty Name="Road" ColumnName="Road" />
+                <ScalarProperty Name="BldgHouseName" ColumnName="BldgHouseName" />
+                <ScalarProperty Name="DealerID" ColumnName="DealerID" />
+                <ScalarProperty Name="SourceSpecification" ColumnName="SourceSpecification" />
+                <ScalarProperty Name="SourceofApplication" ColumnName="SourceofApplication" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
+                <ScalarProperty Name="Children" ColumnName="Children" />
+                <ScalarProperty Name="Spouse" ColumnName="Spouse" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="AppSign" ColumnName="AppSign" />
+                <ScalarProperty Name="AppPhoto" ColumnName="AppPhoto" />
+                <ScalarProperty Name="AppSignPath" ColumnName="AppSignPath" />
+                <ScalarProperty Name="AppPhotoPath" ColumnName="AppPhotoPath" />
+                <ScalarProperty Name="AppLName" ColumnName="AppLName" />
+                <ScalarProperty Name="AppMName" ColumnName="AppMName" />
+                <ScalarProperty Name="AppFName" ColumnName="AppFName" />
+                <ScalarProperty Name="ExistingPLCaseNo" ColumnName="ExistingPLCaseNo" />
+                <ScalarProperty Name="ExistingCustomerID" ColumnName="ExistingCustomerID" />
+                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetDocumentUploadById" FunctionName="MangalDBNewModel.Store.GetDocumentUploadById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.GetDocumentUploadById_Result">
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
+                <ScalarProperty Name="TransactionNumber" ColumnName="TransactionNumber" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="DocId" ColumnName="DocId" />
+                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

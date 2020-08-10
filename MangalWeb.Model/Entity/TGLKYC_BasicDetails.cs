@@ -90,5 +90,8 @@ namespace MangalWeb.Model.Entity
         public string NomineeMobileNo { get; set; }
         public string NomineePanNo { get; set; }
         public string NomineeAdharNo { get; set; }
+        public string Distance { get; set; }
+        public string PinCode { get; set; }
+        public string Area { get; set; }
     }
 }

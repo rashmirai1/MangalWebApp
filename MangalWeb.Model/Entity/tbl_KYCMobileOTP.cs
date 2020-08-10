@@ -12,15 +12,12 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class KycImageStore
+    public partial class tbl_KYCMobileOTP
     {
-        public int ImgId { get; set; }
-        public byte[] KycPhoto { get; set; }
-        public string Operation { get; set; }
-        public string Refno { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public string ImageName { get; set; }
-        public string ContentType { get; set; }
+        public int ID { get; set; }
+        public string CustomerId { get; set; }
+        public string Mobile { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string OTP { get; set; }
     }
 }

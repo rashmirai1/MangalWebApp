@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MangalWeb.Model.Transaction
 {
     public class KYCBasicDetailsVM
     {
+        public KYCBasicDetailsVM()
+        {
+            DocumentUploadList = new List<DocumentUploadDetailsVM>();
+        }
         public Nullable<int> KYCID { get; set; }
         public string AdhaarNo { get; set; }
         public string ApplicationNo { get; set; }
@@ -83,8 +88,16 @@ namespace MangalWeb.Model.Transaction
         public string NomineeMobileNo { get; set; }
         public string NomineePanNo { get; set; }
         public string NomineeAdharNo { get; set; }
-
+        public string Distance { get; set; }
+        public string PinCode { get; set; }
         public Boolean isPanAdharExist { get; set; }
         public byte[] KycPhoto { get; set; }
+        public string ContentType { get; set; }
+        public string ImageName { get; set; }
+        public string Area { get; set; }
+        public DocumentUploadDetailsVM DocumentUploadVM { get; set; }
+        public List<DocumentUploadDetailsVM> DocumentUploadList { get; set; }
+
+
     }
 }
