@@ -84,10 +84,18 @@
     <Compile Include="Entity\Bharat_tbl_SentJVCustHistory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\GetDocumentUploadById_Result.cs" />
-    <Compile Include="Entity\GetDocumentUpload_Result.cs" />
-    <Compile Include="Entity\GetKYCDetailsForDocumentById_Result.cs" />
-    <Compile Include="Entity\GetKYCDetailsForDocument_Result.cs" />
+    <Compile Include="Entity\GetDocumentUploadById_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\GetDocumentUpload_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\GetKYCDetailsForDocumentById_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\GetKYCDetailsForDocument_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\ImageKyc.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -116,6 +124,9 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Mst_AuditCheckList.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Mst_BranchType.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Mst_ChildDeviation.cs">
@@ -250,6 +261,9 @@
     <Compile Include="Entity\tbl_GLDocumentMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tbl_KYCMobileOTP.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tbl_SentJVCustHistory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -370,6 +384,9 @@
     <Compile Include="Entity\User_Category.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\User_Category_Hierarchy.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Masters\AuditCheckListViewModel.cs" />
     <Compile Include="Masters\BranchViewModel.cs" />
     <Compile Include="Masters\ChargeDetailsViewModel.cs" />
@@ -397,7 +414,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transaction\DocumentUploadDetailsVM.cs" />
     <Compile Include="Transaction\DocumentUploadViewModel.cs" />
-    <Compile Include="Transaction\KYCBasciDetailsVM.cs" />
+    <Compile Include="Transaction\FillAddressByPinCode.cs" />
+    <Compile Include="Transaction\KYCBasicDetailsVM.cs" />
+    <Compile Include="Transaction\KYCDocumentDetailsVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -427,6 +446,7 @@
       <LastGenOutput>MangalEntity.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

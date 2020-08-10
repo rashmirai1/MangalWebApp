@@ -1,12 +1,9 @@
 ﻿using MangalWeb.Model.Entity;
-using MangalWeb.Model.Masters;
 using MangalWeb.Model.Transaction;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
 namespace MangalWeb.Repository.Repository
 {
@@ -14,6 +11,10 @@ namespace MangalWeb.Repository.Repository
     {
         MangalDBNewEntities _context = new MangalDBNewEntities();
 
+        /// <summary>
+        /// Save kyc
+        /// </summary>
+        /// <param name="model"></param>
         public void SaveRecord(KYCBasicDetailsVM model)
         {
             try
@@ -97,9 +98,24 @@ namespace MangalWeb.Repository.Repository
                     tGLKYC_Basic.NomineeMobileNo = model.NomineeMobileNo;
                     tGLKYC_Basic.NomineePanNo = model.NomineePanNo;
                     tGLKYC_Basic.NomineeAdharNo = model.NomineeAdharNo;
+                    tGLKYC_Basic.PinCode = model.PinCode;
+                    tGLKYC_Basic.Distance = model.Distance;
+                    tGLKYC_Basic.Area = model.Area;
                     _context.TGLKYC_BasicDetails.Add(tGLKYC_Basic);
-
                     _context.SaveChanges();
+
+                    if (model.KycPhoto != null)
+                    {
+                        KycImageStore kycImageStore = new KycImageStore();
+                        kycImageStore.KycPhoto = model.KycPhoto;
+                        kycImageStore.Operation = "Save";
+                        kycImageStore.Refno = Convert.ToString(tGLKYC_Basic.KYCID);
+                        kycImageStore.ContentType = model.ContentType;
+                        kycImageStore.ImageName = model.ImageName;
+                        kycImageStore.CreatedDate = DateTime.Now;
+                        _context.KycImageStores.Add(kycImageStore);
+                        _context.SaveChanges();
+                    }
                 }
 
 
@@ -110,19 +126,27 @@ namespace MangalWeb.Repository.Repository
             }
 
         }
-
+        /// <summary>
+        /// get source of application to fill dopdown
+        /// </summary>
+        /// <returns></returns>
         public List<Mst_SourceofApplication> GetSourceOfApplicationList()
         {
             var list = _context.Mst_SourceofApplication.ToList();
             return list;
         }
-
+        /// <summary>
+        /// check if pan already exists
+        /// </summary>
+        /// <param name="Pan"></param>
+        /// <returns></returns>
         public KYCBasicDetailsVM doesPanExist(string Pan)
         {
             var kyc = _context.TGLKYC_BasicDetails.Where(x => x.PANNo == Pan).OrderByDescending(x => x.AppliedDate).FirstOrDefault();
             KYCBasicDetailsVM kycVm = new KYCBasicDetailsVM();
             if (kyc != null)
             {
+                kycVm.KYCID = kyc.KYCID;
                 kycVm.isPanAdharExist = true;
                 kycVm.Age = kyc.Age;
                 kycVm.AppFName = kyc.AppFName;
@@ -200,6 +224,20 @@ namespace MangalWeb.Repository.Repository
                 kycVm.NomineeMobileNo = kyc.NomineeMobileNo;
                 kycVm.NomineePanNo = kyc.NomineePanNo;
                 kycVm.NomineeAdharNo = kyc.NomineeAdharNo;
+                kycVm.PinCode = kyc.PinCode;
+                kycVm.Distance = kyc.Distance;
+
+                kycVm.Area = kyc.Area;
+                string kycId = Convert.ToString(kyc.KYCID);
+                kycVm.KycPhoto = _context.KycImageStores.Where(x => x.Refno == kycId)
+                                          .OrderByDescending(x => x.CreatedDate)
+                                          .Select(x => x.KycPhoto).FirstOrDefault();
+                kycVm.ImageName = _context.KycImageStores.Where(x => x.Refno == kycId)
+                                          .OrderByDescending(x => x.CreatedDate)
+                                          .Select(x => x.ImageName).FirstOrDefault();
+                kycVm.ContentType = _context.KycImageStores.Where(x => x.Refno == kycId)
+                                         .OrderByDescending(x => x.CreatedDate)
+                                         .Select(x => x.ContentType).FirstOrDefault();
             }
             else
             {
@@ -207,13 +245,18 @@ namespace MangalWeb.Repository.Repository
             }
             return kycVm;
         }
-
+        /// <summary>
+        /// check if adhar already exists
+        /// </summary>
+        /// <param name="AdharNo"></param>
+        /// <returns></returns>
         public KYCBasicDetailsVM doesAdharExist(string AdharNo)
         {
             var kyc = _context.TGLKYC_BasicDetails.Where(x => x.AdhaarNo == AdharNo).OrderByDescending(x => x.AppliedDate).FirstOrDefault();
             KYCBasicDetailsVM kycVm = new KYCBasicDetailsVM();
             if (kyc != null)
             {
+                kycVm.KYCID = kyc.KYCID;
                 kycVm.isPanAdharExist = true;
                 kycVm.Age = kyc.Age;
                 kycVm.AppFName = kyc.AppFName;
@@ -291,12 +334,115 @@ namespace MangalWeb.Repository.Repository
                 kycVm.NomineeMobileNo = kyc.NomineeMobileNo;
                 kycVm.NomineePanNo = kyc.NomineePanNo;
                 kycVm.NomineeAdharNo = kyc.NomineeAdharNo;
+                kycVm.PinCode = kyc.PinCode;
+                kycVm.Distance = kyc.Distance;
+                kycVm.Area = kyc.Area;
+                string kycId = Convert.ToString(kyc.KYCID);
+                kycVm.KycPhoto = _context.KycImageStores.Where(x => x.Refno == kycId)
+                                          .OrderByDescending(x => x.CreatedDate)
+                                          .Select(x => x.KycPhoto).FirstOrDefault();
+                kycVm.ImageName = _context.KycImageStores.Where(x => x.Refno == kycId)
+                                          .OrderByDescending(x => x.CreatedDate)
+                                          .Select(x => x.ImageName).FirstOrDefault();
+                kycVm.ContentType = _context.KycImageStores.Where(x => x.Refno == kycId)
+                                         .OrderByDescending(x => x.CreatedDate)
+                                         .Select(x => x.ContentType).FirstOrDefault();
             }
             else
             {
                 kycVm.isPanAdharExist = false;
             }
             return kycVm;
+        }
+        /// <summary>
+        /// generate application number
+        /// </summary>
+        /// <returns></returns>
+        public int GenerateApplicationNo()
+        {
+            return _context.TGLKYC_BasicDetails.ToList().Count();
+        }
+        /// <summary>
+        /// get kyc photo by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public KycImageStore GetImageById(int id)
+        {
+            string strId = Convert.ToString(id);
+            return _context.KycImageStores.Where(x => x.Refno == strId).OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+        }
+        /// <summary>
+        /// verify otp code
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <param name="customerId"></param>
+        /// <param name="otp"></param>
+        /// <returns></returns>
+        public string VerifyMobileNumber(string mobile, string customerId, string otp)
+        {
+            string response = String.Empty;
+            var storedOTP = _context.tbl_KYCMobileOTP.Where(x => x.Mobile == mobile && x.CustomerId == customerId)
+                .OrderByDescending(x => x.CreatedDate)
+                .Select(x => x.OTP)
+                .FirstOrDefault();
+            if(otp == storedOTP)
+            {
+                response = "Mobile Verified Successfully!";
+            }
+            else
+            {
+                response = "Invalid OTP!";
+            }
+            return response;
+        }
+        /// <summary>
+        /// store otp code in DB
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <param name="customerId"></param>
+        /// <param name="OTP"></param>
+        public void StoreOtp(string mobile, string customerId, string OTP)
+        {
+            tbl_KYCMobileOTP tbl_KYCMobileOTP = new tbl_KYCMobileOTP();
+            tbl_KYCMobileOTP.CreatedDate = DateTime.Now;
+            tbl_KYCMobileOTP.CustomerId = customerId;
+            tbl_KYCMobileOTP.Mobile = mobile;
+            tbl_KYCMobileOTP.OTP = OTP;
+            _context.tbl_KYCMobileOTP.Add(tbl_KYCMobileOTP);
+            _context.SaveChanges();
+        }
+        /// <summary>
+        /// get area, city, state, zone by pincode id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public FillAddressByPinCode FillAddressByPinCode(int id)
+        {
+            var pincode = _context.Mst_PinCode.Where(x => x.Pc_Id == id).FirstOrDefault();
+            var city = _context.tblCityMasters.Where(x => x.CityID == pincode.Pc_CityId).FirstOrDefault();
+            var state = _context.tblStateMasters.Where(x => x.StateID == city.StateID).FirstOrDefault();
+            var zone = _context.tblZonemasters.Where(x => x.ZoneID == pincode.Pc_ZoneId).FirstOrDefault();
+            var areaName = pincode.Pc_AreaName;
+            FillAddressByPinCode fillAddressByPinCode = new FillAddressByPinCode();
+            fillAddressByPinCode.AreaName = areaName;
+            fillAddressByPinCode.CityId = city.CityID;
+            fillAddressByPinCode.CityName = city.CityName;
+            fillAddressByPinCode.StateID = state.StateID;
+            fillAddressByPinCode.StateName = state.StateName;
+            fillAddressByPinCode.ZoneID = pincode.Pc_ZoneId;
+            fillAddressByPinCode.ZoneName = zone.Zone;
+            return fillAddressByPinCode;
+        }
+        /// <summary>
+        /// get list of pincodes from db
+        /// </summary>
+        /// <returns></returns>
+        public IList<Mst_PinCode> GetAllPincodes()
+        {
+            var pincode = _context.Mst_PinCode.ToList();
+            
+            return pincode;
         }
     }
 }

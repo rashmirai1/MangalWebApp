@@ -20,7 +20,7 @@ namespace MangalWeb.Model.Masters
         public string BranchCode { get; set; }
 
         [Required(ErrorMessage = "Please Select Branch Type")]
-        public short BranchType { get; set; }
+        public int BranchType { get; set; }
 
         [Required(ErrorMessage = "Date Inception is Required")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
