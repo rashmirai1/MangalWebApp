@@ -24,7 +24,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.tblLogin" Width="1.5" PointX="12.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TestDB" Width="1.5" PointX="12.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGL_DefaultOSPercentage" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MangalDBNewModel.TGL_FormAuthorizationDetails" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGL_FormDetails" Width="1.5" PointX="14.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLCash_Denomination_Details" Width="1.5" PointX="6.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLCashAuth_BasicDetails" Width="1.5" PointX="14.75" PointY="7.75" IsExpanded="true" />
@@ -46,12 +45,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.TGLOutwardForm_GoldDetails" Width="1.5" PointX="20.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLSmsHistory" Width="1.5" PointX="0.75" PointY="20.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TSchemeMaster_EffectiveROI" Width="1.5" PointX="10.75" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MangalDBNewModel.UserFormAuthentication" Width="1.5" PointX="20.75" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MangalDBNewModel.UserFormAuthorisationDetail" Width="1.5" PointX="16.75" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MangalDBNewModel.UserFormDetail" Width="1.5" PointX="20.75" PointY="18.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MangalDBNewModel.UserMenuDetail" Width="1.5" PointX="6.75" PointY="21.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MangalDBNewModel.UserModuleAuthentication" Width="1.5" PointX="18.75" PointY="21.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MangalDBNewModel.UserModuleDetail" Width="1.5" PointX="20.75" PointY="21.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.UserTypeDetail" Width="1.5" PointX="22.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_CountryMaster" Width="1.5" PointX="23.375" PointY="4" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblDocumentMaster" Width="1.5" PointX="23.375" PointY="6.75" />
@@ -112,6 +105,8 @@
         <EntityTypeShape EntityType="MangalDBNewModel.Trn_RequestForm" Width="1.5" PointX="3.375" PointY="30.75" />
         <AssociationConnector Association="MangalDBNewModel.FK__tbl_UserC__Organ__51BA1E3A" />
         <EntityTypeShape EntityType="MangalDBNewModel.UserDetail" Width="1.5" PointX="5.375" PointY="30.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Menu" Width="1.5" PointX="7.375" PointY="30.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.UserAuthorization" Width="1.5" PointX="9.375" PointY="30.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

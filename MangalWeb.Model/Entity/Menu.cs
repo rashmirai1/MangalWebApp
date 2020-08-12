@@ -12,14 +12,18 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class UserFormAuthorisationDetail
+    public partial class Menu
     {
         public int ID { get; set; }
-        public int FormID { get; set; }
-        public int RecordID { get; set; }
-        public string Usr { get; set; }
-        public string Admin { get; set; }
-        public string Supervisor { get; set; }
-        public int FinancialYrID { get; set; }
+        public Nullable<int> ParentId { get; set; }
+        public string Sequence { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
+        public string Title { get; set; }
+        public string ToolTip { get; set; }
+        public string IconPath { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string isActive { get; set; }
     }
 }

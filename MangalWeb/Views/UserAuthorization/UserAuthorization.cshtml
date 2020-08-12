@@ -1,0 +1,451 @@
+﻿@model MangalWeb.Model.Utilities.UserAuthorization
+@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript" src="~/Content/vendor/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="~/Content/vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    function GetUser() {
+        debugger;
+        var usercategoryid = $('#UserAuthorizationForms_UserCategoryID').val();
+        var url = '@Url.Action("GetUser", "UserAuthorization")';
+        $("#UserAuthorizationForms_UserID").empty();
+        $('#UserAuthorizationForms_FormID').empty();
+        $.ajax({
+            url: url,
+            data: { UserCategoryId: usercategoryid },
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+                if (result != "") {
+                    debugger;
+                    var items = "<option value='0'>--Select User--</option>";
+                    for (var x = 0; x < result.FirstList.length; x++) {
+                        items += "<option value='" + result.FirstList[x].UserID + "'>" + result.FirstList[x].User + "</option>";
+                    }
+                    $('#UserAuthorizationForms_UserID').html(items);
+                    var items1 = "<option value='0'>--Select Menu--</option>";
+                    for (var x = 0; x < result.SecondList.length; x++) {
+                        items1 += "<option value='" + result.SecondList[x].FormID + "'>" + result.SecondList[x].FormName + "</option>";
+                        $('#UserAuthorizationForms_FormID').html(items1);
+                    }
+                    $("#tblForm").hide();
+                    $('#UserAuthorizationForms_FormID  option:first-child').attr("selected", "selected");
+                }
+                else {
+                    var items = "<option value='0'>--Select User--</option>";
+                    $('#UserAuthorizationForms_UserID').html(items);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                debugger;
+                alert(errorThrown);
+            }
+        });
+    }
+
+
+    function GetAllChildFormsParentIdWise(ParentFormID, UserID) {
+        if (UserID != 0) {
+            var UserCategoryID = $('#UserAuthorizationForms_UserCategoryID').val();
+            var url = '@Url.Action("GetForms", "UserAuthorization")';
+            var rowindex = 0;
+            $("#tblFormslist").empty();
+            $.ajax({
+                url: url,
+                data: { ParentId: ParentFormID, Userid: UserID, UserCategoryID: UserCategoryID },
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+
+                    if (data != "") {
+                        debugger;
+                        var html = '';
+                        for (var x = 0; x < data.length; x++) {
+                            var checkedVisibleString = "";
+                            var disabledString = "";
+                            var checkedEditString = "";
+                            var checkedSaveString = "";
+                            var checkedDeleteString = "";
+                            var checkedViewString = "";
+                            var checkedSearchString = "";
+
+                            if (data[x].isVisible == true) {
+                                checkedVisibleString = "checked=true";
+                                disabledString = '';
+                            }
+                            else {
+                                disabledString = 'disabled';
+                            }
+                            if (data[x].isEdit == true)
+                                checkedEditString = "checked=true";
+                            if (data[x].isSave == true)
+                                checkedSaveString = "checked=true";
+                            if (data[x].isDelete == true)
+                                checkedDeleteString = "checked=true";
+                            if (data[x].isView == true)
+                                checkedViewString = "checked=true";
+                            if (data[x].isSearch == true)
+                                checkedSearchString = "checked=true";
+                            var usercategoryid = $('#UserAuthorizationForms_UserCategoryID').val();
+                            if ((data[x].ParentID == 4 || data[x].ParentID == 5)) {
+                                html += "<tr class='userauthorize'><td>  <input " + checkedVisibleString + "  visible='yes' type='checkbox' name='visible_id" + x + "'    class='visible_id'  />	</td>";
+                                html += "<td value=" + data[x].FormID + ">" + data[x].FormName + "</td><td value=" + data[x].ParentID + ">" + data[x].ParentForm + "</td>";
+                                html += "<td></td>";
+                                html += "<td><input type='checkbox' " + disabledString + "  " + checkedSaveString + " save = 'yes'  name='isSave" + x + "' class='isSave' ></td>";
+                                html += "<td></td>";
+                                html += "<td></td>";
+                                rowindex++;
+                            }
+                            else if (data[x].ParentID == 1) {
+                                html += "<tr class='userauthorize'><td>  <input " + checkedVisibleString + "  visible='yes' type='checkbox' name='visible_id" + x + "'    class='visible_id'  />	</td>";
+                                html += "<td value=" + data[x].FormID + ">" + data[x].FormName + "</td><td value=" + data[x].ParentID + ">" + data[x].ParentForm + "</td>";
+                                html += "<td></td>";
+                                html += "<td></td>";
+                                html += "<td></td>";
+                                html += "<td><input " + disabledString + " view='yes' type='checkbox' " + checkedViewString + " name='isView" + x + "'  class='isView' ></td>";
+                                rowindex++;
+                            }
+                            else {
+                                html += "<tr class='userauthorize'><td>  <input " + checkedVisibleString + "  visible='yes' type='checkbox' name='visible_id" + x + "'    class='visible_id'  />	</td>";
+                                html += "<td value=" + data[x].FormID + ">" + data[x].FormName + "</td><td value=" + data[x].ParentID + ">" + data[x].ParentForm + "</td>";
+                                html += "<td><input type='checkbox' " + disabledString + " Edit='yes' " + checkedEditString + "  name='isEdit" + x + "' class='isEdit'></td>";
+                                html += "<td><input type='checkbox' " + disabledString + "  " + checkedSaveString + " save = 'yes'  name='isSave" + x + "' class='isSave' ></td>";
+                                html += "<td><input " + disabledString + " delete='yes' " + checkedDeleteString + " type='checkbox' name='isDelete" + x + "'  class='isDelete'></td>";
+                                html += "<td><input " + disabledString + " view='yes' type='checkbox' " + checkedViewString + " name='isView" + x + "'  class='isView' ></td>";
+                                rowindex++;
+                            }
+                        }
+                        $("#tblFormslist").append(html);
+                    }
+                    else {
+                        $("#tblFormslist").append("<tr><td colspan='7'>No Sub menu</td></tr>");
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
+        else {
+            $("#tblUserAuthoriztion").attr("style", "display:none;");
+        }
+    }
+</script>
+<script type="text/javascript">
+
+
+    $(document).on('click', 'input[type=checkbox]', function () {
+        var visible = $(this).attr('checked');
+
+        if (typeof visible !== typeof undefined && visible !== false) {
+
+            $(this).removeAttr('checked');
+        }
+        else {
+            $(this).attr('checked', 'true');
+
+        }
+    })
+
+    function CheckStatus(visible) {
+        var visiblex;
+        if (typeof visible !== typeof undefined && visible !== false) {
+            visiblex = 'true';
+        }
+        else {
+            visiblex = 'false';
+        }
+        return visiblex;
+    }
+    function saveUser() {
+        var visible = 0;
+        var formid = 0;
+        var parentformid = 0;
+        var edit = 0;
+        var save = 0;
+        var delete_id = 0;
+        var view = 0;
+        $("#tblFormslist tr").each(function (i) {
+            visible = $("input[name=visible_id" + i + "]").attr('checked');
+            formid = $(this).children("td:nth-child(2)").attr('value');
+            parentformid = $(this).children("td:nth-child(3)").attr('value');
+            edit = $("input[name=isEdit" + i + "]").attr('checked');
+            save = $("input[name=isSave" + i + "]").attr('checked');
+            delete_id = $("input[name=isDelete" + i + "]").attr('checked');
+            view = $("input[name=isView" + i + "]").attr('checked');
+            var UserID = $('#UserAuthorizationForms_UserID').val();
+            var url = '/UserAuthorization/UserAuthorization1';
+            $.ajax({
+                url: url,
+                //data: { formid: formid, parentformid: parentformid, visible: CheckStatus(visible), },
+                data: { index: i, UserID: UserID, formid: formid, parentformid: parentformid, visible: CheckStatus(visible), edit: CheckStatus(edit), save: CheckStatus(save), delete_id: CheckStatus(delete_id), view: CheckStatus(view)},
+                type: 'POST',
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+                    //if (!json.error)
+                    //location.reload(true);
+                    $('#myModalDeleteM').modal('show');
+                    $("#tblForm").hide();
+                    $("#UserAuthorizationForms_UserID").val(0);
+                    var theText = "--Select Menu--";
+                    var theText1 = "--Select User Category--";
+                    $("#UserAuthorizationForms_FormID option:contains(" + theText + ")").attr('selected', 'selected');
+                    $("#UserAuthorizationForms_UserCategoryID option:contains(" + theText1 + ")").attr('selected', 'selected');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    // alert(errorThrown);
+                }
+            });
+        });
+    }
+    //individual click
+    $(document).on('change', '.visible_id', function () {
+
+        $.each($('input[name^=visible_id]'), function (index1, el1) {
+            var input_arr = [];
+            if ($(el1).is(':checked')) {
+                //alert('checked');
+                input_arr.push($(el1).val());
+
+                $(el1).parents(".userauthorize").find(".isEdit").removeAttr("disabled");
+                $(el1).parents(".userauthorize").find(".isSave").removeAttr("disabled");
+                $(el1).parents(".userauthorize").find(".isDelete").removeAttr("disabled");
+                $(el1).parents(".userauthorize").find(".isView").removeAttr("disabled");
+                $(el1).parents(".userauthorize").find(".isSearch").removeAttr("disabled");
+            }
+            else {
+                $(el1).parents(".userauthorize").find(".isEdit").attr("disabled", true);
+                $(el1).parents(".userauthorize").find(".isSave").attr("disabled", true);
+                $(el1).parents(".userauthorize").find(".isDelete").attr("disabled", true);
+                $(el1).parents(".userauthorize").find(".isView").attr("disabled", true);
+                $(el1).parents(".userauthorize").find(".isSearch").attr("disabled", true);
+
+                $(el1).parents(".userauthorize").find(".isEdit").attr("checked", false);
+                $(el1).parents(".userauthorize").find(".isSave").attr("checked", false);
+                $(el1).parents(".userauthorize").find(".isDelete").attr("checked", false);
+                $(el1).parents(".userauthorize").find(".isView").attr("checked", false);
+                $(el1).parents(".userauthorize").find(".isSearch").attr("checked", false);
+            }
+        });
+
+    });
+
+    $(function () {
+        $("#tblForm").hide();
+        $('#UserAuthorizationForms_UserCategoryID').change(function () {
+            debugger;
+            $("#tblForm").hide();
+            var items = "<option value='0'>--Select User--</option>";
+            $('#UserAuthorizationForms_UserID').html(items);
+            var items1 = "<option value='0'>--Select Menu--</option>";
+            $('#UserAuthorizationForms_FormID').html(items1);
+            GetUser();
+        });
+        $('#UserAuthorizationForms_FormID').change(function () {
+            var ParentFormID = $('#UserAuthorizationForms_FormID').val();
+            var UserID = $('#UserAuthorizationForms_UserID').val();
+            if (ParentFormID != 0) {
+                GetAllChildFormsParentIdWise(ParentFormID, UserID);
+                $("#tblForm").show();
+            }
+            else {
+
+                $("#tblForm").hide();
+            }
+
+        });
+    });
+
+</script>
+
+@using (Html.BeginForm())
+{
+    <header id="topbar" class="affix">
+        <div class="col-md-5 col-sm-4 col-xs-12">
+            <div class="topbar-left">
+                <h4>User Authorization</h4>
+            </div><!--end of topbar-left-->
+        </div><!--end of col-md-5-->
+        <div class="right-wrapper pull-right text-right" id="headerbutton" @TempData["headerbutton"]>
+            @* onclick="return saveUser();"*@
+            <button type="button" id="UserauthorizationDetails" class="mb -xs mt-xs mr-xs btn btn-success" onclick="return saveUser();">Save</button>
+            @Html.ActionLink("Cancel", "UserAuthorization", null, new { @style = "text-decoration:none;", @class = "btn btn-info" })
+            <a style="visibility:hidden;" class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+        </div>
+    </header>
+        <!-- start: page  form-->
+        <section id="content" class="animated fadeIn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <div class="panel-body">
+                            @TempData["PanelCity"]
+                            <div class="form-horizontal" @TempData["PanelCityStyle"]>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label" for="inputDefault">User Category</label>
+                                        <div class="col-md-10">
+                                            @Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.UserCategoryID, new SelectList(ViewBag.usercategory, "Value", "Text"), "--Select User Category--", new { @class = "form-control" })
+                                            <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.UserCategoryID)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label" for="inputDefault">User Name</label>
+                                        <div class="col-md-10">
+                                            @Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.UserID, new SelectList(ViewBag.user, "Value", "Text"), "--Select User--", new { @class = "form-control" })
+                                            <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.UserID)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label" for="inputDefault">Menu</label>
+                                        <div class="col-md-10">
+                                            @Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.FormID, new SelectList(ViewBag.menus, "Value", "Text"), "--Select Menu--", new { @class = "form-control" })
+                                            <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.FormID)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                </div>
+                                <br />
+                                <div class="col-md-12">
+                                    <div class="table-responsive" id="tblUserAuthoriztion">
+                                        <table class="table table-bordered mb-none" id="tblForm" style="border: 1px solid;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-1 btn-primary">
+                                                        Visible
+                                                    </th>
+                                                    <th class="col-md-3 btn-primary" > Form Name</th>
+                                                    <th class="col-md-3 btn-primary" >Main Form</th>
+                                                    <th class="col-md-1 btn-primary" >
+                                                        Edit
+                                                    </th>
+                                                    <th class="col-md-1 btn-primary" >
+                                                        Save
+                                                    </th>
+                                                    <th class="col-md-1 btn-primary" >
+                                                        Delete
+                                                    </th>
+                                                    <th class="col-md-1 btn-primary">
+                                                        View
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tblFormslist"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- end: page form-->
+        </section>
+
+}
+<button type="submit" id="btn_successmessage" name="btn_save" style="display:none;" value="Success" class="@ViewBag.btn_editclass" data-toggle="modal" data-target="#myModalDeleteMessage">Edit</button>
+<div class="container">
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModalDeleteMessage" role="dialog" style="@TempData["myModalDeleteMessageStyle"]">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title UTitle">
+                        @{
+                            if (@TempData["UTitle"] == null || @TempData["UTitle"].ToString().Equals(""))
+                            {
+
+                            }
+                            else
+                            {
+                                @TempData["UTitle"]
+                            }
+
+                        }
+                    </h4>
+                </div>
+                <div class="modal-body ">
+                    <p class="UMessage">
+                        @{
+                            if (TempData["UMessage"] == null || TempData["UMessage"].ToString().Equals(""))
+                            {
+                            }
+                            else
+                            {
+                                @TempData["UMessage"]
+                            }
+                        }
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="return hide_popup1_U();">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModalDeleteM" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title UTitle">
+                        User Authorization
+                    </h4>
+                </div>
+                <div class="modal-body ">
+                    User authorization saved sucessfully
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="return hide_popup1_U();">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function show_popup() {
+        document.getElementById('popup').style.display = 'block';
+    }
+
+    function show_popup1() {
+        var btnsuccess = document.getElementById('btn_successmessage');
+        btnsuccess.click();
+    }
+
+    function hide_popup() {
+        document.getElementById('popup').style.display = 'none';
+        window.location.href = '@Url.Action("UserAuthorization", "UserAuthorization")';
+    }
+
+    function hide_popup1_U() {
+        window.location.href = '@Url.Action("UserAuthorization", "UserAuthorization")';
+    }
+    @{
+            if (@TempData["UMessage"] == null || @TempData["UMessage"].ToString().Equals(""))
+                            {
+                            }
+                            else
+                            {
+                                    @:window.onload = show_popup1;
+                                    }
+          }
+</script>

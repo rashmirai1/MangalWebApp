@@ -12,18 +12,20 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class TGL_FormAuthorizationDetails
+    public partial class UserAuthorization
     {
-        public int FormAuthID { get; set; }
-        public Nullable<int> UserID { get; set; }
-        public Nullable<int> FormID { get; set; }
-        public Nullable<int> ParentID { get; set; }
-        public Nullable<bool> IsVisible { get; set; }
-        public Nullable<bool> IsView { get; set; }
-        public Nullable<bool> IsSave { get; set; }
-        public Nullable<bool> IsEdit { get; set; }
-        public Nullable<bool> IsDelete { get; set; }
+        public int ID { get; set; }
+        public int FormID { get; set; }
+        public int UserID { get; set; }
+        public bool isVisible { get; set; }
+        public bool isEdit { get; set; }
+        public bool isSave { get; set; }
+        public bool isDelete { get; set; }
+        public bool isView { get; set; }
+        public bool isDefault { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string isActive { get; set; }
+        public int ParentID { get; set; }
     }
 }

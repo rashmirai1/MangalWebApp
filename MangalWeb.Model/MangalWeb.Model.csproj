@@ -120,6 +120,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MangalEntity.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Menu.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Mst_AuditCategory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -336,9 +339,6 @@
     <Compile Include="Entity\TGL_DefaultOSPercentage.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\TGL_FormAuthorizationDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\TGL_FormDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -357,25 +357,10 @@
     <Compile Include="Entity\TSchemeMaster_EffectiveROI.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\UserAuthorization.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\UserDetail.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\UserFormAuthentication.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\UserFormAuthorisationDetail.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\UserFormDetail.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\UserMenuDetail.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\UserModuleAuthentication.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\UserModuleDetail.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\UserTypeDetail.cs">
@@ -419,6 +404,11 @@
     <Compile Include="Transaction\KYCDocumentDetailsVM.cs" />
     <Compile Include="Transaction\RequestFormViewModel.cs" />
     <Compile Include="Utilities\LoginViewModel.cs" />
+    <Compile Include="Utilities\Menu.cs" />
+    <Compile Include="Utilities\User.cs" />
+    <Compile Include="Utilities\UserAuthorization.cs" />
+    <Compile Include="Utilities\UserAuthorizationForms.cs" />
+    <Compile Include="Utilities\UserCategory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
