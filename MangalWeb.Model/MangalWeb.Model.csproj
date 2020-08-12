@@ -270,9 +270,6 @@
     <Compile Include="Entity\tbl_UserCategory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\tbl_UserLogin.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\TestDB.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -421,6 +418,7 @@
     <Compile Include="Transaction\KYCBasicDetailsVM.cs" />
     <Compile Include="Transaction\KYCDocumentDetailsVM.cs" />
     <Compile Include="Transaction\RequestFormViewModel.cs" />
+    <Compile Include="Utilities\LoginViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

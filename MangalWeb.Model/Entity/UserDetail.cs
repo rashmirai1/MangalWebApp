@@ -18,6 +18,8 @@ namespace MangalWeb.Model.Entity
         public int UserTypeID { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
+        public int BranchId { get; set; }
+        public int FinancialYearId { get; set; }
         public string CreatedBy { get; set; }
     }
 }

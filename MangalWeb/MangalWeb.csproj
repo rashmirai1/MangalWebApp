@@ -134,6 +134,7 @@
     <Compile Include="Controllers\GSTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KYCController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OrnamentController.cs" />
     <Compile Include="Controllers\PenaltySlabController.cs" />
     <Compile Include="Controllers\PincodeController.cs" />
@@ -2091,6 +2092,7 @@
     <Content Include="Views\KYC\Index.cshtml" />
     <Content Include="Views\RequestForm\RequestForm.cshtml" />
     <Content Include="Views\RequestForm\_CustomerDetails.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

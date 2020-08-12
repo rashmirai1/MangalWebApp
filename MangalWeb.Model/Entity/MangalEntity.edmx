@@ -512,27 +512,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_SentJVCustHistory' does not ha
           <Property Name="Organhieraechyid" Type="int" />
           <Property Name="status1" Type="bit" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.tbl_UserLogin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="tbl_UserLogin">
-          <Key>
-            <PropertyRef Name="LoginID" />
-            <PropertyRef Name="LoginUserType" />
-            <PropertyRef Name="LoginUser" />
-            <PropertyRef Name="LoginDate" />
-          </Key>
-          <Property Name="LoginID" Type="int" Nullable="false" />
-          <Property Name="LoginUserType" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="LoginUser" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="LoginDate" Type="smalldatetime" Nullable="false" />
-          <Property Name="LoginTime" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogoutTime" Type="nvarchar" MaxLength="50" />
-          <Property Name="TotalTime" Type="nvarchar" MaxLength="50" />
-          <Property Name="HostName" Type="nvarchar" MaxLength="50" />
-          <Property Name="HostIPAddr" Type="nvarchar" MaxLength="50" />
-          <Property Name="CompID" Type="int" />
-          <Property Name="BranchID" Type="int" />
-        </EntityType>
         <EntityType Name="tblaccountmaster">
           <Key>
             <PropertyRef Name="AccountID" />
@@ -1368,17 +1347,16 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="100" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.UserDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserDetails">
           <Key>
             <PropertyRef Name="UserID" />
-            <PropertyRef Name="UserTypeID" />
           </Key>
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserTypeID" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="varchar" MaxLength="50" />
-          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BranchId" Type="int" Nullable="false" />
+          <Property Name="FinancialYearId" Type="int" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
@@ -1748,6 +1726,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySet Name="TSchemeMaster_BasicDetails" EntityType="Self.TSchemeMaster_BasicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Category" EntityType="Self.User_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Category_Hierarchy" EntityType="Self.User_Category_Hierarchy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bharat_tbl_SentJVCustHistory" EntityType="Self.Bharat_tbl_SentJVCustHistory" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Bharat_tbl_SentJVCustHistory].[SentCustJVID] AS [SentCustJVID], 
@@ -1946,21 +1925,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
     [tbl_SentJVCustHistory].[UpdatedBy] AS [UpdatedBy], 
     [tbl_SentJVCustHistory].[UpdatedDate] AS [UpdatedDate]
     FROM [dbo].[tbl_SentJVCustHistory] AS [tbl_SentJVCustHistory]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="tbl_UserLogin" EntityType="Self.tbl_UserLogin" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tbl_UserLogin].[LoginID] AS [LoginID], 
-    [tbl_UserLogin].[LoginUserType] AS [LoginUserType], 
-    [tbl_UserLogin].[LoginUser] AS [LoginUser], 
-    [tbl_UserLogin].[LoginDate] AS [LoginDate], 
-    [tbl_UserLogin].[LoginTime] AS [LoginTime], 
-    [tbl_UserLogin].[LogoutTime] AS [LogoutTime], 
-    [tbl_UserLogin].[TotalTime] AS [TotalTime], 
-    [tbl_UserLogin].[HostName] AS [HostName], 
-    [tbl_UserLogin].[HostIPAddr] AS [HostIPAddr], 
-    [tbl_UserLogin].[CompID] AS [CompID], 
-    [tbl_UserLogin].[BranchID] AS [BranchID]
-    FROM [dbo].[tbl_UserLogin] AS [tbl_UserLogin]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="tblCreateCompanyMaster" EntityType="Self.tblCreateCompanyMaster" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2328,15 +2292,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
     [TSchemeMaster_EffectiveROI].[NoofDefaultMonths] AS [NoofDefaultMonths], 
     [TSchemeMaster_EffectiveROI].[EffROI] AS [EffROI]
     FROM [dbo].[TSchemeMaster_EffectiveROI] AS [TSchemeMaster_EffectiveROI]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserDetails].[UserID] AS [UserID], 
-    [UserDetails].[UserTypeID] AS [UserTypeID], 
-    [UserDetails].[UserName] AS [UserName], 
-    [UserDetails].[Password] AS [Password], 
-    [UserDetails].[CreatedBy] AS [CreatedBy]
-    FROM [dbo].[UserDetails] AS [UserDetails]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserFormAuthentication" EntityType="Self.UserFormAuthentication" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2730,25 +2685,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
           <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
-        <EntityType Name="tbl_UserLogin">
-          <Key>
-            <PropertyRef Name="LoginID" />
-            <PropertyRef Name="LoginUserType" />
-            <PropertyRef Name="LoginUser" />
-            <PropertyRef Name="LoginDate" />
-          </Key>
-          <Property Name="LoginID" Type="Int32" Nullable="false" />
-          <Property Name="LoginUserType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LoginUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LoginDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="LoginTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogoutTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TotalTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="HostName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="HostIPAddr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CompID" Type="Int32" />
-          <Property Name="BranchID" Type="Int32" />
-        </EntityType>
         <EntityType Name="tblCreateCompanyMaster">
           <Key>
             <PropertyRef Name="CompID" />
@@ -3136,17 +3072,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <Property Name="NoofDefaultMonths" Type="Int32" />
           <Property Name="EffROI" Type="Decimal" Precision="11" Scale="2" />
         </EntityType>
-        <EntityType Name="UserDetail">
-          <Key>
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="UserTypeID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="UserTypeID" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="UserFormAuthentication">
           <Key>
             <PropertyRef Name="FormAuthID" />
@@ -3253,7 +3178,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySet Name="newbharatTGLGoldStocks" EntityType="Self.newbharatTGLGoldStock" />
           <EntitySet Name="tbl_GLDocumentMaster" EntityType="Self.tbl_GLDocumentMaster" />
           <EntitySet Name="tbl_SentJVCustHistory" EntityType="Self.tbl_SentJVCustHistory" />
-          <EntitySet Name="tbl_UserLogin" EntityType="Self.tbl_UserLogin" />
           <EntitySet Name="tblCreateCompanyMasters" EntityType="Self.tblCreateCompanyMaster" />
           <EntitySet Name="tblLogins" EntityType="Self.tblLogin" />
           <EntitySet Name="TestDBs" EntityType="Self.TestDB" />
@@ -3280,7 +3204,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
           <EntitySet Name="TGLOutwardForm_GoldDetails" EntityType="Self.TGLOutwardForm_GoldDetails" />
           <EntitySet Name="TGLSmsHistories" EntityType="Self.TGLSmsHistory" />
           <EntitySet Name="TSchemeMaster_EffectiveROI" EntityType="Self.TSchemeMaster_EffectiveROI" />
-          <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
           <EntitySet Name="UserFormAuthentications" EntityType="Self.UserFormAuthentication" />
           <EntitySet Name="UserFormAuthorisationDetails" EntityType="Self.UserFormAuthorisationDetail" />
           <EntitySet Name="UserFormDetails" EntityType="Self.UserFormDetail" />
@@ -3414,6 +3337,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             <End Role="User_Category_Hierarchy" EntitySet="User_Category_Hierarchy" />
             <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
           </AssociationSet>
+          <EntitySet Name="UserDetails" EntityType="MangalDBNewModel.UserDetail" />
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -4268,6 +4192,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserTypeID" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BranchId" Type="Int32" Nullable="false" />
+          <Property Name="FinancialYearId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4524,23 +4460,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_UserLogin">
-            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_UserLogin">
-              <MappingFragment StoreEntitySet="tbl_UserLogin">
-                <ScalarProperty Name="LoginID" ColumnName="LoginID" />
-                <ScalarProperty Name="LoginUserType" ColumnName="LoginUserType" />
-                <ScalarProperty Name="LoginUser" ColumnName="LoginUser" />
-                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
-                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
-                <ScalarProperty Name="LogoutTime" ColumnName="LogoutTime" />
-                <ScalarProperty Name="TotalTime" ColumnName="TotalTime" />
-                <ScalarProperty Name="HostName" ColumnName="HostName" />
-                <ScalarProperty Name="HostIPAddr" ColumnName="HostIPAddr" />
-                <ScalarProperty Name="CompID" ColumnName="CompID" />
-                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4951,17 +4870,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
                 <ScalarProperty Name="SID" ColumnName="SID" />
                 <ScalarProperty Name="NoofDefaultMonths" ColumnName="NoofDefaultMonths" />
                 <ScalarProperty Name="EffROI" ColumnName="EffROI" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.UserDetail">
-              <MappingFragment StoreEntitySet="UserDetails">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5739,6 +5647,19 @@ warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a p
                 <ScalarProperty Name="SanctionId" ColumnName="SanctionId" />
                 <ScalarProperty Name="KycId" ColumnName="KycId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
