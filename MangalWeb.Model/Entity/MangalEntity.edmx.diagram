@@ -111,6 +111,8 @@
         <AssociationConnector Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_KYCMobileOTP" Width="1.5" PointX="30.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_BasicDetails" Width="1.5" PointX="17.375" PointY="29.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Trn_RequestForm" Width="1.5" PointX="3.375" PointY="30.75" />
+        <AssociationConnector Association="MangalDBNewModel.FK__tbl_UserC__Organ__51BA1E3A" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

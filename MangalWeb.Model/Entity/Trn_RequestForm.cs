@@ -10,17 +10,13 @@
 namespace MangalWeb.Model.Entity
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class GetDocumentUploadById_Result
+    public partial class Trn_RequestForm
     {
+        public int Id { get; set; }
         public int KycId { get; set; }
-        public string CustomerId { get; set; }
-        public string ApplicationNo { get; set; }
-        public string LoanAccountNo { get; set; }
-        public string TransactionNumber { get; set; }
-        public int TransactionId { get; set; }
-        public int DocId { get; set; }
-        public string DocDate { get; set; }
-        public string Comments { get; set; }
+        public int SanctionId { get; set; }
+        public Nullable<System.DateTime> creationdate { get; set; }
     }
 }

@@ -351,6 +351,9 @@
     <Compile Include="Entity\Trn_DocUploadDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Trn_RequestForm.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\TSchemeMaster_BasicDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -417,6 +420,7 @@
     <Compile Include="Transaction\FillAddressByPinCode.cs" />
     <Compile Include="Transaction\KYCBasicDetailsVM.cs" />
     <Compile Include="Transaction\KYCDocumentDetailsVM.cs" />
+    <Compile Include="Transaction\RequestFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

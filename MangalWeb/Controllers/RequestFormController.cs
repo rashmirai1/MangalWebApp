@@ -20,11 +20,12 @@ namespace MangalWeb.Controllers
             ViewBag.PinCodeList = new SelectList(_requestFormService.GetAllPincodes(), "Pc_Id", "Pc_Desc");
             ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
             ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
-            KYCBasicDetailsVM kycVM = new KYCBasicDetailsVM();
+            RequestFormViewModel kycVM = new RequestFormViewModel();
+            kycVM.TransactionId = _requestFormService.GetMaxTransactionId();
             return View(kycVM);
         }
 
-        public JsonResult CreateEdit(KYCBasicDetailsVM model)
+        public JsonResult CreateEdit(RequestFormViewModel model)
         {
             try
             {
@@ -49,14 +50,12 @@ namespace MangalWeb.Controllers
 
         #region GetDoumentUploadById
 
-        [HttpPost]
+        //[HttpPost]
         public ActionResult GetDoumentUploadById(int Id)
         {
             ButtonVisiblity("Edit");
             var model = _requestFormService.GetDoumentUploadById(Id);
-            var objectJson = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(model);
-            ViewBag.ObjectJsonViewBag = objectJson;
-            return Json(objectJson, JsonRequestBehavior.AllowGet);
+            return View("RequestForm", model);
         }
         #endregion GetDoumentUploadById
     }

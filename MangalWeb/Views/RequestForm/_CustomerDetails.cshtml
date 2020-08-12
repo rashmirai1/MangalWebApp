@@ -15,7 +15,7 @@
                     <tbody>
                         @foreach (DocumentUploadViewModel item in Model)
                         {
-                            <tr class="gradeX" style="cursor:pointer;">
+                            <tr class="gradeX" style="cursor:pointer;" onclick='window.document.location="/RequestForm/GetDoumentUploadById?Id=@item.KycId"'>
                                 <td id="@item.KycId">@item.CustomerId</td>
                                 <td id="@item.TransactionNumber">@item.ApplicationNo</td>
                                 <td id="@item.DocDate">@item.LoanAccountNo</td>

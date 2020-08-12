@@ -18,5 +18,7 @@ namespace MangalWeb.Model.Entity
         public string Name { get; set; }
         public Nullable<int> Organhieraechyid { get; set; }
         public Nullable<bool> status1 { get; set; }
+    
+        public virtual User_Category_Hierarchy User_Category_Hierarchy { get; set; }
     }
 }

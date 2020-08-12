@@ -1,4 +1,4 @@
-﻿@model MangalWeb.Model.Transaction.KYCBasicDetailsVM
+﻿@model MangalWeb.Model.Transaction.RequestFormViewModel
 @{
     ViewBag.Title = "ShowRequestForm";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -44,6 +44,20 @@
                                 <div class="form-horizontal">
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Transaction Id<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>
+                                                @Html.EditorFor(model => model.TransactionId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Id", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Updation Date<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                @Html.EditorFor(model => model.KYCDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Updation Date", @autocomplete = "Off" } })
+                                                @Html.ValidationMessageFor(model => model.KYCDate, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Customer Id<span class="text-danger">*</span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 @Html.EditorFor(model => model.CustomerID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Id", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
@@ -52,36 +66,23 @@
                                                     @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Loan Account No<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.LoanAccountNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Loan Account No", @readonly = true } })
+                                            </div>
+                                          
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Application No<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 @Html.EditorFor(model => model.ApplicationNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Application No", @readonly = true } })
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Transaction Id<span class="text-danger"></span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
-                                                @Html.EditorFor(model => model.ApplicationNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Id", @readonly = true } })
-                                            </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Updation Date<span class="text-danger"> * </span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                                                @Html.EditorFor(model => model.AppliedDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Updation Date", @autocomplete = "Off" } })
-                                                @Html.ValidationMessageFor(model => model.AppliedDate, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Loan Account No<span class="text-danger"></span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.ApplicationNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Loan Account No", @readonly = true } })
-                                            </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Disburse Date<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                                                @Html.EditorFor(model => model.AppliedDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Disburse Date", @autocomplete = "Off" } })
-                                                @Html.ValidationMessageFor(model => model.AppliedDate, "", new { @class = "text-danger" })
+                                                @Html.EditorFor(model => model.DisburseDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Disburse Date", @autocomplete = "Off",@readonly=true } })
+                                                @Html.ValidationMessageFor(model => model.DisburseDate, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                     </div>
@@ -552,9 +553,9 @@
             $("#CustomerID").val(CustomerId);
             $("#KycId").val(KycId);
             $("#ApplicationNo").val(ApplicationNo);
-            $("#LoanAccountNo").val(LoanAccountNo);
+            //$("#LoanAccountNo").val(LoanAccountNo);
             $("#editModal").hide();
-            getdocumentbyid(KycId);
+            //getdocumentbyid(KycId);
 
         })
 
@@ -577,6 +578,8 @@
                     $("#LoanAccountNo").val(your_object.LoanAccountNo);
                 },
                 error: function (xhr, status, error) {
+                    debugger;
+                    console.log(xhr.responseText);
                     alert(status.statusText);
                 }
             });

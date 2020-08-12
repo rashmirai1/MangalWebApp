@@ -27,7 +27,7 @@ namespace MangalWeb.Service.Service
             return _requestFormRepository.GetAllPincodes();
         }
 
-        public void SaveRecord(KYCBasicDetailsVM model)
+        public void SaveRecord(RequestFormViewModel model)
         {
             _requestFormRepository.SaveRecord(model);
         }
@@ -40,6 +40,11 @@ namespace MangalWeb.Service.Service
         public DocumentUploadViewModel GetDoumentUploadById(int id)
         {
             return _requestFormRepository.GetDoumentUploadById(id);
+        }
+
+        public int GetMaxTransactionId()
+        {
+            return _requestFormRepository.GetMaxTransactionId();
         }
     }
 }
