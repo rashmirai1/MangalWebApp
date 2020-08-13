@@ -2,6 +2,7 @@
 using MangalWeb.Model.Transaction;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -103,6 +104,7 @@ namespace MangalWeb.Repository.Repository
                     tGLKYC_Basic.Area = model.Area;
                     _context.TGLKYC_BasicDetails.Add(tGLKYC_Basic);
                     _context.SaveChanges();
+                    HttpContext.Current.Session["KycId"] = tGLKYC_Basic.KYCID;
 
                     if (model.KycPhoto != null)
                     {
@@ -114,6 +116,28 @@ namespace MangalWeb.Repository.Repository
                         kycImageStore.ImageName = model.ImageName;
                         kycImageStore.CreatedDate = DateTime.Now;
                         _context.KycImageStores.Add(kycImageStore);
+                        _context.SaveChanges();
+                    }
+
+                    foreach(var item in model.Trans_KYCAddresses)
+                    {
+                        Trans_KYCAddresses trans_KYCAddresses = new Trans_KYCAddresses();
+                        trans_KYCAddresses.AddressCategory = item.AddressCategory;
+                        trans_KYCAddresses.Area = item.Area;
+                        trans_KYCAddresses.BuildingHouseName = item.BuildingHouseName;
+                        trans_KYCAddresses.BuildingPlotNo = item.BuildingPlotNo;
+                        trans_KYCAddresses.CityID = item.CityID;
+                        trans_KYCAddresses.CreatedDate = DateTime.Now;
+                        trans_KYCAddresses.Distance_km = item.Distance_km;
+                        trans_KYCAddresses.KYCID = tGLKYC_Basic.KYCID;
+                        trans_KYCAddresses.NearestLandmark = item.NearestLandmark;
+                        trans_KYCAddresses.PinCode = item.PinCode;
+                        trans_KYCAddresses.ResidenceCode = item.ResidenceCode;
+                        trans_KYCAddresses.Road = item.Road;
+                        trans_KYCAddresses.RoomBlockNo = item.RoomBlockNo;
+                        trans_KYCAddresses.StateID = item.StateID;
+                        trans_KYCAddresses.ZoneId = item.ZoneId;
+                        _context.Trans_KYCAddresses.Add(trans_KYCAddresses);
                         _context.SaveChanges();
                     }
                 }
@@ -443,6 +467,30 @@ namespace MangalWeb.Repository.Repository
             var pincode = _context.Mst_PinCode.ToList();
             
             return pincode;
+        }
+        /// <summary>
+        /// Save Kyc Docs
+        /// </summary>
+        /// <param name="lstDocUploadTrn"></param>
+        public void SaveDocument(List<DocumentUploadDetailsVM> lstDocUploadTrn)
+        {
+            Trn_DocUploadDetails trn_DocUploadDetails = new Trn_DocUploadDetails();
+            if (lstDocUploadTrn != null || lstDocUploadTrn.Count > 0)
+            {
+                foreach (var item in lstDocUploadTrn)
+                {
+                    trn_DocUploadDetails.DocumentId = item.DocumentId;
+                    trn_DocUploadDetails.UploadFile = item.UploadDocName;
+                    trn_DocUploadDetails.ContentType = item.FileExtension;
+                    trn_DocUploadDetails.FileName = item.FileName;
+                    trn_DocUploadDetails.DocumentTypeId = item.DocumentTypeId;
+                    trn_DocUploadDetails.KycId = Convert.ToInt32(HttpContext.Current.Session["KycId"]);
+                    trn_DocUploadDetails.ExpiryDate = item.ExpiryDate;
+                    trn_DocUploadDetails.Status = "Pending";
+                    _context.Trn_DocUploadDetails.Add(trn_DocUploadDetails);
+                    _context.SaveChanges();
+                }
+            }
         }
     }
 }

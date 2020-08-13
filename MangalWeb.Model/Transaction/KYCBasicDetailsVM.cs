@@ -9,6 +9,7 @@ namespace MangalWeb.Model.Transaction
         public KYCBasicDetailsVM()
         {
             DocumentUploadList = new List<DocumentUploadDetailsVM>();
+            Trans_KYCAddresses = new List<KYCAddressesVM>();
         }
         public Nullable<int> KYCID { get; set; }
         public string AdhaarNo { get; set; }
@@ -98,6 +99,7 @@ namespace MangalWeb.Model.Transaction
         public DocumentUploadDetailsVM DocumentUploadVM { get; set; }
         public List<DocumentUploadDetailsVM> DocumentUploadList { get; set; }
 
+        public virtual IList<KYCAddressesVM> Trans_KYCAddresses { get; set; }
 
     }
 }

@@ -12,13 +12,11 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_UserCategory
+    public partial class Trn_RequestForm
     {
-        public int refid { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> Organhieraechyid { get; set; }
-        public Nullable<bool> status1 { get; set; }
-    
-        public virtual User_Category_Hierarchy User_Category_Hierarchy { get; set; }
+        public int Id { get; set; }
+        public int KycId { get; set; }
+        public int SanctionId { get; set; }
+        public Nullable<System.DateTime> creationdate { get; set; }
     }
 }

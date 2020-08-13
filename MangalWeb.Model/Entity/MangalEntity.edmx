@@ -1504,6 +1504,27 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Property Name="CreatedDate" Type="smalldatetime" />
           <Property Name="isActive" Type="nvarchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="Trans_KYCAddresses">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KYCID" Type="int" Nullable="false" />
+          <Property Name="AddressCategory" Type="nvarchar" MaxLength="50" />
+          <Property Name="ResidenceCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="BuildingHouseName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Road" Type="nvarchar" MaxLength="50" />
+          <Property Name="BuildingPlotNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoomBlockNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="NearestLandmark" Type="nvarchar" MaxLength="50" />
+          <Property Name="Distance_km" Type="nvarchar" MaxLength="50" />
+          <Property Name="PinCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="StateID" Type="int" Nullable="false" />
+          <Property Name="CityID" Type="int" Nullable="false" />
+          <Property Name="Area" Type="nvarchar" MaxLength="50" />
+          <Property Name="ZoneId" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Trn_DocumentUpload">
           <Key>
             <PropertyRef Name="DocId" />
@@ -1540,6 +1561,15 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Property Name="VerifiedBy" Type="int" />
           <Property Name="Status" Type="varchar" MaxLength="20" />
           <Property Name="ReasonForRejection" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Trn_RequestForm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="KycId" Type="int" Nullable="false" />
+          <Property Name="SanctionId" Type="int" Nullable="false" />
+          <Property Name="creationdate" Type="datetime" />
         </EntityType>
         <EntityType Name="TSchemeMaster_BasicDetails">
           <Key>
@@ -1734,6 +1764,18 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="CustName" Type="varchar" MaxLength="92" />
           <Property Name="LoanDate1" Type="varchar" MaxLength="20" />
         </EntityType>-->
+        <Association Name="FK__tbl_UserC__Organ__51BA1E3A">
+          <End Role="User_Category_Hierarchy" Type="Self.User_Category_Hierarchy" Multiplicity="0..1" />
+          <End Role="tbl_UserCategory" Type="Self.tbl_UserCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Category_Hierarchy">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tbl_UserCategory">
+              <PropertyRef Name="Organhieraechyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Mst_AuditCheckList_Mst_AuditCategory">
           <End Role="Mst_AuditCategory" Type="Self.Mst_AuditCategory" Multiplicity="1" />
           <End Role="Mst_AuditCheckList" Type="Self.Mst_AuditCheckList" Multiplicity="*" />
@@ -1890,6 +1932,18 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_TGLKYC_BasicDetails">
+          <End Role="TGLKYC_BasicDetails" Type="Self.TGLKYC_BasicDetails" Multiplicity="1" />
+          <End Role="Trans_KYCAddresses" Type="Self.Trans_KYCAddresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TGLKYC_BasicDetails">
+              <PropertyRef Name="KYCID" />
+            </Principal>
+            <Dependent Role="Trans_KYCAddresses">
+              <PropertyRef Name="KYCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TSchemeMaster_BasicDetails_Mst_Product">
           <End Role="Mst_Product" Type="Self.Mst_Product" Multiplicity="1" />
           <End Role="TSchemeMaster_BasicDetails" Type="Self.TSchemeMaster_BasicDetails" Multiplicity="*" />
@@ -1979,8 +2033,10 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <EntitySet Name="tblStateMaster" EntityType="Self.tblStateMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblZonemaster" EntityType="Self.tblZonemaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TGLKYC_BasicDetails" EntityType="Self.TGLKYC_BasicDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trans_KYCAddresses" EntityType="Self.Trans_KYCAddresses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trn_DocumentUpload" EntityType="Self.Trn_DocumentUpload" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trn_DocUploadDetails" EntityType="Self.Trn_DocUploadDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trn_RequestForm" EntityType="Self.Trn_RequestForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TSchemeMaster_BasicDetails" EntityType="Self.TSchemeMaster_BasicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Category" EntityType="Self.User_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Category_Hierarchy" EntityType="Self.User_Category_Hierarchy" Schema="dbo" store:Type="Tables" />
@@ -2634,6 +2690,10 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
     [UserTypeDetails].[UserType] AS [UserType]
     FROM [dbo].[UserTypeDetails] AS [UserTypeDetails]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK__tbl_UserC__Organ__51BA1E3A" Association="Self.FK__tbl_UserC__Organ__51BA1E3A">
+            <End Role="User_Category_Hierarchy" EntitySet="User_Category_Hierarchy" />
+            <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
+          </AssociationSet>
           <AssociationSet Name="FK_Mst_AuditCheckList_Mst_AuditCategory" Association="Self.FK_Mst_AuditCheckList_Mst_AuditCategory">
             <End Role="Mst_AuditCategory" EntitySet="Mst_AuditCategory" />
             <End Role="Mst_AuditCheckList" EntitySet="Mst_AuditCheckList" />
@@ -2685,6 +2745,10 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <AssociationSet Name="FK_tblStateMaster_tbl_CountryMaster" Association="Self.FK_tblStateMaster_tbl_CountryMaster">
             <End Role="tbl_CountryMaster" EntitySet="tbl_CountryMaster" />
             <End Role="tblStateMaster" EntitySet="tblStateMaster" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TGLKYC_BasicDetails" Association="Self.fk_TGLKYC_BasicDetails">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="Trans_KYCAddresses" EntitySet="Trans_KYCAddresses" />
           </AssociationSet>
           <AssociationSet Name="FK_TSchemeMaster_BasicDetails_Mst_Product" Association="Self.FK_TSchemeMaster_BasicDetails_Mst_Product">
             <End Role="Mst_Product" EntitySet="Mst_Product" />
@@ -3641,6 +3705,16 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <FunctionImport Name="GetDocumentUploadById" ReturnType="Collection(MangalDBNewModel.GetDocumentUploadById_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Trans_KYCAddresses" EntityType="MangalDBNewModel.Trans_KYCAddresses" />
+          <EntitySet Name="Trn_RequestForm" EntityType="MangalDBNewModel.Trn_RequestForm" />
+          <AssociationSet Name="FK__tbl_UserC__Organ__51BA1E3A" Association="MangalDBNewModel.FK__tbl_UserC__Organ__51BA1E3A">
+            <End Role="User_Category_Hierarchy" EntitySet="User_Category_Hierarchy" />
+            <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TGLKYC_BasicDetails" Association="MangalDBNewModel.fk_TGLKYC_BasicDetails">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="Trans_KYCAddresses" EntitySet="Trans_KYCAddresses" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -4271,6 +4345,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Organhieraechyid" Type="Int32" />
           <Property Name="status1" Type="Boolean" />
+          <NavigationProperty Name="User_Category_Hierarchy" Relationship="MangalDBNewModel.FK__tbl_UserC__Organ__51BA1E3A" FromRole="tbl_UserCategory" ToRole="User_Category_Hierarchy" />
         </EntityType>
         <EntityType Name="Trn_DocumentUpload">
           <Key>
@@ -4350,6 +4425,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_UserCategory" Relationship="MangalDBNewModel.FK__tbl_UserC__Organ__51BA1E3A" FromRole="User_Category_Hierarchy" ToRole="tbl_UserCategory" />
         </EntityType>
         <Association Name="FK_tblCompanyBranchMaster_Mst_BranchType">
           <End Type="MangalDBNewModel.Mst_BranchType" Role="Mst_BranchType" Multiplicity="1" />
@@ -4460,6 +4536,7 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="Distance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PinCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Trans_KYCAddresses" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="Trans_KYCAddresses" />
         </EntityType>
         <ComplexType Name="GetDocumentUploadById_Result">
           <Property Type="Int32" Name="KycId" Nullable="false" />
@@ -4472,6 +4549,61 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Type="String" Name="DocDate" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="Comments" Nullable="false" MaxLength="100" />
         </ComplexType>
+        <EntityType Name="Trans_KYCAddresses">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KYCID" Type="Int32" Nullable="false" />
+          <Property Name="AddressCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResidenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingHouseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Road" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingPlotNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoomBlockNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NearestLandmark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Distance_km" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PinCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateID" Type="Int32" Nullable="false" />
+          <Property Name="CityID" Type="Int32" Nullable="false" />
+          <Property Name="Area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ZoneId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="Trans_KYCAddresses" ToRole="TGLKYC_BasicDetails" />
+        </EntityType>
+        <EntityType Name="Trn_RequestForm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="KycId" Type="Int32" Nullable="false" />
+          <Property Name="SanctionId" Type="Int32" Nullable="false" />
+          <Property Name="creationdate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK__tbl_UserC__Organ__51BA1E3A">
+          <End Type="MangalDBNewModel.User_Category_Hierarchy" Role="User_Category_Hierarchy" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.tbl_UserCategory" Role="tbl_UserCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Category_Hierarchy">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tbl_UserCategory">
+              <PropertyRef Name="Organhieraechyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TGLKYC_BasicDetails">
+          <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="1" />
+          <End Type="MangalDBNewModel.Trans_KYCAddresses" Role="Trans_KYCAddresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TGLKYC_BasicDetails">
+              <PropertyRef Name="KYCID" />
+            </Principal>
+            <Dependent Role="Trans_KYCAddresses">
+              <PropertyRef Name="KYCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5936,6 +6068,38 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Trans_KYCAddresses">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Trans_KYCAddresses">
+              <MappingFragment StoreEntitySet="Trans_KYCAddresses">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="Distance_km" ColumnName="Distance_km" />
+                <ScalarProperty Name="NearestLandmark" ColumnName="NearestLandmark" />
+                <ScalarProperty Name="RoomBlockNo" ColumnName="RoomBlockNo" />
+                <ScalarProperty Name="BuildingPlotNo" ColumnName="BuildingPlotNo" />
+                <ScalarProperty Name="Road" ColumnName="Road" />
+                <ScalarProperty Name="BuildingHouseName" ColumnName="BuildingHouseName" />
+                <ScalarProperty Name="ResidenceCode" ColumnName="ResidenceCode" />
+                <ScalarProperty Name="AddressCategory" ColumnName="AddressCategory" />
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trn_RequestForm">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Trn_RequestForm">
+              <MappingFragment StoreEntitySet="Trn_RequestForm">
+                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
+                <ScalarProperty Name="SanctionId" ColumnName="SanctionId" />
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

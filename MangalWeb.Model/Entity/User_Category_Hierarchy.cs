@@ -14,7 +14,16 @@ namespace MangalWeb.Model.Entity
     
     public partial class User_Category_Hierarchy
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User_Category_Hierarchy()
+        {
+            this.tbl_UserCategory = new HashSet<tbl_UserCategory>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_UserCategory> tbl_UserCategory { get; set; }
     }
 }

@@ -119,6 +119,8 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<User_Category_Hierarchy> User_Category_Hierarchy { get; set; }
         public virtual DbSet<tbl_KYCMobileOTP> tbl_KYCMobileOTP { get; set; }
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
+        public virtual DbSet<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
+        public virtual DbSet<Trn_RequestForm> Trn_RequestForm { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

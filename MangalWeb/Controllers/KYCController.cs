@@ -1,6 +1,7 @@
 ﻿using MangalWeb.Model.Transaction;
 using MangalWeb.Service.Service;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
@@ -21,6 +22,7 @@ namespace MangalWeb.Controllers
             ButtonVisiblity("Index");
             ViewBag.SourceList = new SelectList(_kycService.GetSourceOfApplicationList(), "Soa_Name", "Soa_Name");
             ViewBag.PinCodeList = new SelectList(_kycService.GetAllPincodes(), "Pc_Id", "Pc_Desc");
+            ViewBag.PinCodes = _kycService.GetAllPincodes();
             ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
             ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
             KYCBasicDetailsVM kycVM = new KYCBasicDetailsVM();
@@ -163,5 +165,25 @@ namespace MangalWeb.Controllers
             }
 
         }
+
+        #region Insert Document Data
+
+        public bool InsertDocumentData(List<DocumentUploadDetailsVM> lstDocUploadTrn)
+        {
+            bool retVal = false;
+            try
+            {
+                lstDocUploadTrn = (List<DocumentUploadDetailsVM>)Session["sub"];
+                _kycService.SaveDocument(lstDocUploadTrn);
+                retVal = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return retVal;
+        }
+        #endregion Insert Data
     }
+
 }
