@@ -42,7 +42,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<newbharatTGLGoldStock> newbharatTGLGoldStocks { get; set; }
         public virtual DbSet<tbl_GLDocumentMaster> tbl_GLDocumentMaster { get; set; }
         public virtual DbSet<tbl_SentJVCustHistory> tbl_SentJVCustHistory { get; set; }
-        public virtual DbSet<tbl_UserLogin> tbl_UserLogin { get; set; }
         public virtual DbSet<tblCreateCompanyMaster> tblCreateCompanyMasters { get; set; }
         public virtual DbSet<tblLogin> tblLogins { get; set; }
         public virtual DbSet<TestDB> TestDBs { get; set; }
@@ -69,14 +68,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLOutwardForm_GoldDetails> TGLOutwardForm_GoldDetails { get; set; }
         public virtual DbSet<TGLSmsHistory> TGLSmsHistories { get; set; }
         public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
-        public virtual DbSet<UserDetail> UserDetails { get; set; }
-        public virtual DbSet<UserFormAuthentication> UserFormAuthentications { get; set; }
-        public virtual DbSet<UserFormAuthorisationDetail> UserFormAuthorisationDetails { get; set; }
-        public virtual DbSet<UserFormDetail> UserFormDetails { get; set; }
-        public virtual DbSet<UserMenuDetail> UserMenuDetails { get; set; }
-        public virtual DbSet<UserModuleAuthentication> UserModuleAuthentications { get; set; }
-        public virtual DbSet<UserModuleDetail> UserModuleDetails { get; set; }
-        public virtual DbSet<UserTypeDetail> UserTypeDetails { get; set; }
         public virtual DbSet<tbl_CountryMaster> tbl_CountryMaster { get; set; }
         public virtual DbSet<tblDocumentMaster> tblDocumentMasters { get; set; }
         public virtual DbSet<tblINV_ItemMaster> tblINV_ItemMaster { get; set; }
@@ -121,6 +112,9 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
         public virtual DbSet<Trn_RequestForm> Trn_RequestForm { get; set; }
+        public virtual DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<UserAuthorization> UserAuthorizations { get; set; }
+        public virtual DbSet<UserDetail> UserDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
