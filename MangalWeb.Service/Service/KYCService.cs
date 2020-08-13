@@ -145,5 +145,10 @@ namespace MangalWeb.Service.Service
             }
             return AppNo;
         }
+
+        public void SaveDocument(List<DocumentUploadDetailsVM> lstDocUploadTrn)
+        {
+            _kycRepository.SaveDocument(lstDocUploadTrn);
+        }
     }
 }

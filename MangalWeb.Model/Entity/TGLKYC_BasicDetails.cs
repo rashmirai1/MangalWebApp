@@ -14,6 +14,12 @@ namespace MangalWeb.Model.Entity
     
     public partial class TGLKYC_BasicDetails
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TGLKYC_BasicDetails()
+        {
+            this.Trans_KYCAddresses = new HashSet<Trans_KYCAddresses>();
+        }
+    
         public int KYCID { get; set; }
         public string CustomerID { get; set; }
         public Nullable<System.DateTime> AppliedDate { get; set; }
@@ -93,5 +99,8 @@ namespace MangalWeb.Model.Entity
         public string Distance { get; set; }
         public string PinCode { get; set; }
         public string Area { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
     }
 }

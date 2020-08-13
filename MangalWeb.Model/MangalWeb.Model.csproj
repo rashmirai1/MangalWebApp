@@ -120,9 +120,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MangalEntity.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Entity\Menu.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\Mst_AuditCategory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -273,6 +270,9 @@
     <Compile Include="Entity\tbl_UserCategory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tbl_UserLogin.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\TestDB.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -339,7 +339,13 @@
     <Compile Include="Entity\TGL_DefaultOSPercentage.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\TGL_FormAuthorizationDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\TGL_FormDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Trans_KYCAddresses.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Trn_DocumentUpload.cs">
@@ -357,10 +363,25 @@
     <Compile Include="Entity\TSchemeMaster_EffectiveROI.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\UserAuthorization.cs">
+    <Compile Include="Entity\UserDetail.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\UserDetail.cs">
+    <Compile Include="Entity\UserFormAuthentication.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\UserFormAuthorisationDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\UserFormDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\UserMenuDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\UserModuleAuthentication.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\UserModuleDetail.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\UserTypeDetail.cs">
@@ -379,6 +400,7 @@
     <Compile Include="Masters\CityViewModel.cs" />
     <Compile Include="Masters\DeviationViewModel.cs" />
     <Compile Include="Masters\DistanceDeviationDetailsVM.cs" />
+    <Compile Include="Masters\DocumentUploadViewModel.cs" />
     <Compile Include="Masters\DocumentViewModel.cs" />
     <Compile Include="Masters\FinancialYearViewModel.cs" />
     <Compile Include="Masters\GstViewModel.cs" />
@@ -400,16 +422,9 @@
     <Compile Include="Transaction\DocumentUploadDetailsVM.cs" />
     <Compile Include="Transaction\DocumentUploadViewModel.cs" />
     <Compile Include="Transaction\FillAddressByPinCode.cs" />
+    <Compile Include="Transaction\KYCAddressesVM.cs" />
     <Compile Include="Transaction\KYCBasicDetailsVM.cs" />
     <Compile Include="Transaction\KYCDocumentDetailsVM.cs" />
-    <Compile Include="Transaction\RequestFormViewModel.cs" />
-    <Compile Include="Utilities\LoginViewModel.cs" />
-    <Compile Include="Utilities\Menus.cs" />
-    <Compile Include="Utilities\MenuViewModel.cs" />
-    <Compile Include="Utilities\User.cs" />
-    <Compile Include="Utilities\UserAuthorization.cs" />
-    <Compile Include="Utilities\UserAuthorizationForms.cs" />
-    <Compile Include="Utilities\UserCategory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
