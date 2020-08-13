@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MangalWeb.Model.Utilities
 {
-    public class Menu 
+    public class Menus 
     {
         public int? ParentId { get; set; }
         public string Sequence { get; set; }
@@ -17,9 +17,9 @@ namespace MangalWeb.Model.Utilities
         public string ToolTip { get; set; }
         public string IconPath { get; set; }
 
-        public virtual Menu MyParent { get; set; }
+        public virtual Menus MyParent { get; set; }
 
-        public virtual ICollection<Menu> MenuCollection { get; set; }
+        public virtual ICollection<Menus> MenuCollection { get; set; }
         public virtual ICollection<UserAuthorization> MyUserAuthorizationList { get; set; }
 
 

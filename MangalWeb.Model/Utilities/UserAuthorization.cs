@@ -21,7 +21,7 @@ namespace MangalWeb.Model.Utilities
 
         public List<UserAuthorizationForms> userauthorizationformsList { get; set; }
 
-        public virtual Menu MyForm { get; set; }
+        public virtual Menus MyForm { get; set; }
         public virtual User MyUser { get; set; }
 
         public UserAuthorization()

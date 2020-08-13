@@ -404,7 +404,8 @@
     <Compile Include="Transaction\KYCDocumentDetailsVM.cs" />
     <Compile Include="Transaction\RequestFormViewModel.cs" />
     <Compile Include="Utilities\LoginViewModel.cs" />
-    <Compile Include="Utilities\Menu.cs" />
+    <Compile Include="Utilities\Menus.cs" />
+    <Compile Include="Utilities\MenuViewModel.cs" />
     <Compile Include="Utilities\User.cs" />
     <Compile Include="Utilities\UserAuthorization.cs" />
     <Compile Include="Utilities\UserAuthorizationForms.cs" />

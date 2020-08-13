@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MangalWeb.Model.Utilities;
+using MangalWeb.Service.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +10,7 @@ namespace MangalWeb.Controllers
 {
     public class BaseController : Controller
     {
+        UserAuthorizationService _userAuthorizationService = new UserAuthorizationService();
         public ActionResult Menu()
         {
             return PartialView("Menu");
@@ -16,6 +19,15 @@ namespace MangalWeb.Controllers
         public ActionResult Header()
         {
             return PartialView("Header");
+        }
+
+        public ActionResult UserAuthorizationForm(int MenuId, int UserId)
+        {
+            Session["MenuId"] = MenuId;
+            Session["UserLoginID"] = UserId;
+            IList<UserAuthorizationForms> user = _userAuthorizationService.GetFormDetails_FormIdWise(MenuId, UserId);
+            var jsonResult = Json(user, JsonRequestBehavior.AllowGet);
+            return jsonResult;
         }
 
         public void ButtonVisiblity(string action)

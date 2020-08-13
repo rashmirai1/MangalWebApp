@@ -290,7 +290,7 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label" for="inputDefault">User Category</label>
                                         <div class="col-md-10">
-                                            @Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.UserCategoryID, new SelectList(ViewBag.usercategory, "Value", "Text"), "--Select User Category--", new { @class = "form-control" })
+                                            @*@Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.UserCategoryID, new SelectList(ViewBag.usercategory, "Value", "Text"), "--Select User Category--", new { @class = "form-control" })*@
                                             <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.UserCategoryID)</span>
                                         </div>
                                     </div>
@@ -301,7 +301,7 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label" for="inputDefault">User Name</label>
                                         <div class="col-md-10">
-                                            @Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.UserID, new SelectList(ViewBag.user, "Value", "Text"), "--Select User--", new { @class = "form-control" })
+                                            @*@Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.UserID, new SelectList(ViewBag.user, "Value", "Text"), "--Select User--", new { @class = "form-control" })*@
                                             <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.UserID)</span>
                                         </div>
                                     </div>
@@ -312,7 +312,7 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label" for="inputDefault">Menu</label>
                                         <div class="col-md-10">
-                                            @Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.FormID, new SelectList(ViewBag.menus, "Value", "Text"), "--Select Menu--", new { @class = "form-control" })
+                                            @*@Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.FormID, new SelectList(ViewBag.menus, "Value", "Text"), "--Select Menu--", new { @class = "form-control" })*@
                                             <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.FormID)</span>
                                         </div>
                                     </div>
