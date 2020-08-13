@@ -413,7 +413,6 @@
     <Compile Include="Utilties\User.cs" />
     <Compile Include="Utilties\UserAuthorization.cs" />
     <Compile Include="Utilties\UserAuthorizationForms.cs" />
-    <Compile Include="Utilties\UserAuthorizationService.cs" />
     <Compile Include="Utilties\UserCategory.cs" />
   </ItemGroup>
   <ItemGroup>
