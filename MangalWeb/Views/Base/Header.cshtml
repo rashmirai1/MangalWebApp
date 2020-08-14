@@ -71,7 +71,39 @@
     </ul>
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script type="text/javascript">
-    $(document).ready(function () {
+        $(document).ready(function () {
+            debugger;
+            var url = '@Url.Action("UserAuthorizationForm", "Base")';
+            var rowIndex = 1;
+            $.ajax({
+                url: url,
+                data: { MenuId: @Session["MenuId"],UserId:  @Session["UserLoginID"]},
+                //data: { MenuId: 1, UserId: 1 },
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    if (data != "") {
+                        for (var x = 0; x < data.length; x++) {
+                            if (data[x].isEdit == false) {
+                                $("#btn_edit").attr("style", "display:none;");
+                            }
+                            if (data[x].isSave == false) {
+                                $("#btn_save").attr("style", "display:none;");
+                            }
+                            if (data[x].isView == false) {
+                                $("#btn_view").attr("style", "display:none;");
+                            }
+                            if (data[x].isDelete == false) {
+                                $("#btnDelete").attr("style", "display:none;");
+                            }
+                        }
+                    }
+                    else {
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
     });
     </script>
 

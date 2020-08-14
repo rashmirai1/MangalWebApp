@@ -1,170 +1,78 @@
-﻿@model IEnumerable<MangalWeb.Model.Utilities.MenuViewModel>
-@using MangalWeb.Model.Utilities
-    <aside id="sidebar_left" class="nano nano-primary  affix has-scrollbar sidebar-light sidebar-light1">
-        <div class="nano-content">
-            <!-- sidebar menu -->
-            *<ul class="nav sidebar-menu">
-                <li class="active">
-                    <a class="accordion-toggle">
-                        <span class="glyphicons glyphicons-global"></span>
-                        <span class="sidebar-title">Masters</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="nav sub-nav">
-                        <li>
-                            <a href="/State/State">
-                                <span class="glyphicons glyphicons-google_maps"></span>State
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/City/City">
-                                <span class="glyphicons glyphicons-google_maps"></span>City
-                            </a>
-                        </li>                        
-                        <li>
-                            <a href="/Zone/Zone">
-                                <span class="glyphicons glyphicons-google_maps"></span>Zone
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/Pincode/Pincode">
-                                <span class="glyphicons glyphicons-google_maps"></span>Pin Code
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/SourceofApplication/SourceApplication">
-                                <span class="glyphicons glyphicons-google_maps"></span>Source of Application
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/Document/Document">
-                                <span class="glyphicons glyphicons-google_maps"></span>Document Master
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/Reason/Reason">
-                                <span class="glyphicons glyphicons-google_maps"></span>Reason Master
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/Ornament/Ornament">
-                                <span class="glyphicons glyphicons-google_maps"></span>Ornament Master
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/AuditCheckList/AuditCheckList">
-                                <span class="glyphicons glyphicons-google_maps"></span>Audit Check List
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/GST/GST">
-                                <span class="glyphicons glyphicons-google_maps"></span>GST Master
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/Charge/Charge">
-                                <span class="glyphicons glyphicons-google_maps"></span>Charge Master
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/ProductRate/ProductRate">
-                                <span class="glyphicons glyphicons-google_maps"></span>Product Rate Master
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/Scheme/Scheme">
-                                <span class="glyphicons glyphicons-google_maps"></span>Scheme Master
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/PenaltySlab/PenaltySlab">
-                                <span class="glyphicons glyphicons-google_maps"></span>Penalty Slab Master
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/Deviation/Deviation">
-                                <span class="glyphicons glyphicons-google_maps"></span>Deviation Master
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/Branch/Branch">
-                                <span class="glyphicons glyphicons-google_maps"></span>Branch Master
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/FinancialYear/FinancialYear">
-                                <span class="glyphicons glyphicons-google_maps"></span>Financial Year Master
-                            </a>
-                        </li>
-                    </ul>
-                    <a class="accordion-toggle">
-                        <span class="glyphicons glyphicons-global"></span>
-                        <span class="sidebar-title">Transactions</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="nav sub-nav">
-                        <li>
-                            <a href="/Kyc/Index">
-                                <span class="glyphicons glyphicons-google_maps"></span>KYC
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/DocumentUpload/DocumentUpload">
-                                <span class="glyphicons glyphicons-google_maps"></span>Document Upload
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/DocumentVerification/DocumentVerification">
-                                <span class="glyphicons glyphicons-google_maps"></span>Document Verification
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/RequestForm/RequestForm">
-                                <span class="glyphicons glyphicons-google_maps"></span>Request Form
-                            </a>
-                        </li>
-                    </ul>
-                    <a class="accordion-toggle">
-                        <span class="glyphicons glyphicons-global"></span>
-                        <span class="sidebar-title">Reports</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="nav sub-nav">
-                        <li>
-                            <a href="/State/State">
-                                <span class="glyphicons glyphicons-google_maps"></span>KYC
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/City/City">
-                                <span class="glyphicons glyphicons-google_maps"></span>Doc Upload
-                            </a>
-                        </li>
-                    </ul>
-                    <a class="accordion-toggle">
-                        <span class="glyphicons glyphicons-global"></span>
-                        <span class="sidebar-title">Utilities</span>
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="nav sub-nav">
-                        <li>
-                            <a href="/State/State">
-                                <span class="glyphicons glyphicons-google_maps"></span>KYC
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/City/City">
-                                <span class="glyphicons glyphicons-google_maps"></span>Doc Upload
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="sidebar-toggle-mini">
-                <a href="#">
-                    <span class="fa fa-sign-out"></span>
-                </a>
-            </div>
-        </div>
-    </aside>
+﻿@model IEnumerable<MangalWeb.Model.Utilities.MenusViewModel>
+@using MangalWeb.Model.Utilities;
+@using MangalWeb.Service.Service
+@{
+    if (Session["UserLoginID"] != null && !Session["UserLoginID"].ToString().Equals(""))
+    {
+        UserAuthorizationService menu = new UserAuthorizationService();
+        MenusViewModel formDetails = new MenusViewModel();
+        IList<MenusViewModel> plist = menu.UserAuthorization_ParentPage(Convert.ToInt32(Session["UserLoginID"].ToString()));
+        {
+            <aside id="sidebar_left" class="nano nano-primary  affix has-scrollbar sidebar-light sidebar-light1">
+                <div class="nano-content">
+                    <!-- sidebar menu -->
+                    <ul class="nav sidebar-menu">
+                        @foreach (var pitem in plist)
+                        {
+            <!--<li class="sidebar-label pt20">Menu</li>-->
+                            <li class="active">
+                                <a href="@pitem.Url" class="@(@pitem.Name == "Dashboard" ? "" : "accordion-toggle")">
+                                    @{
+                                        var menuname = pitem.Name;
+                                        if (menuname == "Transactions")
+                                        {
+                                            <span class="fa fa-@pitem.IconPath"></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="glyphicons glyphicons-@pitem.IconPath"></span>
+                                        }
+                                    }
 
+                                    <span class="sidebar-title">@pitem.Name</span>
+                                    @{
+                                        var name = pitem.Name;
+                                        if (name == "Dashboard")
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            <span class="caret"></span>
+                                        }
+                                    }
+                                </a>
+                                <ul class="nav sub-nav">
+                                    @{
+                                        IList<MenusViewModel> clist = menu.GetAuthorizeSubPagesList_PrentidWise(Convert.ToInt32(Session["UserLoginID"].ToString()), pitem.ParentId);
+                                        if (clist != null && clist.Count > 0)
+                                        {
+                                            foreach (var citem in clist)
+                                            {
+                                                if (citem.isVisible)
+                                                {
+                                                    <li>
+                                                        <a href="~/@citem.Url" onclick="SetUserMenuName(@citem.FormId,@citem.UserID);">
+                                                            <span class="glyphicons glyphicons-@citem.IconPath"></span>@citem.Name.Trim()
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                        }
+                                    }
+                                </ul>
+
+                            </li>
+                                        }
+                    </ul>
+                    <div class="sidebar-toggle-mini">
+                        <a href="#">
+                            <span class="fa fa-sign-out"></span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+                                            }
+                                        }
+}
+}

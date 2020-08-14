@@ -23,24 +23,15 @@ namespace MangalWeb.Model.Utilities
 
         public int index { get; set; }
         public int ParentID { get; set; }
-        public string flag { get; set; }
+        public int flag { get; set; }
         public string ParentForm { get; set; }
-
-        [Required(ErrorMessage = "Please select Branch")]
-        public int BranchID { get; set; }
-
-        /// <summary>
-        /// Gets or sets the UserCategory status
-        /// </summary>
         public bool isVisible { get; set; }
         public string VisibleName { get; set; }
-   
         public bool isEdit { get; set; }
         public bool isSave { get; set; }
         public bool isDelete { get; set; }
         public bool isView { get; set; }
-
         public bool isSearch { get; set; }
-
+        public int CreatedBy { get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace MangalWeb.Controllers
             return PartialView("Header");
         }
 
+        [HttpPost]
         public ActionResult UserAuthorizationForm(int MenuId, int UserId)
         {
             Session["MenuId"] = MenuId;

@@ -1,10 +1,9 @@
-﻿@model MangalWeb.Model.Utilities.UserAuthorization
+﻿@model MangalWeb.Model.Utilities.UserAuthorizations
 @{
 
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <script type="text/javascript" src="~/Content/vendor/jquery/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="~/Content/vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
 <script type="text/javascript">
@@ -60,7 +59,7 @@
                 type: 'POST',
                 dataType: 'json',
                 success: function (data) {
-
+                    debugger;
                     if (data != "") {
                         debugger;
                         var html = '';
@@ -80,6 +79,7 @@
                             else {
                                 disabledString = 'disabled';
                             }
+
                             if (data[x].isEdit == true)
                                 checkedEditString = "checked=true";
                             if (data[x].isSave == true)
@@ -91,6 +91,7 @@
                             if (data[x].isSearch == true)
                                 checkedSearchString = "checked=true";
                             var usercategoryid = $('#UserAuthorizationForms_UserCategoryID').val();
+
                             if ((data[x].ParentID == 4 || data[x].ParentID == 5)) {
                                 html += "<tr class='userauthorize'><td>  <input " + checkedVisibleString + "  visible='yes' type='checkbox' name='visible_id" + x + "'    class='visible_id'  />	</td>";
                                 html += "<td value=" + data[x].FormID + ">" + data[x].FormName + "</td><td value=" + data[x].ParentID + ">" + data[x].ParentForm + "</td>";
@@ -100,17 +101,8 @@
                                 html += "<td></td>";
                                 rowindex++;
                             }
-                            else if (data[x].ParentID == 1) {
-                                html += "<tr class='userauthorize'><td>  <input " + checkedVisibleString + "  visible='yes' type='checkbox' name='visible_id" + x + "'    class='visible_id'  />	</td>";
-                                html += "<td value=" + data[x].FormID + ">" + data[x].FormName + "</td><td value=" + data[x].ParentID + ">" + data[x].ParentForm + "</td>";
-                                html += "<td></td>";
-                                html += "<td></td>";
-                                html += "<td></td>";
-                                html += "<td><input " + disabledString + " view='yes' type='checkbox' " + checkedViewString + " name='isView" + x + "'  class='isView' ></td>";
-                                rowindex++;
-                            }
                             else {
-                                html += "<tr class='userauthorize'><td>  <input " + checkedVisibleString + "  visible='yes' type='checkbox' name='visible_id" + x + "'    class='visible_id'  />	</td>";
+                                html += "<tr class='userauthorize'><td><input " + checkedVisibleString + "  visible='yes' type='checkbox' name='visible_id" + x + "'    class='visible_id'  />	</td>";
                                 html += "<td value=" + data[x].FormID + ">" + data[x].FormName + "</td><td value=" + data[x].ParentID + ">" + data[x].ParentForm + "</td>";
                                 html += "<td><input type='checkbox' " + disabledString + " Edit='yes' " + checkedEditString + "  name='isEdit" + x + "' class='isEdit'></td>";
                                 html += "<td><input type='checkbox' " + disabledString + "  " + checkedSaveString + " save = 'yes'  name='isSave" + x + "' class='isSave' ></td>";
@@ -136,18 +128,13 @@
     }
 </script>
 <script type="text/javascript">
-
-
     $(document).on('click', 'input[type=checkbox]', function () {
         var visible = $(this).attr('checked');
-
         if (typeof visible !== typeof undefined && visible !== false) {
-
             $(this).removeAttr('checked');
         }
         else {
             $(this).attr('checked', 'true');
-
         }
     })
 
@@ -178,11 +165,11 @@
             delete_id = $("input[name=isDelete" + i + "]").attr('checked');
             view = $("input[name=isView" + i + "]").attr('checked');
             var UserID = $('#UserAuthorizationForms_UserID').val();
-            var url = '/UserAuthorization/UserAuthorization1';
+            var url = '/UserAuthorization/SaveUserAuthorization';
             $.ajax({
                 url: url,
                 //data: { formid: formid, parentformid: parentformid, visible: CheckStatus(visible), },
-                data: { index: i, UserID: UserID, formid: formid, parentformid: parentformid, visible: CheckStatus(visible), edit: CheckStatus(edit), save: CheckStatus(save), delete_id: CheckStatus(delete_id), view: CheckStatus(view)},
+                data: { index: i, UserID: UserID, formid: formid, parentformid: parentformid, visible: CheckStatus(visible), edit: CheckStatus(edit), save: CheckStatus(save), delete_id: CheckStatus(delete_id), view: CheckStatus(view) },
                 type: 'POST',
                 dataType: 'json',
                 cache: false,
@@ -279,127 +266,85 @@
         </div>
     </header>
         <!-- start: page  form-->
-        <section id="content" class="animated fadeIn">
-            <div class="row">
-                <div class="col-lg-12">
-                    <section class="panel">
-                        <div class="panel-body">
-                            @TempData["PanelCity"]
-                            <div class="form-horizontal" @TempData["PanelCityStyle"]>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label" for="inputDefault">User Category</label>
-                                        <div class="col-md-10">
-                                            @*@Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.UserCategoryID, new SelectList(ViewBag.usercategory, "Value", "Text"), "--Select User Category--", new { @class = "form-control" })*@
-                                            <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.UserCategoryID)</span>
-                                        </div>
-                                    </div>
-                                </div>
+    <section id="content" class="animated fadeIn">
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="panel">
+                    <div class="panel-body">
+                        @TempData["PanelCity"]
+                        <div class="form-horizontal" @TempData["PanelCityStyle"]>
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label" for="inputDefault">User Name</label>
-                                        <div class="col-md-10">
-                                            @*@Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.UserID, new SelectList(ViewBag.user, "Value", "Text"), "--Select User--", new { @class = "form-control" })*@
-                                            <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.UserID)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label" for="inputDefault">Menu</label>
-                                        <div class="col-md-10">
-                                            @*@Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.FormID, new SelectList(ViewBag.menus, "Value", "Text"), "--Select Menu--", new { @class = "form-control" })*@
-                                            <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.FormID)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                </div>
-                                <br />
-                                <div class="col-md-12">
-                                    <div class="table-responsive" id="tblUserAuthoriztion">
-                                        <table class="table table-bordered mb-none" id="tblForm" style="border: 1px solid;">
-                                            <thead>
-                                                <tr>
-                                                    <th class="col-md-1 btn-primary">
-                                                        Visible
-                                                    </th>
-                                                    <th class="col-md-3 btn-primary" > Form Name</th>
-                                                    <th class="col-md-3 btn-primary" >Main Form</th>
-                                                    <th class="col-md-1 btn-primary" >
-                                                        Edit
-                                                    </th>
-                                                    <th class="col-md-1 btn-primary" >
-                                                        Save
-                                                    </th>
-                                                    <th class="col-md-1 btn-primary" >
-                                                        Delete
-                                                    </th>
-                                                    <th class="col-md-1 btn-primary">
-                                                        View
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="tblFormslist"></tbody>
-                                        </table>
+                                    <label class="col-md-2 control-label" for="inputDefault">User Category</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.UserCategoryID, new SelectList(ViewBag.usercategory, "Value", "Text"), "--Select User Category--", new { @class = "form-control" })
+                                        <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.UserCategoryID)</span>
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label" for="inputDefault">User Name</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.UserID, new SelectList(ViewBag.user, "Value", "Text"), "--Select User--", new { @class = "form-control" })
+                                        <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.UserID)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label" for="inputDefault">Menu</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.FormID, new SelectList(ViewBag.menus, "Value", "Text"), "--Select Menu--", new { @class = "form-control" })
+                                        <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.FormID)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                            </div>
+                            <br />
+                            <div class="col-md-12">
+                                <div class="table-responsive" id="tblUserAuthoriztion">
+                                    <table class="table table-bordered mb-none" id="tblForm" style="border: 1px solid;">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-1 btn-primary">
+                                                    Visible
+                                                </th>
+                                                <th class="col-md-3 btn-primary"> Form Name</th>
+                                                <th class="col-md-3 btn-primary">Main Form</th>
+                                                <th class="col-md-1 btn-primary">
+                                                    Edit
+                                                </th>
+                                                <th class="col-md-1 btn-primary">
+                                                    Save
+                                                </th>
+                                                <th class="col-md-1 btn-primary">
+                                                    Delete
+                                                </th>
+                                                <th class="col-md-1 btn-primary">
+                                                    View
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblFormslist"></tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                    </section>
-                </div>
-            </div>
-            <!-- end: page form-->
-        </section>
-
-}
-<button type="submit" id="btn_successmessage" name="btn_save" style="display:none;" value="Success" class="@ViewBag.btn_editclass" data-toggle="modal" data-target="#myModalDeleteMessage">Edit</button>
-<div class="container">
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModalDeleteMessage" role="dialog" style="@TempData["myModalDeleteMessageStyle"]">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title UTitle">
-                        @{
-                            if (@TempData["UTitle"] == null || @TempData["UTitle"].ToString().Equals(""))
-                            {
-
-                            }
-                            else
-                            {
-                                @TempData["UTitle"]
-                            }
-
-                        }
-                    </h4>
-                </div>
-                <div class="modal-body ">
-                    <p class="UMessage">
-                        @{
-                            if (TempData["UMessage"] == null || TempData["UMessage"].ToString().Equals(""))
-                            {
-                            }
-                            else
-                            {
-                                @TempData["UMessage"]
-                            }
-                        }
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" data-dismiss="modal" onclick="return hide_popup1_U();">Close</button>
-                </div>
+                    </div>
+                </section>
             </div>
         </div>
-    </div>
+        <!-- end: page form-->
+    </section>
 
+}
+<div class="container">
     <!-- Modal -->
     <div class="modal fade" id="myModalDeleteM" role="dialog">
         <div class="modal-dialog modal-sm">
@@ -446,6 +391,6 @@
                             else
                             {
                                     @:window.onload = show_popup1;
-                                    }
+                                        }
           }
 </script>

@@ -375,7 +375,6 @@
                     runJvectorMap();
                 }
             }
-
         });
 
         function SetUserMenuName(MenuId, UserId) {
@@ -383,7 +382,7 @@
             var rowIndex = 1;
             $.ajax({
                 url: url,
-                data: { MenuId: MenuId, UserId: UserId},
+                data: { MenuId: MenuId, UserId: UserId },
                 type: 'POST',
                 dataType: 'json',
                 success: function (data) {
@@ -392,6 +391,8 @@
                 }
             });
         }
+
+        
     </script>
 
     @*@Scripts.Render("~/bundles/bootstrap")*@

@@ -15,30 +15,27 @@ namespace MangalWeb.Controllers
         public ActionResult UserAuthorization()
         {
             GetUserCategory();
-            UserAuthorization userobj = new UserAuthorization();
-            UserAuthorizationForms userobj1 = new UserAuthorizationForms();
             IList<UserAuthorizationForms> userauth = new List<UserAuthorizationForms>();
             ViewBag.user = new SelectList(userauth, "UserID", "User");
             ViewBag.menus = new SelectList(userauth, "FormID", "FormName");
-            UserAuthorization authorization = new UserAuthorization();
-            authorization.userauthorizationformsList.Insert(0, new UserAuthorizationForms());
+            //authorization.userauthorizationformsList.Insert(0, new UserAuthorizationForms());
             TempData["UTitle"] = "";
             TempData["UMessage"] = "";
             TempData["myModalDeleteMessageStyle"] = "";
-            return View("UserAuthorization", authorization);
+            return View("UserAuthorization");
         }
 
         private void GetUserCategory()
         {
             var usercategory = _userAuthorizationService.GetUserCategory();
-            ViewBag.usercategory = new SelectList(usercategory, "UserCategoryID", "UserCategoryName");
+            ViewBag.usercategory = new SelectList(usercategory, "refid", "Name");
         }
 
         [HttpPost]
         public ActionResult GetUser(int UserCategoryId)
         {
             var user = _userAuthorizationService.GetUser(UserCategoryId);
-            ViewBag.user = new SelectList(user, "UserID", "User");
+            ViewBag.user = new SelectList(user, "UserID", "UserName");
             var forms = _userAuthorizationService.GetMenuList();
             ViewBag.menus = new SelectList(forms, "ID", "Name");
             var viewModel = user.Select(x => new
@@ -56,30 +53,29 @@ namespace MangalWeb.Controllers
         }
 
         #region GetForms
-        //public virtual IList<UserAuthorizationForms> GetForms(int parentid, int UserId, int UserCategoryID)
-        //{
-            //Hashtable ht = new Hashtable();
-            //ht.Add("ParentID", parentid);
-            //ht.Add("UserID", UserId);
-            //ht.Add("UserCategoryID", UserCategoryID);
-            //DataSet ds = new DataSet();
-            //ds = aquaCoolRepository.GetById("T_UserAuthorization_Forms", ht);
-
-            //var list = ds.Tables[0].AsEnumerable().Select(dataRow => new UserAuthorizationForms
-            //{
-            //    ID = dataRow.Field<int>("ID"),
-            //    FormID = dataRow.Field<int>("FormID"),
-            //    FormName = dataRow.Field<string>("Name"),
-            //    ParentForm = dataRow.Field<string>("ParentForm"),
-            //    isEdit = dataRow.Field<bool>("isEdit"),
-            //    isVisible = dataRow.Field<bool>("isVisible"),
-            //    isSave = dataRow.Field<bool>("isSave"),
-            //    isDelete = dataRow.Field<bool>("isDelete"),
-            //    isView = dataRow.Field<bool>("isView"),
-            //    ParentID = dataRow.Field<int>("ParentID"),
-            //}).ToList();
-          //  return list;
-        //}
+        public ActionResult GetForms(int parentid, int UserId, int UserCategoryID)
+        {
+            var d = _userAuthorizationService.GetForms(parentid, UserId, UserCategoryID);
+            var jsonResult = Json(d, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
         #endregion
+        public ActionResult SaveUserAuthorization(int index, int UserID, int formid, int parentformid, bool visible, bool edit, bool save, bool delete_id, bool view)
+        {
+            UserAuthorizationForms rm = new UserAuthorizationForms();
+            rm.index = index;
+            rm.FormID = formid;
+            rm.UserID = UserID;
+            rm.ParentID = parentformid;
+            rm.isVisible = visible;
+            rm.isDelete = delete_id;
+            rm.isEdit = edit;
+            rm.isSave = save;
+            rm.isView = view;
+            rm.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
+            formid=_userAuthorizationService.InsertUserAuthorization_DetailsUserWise(rm);
+            var jsonResult = Json(formid, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
     }
 }

@@ -1644,6 +1644,33 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="T_Forms_UserAuthorization_ParentPage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="T_GetAuthorizeSubPagesList_PrentidWise" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="ParentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="T_GetFormDetails_FormIdWise" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FormId" Type="int" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="T_Update_UserAuthorization_DetailsUserWise" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="index" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="ParentID" Type="int" Mode="In" />
+          <Parameter Name="FormID" Type="int" Mode="In" />
+          <Parameter Name="isVisible" Type="bit" Mode="In" />
+          <Parameter Name="isEdit" Type="bit" Mode="In" />
+          <Parameter Name="isView" Type="bit" Mode="In" />
+          <Parameter Name="isSave" Type="bit" Mode="In" />
+          <Parameter Name="isDelete" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="T_UserAuthorization_Forms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ParentID" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="UserCategoryID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="MangalDBNewModelStoreContainer">
           <EntitySet Name="KycImageStore" EntityType="Self.KycImageStore" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menus" EntityType="Self.Menus" Schema="dbo" store:Type="Tables" />
@@ -3158,6 +3185,33 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <EntitySet Name="Menus" EntityType="MangalDBNewModel.Menu" />
           <EntitySet Name="UserAuthorizations" EntityType="MangalDBNewModel.UserAuthorization" />
           <EntitySet Name="UserDetails" EntityType="MangalDBNewModel.UserDetail" />
+          <FunctionImport Name="T_GetFormDetails_FormIdWise" ReturnType="Collection(MangalDBNewModel.T_GetFormDetails_FormIdWise_Result)">
+            <Parameter Name="FormId" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="T_UserAuthorization_Forms" ReturnType="Collection(MangalDBNewModel.T_UserAuthorization_Forms_Result)">
+            <Parameter Name="ParentID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserCategoryID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="T_Update_UserAuthorization_DetailsUserWise">
+            <Parameter Name="index" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="ParentID" Mode="In" Type="Int32" />
+            <Parameter Name="FormID" Mode="In" Type="Int32" />
+            <Parameter Name="isVisible" Mode="In" Type="Boolean" />
+            <Parameter Name="isEdit" Mode="In" Type="Boolean" />
+            <Parameter Name="isView" Mode="In" Type="Boolean" />
+            <Parameter Name="isSave" Mode="In" Type="Boolean" />
+            <Parameter Name="isDelete" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="T_Forms_UserAuthorization_ParentPage" ReturnType="Collection(MangalDBNewModel.T_Forms_UserAuthorization_ParentPage_Result)">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="T_GetAuthorizeSubPagesList_PrentidWise" ReturnType="Collection(MangalDBNewModel.T_GetAuthorizeSubPagesList_PrentidWise_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="ParentID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -4093,6 +4147,63 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="FinancialYearId" Type="Int32" Nullable="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="T_GetFormDetails_FormIdWise_Result">
+          <Property Type="Int32" Name="FormId" Nullable="false" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Boolean" Name="isVisible" Nullable="false" />
+          <Property Type="Boolean" Name="isEdit" Nullable="false" />
+          <Property Type="Boolean" Name="isSave" Nullable="false" />
+          <Property Type="Boolean" Name="isDelete" Nullable="false" />
+          <Property Type="Boolean" Name="isView" Nullable="false" />
+          <Property Type="Int32" Name="FormID1" Nullable="false" />
+          <Property Type="String" Name="FormName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ParentID" Nullable="true" />
+          <Property Type="String" Name="Url" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ToolTip" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="sequence" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="IconPath" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="T_UserAuthorization_Forms_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Boolean" Name="isVisible" Nullable="false" />
+          <Property Type="Boolean" Name="isEdit" Nullable="false" />
+          <Property Type="Boolean" Name="isSave" Nullable="false" />
+          <Property Type="Boolean" Name="isDelete" Nullable="false" />
+          <Property Type="Boolean" Name="isView" Nullable="false" />
+          <Property Type="Int32" Name="FormID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ParentID" Nullable="true" />
+          <Property Type="String" Name="ParentForm" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="T_Forms_UserAuthorization_ParentPage_Result">
+          <Property Type="String" Name="FormName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ParentId" Nullable="false" />
+          <Property Type="String" Name="sequence" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="FormUrl" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ToolTip" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="IconPath" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Boolean" Name="isVisible" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="T_GetAuthorizeSubPagesList_PrentidWise_Result">
+          <Property Type="Int32" Name="FormId" Nullable="false" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Boolean" Name="isVisible" Nullable="false" />
+          <Property Type="Boolean" Name="isEdit" Nullable="false" />
+          <Property Type="Boolean" Name="isSave" Nullable="false" />
+          <Property Type="Boolean" Name="isDelete" Nullable="false" />
+          <Property Type="Boolean" Name="isView" Nullable="false" />
+          <Property Type="Int32" Name="FormID1" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ParentID" Nullable="true" />
+          <Property Type="String" Name="Url" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="FormActualName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IconPath" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="sequence" Nullable="true" MaxLength="10" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5536,6 +5647,80 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="T_GetFormDetails_FormIdWise" FunctionName="MangalDBNewModel.Store.T_GetFormDetails_FormIdWise">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.T_GetFormDetails_FormIdWise_Result">
+                <ScalarProperty Name="FormId" ColumnName="FormId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="isVisible" ColumnName="isVisible" />
+                <ScalarProperty Name="isEdit" ColumnName="isEdit" />
+                <ScalarProperty Name="isSave" ColumnName="isSave" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="isView" ColumnName="isView" />
+                <ScalarProperty Name="FormID1" ColumnName="FormID1" />
+                <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="ToolTip" ColumnName="ToolTip" />
+                <ScalarProperty Name="sequence" ColumnName="sequence" />
+                <ScalarProperty Name="IconPath" ColumnName="IconPath" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="T_UserAuthorization_Forms" FunctionName="MangalDBNewModel.Store.T_UserAuthorization_Forms">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.T_UserAuthorization_Forms_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="isVisible" ColumnName="isVisible" />
+                <ScalarProperty Name="isEdit" ColumnName="isEdit" />
+                <ScalarProperty Name="isSave" ColumnName="isSave" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="isView" ColumnName="isView" />
+                <ScalarProperty Name="FormID" ColumnName="FormID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ParentForm" ColumnName="ParentForm" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="T_Update_UserAuthorization_DetailsUserWise" FunctionName="MangalDBNewModel.Store.T_Update_UserAuthorization_DetailsUserWise" />
+          <FunctionImportMapping FunctionImportName="T_Forms_UserAuthorization_ParentPage" FunctionName="MangalDBNewModel.Store.T_Forms_UserAuthorization_ParentPage">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.T_Forms_UserAuthorization_ParentPage_Result">
+                <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="sequence" ColumnName="sequence" />
+                <ScalarProperty Name="FormUrl" ColumnName="FormUrl" />
+                <ScalarProperty Name="ToolTip" ColumnName="ToolTip" />
+                <ScalarProperty Name="IconPath" ColumnName="IconPath" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="isVisible" ColumnName="isVisible" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="T_GetAuthorizeSubPagesList_PrentidWise" FunctionName="MangalDBNewModel.Store.T_GetAuthorizeSubPagesList_PrentidWise">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.T_GetAuthorizeSubPagesList_PrentidWise_Result">
+                <ScalarProperty Name="FormId" ColumnName="FormId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="isVisible" ColumnName="isVisible" />
+                <ScalarProperty Name="isEdit" ColumnName="isEdit" />
+                <ScalarProperty Name="isSave" ColumnName="isSave" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="isView" ColumnName="isView" />
+                <ScalarProperty Name="FormID1" ColumnName="FormID1" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="FormActualName" ColumnName="FormActualName" />
+                <ScalarProperty Name="IconPath" ColumnName="IconPath" />
+                <ScalarProperty Name="sequence" ColumnName="sequence" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

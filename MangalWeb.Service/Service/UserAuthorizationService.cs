@@ -33,5 +33,25 @@ namespace MangalWeb.Service.Service
         {
             return _userAuthorizationRepository.GetMenuList();
         }
+
+        public List<UserAuthorizationForms> GetForms(int parentid, int userid, int usercategoryid)
+        {
+            return _userAuthorizationRepository.GetForms(parentid, userid, usercategoryid);
+        }
+
+        public int InsertUserAuthorization_DetailsUserWise(UserAuthorizationForms uaf)
+        {
+            return _userAuthorizationRepository.InsertUserAuthorization_DetailsUserWise(uaf);
+        }
+
+        public List<MenusViewModel> UserAuthorization_ParentPage(int Userid)
+        {
+            return _userAuthorizationRepository.UserAuthorization_ParentPage(Userid);
+        }
+
+        public List<MenusViewModel> GetAuthorizeSubPagesList_PrentidWise(int Userid, int ParentId)
+        {
+            return _userAuthorizationRepository.GetAuthorizeSubPagesList_PrentidWise(Userid,ParentId);
+        }
     }
 }

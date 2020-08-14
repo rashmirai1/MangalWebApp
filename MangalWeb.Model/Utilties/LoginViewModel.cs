@@ -8,6 +8,11 @@ namespace MangalWeb.Model.Utilities
 {
     public class LoginViewModel
     {
+        [Required(ErrorMessage ="Please Select Branch")]
+        public int BranchId { get; set; }
+        [Required(ErrorMessage ="Please Select Financial Year")]
+        public int FinancialYearId { get; set; }
+
         [Required]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
@@ -16,9 +21,6 @@ namespace MangalWeb.Model.Utilities
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-        [Required]
-        public int BranchId { get; set; }
-        [Required]
-        public int FinancialYearId { get; set; }
+
     }
 }

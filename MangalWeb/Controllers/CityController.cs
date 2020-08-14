@@ -97,7 +97,7 @@ namespace MangalWeb.Controllers
 
         public ActionResult City()
         {
-            ButtonVisiblity("Index");
+            //ButtonVisiblity("Index");
             var model = new CityViewModel();
             ViewBag.StateList = new SelectList(_cityService.GetStateList(), "StateID", "StateName");
             return View(model);

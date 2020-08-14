@@ -196,5 +196,98 @@ namespace MangalWeb.Model.Entity
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDocumentUploadById_Result>("GetDocumentUploadById", idParameter);
         }
+    
+        public virtual ObjectResult<T_GetFormDetails_FormIdWise_Result> T_GetFormDetails_FormIdWise(Nullable<int> formId, Nullable<int> userId)
+        {
+            var formIdParameter = formId.HasValue ?
+                new ObjectParameter("FormId", formId) :
+                new ObjectParameter("FormId", typeof(int));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<T_GetFormDetails_FormIdWise_Result>("T_GetFormDetails_FormIdWise", formIdParameter, userIdParameter);
+        }
+    
+        public virtual ObjectResult<T_UserAuthorization_Forms_Result> T_UserAuthorization_Forms(Nullable<int> parentID, Nullable<int> userID, Nullable<int> userCategoryID)
+        {
+            var parentIDParameter = parentID.HasValue ?
+                new ObjectParameter("ParentID", parentID) :
+                new ObjectParameter("ParentID", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var userCategoryIDParameter = userCategoryID.HasValue ?
+                new ObjectParameter("UserCategoryID", userCategoryID) :
+                new ObjectParameter("UserCategoryID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<T_UserAuthorization_Forms_Result>("T_UserAuthorization_Forms", parentIDParameter, userIDParameter, userCategoryIDParameter);
+        }
+    
+        public virtual int T_Update_UserAuthorization_DetailsUserWise(Nullable<int> index, Nullable<int> userID, Nullable<int> parentID, Nullable<int> formID, Nullable<bool> isVisible, Nullable<bool> isEdit, Nullable<bool> isView, Nullable<bool> isSave, Nullable<bool> isDelete)
+        {
+            var indexParameter = index.HasValue ?
+                new ObjectParameter("index", index) :
+                new ObjectParameter("index", typeof(int));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var parentIDParameter = parentID.HasValue ?
+                new ObjectParameter("ParentID", parentID) :
+                new ObjectParameter("ParentID", typeof(int));
+    
+            var formIDParameter = formID.HasValue ?
+                new ObjectParameter("FormID", formID) :
+                new ObjectParameter("FormID", typeof(int));
+    
+            var isVisibleParameter = isVisible.HasValue ?
+                new ObjectParameter("isVisible", isVisible) :
+                new ObjectParameter("isVisible", typeof(bool));
+    
+            var isEditParameter = isEdit.HasValue ?
+                new ObjectParameter("isEdit", isEdit) :
+                new ObjectParameter("isEdit", typeof(bool));
+    
+            var isViewParameter = isView.HasValue ?
+                new ObjectParameter("isView", isView) :
+                new ObjectParameter("isView", typeof(bool));
+    
+            var isSaveParameter = isSave.HasValue ?
+                new ObjectParameter("isSave", isSave) :
+                new ObjectParameter("isSave", typeof(bool));
+    
+            var isDeleteParameter = isDelete.HasValue ?
+                new ObjectParameter("isDelete", isDelete) :
+                new ObjectParameter("isDelete", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("T_Update_UserAuthorization_DetailsUserWise", indexParameter, userIDParameter, parentIDParameter, formIDParameter, isVisibleParameter, isEditParameter, isViewParameter, isSaveParameter, isDeleteParameter);
+        }
+    
+        public virtual ObjectResult<T_Forms_UserAuthorization_ParentPage_Result> T_Forms_UserAuthorization_ParentPage(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<T_Forms_UserAuthorization_ParentPage_Result>("T_Forms_UserAuthorization_ParentPage", userIdParameter);
+        }
+    
+        public virtual ObjectResult<T_GetAuthorizeSubPagesList_PrentidWise_Result> T_GetAuthorizeSubPagesList_PrentidWise(Nullable<int> userID, Nullable<int> parentID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var parentIDParameter = parentID.HasValue ?
+                new ObjectParameter("ParentID", parentID) :
+                new ObjectParameter("ParentID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<T_GetAuthorizeSubPagesList_PrentidWise_Result>("T_GetAuthorizeSubPagesList_PrentidWise", userIDParameter, parentIDParameter);
+        }
     }
 }
