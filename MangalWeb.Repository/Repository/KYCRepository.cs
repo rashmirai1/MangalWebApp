@@ -16,13 +16,19 @@ namespace MangalWeb.Repository.Repository
         /// Save kyc
         /// </summary>
         /// <param name="model"></param>
-        public void SaveRecord(KYCBasicDetailsVM model)
+        public void SaveRecord(KYCBasicDetailsVM model, Boolean IsImageExist)
         {
             try
             {
                 TGLKYC_BasicDetails tGLKYC_Basic = new TGLKYC_BasicDetails();
                 if (model != null)
                 {
+                    int kycId = _context.TGLKYC_BasicDetails
+                            .Where(x => x.CustomerID == model.CustomerID)
+                            .OrderByDescending(x => x.AppliedDate)
+                            .Select(x => x.KYCID).FirstOrDefault();
+                    string refNo = Convert.ToString(kycId);
+
                     tGLKYC_Basic.Age = model.Age;
                     tGLKYC_Basic.AppFName = model.AppFName;
                     tGLKYC_Basic.AppliedDate = DateTime.Now;
@@ -119,7 +125,23 @@ namespace MangalWeb.Repository.Repository
                         _context.SaveChanges();
                     }
 
-                    foreach(var item in model.Trans_KYCAddresses)
+                    else if (IsImageExist && model.KycPhoto == null)
+                    {
+                        //If Image already exist for the current customer and no new image is been uploaded add an existing image
+                        KycImageStore kycImageStore = new KycImageStore();
+                        var existingImage = _context.KycImageStores.Where(x => x.Refno == refNo).FirstOrDefault();
+                        kycImageStore.KycPhoto = existingImage.KycPhoto;
+                        kycImageStore.Operation = "Save";
+                        kycImageStore.Refno = Convert.ToString(tGLKYC_Basic.KYCID);
+                        kycImageStore.ContentType = existingImage.ContentType;
+                        kycImageStore.ImageName = existingImage.ImageName;
+                        kycImageStore.CreatedDate = DateTime.Now;
+                        _context.KycImageStores.Add(kycImageStore);
+                        _context.SaveChanges();
+                        HttpContext.Current.Session["KycImageExist"] = null;
+                    }
+
+                    foreach (var item in model.Trans_KYCAddresses)
                     {
                         Trans_KYCAddresses trans_KYCAddresses = new Trans_KYCAddresses();
                         trans_KYCAddresses.AddressCategory = item.AddressCategory;
@@ -166,7 +188,12 @@ namespace MangalWeb.Repository.Repository
         /// <returns></returns>
         public KYCBasicDetailsVM doesPanExist(string Pan)
         {
-            var kyc = _context.TGLKYC_BasicDetails.Where(x => x.PANNo == Pan).OrderByDescending(x => x.AppliedDate).FirstOrDefault();
+            var kyc = _context.TGLKYC_BasicDetails
+                .Include("Trans_KYCAddresses")
+                .Where(x => x.PANNo == Pan)
+                .OrderByDescending(x => x.AppliedDate)
+                .FirstOrDefault();
+
             KYCBasicDetailsVM kycVm = new KYCBasicDetailsVM();
             if (kyc != null)
             {
@@ -250,8 +277,29 @@ namespace MangalWeb.Repository.Repository
                 kycVm.NomineeAdharNo = kyc.NomineeAdharNo;
                 kycVm.PinCode = kyc.PinCode;
                 kycVm.Distance = kyc.Distance;
-
                 kycVm.Area = kyc.Area;
+                kycVm.Trans_KYCAddresses = kyc.Trans_KYCAddresses
+                    .Select(
+                    x => new KYCAddressesVM()
+                    {
+                        AddressCategory = x.AddressCategory,
+                        Area = x.Area,
+                        BuildingHouseName = x.BuildingHouseName,
+                        BuildingPlotNo = x.BuildingPlotNo,
+                        CityID = x.CityID,
+                        CreatedDate = x.CreatedDate,
+                        Distance_km = x.Distance_km,
+                        ID = x.ID,
+                        KYCID = x.KYCID,
+                        NearestLandmark = x.NearestLandmark,
+                        PinCode = x.PinCode,
+                        ResidenceCode = x.ResidenceCode,
+                        Road = x.Road,
+                        RoomBlockNo = x.RoomBlockNo,
+                        StateID = x.StateID,
+                        ZoneId = x.ZoneId
+                    }).ToList();
+
                 string kycId = Convert.ToString(kyc.KYCID);
                 kycVm.KycPhoto = _context.KycImageStores.Where(x => x.Refno == kycId)
                                           .OrderByDescending(x => x.CreatedDate)
@@ -276,7 +324,11 @@ namespace MangalWeb.Repository.Repository
         /// <returns></returns>
         public KYCBasicDetailsVM doesAdharExist(string AdharNo)
         {
-            var kyc = _context.TGLKYC_BasicDetails.Where(x => x.AdhaarNo == AdharNo).OrderByDescending(x => x.AppliedDate).FirstOrDefault();
+            var kyc = _context.TGLKYC_BasicDetails
+                .Include("Trans_KYCAddresses")
+                .Where(x => x.AdhaarNo == AdharNo)
+                .OrderByDescending(x => x.AppliedDate)
+                .FirstOrDefault();
             KYCBasicDetailsVM kycVm = new KYCBasicDetailsVM();
             if (kyc != null)
             {
@@ -361,6 +413,27 @@ namespace MangalWeb.Repository.Repository
                 kycVm.PinCode = kyc.PinCode;
                 kycVm.Distance = kyc.Distance;
                 kycVm.Area = kyc.Area;
+                kycVm.Trans_KYCAddresses = kyc.Trans_KYCAddresses
+                   .Select(
+                   x => new KYCAddressesVM()
+                   {
+                       AddressCategory = x.AddressCategory,
+                       Area = x.Area,
+                       BuildingHouseName = x.BuildingHouseName,
+                       BuildingPlotNo = x.BuildingPlotNo,
+                       CityID = x.CityID,
+                       CreatedDate = x.CreatedDate,
+                       Distance_km = x.Distance_km,
+                       ID = x.ID,
+                       KYCID = x.KYCID,
+                       NearestLandmark = x.NearestLandmark,
+                       PinCode = x.PinCode,
+                       ResidenceCode = x.ResidenceCode,
+                       Road = x.Road,
+                       RoomBlockNo = x.RoomBlockNo,
+                       StateID = x.StateID,
+                       ZoneId = x.ZoneId
+                   }).ToList();
                 string kycId = Convert.ToString(kyc.KYCID);
                 kycVm.KycPhoto = _context.KycImageStores.Where(x => x.Refno == kycId)
                                           .OrderByDescending(x => x.CreatedDate)
@@ -410,7 +483,7 @@ namespace MangalWeb.Repository.Repository
                 .OrderByDescending(x => x.CreatedDate)
                 .Select(x => x.OTP)
                 .FirstOrDefault();
-            if(otp == storedOTP)
+            if (otp == storedOTP)
             {
                 response = "Mobile Verified Successfully!";
             }
@@ -465,25 +538,25 @@ namespace MangalWeb.Repository.Repository
         public IList<Mst_PinCode> GetAllPincodes()
         {
             var pincode = _context.Mst_PinCode.ToList();
-            
+
             return pincode;
         }
         /// <summary>
         /// Save Kyc Docs
         /// </summary>
         /// <param name="lstDocUploadTrn"></param>
-        public void SaveDocument(List<DocumentUploadDetailsVM> lstDocUploadTrn)
+        public void SaveDocument(List<KYCDocumentUpload> lstDocUploadTrn)
         {
             Trn_DocUploadDetails trn_DocUploadDetails = new Trn_DocUploadDetails();
             if (lstDocUploadTrn != null || lstDocUploadTrn.Count > 0)
             {
                 foreach (var item in lstDocUploadTrn)
                 {
-                    trn_DocUploadDetails.DocumentId = item.DocumentId;
+                    trn_DocUploadDetails.DocumentId = item.DocumentId.Value;
                     trn_DocUploadDetails.UploadFile = item.UploadDocName;
                     trn_DocUploadDetails.ContentType = item.FileExtension;
                     trn_DocUploadDetails.FileName = item.FileName;
-                    trn_DocUploadDetails.DocumentTypeId = item.DocumentTypeId;
+                    trn_DocUploadDetails.DocumentTypeId = item.DocumentTypeId.Value;
                     trn_DocUploadDetails.KycId = Convert.ToInt32(HttpContext.Current.Session["KycId"]);
                     trn_DocUploadDetails.ExpiryDate = item.ExpiryDate;
                     trn_DocUploadDetails.Status = "Pending";

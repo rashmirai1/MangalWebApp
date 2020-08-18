@@ -30,6 +30,7 @@ namespace MangalWeb.Controllers
             int cid = rand.Next(000000000, 999999999) + 1;
             kycVM.CustomerID = "C" + cid.ToString();
             kycVM.ApplicationNo = _kycService.GenerateApplicationNo();
+            kycVM.AppliedDate = DateTime.Now;
             return View(kycVM);
         }
 
@@ -51,10 +52,20 @@ namespace MangalWeb.Controllers
                     model.ContentType = uploadFile.ContentType;
                     model.ImageName = uploadFile.FileName;
                 }
-                if(model.CustomerID != null)
+                if (model.CustomerID != null)
                 {
-                    _kycService.SaveRecord(model);
+                    if (Session["KycImageExist"] != null)
+                    {
+                        _kycService.SaveRecord(model, true);
+                    }
+                    else
+                    {
+                        _kycService.SaveRecord(model, false);
+                    }
+
+
                 }
+
                 return Json(model);
             }
             catch (Exception ex)
@@ -71,14 +82,18 @@ namespace MangalWeb.Controllers
         {
             try
             {
-              var model= _kycService.doesPanExist(PanNo);
-              return Json(model);
+                var model = _kycService.doesPanExist(PanNo);
+                if (model.ImageName != null)
+                {
+                    Session["KycImageExist"] = true;
+                }
+                return Json(model);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-            
+
         }
         /// <summary>
         /// check if adhar already exist
@@ -90,6 +105,10 @@ namespace MangalWeb.Controllers
             try
             {
                 var model = _kycService.doesAdharExist(AdharNo);
+                if (model.ImageName != null)
+                {
+                    Session["KycImageExist"] = true;
+                }
                 return Json(model);
             }
             catch (Exception ex)
@@ -168,12 +187,12 @@ namespace MangalWeb.Controllers
 
         #region Insert Document Data
 
-        public bool InsertDocumentData(List<DocumentUploadDetailsVM> lstDocUploadTrn)
+        public bool InsertDocumentData(List<KYCDocumentUpload> lstDocUploadTrn)
         {
             bool retVal = false;
             try
             {
-                lstDocUploadTrn = (List<DocumentUploadDetailsVM>)Session["sub"];
+                lstDocUploadTrn = (List<KYCDocumentUpload>)Session["sub"];
                 _kycService.SaveDocument(lstDocUploadTrn);
                 retVal = true;
             }

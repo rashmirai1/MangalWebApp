@@ -419,6 +419,7 @@
     <Compile Include="Masters\TenureDeviationVM.cs" />
     <Compile Include="Masters\ZoneViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transaction\KYCDocumentUpload.cs" />
     <Compile Include="Transaction\DocumentUploadDetailsVM.cs" />
     <Compile Include="Transaction\DocumentUploadViewModel.cs" />
     <Compile Include="Transaction\FillAddressByPinCode.cs" />

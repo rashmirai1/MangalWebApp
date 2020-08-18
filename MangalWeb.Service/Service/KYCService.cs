@@ -18,9 +18,9 @@ namespace MangalWeb.Service.Service
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public void SaveRecord(KYCBasicDetailsVM model)
+        public void SaveRecord(KYCBasicDetailsVM model, Boolean IsImageExist)
         {
-            _kycRepository.SaveRecord(model);
+            _kycRepository.SaveRecord(model, IsImageExist);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace MangalWeb.Service.Service
             return AppNo;
         }
 
-        public void SaveDocument(List<DocumentUploadDetailsVM> lstDocUploadTrn)
+        public void SaveDocument(List<KYCDocumentUpload> lstDocUploadTrn)
         {
             _kycRepository.SaveDocument(lstDocUploadTrn);
         }
