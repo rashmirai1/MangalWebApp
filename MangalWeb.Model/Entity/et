@@ -12,11 +12,11 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class UserModuleAuthentication
+    public partial class Trn_RequestForm
     {
-        public int ModuleAuthID { get; set; }
-        public int UserTypeID { get; set; }
-        public int ModuleID { get; set; }
-        public string Visible { get; set; }
+        public int Id { get; set; }
+        public int KycId { get; set; }
+        public int SanctionId { get; set; }
+        public Nullable<System.DateTime> creationdate { get; set; }
     }
 }

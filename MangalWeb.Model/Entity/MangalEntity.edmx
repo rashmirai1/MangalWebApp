@@ -90,56 +90,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.bharatTGLGoldInOutDetails' does no
           <Property Name="isActive" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.Bhart01012017TGLSanctionDisburse_BasicDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Bhart01012017TGLSanctionDisburse_BasicDetails">
-          <Property Name="SDID" Type="int" />
-          <Property Name="RefType" Type="nvarchar" MaxLength="50" />
-          <Property Name="RefMon" Type="nvarchar" MaxLength="5" />
-          <Property Name="RefYr" Type="nvarchar" MaxLength="5" />
-          <Property Name="RefID" Type="int" />
-          <Property Name="LoanType" Type="nvarchar" MaxLength="20" />
-          <Property Name="LoanDate" Type="smalldatetime" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
-          <Property Name="KYCID" Type="int" />
-          <Property Name="OperatorID" Type="int" />
-          <Property Name="EligibleLoanAmt" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanPayable" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="BankCashAccID" Type="int" />
-          <Property Name="CheqNEFTDD" Type="nvarchar" MaxLength="50" />
-          <Property Name="CheqNEFTDDNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="CheqNEFTDDDate" Type="smalldatetime" />
-          <Property Name="TotalGrossWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalNetWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalQuantity" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Totalvalue" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalRate" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="SID" Type="int" />
-          <Property Name="DueDate" Type="smalldatetime" />
-          <Property Name="OwnershipProofImagePath" Type="nvarchar" MaxLength="50" />
-          <Property Name="CIBILScore" Type="nvarchar" MaxLength="20" />
-          <Property Name="ItemImage" Type="image" />
-          <Property Name="BCPID" Type="int" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedDate" Type="smalldatetime" />
-          <Property Name="UpdatedBy" Type="int" />
-          <Property Name="UpdatedDate" Type="smalldatetime" />
-          <Property Name="DeletedBy" Type="int" />
-          <Property Name="DeletedDate" Type="smalldatetime" />
-          <Property Name="FYID" Type="int" />
-          <Property Name="BranchID" Type="int" />
-          <Property Name="CMPID" Type="int" />
-          <Property Name="isActive" Type="nvarchar" MaxLength="100" />
-          <Property Name="CashInOutID" Type="int" />
-          <Property Name="GLInOutID" Type="int" />
-          <Property Name="CashOutWardById" Type="int" />
-          <Property Name="GoldInWardById" Type="int" />
-          <Property Name="CashAccID" Type="int" />
-          <Property Name="BankAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CashAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.ImageKyc' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ImageKyc">
           <Key>
@@ -183,6 +133,22 @@ warning 6002: The table/view 'MangalDBNew.dbo.M_Words' does not have a primary k
           <Property Name="Code" Type="decimal" Precision="9" Scale="0" Nullable="false" />
           <Property Name="WNumber" Type="int" />
           <Property Name="Wwords" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Menus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="Sequence" Type="nvarchar" MaxLength="10" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Url" Type="nvarchar" MaxLength="100" />
+          <Property Name="Title" Type="nvarchar" MaxLength="20" />
+          <Property Name="ToolTip" Type="nvarchar" MaxLength="20" />
+          <Property Name="IconPath" Type="nvarchar" MaxLength="30" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="isActive" Type="char" MaxLength="2" />
         </EntityType>
         <EntityType Name="Mst_AuditCategory">
           <Key>
@@ -471,23 +437,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.newbharatTGLGoldStock' does not ha
           <Property Name="TotalRelease" Type="int" />
           <Property Name="ClosingBalance" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.Sheet2$' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="Sheet2$">
-          <Property Name="GLInOutID" Type="nvarchar" MaxLength="255" />
-          <Property Name="RefType" Type="nvarchar" MaxLength="255" />
-          <Property Name="RefNo" Type="nvarchar" MaxLength="255" />
-          <Property Name="ReferenceType" Type="nvarchar" MaxLength="255" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="255" />
-          <Property Name="PouchNo" Type="nvarchar" MaxLength="255" />
-          <Property Name="GLInOutMode" Type="nvarchar" MaxLength="255" />
-          <Property Name="InOutLoc" Type="nvarchar" MaxLength="255" />
-          <Property Name="LocName" Type="nvarchar" MaxLength="255" />
-          <Property Name="LocResiName" Type="nvarchar" MaxLength="255" />
-          <Property Name="LocDetails" Type="nvarchar" MaxLength="255" />
-          <Property Name="NarrationID" Type="nvarchar" MaxLength="255" />
-          <Property Name="InOutBy" Type="nvarchar" MaxLength="255" />
-        </EntityType>-->
         <EntityType Name="tbl_CountryMaster">
           <Key>
             <PropertyRef Name="CountryID" />
@@ -578,27 +527,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_SentJVCustHistory' does not ha
           <Property Name="Name" Type="varchar" MaxLength="100" />
           <Property Name="Organhieraechyid" Type="int" />
           <Property Name="status1" Type="bit" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.tbl_UserLogin' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="tbl_UserLogin">
-          <Key>
-            <PropertyRef Name="LoginID" />
-            <PropertyRef Name="LoginUserType" />
-            <PropertyRef Name="LoginUser" />
-            <PropertyRef Name="LoginDate" />
-          </Key>
-          <Property Name="LoginID" Type="int" Nullable="false" />
-          <Property Name="LoginUserType" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="LoginUser" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="LoginDate" Type="smalldatetime" Nullable="false" />
-          <Property Name="LoginTime" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogoutTime" Type="nvarchar" MaxLength="50" />
-          <Property Name="TotalTime" Type="nvarchar" MaxLength="50" />
-          <Property Name="HostName" Type="nvarchar" MaxLength="50" />
-          <Property Name="HostIPAddr" Type="nvarchar" MaxLength="50" />
-          <Property Name="CompID" Type="int" />
-          <Property Name="BranchID" Type="int" />
         </EntityType>
         <EntityType Name="tblaccountmaster">
           <Key>
@@ -1300,185 +1228,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLOutwardForm_GoldDetails' does n
           <Property Name="StockLocation" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'ReceiveTime' in the table 'MangalDBNew.dbo.TGlReceipt_BasicDetails' was excluded.
-warning 6013: The table/view 'MangalDBNew.dbo.TGlReceipt_BasicDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGlReceipt_BasicDetails">
-          <Property Name="RcptId" Type="int" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="KYCID" Type="int" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="ReceiveDate" Type="smalldatetime" />
-          <Property Name="BalanceLoanPayable" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="BalanceLoanEligibility" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="ROI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="ReceiptBookNo" Type="nvarchar" MaxLength="10" />
-          <Property Name="ReceiptNo" Type="nvarchar" MaxLength="10" />
-          <Property Name="ReceivedFrom" Type="nvarchar" MaxLength="50" />
-          <Property Name="PaymentMode" Type="nvarchar" MaxLength="50" />
-          <Property Name="CLP" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CLI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CLPI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CLC" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CLO" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RcvCLP" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RecCLPAccID" Type="int" />
-          <Property Name="RecCLPNarID" Type="int" />
-          <Property Name="RcvCLI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RecCLIAccID" Type="int" />
-          <Property Name="RecCLINarID" Type="int" />
-          <Property Name="RcvCLPI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RecCLPIAccID" Type="int" />
-          <Property Name="RecCLPINarID" Type="int" />
-          <Property Name="RecCLC" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RecCLCAccID" Type="int" />
-          <Property Name="RecCLCNarID" Type="int" />
-          <Property Name="RcvTotal" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="BankAccID" Type="int" />
-          <Property Name="CashAccID" Type="int" />
-          <Property Name="CollectedByID" Type="int" />
-          <Property Name="CashierID" Type="int" />
-          <Property Name="CashInOutID" Type="int" />
-          <Property Name="BCRID" Type="int" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedDate" Type="smalldatetime" />
-          <Property Name="UpdatedBy" Type="int" />
-          <Property Name="UpdatedDate" Type="smalldatetime" />
-          <Property Name="DeletedBy" Type="int" />
-          <Property Name="DeletedDate" Type="smalldatetime" />
-          <Property Name="isActive" Type="varchar" MaxLength="2" />
-          <Property Name="FYID" Type="int" />
-          <Property Name="BranchId" Type="int" />
-          <Property Name="CMPID" Type="int" />
-          <Property Name="Finalize" Type="nchar" MaxLength="2" />
-          <Property Name="InterestFromDate" Type="smalldatetime" />
-          <Property Name="InterestToDate" Type="smalldatetime" />
-          <Property Name="OSPrincipal" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="OSInterest" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="OSDays" Type="int" />
-          <Property Name="IntrestRcvTillDate" Type="smalldatetime" />
-          <Property Name="LastROI" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="AdvInterestAmt" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="AdvInterestFromDate" Type="smalldatetime" />
-          <Property Name="AdvInterestToDate" Type="smalldatetime" />
-          <Property Name="AdvInterestAccID" Type="int" />
-          <Property Name="TotalAdvInterestAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="OSAdvInterestAmount" Type="decimal" Precision="11" Scale="2" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGlReceipt_Cheque_Details' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGlReceipt_Cheque_Details">
-          <Property Name="ChequeId" Type="int" />
-          <Property Name="RcptId" Type="int" />
-          <Property Name="Serialno" Type="int" />
-          <Property Name="Chq_DD_NEFT" Type="varchar" MaxLength="50" />
-          <Property Name="ChequeNo" Type="nvarchar" MaxLength="100" />
-          <Property Name="BankId" Type="int" />
-          <Property Name="BankName" Type="nvarchar" MaxLength="100" />
-          <Property Name="Amount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="ChequeDate" Type="varchar" MaxLength="12" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGlReceipt_Denomination_Details' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGlReceipt_Denomination_Details">
-          <Property Name="DenoId" Type="int" />
-          <Property Name="RcptId" Type="int" />
-          <Property Name="Serialno" Type="int" />
-          <Property Name="DenoRs" Type="nvarchar" MaxLength="50" />
-          <Property Name="Quantity" Type="int" />
-          <Property Name="Total" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="NoteNos" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_BasicDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGLSanctionDisburse_BasicDetails">
-          <Property Name="SDID" Type="int" />
-          <Property Name="RefType" Type="nvarchar" MaxLength="50" />
-          <Property Name="RefMon" Type="nvarchar" MaxLength="5" />
-          <Property Name="RefYr" Type="nvarchar" MaxLength="5" />
-          <Property Name="RefID" Type="int" />
-          <Property Name="LoanType" Type="nvarchar" MaxLength="20" />
-          <Property Name="LoanDate" Type="smalldatetime" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
-          <Property Name="KYCID" Type="int" />
-          <Property Name="OperatorID" Type="int" />
-          <Property Name="EligibleLoanAmt" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanPayable" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="BankCashAccID" Type="int" />
-          <Property Name="CheqNEFTDD" Type="nvarchar" MaxLength="50" />
-          <Property Name="CheqNEFTDDNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="CheqNEFTDDDate" Type="smalldatetime" />
-          <Property Name="TotalGrossWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalNetWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalQuantity" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Totalvalue" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="TotalRate" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="SID" Type="int" />
-          <Property Name="DueDate" Type="smalldatetime" />
-          <Property Name="OwnershipProofImagePath" Type="nvarchar" MaxLength="50" />
-          <Property Name="CIBILScore" Type="nvarchar" MaxLength="20" />
-          <Property Name="ItemImage" Type="image" />
-          <Property Name="BCPID" Type="int" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedDate" Type="smalldatetime" />
-          <Property Name="UpdatedBy" Type="int" />
-          <Property Name="UpdatedDate" Type="smalldatetime" />
-          <Property Name="DeletedBy" Type="int" />
-          <Property Name="DeletedDate" Type="smalldatetime" />
-          <Property Name="FYID" Type="int" />
-          <Property Name="BranchID" Type="int" />
-          <Property Name="CMPID" Type="int" />
-          <Property Name="isActive" Type="nvarchar" MaxLength="100" />
-          <Property Name="CashInOutID" Type="int" />
-          <Property Name="GLInOutID" Type="int" />
-          <Property Name="CashOutWardById" Type="int" />
-          <Property Name="GoldInWardById" Type="int" />
-          <Property Name="CashAccID" Type="int" />
-          <Property Name="BankAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="CashAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_ChargesDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGLSanctionDisburse_ChargesDetails">
-          <Property Name="CHID" Type="int" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="CID" Type="int" />
-          <Property Name="Serialno" Type="int" />
-          <Property Name="Charges" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Amount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="AccountID" Type="int" />
-          <Property Name="AccountName" Type="nvarchar" MaxLength="50" />
-          <Property Name="ID" Type="int" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_ChargesPostingDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGLSanctionDisburse_ChargesPostingDetails">
-          <Property Name="ID" Type="int" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="20" />
-          <Property Name="AccID" Type="int" />
-          <Property Name="Debit" Type="float" />
-          <Property Name="Credit" Type="float" />
-          <Property Name="LedgerID" Type="int" />
-          <Property Name="FYID" Type="int" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.TGLSanctionDisburse_GoldItemDetails' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TGLSanctionDisburse_GoldItemDetails">
-          <Property Name="GID" Type="int" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="Serialno" Type="int" />
-          <Property Name="ItemID" Type="int" />
-          <Property Name="GrossWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Quantity" Type="int" />
-          <Property Name="NetWeight" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="RateperGram" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Value" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="Purity" Type="nvarchar" MaxLength="50" />
-          <Property Name="ImgItemPath" Type="nvarchar" MaxLength="500" />
-        </EntityType>-->
-        <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TGLSmsHistory">
           <Key>
@@ -1635,135 +1384,36 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="100" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.UserDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="UserAuthorizations">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="isVisible" Type="bit" Nullable="false" />
+          <Property Name="isEdit" Type="bit" Nullable="false" />
+          <Property Name="isSave" Type="bit" Nullable="false" />
+          <Property Name="isDelete" Type="bit" Nullable="false" />
+          <Property Name="isView" Type="bit" Nullable="false" />
+          <Property Name="isDefault" Type="bit" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="isActive" Type="nvarchar" MaxLength="10" />
+          <Property Name="ParentID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserDetails">
           <Key>
             <PropertyRef Name="UserID" />
-            <PropertyRef Name="UserTypeID" />
           </Key>
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserTypeID" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="varchar" MaxLength="50" />
-          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BranchId" Type="int" Nullable="false" />
+          <Property Name="FinancialYearId" Type="int" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.UserFormAuthentication' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="UserFormAuthentication">
-          <Key>
-            <PropertyRef Name="FormAuthID" />
-            <PropertyRef Name="UserTypeID" />
-            <PropertyRef Name="FormID" />
-            <PropertyRef Name="Visible" />
-            <PropertyRef Name="CanADD" />
-            <PropertyRef Name="CanEDIT" />
-            <PropertyRef Name="CanSave" />
-            <PropertyRef Name="CanDelete" />
-            <PropertyRef Name="CanView" />
-            <PropertyRef Name="CanFinalize" />
-          </Key>
-          <Property Name="FormAuthID" Type="int" Nullable="false" />
-          <Property Name="UserTypeID" Type="int" Nullable="false" />
-          <Property Name="FormID" Type="int" Nullable="false" />
-          <Property Name="Visible" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="CanADD" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="CanEDIT" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="CanSave" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="CanDelete" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="CanView" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="CanFinalize" Type="nvarchar" MaxLength="10" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.UserFormAuthorisationDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="UserFormAuthorisationDetails">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="FormID" />
-            <PropertyRef Name="RecordID" />
-            <PropertyRef Name="Usr" />
-            <PropertyRef Name="Admin" />
-            <PropertyRef Name="Supervisor" />
-            <PropertyRef Name="FinancialYrID" />
-          </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="FormID" Type="int" Nullable="false" />
-          <Property Name="RecordID" Type="int" Nullable="false" />
-          <Property Name="Usr" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Admin" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="Supervisor" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="FinancialYrID" Type="int" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.UserFormDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="UserFormDetails">
-          <Key>
-            <PropertyRef Name="FormID" />
-            <PropertyRef Name="FormName" />
-            <PropertyRef Name="MTR" />
-          </Key>
-          <Property Name="FormID" Type="int" Nullable="false" />
-          <Property Name="FormName" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="MTR" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="ToolStripName" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.UserMenuDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="UserMenuDetails">
-          <Key>
-            <PropertyRef Name="MenuDetailsID" />
-            <PropertyRef Name="ModuleID" />
-            <PropertyRef Name="FormID" />
-          </Key>
-          <Property Name="MenuDetailsID" Type="int" Nullable="false" />
-          <Property Name="ModuleID" Type="int" Nullable="false" />
-          <Property Name="FormID" Type="int" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.UserModuleAuthentication' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="UserModuleAuthentication">
-          <Key>
-            <PropertyRef Name="ModuleAuthID" />
-            <PropertyRef Name="UserTypeID" />
-            <PropertyRef Name="ModuleID" />
-            <PropertyRef Name="Visible" />
-          </Key>
-          <Property Name="ModuleAuthID" Type="int" Nullable="false" />
-          <Property Name="UserTypeID" Type="int" Nullable="false" />
-          <Property Name="ModuleID" Type="int" Nullable="false" />
-          <Property Name="Visible" Type="nchar" MaxLength="10" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.UserModuleDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="UserModuleDetails">
-          <Key>
-            <PropertyRef Name="ModuleID" />
-            <PropertyRef Name="ModuleName" />
-          </Key>
-          <Property Name="ModuleID" Type="int" Nullable="false" />
-          <Property Name="ModuleName" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.UserTypeDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="UserTypeDetails">
-          <Key>
-            <PropertyRef Name="UserTypeID" />
-          </Key>
-          <Property Name="UserTypeID" Type="int" Nullable="false" />
-          <Property Name="UserType" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="V_MonthlyJv">
-          <Property Name="RN" Type="bigint" />
-          <Property Name="SDID" Type="int" />
-          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
-          <Property Name="SID" Type="int" />
-          <Property Name="LoanDate" Type="smalldatetime" />
-          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="CustName" Type="varchar" MaxLength="92" />
-          <Property Name="LoanDate1" Type="varchar" MaxLength="20" />
-        </EntityType>-->
         <Association Name="FK__tbl_UserC__Organ__51BA1E3A">
           <End Role="User_Category_Hierarchy" Type="Self.User_Category_Hierarchy" Multiplicity="0..1" />
           <End Role="tbl_UserCategory" Type="Self.tbl_UserCategory" Multiplicity="*" />
@@ -1969,6 +1619,9 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
         <Function Name="GetKYCDetailsForDocumentById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetKYCDetailsForRequestForm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="KycId" Type="int" Mode="In" />
+        </Function>
         <Function Name="NumberSuffix" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="val" Type="int" Mode="In" />
         </Function>
@@ -1994,8 +1647,36 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="T_Forms_UserAuthorization_ParentPage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="T_GetAuthorizeSubPagesList_PrentidWise" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="ParentID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="T_GetFormDetails_FormIdWise" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FormId" Type="int" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="T_Update_UserAuthorization_DetailsUserWise" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="index" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="ParentID" Type="int" Mode="In" />
+          <Parameter Name="FormID" Type="int" Mode="In" />
+          <Parameter Name="isVisible" Type="bit" Mode="In" />
+          <Parameter Name="isEdit" Type="bit" Mode="In" />
+          <Parameter Name="isView" Type="bit" Mode="In" />
+          <Parameter Name="isSave" Type="bit" Mode="In" />
+          <Parameter Name="isDelete" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="T_UserAuthorization_Forms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ParentID" Type="int" Mode="In" />
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="UserCategoryID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="MangalDBNewModelStoreContainer">
           <EntitySet Name="KycImageStore" EntityType="Self.KycImageStore" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menus" EntityType="Self.Menus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_AuditCategory" EntityType="Self.Mst_AuditCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_AuditCheckList" EntityType="Self.Mst_AuditCheckList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_BranchType" EntityType="Self.Mst_BranchType" Schema="dbo" store:Type="Tables" />
@@ -2040,6 +1721,8 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <EntitySet Name="TSchemeMaster_BasicDetails" EntityType="Self.TSchemeMaster_BasicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Category" EntityType="Self.User_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Category_Hierarchy" EntityType="Self.User_Category_Hierarchy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAuthorizations" EntityType="Self.UserAuthorizations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bharat_tbl_SentJVCustHistory" EntityType="Self.Bharat_tbl_SentJVCustHistory" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Bharat_tbl_SentJVCustHistory].[SentCustJVID] AS [SentCustJVID], 
@@ -2238,21 +1921,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
     [tbl_SentJVCustHistory].[UpdatedBy] AS [UpdatedBy], 
     [tbl_SentJVCustHistory].[UpdatedDate] AS [UpdatedDate]
     FROM [dbo].[tbl_SentJVCustHistory] AS [tbl_SentJVCustHistory]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="tbl_UserLogin" EntityType="Self.tbl_UserLogin" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tbl_UserLogin].[LoginID] AS [LoginID], 
-    [tbl_UserLogin].[LoginUserType] AS [LoginUserType], 
-    [tbl_UserLogin].[LoginUser] AS [LoginUser], 
-    [tbl_UserLogin].[LoginDate] AS [LoginDate], 
-    [tbl_UserLogin].[LoginTime] AS [LoginTime], 
-    [tbl_UserLogin].[LogoutTime] AS [LogoutTime], 
-    [tbl_UserLogin].[TotalTime] AS [TotalTime], 
-    [tbl_UserLogin].[HostName] AS [HostName], 
-    [tbl_UserLogin].[HostIPAddr] AS [HostIPAddr], 
-    [tbl_UserLogin].[CompID] AS [CompID], 
-    [tbl_UserLogin].[BranchID] AS [BranchID]
-    FROM [dbo].[tbl_UserLogin] AS [tbl_UserLogin]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="tblCreateCompanyMaster" EntityType="Self.tblCreateCompanyMaster" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2621,75 +2289,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
     [TSchemeMaster_EffectiveROI].[EffROI] AS [EffROI]
     FROM [dbo].[TSchemeMaster_EffectiveROI] AS [TSchemeMaster_EffectiveROI]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserDetails].[UserID] AS [UserID], 
-    [UserDetails].[UserTypeID] AS [UserTypeID], 
-    [UserDetails].[UserName] AS [UserName], 
-    [UserDetails].[Password] AS [Password], 
-    [UserDetails].[CreatedBy] AS [CreatedBy]
-    FROM [dbo].[UserDetails] AS [UserDetails]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UserFormAuthentication" EntityType="Self.UserFormAuthentication" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserFormAuthentication].[FormAuthID] AS [FormAuthID], 
-    [UserFormAuthentication].[UserTypeID] AS [UserTypeID], 
-    [UserFormAuthentication].[FormID] AS [FormID], 
-    [UserFormAuthentication].[Visible] AS [Visible], 
-    [UserFormAuthentication].[CanADD] AS [CanADD], 
-    [UserFormAuthentication].[CanEDIT] AS [CanEDIT], 
-    [UserFormAuthentication].[CanSave] AS [CanSave], 
-    [UserFormAuthentication].[CanDelete] AS [CanDelete], 
-    [UserFormAuthentication].[CanView] AS [CanView], 
-    [UserFormAuthentication].[CanFinalize] AS [CanFinalize]
-    FROM [dbo].[UserFormAuthentication] AS [UserFormAuthentication]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UserFormAuthorisationDetails" EntityType="Self.UserFormAuthorisationDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserFormAuthorisationDetails].[ID] AS [ID], 
-    [UserFormAuthorisationDetails].[FormID] AS [FormID], 
-    [UserFormAuthorisationDetails].[RecordID] AS [RecordID], 
-    [UserFormAuthorisationDetails].[Usr] AS [Usr], 
-    [UserFormAuthorisationDetails].[Admin] AS [Admin], 
-    [UserFormAuthorisationDetails].[Supervisor] AS [Supervisor], 
-    [UserFormAuthorisationDetails].[FinancialYrID] AS [FinancialYrID]
-    FROM [dbo].[UserFormAuthorisationDetails] AS [UserFormAuthorisationDetails]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UserFormDetails" EntityType="Self.UserFormDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserFormDetails].[FormID] AS [FormID], 
-    [UserFormDetails].[FormName] AS [FormName], 
-    [UserFormDetails].[MTR] AS [MTR], 
-    [UserFormDetails].[ToolStripName] AS [ToolStripName]
-    FROM [dbo].[UserFormDetails] AS [UserFormDetails]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UserMenuDetails" EntityType="Self.UserMenuDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserMenuDetails].[MenuDetailsID] AS [MenuDetailsID], 
-    [UserMenuDetails].[ModuleID] AS [ModuleID], 
-    [UserMenuDetails].[FormID] AS [FormID]
-    FROM [dbo].[UserMenuDetails] AS [UserMenuDetails]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UserModuleAuthentication" EntityType="Self.UserModuleAuthentication" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserModuleAuthentication].[ModuleAuthID] AS [ModuleAuthID], 
-    [UserModuleAuthentication].[UserTypeID] AS [UserTypeID], 
-    [UserModuleAuthentication].[ModuleID] AS [ModuleID], 
-    [UserModuleAuthentication].[Visible] AS [Visible]
-    FROM [dbo].[UserModuleAuthentication] AS [UserModuleAuthentication]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UserModuleDetails" EntityType="Self.UserModuleDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserModuleDetails].[ModuleID] AS [ModuleID], 
-    [UserModuleDetails].[ModuleName] AS [ModuleName]
-    FROM [dbo].[UserModuleDetails] AS [UserModuleDetails]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UserTypeDetails" EntityType="Self.UserTypeDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserTypeDetails].[UserTypeID] AS [UserTypeID], 
-    [UserTypeDetails].[UserType] AS [UserType]
-    FROM [dbo].[UserTypeDetails] AS [UserTypeDetails]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK__tbl_UserC__Organ__51BA1E3A" Association="Self.FK__tbl_UserC__Organ__51BA1E3A">
             <End Role="User_Category_Hierarchy" EntitySet="User_Category_Hierarchy" />
             <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
@@ -3025,25 +2624,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
           <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="0" />
-        </EntityType>
-        <EntityType Name="tbl_UserLogin">
-          <Key>
-            <PropertyRef Name="LoginID" />
-            <PropertyRef Name="LoginUserType" />
-            <PropertyRef Name="LoginUser" />
-            <PropertyRef Name="LoginDate" />
-          </Key>
-          <Property Name="LoginID" Type="Int32" Nullable="false" />
-          <Property Name="LoginUserType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LoginUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LoginDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="LoginTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogoutTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TotalTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="HostName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="HostIPAddr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CompID" Type="Int32" />
-          <Property Name="BranchID" Type="Int32" />
         </EntityType>
         <EntityType Name="tblCreateCompanyMaster">
           <Key>
@@ -3432,107 +3012,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <Property Name="NoofDefaultMonths" Type="Int32" />
           <Property Name="EffROI" Type="Decimal" Precision="11" Scale="2" />
         </EntityType>
-        <EntityType Name="UserDetail">
-          <Key>
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="UserTypeID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="UserTypeID" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="UserFormAuthentication">
-          <Key>
-            <PropertyRef Name="FormAuthID" />
-            <PropertyRef Name="UserTypeID" />
-            <PropertyRef Name="FormID" />
-            <PropertyRef Name="Visible" />
-            <PropertyRef Name="CanADD" />
-            <PropertyRef Name="CanEDIT" />
-            <PropertyRef Name="CanSave" />
-            <PropertyRef Name="CanDelete" />
-            <PropertyRef Name="CanView" />
-            <PropertyRef Name="CanFinalize" />
-          </Key>
-          <Property Name="FormAuthID" Type="Int32" Nullable="false" />
-          <Property Name="UserTypeID" Type="Int32" Nullable="false" />
-          <Property Name="FormID" Type="Int32" Nullable="false" />
-          <Property Name="Visible" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CanADD" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CanEDIT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CanSave" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CanDelete" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CanView" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CanFinalize" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserFormAuthorisationDetail">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="FormID" />
-            <PropertyRef Name="RecordID" />
-            <PropertyRef Name="Usr" />
-            <PropertyRef Name="Admin" />
-            <PropertyRef Name="Supervisor" />
-            <PropertyRef Name="FinancialYrID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="FormID" Type="Int32" Nullable="false" />
-          <Property Name="RecordID" Type="Int32" Nullable="false" />
-          <Property Name="Usr" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Admin" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Supervisor" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="FinancialYrID" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserFormDetail">
-          <Key>
-            <PropertyRef Name="FormID" />
-            <PropertyRef Name="FormName" />
-            <PropertyRef Name="MTR" />
-          </Key>
-          <Property Name="FormID" Type="Int32" Nullable="false" />
-          <Property Name="FormName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MTR" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="ToolStripName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="UserMenuDetail">
-          <Key>
-            <PropertyRef Name="MenuDetailsID" />
-            <PropertyRef Name="ModuleID" />
-            <PropertyRef Name="FormID" />
-          </Key>
-          <Property Name="MenuDetailsID" Type="Int32" Nullable="false" />
-          <Property Name="ModuleID" Type="Int32" Nullable="false" />
-          <Property Name="FormID" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserModuleAuthentication">
-          <Key>
-            <PropertyRef Name="ModuleAuthID" />
-            <PropertyRef Name="UserTypeID" />
-            <PropertyRef Name="ModuleID" />
-            <PropertyRef Name="Visible" />
-          </Key>
-          <Property Name="ModuleAuthID" Type="Int32" Nullable="false" />
-          <Property Name="UserTypeID" Type="Int32" Nullable="false" />
-          <Property Name="ModuleID" Type="Int32" Nullable="false" />
-          <Property Name="Visible" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserModuleDetail">
-          <Key>
-            <PropertyRef Name="ModuleID" />
-            <PropertyRef Name="ModuleName" />
-          </Key>
-          <Property Name="ModuleID" Type="Int32" Nullable="false" />
-          <Property Name="ModuleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserTypeDetail">
-          <Key>
-            <PropertyRef Name="UserTypeID" />
-          </Key>
-          <Property Name="UserTypeID" Type="Int32" Nullable="false" />
-          <Property Name="UserType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityContainer Name="MangalDBNewEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblBankMasters" EntityType="Self.tblBankMaster" />
           <EntitySet Name="Bharat_tbl_SentJVCustHistory" EntityType="Self.Bharat_tbl_SentJVCustHistory" />
@@ -3549,7 +3028,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <EntitySet Name="newbharatTGLGoldStocks" EntityType="Self.newbharatTGLGoldStock" />
           <EntitySet Name="tbl_GLDocumentMaster" EntityType="Self.tbl_GLDocumentMaster" />
           <EntitySet Name="tbl_SentJVCustHistory" EntityType="Self.tbl_SentJVCustHistory" />
-          <EntitySet Name="tbl_UserLogin" EntityType="Self.tbl_UserLogin" />
           <EntitySet Name="tblCreateCompanyMasters" EntityType="Self.tblCreateCompanyMaster" />
           <EntitySet Name="tblLogins" EntityType="Self.tblLogin" />
           <EntitySet Name="TestDBs" EntityType="Self.TestDB" />
@@ -3576,14 +3054,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
           <EntitySet Name="TGLOutwardForm_GoldDetails" EntityType="Self.TGLOutwardForm_GoldDetails" />
           <EntitySet Name="TGLSmsHistories" EntityType="Self.TGLSmsHistory" />
           <EntitySet Name="TSchemeMaster_EffectiveROI" EntityType="Self.TSchemeMaster_EffectiveROI" />
-          <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
-          <EntitySet Name="UserFormAuthentications" EntityType="Self.UserFormAuthentication" />
-          <EntitySet Name="UserFormAuthorisationDetails" EntityType="Self.UserFormAuthorisationDetail" />
-          <EntitySet Name="UserFormDetails" EntityType="Self.UserFormDetail" />
-          <EntitySet Name="UserMenuDetails" EntityType="Self.UserMenuDetail" />
-          <EntitySet Name="UserModuleAuthentications" EntityType="Self.UserModuleAuthentication" />
-          <EntitySet Name="UserModuleDetails" EntityType="Self.UserModuleDetail" />
-          <EntitySet Name="UserTypeDetails" EntityType="Self.UserTypeDetail" />
           <FunctionImport Name="SplitValue" IsComposable="true" ReturnType="Collection(MangalDBNewModel.SplitValue_Result)">
             <Parameter Name="String" Mode="In" Type="String" />
             <Parameter Name="Delimiter" Mode="In" Type="String" />
@@ -3715,6 +3185,39 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
             <End Role="Trans_KYCAddresses" EntitySet="Trans_KYCAddresses" />
           </AssociationSet>
+          <EntitySet Name="Menus" EntityType="MangalDBNewModel.Menu" />
+          <EntitySet Name="UserAuthorizations" EntityType="MangalDBNewModel.UserAuthorization" />
+          <EntitySet Name="UserDetails" EntityType="MangalDBNewModel.UserDetail" />
+          <FunctionImport Name="T_GetFormDetails_FormIdWise" ReturnType="Collection(MangalDBNewModel.T_GetFormDetails_FormIdWise_Result)">
+            <Parameter Name="FormId" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="T_UserAuthorization_Forms" ReturnType="Collection(MangalDBNewModel.T_UserAuthorization_Forms_Result)">
+            <Parameter Name="ParentID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserCategoryID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="T_Update_UserAuthorization_DetailsUserWise">
+            <Parameter Name="index" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="ParentID" Mode="In" Type="Int32" />
+            <Parameter Name="FormID" Mode="In" Type="Int32" />
+            <Parameter Name="isVisible" Mode="In" Type="Boolean" />
+            <Parameter Name="isEdit" Mode="In" Type="Boolean" />
+            <Parameter Name="isView" Mode="In" Type="Boolean" />
+            <Parameter Name="isSave" Mode="In" Type="Boolean" />
+            <Parameter Name="isDelete" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="T_Forms_UserAuthorization_ParentPage" ReturnType="Collection(MangalDBNewModel.T_Forms_UserAuthorization_ParentPage_Result)">
+          <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="T_GetAuthorizeSubPagesList_PrentidWise" ReturnType="Collection(MangalDBNewModel.T_GetAuthorizeSubPagesList_PrentidWise_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="ParentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetKYCDetailsForRequestForm" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForRequestForm_Result)">
+            <Parameter Name="KycId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -4604,6 +4107,129 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="Sequence" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ToolTip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IconPath" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserAuthorization">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="isVisible" Type="Boolean" Nullable="false" />
+          <Property Name="isEdit" Type="Boolean" Nullable="false" />
+          <Property Name="isSave" Type="Boolean" Nullable="false" />
+          <Property Name="isDelete" Type="Boolean" Nullable="false" />
+          <Property Name="isView" Type="Boolean" Nullable="false" />
+          <Property Name="isDefault" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ParentID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserTypeID" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BranchId" Type="Int32" Nullable="false" />
+          <Property Name="FinancialYearId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="T_GetFormDetails_FormIdWise_Result">
+          <Property Type="Int32" Name="FormId" Nullable="false" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Boolean" Name="isVisible" Nullable="false" />
+          <Property Type="Boolean" Name="isEdit" Nullable="false" />
+          <Property Type="Boolean" Name="isSave" Nullable="false" />
+          <Property Type="Boolean" Name="isDelete" Nullable="false" />
+          <Property Type="Boolean" Name="isView" Nullable="false" />
+          <Property Type="Int32" Name="FormID1" Nullable="false" />
+          <Property Type="String" Name="FormName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ParentID" Nullable="true" />
+          <Property Type="String" Name="Url" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ToolTip" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="sequence" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="IconPath" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="T_UserAuthorization_Forms_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Boolean" Name="isVisible" Nullable="false" />
+          <Property Type="Boolean" Name="isEdit" Nullable="false" />
+          <Property Type="Boolean" Name="isSave" Nullable="false" />
+          <Property Type="Boolean" Name="isDelete" Nullable="false" />
+          <Property Type="Boolean" Name="isView" Nullable="false" />
+          <Property Type="Int32" Name="FormID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ParentID" Nullable="true" />
+          <Property Type="String" Name="ParentForm" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="T_Forms_UserAuthorization_ParentPage_Result">
+          <Property Type="String" Name="FormName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ParentId" Nullable="false" />
+          <Property Type="String" Name="sequence" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="FormUrl" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ToolTip" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="IconPath" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Boolean" Name="isVisible" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="T_GetAuthorizeSubPagesList_PrentidWise_Result">
+          <Property Type="Int32" Name="FormId" Nullable="false" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Boolean" Name="isVisible" Nullable="false" />
+          <Property Type="Boolean" Name="isEdit" Nullable="false" />
+          <Property Type="Boolean" Name="isSave" Nullable="false" />
+          <Property Type="Boolean" Name="isDelete" Nullable="false" />
+          <Property Type="Boolean" Name="isView" Nullable="false" />
+          <Property Type="Int32" Name="FormID1" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ParentID" Nullable="true" />
+          <Property Type="String" Name="Url" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="FormActualName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IconPath" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="sequence" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="GetKYCDetailsForRequestForm_Result">
+          <Property Type="Int32" Name="KycId" Nullable="false" />
+          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="MobileNo" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="EmailID" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="BldgHouseName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Road" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="BldgPlotNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="RoomBlockNo" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="StateID" Nullable="true" />
+          <Property Type="Int32" Name="CityID" Nullable="true" />
+          <Property Type="Int32" Name="ZoneID" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Distance" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PinCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Area" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="KYCDate" Nullable="true" Precision="23" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4860,23 +4486,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tbl_UserLogin">
-            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_UserLogin">
-              <MappingFragment StoreEntitySet="tbl_UserLogin">
-                <ScalarProperty Name="LoginID" ColumnName="LoginID" />
-                <ScalarProperty Name="LoginUserType" ColumnName="LoginUserType" />
-                <ScalarProperty Name="LoginUser" ColumnName="LoginUser" />
-                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
-                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
-                <ScalarProperty Name="LogoutTime" ColumnName="LogoutTime" />
-                <ScalarProperty Name="TotalTime" ColumnName="TotalTime" />
-                <ScalarProperty Name="HostName" ColumnName="HostName" />
-                <ScalarProperty Name="HostIPAddr" ColumnName="HostIPAddr" />
-                <ScalarProperty Name="CompID" ColumnName="CompID" />
-                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5287,91 +4896,6 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
                 <ScalarProperty Name="SID" ColumnName="SID" />
                 <ScalarProperty Name="NoofDefaultMonths" ColumnName="NoofDefaultMonths" />
                 <ScalarProperty Name="EffROI" ColumnName="EffROI" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.UserDetail">
-              <MappingFragment StoreEntitySet="UserDetails">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserFormAuthentications">
-            <EntityTypeMapping TypeName="MangalDBNewModel.UserFormAuthentication">
-              <MappingFragment StoreEntitySet="UserFormAuthentication">
-                <ScalarProperty Name="FormAuthID" ColumnName="FormAuthID" />
-                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
-                <ScalarProperty Name="FormID" ColumnName="FormID" />
-                <ScalarProperty Name="Visible" ColumnName="Visible" />
-                <ScalarProperty Name="CanADD" ColumnName="CanADD" />
-                <ScalarProperty Name="CanEDIT" ColumnName="CanEDIT" />
-                <ScalarProperty Name="CanSave" ColumnName="CanSave" />
-                <ScalarProperty Name="CanDelete" ColumnName="CanDelete" />
-                <ScalarProperty Name="CanView" ColumnName="CanView" />
-                <ScalarProperty Name="CanFinalize" ColumnName="CanFinalize" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserFormAuthorisationDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.UserFormAuthorisationDetail">
-              <MappingFragment StoreEntitySet="UserFormAuthorisationDetails">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="FormID" ColumnName="FormID" />
-                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
-                <ScalarProperty Name="Usr" ColumnName="Usr" />
-                <ScalarProperty Name="Admin" ColumnName="Admin" />
-                <ScalarProperty Name="Supervisor" ColumnName="Supervisor" />
-                <ScalarProperty Name="FinancialYrID" ColumnName="FinancialYrID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserFormDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.UserFormDetail">
-              <MappingFragment StoreEntitySet="UserFormDetails">
-                <ScalarProperty Name="FormID" ColumnName="FormID" />
-                <ScalarProperty Name="FormName" ColumnName="FormName" />
-                <ScalarProperty Name="MTR" ColumnName="MTR" />
-                <ScalarProperty Name="ToolStripName" ColumnName="ToolStripName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserMenuDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.UserMenuDetail">
-              <MappingFragment StoreEntitySet="UserMenuDetails">
-                <ScalarProperty Name="MenuDetailsID" ColumnName="MenuDetailsID" />
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
-                <ScalarProperty Name="FormID" ColumnName="FormID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserModuleAuthentications">
-            <EntityTypeMapping TypeName="MangalDBNewModel.UserModuleAuthentication">
-              <MappingFragment StoreEntitySet="UserModuleAuthentication">
-                <ScalarProperty Name="ModuleAuthID" ColumnName="ModuleAuthID" />
-                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
-                <ScalarProperty Name="Visible" ColumnName="Visible" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserModuleDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.UserModuleDetail">
-              <MappingFragment StoreEntitySet="UserModuleDetails">
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
-                <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserTypeDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.UserTypeDetail">
-              <MappingFragment StoreEntitySet="UserTypeDetails">
-                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
-                <ScalarProperty Name="UserType" ColumnName="UserType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6100,6 +5624,153 @@ warning 6013: The table/view 'MangalDBNew.dbo.V_MonthlyJv' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Menu">
+              <MappingFragment StoreEntitySet="Menus">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IconPath" ColumnName="IconPath" />
+                <ScalarProperty Name="ToolTip" ColumnName="ToolTip" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAuthorizations">
+            <EntityTypeMapping TypeName="MangalDBNewModel.UserAuthorization">
+              <MappingFragment StoreEntitySet="UserAuthorizations">
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="isDefault" ColumnName="isDefault" />
+                <ScalarProperty Name="isView" ColumnName="isView" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="isSave" ColumnName="isSave" />
+                <ScalarProperty Name="isEdit" ColumnName="isEdit" />
+                <ScalarProperty Name="isVisible" ColumnName="isVisible" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FormID" ColumnName="FormID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="T_GetFormDetails_FormIdWise" FunctionName="MangalDBNewModel.Store.T_GetFormDetails_FormIdWise">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.T_GetFormDetails_FormIdWise_Result">
+                <ScalarProperty Name="FormId" ColumnName="FormId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="isVisible" ColumnName="isVisible" />
+                <ScalarProperty Name="isEdit" ColumnName="isEdit" />
+                <ScalarProperty Name="isSave" ColumnName="isSave" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="isView" ColumnName="isView" />
+                <ScalarProperty Name="FormID1" ColumnName="FormID1" />
+                <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="ToolTip" ColumnName="ToolTip" />
+                <ScalarProperty Name="sequence" ColumnName="sequence" />
+                <ScalarProperty Name="IconPath" ColumnName="IconPath" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="T_UserAuthorization_Forms" FunctionName="MangalDBNewModel.Store.T_UserAuthorization_Forms">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.T_UserAuthorization_Forms_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="isVisible" ColumnName="isVisible" />
+                <ScalarProperty Name="isEdit" ColumnName="isEdit" />
+                <ScalarProperty Name="isSave" ColumnName="isSave" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="isView" ColumnName="isView" />
+                <ScalarProperty Name="FormID" ColumnName="FormID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ParentForm" ColumnName="ParentForm" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="T_Update_UserAuthorization_DetailsUserWise" FunctionName="MangalDBNewModel.Store.T_Update_UserAuthorization_DetailsUserWise" />
+          <FunctionImportMapping FunctionImportName="T_Forms_UserAuthorization_ParentPage" FunctionName="MangalDBNewModel.Store.T_Forms_UserAuthorization_ParentPage">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.T_Forms_UserAuthorization_ParentPage_Result">
+                <ScalarProperty Name="FormName" ColumnName="FormName" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="sequence" ColumnName="sequence" />
+                <ScalarProperty Name="FormUrl" ColumnName="FormUrl" />
+                <ScalarProperty Name="ToolTip" ColumnName="ToolTip" />
+                <ScalarProperty Name="IconPath" ColumnName="IconPath" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="isVisible" ColumnName="isVisible" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="T_GetAuthorizeSubPagesList_PrentidWise" FunctionName="MangalDBNewModel.Store.T_GetAuthorizeSubPagesList_PrentidWise">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.T_GetAuthorizeSubPagesList_PrentidWise_Result">
+                <ScalarProperty Name="FormId" ColumnName="FormId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="isVisible" ColumnName="isVisible" />
+                <ScalarProperty Name="isEdit" ColumnName="isEdit" />
+                <ScalarProperty Name="isSave" ColumnName="isSave" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="isView" ColumnName="isView" />
+                <ScalarProperty Name="FormID1" ColumnName="FormID1" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="FormActualName" ColumnName="FormActualName" />
+                <ScalarProperty Name="IconPath" ColumnName="IconPath" />
+                <ScalarProperty Name="sequence" ColumnName="sequence" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetKYCDetailsForRequestForm" FunctionName="MangalDBNewModel.Store.GetKYCDetailsForRequestForm">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.GetKYCDetailsForRequestForm_Result">
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="BldgHouseName" ColumnName="BldgHouseName" />
+                <ScalarProperty Name="Road" ColumnName="Road" />
+                <ScalarProperty Name="BldgPlotNo" ColumnName="BldgPlotNo" />
+                <ScalarProperty Name="RoomBlockNo" ColumnName="RoomBlockNo" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="ZoneID" ColumnName="ZoneID" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="KYCDate" ColumnName="KYCDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

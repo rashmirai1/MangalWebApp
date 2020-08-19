@@ -127,6 +127,7 @@ namespace MangalWeb.Controllers
             var file = _kycService.GetImageById(id);
             return File(file.KycPhoto, file.ContentType);
         }
+
         /// <summary>
         /// verify otp code
         /// </summary>

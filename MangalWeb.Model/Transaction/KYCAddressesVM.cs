@@ -24,6 +24,9 @@ namespace MangalWeb.Model.Transaction
         public string Area { get; set; }
         public string ZoneId { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string CityName { get; set; }
+        public string StateName { get; set; }
+        public string ZoneName { get; set; }
 
         public virtual KYCBasicDetailsVM KYCBasicDetailsVm { get; set; }
     }

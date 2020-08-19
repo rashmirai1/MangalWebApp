@@ -10,12 +10,19 @@
 namespace MangalWeb.Model.Entity
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class UserMenuDetail
+    public partial class T_UserAuthorization_Forms_Result
     {
-        public int MenuDetailsID { get; set; }
-        public int ModuleID { get; set; }
+        public int ID { get; set; }
+        public int UserID { get; set; }
+        public bool isVisible { get; set; }
+        public bool isEdit { get; set; }
+        public bool isSave { get; set; }
+        public bool isDelete { get; set; }
+        public bool isView { get; set; }
         public int FormID { get; set; }
+        public string Name { get; set; }
+        public Nullable<int> ParentID { get; set; }
+        public string ParentForm { get; set; }
     }
 }

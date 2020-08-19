@@ -10,11 +10,16 @@
 namespace MangalWeb.Model.Entity
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class UserTypeDetail
+    public partial class T_Forms_UserAuthorization_ParentPage_Result
     {
-        public int UserTypeID { get; set; }
-        public string UserType { get; set; }
+        public string FormName { get; set; }
+        public int ParentId { get; set; }
+        public string sequence { get; set; }
+        public string FormUrl { get; set; }
+        public string ToolTip { get; set; }
+        public string IconPath { get; set; }
+        public string Name { get; set; }
+        public bool isVisible { get; set; }
     }
 }

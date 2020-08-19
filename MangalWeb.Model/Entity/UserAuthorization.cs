@@ -12,14 +12,20 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class UserFormAuthorisationDetail
+    public partial class UserAuthorization
     {
         public int ID { get; set; }
         public int FormID { get; set; }
-        public int RecordID { get; set; }
-        public string Usr { get; set; }
-        public string Admin { get; set; }
-        public string Supervisor { get; set; }
-        public int FinancialYrID { get; set; }
+        public int UserID { get; set; }
+        public bool isVisible { get; set; }
+        public bool isEdit { get; set; }
+        public bool isSave { get; set; }
+        public bool isDelete { get; set; }
+        public bool isView { get; set; }
+        public bool isDefault { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string isActive { get; set; }
+        public int ParentID { get; set; }
     }
 }
