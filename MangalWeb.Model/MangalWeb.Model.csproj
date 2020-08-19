@@ -97,6 +97,9 @@
     <Compile Include="Entity\GetKYCDetailsForDocument_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\GetKYCDetailsForRequestForm_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\ImageKyc.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>

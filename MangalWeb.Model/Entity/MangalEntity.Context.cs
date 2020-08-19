@@ -289,5 +289,14 @@ namespace MangalWeb.Model.Entity
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<T_GetAuthorizeSubPagesList_PrentidWise_Result>("T_GetAuthorizeSubPagesList_PrentidWise", userIDParameter, parentIDParameter);
         }
+    
+        public virtual ObjectResult<GetKYCDetailsForRequestForm_Result> GetKYCDetailsForRequestForm(Nullable<int> kycId)
+        {
+            var kycIdParameter = kycId.HasValue ?
+                new ObjectParameter("KycId", kycId) :
+                new ObjectParameter("KycId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetKYCDetailsForRequestForm_Result>("GetKYCDetailsForRequestForm", kycIdParameter);
+        }
     }
 }

@@ -37,9 +37,9 @@ namespace MangalWeb.Service.Service
             return _requestFormRepository.GetKYCList();
         }
 
-        public DocumentUploadViewModel GetDoumentUploadById(int id)
+        public RequestFormViewModel GetRequestFormById(int id)
         {
-            return _requestFormRepository.GetDoumentUploadById(id);
+            return _requestFormRepository.GetRequestFormById(id);
         }
 
         public int GetMaxTransactionId()

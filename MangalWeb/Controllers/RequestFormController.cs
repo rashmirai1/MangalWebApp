@@ -12,14 +12,23 @@ namespace MangalWeb.Controllers
         RequestFormService _requestFormService = new RequestFormService();
         DocumentUploadService _documentUploadService = new DocumentUploadService();
 
+
+        public void BindList()
+        {
+            ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
+            ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
+            //ViewBag.SourceList = new SelectList(_requestFormService.GetSourceOfApplicationList(), "Soa_Name", "Soa_Name");
+            ViewBag.PinCodeList = new SelectList(_requestFormService.GetAllPincodes(), "Pc_Id", "Pc_Desc");
+            ViewBag.AddressPinCodeList = new SelectList(_requestFormService.GetAllPincodes(), "Pc_Id", "Pc_Desc");
+            ViewBag.OfficePinCodeList = new SelectList(_requestFormService.GetAllPincodes(), "Pc_Id", "Pc_Desc");
+            ViewBag.PinCodes = _requestFormService.GetAllPincodes();
+        }
+
         // GET: RequestForm
         public ActionResult RequestForm()
         {
             ButtonVisiblity("Index");
-            ViewBag.SourceList = new SelectList(_requestFormService.GetSourceOfApplicationList(), "Soa_Name", "Soa_Name");
-            ViewBag.PinCodeList = new SelectList(_requestFormService.GetAllPincodes(), "Pc_Id", "Pc_Desc");
-            ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
-            ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
+            BindList();
             RequestFormViewModel kycVM = new RequestFormViewModel();
             kycVM.TransactionId = _requestFormService.GetMaxTransactionId();
             return View(kycVM);
@@ -48,15 +57,17 @@ namespace MangalWeb.Controllers
         }
         #endregion GetCustomerDetails
 
-        #region GetDoumentUploadById
+        #region GetRequestFormById
 
         //[HttpPost]
-        public ActionResult GetDoumentUploadById(int Id)
+        public ActionResult GetRequestFormById(int Id)
         {
             ButtonVisiblity("Edit");
-            var model = _requestFormService.GetDoumentUploadById(Id);
+            BindList();
+            var model = _requestFormService.GetRequestFormById(Id);
+            model.TransactionId = _requestFormService.GetMaxTransactionId();
             return View("RequestForm", model);
         }
-        #endregion GetDoumentUploadById
+        #endregion GetRequestFormById
     }
 }

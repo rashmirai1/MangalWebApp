@@ -1619,6 +1619,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
         <Function Name="GetKYCDetailsForDocumentById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetKYCDetailsForRequestForm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="KycId" Type="int" Mode="In" />
+        </Function>
         <Function Name="NumberSuffix" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="val" Type="int" Mode="In" />
         </Function>
@@ -3206,11 +3209,14 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
             <Parameter Name="isDelete" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="T_Forms_UserAuthorization_ParentPage" ReturnType="Collection(MangalDBNewModel.T_Forms_UserAuthorization_ParentPage_Result)">
-            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          <Parameter Name="UserId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="T_GetAuthorizeSubPagesList_PrentidWise" ReturnType="Collection(MangalDBNewModel.T_GetAuthorizeSubPagesList_PrentidWise_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="ParentID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetKYCDetailsForRequestForm" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForRequestForm_Result)">
+            <Parameter Name="KycId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
@@ -4203,6 +4209,26 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Type="String" Name="FormActualName" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="IconPath" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="sequence" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="GetKYCDetailsForRequestForm_Result">
+          <Property Type="Int32" Name="KycId" Nullable="false" />
+          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="MobileNo" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="EmailID" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="BldgHouseName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Road" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="BldgPlotNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="RoomBlockNo" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="StateID" Nullable="true" />
+          <Property Type="Int32" Name="CityID" Nullable="true" />
+          <Property Type="Int32" Name="ZoneID" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Distance" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PinCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Area" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="KYCDate" Nullable="true" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -5718,6 +5744,30 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
                 <ScalarProperty Name="FormActualName" ColumnName="FormActualName" />
                 <ScalarProperty Name="IconPath" ColumnName="IconPath" />
                 <ScalarProperty Name="sequence" ColumnName="sequence" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetKYCDetailsForRequestForm" FunctionName="MangalDBNewModel.Store.GetKYCDetailsForRequestForm">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.GetKYCDetailsForRequestForm_Result">
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="BldgHouseName" ColumnName="BldgHouseName" />
+                <ScalarProperty Name="Road" ColumnName="Road" />
+                <ScalarProperty Name="BldgPlotNo" ColumnName="BldgPlotNo" />
+                <ScalarProperty Name="RoomBlockNo" ColumnName="RoomBlockNo" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="ZoneID" ColumnName="ZoneID" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="KYCDate" ColumnName="KYCDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

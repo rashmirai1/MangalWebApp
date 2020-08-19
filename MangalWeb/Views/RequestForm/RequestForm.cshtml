@@ -8,14 +8,14 @@
 @using (Ajax.BeginForm("CreateEdit", "RequestForm", new AjaxOptions { }, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.KYCID, new { @id = "ItemID" })
+    @Html.HiddenFor(model => model.KycId, new { @id = "ItemID" })
     <header id="topbar" class="affix">
         <div class="col-md-5 col-sm-4 col-xs-12">
             <div class="topbar-left">
                 <h4>Request Form </h4>
             </div><!--end of topbar-left-->
         </div><!--end of col-md-5-->
-        <div class="col-md-7 col-sm-8 col-xs-12">
+        <div class="col-BlankFieldmd-7 col-sm-8 col-xs-12">
             <div class="topbar-right" id="headerbutton">
                 @*<button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>*@
                 <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
@@ -24,13 +24,15 @@
                             type="button" data-toggle="modal">
                         <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
                     </button>*@
-                <a href="@Html.Raw(@Url.Action("Index", "KYC"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+                <a href="@Html.Raw(@Url.Action("RequestForm", "RequestForm"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+                @*<button type="button" onclick="BlankData()" class="btn btn-alert btn-md light fw600 ml10">Blank Data</button>*@
             </div><!--end of topbar-right-->
 
         </div><!--end of col-md-7-->
     </header>
     <section id="content" class="animated fadeIn">
-        <input id="isMobileVerified" name="isMobileVerified" type="hidden" value="0">
+        <input name="Trans_KYCAddresses[0].AddressCategory" id="Trans_KYCAddresses_0__AddressCategory" type="hidden" value="01" />
+        <input name="Trans_KYCAddresses[1].AddressCategory" id="Trans_KYCAddresses_1__AddressCategory" type="hidden" value="03" />
         <!-- Start: Topbar -->
         <!-- End: Topbar -->
         <!-- Begin: Content -->
@@ -70,7 +72,6 @@
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 @Html.EditorFor(model => model.LoanAccountNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Loan Account No", @readonly = true } })
                                             </div>
-                                          
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
@@ -81,13 +82,43 @@
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Disburse Date<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                                                @Html.EditorFor(model => model.DisburseDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Disburse Date", @autocomplete = "Off",@readonly=true } })
+                                                @Html.EditorFor(model => model.DisburseDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Disburse Date", @autocomplete = "Off", @readonly = true } })
                                                 @Html.ValidationMessageFor(model => model.DisburseDate, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                     </div>
                                     <hr style="border: 1px solid #DDD;margin-bottom: 20px;">
-                                    <label style="padding-left:20px;"><b>Address Details</b></label>
+                                    <label style="padding-left:20px;"><b>Address Details 1(Present Address)</b></label>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Address Category<span class="text-danger"> * </span></label>
+                                                <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                    <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.AddressCategory,
+                                                new List<SelectListItem> {
+                                                new SelectListItem { Value = "00" , Text = "Select Address Category" },
+                                                new SelectListItem { Value = "01" , Text = "Rented" },
+                                                new SelectListItem { Value = "02" , Text = "Owned" },
+                                                },
+                                                new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.AddressCategory, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                    Residence Code
+                                                    <span class="text-danger"> * </span>
+                                                </label>
+                                                <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                    <span class="text-danger" id="CustomErr"> </span>
+                                                    @Html.EditorFor(model => model.ResidenceCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Residence Code" } })
+                                                    @Html.ValidationMessageFor(model => model.ResidenceCode, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                             <div class="form-group">
@@ -109,7 +140,7 @@
                                                     <span class="text-danger"> * </span>
                                                 </label>
                                                 <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
-                                                    <span class="text-danger" id="CustomErr"> </span> @Html.EditorFor(model => model.Road, new { htmlAttributes = new { @class = "form-control", @placeholder = "Road", @autofocus = "autofocus" } })
+                                                    @Html.EditorFor(model => model.Road, new { htmlAttributes = new { @class = "form-control", @placeholder = "Road", @autofocus = "autofocus" } })
                                                     @Html.ValidationMessageFor(model => model.Road, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -123,7 +154,6 @@
                                                     <span class="text-danger"> * </span>
                                                 </label>
                                                 <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
-                                                    <span class="text-danger" id="CustomErr"> </span>
                                                     @Html.EditorFor(model => model.BldgPlotNo, new { htmlAttributes = new { @class = "form-control", @placeholder = " Building/ Plot No", @autofocus = "autofocus" } })
                                                     @Html.ValidationMessageFor(model => model.BldgPlotNo, "", new { @class = "text-danger" })
                                                 </div>
@@ -136,7 +166,7 @@
                                                     <span class="text-danger"> * </span>
                                                 </label>
                                                 <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
-                                                    <span class="text-danger" id="CustomErr"> </span> @Html.EditorFor(model => model.RoomBlockNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Room/Block No", @autofocus = "autofocus" } })
+                                                    @Html.EditorFor(model => model.RoomBlockNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Room/Block No", @autofocus = "autofocus" } })
                                                     @Html.ValidationMessageFor(model => model.RoomBlockNo, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -150,7 +180,6 @@
                                                     <span class="text-danger"> * </span>
                                                 </label>
                                                 <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
-                                                    <span class="text-danger" id="CustomErr"> </span>
                                                     @Html.EditorFor(model => model.Landmark, new { htmlAttributes = new { @class = "form-control", @placeholder = "Landmark", @autofocus = "autofocus" } })
                                                     @Html.ValidationMessageFor(model => model.Landmark, "", new { @class = "text-danger" })
                                                 </div>
@@ -177,8 +206,7 @@
                                                     <span class="text-danger"> * </span>
                                                 </label>
                                                 <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
-                                                    <span class="text-danger" id="CustomErr"> </span>
-                                                    @Html.DropDownListFor(m => m.PinCode, (SelectList)ViewBag.PinCodeList, "--Select PinCode--", htmlAttributes: new { @class = "form-control" })
+                                                    @Html.DropDownListFor(m => m.PinCode, (SelectList)ViewBag.PinCodeList, "--Select Pin Code--", htmlAttributes: new { @class = "form-control" })
                                                     @Html.ValidationMessageFor(model => model.PinCode, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -190,7 +218,6 @@
                                                     <span class="text-danger"> * </span>
                                                 </label>
                                                 <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
-                                                    <span class="text-danger" id="CustomErr"> </span>
                                                     @Html.HiddenFor(m => m.StateID)
                                                     @Html.Editor("state", new { htmlAttributes = new { @class = "form-control", @placeholder = "State", @autofocus = "autofocus", @readonly = "readonly" } })
                                                     @Html.ValidationMessageFor(model => model.StateID, "", new { @class = "text-danger" })
@@ -206,7 +233,6 @@
                                                     <span class="text-danger"> * </span>
                                                 </label>
                                                 <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
-                                                    <span class="text-danger" id="CustomErr"> </span>
                                                     @Html.HiddenFor(m => m.CityID)
                                                     @Html.Editor("city", new { htmlAttributes = new { @class = "form-control", @placeholder = "City", @autofocus = "autofocus", @readonly = "readonly" } })
                                                     @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
@@ -220,7 +246,6 @@
                                                     <span class="text-danger"> * </span>
                                                 </label>
                                                 <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
-                                                    <span class="text-danger" id="CustomErr"> </span>
                                                     @Html.HiddenFor(m => m.Area)
                                                     @Html.Editor("area", new { htmlAttributes = new { @class = "form-control", @placeholder = "Area", @autofocus = "autofocus", @readonly = "readonly" } })
                                                     @Html.ValidationMessageFor(model => model.Area, "", new { @class = "text-danger" })
@@ -234,7 +259,6 @@
                                                     <span class="text-danger"> * </span>
                                                 </label>
                                                 <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
-                                                    <span class="text-danger" id="CustomErr"> </span>
                                                     @Html.HiddenFor(m => m.ZoneID)
                                                     @Html.Editor("zone", new { htmlAttributes = new { @class = "form-control", @placeholder = "Zone", @autofocus = "autofocus", @readonly = "readonly" } })
                                                     @Html.ValidationMessageFor(model => model.ZoneID, "", new { @class = "text-danger" })
@@ -242,6 +266,702 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <hr style="border: 1px solid #DDD;margin-bottom: 20px;">
+                                    @if (Model.Trans_KYCAddresses.Count > 0)
+                                    {
+                                        <label style="padding-left:20px;"><b>Address Details 2(Permanent Address)</b></label>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Address Category<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.Trans_KYCAddresses[0].AddressCategory,
+new List<SelectListItem> {
+                                                new SelectListItem { Value = "00" , Text = "Select Address Category" },
+                                                new SelectListItem { Value = "01" , Text = "Rented" },
+                                                new SelectListItem { Value = "02" , Text = "Owned" },
+},
+new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[0].AddressCategory, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                        Residence Code
+                                                        <span class="text-danger"> * </span>
+                                                    </label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>
+                                                        @Html.EditorFor(model => model.Trans_KYCAddresses[0].ResidenceCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Residence Code", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[0].ResidenceCode, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                        Building/House Name
+                                                        <span class="text-danger"> * </span>
+                                                    </label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        @Html.HiddenFor(x => x.Trans_KYCAddresses[0].ID)
+                                                        @Html.EditorFor(model => model.Trans_KYCAddresses[0].BuildingHouseName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Building/House Name", @autofocus = "autofocus" } })
+                                                        @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[0].BuildingHouseName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                        Road
+                                                        <span class="text-danger"> * </span>
+                                                    </label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        @Html.EditorFor(model => model.Trans_KYCAddresses[0].Road, new { htmlAttributes = new { @class = "form-control", @placeholder = "Road" } })
+                                                        @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[0].Road, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                        Building/ Plot No
+                                                        <span class="text-danger"> * </span>
+                                                    </label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        @Html.EditorFor(model => model.Trans_KYCAddresses[0].BuildingPlotNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Building/ Plot No" } })
+                                                        @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[0].BuildingPlotNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                        Room/Block No
+                                                        <span class="text-danger"> * </span>
+                                                    </label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        @Html.EditorFor(model => model.Trans_KYCAddresses[0].RoomBlockNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Room/Block No" } })
+                                                        @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[0].RoomBlockNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            Nearest landmark
+                                                            <span class="text-danger"> * </span>
+                                                        </label>
+                                                        <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                            @Html.EditorFor(model => model.Trans_KYCAddresses[0].NearestLandmark, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nearest landmark" } })
+                                                            @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[0].NearestLandmark, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            Distance (km)
+                                                            <span class="text-danger"> * </span>
+                                                        </label>
+                                                        <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                            @Html.EditorFor(model => model.Trans_KYCAddresses[0].Distance_km, new { htmlAttributes = new { @class = "form-control", @placeholder = "Distance (km)" } })
+                                                            @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[0].Distance_km, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            Pin Code
+                                                            <span class="text-danger"> * </span>
+                                                        </label>
+                                                        <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                            <div class="section">
+                                                                <label class="field select">
+                                                                    @Html.DropDownListFor(model => model.Trans_KYCAddresses[0].PinCode, (SelectList)ViewBag.AddressPinCodeList, "--Select Pincode --", htmlAttributes: new { @class = "form-control" })
+                                                                    <span class="text-danger small">@Html.ValidationMessageFor(m => m.Trans_KYCAddresses[0].PinCode)</span>
+                                                                    <i class="arrow"></i>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            State
+                                                            <span class="text-danger"> * </span>
+                                                        </label>
+                                                        <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                            <span class="text-danger" id="CustomErr"> </span>
+                                                            @Html.EditorFor(model => model.Trans_KYCAddresses[0].StateID, new { htmlAttributes = new { @class = "form-control", @placeholder = "State" } })
+                                                            @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[0].StateID, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            City
+                                                            <span class="text-danger"> * </span>
+                                                        </label>
+                                                        <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                            @Html.EditorFor(model => model.Trans_KYCAddresses[0].CityID, new { htmlAttributes = new { @class = "form-control", @placeholder = "City" } })
+                                                            @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[0].CityID, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            Area
+                                                            <span class="text-danger"> * </span>
+                                                        </label>
+                                                        <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                            @Html.EditorFor(model => model.Trans_KYCAddresses[0].Area, new { htmlAttributes = new { @class = "form-control", @placeholder = "Area" } })
+                                                            @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[0].Area, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                            Zone
+                                                            <span class="text-danger"> * </span>
+                                                        </label>
+                                                        <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                            @Html.EditorFor(model => model.Trans_KYCAddresses[0].ZoneId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Zone" } })
+                                                            @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[0].ZoneId, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Mobile No<span class="text-danger"> * </span></label>
+                                                        <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                            <span class="text-danger" id="CustomErr"> </span>
+                                                            @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mobile No" } })
+                                                            @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+                                                            <span class="text-alert" id="otpError"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Email id<span class="text-danger"> * </span></label>
+                                                        <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                            <span class="text-danger" id="CustomErr"> </span>
+                                                            @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email id" } })
+                                                            @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <hr style="border: 1px solid #DDD;margin-bottom: 20px;">
+                                                <label style="padding-left:20px;"><b>Office Address</b></label>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Address Category<span class="text-danger"> * </span></label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.Trans_KYCAddresses[1].AddressCategory,
+new List<SelectListItem> {
+                                                    new SelectListItem { Value = "00" , Text = "Select Address Category" },
+                                                new SelectListItem { Value = "01" , Text = "Rented" },
+                                                new SelectListItem { Value = "02" , Text = "Owned" },
+},
+new { @class = "form-control" })
+                                                                @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[1].AddressCategory, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Residence Code
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                @Html.EditorFor(model => model.Trans_KYCAddresses[1].ResidenceCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Residence Code" } })
+                                                                @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[1].ResidenceCode, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Building/House Name
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                @Html.HiddenFor(x => x.Trans_KYCAddresses[1].ID)
+                                                                @Html.EditorFor(model => model.Trans_KYCAddresses[1].BuildingHouseName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Building/House Name", @autofocus = "autofocus" } })
+                                                                @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[1].BuildingHouseName, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Road
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                @Html.EditorFor(model => model.Trans_KYCAddresses[1].Road, new { htmlAttributes = new { @class = "form-control", @placeholder = "Road" } })
+                                                                @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[1].Road, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Building/ Plot No
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                @Html.EditorFor(model => model.Trans_KYCAddresses[1].BuildingPlotNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Building/ Plot No" } })
+                                                                @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[1].BuildingPlotNo, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Room/Block No
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                @Html.EditorFor(model => model.Trans_KYCAddresses[1].RoomBlockNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Room/Block No" } })
+                                                                @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[1].RoomBlockNo, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Nearest landmark
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                @Html.EditorFor(model => model.Trans_KYCAddresses[1].NearestLandmark, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nearest landmark" } })
+                                                                @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[1].NearestLandmark, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Distance (km)
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                @Html.EditorFor(model => model.Trans_KYCAddresses[1].Distance_km, new { htmlAttributes = new { @class = "form-control", @placeholder = "Distance (km)" } })
+                                                                @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[1].Distance_km, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Pin Code
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <div class="section">
+                                                                    <label class="field select">
+                                                                        @Html.DropDownListFor(model => model.Trans_KYCAddresses[1].PinCode, (SelectList)ViewBag.OfficePinCodeList, "--Select Pincode --", htmlAttributes: new { @class = "form-control" })
+                                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.Trans_KYCAddresses[1].PinCode)</span>
+                                                                        <i class="arrow"></i>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                State
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                @Html.EditorFor(model => model.Trans_KYCAddresses[1].StateID, new { htmlAttributes = new { @class = "form-control", @placeholder = "State" } })
+                                                                @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[1].StateID, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                City
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                @Html.EditorFor(model => model.Trans_KYCAddresses[1].CityID, new { htmlAttributes = new { @class = "form-control", @placeholder = "City" } })
+                                                                @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[1].CityID, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Area
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                @Html.EditorFor(model => model.Trans_KYCAddresses[1].Area, new { htmlAttributes = new { @class = "form-control", @placeholder = "Area" } })
+                                                                @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[1].Area, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Zone
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                @Html.EditorFor(model => model.Trans_KYCAddresses[1].ZoneId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Zone" } })
+                                                                @Html.ValidationMessageFor(model => model.Trans_KYCAddresses[1].ZoneId, "", new { @class = "text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    }
+                                    else
+                                    {
+                                        <hr style="border: 1px solid #DDD;margin-bottom: 20px;">
+                                        <label style="padding-left:20px;"><b> Address Details 2(Permanent Address) </b></label>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Building/House Name
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input name="Trans_KYCAddresses[0].BuildingHouseName" class="form-control" id="Trans_KYCAddresses_0__BuildingHouseName" type="text" data-val-required="This field is required." data-val="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Road
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input name="Trans_KYCAddresses[0].Road" class="form-control" id="Trans_KYCAddresses_0__Road" type="text" data-val-required="This field is required." data-val="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Building/ Plot No
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input name="Trans_KYCAddresses[0].BuildingPlotNo" class="form-control" id="Trans_KYCAddresses_0__BuildingPlotNo" type="text" data-val-required="This field is required." data-val="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Room/Block No
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input name="Trans_KYCAddresses[0].RoomBlockNo" class="form-control" id="Trans_KYCAddresses_0__RoomBlockNo" type="text" data-val-required="This field is required." data-val="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Nearest landmark
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input name="Trans_KYCAddresses[0].NearestLandmark" class="form-control" id="Trans_KYCAddresses_0__NearestLandmark" type="text" data-val-required="This field is required." data-val="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Distance (km)
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input name="Trans_KYCAddresses[0].Distance_km" class="form-control" id="Trans_KYCAddresses_0__Distance_km" type="text" data-val-required="This field is required." data-val="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Pin Code
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <select name="Trans_KYCAddresses[0].PinCode" id="Trans_KYCAddresses_0__PinCode" class="form-control">
+                                                                    @foreach (var item in ViewBag.PinCodes)
+                                                                    {
+                                                                        <option value="@item.Pc_Id">@item.Pc_Desc</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                State
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input type="hidden" name="Trans_KYCAddresses[0].StateID" id="Trans_KYCAddresses_0__StateID">
+                                                                <input class="form-control" id="statePermanentAdd" type="text" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                City
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input type="hidden" name="Trans_KYCAddresses[0].CityID" id="Trans_KYCAddresses_0__CityID">
+                                                                <input class="form-control" id="cityPermanentAdd" type="text" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Area
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input type="hidden" name="Trans_KYCAddresses[0].Area" id="Trans_KYCAddresses_0__Area">
+                                                                <input class="form-control" id="areaPermanentAdd" type="text" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Zone
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input type="hidden" name="Trans_KYCAddresses[0].ZoneId" id="Trans_KYCAddresses_0__ZoneId">
+                                                                <input class="form-control" id="zonePermanentAdd" type="text" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr style="border: 1px solid #DDD;margin-bottom: 20px;">
+                                                <label style="padding-left:20px;"><b>Office Address</b></label>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Building/House Name
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input name="Trans_KYCAddresses[1].BuildingHouseName" class="form-control" id="Trans_KYCAddresses_1__BuildingHouseName" type="text" data-val-required="This field is required." data-val="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Road
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input name="Trans_KYCAddresses[1].Road" class="form-control" id="Trans_KYCAddresses_1__Road" type="text" data-val-required="This field is required." data-val="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Building/ Plot No
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input name="Trans_KYCAddresses[1].BuildingPlotNo" class="form-control" id="Trans_KYCAddresses_1__BuildingPlotNo" type="text" data-val-required="This field is required." data-val="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Room/Block No
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input name="Trans_KYCAddresses[1].RoomBlockNo" class="form-control" id="Trans_KYCAddresses_1__RoomBlockNo" type="text" data-val-required="This field is required." data-val="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Nearest landmark
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input name="Trans_KYCAddresses[1].NearestLandmark" class="form-control" id="Trans_KYCAddresses_1__NearestLandmark" type="text" data-val-required="This field is required." data-val="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Distance (km)
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input name="Trans_KYCAddresses[1].Distance_km" class="form-control" id="Trans_KYCAddresses_1__Distance_km" type="text" data-val-required="This field is required." data-val="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Pin Code
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <select name="Trans_KYCAddresses[1].PinCode" id="Trans_KYCAddresses_1__PinCode" class="form-control">
+                                                                    @foreach (var item in ViewBag.PinCodes)
+                                                                    {
+                                                                        <option value="@item.Pc_Id">@item.Pc_Desc</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                State
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input type="hidden" name="Trans_KYCAddresses[1].StateID" id="Trans_KYCAddresses_1__StateID">
+                                                                <input class="form-control" id="stateOfficeAdd" type="text" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                City
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input type="hidden" name="Trans_KYCAddresses[1].CityID" id="Trans_KYCAddresses_1__CityID">
+                                                                <input class="form-control" id="cityOfficeAdd" type="text" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Area
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input type="hidden" name="Trans_KYCAddresses[1].Area" id="Trans_KYCAddresses_1__Area">
+                                                                <input class="form-control" id="areaOfficeAdd" type="text" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">
+                                                                Zone
+                                                                <span class="text-danger"> * </span>
+                                                            </label>
+                                                            <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                                <span class="text-danger" id="CustomErr"> </span>
+                                                                <input type="hidden" name="Trans_KYCAddresses[1].ZoneId" id="Trans_KYCAddresses_1__ZoneId">
+                                                                <input class="form-control" id="zoneOfficeAdd" type="text" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                    }
                                     <hr style="border: 1px solid #DDD;margin-bottom: 20px;">
                                     <label style="padding-left:20px;"><b>Document Details</b></label>
                                     <div class="row">
@@ -323,14 +1043,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
-    </section>
+                                                        <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
+                                                    </section>
                                                         }
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -339,6 +1060,29 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
     <script type="text/javascript">
+
+        function BlankData()
+        {
+            $("#KYCDate").val('');
+            $("#CustomerID").val('');
+            $("#LoanAccountNo").val('');
+            $("#ApplicationNo").val('');
+            $("#DisburseDate").val('');
+            $("#BldgHouseName").val('');
+            $("#Road").val('');
+            $("#BldgPlotNo").val('');
+            $("#RoomBlockNo").val('');
+            $("#Landmark").val('');
+            $("#Distance").val('');
+            $("#PinCode").val('');
+            $("#state").val('');
+            $("#city").val('');
+            $("#area").val('');
+            $("#zone").val('');
+            $("#state").val('');
+            $("#city").val('');
+            $("#area").val('');
+        }
 
         $(document).ready(function () {
 
