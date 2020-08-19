@@ -18,13 +18,13 @@
         </div><!--end of col-md-5-->
         <div class="col-md-7 col-sm-8 col-xs-12">
             <div class="topbar-right" id="headerbutton">
-                @*<button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>*@
-                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
-                @*<button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>*@
-                @*<button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]"
+                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" disabled="disabled" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
+                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]" disabled="disabled"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
+                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]" disabled="disabled"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
+                <button href="#viewModal" id="btn_view"  disabled="disabled" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]"
                         type="button" data-toggle="modal">
                     <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
-                </button>*@
+                </button>
                 <a href="@Html.Raw(@Url.Action("Index", "KYC"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
             </div><!--end of topbar-right-->
 
@@ -49,6 +49,7 @@
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                             <div class="form-group">
+                                                <div style="display:none">@Html.ValidationSummary()</div>
                                                 <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">PAN No.</label>
                                                 <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
                                                     <span class="text-danger" id="CustomErr"> </span>
@@ -75,7 +76,7 @@
                                         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                             <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Upload Photo</label>
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Upload Photo<span class="text-danger"> * </span></label>
 
                                                     <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
                                                         <span class="text-danger" id="CustomErr"> </span>
@@ -880,17 +881,7 @@ new { @class= "form-control" })
                                                 </div>
 
                                             </div>
-                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                                <div class="form-group">
-                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Office Address<span class="text-danger"> * </span></label>
-                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
-                                                        <span class="text-danger" id="CustomErr"> </span>
-                                                        @Html.TextAreaFor(model => model.OfficeAddress, new { htmlAttributes = new { @class = "form-control", @placeholder = "Office Address", @autofocus = "autofocus" } })
-                                                        @Html.ValidationMessageFor(model => model.OfficeAddress, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
-
-                                            </div>
+                                           
                                         </div>
 
                                         <hr style="border: 1px solid #DDD;margin-bottom: 20px;">
@@ -1297,6 +1288,7 @@ new { @class= "form-control" })
                 </div>
             </div>
             <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
+            </div>
     </section>
 }
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -1306,13 +1298,19 @@ new { @class= "form-control" })
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
     <script type="text/javascript">
+        var imageExist = false;
         window.addEventListener("submit", function (e) {
             //var isMobileVerified = $("#isMobileVerified").val();
             //if (isMobileVerified == "0") {
             //    alert("Please Verify Your Mobile Number!");
             //    return false;
             //}
-
+            var inp = document.getElementById('uploadFile');
+            if (inp.files.length === 0 && imageExist == false) {
+                alert("Upload Photo!");
+                inp.focus();
+                return false;
+            }
             var form = e.target;
             if (form.getAttribute("enctype") === "multipart/form-data") {
                 if (form.dataset.ajax) {
@@ -1353,7 +1351,7 @@ new { @class= "form-control" })
                     $("#Age").val(age);
                 }
             });
-
+           
          $("#DocDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
         $("#DocumentUploadVM_ExpiryDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
         $("#divDocumentDetails").hide();
@@ -1501,6 +1499,7 @@ new { @class= "form-control" })
 
             $("#btnUpdate").click(function () {
                 $('#disabledFields').find(':input').prop('disabled', false);
+                $('#btn_save').prop('disabled', false);
                 $("#CustomerID").attr('readOnly', true);
                 $("#ApplicationNo").attr('readOnly', true);
                 $("#ApplicationDate").attr('readOnly', true);
@@ -1553,6 +1552,29 @@ new { @class= "form-control" })
             FillAddressByPinCodeOfficeAdd(pin);
         });
 
+        function IsImageExist(boolVal) {
+            imageExist = boolVal;
+        }
+        //Check all validation done 
+        function checkFormValidateOrNot() {
+            var True = true;
+            var False = false;
+            if (@ViewData.ModelState.IsValid) {
+
+            }
+            if ($(".field-validation-error").length > 0) {
+                return false;
+            }
+
+            $(".form-control").each(function () {
+                if ($(this).attr("data-val") == "true" && $(this).val() == "" &&
+                    $(this).is("select") == false) {
+                    return false;
+                }
+            });
+            return true;
+        }
+
            function FillAddressByPinCodePermanentAdd(pin) {
             $.ajax({
                 type: "POST",
@@ -1589,10 +1611,10 @@ new { @class= "form-control" })
                     $("#stateOfficeAdd").val(result.StateName);
                     $("#areaOfficeAdd").val(result.AreaName);
                     $("#zoneOfficeAdd").val(result.ZoneName);
-                    $("#Trans_KYCAddresses_1__.StateID").val(result.StateID);
-                    $("#Trans_KYCAddresses_1__.CityID").val(result.CityId);
-                    $("#Trans_KYCAddresses_1__.Area").val(result.AreaName);
-                    $("#Trans_KYCAddresses_1__.ZoneId").val(result.ZoneID);
+                    $("#Trans_KYCAddresses_1__StateID").val(result.StateID);
+                    $("#Trans_KYCAddresses_1__CityID").val(result.CityId);
+                    $("#Trans_KYCAddresses_1__Area").val(result.AreaName);
+                    $("#Trans_KYCAddresses_1__ZoneId").val(result.ZoneID);
 
                 },
                 error: function (xhr, status, error) {
@@ -1733,7 +1755,6 @@ new { @class= "form-control" })
 
             var fileData = new FormData();
             $("#tblDocumentDetails TBODY TR").each(function () {
-                debugger;
                 var row = $(this);
                 var rowDocUploadTrn = {};
                 rowDocUploadTrn.DocumentTypeId = row.find("td").eq(1).attr('id');
@@ -1823,10 +1844,20 @@ new { @class= "form-control" })
 
                                 $("#" + key + "").val(value);
                             });
+                            $.each(result.Trans_KYCAddresses, function (i) {
+                                $.each(result.Trans_KYCAddresses[i], function (key, val) {
+                                    $("#Trans_KYCAddresses_" + i + "__" + key +"").val(val);
+                                });
+                            });
                             if (result.ImageName != null) {
                                 $("#kycPhoto").append('<td><a href="/KYC/Download/' + result.KYCID + '" target=_blank>' + result.ImageName + '</a></td>');
+                                IsImageExist(true);
                             }
+                            FillAddressByPinCode(result.PinCode);
+                            FillAddressByPinCodePermanentAdd(result.Trans_KYCAddresses[0].PinCode);
+                            FillAddressByPinCodeOfficeAdd(result.Trans_KYCAddresses[1].PinCode);
                             $('#disabledFields').find(':input').prop('disabled', true);
+                            $('#btn_save').prop('disabled', true);
                             $("#disabledFields").show();
                             $("#btnUpdate").show();
                             $("#btnUpdate").attr('disabled', false);
@@ -1837,9 +1868,11 @@ new { @class= "form-control" })
                         var adhar = $("#AdhaarNo").val();
                         if (pan.length > 0 || adhar.length > 0) {
                             $('#disabledFields').find(':input').prop('disabled', false);
+                            $('#btn_save').prop('disabled', false);
                         }
                         else {
                             $('#disabledFields').find(':input').prop('disabled', true);
+                            $('#btn_save').prop('disabled', true);
                         }
 
                     }
@@ -1873,11 +1906,17 @@ new { @class= "form-control" })
                                 }
                                 $("#" + key + "").val(value);
                             });
+                            $.each(result.Trans_KYCAddresses, function (i) {
+                                $.each(result.Trans_KYCAddresses[i], function (key, val) {
+                                    $("#Trans_KYCAddresses_" + i + "__" + key + "").val(val);
+                                });
+                            });
                             if (result.ImageName != null) {
                                 $("#kycPhoto").append('<td><a href="/KYC/Download/' + result.KYCID + '" target=_blank>' + result.ImageName + '</a></td>');
                             }
-
+                            $("#area").val(result.Area);
                             $('#disabledFields').find(':input').prop('disabled', true);
+                            $('#btn_save').prop('disabled', true);
                             $("#btnUpdate").show();
                             $("#btnUpdate").attr('disabled', false);
 
@@ -1887,9 +1926,11 @@ new { @class= "form-control" })
                         var pan = $("#PANNo").val();
                         if (adhar.length > 0 || pan.length > 0) {
                             $('#disabledFields').find(':input').prop('disabled', false);
+                            $('#btn_save').prop('disabled', false);
                         }
                         else {
                             $('#disabledFields').find(':input').prop('disabled', true);
+                            $('#btn_save').prop('disabled', true);
                         }
 
                         CheckPanAvailable(pan);
