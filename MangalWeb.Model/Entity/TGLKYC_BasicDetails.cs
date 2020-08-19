@@ -99,6 +99,7 @@ namespace MangalWeb.Model.Entity
         public string Distance { get; set; }
         public string PinCode { get; set; }
         public string Area { get; set; }
+        public string ResidenceCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }

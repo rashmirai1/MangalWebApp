@@ -572,6 +572,22 @@ new { @class= "form-control" })
 
                                             </div>
 
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Residence<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.ResidenceCode,
+new List<SelectListItem> {
+new SelectListItem { Value = "01" , Text = "Owned" },
+new SelectListItem { Value = "02" , Text = "Rented" }
+},
+new { @class= "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.Occupation, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
                                         </div>
 
                                         <hr style="border: 1px solid #DDD;margin-bottom: 20px;">
@@ -758,6 +774,20 @@ new { @class= "form-control" })
                                                         <span class="text-danger" id="CustomErr"> </span>
                                                         <input type="hidden" name="Trans_KYCAddresses[0].ZoneId" id="Trans_KYCAddresses_0__ZoneId">
                                                         <input class="form-control" id="zonePermanentAdd" type="text" readonly="readonly">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Residence<span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                                        <span class="text-danger" id="CustomErr"> </span> 
+                                                        <select name="Trans_KYCAddresses[0].ResidenceCode" id="Trans_KYCAddresses_0__ResidenceCode" class="form-control">
+                                                            <option value="01">Owned</option>
+                                                            <option value="02">Rented</option>
+                                                        </select>
                                                     </div>
                                                 </div>
 
