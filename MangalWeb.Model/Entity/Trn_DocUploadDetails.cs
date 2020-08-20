@@ -18,6 +18,8 @@ namespace MangalWeb.Model.Entity
         public int KycId { get; set; }
         public int DocumentTypeId { get; set; }
         public int DocumentId { get; set; }
+        public string SpecifyOther { get; set; }
+        public string NameonDocument { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public string FileName { get; set; }
         public string ContentType { get; set; }

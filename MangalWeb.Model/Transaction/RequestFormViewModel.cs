@@ -21,8 +21,8 @@ namespace MangalWeb.Model.Transaction
         public string ApplicationNo { get; set; }
         public string LoanAccountNo { get; set; }
         public string CustomerID { get; set; }
-        public Nullable<System.DateTime> DisburseDate { get; set; }
-        public Nullable<System.DateTime> KYCDate { get; set; }
+        public string DisburseDate { get; set; }
+        public string KYCDate { get; set; }
         public string MobileNo { get; set; }
         public string TelephoneNo { get; set; }
         public string EmailID { get; set; }
@@ -36,6 +36,9 @@ namespace MangalWeb.Model.Transaction
         public Nullable<int> CityID { get; set; }
         public Nullable<int> AreaID { get; set; }
         public Nullable<int> ZoneID { get; set; }
+        public string CityName { get; set; }
+        public string StateName { get; set; }
+        public string ZoneName { get; set; }
         public string Landmark { get; set; }
         public string OfficeAddress { get; set; }
         public string PinCode { get; set; }

@@ -122,8 +122,8 @@ namespace MangalWeb.Repository.Repository
                         var docuptrn = new Trn_DocUploadDetails
                         {
                             KycId = DocUploadViewModel.KycId,
-                            DocumentTypeId = p.DocumentTypeId,
-                            DocumentId = p.DocumentId,
+                            DocumentTypeId = (int)p.DocumentTypeId,
+                            DocumentId = (int)p.DocumentId,
                             ExpiryDate = p.ExpiryDate,
                             FileName = p.FileName,
                             ContentType = p.FileExtension,
@@ -162,12 +162,14 @@ namespace MangalWeb.Repository.Repository
                             var ratetrnnew = new Trn_DocUploadDetails
                             {
                                 KycId = DocUploadViewModel.KycId,
-                                DocumentTypeId = p.DocumentTypeId,
-                                DocumentId = p.DocumentId,
+                                DocumentTypeId = (int)p.DocumentTypeId,
+                                DocumentId = (int)p.DocumentId,
                                 ExpiryDate = p.ExpiryDate,
                                 FileName = p.FileName,
                                 ContentType = p.FileExtension,
                                 UploadFile = p.UploadDocName,
+                                SpecifyOther=p.SpecifyOther,
+                                NameonDocument=p.NameonDocument,
                                 Status = "Pending"
                             };
                             _context.Trn_DocUploadDetails.Add(ratetrnnew);
@@ -175,12 +177,14 @@ namespace MangalWeb.Repository.Repository
                         else
                         {
                             FindRateobject.KycId = tblDocUploadObj.KycId;
-                            FindRateobject.DocumentTypeId = p.DocumentTypeId;
-                            FindRateobject.DocumentId = p.DocumentId;
+                            FindRateobject.DocumentTypeId = (int)p.DocumentTypeId;
+                            FindRateobject.DocumentId = (int)p.DocumentId;
                             FindRateobject.ExpiryDate = p.ExpiryDate;
                             FindRateobject.FileName = p.FileName;
                             FindRateobject.ContentType = p.FileExtension;
                             FindRateobject.UploadFile = p.UploadDocName;
+                            FindRateobject.SpecifyOther = p.SpecifyOther;
+                            FindRateobject.NameonDocument = p.NameonDocument;
                         }
                         NewDocUploadDetails.Add(FindRateobject);
                     }
@@ -251,6 +255,8 @@ namespace MangalWeb.Repository.Repository
                     UploadDocName = c.UploadFile,
                     FileName = c.FileName,
                     FileExtension = c.ContentType,
+                    SpecifyOther=c.SpecifyOther,
+                    NameonDocument=c.NameonDocument,
                     KycId = c.KycId,
                 };
                 DocTrnViewModelList.Add(TrnViewModel);
@@ -312,6 +318,8 @@ namespace MangalWeb.Repository.Repository
             docupload.UploadDocName = bytes;
             docupload.FileName = pFileName;
             docupload.FileExtension = pFileExtension;
+            docupload.SpecifyOther = docupload.SpecifyOther;
+            docupload.NameonDocument = docupload.NameonDocument;
             sessionlist.Add(docupload);
             return docupload;
         }

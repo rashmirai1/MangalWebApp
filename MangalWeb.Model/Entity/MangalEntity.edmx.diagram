@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fc080b8f0dcd4ead8cf66be6dcd2c195" Name="Diagram1" ZoomLevel="31">
+      <Diagram DiagramId="fc080b8f0dcd4ead8cf66be6dcd2c195" Name="Diagram1" ZoomLevel="34">
         <EntityTypeShape EntityType="MangalDBNewModel.tblBankMaster" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.Bharat_tbl_SentJVCustHistory" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.Bharat01012017tbl_SentJVCustHistory" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
@@ -94,18 +94,18 @@
         <AssociationConnector Association="MangalDBNewModel.FK_TSchemeMaster_BasicDetails_Mst_Product" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_UserCategory" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocumentUpload" Width="1.5" PointX="21.375" PointY="29.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocUploadDetails" Width="1.5" PointX="23.375" PointY="29.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_BranchType" Width="1.5" PointX="5.375" PointY="18.875" />
         <EntityTypeShape EntityType="MangalDBNewModel.User_Category" Width="1.5" PointX="28.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.User_Category_Hierarchy" Width="1.5" PointX="28.375" PointY="24.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_KYCMobileOTP" Width="1.5" PointX="30.375" PointY="0.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_BasicDetails" Width="1.5" PointX="17.375" PointY="29.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.Trn_RequestForm" Width="1.5" PointX="3.375" PointY="30.75" />
         <AssociationConnector Association="MangalDBNewModel.FK__tbl_UserC__Organ__51BA1E3A" />
         <EntityTypeShape EntityType="MangalDBNewModel.Menu" Width="1.5" PointX="7.375" PointY="30.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.UserAuthorization" Width="1.5" PointX="9.375" PointY="30.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.UserDetail" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocUploadDetails" Width="1.5" PointX="17.375" PointY="20.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_BasicDetails" Width="1.5" PointX="17.375" PointY="29.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Trn_RequestForm" Width="1.5" PointX="19.375" PointY="20.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

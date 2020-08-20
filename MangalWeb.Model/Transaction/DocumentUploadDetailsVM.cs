@@ -11,14 +11,16 @@ namespace MangalWeb.Model.Transaction
     {
         public int ID { get; set; }
         public int KycId { get; set; }
-        public int DocumentTypeId { get; set; }
-        public int DocumentId { get; set; }
+        public int? DocumentTypeId { get; set; }
+        public int? DocumentId { get; set; }
         public string DocumentTypeName { get; set; }
         public string DocumentName { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
-        [Required(ErrorMessage = "Date is Required")]
+        //[Required(ErrorMessage = "Date is Required")]
         public DateTime? ExpiryDate { get; set; }
+        public string SpecifyOther { get; set; }
+        public string NameonDocument { get; set; }
         public byte[] UploadDocName { get; set; }
         public string FileName { get; set; }
         public string FileExtension { get; set; }

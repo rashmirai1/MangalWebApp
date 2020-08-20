@@ -51,6 +51,9 @@ namespace MangalWeb.Controllers
                     Session["UserLoginId"] = user.UserID;
                     Session["UserName"] = user.UserName;
                     Session["UserCategory"] = user.UserTypeID;
+                    Session["BranchId"] = user.BranchId;
+                    Session["FinancialYearId"] = user.FinancialYearId;
+                    Session["CompanyId"] = 1;
                     return RedirectToAction("Index", "Home");
                 }
                 else
