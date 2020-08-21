@@ -16,9 +16,10 @@ namespace MangalWeb.Controllers
         // GET: User
         public ActionResult UserMaster()
         {
-            ButtonVisiblity("Index");
+            ButtonVisiblity("Index");var user = new UserViewModel();
+            user.ID = _userService.GetMaxUserMasterId();
             ViewBag.UserCategoryList = new SelectList(_userAuthorizationService.GetUserCategory(), "refId", "Name");
-            return View();
+            return View(user);
         }
 
         [HttpPost]
@@ -27,12 +28,14 @@ namespace MangalWeb.Controllers
         {
             try
             {
+                user.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
+                user.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
                 if (user.ID <= 0)
                 {
-                    var data = _userService.CheckEmployeeCodeExists(user.UserName);
+                    var data = _userService.CheckEmployeeCodeExists(user.EmployeeCode);
                     if (data != null)
                     {
-                        ModelState.AddModelError("UserName", "User Name Already Exists");
+                        ModelState.AddModelError("EmployeeCode", "Employee Code Already Exists");
                         return Json(user);
                     }
                 }
@@ -56,6 +59,7 @@ namespace MangalWeb.Controllers
                 model = _userService.SetDataOnEdit(tbluser);
             }
             model.operation = operation;
+            ViewBag.UserCategoryList = new SelectList(_userAuthorizationService.GetUserCategory(), "refId", "Name");
             return View("UserMaster", model);
         }
 

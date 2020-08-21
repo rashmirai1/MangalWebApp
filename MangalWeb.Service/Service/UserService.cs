@@ -18,6 +18,11 @@ namespace MangalWeb.Service.Service
             return _userRepository.GetAllUserDetails();
         }
 
+        public int GetMaxUserMasterId()
+        {
+            return _userRepository.GetMaxUserMasterId();
+        }
+
         public UserDetail GetUserMasterById(int id)
         {
             return _userRepository.GetUserMasterById(id);

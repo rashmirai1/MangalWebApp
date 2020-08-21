@@ -41,9 +41,12 @@ namespace MangalWeb.Repository.Repository
         public void SaveUpdateRecord(UserViewModel model)
         {
             UserDetail tblUserMaster = new UserDetail();
-            if (model.ID <= 0)
+            if (model.EditId <= 0)
             {
+                tblUserMaster.UserID = model.ID;
                 _context.UserDetails.Add(tblUserMaster);
+                tblUserMaster.createdby = model.CreatedBy;
+                tblUserMaster.createddate = DateTime.Now;
             }
             else
             {
@@ -53,10 +56,12 @@ namespace MangalWeb.Repository.Repository
             tblUserMaster.EmployeeCode = model.EmployeeCode;
             tblUserMaster.EmpAddress = model.Address;
             tblUserMaster.MobileNo = model.MobileNo;
-            tblUserMaster.EmpAddress = model.EmailId;
+            tblUserMaster.EmailId = model.EmailId;
             tblUserMaster.UserTypeID = model.UserCategoryId;
             tblUserMaster.UserName = model.UserName;
             tblUserMaster.Password = PasswordEncryptionDecryption.Encrypt(model.Password);
+            tblUserMaster.updatedby = model.UpdatedBy;
+            tblUserMaster.updateddate = DateTime.Now;
             _context.SaveChanges();
         }
 
@@ -69,6 +74,7 @@ namespace MangalWeb.Repository.Repository
         {
             UserViewModel user = new UserViewModel();
             user.ID = tblUser.UserID;
+            user.EditId = tblUser.UserID; 
             user.EmployeeName = tblUser.EmployeeName;
             user.EmployeeCode = tblUser.EmployeeCode;
             user.Address = tblUser.EmpAddress;

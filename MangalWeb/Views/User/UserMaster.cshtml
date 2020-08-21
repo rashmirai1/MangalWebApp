@@ -6,15 +6,16 @@
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
 
-@using (Ajax.BeginForm("CreateEdit", "UserMaster", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+@using (Ajax.BeginForm("CreateEdit", "User", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
+    @Html.HiddenFor(model => model.EditId, new { @id = "EditId" })
 
     <header id="topbar" class="affix">
         <div class="col-md-5 col-sm-4 col-xs-12">
             <div class="topbar-left">
-                <h4>City Master</h4>
+                <h4>User Master</h4>
             </div><!--end of topbar-left-->
         </div><!--end of col-md-5-->
         <div class="col-md-7 col-sm-8 col-xs-12">
@@ -55,13 +56,13 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Employee Name<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                        @Html.EditorFor(model => model.EmployeeName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Employee Name" } })
+                                                        @Html.EditorFor(model => model.EmployeeName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Employee Name", @maxlength = "50" } })
                                                         <span class="text-danger small">@Html.ValidationMessageFor(m => m.EmployeeName)</span>
                                                         <i class="arrow"></i>
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Employee Code<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                        @Html.EditorFor(model => model.EmployeeCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Employee Code" } })
+                                                        @Html.EditorFor(model => model.EmployeeCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Employee Code", @maxlength = "20" } })
                                                         <span class="text-danger small">@Html.ValidationMessageFor(m => m.EmployeeCode)</span>
                                                         <i class="arrow"></i>
                                             </div>
@@ -69,13 +70,13 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Address<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                        @Html.TextAreaFor(model => model.Address, new { @class = "form-control",@rows="3",@cols="2", @placeholder = "Address"  })
+                                                        @Html.TextAreaFor(model => model.Address, new { @class = "form-control",@rows="3",@cols="2", @placeholder = "Address", @maxlength = "100" })
                                                         <span class="text-danger small">@Html.ValidationMessageFor(m => m.Address)</span>
                                                         <i class="arrow"></i>
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Mobile No<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mobile No" } })
+                                                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mobile No",@maxlength="10", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57" } })
                                                         <span class="text-danger small">@Html.ValidationMessageFor(m => m.MobileNo)</span>
                                                         <i class="arrow"></i>
                                             </div>
@@ -83,7 +84,7 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Email Id<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                        @Html.EditorFor(model => model.EmailId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email Id" } })
+                                                        @Html.EditorFor(model => model.EmailId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email Id",@type="Email", @maxlength = "30" } })
                                                         <span class="text-danger small">@Html.ValidationMessageFor(m => m.EmailId)</span>
                                                         <i class="arrow"></i>
                                             </div>
@@ -101,13 +102,13 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">User Name<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "User Name" } })
+                                                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "User Name", @maxlength = "30" } })
                                                         <span class="text-danger small">@Html.ValidationMessageFor(m => m.UserName)</span>
                                                         <i class="arrow"></i>
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Password<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password" } })
+                                                @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "Password", @type="Password", @maxlength = "30" })
                                                         <span class="text-danger small">@Html.ValidationMessageFor(m => m.Password)</span>
                                                         <i class="arrow"></i>
                                             </div>
@@ -131,18 +132,12 @@
     <script src="~/Scripts/jquery.validate.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            if ($("#ItemID").val() == 0) {
-                $("#HideCountry").hide();
-            }
-            else {
-                $("#HideCountry").show();
-            }
             // if (document.URL.indexOf("ID") == -1) {
-            $("#CityName").on('input', function () {
+            $("#EmployeeCode").on('input', function () {
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("doesCityNameExist", "City")',
-                    data: '{CityName: "' + $("#CityName").val() + '" }',
+                    url: '@Url.Action("doesEmployeeCodeExist", "User")',
+                    data: '{EmployeeCode: "' + $("#EmployeeCode").val() + '" }',
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (result) {
@@ -161,35 +156,13 @@
                     }
                 });
             });
-            //}
-
-            //Dropdownlist Selectedchange event
-            $("#StateId").change(function () {
-                $("#CountryName").empty();
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("GetCountry")', // we are calling json method
-                    dataType: 'json',
-                    data: { id: $("#StateId").val() },
-                    // here we are get value of selected country and passing same value
-                    //as inputto json method GetStates.
-                    success: function (country) {
-                        $("#HideCountry").show();
-                        $("#CountryName").val(country);
-                    },
-                    error: function (ex) {
-                        alert('Failed to retrieve states.' + ex);
-                    }
-                });
-                return false;
-            })
         });
 
         function ShowEditTableList() {
             $('#divviewfilldata').empty();
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("GetCityTable", "City")',
+                url: '@Url.Action("GetUserMasterTable", "User")',
                 dataType: "html",
                 data: { Operation: "Edit" },
                 success: function (data) {
@@ -207,7 +180,7 @@
             $('#diveditfilldata').empty();
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("GetCityTable", "City")',
+                url: '@Url.Action("GetUserMasterTable", "User")',
                 dataType: "html",
                 data: { Operation: "View" },
                 success: function (data) {
@@ -220,7 +193,7 @@
                 }
             });
         }
-        var urlRedirect = '@Html.Raw(@Url.Action("City", "City"))';
+        var urlRedirect = '@Html.Raw(@Url.Action("UserMaster", "User"))';
         function OnSuccess(response) {
 
             $("#saveModal").modal('show');
@@ -234,7 +207,7 @@
         }
 
         $(function () {
-            var url = '@Html.Raw(@Url.Action("Delete", "City"))';
+            var url = '@Html.Raw(@Url.Action("Delete", "User"))';
             $("#btnDelete").click(function () {
                 $("#deleteModal").modal('show');
             });

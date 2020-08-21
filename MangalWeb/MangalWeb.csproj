@@ -2097,6 +2097,7 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\UserAuthorization\UserAuthorization.cshtml" />
     <Content Include="Views\User\UserMaster.cshtml" />
+    <Content Include="Views\User\_UserMasterList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
