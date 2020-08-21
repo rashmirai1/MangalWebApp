@@ -165,8 +165,8 @@
                                             {
                                                 <tr id="@item.ID">
                                                     <td>@j</td>
-                                                    <td>@item.DocumentTypeName</td>
-                                                    <td>@item.DocumentName</td>
+                                                    <td id="@item.DocumentTypeId">@item.DocumentTypeName</td>
+                                                    <td id="@item.DocumentId">@item.DocumentName</td>
                                                     <td>@item.SpecifyOther</td>
                                                     <td>@item.NameonDocument</td>
                                                     <td>@item.ExpiryDate</td>
@@ -288,68 +288,88 @@
                 var NameonDocument = $("#DocumentUploadVM_NameonDocument").val();
                 debugger;
 
-                if(currentRow){
-                    $("#tblDocumentDetails tbody").find($(currentRow)).replaceWith(row);
-                    $("#DocumentUploadVM_DocumentTypeId").val("");
-                    $("#DocumentUploadVM_DocumentId").val("");
-                    $("#DocumentUploadVM_ExpiryDate").val("");
-                    $("#UploadedFile").val("");
-                    currentRow = null;
+                var isExist = false;
+                $("#tblDocumentDetails TBODY tr").each(function() {
+                    // get row
+                    debugger;
+                    var row = $(this);
+                    // get first and second td
+                    var first = row.find('td:nth-child(2)').attr('id');
+                    var second = row.find('td:nth-child(3)').attr('id');
+                    // if exists, remove the tr
+                    if (first == DocumentTypeId && second == DocumentId) {
+                        isExist = true;
+                    }
+                });
+                if(isExist)
+                {
+                    alert("The same Document Type and Document Name already Exist");
+                    return false;
                 }
                 else
                 {
-                    if (DocumentTypeId!="" && DocumentId!="") {
-
-                        var fileUpload = $("#UploadedFile").get(0);
-                        var files = fileUpload.files;
-                        // Create FormData object
-                        fileData = new FormData();
-                        // Looping over all files and add it to FormData object
-                        for (var i = 0; i < files.length; i++) {
-                            fileData.append("UploadedFile", files[i]);
-                        }
-                        var row = '<tr id=' + newtrno + '>' +
-                      '<td width="10%">' + srno + '</td>' +
-                      '<td width="10%" id="'+DocumentTypeId+'">' + DocumentTypeName+'</td>' +
-                      '<td width="10%" id="'+DocumentId+'">' + DocumentName+'</td>' +
-                      '<td width="20%">' + SpecifyOther + '</td>' +
-                      '<td width="20%">' + NameonDocument + '</td>' +
-                      '<td width="20%">' + ExpiryDate + '</td>' +
-                      '<td width="20%"><a href="#">'+files[0].name+'</a></td>"' +
-                      '<td id=' + srno +'' + actions + '</td>' +
-                      '</tr>';
-                        $("#tblDocumentDetails tbody").append(row);
-
-                        // Adding one more key to FormData object
-                        fileData.append('Id', srno);
-                        fileData.append('DocumentTypeId', DocumentTypeId);
-                        fileData.append('DocumentId', DocumentId);
-                        fileData.append('ExpiryDate', ExpiryDate);
-                        fileData.append('SpecifyOther', SpecifyOther);
-                        fileData.append('NameonDocument', NameonDocument);
-                        $.ajax({
-                            url: '/DocumentUpload/AddDocument',
-                            type: "POST",
-                            contentType: false, // Not to set any content header
-                            processData: false, // Not to process data
-                            data: fileData,
-                            success: function (result) {
-                            },
-                            error: function (err) {
-                                //alert(err.statusText);
-                            }
-                        });
-
+                    if(currentRow){
+                        $("#tblDocumentDetails tbody").find($(currentRow)).replaceWith(row);
                         $("#DocumentUploadVM_DocumentTypeId").val("");
                         $("#DocumentUploadVM_DocumentId").val("");
                         $("#DocumentUploadVM_ExpiryDate").val("");
                         $("#UploadedFile").val("");
-                        $("#DocumentUploadVM_SpecifyOther").val("");
-                        $("#DocumentUploadVM_NameonDocument").val("");
-                        $("#divDocumentDetails").show();
+                        currentRow = null;
+                    }
+                    else
+                    {
+                        if (DocumentTypeId!="" && DocumentId!="") {
+
+                            var fileUpload = $("#UploadedFile").get(0);
+                            var files = fileUpload.files;
+                            // Create FormData object
+                            fileData = new FormData();
+                            // Looping over all files and add it to FormData object
+                            for (var i = 0; i < files.length; i++) {
+                                fileData.append("UploadedFile", files[i]);
+                            }
+                            var row = '<tr id=' + newtrno + '>' +
+                          '<td width="10%">' + srno + '</td>' +
+                          '<td width="10%" id="'+DocumentTypeId+'">' + DocumentTypeName+'</td>' +
+                          '<td width="10%" id="'+DocumentId+'">' + DocumentName+'</td>' +
+                          '<td width="20%">' + SpecifyOther + '</td>' +
+                          '<td width="20%">' + NameonDocument + '</td>' +
+                          '<td width="20%">' + ExpiryDate + '</td>' +
+                          '<td width="20%"><a href="#">'+files[0].name+'</a></td>"' +
+                          '<td id=' + srno +'' + actions + '</td>' +
+                          '</tr>';
+                            $("#tblDocumentDetails tbody").append(row);
+
+                            // Adding one more key to FormData object
+                            fileData.append('Id', srno);
+                            fileData.append('DocumentTypeId', DocumentTypeId);
+                            fileData.append('DocumentId', DocumentId);
+                            fileData.append('ExpiryDate', ExpiryDate);
+                            fileData.append('SpecifyOther', SpecifyOther);
+                            fileData.append('NameonDocument', NameonDocument);
+                            $.ajax({
+                                url: '/DocumentUpload/AddDocument',
+                                type: "POST",
+                                contentType: false, // Not to set any content header
+                                processData: false, // Not to process data
+                                data: fileData,
+                                success: function (result) {
+                                },
+                                error: function (err) {
+                                    //alert(err.statusText);
+                                }
+                            });
+
+                            $("#DocumentUploadVM_DocumentTypeId").val("");
+                            $("#DocumentUploadVM_DocumentId").val("");
+                            $("#DocumentUploadVM_ExpiryDate").val("");
+                            $("#UploadedFile").val("");
+                            $("#DocumentUploadVM_SpecifyOther").val("");
+                            $("#DocumentUploadVM_NameonDocument").val("");
+                            $("#divDocumentDetails").show();
+                        }
                     }
                 }
-
                 //$("#tblDocumentDetails TBODY TR").on("click", ".edit", function () {
                 //    debugger;
                 //    var tr = $(this).closest('tr');
