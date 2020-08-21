@@ -1414,9 +1414,15 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="UserTypeID" Type="int" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="BranchId" Type="int" Nullable="false" />
-          <Property Name="FinancialYearId" Type="int" Nullable="false" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmployeeCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="EmpAddress" Type="nvarchar" MaxLength="100" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="EmailId" Type="nvarchar" MaxLength="30" />
+          <Property Name="createdby" Type="int" />
+          <Property Name="createddate" Type="datetime" />
+          <Property Name="updatedby" Type="int" />
+          <Property Name="updateddate" Type="datetime" />
         </EntityType>
         <Association Name="FK__tbl_UserC__Organ__51BA1E3A">
           <End Role="User_Category_Hierarchy" Type="Self.User_Category_Hierarchy" Multiplicity="0..1" />
@@ -1607,6 +1613,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
             </Principal>
             <Dependent Role="TSchemeMaster_BasicDetails">
               <PropertyRef Name="Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_tbl_UserCategory">
+          <End Role="tbl_UserCategory" Type="Self.tbl_UserCategory" Multiplicity="1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_UserCategory">
+              <PropertyRef Name="refid" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="UserTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2356,6 +2374,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <AssociationSet Name="FK_TSchemeMaster_BasicDetails_Mst_Product" Association="Self.FK_TSchemeMaster_BasicDetails_Mst_Product">
             <End Role="Mst_Product" EntitySet="Mst_Product" />
             <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_tbl_UserCategory" Association="Self.FK_UserDetails_tbl_UserCategory">
+            <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -3184,7 +3206,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           </AssociationSet>
           <EntitySet Name="Menus" EntityType="MangalDBNewModel.Menu" />
           <EntitySet Name="UserAuthorizations" EntityType="MangalDBNewModel.UserAuthorization" />
-          <EntitySet Name="UserDetails" EntityType="MangalDBNewModel.UserDetail" />
           <FunctionImport Name="T_GetFormDetails_FormIdWise" ReturnType="Collection(MangalDBNewModel.T_GetFormDetails_FormIdWise_Result)">
             <Parameter Name="FormId" Mode="In" Type="Int32" />
             <Parameter Name="UserId" Mode="In" Type="Int32" />
@@ -3222,6 +3243,11 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
             <End Role="Trans_KYCAddresses" EntitySet="Trans_KYCAddresses" />
           </AssociationSet>
           <EntitySet Name="Trn_RequestForm" EntityType="MangalDBNewModel.Trn_RequestForm" />
+          <EntitySet Name="UserDetails" EntityType="MangalDBNewModel.UserDetail" />
+          <AssociationSet Name="FK_UserDetails_tbl_UserCategory" Association="MangalDBNewModel.FK_UserDetails_tbl_UserCategory">
+            <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
+            <End Role="UserDetail" EntitySet="UserDetails" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3853,6 +3879,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="Organhieraechyid" Type="Int32" />
           <Property Name="status1" Type="Boolean" />
           <NavigationProperty Name="User_Category_Hierarchy" Relationship="MangalDBNewModel.FK__tbl_UserC__Organ__51BA1E3A" FromRole="tbl_UserCategory" ToRole="User_Category_Hierarchy" />
+          <NavigationProperty Name="UserDetails" Relationship="MangalDBNewModel.FK_UserDetails_tbl_UserCategory" FromRole="tbl_UserCategory" ToRole="UserDetail" />
         </EntityType>
         <EntityType Name="Trn_DocumentUpload">
           <Key>
@@ -4022,18 +4049,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="isActive" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ParentID" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserDetail">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserTypeID" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="BranchId" Type="Int32" Nullable="false" />
-          <Property Name="FinancialYearId" Type="Int32" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="T_GetFormDetails_FormIdWise_Result">
           <Property Type="Int32" Name="FormId" Nullable="false" />
@@ -4238,6 +4253,37 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="SanctionId" Type="Int32" Nullable="false" />
           <Property Name="creationdate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserTypeID" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmployeeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EmpAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="EmailId" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="createdby" Type="Int32" />
+          <Property Name="createddate" Type="DateTime" Precision="3" />
+          <Property Name="updatedby" Type="Int32" />
+          <Property Name="updateddate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_UserCategory" Relationship="MangalDBNewModel.FK_UserDetails_tbl_UserCategory" FromRole="UserDetail" ToRole="tbl_UserCategory" />
+        </EntityType>
+        <Association Name="FK_UserDetails_tbl_UserCategory">
+          <End Type="MangalDBNewModel.tbl_UserCategory" Role="tbl_UserCategory" Multiplicity="1" />
+          <End Type="MangalDBNewModel.UserDetail" Role="UserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_UserCategory">
+              <PropertyRef Name="refid" />
+            </Principal>
+            <Dependent Role="UserDetail">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5556,19 +5602,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="UserDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.UserDetail">
-              <MappingFragment StoreEntitySet="UserDetails">
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
-                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="T_GetFormDetails_FormIdWise" FunctionName="MangalDBNewModel.Store.T_GetFormDetails_FormIdWise">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MangalDBNewModel.T_GetFormDetails_FormIdWise_Result">
@@ -5780,6 +5813,25 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
                 <ScalarProperty Name="SanctionId" ColumnName="SanctionId" />
                 <ScalarProperty Name="KycId" ColumnName="KycId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="updateddate" ColumnName="updateddate" />
+                <ScalarProperty Name="updatedby" ColumnName="updatedby" />
+                <ScalarProperty Name="createddate" ColumnName="createddate" />
+                <ScalarProperty Name="createdby" ColumnName="createdby" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="EmpAddress" ColumnName="EmpAddress" />
+                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

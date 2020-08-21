@@ -416,6 +416,7 @@
     <Compile Include="Masters\TenureDeviationVM.cs" />
     <Compile Include="Masters\ZoneViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\PasswordEncryptionDecryption.cs" />
     <Compile Include="Transaction\KYCDocumentUpload.cs" />
     <Compile Include="Transaction\DocumentUploadDetailsVM.cs" />
     <Compile Include="Transaction\DocumentUploadViewModel.cs" />
@@ -428,6 +429,7 @@
     <Compile Include="Utilties\MenusViewModel.cs" />
     <Compile Include="Utilties\UserAuthorizations.cs" />
     <Compile Include="Utilties\UserAuthorizationForms.cs" />
+    <Compile Include="Utilties\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

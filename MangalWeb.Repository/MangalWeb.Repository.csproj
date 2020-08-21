@@ -97,6 +97,7 @@
     <Compile Include="Repository\SourceofApplicationRepository.cs" />
     <Compile Include="Repository\StateRepository.cs" />
     <Compile Include="Repository\UserAuthorizationRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Repository\ZoneRepository.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -111,10 +111,10 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<UserAuthorization> UserAuthorizations { get; set; }
-        public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<Trn_DocUploadDetails> Trn_DocUploadDetails { get; set; }
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<Trn_RequestForm> Trn_RequestForm { get; set; }
+        public virtual DbSet<UserDetail> UserDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
