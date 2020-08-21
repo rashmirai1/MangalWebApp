@@ -107,9 +107,9 @@ namespace MangalWeb.Repository.Repository
                     tblDocUpload.ApplicationNo = DocUploadViewModel.ApplicationNo;
                     tblDocUpload.LoanAccountNo = DocUploadViewModel.LoanAccountNo;
                     tblDocUpload.Comments = DocUploadViewModel.Comments;
-                    tblDocUpload.BranchId = 1;
-                    tblDocUpload.FinancialYearId = 1;
-                    tblDocUpload.CompId = 1;
+                    tblDocUpload.BranchId = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+                    tblDocUpload.CompId = Convert.ToInt32(HttpContext.Current.Session["CompanyId"]);
+                    tblDocUpload.FinancialYearId = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
                     tblDocUpload.RecordCreatedBy = DocUploadViewModel.CreatedBy;
                     tblDocUpload.RecordCreated = DateTime.Now;
                     tblDocUpload.RecordUpdatedBy = DocUploadViewModel.UpdatedBy;
@@ -129,6 +129,8 @@ namespace MangalWeb.Repository.Repository
                             ContentType = p.FileExtension,
                             UploadFile = p.UploadDocName,
                             Status = "Pending",
+                            SpecifyOther=p.SpecifyOther,
+                            NameonDocument=p.NameonDocument
                         };
                         _context.Trn_DocUploadDetails.Add(docuptrn);
                         _context.SaveChanges();

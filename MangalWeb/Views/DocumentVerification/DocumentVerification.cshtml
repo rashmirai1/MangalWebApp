@@ -95,6 +95,8 @@
                                                 <th class="col-sm-2" style="width:4%">Sr. No.</th>
                                                 <th style="text-align:left">Document Type</th>
                                                 <th style="text-align:left">Document Name</th>
+                                                <th style="text-align:left">Specify Other</th>
+                                                <th style="text-align:left">Name on Document</th>
                                                 <th style="text-align:left">Expiry Date</th>
                                                 <th style="text-align:left">Upload File</th>
                                                 <th style="text-align:left">Verify By</th>
@@ -110,6 +112,8 @@
                                                     <td>@j</td>
                                                     <td>@Model.DocumentUploadList[i].DocumentTypeName</td>
                                                     <td>@Model.DocumentUploadList[i].DocumentName</td>
+                                                    <td>@Model.DocumentUploadList[i].SpecifyOther</td>
+                                                    <td>@Model.DocumentUploadList[i].NameonDocument</td>
                                                     <td>
                                                         @{
                                                             string parameterValue =Convert.ToDateTime(Model.DocumentUploadList[i].ExpiryDate).ToString("dd/MM/yyyy");
@@ -118,7 +122,7 @@
                                                     </td>
                                                     <td><a href="/DocumentUpload/Download/@Model.DocumentUploadList[i].ID" target=_blank>@Model.DocumentUploadList[i].FileName</a></td>
                                                     <td style="width:10%;">
-                                                        <span>Admin</span>
+                                                        <span>@Session["UserName"].ToString()</span>
                                                     </td>
                                                     <td>
                                                         @Html.DropDownListFor(m => m.DocumentUploadList[i].Status, new SelectList(ViewBag.StatusList, "Value", "Text", Model.DocumentUploadList[i].Status), new { @class = "form-control select2", style = "width:165px;" })
@@ -212,8 +216,8 @@
                 var rowDocUploadTrn = {};
                 debugger;
                 rowDocUploadTrn.ID = row.attr('id');
-                rowDocUploadTrn.Status = row.find("td").eq(6).find(":input").val();
-                rowDocUploadTrn.ReasonForRejection = row.find("td").eq(7).find(":input").val();
+                rowDocUploadTrn.Status = row.find("td").eq(8).find(":input").val();
+                rowDocUploadTrn.ReasonForRejection = row.find("td").eq(9).find(":input").val();
                 lstDocUploadTrn.push(rowDocUploadTrn);
             });
             DocUploadViewModel.KycId=$("#KycId").val();
