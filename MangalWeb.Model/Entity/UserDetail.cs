@@ -18,8 +18,16 @@ namespace MangalWeb.Model.Entity
         public int UserTypeID { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public int BranchId { get; set; }
-        public int FinancialYearId { get; set; }
-        public string CreatedBy { get; set; }
+        public string EmployeeName { get; set; }
+        public string EmployeeCode { get; set; }
+        public string EmpAddress { get; set; }
+        public string MobileNo { get; set; }
+        public string EmailId { get; set; }
+        public Nullable<int> createdby { get; set; }
+        public Nullable<System.DateTime> createddate { get; set; }
+        public Nullable<int> updatedby { get; set; }
+        public Nullable<System.DateTime> updateddate { get; set; }
+    
+        public virtual tbl_UserCategory tbl_UserCategory { get; set; }
     }
 }

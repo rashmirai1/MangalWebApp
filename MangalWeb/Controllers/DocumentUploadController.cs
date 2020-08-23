@@ -151,6 +151,8 @@ namespace MangalWeb.Controllers
             docupload.UploadDocName = bytes;
             docupload.FileName = pFileName;
             docupload.FileExtension = pFileExtension;
+            docupload.SpecifyOther = Request.Form["SpecifyOther"];
+            docupload.NameonDocument = Request.Form["NameonDocument"];
             sessionlist.Add(docupload);
             Session["sub"] = sessionlist;
             return Json(docupload, JsonRequestBehavior.AllowGet);

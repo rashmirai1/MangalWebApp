@@ -92,24 +92,13 @@
                                 checkedSearchString = "checked=true";
                             var usercategoryid = $('#UserAuthorizationForms_UserCategoryID').val();
 
-                            if ((data[x].ParentID == 4 || data[x].ParentID == 5)) {
-                                html += "<tr class='userauthorize'><td>  <input " + checkedVisibleString + "  visible='yes' type='checkbox' name='visible_id" + x + "'    class='visible_id'  />	</td>";
-                                html += "<td value=" + data[x].FormID + ">" + data[x].FormName + "</td><td value=" + data[x].ParentID + ">" + data[x].ParentForm + "</td>";
-                                html += "<td></td>";
-                                html += "<td><input type='checkbox' " + disabledString + "  " + checkedSaveString + " save = 'yes'  name='isSave" + x + "' class='isSave' ></td>";
-                                html += "<td></td>";
-                                html += "<td></td>";
-                                rowindex++;
-                            }
-                            else {
-                                html += "<tr class='userauthorize'><td><input " + checkedVisibleString + "  visible='yes' type='checkbox' name='visible_id" + x + "'    class='visible_id'  />	</td>";
-                                html += "<td value=" + data[x].FormID + ">" + data[x].FormName + "</td><td value=" + data[x].ParentID + ">" + data[x].ParentForm + "</td>";
-                                html += "<td><input type='checkbox' " + disabledString + " Edit='yes' " + checkedEditString + "  name='isEdit" + x + "' class='isEdit'></td>";
-                                html += "<td><input type='checkbox' " + disabledString + "  " + checkedSaveString + " save = 'yes'  name='isSave" + x + "' class='isSave' ></td>";
-                                html += "<td><input " + disabledString + " delete='yes' " + checkedDeleteString + " type='checkbox' name='isDelete" + x + "'  class='isDelete'></td>";
-                                html += "<td><input " + disabledString + " view='yes' type='checkbox' " + checkedViewString + " name='isView" + x + "'  class='isView' ></td>";
-                                rowindex++;
-                            }
+                            html += "<tr class='userauthorize'><td><input " + checkedVisibleString + "  visible='yes' type='checkbox' name='visible_id" + x + "'    class='visible_id'  />	</td>";
+                            html += "<td value=" + data[x].FormID + ">" + data[x].FormName + "</td><td value=" + data[x].ParentID + ">" + data[x].ParentForm + "</td>";
+                            html += "<td><input type='checkbox' " + disabledString + " Edit='yes' " + checkedEditString + "  name='isEdit" + x + "' class='isEdit'></td>";
+                            html += "<td><input type='checkbox' " + disabledString + "  " + checkedSaveString + " save = 'yes'  name='isSave" + x + "' class='isSave' ></td>";
+                            html += "<td><input " + disabledString + " delete='yes' " + checkedDeleteString + " type='checkbox' name='isDelete" + x + "'  class='isDelete'></td>";
+                            html += "<td><input " + disabledString + " view='yes' type='checkbox' " + checkedViewString + " name='isView" + x + "'  class='isView' ></td>";
+                            rowindex++;
                         }
                         $("#tblFormslist").append(html);
                     }
@@ -391,6 +380,6 @@
                             else
                             {
                                     @:window.onload = show_popup1;
-                                        }
+                                            }
           }
 </script>

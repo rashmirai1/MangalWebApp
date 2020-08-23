@@ -12,7 +12,6 @@ namespace MangalWeb.Controllers
     {
         CityService _cityService = new CityService();
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
 
@@ -97,7 +96,7 @@ namespace MangalWeb.Controllers
 
         public ActionResult City()
         {
-            //ButtonVisiblity("Index");
+            ButtonVisiblity("Index");
             var model = new CityViewModel();
             ViewBag.StateList = new SelectList(_cityService.GetStateList(), "StateID", "StateName");
             return View(model);

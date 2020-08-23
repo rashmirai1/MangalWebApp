@@ -1,4 +1,5 @@
 ﻿using MangalWeb.Model.Entity;
+using MangalWeb.Model.Security;
 using MangalWeb.Model.Utilities;
 using MangalWeb.Service.Service;
 using System;
@@ -29,10 +30,10 @@ namespace MangalWeb.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult Login(LoginViewModel login)
         {
+            login.Password = PasswordEncryptionDecryption.Encrypt(login.Password);
+
             var user = _context.UserDetails.Where(x => x.UserName.ToLower() == login.UserName.ToLower() &&
-                                                    x.Password.ToLower() == login.Password.ToLower() &&
-                                                    x.BranchId == login.BranchId &&
-                                                    x.FinancialYearId == login.FinancialYearId
+                                                    x.Password == login.Password
                                                     ).FirstOrDefault();
             if (ModelState.IsValid)
             {
@@ -51,6 +52,9 @@ namespace MangalWeb.Controllers
                     Session["UserLoginId"] = user.UserID;
                     Session["UserName"] = user.UserName;
                     Session["UserCategory"] = user.UserTypeID;
+                    Session["BranchId"] = login.BranchId;
+                    Session["FinancialYearId"] = login.FinancialYearId;
+                    Session["CompanyId"] = 1;
                     return RedirectToAction("Index", "Home");
                 }
                 else

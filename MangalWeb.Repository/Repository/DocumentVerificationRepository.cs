@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MangalWeb.Repository.Repository
 {
@@ -27,7 +28,7 @@ namespace MangalWeb.Repository.Repository
                 foreach (var p in DocUploadViewModel.DocumentUploadList)
                 {
                     var FindRateobject = _context.Trn_DocUploadDetails.Where(x => x.Id == p.ID && x.KycId == DocUploadViewModel.KycId).FirstOrDefault();
-                    FindRateobject.VerifiedBy = 1;
+                    FindRateobject.VerifiedBy = Convert.ToInt32(HttpContext.Current.Session["UserLoginId"]); 
                     FindRateobject.Status = p.Status;
                     FindRateobject.ReasonForRejection = p.ReasonForRejection;
                 }
@@ -83,7 +84,9 @@ namespace MangalWeb.Repository.Repository
                     KycId = c.KycId,
                     Status=c.Status,
                     VerifiedBy=c.VerifiedBy,
-                    ReasonForRejection=c.ReasonForRejection
+                    ReasonForRejection=c.ReasonForRejection,
+                    SpecifyOther=c.SpecifyOther,
+                    NameonDocument=c.NameonDocument
                 };
                 DocTrnViewModelList.Add(TrnViewModel);
             }

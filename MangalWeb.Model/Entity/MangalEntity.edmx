@@ -1153,6 +1153,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInwardForm_GoldDetails' does no
           <Property Name="PinCode" Type="nvarchar" MaxLength="50" />
           <Property Name="Area" Type="nvarchar" MaxLength="50" />
           <Property Name="ResidenceCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressCategory" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.TGLKYC_DocumentDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1304,6 +1305,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Property Name="KycId" Type="int" Nullable="false" />
           <Property Name="DocumentTypeId" Type="int" Nullable="false" />
           <Property Name="DocumentId" Type="int" Nullable="false" />
+          <Property Name="SpecifyOther" Type="nvarchar" MaxLength="100" />
+          <Property Name="NameonDocument" Type="nvarchar" MaxLength="100" />
           <Property Name="ExpiryDate" Type="datetime" />
           <Property Name="FileName" Type="varchar" MaxLength="100" />
           <Property Name="ContentType" Type="nvarchar" MaxLength="200" />
@@ -1316,7 +1319,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="KycId" Type="int" Nullable="false" />
           <Property Name="SanctionId" Type="int" Nullable="false" />
           <Property Name="creationdate" Type="datetime" />
@@ -1407,13 +1410,19 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="UserTypeID" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="BranchId" Type="int" Nullable="false" />
-          <Property Name="FinancialYearId" Type="int" Nullable="false" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmployeeCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="EmpAddress" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="EmailId" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="createdby" Type="int" />
+          <Property Name="createddate" Type="datetime" />
+          <Property Name="updatedby" Type="int" />
+          <Property Name="updateddate" Type="datetime" />
         </EntityType>
         <Association Name="FK__tbl_UserC__Organ__51BA1E3A">
           <End Role="User_Category_Hierarchy" Type="Self.User_Category_Hierarchy" Multiplicity="0..1" />
@@ -1604,6 +1613,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
             </Principal>
             <Dependent Role="TSchemeMaster_BasicDetails">
               <PropertyRef Name="Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDetails_tbl_UserCategory">
+          <End Role="tbl_UserCategory" Type="Self.tbl_UserCategory" Multiplicity="1" />
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_UserCategory">
+              <PropertyRef Name="refid" />
+            </Principal>
+            <Dependent Role="UserDetails">
+              <PropertyRef Name="UserTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2353,6 +2374,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <AssociationSet Name="FK_TSchemeMaster_BasicDetails_Mst_Product" Association="Self.FK_TSchemeMaster_BasicDetails_Mst_Product">
             <End Role="Mst_Product" EntitySet="Mst_Product" />
             <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDetails_tbl_UserCategory" Association="Self.FK_UserDetails_tbl_UserCategory">
+            <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
+            <End Role="UserDetails" EntitySet="UserDetails" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -3150,7 +3175,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           </AssociationSet>
           <EntitySet Name="tbl_UserCategory" EntityType="MangalDBNewModel.tbl_UserCategory" />
           <EntitySet Name="Trn_DocumentUpload" EntityType="MangalDBNewModel.Trn_DocumentUpload" />
-          <EntitySet Name="Trn_DocUploadDetails" EntityType="MangalDBNewModel.Trn_DocUploadDetails" />
           <FunctionImport Name="generateFinancialYear" />
           <FunctionImport Name="GetKYCDetailsForDocument" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForDocument_Result)" />
           <FunctionImport Name="GetKYCDetailsForDocumentById" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForDocumentById_Result)">
@@ -3172,23 +3196,16 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Parameter Name="text" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="tbl_KYCMobileOTP" EntityType="MangalDBNewModel.tbl_KYCMobileOTP" />
-          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
           <FunctionImport Name="GetDocumentUploadById" ReturnType="Collection(MangalDBNewModel.GetDocumentUploadById_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="Trans_KYCAddresses" EntityType="MangalDBNewModel.Trans_KYCAddresses" />
-          <EntitySet Name="Trn_RequestForm" EntityType="MangalDBNewModel.Trn_RequestForm" />
           <AssociationSet Name="FK__tbl_UserC__Organ__51BA1E3A" Association="MangalDBNewModel.FK__tbl_UserC__Organ__51BA1E3A">
             <End Role="User_Category_Hierarchy" EntitySet="User_Category_Hierarchy" />
             <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
           </AssociationSet>
-          <AssociationSet Name="fk_TGLKYC_BasicDetails" Association="MangalDBNewModel.fk_TGLKYC_BasicDetails">
-            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
-            <End Role="Trans_KYCAddresses" EntitySet="Trans_KYCAddresses" />
-          </AssociationSet>
           <EntitySet Name="Menus" EntityType="MangalDBNewModel.Menu" />
           <EntitySet Name="UserAuthorizations" EntityType="MangalDBNewModel.UserAuthorization" />
-          <EntitySet Name="UserDetails" EntityType="MangalDBNewModel.UserDetail" />
           <FunctionImport Name="T_GetFormDetails_FormIdWise" ReturnType="Collection(MangalDBNewModel.T_GetFormDetails_FormIdWise_Result)">
             <Parameter Name="FormId" Mode="In" Type="Int32" />
             <Parameter Name="UserId" Mode="In" Type="Int32" />
@@ -3219,6 +3236,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <FunctionImport Name="GetKYCDetailsForRequestForm" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForRequestForm_Result)">
           <Parameter Name="KycId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Trn_DocUploadDetails" EntityType="MangalDBNewModel.Trn_DocUploadDetails" />
+          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
+          <AssociationSet Name="fk_TGLKYC_BasicDetails" Association="MangalDBNewModel.fk_TGLKYC_BasicDetails">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="Trans_KYCAddresses" EntitySet="Trans_KYCAddresses" />
+          </AssociationSet>
+          <EntitySet Name="Trn_RequestForm" EntityType="MangalDBNewModel.Trn_RequestForm" />
+          <EntitySet Name="UserDetails" EntityType="MangalDBNewModel.UserDetail" />
+          <AssociationSet Name="FK_UserDetails_tbl_UserCategory" Association="MangalDBNewModel.FK_UserDetails_tbl_UserCategory">
+            <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
+            <End Role="UserDetail" EntitySet="UserDetails" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3850,6 +3879,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="Organhieraechyid" Type="Int32" />
           <Property Name="status1" Type="Boolean" />
           <NavigationProperty Name="User_Category_Hierarchy" Relationship="MangalDBNewModel.FK__tbl_UserC__Organ__51BA1E3A" FromRole="tbl_UserCategory" ToRole="User_Category_Hierarchy" />
+          <NavigationProperty Name="UserDetails" Relationship="MangalDBNewModel.FK_UserDetails_tbl_UserCategory" FromRole="tbl_UserCategory" ToRole="UserDetail" />
         </EntityType>
         <EntityType Name="Trn_DocumentUpload">
           <Key>
@@ -3871,22 +3901,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="RecordUpdated" Type="DateTime" Precision="3" />
           <Property Name="RecordCreatedBy" Type="Int32" />
           <Property Name="RecordUpdatedBy" Type="Int32" />
-        </EntityType>
-        <EntityType Name="Trn_DocUploadDetails">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="KycId" Type="Int32" Nullable="false" />
-          <Property Name="DocumentTypeId" Type="Int32" Nullable="false" />
-          <Property Name="DocumentId" Type="Int32" Nullable="false" />
-          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
-          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ContentType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="UploadFile" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="VerifiedBy" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ReasonForRejection" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="GetKYCDetailsForDocument_Result">
           <Property Type="Int32" Name="KycId" Nullable="false" />
@@ -3956,6 +3970,180 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="OTP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="GetDocumentUploadById_Result">
+          <Property Type="Int32" Name="KycId" Nullable="false" />
+          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="TransactionNumber" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="TransactionId" Nullable="false" />
+          <Property Type="Int32" Name="DocId" Nullable="false" />
+          <Property Type="String" Name="DocDate" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Comments" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <EntityType Name="Trans_KYCAddresses">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KYCID" Type="Int32" Nullable="false" />
+          <Property Name="AddressCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResidenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingHouseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Road" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingPlotNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoomBlockNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NearestLandmark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Distance_km" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PinCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateID" Type="Int32" Nullable="false" />
+          <Property Name="CityID" Type="Int32" Nullable="false" />
+          <Property Name="Area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ZoneId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="Trans_KYCAddresses" ToRole="TGLKYC_BasicDetails" />
+        </EntityType>
+        <Association Name="FK__tbl_UserC__Organ__51BA1E3A">
+          <End Type="MangalDBNewModel.User_Category_Hierarchy" Role="User_Category_Hierarchy" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.tbl_UserCategory" Role="tbl_UserCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Category_Hierarchy">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="tbl_UserCategory">
+              <PropertyRef Name="Organhieraechyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="Sequence" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ToolTip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IconPath" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserAuthorization">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="isVisible" Type="Boolean" Nullable="false" />
+          <Property Name="isEdit" Type="Boolean" Nullable="false" />
+          <Property Name="isSave" Type="Boolean" Nullable="false" />
+          <Property Name="isDelete" Type="Boolean" Nullable="false" />
+          <Property Name="isView" Type="Boolean" Nullable="false" />
+          <Property Name="isDefault" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ParentID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="T_GetFormDetails_FormIdWise_Result">
+          <Property Type="Int32" Name="FormId" Nullable="false" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Boolean" Name="isVisible" Nullable="false" />
+          <Property Type="Boolean" Name="isEdit" Nullable="false" />
+          <Property Type="Boolean" Name="isSave" Nullable="false" />
+          <Property Type="Boolean" Name="isDelete" Nullable="false" />
+          <Property Type="Boolean" Name="isView" Nullable="false" />
+          <Property Type="Int32" Name="FormID1" Nullable="false" />
+          <Property Type="String" Name="FormName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ParentID" Nullable="true" />
+          <Property Type="String" Name="Url" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ToolTip" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="sequence" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="IconPath" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="T_UserAuthorization_Forms_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Boolean" Name="isVisible" Nullable="false" />
+          <Property Type="Boolean" Name="isEdit" Nullable="false" />
+          <Property Type="Boolean" Name="isSave" Nullable="false" />
+          <Property Type="Boolean" Name="isDelete" Nullable="false" />
+          <Property Type="Boolean" Name="isView" Nullable="false" />
+          <Property Type="Int32" Name="FormID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ParentID" Nullable="true" />
+          <Property Type="String" Name="ParentForm" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="T_Forms_UserAuthorization_ParentPage_Result">
+          <Property Type="String" Name="FormName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ParentId" Nullable="false" />
+          <Property Type="String" Name="sequence" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="FormUrl" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ToolTip" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="IconPath" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Boolean" Name="isVisible" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="T_GetAuthorizeSubPagesList_PrentidWise_Result">
+          <Property Type="Int32" Name="FormId" Nullable="false" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Boolean" Name="isVisible" Nullable="false" />
+          <Property Type="Boolean" Name="isEdit" Nullable="false" />
+          <Property Type="Boolean" Name="isSave" Nullable="false" />
+          <Property Type="Boolean" Name="isDelete" Nullable="false" />
+          <Property Type="Boolean" Name="isView" Nullable="false" />
+          <Property Type="Int32" Name="FormID1" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ParentID" Nullable="true" />
+          <Property Type="String" Name="Url" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="FormActualName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="IconPath" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="sequence" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="GetKYCDetailsForRequestForm_Result">
+          <Property Type="Int32" Name="KycId" Nullable="false" />
+          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="MobileNo" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="EmailID" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="BldgHouseName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Road" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="BldgPlotNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="RoomBlockNo" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="StateID" Nullable="true" />
+          <Property Type="Int32" Name="CityID" Nullable="true" />
+          <Property Type="Int32" Name="ZoneID" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Distance" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PinCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Area" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="KYCDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <EntityType Name="Trn_DocUploadDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KycId" Type="Int32" Nullable="false" />
+          <Property Name="DocumentTypeId" Type="Int32" Nullable="false" />
+          <Property Name="DocumentId" Type="Int32" Nullable="false" />
+          <Property Name="SpecifyOther" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NameonDocument" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ContentType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UploadFile" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="VerifiedBy" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ReasonForRejection" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TGLKYC_BasicDetails">
           <Key>
@@ -4040,63 +4228,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="Distance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PinCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResidenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressCategory" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Trans_KYCAddresses" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="Trans_KYCAddresses" />
-          <Property Name="ResidenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <ComplexType Name="GetDocumentUploadById_Result">
-          <Property Type="Int32" Name="KycId" Nullable="false" />
-          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
-          <Property Type="String" Name="TransactionNumber" Nullable="false" MaxLength="20" />
-          <Property Type="Int32" Name="TransactionId" Nullable="false" />
-          <Property Type="Int32" Name="DocId" Nullable="false" />
-          <Property Type="String" Name="DocDate" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="Comments" Nullable="false" MaxLength="100" />
-        </ComplexType>
-        <EntityType Name="Trans_KYCAddresses">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="KYCID" Type="Int32" Nullable="false" />
-          <Property Name="AddressCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ResidenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BuildingHouseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Road" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BuildingPlotNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RoomBlockNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NearestLandmark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Distance_km" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PinCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="StateID" Type="Int32" Nullable="false" />
-          <Property Name="CityID" Type="Int32" Nullable="false" />
-          <Property Name="Area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ZoneId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="Trans_KYCAddresses" ToRole="TGLKYC_BasicDetails" />
-        </EntityType>
-        <EntityType Name="Trn_RequestForm">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="KycId" Type="Int32" Nullable="false" />
-          <Property Name="SanctionId" Type="Int32" Nullable="false" />
-          <Property Name="creationdate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <Association Name="FK__tbl_UserC__Organ__51BA1E3A">
-          <End Type="MangalDBNewModel.User_Category_Hierarchy" Role="User_Category_Hierarchy" Multiplicity="0..1" />
-          <End Type="MangalDBNewModel.tbl_UserCategory" Role="tbl_UserCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User_Category_Hierarchy">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="tbl_UserCategory">
-              <PropertyRef Name="Organhieraechyid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_TGLKYC_BasicDetails">
           <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="1" />
           <End Type="MangalDBNewModel.Trans_KYCAddresses" Role="Trans_KYCAddresses" Multiplicity="*" />
@@ -4109,129 +4244,46 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Menu">
+        <EntityType Name="Trn_RequestForm">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ParentId" Type="Int32" />
-          <Property Name="Sequence" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Url" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="ToolTip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="IconPath" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="isActive" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <EntityType Name="UserAuthorization">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FormID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="isVisible" Type="Boolean" Nullable="false" />
-          <Property Name="isEdit" Type="Boolean" Nullable="false" />
-          <Property Name="isSave" Type="Boolean" Nullable="false" />
-          <Property Name="isDelete" Type="Boolean" Nullable="false" />
-          <Property Name="isView" Type="Boolean" Nullable="false" />
-          <Property Name="isDefault" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="isActive" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="ParentID" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KycId" Type="Int32" Nullable="false" />
+          <Property Name="SanctionId" Type="Int32" Nullable="false" />
+          <Property Name="creationdate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="UserDetail">
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="UserTypeID" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="BranchId" Type="Int32" Nullable="false" />
-          <Property Name="FinancialYearId" Type="Int32" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EmpAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="EmailId" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="createdby" Type="Int32" />
+          <Property Name="createddate" Type="DateTime" Precision="3" />
+          <Property Name="updatedby" Type="Int32" />
+          <Property Name="updateddate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_UserCategory" Relationship="MangalDBNewModel.FK_UserDetails_tbl_UserCategory" FromRole="UserDetail" ToRole="tbl_UserCategory" />
         </EntityType>
-        <ComplexType Name="T_GetFormDetails_FormIdWise_Result">
-          <Property Type="Int32" Name="FormId" Nullable="false" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="Boolean" Name="isVisible" Nullable="false" />
-          <Property Type="Boolean" Name="isEdit" Nullable="false" />
-          <Property Type="Boolean" Name="isSave" Nullable="false" />
-          <Property Type="Boolean" Name="isDelete" Nullable="false" />
-          <Property Type="Boolean" Name="isView" Nullable="false" />
-          <Property Type="Int32" Name="FormID1" Nullable="false" />
-          <Property Type="String" Name="FormName" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="ParentID" Nullable="true" />
-          <Property Type="String" Name="Url" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="ToolTip" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="sequence" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="IconPath" Nullable="true" MaxLength="30" />
-        </ComplexType>
-        <ComplexType Name="T_UserAuthorization_Forms_Result">
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="Boolean" Name="isVisible" Nullable="false" />
-          <Property Type="Boolean" Name="isEdit" Nullable="false" />
-          <Property Type="Boolean" Name="isSave" Nullable="false" />
-          <Property Type="Boolean" Name="isDelete" Nullable="false" />
-          <Property Type="Boolean" Name="isView" Nullable="false" />
-          <Property Type="Int32" Name="FormID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="ParentID" Nullable="true" />
-          <Property Type="String" Name="ParentForm" Nullable="true" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="T_Forms_UserAuthorization_ParentPage_Result">
-          <Property Type="String" Name="FormName" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="ParentId" Nullable="false" />
-          <Property Type="String" Name="sequence" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="FormUrl" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="ToolTip" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="IconPath" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
-          <Property Type="Boolean" Name="isVisible" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="T_GetAuthorizeSubPagesList_PrentidWise_Result">
-          <Property Type="Int32" Name="FormId" Nullable="false" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="Boolean" Name="isVisible" Nullable="false" />
-          <Property Type="Boolean" Name="isEdit" Nullable="false" />
-          <Property Type="Boolean" Name="isSave" Nullable="false" />
-          <Property Type="Boolean" Name="isDelete" Nullable="false" />
-          <Property Type="Boolean" Name="isView" Nullable="false" />
-          <Property Type="Int32" Name="FormID1" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="ParentID" Nullable="true" />
-          <Property Type="String" Name="Url" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="FormActualName" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="IconPath" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="sequence" Nullable="true" MaxLength="10" />
-        </ComplexType>
-        <ComplexType Name="GetKYCDetailsForRequestForm_Result">
-          <Property Type="Int32" Name="KycId" Nullable="false" />
-          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="LoanAccountNo" Nullable="false" MaxLength="40" />
-          <Property Type="String" Name="MobileNo" Nullable="false" MaxLength="15" />
-          <Property Type="String" Name="EmailID" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="BldgHouseName" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Road" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="BldgPlotNo" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="RoomBlockNo" Nullable="true" MaxLength="20" />
-          <Property Type="Int32" Name="StateID" Nullable="true" />
-          <Property Type="Int32" Name="CityID" Nullable="true" />
-          <Property Type="Int32" Name="ZoneID" Nullable="true" />
-          <Property Type="String" Name="Landmark" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Distance" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="PinCode" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Area" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="KYCDate" Nullable="true" Precision="23" />
-        </ComplexType>
+        <Association Name="FK_UserDetails_tbl_UserCategory">
+          <End Type="MangalDBNewModel.tbl_UserCategory" Role="tbl_UserCategory" Multiplicity="1" />
+          <End Type="MangalDBNewModel.UserDetail" Role="UserDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_UserCategory">
+              <PropertyRef Name="refid" />
+            </Principal>
+            <Dependent Role="UserDetail">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5400,23 +5452,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Trn_DocUploadDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.Trn_DocUploadDetails">
-              <MappingFragment StoreEntitySet="Trn_DocUploadDetails">
-                <ScalarProperty Name="ReasonForRejection" ColumnName="ReasonForRejection" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="VerifiedBy" ColumnName="VerifiedBy" />
-                <ScalarProperty Name="UploadFile" ColumnName="UploadFile" />
-                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
-                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
-                <ScalarProperty Name="DocumentTypeId" ColumnName="DocumentTypeId" />
-                <ScalarProperty Name="KycId" ColumnName="KycId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="generateFinancialYear" FunctionName="MangalDBNewModel.Store.generateFinancialYear" />
           <FunctionImportMapping FunctionImportName="GetKYCDetailsForDocument" FunctionName="MangalDBNewModel.Store.GetKYCDetailsForDocument">
             <ResultMapping>
@@ -5494,92 +5529,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TGLKYC_BasicDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
-              <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
-                <ScalarProperty Name="ResidenceCode" ColumnName="ResidenceCode" />
-                <ScalarProperty Name="Area" ColumnName="Area" />
-                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
-                <ScalarProperty Name="Distance" ColumnName="Distance" />
-                <ScalarProperty Name="NomineeAdharNo" ColumnName="NomineeAdharNo" />
-                <ScalarProperty Name="NomineePanNo" ColumnName="NomineePanNo" />
-                <ScalarProperty Name="NomineeMobileNo" ColumnName="NomineeMobileNo" />
-                <ScalarProperty Name="IndustryOther" ColumnName="IndustryOther" />
-                <ScalarProperty Name="OccupationOther" ColumnName="OccupationOther" />
-                <ScalarProperty Name="SourceType" ColumnName="SourceType" />
-                <ScalarProperty Name="CKYCNo" ColumnName="CKYCNo" />
-                <ScalarProperty Name="Father_Spouse" ColumnName="Father_Spouse" />
-                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
-                <ScalarProperty Name="ApplicantPrefix" ColumnName="ApplicantPrefix" />
-                <ScalarProperty Name="AdhaarNo" ColumnName="AdhaarNo" />
-                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
-                <ScalarProperty Name="KYCDate" ColumnName="KYCDate" />
-                <ScalarProperty Name="SourceofApplicationID" ColumnName="SourceofApplicationID" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
-                <ScalarProperty Name="CmpID" ColumnName="CmpID" />
-                <ScalarProperty Name="FYID" ColumnName="FYID" />
-                <ScalarProperty Name="SpecifyLoanPurpose" ColumnName="SpecifyLoanPurpose" />
-                <ScalarProperty Name="LoanpurposeID" ColumnName="LoanpurposeID" />
-                <ScalarProperty Name="NomAddress" ColumnName="NomAddress" />
-                <ScalarProperty Name="NomRelation" ColumnName="NomRelation" />
-                <ScalarProperty Name="NomLName" ColumnName="NomLName" />
-                <ScalarProperty Name="NomMName" ColumnName="NomMName" />
-                <ScalarProperty Name="NomFName" ColumnName="NomFName" />
-                <ScalarProperty Name="Designation" ColumnName="Designation" />
-                <ScalarProperty Name="SpecifyIndustries" ColumnName="SpecifyIndustries" />
-                <ScalarProperty Name="IndustriesType" ColumnName="IndustriesType" />
-                <ScalarProperty Name="SpecifyEmployment" ColumnName="SpecifyEmployment" />
-                <ScalarProperty Name="EmploymentType" ColumnName="EmploymentType" />
-                <ScalarProperty Name="OfficeAddress" ColumnName="OfficeAddress" />
-                <ScalarProperty Name="PresentIncome" ColumnName="PresentIncome" />
-                <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
-                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="ZoneID" ColumnName="ZoneID" />
-                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-                <ScalarProperty Name="StateID" ColumnName="StateID" />
-                <ScalarProperty Name="RoomBlockNo" ColumnName="RoomBlockNo" />
-                <ScalarProperty Name="BldgPlotNo" ColumnName="BldgPlotNo" />
-                <ScalarProperty Name="Road" ColumnName="Road" />
-                <ScalarProperty Name="BldgHouseName" ColumnName="BldgHouseName" />
-                <ScalarProperty Name="DealerID" ColumnName="DealerID" />
-                <ScalarProperty Name="SourceSpecification" ColumnName="SourceSpecification" />
-                <ScalarProperty Name="SourceofApplication" ColumnName="SourceofApplication" />
-                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
-                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
-                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
-                <ScalarProperty Name="Children" ColumnName="Children" />
-                <ScalarProperty Name="Spouse" ColumnName="Spouse" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="AppSign" ColumnName="AppSign" />
-                <ScalarProperty Name="AppPhoto" ColumnName="AppPhoto" />
-                <ScalarProperty Name="AppSignPath" ColumnName="AppSignPath" />
-                <ScalarProperty Name="AppPhotoPath" ColumnName="AppPhotoPath" />
-                <ScalarProperty Name="AppLName" ColumnName="AppLName" />
-                <ScalarProperty Name="AppMName" ColumnName="AppMName" />
-                <ScalarProperty Name="AppFName" ColumnName="AppFName" />
-                <ScalarProperty Name="ExistingPLCaseNo" ColumnName="ExistingPLCaseNo" />
-                <ScalarProperty Name="ExistingCustomerID" ColumnName="ExistingCustomerID" />
-                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
-                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetDocumentUploadById" FunctionName="MangalDBNewModel.Store.GetDocumentUploadById">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MangalDBNewModel.GetDocumentUploadById_Result">
@@ -5617,16 +5566,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Trn_RequestForm">
-            <EntityTypeMapping TypeName="MangalDBNewModel.Trn_RequestForm">
-              <MappingFragment StoreEntitySet="Trn_RequestForm">
-                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
-                <ScalarProperty Name="SanctionId" ColumnName="SanctionId" />
-                <ScalarProperty Name="KycId" ColumnName="KycId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Menus">
             <EntityTypeMapping TypeName="MangalDBNewModel.Menu">
               <MappingFragment StoreEntitySet="Menus">
@@ -5660,19 +5599,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FormID" ColumnName="FormID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.UserDetail">
-              <MappingFragment StoreEntitySet="UserDetails">
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
-                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5774,6 +5700,141 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Trn_DocUploadDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Trn_DocUploadDetails">
+              <MappingFragment StoreEntitySet="Trn_DocUploadDetails">
+                <ScalarProperty Name="ReasonForRejection" ColumnName="ReasonForRejection" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="VerifiedBy" ColumnName="VerifiedBy" />
+                <ScalarProperty Name="UploadFile" ColumnName="UploadFile" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="NameonDocument" ColumnName="NameonDocument" />
+                <ScalarProperty Name="SpecifyOther" ColumnName="SpecifyOther" />
+                <ScalarProperty Name="DocumentId" ColumnName="DocumentId" />
+                <ScalarProperty Name="DocumentTypeId" ColumnName="DocumentTypeId" />
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TGLKYC_BasicDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
+              <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
+                <ScalarProperty Name="AddressCategory" ColumnName="AddressCategory" />
+                <ScalarProperty Name="ResidenceCode" ColumnName="ResidenceCode" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="NomineeAdharNo" ColumnName="NomineeAdharNo" />
+                <ScalarProperty Name="NomineePanNo" ColumnName="NomineePanNo" />
+                <ScalarProperty Name="NomineeMobileNo" ColumnName="NomineeMobileNo" />
+                <ScalarProperty Name="IndustryOther" ColumnName="IndustryOther" />
+                <ScalarProperty Name="OccupationOther" ColumnName="OccupationOther" />
+                <ScalarProperty Name="SourceType" ColumnName="SourceType" />
+                <ScalarProperty Name="CKYCNo" ColumnName="CKYCNo" />
+                <ScalarProperty Name="Father_Spouse" ColumnName="Father_Spouse" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="ApplicantPrefix" ColumnName="ApplicantPrefix" />
+                <ScalarProperty Name="AdhaarNo" ColumnName="AdhaarNo" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="KYCDate" ColumnName="KYCDate" />
+                <ScalarProperty Name="SourceofApplicationID" ColumnName="SourceofApplicationID" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="CmpID" ColumnName="CmpID" />
+                <ScalarProperty Name="FYID" ColumnName="FYID" />
+                <ScalarProperty Name="SpecifyLoanPurpose" ColumnName="SpecifyLoanPurpose" />
+                <ScalarProperty Name="LoanpurposeID" ColumnName="LoanpurposeID" />
+                <ScalarProperty Name="NomAddress" ColumnName="NomAddress" />
+                <ScalarProperty Name="NomRelation" ColumnName="NomRelation" />
+                <ScalarProperty Name="NomLName" ColumnName="NomLName" />
+                <ScalarProperty Name="NomMName" ColumnName="NomMName" />
+                <ScalarProperty Name="NomFName" ColumnName="NomFName" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="SpecifyIndustries" ColumnName="SpecifyIndustries" />
+                <ScalarProperty Name="IndustriesType" ColumnName="IndustriesType" />
+                <ScalarProperty Name="SpecifyEmployment" ColumnName="SpecifyEmployment" />
+                <ScalarProperty Name="EmploymentType" ColumnName="EmploymentType" />
+                <ScalarProperty Name="OfficeAddress" ColumnName="OfficeAddress" />
+                <ScalarProperty Name="PresentIncome" ColumnName="PresentIncome" />
+                <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="ZoneID" ColumnName="ZoneID" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="RoomBlockNo" ColumnName="RoomBlockNo" />
+                <ScalarProperty Name="BldgPlotNo" ColumnName="BldgPlotNo" />
+                <ScalarProperty Name="Road" ColumnName="Road" />
+                <ScalarProperty Name="BldgHouseName" ColumnName="BldgHouseName" />
+                <ScalarProperty Name="DealerID" ColumnName="DealerID" />
+                <ScalarProperty Name="SourceSpecification" ColumnName="SourceSpecification" />
+                <ScalarProperty Name="SourceofApplication" ColumnName="SourceofApplication" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
+                <ScalarProperty Name="Children" ColumnName="Children" />
+                <ScalarProperty Name="Spouse" ColumnName="Spouse" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="AppSign" ColumnName="AppSign" />
+                <ScalarProperty Name="AppPhoto" ColumnName="AppPhoto" />
+                <ScalarProperty Name="AppSignPath" ColumnName="AppSignPath" />
+                <ScalarProperty Name="AppPhotoPath" ColumnName="AppPhotoPath" />
+                <ScalarProperty Name="AppLName" ColumnName="AppLName" />
+                <ScalarProperty Name="AppMName" ColumnName="AppMName" />
+                <ScalarProperty Name="AppFName" ColumnName="AppFName" />
+                <ScalarProperty Name="ExistingPLCaseNo" ColumnName="ExistingPLCaseNo" />
+                <ScalarProperty Name="ExistingCustomerID" ColumnName="ExistingCustomerID" />
+                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trn_RequestForm">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Trn_RequestForm">
+              <MappingFragment StoreEntitySet="Trn_RequestForm">
+                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
+                <ScalarProperty Name="SanctionId" ColumnName="SanctionId" />
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="updateddate" ColumnName="updateddate" />
+                <ScalarProperty Name="updatedby" ColumnName="updatedby" />
+                <ScalarProperty Name="createddate" ColumnName="createddate" />
+                <ScalarProperty Name="createdby" ColumnName="createdby" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="EmpAddress" ColumnName="EmpAddress" />
+                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

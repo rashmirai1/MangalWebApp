@@ -22,6 +22,12 @@ namespace MangalWeb.Service.Service
             return _requestFormRepository.GetSourceOfApplicationList();
         }
 
+        public RequestFormViewModel GetPincodDetails(int id)
+        {
+            var pincodedetails = _requestFormRepository.GetPincodDetails(id);
+            return pincodedetails;
+        }
+
         public IList<Mst_PinCode> GetAllPincodes()
         {
             return _requestFormRepository.GetAllPincodes();
@@ -32,7 +38,7 @@ namespace MangalWeb.Service.Service
             _requestFormRepository.SaveRecord(model);
         }
 
-        public List<DocumentUploadViewModel> GetKYCList()
+        public List<RequestFormViewModel> GetKYCList()
         {
             return _requestFormRepository.GetKYCList();
         }
