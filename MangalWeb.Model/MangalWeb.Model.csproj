@@ -256,6 +256,9 @@
     <Compile Include="Entity\tblZonemaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tbl_CKycState.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tbl_CountryMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -417,6 +420,7 @@
     <Compile Include="Masters\ZoneViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\PasswordEncryptionDecryption.cs" />
+    <Compile Include="Transaction\GLBorrowerCopyReport.cs" />
     <Compile Include="Transaction\KYCDocumentUpload.cs" />
     <Compile Include="Transaction\DocumentUploadDetailsVM.cs" />
     <Compile Include="Transaction\DocumentUploadViewModel.cs" />

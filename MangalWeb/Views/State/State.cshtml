@@ -48,8 +48,9 @@
                                             <div class="form-group">
                                                 <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">State Code<span class="text-danger"> * </span></label>
                                                 <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                    <span class="text-danger" id="CustomErr"> </span>
-                                                    @Html.EditorFor(model => model.StateCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "State Code", @autofocus = "autofocus" } })
+                                                    <span class="text-danger" id="CustomErr"> </span><br />
+                                                    <span class="text-danger" id="CustomErrr"> </span>
+                                                    @Html.EditorFor(model => model.StateCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "State Code", @autocomplete = "Off", @autofocus = "autofocus" } })
                                                     @Html.ValidationMessageFor(model => model.StateCode, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -58,11 +59,25 @@
                                             <div class="form-group">
                                                 <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">State Name<span class="text-danger"> * </span></label>
                                                 <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                    @Html.EditorFor(model => model.StateName, new { htmlAttributes = new { @class = "form-control", @placeholder = "State Name", @autofocus = "autofocus" } })
+                                                    @Html.EditorFor(model => model.StateName, new { htmlAttributes = new { @class = "form-control", @placeholder = "State Name",@autocomplete="Off"} })
                                                     @Html.ValidationMessageFor(model => model.StateName, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <br />
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">State Name as Per CKYC <span class="text-danger"> * </span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            @Html.DropDownListFor(m => m.CkycStateId, (SelectList)ViewBag.CkycStateList, "--Select State Name as Per CKYC --", htmlAttributes: new { @class = "form-control" })
+                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.CkycStateId)</span>
+                                                            <i class="arrow"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                             <div class="form-group">
@@ -105,7 +120,7 @@
                         $.ajax({
                             type: "POST",
                             url: '@Url.Action("doesStateNameExist", "State")',
-                            data: '{StateName: "' + $("#StateName").val() + '" }',
+                            data: '{StateName: "' + $("#StateName").val() + '", Id: "' + $("#ItemID").val() + '"}',
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function (result) {
@@ -124,6 +139,31 @@
                             }
                         });
                     });
+
+                $("#StateName").on('input', function () {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("CheckRecordonEditMode", "State")',
+                        data: '{Id: "' + $("#ItemID").val() + '" }',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "") {
+                                $("#CustomErrr").empty();
+                                $("#btn_save").removeAttr('disabled')
+                            }
+                            else {
+                                $("#CustomErrr").text(result);
+                                $("#btn_save").attr('disabled', true)
+                                return false;
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            //alert(error);
+                        }
+                    });
+                });
+
             //    }
             });
 

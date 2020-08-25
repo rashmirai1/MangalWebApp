@@ -12,6 +12,11 @@ namespace MangalWeb.Repository.Repository
     {
         MangalDBNewEntities _context = new MangalDBNewEntities();
 
+        public int CheckPincodeExistsByCityId(int id)
+        {
+            return _context.Mst_PinCode.Where(x => x.Pc_CityId == id).Select(x => x.Pc_CityId).Count();
+        }
+
         public List<tblCityMaster> GetAllCityMasters()
         {
             var list = _context.tblCityMasters.ToList();
@@ -71,10 +76,16 @@ namespace MangalWeb.Repository.Repository
             _context.SaveChanges();
         }
 
-        public string CheckCityNameExists(string Name)
+        public string CheckCityNameExists(string Name, int id)
         {
-            var state = _context.tblCityMasters.Where(x => x.CityName == Name).Select(x => x.CityName).FirstOrDefault();
-            return state;
+            if (id > 0)
+            {
+                return _context.tblCityMasters.Where(x => x.CityName == Name && x.CityID != id).Select(x => x.CityName).FirstOrDefault();
+            }
+            else
+            {
+                return _context.tblCityMasters.Where(x => x.CityName == Name).Select(x => x.CityName).FirstOrDefault();
+            }
         }
 
         public CityViewModel SetRecordinEdit(tblCityMaster tblCity)

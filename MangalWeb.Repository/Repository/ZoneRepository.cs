@@ -51,10 +51,16 @@ namespace MangalWeb.Repository.Repository
             _context.SaveChanges();
         }
 
-        public string CheckZoneNameExists(string Name)
+        public string CheckZoneNameExists(string Name, int id)
         {
-            var zone = _context.tblZonemasters.Where(x => x.Zone == Name).Select(x => x.Zone).FirstOrDefault();
-            return zone;
+            if (id > 0)
+            {
+                return _context.tblZonemasters.Where(x => x.Zone == Name && x.ZoneID != id).Select(x => x.Zone).FirstOrDefault();
+            }
+            else
+            {
+                return _context.tblZonemasters.Where(x => x.Zone == Name).Select(x => x.Zone).FirstOrDefault();
+            }
         }
 
         public ZoneViewModel SetRecordinEdit(tblZonemaster tblZone)
@@ -63,6 +69,11 @@ namespace MangalWeb.Repository.Repository
             zone.ID = tblZone.ZoneID;
             zone.ZoneName = tblZone.Zone;
             return zone;
+        }
+
+        public int CheckPincodeExistsByZoneId(int id)
+        {
+            return _context.Mst_PinCode.Where(x => x.Pc_ZoneId == id).Select(x => x.Pc_ZoneId).Count();
         }
     }
 }

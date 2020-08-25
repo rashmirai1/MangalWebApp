@@ -131,6 +131,7 @@
     <Compile Include="Controllers\DocumentUploadController.cs" />
     <Compile Include="Controllers\DocumentVerificationController.cs" />
     <Compile Include="Controllers\FinancialYearController.cs" />
+    <Compile Include="Controllers\GLBorrowerCopyController.cs" />
     <Compile Include="Controllers\GSTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KYCController.cs" />
@@ -2098,6 +2099,7 @@
     <Content Include="Views\UserAuthorization\UserAuthorization.cshtml" />
     <Content Include="Views\User\UserMaster.cshtml" />
     <Content Include="Views\User\_UserMasterList.cshtml" />
+    <Content Include="Views\GLBorrowerCopy\GLBorrowerCopy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

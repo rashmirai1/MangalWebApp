@@ -31,73 +31,73 @@
         </div><!--end of col-md-7-->
     </header>
 
-        <section id="content" class="animated fadeIn">
-            <!-- Start: Topbar -->
-            <!-- End: Topbar -->
-            <!-- Begin: Content -->
-            <!-- Dashboard Tiles -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel1 panel-primary">
-                        <div class="admin-form">
-                            <div class="panel-body">
-                                <div class="section row mbn">
-                                    <div class="form-horizontal">
-                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Pin Code<span class="text-danger"> * </span></label>
-                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                    <span class="text-danger" id="CustomErr"> </span>
-                                                    @Html.EditorFor(model => model.Pincode, new { htmlAttributes = new { @maxlength="7", @class = "form-control", @placeholder = "Pin Code", @autofocus = "autofocus" } })
-                                                    @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "text-danger" })
+    <section id="content" class="animated fadeIn">
+        <!-- Start: Topbar -->
+        <!-- End: Topbar -->
+        <!-- Begin: Content -->
+        <!-- Dashboard Tiles -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel1 panel-primary">
+                    <div class="admin-form">
+                        <div class="panel-body">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Pin Code<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span><br />
+                                                <span class="text-danger" id="CustomErrr"> </span>
+                                                @Html.EditorFor(model => model.Pincode, new { htmlAttributes = new { @maxlength = "7", @class = "form-control", @placeholder = "Pin Code", @autocomplete = "Off", @autofocus = "autofocus" } })
+                                                @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Area Name<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.AreaName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Area Name", @autocomplete = "Off" } })
+                                                @Html.ValidationMessageFor(model => model.AreaName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">City<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.CityId, (SelectList)ViewBag.CityList, "--Select City--", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.CityId)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Area Name<span class="text-danger"> * </span></label>
-                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                    @Html.EditorFor(model => model.AreaName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Area Name", @autofocus = "autofocus" } })
-                                                    @Html.ValidationMessageFor(model => model.AreaName, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                            <br />
-                                        </div>
-                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">City<span class="text-danger"> * </span></label>
-                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                    <div class="section">
-                                                        <label class="field select">
-                                                            @Html.DropDownListFor(m => m.CityId, (SelectList)ViewBag.CityList, "--Select City--", htmlAttributes: new { @class = "form-control" })
-                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.CityId)</span>
-                                                            <i class="arrow"></i>
-                                                        </label>
-                                                    </div>
-                                                </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="hideState">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">State</label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.TextBoxFor(model => model.StateName, new { @class = "form-control", @disabled = true })
                                             </div>
                                         </div>
-                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="hideState">
-                                            <div class="form-group">
-                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">State</label>
-                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                    @Html.TextBoxFor(model => model.StateName, new { @class = "form-control", @disabled = true })
-                                                </div>
-                                            </div>
-                                            <br />
-                                        </div>
-                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Zone<span class="text-danger"> * </span></label>
-                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                    <div class="section">
-                                                        <label class="field select">
-                                                            @Html.DropDownListFor(m => m.ZoneId, (SelectList)ViewBag.ZoneList, "--Select Zone--",
+                                        <br />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Zone<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.ZoneId, (SelectList)ViewBag.ZoneList, "--Select Zone--",
                                                            htmlAttributes: new { @class = "form-control" })
-                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.ZoneId)</span>
-                                                            <i class="arrow"></i>
-                                                        </label>
-                                                    </div>
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.ZoneId)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -108,8 +108,9 @@
                     </div>
                 </div>
             </div>
-            <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
-        </section>
+        </div>
+        <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
+    </section>
 }
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -131,140 +132,164 @@
                     return false;
                 }
             });
-                if ($("#ItemID").val() == 0) {
-                    $("#hideState").hide();
-                }
-                else {
-                    $("#hideState").show();
-                }
-                //if (document.URL.indexOf("ID") == -1) {
-                    $("#AreaName").on('input', function () {
-                        $.ajax({
-                            type: "POST",
-                            url: '@Url.Action("doesAreaNameExist", "Pincode")',
-                            data: '{AreaName: "' + $("#AreaName").val() + '" }',
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (result) {
-                                if (result == "") {
-                                    $("#CustomErr").empty();
-                                    $("#btn_save").removeAttr('disabled')
-                                }
-                                else {
-                                    $("#CustomErr").text(result);
-                                    $("#btn_save").attr('disabled', true)
-                                    return false;
-                                }
-                            },
-                            error: function (xhr, status, error) {
-                                //alert(error);
-                            }
-                        });
-                    });
-               // }
-
-                //Dropdownlist Selectedchange event
-                $("#CityId").change(function () {
-                    $("#StateName").empty();
-                    $.ajax({
-                        type: 'POST',
-                        url: '@Url.Action("GetState")', // we are calling json method
-                        dataType: 'json',
-                        data: { id: $("#CityId").val() },
-                        // here we are get value of selected country and passing same value
-                        //as inputto json method GetStates.
-                        success: function (state) {
-                            $("#hideState").show();
-                            $("#StateName").val(state);
-                        },
-                        error: function (ex) {
-                            alert('Failed to retrieve states.' + ex);
-                        }
-                    });
-                    return false;
-                })
-
-            });
-
-            function ShowEditTableList() {
-                $('#divviewfilldata').empty();
+            if ($("#ItemID").val() == 0) {
+                $("#hideState").hide();
+            }
+            else {
+                $("#hideState").show();
+            }
+            //if (document.URL.indexOf("ID") == -1) {
+            $("#Pincode").on('input', function () {
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("GetPincodeTable", "Pincode")',
-                    dataType: "html",
-                    data: { Operation: "Edit" },
+                    url: '@Url.Action("doesPincodeNameExist", "Pincode")',
+                    data: '{Pincode: "' + $("#Pincode").val() + '", Id: "' + $("#ItemID").val() + '"}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "") {
+                            $("#CustomErr").empty();
+                            $("#btn_save").removeAttr('disabled')
+                        }
+                        else {
+                            $("#CustomErr").text(result);
+                            $("#btn_save").attr('disabled', true)
+                            return false;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(error);
+                    }
+                });
+            });
+
+            $("#Pincode").on('input', function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CheckRecordonEditMode", "Pincode")',
+                    data: '{Id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "") {
+                            $("#CustomErrr").empty();
+                            $("#btn_save").removeAttr('disabled')
+                        }
+                        else {
+                            $("#CustomErrr").text(result);
+                            $("#btn_save").attr('disabled', true)
+                            return false;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(error);
+                    }
+                });
+            });
+            // }
+
+            //Dropdownlist Selectedchange event
+            $("#CityId").change(function () {
+                $("#StateName").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetState")', // we are calling json method
+                    dataType: 'json',
+                    data: { id: $("#CityId").val() },
+                    // here we are get value of selected country and passing same value
+                    //as inputto json method GetStates.
+                    success: function (state) {
+                        $("#hideState").show();
+                        $("#StateName").val(state);
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            })
+
+        });
+
+        function ShowEditTableList() {
+            $('#divviewfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetPincodeTable", "Pincode")',
+                dataType: "html",
+                data: { Operation: "Edit" },
+                success: function (data) {
+                    $('#diveditfilldata').empty();
+                    $('#diveditfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+
+        function ShowViewTableList() {
+            $('#diveditfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetPincodeTable", "Pincode")',
+                dataType: "html",
+                data: { Operation: "View" },
+                success: function (data) {
+                    $('#divviewfilldata').empty();
+                    $('#divviewfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+        var urlRedirect = '@Html.Raw(@Url.Action("Pincode", "Pincode"))';
+        function OnSuccess(response) {
+            $("#saveModal").modal('show');
+            $(document).click(function () {
+                window.location.href = urlRedirect;
+            });
+        }
+
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+
+        $(function () {
+            var url = '@Html.Raw(@Url.Action("Delete", "Pincode"))';
+            $("#btnDelete").click(function () {
+                $("#deleteModal").modal('show');
+            });
+            $("#btnDeleteConfirm").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: '{id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
                     success: function (data) {
-                        $('#diveditfilldata').empty();
-                        $('#diveditfilldata').html(data);
-                        $('#example').dataTable();
+                        if (data != "") {
+                            $("#CustomErr").text(data);
+                            return false;
+                        }
+                        else {
+                            $("#CustomErr").empty();
+                            $("#DeleteSuccessModal").modal('show');
+
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
                     },
                     error: function (xhr, status, error) {
                         alert(error);
                     }
                 });
-            }
-
-            function ShowViewTableList() {
-                $('#diveditfilldata').empty();
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("GetPincodeTable", "Pincode")',
-                    dataType: "html",
-                    data: { Operation: "View" },
-                    success: function (data) {
-                        $('#divviewfilldata').empty();
-                        $('#divviewfilldata').html(data);
-                        $('#example').dataTable();
-                    },
-                    error: function (xhr, status, error) {
-                        alert(error);
-                    }
-                });
-            }
-            var urlRedirect = '@Html.Raw(@Url.Action("Pincode", "Pincode"))';
-            function OnSuccess(response) {
-                $("#saveModal").modal('show');
-                $(document).click(function () {
-                    window.location.href = urlRedirect;
-                });
-            }
-
-            function OnFailure(response) {
-                alert("Error occured.");
-            }
-
-            $(function () {
-                var url = '@Html.Raw(@Url.Action("Delete", "Pincode"))';
-                $("#btnDelete").click(function () {
-                    $("#deleteModal").modal('show');
-                });
-                $("#btnDeleteConfirm").click(function () {
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: '{id: "' + $("#ItemID").val() + '" }',
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (data) {
-                            if (data != "") {
-                                $("#CustomErr").text(data);
-                                return false;
-                            }
-                            else {
-                                $("#CustomErr").empty();
-                                $("#DeleteSuccessModal").modal('show');
-
-                                $(document).click(function () {
-                                    window.location.href = urlRedirect;
-                                });
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            alert(error);
-                        }
-                    });
-                });
             });
+        });
     </script>
 }
 

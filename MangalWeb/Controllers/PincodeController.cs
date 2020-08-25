@@ -20,15 +20,6 @@ namespace MangalWeb.Controllers
             pincodeViewModel.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
             try
             {
-                if (pincodeViewModel.ID <= 0)
-                {
-                    var data = _pincodeService.CheckPinAreaExists(pincodeViewModel.AreaName);
-                    if (data != null)
-                    {
-                        ModelState.AddModelError("AreaName", "Area Name Already Exists");
-                        return Json(pincodeViewModel);
-                    }
-                }
                 _pincodeService.SaveUpdateRecord(pincodeViewModel);
             }
             catch (Exception ex)
@@ -56,22 +47,40 @@ namespace MangalWeb.Controllers
             return View("Pincode", model);
         }
 
+        public JsonResult CheckRecordonEditMode(int Id)
+        {
+            string data = "";
+            if (_pincodeService.CheckBranchExistsByPincodeId(Id) > 0)
+            {
+                data = "Record Cannot Be Edit Already In Use!";
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+
         // GETDelete/5
         public ActionResult Delete(int id)
         {
             string data = "";
-            _pincodeService.DeleteRecord(id);
-            return Json(JsonRequestBehavior.AllowGet);
+            if (_pincodeService.CheckBranchExistsByPincodeId(id) > 0)
+            {
+                data = "Record Cannot Be Deleted Already In Use!";
+            }
+            else
+            {
+                _pincodeService.DeleteRecord(id);
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesAreaNameExist(string AreaName)
+        public JsonResult doesPincodeNameExist(string Pincode, int Id)
         {
-            var data = _pincodeService.CheckPinAreaExists(AreaName);
+            var data = _pincodeService.CheckPinAreaExists(Pincode, Id);
             var result = "";
             //Check if city name already exists
             if (data != null)
             {
-                if (AreaName.ToLower() == data.ToLower().ToString())
+                if (Pincode == data.ToString())
                 {
                     result = "Area Already Exists";
                 }

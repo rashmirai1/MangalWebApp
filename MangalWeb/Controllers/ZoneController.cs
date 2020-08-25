@@ -18,20 +18,7 @@ namespace MangalWeb.Controllers
         {
             try
             {
-                if (zone.ID <= 0)
-                {
-                    var data = _zoneService.CheckZoneNameExists(zone.ZoneName);
-                    if (data != null)
-                    {
-                        ModelState.AddModelError("ZoneName", "Zone Name Already Exists");
-                        return Json(zone);
-                    }
-                    _zoneService.SaveUpdateRecord(zone);
-                }
-                else
-                {
-                    _zoneService.SaveUpdateRecord(zone);
-                }
+                _zoneService.SaveUpdateRecord(zone);
             }
             catch (Exception ex)
             {
@@ -63,21 +50,31 @@ namespace MangalWeb.Controllers
         public ActionResult Delete(int id)
         {
             string data = "";
-            //if (dd._context.Mst_PinCode.Any(o => o.Pc_ZoneId == id))
-            //{
-            //    data = "Record Cannot Be Deleted Already In Use!";
-            //    return Json(data, JsonRequestBehavior.AllowGet);
-            //}
-            //else
-            //{
-            _zoneService.DeleteZoneRecord(id);
-            return Json(JsonRequestBehavior.AllowGet);
-            //}
+            if (_zoneService.CheckPincodeExistsByZoneId(id) > 0)
+            {
+                data = "Record Cannot Be Deleted Already In Use!";
+            }
+            else
+            {
+                _zoneService.DeleteZoneRecord(id);
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesZoneNameExist(string ZoneName)
+        public JsonResult CheckRecordonEditMode(int Id)
         {
-            var data = _zoneService.CheckZoneNameExists(ZoneName);
+            string data = "";
+            if (_zoneService.CheckPincodeExistsByZoneId(Id) > 0)
+            {
+                data = "Record Cannot Be Edit Already In Use!";
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult doesZoneNameExist(string ZoneName,int Id)
+        {
+            var data = _zoneService.CheckZoneNameExists(ZoneName,Id);
             var result = "";
             //Check if state name already exists
             if (data != null)

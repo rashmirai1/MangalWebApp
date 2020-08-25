@@ -74,7 +74,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tblPenaltySlabtMaster> tblPenaltySlabtMasters { get; set; }
         public virtual DbSet<tblSchemeMaster> tblSchemeMasters { get; set; }
         public virtual DbSet<tblSchemeTransMaster> tblSchemeTransMasters { get; set; }
-        public virtual DbSet<tblStateMaster> tblStateMasters { get; set; }
         public virtual DbSet<tblZonemaster> tblZonemasters { get; set; }
         public virtual DbSet<tblSchemeTransMonth> tblSchemeTransMonths { get; set; }
         public virtual DbSet<tblCityMaster> tblCityMasters { get; set; }
@@ -115,6 +114,8 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<Trn_RequestForm> Trn_RequestForm { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
+        public virtual DbSet<tbl_CKycState> tbl_CKycState { get; set; }
+        public virtual DbSet<tblStateMaster> tblStateMasters { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

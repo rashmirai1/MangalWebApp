@@ -11,7 +11,7 @@ namespace MangalWeb.Model.Masters
         public int ID { get; set; }
 
         [Required(ErrorMessage = "City Name is Required")]
-        [StringLength(20)]
+        [StringLength(20,ErrorMessage ="City Name can not be more than 20 charaters")]
         public string CityName { get; set; }
 
         [Required(ErrorMessage = "Please Select State")]

@@ -19,20 +19,7 @@ namespace MangalWeb.Controllers
         {
             try
             {
-                if (city.ID <= 0)
-                {
-                    var data = _cityService.CheckCityNameExists(city.CityName);
-                    if (data != null)
-                    {
-                        ModelState.AddModelError("CityName", "City Name Already Exists");
-                        return Json(city);
-                    }
                     _cityService.SaveUpdateRecord(city);
-                }
-                else
-                {
-                    _cityService.SaveUpdateRecord(city);
-                }
             }
             catch (Exception ex)
             {
@@ -63,22 +50,31 @@ namespace MangalWeb.Controllers
         {
 
             string data = "";
-            //if (dd._context.Mst_PinCode.Any(o => o.Pc_CityId == id))
-            //{
-            //    data = "Record Cannot Be Deleted Already In Use!";
-
-            //    return Json(data, JsonRequestBehavior.AllowGet);
-            //}
-            //else
-            //{
-            _cityService.DeleteCityRecord(id);
-            return Json(JsonRequestBehavior.AllowGet);
+            if (_cityService.CheckPincodeExistsByCityId(id) > 0)
+            {
+                data = "Record Cannot Be Deleted Already In Use!";
+            }
+            else
+            {
+                _cityService.DeleteCityRecord(id);
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesCityNameExist(string CityName)
+        public JsonResult CheckRecordonEditMode(int Id)
+        {
+            string data = "";
+            if (_cityService.CheckPincodeExistsByCityId(Id) > 0)
+            {
+                data = "Record Cannot Be Edit Already In Use!";
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult doesCityNameExist(string CityName, int Id)
         {
             var result = "";
-            var data = _cityService.CheckCityNameExists(CityName);
+            var data = _cityService.CheckCityNameExists(CityName, Id);
             //Check if city name already exists
             if (data != null)
             {

@@ -26,9 +26,9 @@ namespace MangalWeb.Service.Service
             return city;
         }
 
-        public string CheckCityNameExists(string name)
+        public string CheckCityNameExists(string name,int id)
         {
-            var cityname = _cityRepository.CheckCityNameExists(name);
+            var cityname = _cityRepository.CheckCityNameExists(name,id);
             return cityname;
         }
 
@@ -65,5 +65,11 @@ namespace MangalWeb.Service.Service
         {
             _cityRepository.SaveUpdateRecord(model);
         }
+
+        public int CheckPincodeExistsByCityId(int id)
+        {
+            return _cityRepository.CheckPincodeExistsByCityId(id);
+        }
+
     }
 }

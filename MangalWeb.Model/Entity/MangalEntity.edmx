@@ -437,6 +437,14 @@ warning 6002: The table/view 'MangalDBNew.dbo.newbharatTGLGoldStock' does not ha
           <Property Name="TotalRelease" Type="int" />
           <Property Name="ClosingBalance" Type="int" />
         </EntityType>
+        <EntityType Name="tbl_CKycState">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="tbl_CountryMaster">
           <Key>
             <PropertyRef Name="CountryID" />
@@ -760,6 +768,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblSchemeTransMonths' does not hav
           <Property Name="StateName" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="countryID" Type="int" Nullable="false" />
           <Property Name="StateCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CkycStateId" Type="int" />
         </EntityType>
         <EntityType Name="tblZonemaster">
           <Key>
@@ -1715,6 +1724,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <EntitySet Name="Mst_Reason" EntityType="Self.Mst_Reason" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_SchemePurity" EntityType="Self.Mst_SchemePurity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_SourceofApplication" EntityType="Self.Mst_SourceofApplication" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_CKycState" EntityType="Self.tbl_CKycState" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_CountryMaster" EntityType="Self.tbl_CountryMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_GLChargeMaster_BasicInfo" EntityType="Self.tbl_GLChargeMaster_BasicInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_GLChargeMaster_Details" EntityType="Self.tbl_GLChargeMaster_Details" Schema="dbo" store:Type="Tables" />
@@ -3093,18 +3103,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <EntitySet Name="tblPenaltySlabtMasters" EntityType="MangalDBNewModel.tblPenaltySlabtMaster" />
           <EntitySet Name="tblSchemeMasters" EntityType="MangalDBNewModel.tblSchemeMaster" />
           <EntitySet Name="tblSchemeTransMasters" EntityType="MangalDBNewModel.tblSchemeTransMaster" />
-          <EntitySet Name="tblStateMasters" EntityType="MangalDBNewModel.tblStateMaster" />
           <EntitySet Name="tblZonemasters" EntityType="MangalDBNewModel.tblZonemaster" />
           <EntitySet Name="tblSchemeTransMonths" EntityType="MangalDBNewModel.tblSchemeTransMonth" />
-          <AssociationSet Name="FK_tblStateMaster_tbl_CountryMaster" Association="MangalDBNewModel.FK_tblStateMaster_tbl_CountryMaster">
-            <End Role="tbl_CountryMaster" EntitySet="tbl_CountryMaster" />
-            <End Role="tblStateMaster" EntitySet="tblStateMasters" />
-          </AssociationSet>
           <EntitySet Name="tblCityMasters" EntityType="MangalDBNewModel.tblCityMaster" />
-          <AssociationSet Name="FK_tblCityMaster_tblStateMaster" Association="MangalDBNewModel.FK_tblCityMaster_tblStateMaster">
-            <End Role="tblStateMaster" EntitySet="tblStateMasters" />
-            <End Role="tblCityMaster" EntitySet="tblCityMasters" />
-          </AssociationSet>
           <EntitySet Name="Mst_PinCode" EntityType="MangalDBNewModel.Mst_PinCode" />
           <AssociationSet Name="FK_Mst_PinCode_Mst_PinCode" Association="MangalDBNewModel.FK_Mst_PinCode_Mst_PinCode">
             <End Role="tblCityMaster" EntitySet="tblCityMasters" />
@@ -3248,6 +3249,16 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
             <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
             <End Role="UserDetail" EntitySet="UserDetails" />
           </AssociationSet>
+          <EntitySet Name="tbl_CKycState" EntityType="MangalDBNewModel.tbl_CKycState" />
+          <EntitySet Name="tblStateMasters" EntityType="MangalDBNewModel.tblStateMaster" />
+          <AssociationSet Name="FK_tblStateMaster_tbl_CountryMaster" Association="MangalDBNewModel.FK_tblStateMaster_tbl_CountryMaster">
+            <End Role="tbl_CountryMaster" EntitySet="tbl_CountryMaster" />
+            <End Role="tblStateMaster" EntitySet="tblStateMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblCityMaster_tblStateMaster" Association="MangalDBNewModel.FK_tblCityMaster_tblStateMaster">
+            <End Role="tblStateMaster" EntitySet="tblStateMasters" />
+            <End Role="tblCityMaster" EntitySet="tblCityMasters" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3321,17 +3332,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="ServiceTaxAmount" Type="Int32" Nullable="false" />
           <Property Name="EMIType" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
-        <EntityType Name="tblStateMaster">
-          <Key>
-            <PropertyRef Name="StateID" />
-          </Key>
-          <Property Name="StateID" Type="Int32" Nullable="false" />
-          <Property Name="StateName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="countryID" Type="Int32" Nullable="false" />
-          <Property Name="StateCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tbl_CountryMaster" Relationship="MangalDBNewModel.FK_tblStateMaster_tbl_CountryMaster" FromRole="tblStateMaster" ToRole="tbl_CountryMaster" />
-          <NavigationProperty Name="tblCityMasters" Relationship="MangalDBNewModel.FK_tblCityMaster_tblStateMaster" FromRole="tblStateMaster" ToRole="tblCityMaster" />
-        </EntityType>
         <EntityType Name="tblZonemaster">
           <Key>
             <PropertyRef Name="ZoneID" />
@@ -3355,18 +3355,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="TotalMonths" Type="Int32" Nullable="false" />
           <Property Name="EMI" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="FK_tblStateMaster_tbl_CountryMaster">
-          <End Type="MangalDBNewModel.tbl_CountryMaster" Role="tbl_CountryMaster" Multiplicity="1" />
-          <End Type="MangalDBNewModel.tblStateMaster" Role="tblStateMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_CountryMaster">
-              <PropertyRef Name="CountryID" />
-            </Principal>
-            <Dependent Role="tblStateMaster">
-              <PropertyRef Name="countryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tblCityMaster">
           <Key>
             <PropertyRef Name="CityID" />
@@ -3376,21 +3364,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="StateID" Type="Int32" Nullable="false" />
           <Property Name="CityStdCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CityBlackListed" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="tblStateMaster" Relationship="MangalDBNewModel.FK_tblCityMaster_tblStateMaster" FromRole="tblCityMaster" ToRole="tblStateMaster" />
           <NavigationProperty Name="Mst_PinCode" Relationship="MangalDBNewModel.FK_Mst_PinCode_Mst_PinCode" FromRole="tblCityMaster" ToRole="Mst_PinCode" />
+          <NavigationProperty Name="tblStateMaster" Relationship="MangalDBNewModel.FK_tblCityMaster_tblStateMaster" FromRole="tblCityMaster" ToRole="tblStateMaster" />
         </EntityType>
-        <Association Name="FK_tblCityMaster_tblStateMaster">
-          <End Type="MangalDBNewModel.tblStateMaster" Role="tblStateMaster" Multiplicity="1" />
-          <End Type="MangalDBNewModel.tblCityMaster" Role="tblCityMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblStateMaster">
-              <PropertyRef Name="StateID" />
-            </Principal>
-            <Dependent Role="tblCityMaster">
-              <PropertyRef Name="StateID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Mst_PinCode">
           <Key>
             <PropertyRef Name="Pc_Id" />
@@ -4284,6 +4260,50 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tbl_CKycState">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="StateName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblStateMaster">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="Int32" Nullable="false" />
+          <Property Name="StateName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="countryID" Type="Int32" Nullable="false" />
+          <Property Name="StateCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CkycStateId" Type="Int32" />
+          <NavigationProperty Name="tbl_CountryMaster" Relationship="MangalDBNewModel.FK_tblStateMaster_tbl_CountryMaster" FromRole="tblStateMaster" ToRole="tbl_CountryMaster" />
+          <NavigationProperty Name="tblCityMasters" Relationship="MangalDBNewModel.FK_tblCityMaster_tblStateMaster" FromRole="tblStateMaster" ToRole="tblCityMaster" />
+        </EntityType>
+        <Association Name="FK_tblStateMaster_tbl_CountryMaster">
+          <End Type="MangalDBNewModel.tbl_CountryMaster" Role="tbl_CountryMaster" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tblStateMaster" Role="tblStateMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_CountryMaster">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="tblStateMaster">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblCityMaster_tblStateMaster">
+          <End Type="MangalDBNewModel.tblStateMaster" Role="tblStateMaster" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tblCityMaster" Role="tblCityMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStateMaster">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="tblCityMaster">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5026,16 +5046,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
                 <ScalarProperty Name="LoanAmount" ColumnName="LoanAmount" />
                 <ScalarProperty Name="SchemeID" ColumnName="SchemeID" />
                 <ScalarProperty Name="SchemesID" ColumnName="SchemesID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblStateMasters">
-            <EntityTypeMapping TypeName="MangalDBNewModel.tblStateMaster">
-              <MappingFragment StoreEntitySet="tblStateMaster">
-                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
-                <ScalarProperty Name="countryID" ColumnName="countryID" />
-                <ScalarProperty Name="StateName" ColumnName="StateName" />
-                <ScalarProperty Name="StateID" ColumnName="StateID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5832,6 +5842,26 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_CKycState">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_CKycState">
+              <MappingFragment StoreEntitySet="tbl_CKycState">
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStateMasters">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblStateMaster">
+              <MappingFragment StoreEntitySet="tblStateMaster">
+                <ScalarProperty Name="CkycStateId" ColumnName="CkycStateId" />
+                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
