@@ -49,9 +49,9 @@ namespace MangalWeb.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesReasonExist(string Reason)
+        public JsonResult doesReasonExist(string Reason,int Id)
         {
-            var data = _reasonService.CheckReasonNameExists(Reason);
+            var data = _reasonService.CheckReasonNameExists(Reason,Id);
             var result = "";
             //Check if record already exists
             if (data != null)
@@ -71,7 +71,8 @@ namespace MangalWeb.Controllers
         public ActionResult Reason()
         {
             ButtonVisiblity("Index");
-            return View();
+            var model = new ReasonViewModel();
+            return View(model);
         }
 
         public ActionResult GetReasonTable(string Operation)
