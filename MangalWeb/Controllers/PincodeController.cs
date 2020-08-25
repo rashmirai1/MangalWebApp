@@ -82,7 +82,7 @@ namespace MangalWeb.Controllers
             {
                 if (Pincode == data.ToString())
                 {
-                    result = "Area Already Exists";
+                    result = "Pincode Already Exists";
                 }
                 else
                 {

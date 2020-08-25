@@ -81,11 +81,11 @@ namespace MangalWeb.Repository.Repository
         {
             if (id > 0)
             {
-                return _context.Mst_PinCode.Where(x => x.Pc_Desc == pincode && x.Pc_Id != id).Select(x => x.Pc_AreaName).FirstOrDefault();
+                return _context.Mst_PinCode.Where(x => x.Pc_Desc == pincode && x.Pc_Id != id).Select(x => x.Pc_Desc).FirstOrDefault();
             }
             else
             {
-                return _context.Mst_PinCode.Where(x => x.Pc_Desc == pincode).Select(x => x.Pc_AreaName).FirstOrDefault();
+                return _context.Mst_PinCode.Where(x => x.Pc_Desc == pincode).Select(x => x.Pc_Desc).FirstOrDefault();
             }
         }
 

@@ -19,15 +19,6 @@ namespace MangalWeb.Controllers
             reason.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
             try
             {
-                if (reason.ID <= 0)
-                {
-                    var data = _reasonService.CheckReasonNameExists(reason.ReasonName);
-                    if (data != null)
-                    {
-                        ModelState.AddModelError("Reason", "Reason Already Exists");
-                        return Json(reason);
-                    }
-                }
                 _reasonService.SaveUpdateRecord(reason);
             }
             catch (Exception ex)
