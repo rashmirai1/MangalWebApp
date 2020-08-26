@@ -46,8 +46,9 @@
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Scheme Id</label>
+                                            <span class="text-danger" id="CustomErr"> </span><br />
+                                            <span class="text-danger" id="CustomErrr"> </span>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
                                                 @Html.EditorFor(model => model.SchemeId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Scheme ID", @disabled = true } })
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Scheme Name<span class="text-danger"> * </span></label>
@@ -74,7 +75,7 @@
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 @*@Html.DropDownListFor(model => model.Purity, (SelectList)ViewBag.PurityList, "--Select Purity--", new { @class = "form-control", multiple = "multiple" })*@
                                                 @Html.ListBoxFor(model => model.Purity, (SelectList)ViewBag.PurityList, new { @class = "form-control", id = "Purity", multiple = "multiple" })
-                                                <span class="text-danger">@Html.ValidationMessageFor(m => m.Product)</span>
+                                                <span class="text-danger">@Html.ValidationMessageFor(m => m.Purity)</span>
                                             </div>
                                         </div>
                                     </div>
@@ -121,12 +122,12 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Min Tenure<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.MinTenure, new { htmlAttributes = new { @class = "form-control", @placeholder = "Min Tenure", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", @maxlength = "3" } })
+                                                @Html.EditorFor(model => model.MinTenure, new { htmlAttributes = new { @class = "form-control", @placeholder = "Min Tenure", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", @maxlength = "3", @min = "0" } })
                                                 @Html.ValidationMessageFor(model => model.MinTenure, "", new { @class = "text-danger" })
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Max Tenure<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.MaxTenure, new { htmlAttributes = new { @class = "form-control", @placeholder = "Max Tenure", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", @maxlength = "3" } })
+                                                @Html.EditorFor(model => model.MaxTenure, new { htmlAttributes = new { @class = "form-control", @placeholder = "Max Tenure", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", @maxlength = "3" , @min = "0" } })
                                                 @Html.ValidationMessageFor(model => model.MaxTenure, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -180,7 +181,7 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Grace Period (days)<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.GracePeriod, new { htmlAttributes = new { @class = "form-control", @placeholder = "Grace Period (in days)", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", @maxlength = "4" } })
+                                                @Html.EditorFor(model => model.GracePeriod, new { htmlAttributes = new { @class = "form-control", @placeholder = "Grace Period (in days)", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", @maxlength = "3" } })
                                                 @Html.ValidationMessageFor(model => model.GracePeriod, "", new { @class = "text-danger" })
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Effective ROI %<span class="text-danger"> * </span></label>
@@ -220,12 +221,12 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Processing Charges<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.ProcessingCharges, new { htmlAttributes = new { @class = "form-control", @placeholder = "Processing Charges", @maxlength = "5" } })
+                                                @Html.EditorFor(model => model.ProcessingCharges, new { htmlAttributes = new { @class = "form-control", @placeholder = "Processing Charges", @maxlength = "8" } })
                                                 @Html.ValidationMessageFor(model => model.ProcessingCharges, "", new { @class = "text-danger" })
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Maximum processing Charges<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.MaxProcessingCharge, new { htmlAttributes = new { @class = "form-control", @placeholder = "Maximum processing Charges", @maxlength = "5" } })
+                                                @Html.EditorFor(model => model.MaxProcessingCharge, new { htmlAttributes = new { @class = "form-control", @placeholder = "Maximum processing Charges", @maxlength = "8" } })
                                                 @Html.ValidationMessageFor(model => model.MaxProcessingCharge, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -283,7 +284,7 @@
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("doesSchemeNameExist", "Scheme")',
-                    data: '{SchemeName: "' + $("#SchemeName").val() + '" }',
+                    data: '{SchemeName: "' + $("#SchemeName").val() + '", Id: "' + $("#ItemID").val() + '"}',
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (result) {
@@ -293,6 +294,30 @@
                         }
                         else {
                             $("#CustomErr").text(result);
+                            $("#btn_save").attr('disabled', true)
+                            return false;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(error);
+                    }
+                });
+            });
+
+            $("#SchemeName").on('input', function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CheckRecordonEditMode", "Scheme")',
+                    data: '{Id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "") {
+                            $("#CustomErrr").empty();
+                            $("#btn_save").removeAttr('disabled')
+                        }
+                        else {
+                            $("#CustomErrr").text(result);
                             $("#btn_save").attr('disabled', true)
                             return false;
                         }

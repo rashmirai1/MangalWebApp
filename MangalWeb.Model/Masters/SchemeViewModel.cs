@@ -19,22 +19,22 @@ namespace MangalWeb.Model.Masters
 
         [Required(ErrorMessage = "Please Select Scheme Type")]
         public string SchemeType { get; set; }
-        public string SchemeTypeStr { get; set; }
 
         [Required(ErrorMessage = "Please Select Frequency")]
         public string Frequency { get; set; }
-        public string FrequencyStr { get; set; }
 
         public int EditID { get; set; }
 
         [Required(ErrorMessage = "Scheme Name is Required")]
-        [StringLength(30)]
+        [StringLength(30, ErrorMessage = "Scheme Name can not be greater than 30 characters")]
         public string SchemeName { get; set; }
 
         [Required(ErrorMessage = "Min Tenure is Required")]
+        [RegularExpression(@"^(\d{1,3})$", ErrorMessage = "error Message")]
         public int MinTenure { get; set; }
 
         [Required(ErrorMessage = "Max Tenure is Required")]
+        [RegularExpression(@"^(\d{1,3})$", ErrorMessage = "error Message")]
         public int MaxTenure { get; set; }
 
         [Required(ErrorMessage = "Min Loan Amount is Required")]
@@ -53,18 +53,21 @@ namespace MangalWeb.Model.Masters
         public decimal? MinROIPerc { get; set; }
 
         [Required(ErrorMessage = "Max ROI % is Required")]
+        //[RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "error Message")]
         public decimal? MaxROIPerc { get; set; }
 
         [Required(ErrorMessage = "Grace Period is Required")]
+        [RegularExpression(@"^(\d{1,3})$", ErrorMessage = "error Message")]
         public int? GracePeriod { get; set; }
 
         [Required(ErrorMessage = "Effective ROI % is Required")]
         public decimal? EffectiveROIPerc { get; set; }
 
         [Required(ErrorMessage = "Lock In Period is Required")]
+        [RegularExpression(@"^(\d{1,2})$", ErrorMessage = "error Message")]
         public int? LockInPeriod { get; set; }
 
-        [Required(ErrorMessage = "ProcessingFeeType is Required")]
+        [Required(ErrorMessage = "Processing Fee Type is Required")]
         public string ProcessingFeeType { get; set; }
 
         [Required(ErrorMessage = "Processing Charges is Required")]

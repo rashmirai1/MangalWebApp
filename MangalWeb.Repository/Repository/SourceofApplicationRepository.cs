@@ -20,7 +20,7 @@ namespace MangalWeb.Repository.Repository
 
         public Mst_SourceofApplication GetSourceofApplicationById(int id)
         {
-            var source = _context.Mst_SourceofApplication.Where(x => x.Soa_Id == id && x.Soa_Status == "Active").FirstOrDefault();
+            var source = _context.Mst_SourceofApplication.Where(x => x.Soa_Id == id).FirstOrDefault();
             return source;
         }
 
@@ -63,12 +63,17 @@ namespace MangalWeb.Repository.Repository
             _context.SaveChanges();
         }
 
-        public string CheckSourceNameExists(string Name)
+        public string CheckSourceNameExists(string Name, int id)
         {
-            var source = _context.Mst_SourceofApplication.Where(x => x.Soa_Name == Name).Select(x => x.Soa_Name).FirstOrDefault();
-            return source;
+            if (id > 0)
+            {
+                return _context.Mst_SourceofApplication.Where(x => x.Soa_Name == Name && x.Soa_Id != id).Select(x => x.Soa_Name).FirstOrDefault();
+            }
+            else
+            {
+                return _context.Mst_SourceofApplication.Where(x => x.Soa_Name == Name).Select(x => x.Soa_Name).FirstOrDefault();
+            }
         }
-
 
         public SourceofApplicationViewModel SetRecordinEdit(Mst_SourceofApplication tblsource)
         {
@@ -88,12 +93,12 @@ namespace MangalWeb.Repository.Repository
             foreach (var item in tablelist)
             {
                 var model = new SourceofApplicationViewModel();
-                 model.SourceName = item.Soa_Name;
-                 model.EditID = item.Soa_Id;
-                 model.ID = item.Soa_Id;
-                 model.SourceCategory = item.Soa_Category;
-                 model.SourceStatus = item.Soa_Status;
-                 list.Add(model);
+                model.SourceName = item.Soa_Name;
+                model.EditID = item.Soa_Id;
+                model.ID = item.Soa_Id;
+                model.SourceCategory = item.Soa_Category;
+                model.SourceStatus = item.Soa_Status;
+                list.Add(model);
             }
             return list;
         }

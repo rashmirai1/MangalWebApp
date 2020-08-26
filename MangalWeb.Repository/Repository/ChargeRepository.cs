@@ -125,10 +125,16 @@ namespace MangalWeb.Repository.Repository
 
         }
 
-        public string CheckChargeNameExists(string Name)
+        public string CheckChargeNameExists(string Name, int id)
         {
-            var charge = _context.tbl_GLChargeMaster_BasicInfo.Where(x => x.ChargeName == Name).Select(x => x.ChargeName).FirstOrDefault();
-            return charge;
+            if (id > 0)
+            {
+                return _context.tbl_GLChargeMaster_BasicInfo.Where(x => x.ChargeName == Name && x.CID != id).Select(x => x.ChargeName).FirstOrDefault();
+            }
+            else
+            {
+                return _context.tbl_GLChargeMaster_BasicInfo.Where(x => x.ChargeName == Name).Select(x => x.ChargeName).FirstOrDefault();
+            }
         }
 
         public List<ChargeViewModel> SetDataofModalList()

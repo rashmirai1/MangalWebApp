@@ -21,15 +21,6 @@ namespace MangalWeb.Controllers
                 scheme.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
                 scheme.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
 
-                if (scheme.EditID <= 0)
-                {
-                    var data = _schemeService.CheckSchemeNameExists(scheme.SchemeName);
-                    if (data != null)
-                    {
-                        ModelState.AddModelError("SchemeName", "Scheme Name Already Exists");
-                        return Json(scheme);
-                    }
-                }
                 _schemeService.SaveUpdateRecord(scheme);
             }
             catch (Exception ex)
@@ -62,10 +53,16 @@ namespace MangalWeb.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesSchemeNameExist(string SchemeName)
+        public JsonResult CheckRecordonEditMode(int Id)
+        {
+            string data = "";
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult doesSchemeNameExist(string SchemeName,int Id)
         {
             var result = "";
-            var data = _schemeService.CheckSchemeNameExists(SchemeName);
+            var data = _schemeService.CheckSchemeNameExists(SchemeName,Id);
             //Check if city name already exists
             if (data != null)
             {

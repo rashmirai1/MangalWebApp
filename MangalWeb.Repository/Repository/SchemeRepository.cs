@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MangalWeb.Repository.Repository
 {
@@ -80,9 +81,9 @@ namespace MangalWeb.Repository.Repository
                 tblSchemeMaster.isActive = scheme.Status;
                 tblSchemeMaster.UpdatedDate = DateTime.Now;
                 tblSchemeMaster.UpdatedBy = scheme.UpdatedBy;
-                tblSchemeMaster.BranchId = 1;
-                tblSchemeMaster.CMPId = 1;
-                tblSchemeMaster.FYId = 1;
+                tblSchemeMaster.BranchId = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+                tblSchemeMaster.CMPId = Convert.ToInt32(HttpContext.Current.Session["CompanyId"]); ;
+                tblSchemeMaster.FYId = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]); ;
                 _context.SaveChanges();
 
                 int schemeid = _context.TSchemeMaster_BasicDetails.Max(x => x.SID);
@@ -121,10 +122,16 @@ namespace MangalWeb.Repository.Repository
             return _context.Mst_PurityMaster.Where(x => x.PurityType == id).ToList();
         }
 
-        public string CheckSchemeNameExists(string Name)
+        public string CheckSchemeNameExists(string Name, int id)
         {
-            var scheme = _context.TSchemeMaster_BasicDetails.Where(x => x.SchemeName == Name).Select(x => x.SchemeName).FirstOrDefault();
-            return scheme;
+            if (id > 0)
+            {
+                return _context.TSchemeMaster_BasicDetails.Where(x => x.SchemeName == Name && x.SID != id).Select(x => x.SchemeName).FirstOrDefault();
+            }
+            else
+            {
+                return _context.TSchemeMaster_BasicDetails.Where(x => x.SchemeName == Name).Select(x => x.SchemeName).FirstOrDefault();
+            }
         }
 
         public SchemeViewModel SetRecordinEdit(TSchemeMaster_BasicDetails tblScheme)

@@ -17,7 +17,7 @@
                         @foreach (AuditCheckListViewModel item in Model)
                         {
                             <tr class="gradeX" onclick='window.document.location="/AuditCheckList/GetAuditCheckListById?ID=@item.ID"'>
-                                <td>@item.EffectiveDate.ToString("dd/MM/yyyy")</td>
+                                <td>@item.EffectiveDate</td>
                                 <td>@item.CategoryAuditStr</td>
                                 <td>@item.AuditCheckPoint</td>
                                 <td>@item.Status</td>

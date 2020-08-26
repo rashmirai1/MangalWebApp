@@ -166,7 +166,7 @@ namespace MangalWeb.Repository.Repository
 
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 

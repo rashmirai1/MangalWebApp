@@ -123,6 +123,12 @@ namespace MangalWeb.Controllers
 
         #endregion Delete
 
+        public JsonResult CheckRecordonEditMode(int Id)
+        {
+            string data = "";
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
         #region GetChargeTable
 
         public ActionResult GetChargeTable(string Operation)
@@ -153,10 +159,10 @@ namespace MangalWeb.Controllers
         }
         #endregion GetChargeDetailsById
 
-        public JsonResult doesChargeNameExist(string ChargeName)
+        public JsonResult doesChargeNameExist(string ChargeName, int Id)
         {
             var result = "";
-            var data = _chargeService.CheckChargeNameExists(ChargeName);
+            var data = _chargeService.CheckChargeNameExists(ChargeName, Id);
             //Check if city name already exists
             if (data != null)
             {

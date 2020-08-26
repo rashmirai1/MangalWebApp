@@ -5,7 +5,7 @@
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
 
-@using (Ajax.BeginForm("", "", new AjaxOptions { }))
+@using (Ajax.BeginForm("CreateEdit", "PenaltySlab", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
@@ -48,7 +48,7 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Ref Id</label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
+                                                <span class="text-danger" id="CustomErr"> </span><br />
                                                 <span class="text-danger" id="CustomErrr"> </span>
                                                 @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Source ID", @disabled = true } })
                                             </div>
@@ -60,7 +60,7 @@
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Date Wef<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.Datewef, new { htmlAttributes = new { @class = "form-control", @placeholder = "Date Wef",@autocomplete="Off"} })
-                                                @*@Html.ValidationMessageFor(model => model.Datewef, "", new { @class = "text-danger" })*@
+                                                @Html.ValidationMessageFor(model => model.Datewef, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                         <br />
@@ -69,7 +69,7 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Penalty (%)<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.PenaltyAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Penalty",@maxlength="5", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.PenaltyAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Penalty (%)",@maxlength="5", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                                 @Html.ValidationMessageFor(model => model.PenaltyAmount, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -106,10 +106,34 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
-    @*<script src="~/Scripts/jquery.validate.js"></script>*@
+    <script src="~/Scripts/jquery.validate.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Datewef").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
+        });
+
+        $("#Datewef").on('change', function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("CheckRecordonEditMode", "PenaltySlab")',
+                data: '{Id: "' + $("#HiddenEditID").val() + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result == "") {
+                        $("#CustomErrr").empty();
+                        $("#btn_save").removeAttr('disabled')
+                    }
+                    else {
+                        $("#CustomErrr").text(result);
+                        $("#btn_save").attr('disabled', true)
+                        return false;
+                    }
+                },
+                error: function (xhr, status, error) {
+                    //alert(error);
+                }
+            });
         });
 
         //$("#Penalty").keypress(function (e) {
@@ -123,7 +147,7 @@
         //});
 
         $("#btn_save").click(function () {
-            SavePenaltySlab();
+            //SavePenaltySlab();
         });
 
         function SavePenaltySlab() {

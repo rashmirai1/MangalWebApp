@@ -18,9 +18,9 @@ namespace MangalWeb.Service.Service
             return charge;
         }
 
-        public string CheckChargeNameExists(string name)
+        public string CheckChargeNameExists(string name,int id)
         {
-            var chargename = _chargeRepository.CheckChargeNameExists(name);
+            var chargename = _chargeRepository.CheckChargeNameExists(name,id);
             return chargename;
         }
 

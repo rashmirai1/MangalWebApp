@@ -59,7 +59,7 @@ namespace MangalWeb.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Please enter proper data.");
+                    ModelState.AddModelError("", "Please check user name and password.");
                 }
             }
             ViewBag.BranchList = new SelectList(_branchService.GetAllBranchMasters(), "BID", "BranchName");
