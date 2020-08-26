@@ -46,8 +46,9 @@
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Branch Name<span class="text-danger"> * </span></label>
+                                            <span class="text-danger" id="CustomErr"> </span><br />
+                                            <span class="text-danger" id="CustomErrr"> </span>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
                                                 @Html.EditorFor(model => model.BranchName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Branch Name", @maxlength = "20" } })
                                                 @Html.ValidationMessageFor(model => model.BranchName, "", new { @class = "text-danger" })
                                             </div>
@@ -163,41 +164,36 @@
                                         <br />
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <div class="section">
+                                                <label class="field select">
+                                                    @{
+                                                        var statuslist = new SelectList(new[]
+                                                        {
+                                                                    new SelectListItem { Text = "Select Status"},
+                                                                    new SelectListItem { Text = "Active", Value = "1"},
+                                                                    new SelectListItem { Text = "Inactive", Value = "2"},
+                                                                    }, "Value", "Text");
+                                                    }
+                                                    @Html.DropDownListFor(m => m.Status, statuslist)
+                                                    <span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>
+                                                    <i class="arrow"></i>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">In Time<span class="text-danger"> * </span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            @Html.TextBoxFor(model => model.InTime, new { @class = "form-control", @placeholder = "In Time", @autocomplete = "Off" })
+                                            @Html.ValidationMessageFor(model => model.InTime, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Out Time<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 @Html.TextBoxFor(model => model.OutTime, new { @class = "form-control", @placeholder = "Out Time", @autocomplete = "Off" })
                                                 @Html.ValidationMessageFor(model => model.OutTime, "", new { @class = "text-danger" })
                                             </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">In Time<span class="text-danger"> * </span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.TextBoxFor(model => model.InTime, new { @class = "form-control", @placeholder = "In Time", @autocomplete = "Off" })
-                                                @Html.ValidationMessageFor(model => model.InTime, "", new { @class = "text-danger" })
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
-                                                        @{
-                                                            var statuslist = new SelectList(new[]
-                                                            {
-                                                                    new SelectListItem { Text = "Select Status"},
-                                                                    new SelectListItem { Text = "Active", Value = "1"},
-                                                                    new SelectListItem { Text = "Inactive", Value = "2"},
-                                                                    }, "Value", "Text");
-                                                        }
-                                                        @Html.DropDownListFor(m => m.Status, statuslist)
-                                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
-                                            </div>                                            
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -206,7 +202,7 @@
                 </div>
                 <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
     </section>
-                                                            }
+                                                        }
 @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
@@ -220,7 +216,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             if (document.URL.indexOf("ID") != -1) {
-                $("#DateWEF").attr('disabled','disabled')
+                $("#DateWEF").attr('disabled', 'disabled')
 
                 $("#DateInception").change(function () {
                     $("#Pincode").val("");
@@ -231,7 +227,7 @@
                     $("#StateName").val("");
                     $("#ContactPerson").val("");
                     $("#MobileNo").val("");
-                });                
+                });
             }
             $("#BranchType").change(function () {
                 if ($("#BranchType").val() == 2) {
@@ -276,7 +272,7 @@
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("doesBranchNameExist", "Branch")',
-                    data: '{BranchName: "' + $("#BranchName").val() + '" }',
+                    data: '{BranchName: "' + $("#BranchName").val() + '", Id: "' + $("#ItemID").val() + '"}',
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (result) {
@@ -286,6 +282,30 @@
                         }
                         else {
                             $("#CustomErr").text(result);
+                            $("#btn_save").attr('disabled', true)
+                            return false;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(error);
+                    }
+                });
+            });
+
+            $("#BranchName").on('input', function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CheckRecordonEditMode", "Branch")',
+                    data: '{Id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "") {
+                            $("#CustomErrr").empty();
+                            //$("#btn_save").removeAttr('disabled')
+                        }
+                        else {
+                            $("#CustomErrr").text(result);
                             $("#btn_save").attr('disabled', true)
                             return false;
                         }

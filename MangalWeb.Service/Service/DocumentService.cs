@@ -31,9 +31,9 @@ namespace MangalWeb.Service.Service
             return source;
         }
 
-        public string CheckDocumentNameExists(string name)
+        public string CheckDocumentNameExists(string name,int id)
         {
-            var docname = _documentRepository.CheckDocumentNameExists(name);
+            var docname = _documentRepository.CheckDocumentNameExists(name,id);
             return docname;
         }
 

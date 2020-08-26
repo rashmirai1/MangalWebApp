@@ -31,10 +31,16 @@ namespace MangalWeb.Repository
             return list;
         }
 
-        public string CheckDocumentNameExists(string Name)
+        public string CheckDocumentNameExists(string Name, int id)
         {
-            var document = _context.tblDocumentMasters.Where(x => x.DocumentName == Name).Select(x => x.DocumentName).FirstOrDefault();
-            return document;
+            if (id > 0)
+            {
+                return _context.tblDocumentMasters.Where(x => x.DocumentName == Name && x.DocumentID != id).Select(x => x.DocumentName).FirstOrDefault();
+            }
+            else
+            {
+                return _context.tblDocumentMasters.Where(x => x.DocumentName == Name).Select(x => x.DocumentName).FirstOrDefault();
+            }
         }
 
         public void DeleteRecord(int id)

@@ -16,7 +16,7 @@ namespace MangalWeb.Controllers
         public ActionResult Insert(GstViewModel objViewModel)
         {
             ModelState.Remove("Id");
-            if (objViewModel.ID == 0)
+            if (objViewModel.EditID == 0)
             {
                 if (InsertData(objViewModel))
                 {
@@ -79,11 +79,16 @@ namespace MangalWeb.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult CheckRecordonEditMode(int Id)
+        {
+            string data = "";
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GST()
         {
             ButtonVisiblity("Index");
             var model = new GstViewModel();
-            model.EffectiveFrom = DateTime.Now;
             model.ID = _gstService.GetMaxId();
             return View(model);
         }

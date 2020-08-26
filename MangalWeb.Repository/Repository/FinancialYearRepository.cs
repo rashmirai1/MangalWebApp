@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MangalWeb.Repository.Repository
 {
@@ -39,10 +40,11 @@ namespace MangalWeb.Repository.Repository
         {
             tblFinancialyear tblfinancial = new tblFinancialyear();
             var financial = new FinancialYearViewModel();
+            financial.ID =Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
             tblfinancial = _context.tblFinancialyears.Where(x => x.FinancialyearID == financial.ID).FirstOrDefault();
             if (tblfinancial != null)
             {
-                var financialyear = _context.Database.SqlQuery<FinancialYearViewModel>("generatefinancialyear").ToList();
+                var financialyear = _context.Database.SqlQuery<FinancialYearViewModel>("generatefinancialyear @FinancialYearId",new SqlParameter("FinancialYearId", financial.ID)).ToList();
             }
             else
             {

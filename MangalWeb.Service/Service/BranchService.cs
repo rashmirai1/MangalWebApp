@@ -49,9 +49,9 @@ namespace MangalWeb.Service.Service
             _branchRepository.SaveUpdateRecord(branch);
         }
 
-        public string CheckBranchNameExists(string name)
+        public string CheckBranchNameExists(string name,int id)
         {
-           return _branchRepository.CheckBranchNameExists(name);
+           return _branchRepository.CheckBranchNameExists(name,id);
         }
         public BranchViewModel SetRecordinEdit(tblCompanyBranchMaster tblBranch)
         {

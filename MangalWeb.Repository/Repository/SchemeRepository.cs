@@ -22,7 +22,7 @@ namespace MangalWeb.Repository.Repository
 
         public TSchemeMaster_BasicDetails GetSchemeMasterById(int id)
         {
-            return _context.TSchemeMaster_BasicDetails.Where(x => x.SID == id && x.isActive == "Active").FirstOrDefault();
+            return _context.TSchemeMaster_BasicDetails.Where(x => x.SID == id).FirstOrDefault();
         }
 
         public void DeleteRecord(int id)
@@ -82,8 +82,8 @@ namespace MangalWeb.Repository.Repository
                 tblSchemeMaster.UpdatedDate = DateTime.Now;
                 tblSchemeMaster.UpdatedBy = scheme.UpdatedBy;
                 tblSchemeMaster.BranchId = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
-                tblSchemeMaster.CMPId = Convert.ToInt32(HttpContext.Current.Session["CompanyId"]); ;
-                tblSchemeMaster.FYId = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]); ;
+                tblSchemeMaster.CMPId = Convert.ToInt32(HttpContext.Current.Session["CompanyId"]); 
+                tblSchemeMaster.FYId = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]); 
                 _context.SaveChanges();
 
                 int schemeid = _context.TSchemeMaster_BasicDetails.Max(x => x.SID);

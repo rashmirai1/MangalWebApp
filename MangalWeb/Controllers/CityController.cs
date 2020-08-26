@@ -14,7 +14,6 @@ namespace MangalWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public JsonResult CreateEdit(CityViewModel city)
         {
             try

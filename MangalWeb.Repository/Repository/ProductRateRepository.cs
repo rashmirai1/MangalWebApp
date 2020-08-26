@@ -155,7 +155,7 @@ namespace MangalWeb.Repository.Repository
                 model = new ProductRateViewModel();
                 model.ID = item.Pr_Id;
                 model.ProductRateDate = item.Pr_Date.ToShortDateString();
-                model.ProductStr = item.Pr_Product == 1 ? "Gold" : "Diamond";
+                model.ProductStr = _context.Mst_Product.Where(x => x.Id == item.Pr_Product).Select(x => x.Name).FirstOrDefault();
                 list.Add(model);
             }
             return list;
@@ -199,8 +199,7 @@ namespace MangalWeb.Repository.Repository
 
         public List<Mst_Product> GetProductList()
         {
-            var list = _context.Mst_Product.ToList();
-            return list;
+            return _context.Mst_Product.ToList();
         }
     }
 }

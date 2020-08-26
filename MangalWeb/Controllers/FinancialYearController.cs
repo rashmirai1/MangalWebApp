@@ -51,7 +51,7 @@ namespace MangalWeb.Controllers
         public ActionResult FinancialYear()
         {
             ButtonVisiblity("Index");
-            int ID = 1;
+            int ID =Convert.ToInt32(Session["FinancialYearId"]);
             var tblyear = _financialYearService.GetFinancialYearById(ID);
             var model = new FinancialYearViewModel();
             if (tblyear != null)
