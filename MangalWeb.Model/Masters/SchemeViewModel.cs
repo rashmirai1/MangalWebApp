@@ -8,6 +8,11 @@ namespace MangalWeb.Model.Masters
 {
     public class SchemeViewModel
     {
+        public SchemeViewModel()
+        {
+            SchemeEffectiveROIModel = new SchemeEffectiveROIVM();
+            SchemeEffectiveROIList = new List<SchemeEffectiveROIVM>();
+        }
         public int SchemeId { get; set; }
 
         [Required(ErrorMessage = "Please Select Product")]
@@ -60,9 +65,6 @@ namespace MangalWeb.Model.Masters
         [RegularExpression(@"^(\d{1,3})$", ErrorMessage = "error Message")]
         public int? GracePeriod { get; set; }
 
-        [Required(ErrorMessage = "Effective ROI % is Required")]
-        public decimal? EffectiveROIPerc { get; set; }
-
         [Required(ErrorMessage = "Lock In Period is Required")]
         [RegularExpression(@"^(\d{1,2})$", ErrorMessage = "error Message")]
         public int? LockInPeriod { get; set; }
@@ -85,5 +87,8 @@ namespace MangalWeb.Model.Masters
         public DateTime? CreatedDate { get; set; }
         public int? UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
+
+        public SchemeEffectiveROIVM SchemeEffectiveROIModel { get; set; }
+        public List<SchemeEffectiveROIVM> SchemeEffectiveROIList { get; set; }
     }
 }

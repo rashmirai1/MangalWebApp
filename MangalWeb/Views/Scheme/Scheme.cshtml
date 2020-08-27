@@ -142,7 +142,7 @@
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Max Loan Amount<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.MaxLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Max Loan Amount", @maxlength = "9", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.MaxLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Max Loan Amount", @maxlength = "11", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                                 @Html.ValidationMessageFor(model => model.MaxLoanAmount, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -184,28 +184,23 @@
                                                 @Html.EditorFor(model => model.GracePeriod, new { htmlAttributes = new { @class = "form-control", @placeholder = "Grace Period (in days)", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57", @maxlength = "3" } })
                                                 @Html.ValidationMessageFor(model => model.GracePeriod, "", new { @class = "text-danger" })
                                             </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Effective ROI %<span class="text-danger"> * </span></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Lock in Period (days)<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.EffectiveROIPerc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Effective ROI %", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @maxlength = "5" } })
-                                                @Html.ValidationMessageFor(model => model.EffectiveROIPerc, "", new { @class = "text-danger" })
+                                                @Html.EditorFor(model => model.LockInPeriod, new { htmlAttributes = new { @class = "form-control", @placeholder = "Lock in Period (in days)", @maxlength = "2", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57" } })
+                                                @Html.ValidationMessageFor(model => model.LockInPeriod, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                         <br />
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Lock in Period (days)<span class="text-danger"> * </span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.LockInPeriod, new { htmlAttributes = new { @class = "form-control", @placeholder = "Lock in Period (in days)", @maxlength = "2", @onkeypress = "return event.charCode >= 48 && event.charCode <= 57" } })
-                                                @Html.ValidationMessageFor(model => model.LockInPeriod, "", new { @class = "text-danger" })
-                                            </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Processing Fees<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 <div class="section">
                                                     <label class="field select">
                                                         @{
-                                                            var processingfeelist = new SelectList(new[]
-                                                            {
+                                                                var processingfeelist = new SelectList(new[]
+                                                                {
                                                                     new SelectListItem { Text = "Amount", Value = "Amount"},
                                                                     new SelectListItem { Text = "Percentage", Value = "Percentage"}
                                                                     }, "Value", "Text");
@@ -215,42 +210,82 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Processing Charges<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ProcessingCharges, new { htmlAttributes = new { @class = "form-control", @placeholder = "Processing Charges", @maxlength = "8" } })
                                                 @Html.ValidationMessageFor(model => model.ProcessingCharges, "", new { @class = "text-danger" })
                                             </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Maximum processing Charges<span class="text-danger"> * </span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Maximum Processing<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.MaxProcessingCharge, new { htmlAttributes = new { @class = "form-control", @placeholder = "Maximum processing Charges", @maxlength = "8" } })
                                                 @Html.ValidationMessageFor(model => model.MaxProcessingCharge, "", new { @class = "text-danger" })
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
-                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                            <div class="section">
-                                                <label class="field select">
-                                                    @{
-                                                        var statuslist = new SelectList(new[]
-                                                        {
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @{
+                                                            var statuslist = new SelectList(new[]
+                                                            {
                                                     new SelectListItem { Text = "Select Status"},
                                                     new SelectListItem { Text = "Active", Value = "Active"},
                                                     new SelectListItem { Text = "Inactive", Value = "Inactive"},
                                                     }, "Value", "Text");
-                                                    }
-                                                    @Html.DropDownListFor(m => m.Status, statuslist)
-                                                    <span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>
-                                                    <i class="arrow"></i>
-                                                </label>
+                                                        }
+                                                        @Html.DropDownListFor(m => m.Status, statuslist)
+                                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
                                             </div>
-
                                         </div>
+                                        <br />
+                                    </div>
+                                </div>
+                                <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
+                                <hr style="margin-top:0px;" />
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> Effective ROI(%) <span class="text-danger"> * </span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            @Html.EditorFor(model => model.SchemeEffectiveROIModel.EffectiveROIPerc, new { htmlAttributes = new { @class = "form-control", @placeholder = "Effective ROI %", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @maxlength = "5" } })
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnAdd" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body panel-no-padding">
+                                    <div id="divEffectiveROI">
+                                        <table cellpadding="0" style="width:90%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblEffectiveROIDetails">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align:left">No. Of Default Months</th>
+                                                    <th style="text-align:left">ROI(%)</th>
+                                                    <th class="text-center" style="width:8%">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{int j = 1;}
+                                                @foreach (var item in Model.SchemeEffectiveROIList)
+                                                {
+                                                    <tr id="@item.ID">
+                                                        <td>@j</td>
+                                                        <td>@item.EffectiveROIPerc</td>
+                                                        <td>
+                                                            <a class="delete"><i class="fa fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    j++;
+                                                }
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -261,7 +296,7 @@
         </div>
         <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
     </section>
-                                                        }
+                                                    }
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 @section javascriptsection{
@@ -273,6 +308,14 @@
     <script src="http://cdn.rawgit.com/davidstutz/bootstrap-multiselect/master/dist/js/bootstrap-multiselect.js"
             type="text/javascript"></script>
     <script type="text/javascript">
+
+        $("#btn_save").click(function () {
+            if ($('#tbleffectiveroidetails tbody tr').length == 0) {
+                alert("Please Add Effective ROI(%)");
+                return false;
+            }
+        });
+
         $(document).ready(function () {
             if (document.URL.indexOf("ID") != -1) {
                 $("#Purity").removeAttr('disabled')
@@ -280,6 +323,33 @@
             else {
                 $("#Purity").attr('disabled', 'disabled')
             }
+
+            $("#divEffectiveROI").hide();
+
+            if (@Model.SchemeEffectiveROIList.Count() > 0) {
+                $("#divEffectiveROI").show();
+            }
+
+            $("#tblEffectiveROIDetails TBODY TR td").on("click", ".delete", function () {
+                if (confirm('Are you sure to remove?')) {
+                    var tr = $(this).closest('tr');
+                    trid =tr.attr('id'); // table row ID
+                    tr.remove();
+                    $.ajax({
+                        url: '/Scheme/Remove?id='+trid,
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            //$(this).parents('tr').remove();
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    });
+                }
+            })
+
             $("#SchemeName").on('input', function () {
                 $.ajax({
                     type: "POST",
@@ -329,6 +399,97 @@
             });
         });
 
+        var trid = 0;
+        var sr_no = 0;
+        //Add event handler.
+        $("#btnAdd").click(function () {
+            $("#CustomErrr").text("");
+            $('[data-toggle="tooltip"]').tooltip();
+
+            var actions = "<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+
+            var index = $("#tblEffectiveROIDetails tbody tr:last").index();
+            debugger;
+            var srno = 0;
+            var newtrno=trid;
+            if (sr_no == 0) {
+                srno = index + 2;
+                newtrno=0;
+            }
+            else {
+                srno = sr_no;
+            }
+            sr_no = 0;
+            trid=0;
+            var EffectiveROI = $("#SchemeEffectiveROIModel_EffectiveROIPerc").val();
+            debugger;
+            var row = '<tr id=' + newtrno + '>' +
+                '<td width="10%">' + srno + '</td>' +
+                '<td width="10%">' + EffectiveROI + '</td>' +
+                '<td id=' + srno + '' + actions + '</td>' +
+                '</tr>';
+            var SchemeEffectiveROIVM={};
+            SchemeEffectiveROIVM.NoofDefaultMonths = srno;
+            SchemeEffectiveROIVM.EffectiveROIPerc = EffectiveROI;
+            var isExist = false;
+            $("#tblEffectiveROIDetails TBODY tr").each(function () {
+                // get row
+                debugger;
+                var row = $(this);
+                // get first and second td
+                var first = row.find('td:nth-child(2)').html();
+                // if exists, remove the tr
+                if (first == EffectiveROI) {
+                    isExist = true;
+                }
+            });
+
+            if(isExist)
+            {
+                alert("The same Effective ROI(%) already Exist");
+                return false;
+            }
+            else
+            {
+                if (EffectiveROI != "") {
+                    $("#tblEffectiveROIDetails tbody").append(row);
+                    $.ajax({
+                        url: '/Scheme/AddDocument',
+                        type: "POST",
+                        data: JSON.stringify(SchemeEffectiveROIVM),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                        },
+                        error: function (err) {
+                            //alert(err.statusText);
+                        }
+                    });
+                    $("#SchemeEffectiveROIModel_EffectiveROIPerc").val("");
+                    $("#divEffectiveROI").show();
+                }
+            }
+
+            $("#tblEffectiveROIDetails TBODY TR").on("click", ".delete", function () {
+                if (confirm('Are you sure to remove?')) {
+                    var tr = $(this).closest('tr');
+                    trid =tr.find('td:eq(0)').html();
+                    tr.remove();
+                    $.ajax({
+                        url: '/Scheme/Remove?id='+trid,
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            //$(this).parents('tr').remove();
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    });
+                }
+            })
+        })
 
         //Dropdownlist Selectedchange event
         $("#Product").change(function () {

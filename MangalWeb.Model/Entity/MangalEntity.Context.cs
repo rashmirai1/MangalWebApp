@@ -67,7 +67,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLOutwardForm_DocDetails> TGLOutwardForm_DocDetails { get; set; }
         public virtual DbSet<TGLOutwardForm_GoldDetails> TGLOutwardForm_GoldDetails { get; set; }
         public virtual DbSet<TGLSmsHistory> TGLSmsHistories { get; set; }
-        public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
         public virtual DbSet<tbl_CountryMaster> tbl_CountryMaster { get; set; }
         public virtual DbSet<tblDocumentMaster> tblDocumentMasters { get; set; }
         public virtual DbSet<tblINV_ItemMaster> tblINV_ItemMaster { get; set; }
@@ -116,6 +115,7 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<tbl_CKycState> tbl_CKycState { get; set; }
         public virtual DbSet<tblStateMaster> tblStateMasters { get; set; }
+        public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -141,9 +141,13 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SplitWords_Result>("[MangalDBNewEntities].[SplitWords](@text)", textParameter);
         }
     
-        public virtual int generateFinancialYear()
+        public virtual int generateFinancialYear(Nullable<int> financialYearId, ObjectParameter message)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("generateFinancialYear");
+            var financialYearIdParameter = financialYearId.HasValue ?
+                new ObjectParameter("FinancialYearId", financialYearId) :
+                new ObjectParameter("FinancialYearId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("generateFinancialYear", financialYearIdParameter, message);
         }
     
         public virtual ObjectResult<GetKYCDetailsForDocument_Result> GetKYCDetailsForDocument()

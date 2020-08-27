@@ -36,9 +36,9 @@ namespace MangalWeb.Service.Service
             _financialYearRepository.DeleteRecord(id);
         }
 
-        public void SaveUpdateRecord()
+        public int SaveUpdateRecord()
         {
-            _financialYearRepository.SaveUpdateRecord();
+          return _financialYearRepository.SaveUpdateRecord();
         }
     }
 }

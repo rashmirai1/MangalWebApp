@@ -15,18 +15,19 @@
                 <h4>Financial Year Master</h4>
             </div><!--end of topbar-left-->
         </div><!--end of col-md-5-->
-        @*<div class="col-md-7 col-sm-8 col-xs-12">
+        <div class="col-md-7 col-sm-8 col-xs-12">
             <div class="topbar-right" id="headerbutton">
-                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
-                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
-                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
-                <button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]"
+                <button type="button" id="btn_save" style="margin-left: 225px;" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Generate Financial Year</span></button>
+                @*<button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>*@
+                @*<button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>*@
+                @*<button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>*@
+                @*<button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]"
                         type="button" data-toggle="modal">
                     <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
-                </button>
+                </button>*@
                 <a href="@Html.Raw(@Url.Action("FinancialYear","FinancialYear"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
             </div><!--end of topbar-right-->
-        </div>*@<!--end of col-md-7-->
+        </div><!--end of col-md-7-->
     </header>
     <section id="content" class="animated fadeIn">
         <!-- Start: Topbar -->
@@ -55,7 +56,7 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Financial Year To<span class="text-danger">  </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
+                                                <span class="text-danger" id="CustomErrr"> </span>
                                                 @Html.EditorFor(model => model.FinancialYearTo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Financial Year To", @disabled = true } })
                                                 @Html.ValidationMessageFor(model => model.FinancialYearTo, "", new { @class = "text-danger" })
                                             </div>
@@ -64,7 +65,7 @@
                                     
                                     </div>
                                     <div>
-                                        <button type="submit" style="margin-left: 225px;" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Generate Financial Year</span></button>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -84,10 +85,26 @@
                 <h4 class="modal-title">Generate Financial Year</h4>
             </div>
             <div class="modal-body">
-                <p>Financial Year Generated successfully. </p>
+                <p>Financial Year Generated Successfully !</p>
             </div>
             <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" type="button">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
+<div class="modal fade" id="RecordAlreadyExistsModal" role="dialog">
+    <div class="modal-dialog  modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="modal-title">Financial Year Exists</h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-danger">Financial Year Already Exists !</p>
+            </div>
+            <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal" type="button">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -105,6 +122,43 @@
             $("#FinancialYearFrom").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
             $("#FinancialYearTo").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
         });
+
+        $("#btn_save").click(function () {
+            if (confirm('Are you sure to generate financial year ?')) {
+                SaveFinancialYear();
+            }
+        });
+
+        function SaveFinancialYear() {
+            debugger;
+            $("#btn_save").prop("disabled", true);
+            var FinancialYearViewModel = {};
+            FinancialYearViewModel.FinancialYearFrom = $('#FinancialYearFrom').val();
+            FinancialYearViewModel.FinancialYearTo = $('#FinancialYearTo').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/FinancialYear/CreateEdit",
+                data: JSON.stringify(FinancialYearViewModel),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    debugger;
+                    if (r == 1) {
+                        $("#generateModal").modal('show');
+                        $(document).click(function () {
+                            window.location.href = urlRedirect;
+                        });
+                    }
+                    else if (r == 2) {
+                        $("#RecordAlreadyExistsModal").modal('show');
+                        $(document).click(function () {
+                            window.location.href = urlRedirect;
+                        });
+                    }
+                }
+            });
+        }
 
         function ShowEditTableList() {
             $('#divviewfilldata').empty();

@@ -643,7 +643,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblCreateCompanyMaster' does not h
           <Key>
             <PropertyRef Name="FinancialyearID" />
           </Key>
-          <Property Name="FinancialyearID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FinancialyearID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Financialyearfrom" Type="smalldatetime" Nullable="false" />
           <Property Name="Financialyearto" Type="smalldatetime" Nullable="false" />
           <Property Name="StartDate" Type="smalldatetime" Nullable="false" />
@@ -1370,16 +1370,14 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Property Name="EffectiveRoiPerc" Type="decimal" Precision="6" Scale="2" />
           <Property Name="LockInPeriod" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TSchemeMaster_EffectiveROI">
           <Key>
             <PropertyRef Name="ROIID" />
           </Key>
-          <Property Name="ROIID" Type="int" Nullable="false" />
-          <Property Name="SID" Type="int" />
-          <Property Name="NoofDefaultMonths" Type="int" />
-          <Property Name="EffROI" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="ROIID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SID" Type="int" Nullable="false" />
+          <Property Name="NoofDefaultMonths" Type="int" Nullable="false" />
+          <Property Name="EffROI" Type="decimal" Precision="11" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="User_Category">
           <Key>
@@ -1625,6 +1623,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails">
+          <End Role="TSchemeMaster_BasicDetails" Type="Self.TSchemeMaster_BasicDetails" Multiplicity="1" />
+          <End Role="TSchemeMaster_EffectiveROI" Type="Self.TSchemeMaster_EffectiveROI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TSchemeMaster_BasicDetails">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="TSchemeMaster_EffectiveROI">
+              <PropertyRef Name="SID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserDetails_tbl_UserCategory">
           <End Role="tbl_UserCategory" Type="Self.tbl_UserCategory" Multiplicity="1" />
           <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
@@ -1641,7 +1651,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Parameter Name="Number" Type="numeric" Mode="In" />
           <Parameter Name="CPaise" Type="char" Mode="In" />
         </Function>
-        <Function Name="generateFinancialYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="generateFinancialYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FinancialYearId" Type="int" Mode="In" />
+          <Parameter Name="Message" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="GetDocumentUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetDocumentUploadById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -1751,6 +1764,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <EntitySet Name="Trn_DocUploadDetails" EntityType="Self.Trn_DocUploadDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trn_RequestForm" EntityType="Self.Trn_RequestForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TSchemeMaster_BasicDetails" EntityType="Self.TSchemeMaster_BasicDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TSchemeMaster_EffectiveROI" EntityType="Self.TSchemeMaster_EffectiveROI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Category" EntityType="Self.User_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Category_Hierarchy" EntityType="Self.User_Category_Hierarchy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAuthorizations" EntityType="Self.UserAuthorizations" Schema="dbo" store:Type="Tables" />
@@ -2313,14 +2327,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
     [TGLSmsHistory].[isActive] AS [isActive]
     FROM [dbo].[TGLSmsHistory] AS [TGLSmsHistory]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="TSchemeMaster_EffectiveROI" EntityType="Self.TSchemeMaster_EffectiveROI" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TSchemeMaster_EffectiveROI].[ROIID] AS [ROIID], 
-    [TSchemeMaster_EffectiveROI].[SID] AS [SID], 
-    [TSchemeMaster_EffectiveROI].[NoofDefaultMonths] AS [NoofDefaultMonths], 
-    [TSchemeMaster_EffectiveROI].[EffROI] AS [EffROI]
-    FROM [dbo].[TSchemeMaster_EffectiveROI] AS [TSchemeMaster_EffectiveROI]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK__tbl_UserC__Organ__51BA1E3A" Association="Self.FK__tbl_UserC__Organ__51BA1E3A">
             <End Role="User_Category_Hierarchy" EntitySet="User_Category_Hierarchy" />
             <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
@@ -2384,6 +2390,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <AssociationSet Name="FK_TSchemeMaster_BasicDetails_Mst_Product" Association="Self.FK_TSchemeMaster_BasicDetails_Mst_Product">
             <End Role="Mst_Product" EntitySet="Mst_Product" />
             <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails" Association="Self.FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails">
+            <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
+            <End Role="TSchemeMaster_EffectiveROI" EntitySet="TSchemeMaster_EffectiveROI" />
           </AssociationSet>
           <AssociationSet Name="FK_UserDetails_tbl_UserCategory" Association="Self.FK_UserDetails_tbl_UserCategory">
             <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
@@ -3039,15 +3049,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="CreatedDate" Type="DateTime" Precision="0" />
           <Property Name="isActive" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="TSchemeMaster_EffectiveROI">
-          <Key>
-            <PropertyRef Name="ROIID" />
-          </Key>
-          <Property Name="ROIID" Type="Int32" Nullable="false" />
-          <Property Name="SID" Type="Int32" />
-          <Property Name="NoofDefaultMonths" Type="Int32" />
-          <Property Name="EffROI" Type="Decimal" Precision="11" Scale="2" />
-        </EntityType>
         <EntityContainer Name="MangalDBNewEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblBankMasters" EntityType="Self.tblBankMaster" />
           <EntitySet Name="Bharat_tbl_SentJVCustHistory" EntityType="Self.Bharat_tbl_SentJVCustHistory" />
@@ -3089,7 +3090,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <EntitySet Name="TGLOutwardForm_DocDetails" EntityType="Self.TGLOutwardForm_DocDetails" />
           <EntitySet Name="TGLOutwardForm_GoldDetails" EntityType="Self.TGLOutwardForm_GoldDetails" />
           <EntitySet Name="TGLSmsHistories" EntityType="Self.TGLSmsHistory" />
-          <EntitySet Name="TSchemeMaster_EffectiveROI" EntityType="Self.TSchemeMaster_EffectiveROI" />
           <FunctionImport Name="SplitValue" IsComposable="true" ReturnType="Collection(MangalDBNewModel.SplitValue_Result)">
             <Parameter Name="String" Mode="In" Type="String" />
             <Parameter Name="Delimiter" Mode="In" Type="String" />
@@ -3176,7 +3176,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           </AssociationSet>
           <EntitySet Name="tbl_UserCategory" EntityType="MangalDBNewModel.tbl_UserCategory" />
           <EntitySet Name="Trn_DocumentUpload" EntityType="MangalDBNewModel.Trn_DocumentUpload" />
-          <FunctionImport Name="generateFinancialYear" />
+          <FunctionImport Name="generateFinancialYear" >
+            <Parameter Name="FinancialYearId" Mode="In" Type="Int32" />
+            <Parameter Name="Message" Mode="InOut" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="GetKYCDetailsForDocument" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForDocument_Result)" />
           <FunctionImport Name="GetKYCDetailsForDocumentById" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForDocumentById_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
@@ -3258,6 +3261,11 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <AssociationSet Name="FK_tblCityMaster_tblStateMaster" Association="MangalDBNewModel.FK_tblCityMaster_tblStateMaster">
             <End Role="tblStateMaster" EntitySet="tblStateMasters" />
             <End Role="tblCityMaster" EntitySet="tblCityMasters" />
+          </AssociationSet>
+          <EntitySet Name="TSchemeMaster_EffectiveROI" EntityType="MangalDBNewModel.TSchemeMaster_EffectiveROI" />
+          <AssociationSet Name="FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails" Association="MangalDBNewModel.FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails">
+            <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
+            <End Role="TSchemeMaster_EffectiveROI" EntitySet="TSchemeMaster_EffectiveROI" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
@@ -3821,6 +3829,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="EffectiveRoiPerc" Type="Decimal" Precision="6" Scale="2" />
           <Property Name="LockInPeriod" Type="Int32" />
           <NavigationProperty Name="Mst_Product" Relationship="MangalDBNewModel.FK_TSchemeMaster_BasicDetails_Mst_Product" FromRole="TSchemeMaster_BasicDetails" ToRole="Mst_Product" />
+          <NavigationProperty Name="TSchemeMaster_EffectiveROI" Relationship="MangalDBNewModel.FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails" FromRole="TSchemeMaster_BasicDetails" ToRole="TSchemeMaster_EffectiveROI" />
         </EntityType>
         <Association Name="FK_tblCompanyBranchMaster_Mst_PinCode">
           <End Type="MangalDBNewModel.Mst_PinCode" Role="Mst_PinCode" Multiplicity="1" />
@@ -4301,6 +4310,28 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
             </Principal>
             <Dependent Role="tblCityMaster">
               <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TSchemeMaster_EffectiveROI">
+          <Key>
+            <PropertyRef Name="ROIID" />
+          </Key>
+          <Property Name="ROIID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SID" Type="Int32" Nullable="false" />
+          <Property Name="NoofDefaultMonths" Type="Int32" Nullable="false" />
+          <Property Name="EffROI" Type="Decimal" Nullable="false" Precision="11" Scale="2" />
+          <NavigationProperty Name="TSchemeMaster_BasicDetails" Relationship="MangalDBNewModel.FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails" FromRole="TSchemeMaster_EffectiveROI" ToRole="TSchemeMaster_BasicDetails" />
+        </EntityType>
+        <Association Name="FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails">
+          <End Type="MangalDBNewModel.TSchemeMaster_BasicDetails" Role="TSchemeMaster_BasicDetails" Multiplicity="1" />
+          <End Type="MangalDBNewModel.TSchemeMaster_EffectiveROI" Role="TSchemeMaster_EffectiveROI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TSchemeMaster_BasicDetails">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="TSchemeMaster_EffectiveROI">
+              <PropertyRef Name="SID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4960,16 +4991,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TSchemeMaster_EffectiveROI">
-            <EntityTypeMapping TypeName="MangalDBNewModel.TSchemeMaster_EffectiveROI">
-              <MappingFragment StoreEntitySet="TSchemeMaster_EffectiveROI">
-                <ScalarProperty Name="ROIID" ColumnName="ROIID" />
-                <ScalarProperty Name="SID" ColumnName="SID" />
-                <ScalarProperty Name="NoofDefaultMonths" ColumnName="NoofDefaultMonths" />
-                <ScalarProperty Name="EffROI" ColumnName="EffROI" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5862,6 +5883,16 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
                 <ScalarProperty Name="countryID" ColumnName="countryID" />
                 <ScalarProperty Name="StateName" ColumnName="StateName" />
                 <ScalarProperty Name="StateID" ColumnName="StateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TSchemeMaster_EffectiveROI">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TSchemeMaster_EffectiveROI">
+              <MappingFragment StoreEntitySet="TSchemeMaster_EffectiveROI">
+                <ScalarProperty Name="EffROI" ColumnName="EffROI" />
+                <ScalarProperty Name="NoofDefaultMonths" ColumnName="NoofDefaultMonths" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="ROIID" ColumnName="ROIID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -15,8 +15,10 @@ namespace MangalWeb.Model.Entity
     public partial class TSchemeMaster_EffectiveROI
     {
         public int ROIID { get; set; }
-        public Nullable<int> SID { get; set; }
-        public Nullable<int> NoofDefaultMonths { get; set; }
-        public Nullable<decimal> EffROI { get; set; }
+        public int SID { get; set; }
+        public int NoofDefaultMonths { get; set; }
+        public decimal EffROI { get; set; }
+    
+        public virtual TSchemeMaster_BasicDetails TSchemeMaster_BasicDetails { get; set; }
     }
 }

@@ -241,7 +241,6 @@
                 {
                     var tr = $(this).closest('tr');
                     trid =tr.attr('id'); // table row ID
-                    var tr = $(this).closest('tr');
                     tr.remove();
                     $.ajax({
                         url: '/DocumentUpload/Remove?id='+trid,
@@ -370,24 +369,6 @@
                         }
                     }
                 }
-                //$("#tblDocumentDetails TBODY TR").on("click", ".edit", function () {
-                //    debugger;
-                //    var tr = $(this).closest('tr');
-                //    currentRow= $(this).parents('tr');
-                //    debugger;
-                //    sr_no = tr.find('td:eq(0)').html();
-                //    trid =tr.attr('id'); // table row ID
-
-                //    var DocumentTypeId =tr.find("td").eq(1).attr('id');
-                //    var DocumentId = tr.find("td").eq(2).attr('id');
-                //    var ExpiryDate =tr.find('td:eq(3)').html();
-                //    var FileName =tr.find('td:eq(4)').val();
-
-                //    $("#DocumentUploadVM_DocumentTypeId").val(DocumentTypeId);
-                //    $("#DocumentUploadVM_DocumentId").val(DocumentId);
-                //    $("#DocumentUploadVM_ExpiryDate").val(ExpiryDate);
-                //    $("#UploadedFile").val(FileName);
-                //})
 
                 $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
                     if(confirm('Are you sure to remove?'))

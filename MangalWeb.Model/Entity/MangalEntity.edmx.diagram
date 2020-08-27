@@ -44,7 +44,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.TGLOutwardForm_DocDetails" Width="1.5" PointX="14.75" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLOutwardForm_GoldDetails" Width="1.5" PointX="20.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLSmsHistory" Width="1.5" PointX="0.75" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MangalDBNewModel.TSchemeMaster_EffectiveROI" Width="1.5" PointX="10.75" PointY="20.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_CountryMaster" Width="1.5" PointX="23.375" PointY="4" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblDocumentMaster" Width="1.5" PointX="23.375" PointY="6.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblINV_ItemMaster" Width="1.5" PointX="23.375" PointY="9.75" />
@@ -72,7 +71,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_GLChargeMaster_BasicInfo" Width="1.5" PointX="12.375" PointY="29" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_GLChargeMaster_Details" Width="1.5" PointX="14.625" PointY="29.625" />
         <AssociationConnector Association="MangalDBNewModel.FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tblFinancialyear" Width="1.5" PointX="11.375" PointY="3.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblCompanyBranchMaster" Width="1.5" PointX="3.375" PointY="24.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_PenaltySlab" Width="1.5" PointX="3.375" PointY="20.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_SourceofApplication" Width="1.5" PointX="11.375" PointY="23.75" />
@@ -108,6 +106,8 @@
         <EntityTypeShape EntityType="MangalDBNewModel.tblStateMaster" Width="1.5" PointX="25.625" PointY="3.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_tblStateMaster_tbl_CountryMaster" />
         <AssociationConnector Association="MangalDBNewModel.FK_tblCityMaster_tblStateMaster" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TSchemeMaster_EffectiveROI" Width="1.5" PointX="29.875" PointY="30.875" />
+        <AssociationConnector Association="MangalDBNewModel.FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

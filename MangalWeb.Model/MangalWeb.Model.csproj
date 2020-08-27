@@ -413,6 +413,7 @@
     <Compile Include="Masters\ReasonViewModel.cs" />
     <Compile Include="Masters\RoiDeviationDetailsVM.cs" />
     <Compile Include="Masters\SanctionDeviationVM.cs" />
+    <Compile Include="Masters\SchemeEffectiveROIVM.cs" />
     <Compile Include="Masters\SchemeViewModel.cs" />
     <Compile Include="Masters\SourceofApplicationViewModel.cs" />
     <Compile Include="Masters\StateViewModel.cs" />

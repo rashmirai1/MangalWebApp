@@ -13,18 +13,18 @@ namespace MangalWeb.Controllers
         FinancialYearService _financialYearService = new FinancialYearService();
 
         [HttpPost]
-        [ValidateAntiForgeryToken]        
         public JsonResult CreateEdit()
         {
+            int status;
             try
             {
-                _financialYearService.SaveUpdateRecord();
+               status=_financialYearService.SaveUpdateRecord();
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-            return Json(JsonRequestBehavior.AllowGet);
+            return Json(status,JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetFinancialYearById(int ID)
