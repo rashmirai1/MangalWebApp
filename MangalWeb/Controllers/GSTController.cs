@@ -12,6 +12,8 @@ namespace MangalWeb.Controllers
     {
         GSTService _gstService = new GSTService();
 
+
+
         [HttpPost]
         public ActionResult Insert(GstViewModel objViewModel)
         {
