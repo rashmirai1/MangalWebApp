@@ -108,6 +108,7 @@ namespace MangalWeb.Repository.Repository
                     tGLKYC_Basic.PinCode = model.PinCode;
                     tGLKYC_Basic.Distance = model.Distance;
                     tGLKYC_Basic.Area = model.Area;
+                    tGLKYC_Basic.ResidenceCode = model.ResidenceCode;
                     _context.TGLKYC_BasicDetails.Add(tGLKYC_Basic);
                     _context.SaveChanges();
                     HttpContext.Current.Session["KycId"] = tGLKYC_Basic.KYCID;

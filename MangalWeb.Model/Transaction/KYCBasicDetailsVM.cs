@@ -155,6 +155,7 @@ namespace MangalWeb.Model.Transaction
         public KYCDocumentUpload DocumentUploadVM { get; set; }
         public List<KYCDocumentUpload> DocumentUploadList { get; set; }
         public virtual IList<KYCAddressesVM> Trans_KYCAddresses { get; set; }
+        public string ResidenceCode { get; set; }
 
     }
 }

@@ -27,7 +27,6 @@ namespace MangalWeb.Model.Transaction
         public string CityName { get; set; }
         public string StateName { get; set; }
         public string ZoneName { get; set; }
-
         public virtual KYCBasicDetailsVM KYCBasicDetailsVm { get; set; }
     }
 }
