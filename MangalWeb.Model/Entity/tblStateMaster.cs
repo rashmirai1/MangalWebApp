@@ -24,6 +24,7 @@ namespace MangalWeb.Model.Entity
         public string StateName { get; set; }
         public int countryID { get; set; }
         public string StateCode { get; set; }
+        public Nullable<int> CkycStateId { get; set; }
     
         public virtual tbl_CountryMaster tbl_CountryMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

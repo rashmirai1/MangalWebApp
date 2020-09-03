@@ -129,6 +129,7 @@
     <Compile Include="Controllers\DeviationController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\DocumentUploadController.cs" />
+    <Compile Include="Controllers\PreSanctionController.cs" />
     <Compile Include="Controllers\DocumentVerificationController.cs" />
     <Compile Include="Controllers\FinancialYearController.cs" />
     <Compile Include="Controllers\GSTController.cs" />
@@ -2098,6 +2099,8 @@
     <Content Include="Views\UserAuthorization\UserAuthorization.cshtml" />
     <Content Include="Views\User\UserMaster.cshtml" />
     <Content Include="Views\User\_UserMasterList.cshtml" />
+    <Content Include="Views\PreSanction\_CustomerDetails.cshtml" />
+    <Content Include="Views\PreSanction\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

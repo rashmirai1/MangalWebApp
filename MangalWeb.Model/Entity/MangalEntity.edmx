@@ -494,6 +494,31 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="OTP" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="tbl_PreSanctionDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KycId" Type="int" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="50" />
+          <Property Name="NewTopUp" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerId" Type="nvarchar" MaxLength="50" />
+          <Property Name="AppliedDate" Type="datetime" />
+          <Property Name="ResidenceVerification" Type="nvarchar" MaxLength="50" />
+          <Property Name="ApplicationNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="RM" Type="nvarchar" MaxLength="50" />
+          <Property Name="Product" Type="nvarchar" MaxLength="50" />
+          <Property Name="PurposeofLoan" Type="nvarchar" MaxLength="50" />
+          <Property Name="Scheme" Type="int" />
+          <Property Name="ReqLoanAmount" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tenure" Type="nvarchar" MaxLength="50" />
+          <Property Name="ROI" Type="nvarchar" MaxLength="50" />
+          <Property Name="LTV" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.tbl_SentJVCustHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tbl_SentJVCustHistory">
@@ -760,6 +785,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.tblSchemeTransMonths' does not hav
           <Property Name="StateName" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="countryID" Type="int" Nullable="false" />
           <Property Name="StateCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CkycStateId" Type="int" />
         </EntityType>
         <EntityType Name="tblZonemaster">
           <Key>
@@ -1520,6 +1546,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+          <End Role="TGLKYC_BasicDetails" Type="Self.TGLKYC_BasicDetails" Multiplicity="0..1" />
+          <End Role="tbl_PreSanctionDetails" Type="Self.tbl_PreSanctionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TGLKYC_BasicDetails">
+              <PropertyRef Name="KYCID" />
+            </Principal>
+            <Dependent Role="tbl_PreSanctionDetails">
+              <PropertyRef Name="KycId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblCityMaster_tblStateMaster">
           <End Role="tblStateMaster" Type="Self.tblStateMaster" Multiplicity="1" />
           <End Role="tblCityMaster" Type="Self.tblCityMaster" Multiplicity="*" />
@@ -1632,7 +1670,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Parameter Name="Number" Type="numeric" Mode="In" />
           <Parameter Name="CPaise" Type="char" Mode="In" />
         </Function>
-        <Function Name="generateFinancialYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="generateFinancialYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FinancialYearId" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetDocumentUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetDocumentUploadById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -1719,6 +1759,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <EntitySet Name="tbl_GLChargeMaster_BasicInfo" EntityType="Self.tbl_GLChargeMaster_BasicInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_GLChargeMaster_Details" EntityType="Self.tbl_GLChargeMaster_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_KYCMobileOTP" EntityType="Self.tbl_KYCMobileOTP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_PreSanctionDetails" EntityType="Self.tbl_PreSanctionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserCategory" EntityType="Self.tbl_UserCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblaccountmaster" EntityType="Self.tblaccountmaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBankMaster" EntityType="Self.tblBankMaster" Schema="dbo" store:Type="Tables" />
@@ -2342,6 +2383,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <AssociationSet Name="FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo" Association="Self.FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo">
             <End Role="tbl_GLChargeMaster_BasicInfo" EntitySet="tbl_GLChargeMaster_BasicInfo" />
             <End Role="tbl_GLChargeMaster_Details" EntitySet="tbl_GLChargeMaster_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" Association="Self.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_tblCityMaster_tblStateMaster" Association="Self.FK_tblCityMaster_tblStateMaster">
             <End Role="tblStateMaster" EntitySet="tblStateMaster" />
@@ -3175,7 +3220,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           </AssociationSet>
           <EntitySet Name="tbl_UserCategory" EntityType="MangalDBNewModel.tbl_UserCategory" />
           <EntitySet Name="Trn_DocumentUpload" EntityType="MangalDBNewModel.Trn_DocumentUpload" />
-          <FunctionImport Name="generateFinancialYear" />
+          <FunctionImport Name="generateFinancialYear" >
+          <Parameter Name="FinancialYearId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="GetKYCDetailsForDocument" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForDocument_Result)" />
           <FunctionImport Name="GetKYCDetailsForDocumentById" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForDocumentById_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
@@ -3247,6 +3294,11 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <AssociationSet Name="FK_UserDetails_tbl_UserCategory" Association="MangalDBNewModel.FK_UserDetails_tbl_UserCategory">
             <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
             <End Role="UserDetail" EntitySet="UserDetails" />
+          </AssociationSet>
+          <EntitySet Name="tbl_PreSanctionDetails" EntityType="MangalDBNewModel.tbl_PreSanctionDetails" />
+          <AssociationSet Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" Association="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
@@ -3331,6 +3383,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="StateCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tbl_CountryMaster" Relationship="MangalDBNewModel.FK_tblStateMaster_tbl_CountryMaster" FromRole="tblStateMaster" ToRole="tbl_CountryMaster" />
           <NavigationProperty Name="tblCityMasters" Relationship="MangalDBNewModel.FK_tblCityMaster_tblStateMaster" FromRole="tblStateMaster" ToRole="tblCityMaster" />
+          <Property Name="CkycStateId" Type="Int32" />
         </EntityType>
         <EntityType Name="tblZonemaster">
           <Key>
@@ -4231,6 +4284,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <Property Name="ResidenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AddressCategory" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Trans_KYCAddresses" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="Trans_KYCAddresses" />
+          <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="tbl_PreSanctionDetails" />
         </EntityType>
         <Association Name="fk_TGLKYC_BasicDetails">
           <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="1" />
@@ -4281,6 +4335,44 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
             </Principal>
             <Dependent Role="UserDetail">
               <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_PreSanctionDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KycId" Type="Int32" />
+          <Property Name="TransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NewTopUp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppliedDate" Type="DateTime" Precision="3" />
+          <Property Name="ResidenceVerification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Product" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PurposeofLoan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Scheme" Type="Int32" />
+          <Property Name="ReqLoanAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tenure" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ROI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LTV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="tbl_PreSanctionDetails" ToRole="TGLKYC_BasicDetails" />
+        </EntityType>
+        <Association Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+          <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.tbl_PreSanctionDetails" Role="tbl_PreSanctionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TGLKYC_BasicDetails">
+              <PropertyRef Name="KYCID" />
+            </Principal>
+            <Dependent Role="tbl_PreSanctionDetails">
+              <PropertyRef Name="KycId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5032,6 +5124,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
           <EntitySetMapping Name="tblStateMasters">
             <EntityTypeMapping TypeName="MangalDBNewModel.tblStateMaster">
               <MappingFragment StoreEntitySet="tblStateMaster">
+                <ScalarProperty Name="CkycStateId" ColumnName="CkycStateId" />
                 <ScalarProperty Name="StateCode" ColumnName="StateCode" />
                 <ScalarProperty Name="countryID" ColumnName="countryID" />
                 <ScalarProperty Name="StateName" ColumnName="StateName" />
@@ -5832,6 +5925,32 @@ warning 6002: The table/view 'MangalDBNew.dbo.TSchemeMaster_EffectiveROI' does n
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_PreSanctionDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_PreSanctionDetails">
+              <MappingFragment StoreEntitySet="tbl_PreSanctionDetails">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="LTV" ColumnName="LTV" />
+                <ScalarProperty Name="ROI" ColumnName="ROI" />
+                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
+                <ScalarProperty Name="ReqLoanAmount" ColumnName="ReqLoanAmount" />
+                <ScalarProperty Name="Scheme" ColumnName="Scheme" />
+                <ScalarProperty Name="PurposeofLoan" ColumnName="PurposeofLoan" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="RM" ColumnName="RM" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="ResidenceVerification" ColumnName="ResidenceVerification" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="NewTopUp" ColumnName="NewTopUp" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

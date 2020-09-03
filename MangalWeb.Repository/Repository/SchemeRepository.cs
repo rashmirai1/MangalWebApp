@@ -21,7 +21,9 @@ namespace MangalWeb.Repository.Repository
 
         public TSchemeMaster_BasicDetails GetSchemeMasterById(int id)
         {
-            return _context.TSchemeMaster_BasicDetails.Where(x => x.SID == id && x.isActive == "Active").FirstOrDefault();
+            TSchemeMaster_BasicDetails schemeMaster_BasicDetails = new TSchemeMaster_BasicDetails();
+            schemeMaster_BasicDetails = _context.TSchemeMaster_BasicDetails.Where(x => x.SID == id && x.isActive == "Active").FirstOrDefault();
+            return schemeMaster_BasicDetails;
         }
 
         public void DeleteRecord(int id)
