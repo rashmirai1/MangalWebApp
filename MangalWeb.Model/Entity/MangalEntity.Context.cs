@@ -103,7 +103,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tbl_UserCategory> tbl_UserCategory { get; set; }
         public virtual DbSet<Trn_DocumentUpload> Trn_DocumentUpload { get; set; }
         public virtual DbSet<Mst_BranchType> Mst_BranchType { get; set; }
-        public virtual DbSet<User_Category> User_Category { get; set; }
         public virtual DbSet<User_Category_Hierarchy> User_Category_Hierarchy { get; set; }
         public virtual DbSet<tbl_KYCMobileOTP> tbl_KYCMobileOTP { get; set; }
         public virtual DbSet<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
@@ -116,6 +115,7 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tbl_CKycState> tbl_CKycState { get; set; }
         public virtual DbSet<tblStateMaster> tblStateMasters { get; set; }
         public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
+        public virtual DbSet<tbl_PreSanctionDetails> tbl_PreSanctionDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

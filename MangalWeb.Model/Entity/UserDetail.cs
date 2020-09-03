@@ -27,6 +27,7 @@ namespace MangalWeb.Model.Entity
         public Nullable<System.DateTime> createddate { get; set; }
         public Nullable<int> updatedby { get; set; }
         public Nullable<System.DateTime> updateddate { get; set; }
+        public Nullable<int> IsVerified { get; set; }
     
         public virtual tbl_UserCategory tbl_UserCategory { get; set; }
     }

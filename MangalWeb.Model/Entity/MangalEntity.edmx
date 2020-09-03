@@ -502,6 +502,31 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="OTP" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="tbl_PreSanctionDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KycId" Type="int" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="50" />
+          <Property Name="NewTopUp" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerId" Type="nvarchar" MaxLength="50" />
+          <Property Name="AppliedDate" Type="datetime" />
+          <Property Name="ResidenceVerification" Type="nvarchar" MaxLength="50" />
+          <Property Name="ApplicationNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="RM" Type="nvarchar" MaxLength="50" />
+          <Property Name="Product" Type="nvarchar" MaxLength="50" />
+          <Property Name="PurposeofLoan" Type="nvarchar" MaxLength="50" />
+          <Property Name="Scheme" Type="int" />
+          <Property Name="ReqLoanAmount" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tenure" Type="nvarchar" MaxLength="50" />
+          <Property Name="ROI" Type="nvarchar" MaxLength="50" />
+          <Property Name="LTV" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.tbl_SentJVCustHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tbl_SentJVCustHistory">
@@ -1379,15 +1404,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Property Name="NoofDefaultMonths" Type="int" Nullable="false" />
           <Property Name="EffROI" Type="decimal" Precision="11" Scale="2" Nullable="false" />
         </EntityType>
-        <EntityType Name="User_Category">
-          <Key>
-            <PropertyRef Name="usercateid" />
-          </Key>
-          <Property Name="usercateid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="100" />
-          <Property Name="hierarchyid" Type="int" />
-          <Property Name="status" Type="int" />
-        </EntityType>
         <EntityType Name="User_Category_Hierarchy">
           <Key>
             <PropertyRef Name="id" />
@@ -1430,6 +1446,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Property Name="createddate" Type="datetime" />
           <Property Name="updatedby" Type="int" />
           <Property Name="updateddate" Type="datetime" />
+          <Property Name="IsVerified" Type="int" />
         </EntityType>
         <Association Name="FK__tbl_UserC__Organ__51BA1E3A">
           <End Role="User_Category_Hierarchy" Type="Self.User_Category_Hierarchy" Multiplicity="0..1" />
@@ -1524,6 +1541,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
             </Principal>
             <Dependent Role="tbl_GLChargeMaster_Details">
               <PropertyRef Name="CID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+          <End Role="TGLKYC_BasicDetails" Type="Self.TGLKYC_BasicDetails" Multiplicity="0..1" />
+          <End Role="tbl_PreSanctionDetails" Type="Self.tbl_PreSanctionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TGLKYC_BasicDetails">
+              <PropertyRef Name="KYCID" />
+            </Principal>
+            <Dependent Role="tbl_PreSanctionDetails">
+              <PropertyRef Name="KycId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1742,6 +1771,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <EntitySet Name="tbl_GLChargeMaster_BasicInfo" EntityType="Self.tbl_GLChargeMaster_BasicInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_GLChargeMaster_Details" EntityType="Self.tbl_GLChargeMaster_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_KYCMobileOTP" EntityType="Self.tbl_KYCMobileOTP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_PreSanctionDetails" EntityType="Self.tbl_PreSanctionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserCategory" EntityType="Self.tbl_UserCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblaccountmaster" EntityType="Self.tblaccountmaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBankMaster" EntityType="Self.tblBankMaster" Schema="dbo" store:Type="Tables" />
@@ -1765,7 +1795,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <EntitySet Name="Trn_RequestForm" EntityType="Self.Trn_RequestForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TSchemeMaster_BasicDetails" EntityType="Self.TSchemeMaster_BasicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TSchemeMaster_EffectiveROI" EntityType="Self.TSchemeMaster_EffectiveROI" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User_Category" EntityType="Self.User_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Category_Hierarchy" EntityType="Self.User_Category_Hierarchy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAuthorizations" EntityType="Self.UserAuthorizations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
@@ -2358,6 +2387,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <AssociationSet Name="FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo" Association="Self.FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo">
             <End Role="tbl_GLChargeMaster_BasicInfo" EntitySet="tbl_GLChargeMaster_BasicInfo" />
             <End Role="tbl_GLChargeMaster_Details" EntitySet="tbl_GLChargeMaster_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" Association="Self.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_tblCityMaster_tblStateMaster" Association="Self.FK_tblCityMaster_tblStateMaster">
             <End Role="tblStateMaster" EntitySet="tblStateMaster" />
@@ -3186,7 +3219,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           </FunctionImport>
           <FunctionImport Name="GetDocumentUpload" ReturnType="Collection(MangalDBNewModel.GetDocumentUpload_Result)" />
           <EntitySet Name="Mst_BranchType" EntityType="MangalDBNewModel.Mst_BranchType" />
-          <EntitySet Name="User_Category" EntityType="MangalDBNewModel.User_Category" />
           <EntitySet Name="User_Category_Hierarchy" EntityType="MangalDBNewModel.User_Category_Hierarchy" />
           <AssociationSet Name="FK_tblCompanyBranchMaster_Mst_BranchType" Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType">
             <End Role="Mst_BranchType" EntitySet="Mst_BranchType" />
@@ -3266,6 +3298,11 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <AssociationSet Name="FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails" Association="MangalDBNewModel.FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails">
             <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
             <End Role="TSchemeMaster_EffectiveROI" EntitySet="TSchemeMaster_EffectiveROI" />
+          </AssociationSet>
+          <EntitySet Name="tbl_PreSanctionDetails" EntityType="MangalDBNewModel.tbl_PreSanctionDetails" />
+          <AssociationSet Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" Association="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
@@ -3913,15 +3950,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblCompanyBranchMasters" Relationship="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType" FromRole="Mst_BranchType" ToRole="tblCompanyBranchMaster" />
         </EntityType>
-        <EntityType Name="User_Category">
-          <Key>
-            <PropertyRef Name="usercateid" />
-          </Key>
-          <Property Name="usercateid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="hierarchyid" Type="Int32" />
-          <Property Name="status" Type="Int32" />
-        </EntityType>
         <EntityType Name="User_Category_Hierarchy">
           <Key>
             <PropertyRef Name="id" />
@@ -4216,6 +4244,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Property Name="ResidenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AddressCategory" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Trans_KYCAddresses" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="Trans_KYCAddresses" />
+          <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="tbl_PreSanctionDetails" />
         </EntityType>
         <Association Name="fk_TGLKYC_BasicDetails">
           <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="1" />
@@ -4256,6 +4285,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Property Name="updatedby" Type="Int32" />
           <Property Name="updateddate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tbl_UserCategory" Relationship="MangalDBNewModel.FK_UserDetails_tbl_UserCategory" FromRole="UserDetail" ToRole="tbl_UserCategory" />
+          <Property Name="IsVerified" Type="Int32" />
         </EntityType>
         <Association Name="FK_UserDetails_tbl_UserCategory">
           <End Type="MangalDBNewModel.tbl_UserCategory" Role="tbl_UserCategory" Multiplicity="1" />
@@ -4332,6 +4362,44 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
             </Principal>
             <Dependent Role="TSchemeMaster_EffectiveROI">
               <PropertyRef Name="SID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_PreSanctionDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KycId" Type="Int32" />
+          <Property Name="TransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NewTopUp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppliedDate" Type="DateTime" Precision="3" />
+          <Property Name="ResidenceVerification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Product" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PurposeofLoan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Scheme" Type="Int32" />
+          <Property Name="ReqLoanAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tenure" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ROI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LTV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="tbl_PreSanctionDetails" ToRole="TGLKYC_BasicDetails" />
+        </EntityType>
+        <Association Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+          <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.tbl_PreSanctionDetails" Role="tbl_PreSanctionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TGLKYC_BasicDetails">
+              <PropertyRef Name="KYCID" />
+            </Principal>
+            <Dependent Role="tbl_PreSanctionDetails">
+              <PropertyRef Name="KycId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5522,16 +5590,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="User_Category">
-            <EntityTypeMapping TypeName="MangalDBNewModel.User_Category">
-              <MappingFragment StoreEntitySet="User_Category">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="hierarchyid" ColumnName="hierarchyid" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="usercateid" ColumnName="usercateid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="User_Category_Hierarchy">
             <EntityTypeMapping TypeName="MangalDBNewModel.User_Category_Hierarchy">
               <MappingFragment StoreEntitySet="User_Category_Hierarchy">
@@ -5850,6 +5908,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <EntitySetMapping Name="UserDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.UserDetail">
               <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
                 <ScalarProperty Name="updateddate" ColumnName="updateddate" />
                 <ScalarProperty Name="updatedby" ColumnName="updatedby" />
                 <ScalarProperty Name="createddate" ColumnName="createddate" />
@@ -5893,6 +5952,32 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
                 <ScalarProperty Name="NoofDefaultMonths" ColumnName="NoofDefaultMonths" />
                 <ScalarProperty Name="SID" ColumnName="SID" />
                 <ScalarProperty Name="ROIID" ColumnName="ROIID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_PreSanctionDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_PreSanctionDetails">
+              <MappingFragment StoreEntitySet="tbl_PreSanctionDetails">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="LTV" ColumnName="LTV" />
+                <ScalarProperty Name="ROI" ColumnName="ROI" />
+                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
+                <ScalarProperty Name="ReqLoanAmount" ColumnName="ReqLoanAmount" />
+                <ScalarProperty Name="Scheme" ColumnName="Scheme" />
+                <ScalarProperty Name="PurposeofLoan" ColumnName="PurposeofLoan" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="RM" ColumnName="RM" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="ResidenceVerification" ColumnName="ResidenceVerification" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="NewTopUp" ColumnName="NewTopUp" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

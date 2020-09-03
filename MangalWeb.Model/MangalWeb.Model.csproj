@@ -391,9 +391,6 @@
     <Compile Include="Entity\UserDetail.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\User_Category.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\User_Category_Hierarchy.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
