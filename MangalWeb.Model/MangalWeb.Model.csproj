@@ -274,6 +274,9 @@
     <Compile Include="Entity\tbl_KYCMobileOTP.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tbl_PreSanctionDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tbl_SentJVCustHistory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -429,7 +432,9 @@
     <Compile Include="Transaction\KYCAddressesVM.cs" />
     <Compile Include="Transaction\KYCBasicDetailsVM.cs" />
     <Compile Include="Transaction\KYCDocumentDetailsVM.cs" />
+    <Compile Include="Transaction\PreSanctionDetailsVM.cs" />
     <Compile Include="Transaction\RequestFormViewModel.cs" />
+    <Compile Include="Transaction\SchemeDetailsVM.cs" />
     <Compile Include="Transaction\SanctionDisbursementVM.cs" />
     <Compile Include="Utilties\LoginViewModel.cs" />
     <Compile Include="Utilties\MenusViewModel.cs" />

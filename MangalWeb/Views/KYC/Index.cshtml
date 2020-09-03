@@ -1327,11 +1327,11 @@ new { @class= "form-control" })
     <script type="text/javascript">
         var imageExist = false;
         window.addEventListener("submit", function (e) {
-            //var isMobileVerified = $("#isMobileVerified").val();
-            //if (isMobileVerified == "0") {
-            //    alert("Please Verify Your Mobile Number!");
-            //    return false;
-            //}
+            var isMobileVerified = $("#isMobileVerified").val();
+            if (isMobileVerified == "0") {
+                alert("Please Verify Your Mobile Number!");
+                return false;
+            }
             var inp = document.getElementById('uploadFile');
             if (inp.files.length === 0 && imageExist == false) {
                 alert("Upload Photo!");
