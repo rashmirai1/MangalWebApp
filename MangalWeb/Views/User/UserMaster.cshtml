@@ -137,7 +137,7 @@
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("doesEmployeeCodeExist", "User")',
-                    data: '{EmployeeCode: "' + $("#EmployeeCode").val() + '" }',
+                    data: '{EmployeeCode: "' + $("#EmployeeCode").val() + '", Id: "' + $("#EditId").val() + '"}',
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (result) {

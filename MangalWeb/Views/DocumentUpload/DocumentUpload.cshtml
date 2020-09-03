@@ -163,18 +163,18 @@
                                             @{int j = 1;}
                                             @foreach (var item in Model.DocumentUploadList)
                                             {
-                                                <tr id="@item.ID">
-                                                    <td>@j</td>
-                                                    <td id="@item.DocumentTypeId">@item.DocumentTypeName</td>
-                                                    <td id="@item.DocumentId">@item.DocumentName</td>
-                                                    <td>@item.SpecifyOther</td>
-                                                    <td>@item.NameonDocument</td>
-                                                    <td>@item.ExpiryDate</td>
-                                                    <td><a href="/DocumentUpload/Download/@item.ID" target=_blank>@item.FileName</a></td>
-                                                    <td>
-                                                        <a class="delete"><i class="fa fa-trash"></i></a>
-                                                    </td>
-                                                </tr>
+                                            <tr id="@item.ID">
+                                                <td>@j</td>
+                                                <td id="@item.DocumentTypeId">@item.DocumentTypeName</td>
+                                                <td id="@item.DocumentId">@item.DocumentName</td>
+                                                <td>@item.SpecifyOther</td>
+                                                <td>@item.NameonDocument</td>
+                                                <td>@item.ExpiryDate</td>
+                                                <td><a href="/DocumentUpload/Download/@item.ID" target=_blank>@item.FileName</a></td>
+                                                <td>
+                                                    <a class="delete"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
                                                 j++;
                                             }
                                         </tbody>
@@ -185,6 +185,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
                                                 }
 

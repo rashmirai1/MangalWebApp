@@ -30,15 +30,15 @@ namespace MangalWeb.Controllers
             {
                 user.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
                 user.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
-                if (user.ID <= 0)
-                {
-                    var data = _userService.CheckEmployeeCodeExists(user.EmployeeCode);
-                    if (data != null)
-                    {
-                        ModelState.AddModelError("EmployeeCode", "Employee Code Already Exists");
-                        return Json(user);
-                    }
-                }
+                //if (user.ID <= 0)
+                //{
+                //    var data = _userService.CheckEmployeeCodeExists(user.EmployeeCode);
+                //    if (data != null)
+                //    {
+                //        ModelState.AddModelError("EmployeeCode", "Employee Code Already Exists");
+                //        return Json(user);
+                //    }
+                //}
                 _userService.SaveUpdateRecord(user);
             }
             catch (Exception ex)
@@ -70,10 +70,10 @@ namespace MangalWeb.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesEmployeeCodeExist(string EmployeeCode)
+        public JsonResult doesEmployeeCodeExist(string EmployeeCode,int Id)
         {
             var result = "";
-            var data = _userService.CheckEmployeeCodeExists(EmployeeCode);
+            var data = _userService.CheckEmployeeCodeExists(EmployeeCode,Id);
             //Check if empluee code already exists
             if (data != null)
             {

@@ -1,0 +1,410 @@
+﻿@model MangalWeb.Model.Transaction.SanctionDisbursementVM
+@{
+    ViewBag.Title = "SanctionDisbursement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+
+@using (Ajax.BeginForm("CreateEdit", "City", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
+    <header id="topbar" class="affix">
+        <div class="col-md-5 col-sm-4 col-xs-12">
+            <div class="topbar-left">
+                <h4>Sanction Disbursement</h4>
+            </div><!--end of topbar-left-->
+        </div><!--end of col-md-5-->
+        <div class="col-md-7 col-sm-8 col-xs-12">
+            <div class="topbar-right" id="headerbutton" @TempData["headerbutton"]>
+                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
+                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
+                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
+                <button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]" type="button" data-toggle="modal">
+                    <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
+                </button>
+                <a href="@Html.Raw(@Url.Action("SanctionDisbursement", "SanctionDisbursement"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+            </div><!--end of topbar-right-->
+        </div><!--end of col-md-7-->
+
+    </header>
+
+    <section id="content" class="animated fadeIn content_height">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel1 panel-primary">
+                    <div class="admin-form">
+                        <div class="panel-body">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Transaction Id<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>
+                                                @Html.EditorFor(model => model.TransactionNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Id", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Customer Id<span class="text-danger">*</span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.CustomerId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Id", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
+                                                <div class="input-group-btn" style="display:inline;">
+                                                    <button type="button" data-toggle="modal" data-target="#editModal" onclick="ShowClientTableList();" class="btn btn-info btn_info1">...</button>
+                                                    @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Application No<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.ApplicationNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Application No", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Loan Type<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.LoanType, new { htmlAttributes = new { @class = "form-control", @placeholder = "Loan Type", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Loan Account No<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.LoanAccountNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Loan Account No", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Employee Name<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.EmployeeName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Employee Name", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Customer Name<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Name", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Gender<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control", @placeholder = "Gender", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Birth Date<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Birth Date", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">PAN No<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.PANNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "PAN No", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Marital Status<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.MaritalStatus, new { htmlAttributes = new { @class = "form-control", @placeholder = "Marital Status", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">PAN No<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.PANNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "PAN No", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Marital Status<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.MaritalStatus, new { htmlAttributes = new { @class = "form-control", @placeholder = "Marital Status", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Age<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control", @placeholder = "Age", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Customer Address<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.CustomerAddress, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Address", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Nominee Name<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.NomineeName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Name", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Customer Address<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.NomineeRelation, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Relation", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Nominee Name<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.NomineeName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Name", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Nominee Relation<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.NomineeRelation, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Relation", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Gold Item Details<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.GoldItemDetails, new { htmlAttributes = new { @class = "form-control", @placeholder = "Gold Item Details", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Scheme Name<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.SchemeName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Scheme Name", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Tenure<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.Tenure, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tenure", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Maximum Loan Amount<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.MaximumLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Maximum Loan Amount", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Tenure<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.Tenure, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tenure", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Maximum Loan Amount<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.MaximumLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Maximum Loan Amount", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Principal<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.Principal, new { htmlAttributes = new { @class = "form-control", @placeholder = "Principal", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Interest<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.Interest, new { htmlAttributes = new { @class = "form-control", @placeholder = "Interest", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Penal Interest<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.PenalInterest, new { htmlAttributes = new { @class = "form-control", @placeholder = "Penal Interest", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Charges<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.Charges, new { htmlAttributes = new { @class = "form-control", @placeholder = "Charges", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Total<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", @placeholder = "Total", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Eligible Loan Amount<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.EligibleLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Eligible Loan Amount", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Sanction Loan Amount<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.SanctionLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Sanction Loan Amount", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Charge Name<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.ChargeName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Charge Name", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Charge Amount<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.ChargeAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Charge Amount", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Net Payable<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.NetPayable, new { htmlAttributes = new { @class = "form-control", @placeholder = "Net Payable", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Interest Repayment Date<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.InterestRepaymentDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Interest Repayment Date", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Gold Item Image<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.GoldItemImage, new { htmlAttributes = new { @class = "form-control", @placeholder = "Gold Item Image", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Packet Weight<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.PacketWeight, new { htmlAttributes = new { @class = "form-control", @placeholder = "Packet Weight", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Locker No<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.LockerNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Locker No", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Payment Mode<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.PaymentMode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Payment Mode", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Cash Account No<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.CashAccountNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cash Account No", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Amount<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Outward by<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.OutwardbyNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Outward by", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Voucher Entry Date<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.VoucherEntryDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Voucher Entry Date", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Transaction Date<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.TransactionDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Date", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Loan Amount<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.LoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Loan Amount", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Bank Payment Date<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.BankPaymentDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Bank Payment Date", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">BankAccountNo<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.BankAccountNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Bank Account No", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">CheckDD<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.CheckDD, new { htmlAttributes = new { @class = "form-control", @placeholder = "Check DD", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Check DD string<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.CheckDDstring, new { htmlAttributes = new { @class = "form-control", @placeholder = "Check DD string", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Check NEFT Date<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.CheckDDNEFTDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Check DDNEFT Date", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Check DD string<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.CheckDDstring, new { htmlAttributes = new { @class = "form-control", @placeholder = "Check DD string", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Check NEFT Date<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.CheckDDNEFTDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Check DDNEFT Date", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Remark<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control", @placeholder = "Remark", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Gold InwardBy No<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.GoldInwardByNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Gold Inward By", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Rack No<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.RackNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Rack No", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Gold InwardBy Date<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.GoldInwardDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Gold Inward Date", @readonly = true } })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@section javascriptsection{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript">
+
+    </script>
+    }
+

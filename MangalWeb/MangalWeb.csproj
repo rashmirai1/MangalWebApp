@@ -142,6 +142,7 @@
     <Compile Include="Controllers\ProductRateController.cs" />
     <Compile Include="Controllers\ReasonController.cs" />
     <Compile Include="Controllers\RequestFormController.cs" />
+    <Compile Include="Controllers\SanctionDisbursementController.cs" />
     <Compile Include="Controllers\SchemeController.cs" />
     <Compile Include="Controllers\SourceofApplicationController.cs" />
     <Compile Include="Controllers\StateController.cs" />
@@ -2100,6 +2101,7 @@
     <Content Include="Views\User\UserMaster.cshtml" />
     <Content Include="Views\User\_UserMasterList.cshtml" />
     <Content Include="Views\GLBorrowerCopy\GLBorrowerCopy.cshtml" />
+    <Content Include="Views\SanctionDisbursement\SanctionDisbursement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

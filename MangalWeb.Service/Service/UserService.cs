@@ -28,9 +28,9 @@ namespace MangalWeb.Service.Service
             return _userRepository.GetUserMasterById(id);
         }
 
-        public string CheckEmployeeCodeExists(string empcode)
+        public string CheckEmployeeCodeExists(string empcode,int id)
         {
-            return _userRepository.CheckEmployeeCodeExists(empcode);
+            return _userRepository.CheckEmployeeCodeExists(empcode,id);
         }
 
         public UserViewModel SetDataOnEdit(UserDetail tblUser)
