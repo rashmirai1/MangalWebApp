@@ -105,7 +105,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tbl_UserCategory> tbl_UserCategory { get; set; }
         public virtual DbSet<Trn_DocumentUpload> Trn_DocumentUpload { get; set; }
         public virtual DbSet<Mst_BranchType> Mst_BranchType { get; set; }
-        public virtual DbSet<User_Category> User_Category { get; set; }
         public virtual DbSet<User_Category_Hierarchy> User_Category_Hierarchy { get; set; }
         public virtual DbSet<tbl_KYCMobileOTP> tbl_KYCMobileOTP { get; set; }
         public virtual DbSet<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
@@ -115,6 +114,8 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<Trn_RequestForm> Trn_RequestForm { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
+        public virtual DbSet<tbl_CKycState> tbl_CKycState { get; set; }
+        public virtual DbSet<tbl_PreSanctionDetails> tbl_PreSanctionDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -140,9 +141,13 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SplitWords_Result>("[MangalDBNewEntities].[SplitWords](@text)", textParameter);
         }
     
-        public virtual int generateFinancialYear()
+        public virtual int generateFinancialYear(Nullable<int> financialYearId, ObjectParameter message)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("generateFinancialYear");
+            var financialYearIdParameter = financialYearId.HasValue ?
+                new ObjectParameter("FinancialYearId", financialYearId) :
+                new ObjectParameter("FinancialYearId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("generateFinancialYear", financialYearIdParameter, message);
         }
     
         public virtual ObjectResult<GetKYCDetailsForDocument_Result> GetKYCDetailsForDocument()
@@ -297,6 +302,37 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("KycId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetKYCDetailsForRequestForm_Result>("GetKYCDetailsForRequestForm", kycIdParameter);
+        }
+    
+        public virtual ObjectResult<GetCustomerById_Result> GetCustomerById(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCustomerById_Result>("GetCustomerById", idParameter);
+        }
+    
+        public virtual ObjectResult<GetPreSanctionCustomerList_Result> GetPreSanctionCustomerList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPreSanctionCustomerList_Result>("GetPreSanctionCustomerList");
+        }
+    
+        public virtual ObjectResult<GL_SanctionDisburse_KYC_RTR_Result> GL_SanctionDisburse_KYC_RTR(string loanType, Nullable<int> fYID, Nullable<int> branchId)
+        {
+            var loanTypeParameter = loanType != null ?
+                new ObjectParameter("LoanType", loanType) :
+                new ObjectParameter("LoanType", typeof(string));
+    
+            var fYIDParameter = fYID.HasValue ?
+                new ObjectParameter("FYID", fYID) :
+                new ObjectParameter("FYID", typeof(int));
+    
+            var branchIdParameter = branchId.HasValue ?
+                new ObjectParameter("BranchId", branchId) :
+                new ObjectParameter("BranchId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_RTR_Result>("GL_SanctionDisburse_KYC_RTR", loanTypeParameter, fYIDParameter, branchIdParameter);
         }
     }
 }

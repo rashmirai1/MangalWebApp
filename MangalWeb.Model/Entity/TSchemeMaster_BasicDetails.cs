@@ -14,6 +14,12 @@ namespace MangalWeb.Model.Entity
     
     public partial class TSchemeMaster_BasicDetails
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TSchemeMaster_BasicDetails()
+        {
+            this.TSchemeMaster_EffectiveROI = new HashSet<TSchemeMaster_EffectiveROI>();
+        }
+    
         public int SID { get; set; }
         public string SchemeName { get; set; }
         public string SchemeType { get; set; }
@@ -48,5 +54,7 @@ namespace MangalWeb.Model.Entity
         public Nullable<int> LockInPeriod { get; set; }
     
         public virtual Mst_Product Mst_Product { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
     }
 }

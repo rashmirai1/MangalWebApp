@@ -95,7 +95,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_UserCategory" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocumentUpload" Width="1.5" PointX="21.375" PointY="29.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_BranchType" Width="1.5" PointX="5.375" PointY="18.875" />
-        <EntityTypeShape EntityType="MangalDBNewModel.User_Category" Width="1.5" PointX="28.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.User_Category_Hierarchy" Width="1.5" PointX="28.375" PointY="24.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_KYCMobileOTP" Width="1.5" PointX="30.375" PointY="0.75" />
@@ -107,6 +106,10 @@
         <EntityTypeShape EntityType="MangalDBNewModel.Trn_RequestForm" Width="1.5" PointX="19.375" PointY="20.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.UserDetail" Width="1.5" PointX="13.625" PointY="0.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_UserDetails_tbl_UserCategory" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_CKycState" Width="1.5" PointX="5.375" PointY="21.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_PreSanctionDetails" Width="1.5" PointX="19.625" PointY="35.75" />
+        <AssociationConnector Association="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" />
+        <AssociationConnector Association="MangalDBNewModel.FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

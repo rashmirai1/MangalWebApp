@@ -47,5 +47,25 @@ namespace MangalWeb.Service.Service
         {
             _userRepository.SaveUpdateRecord(model);
         }
+
+        public void SetUserFlag(string email,int flag)
+        {
+            _userRepository.SetUserFlag(email,flag);
+        }
+
+        public void UpdatePassword(int userid, string password)
+        {
+            _userRepository.UpdatePassword(userid, password);
+        }
+
+        public void AppSettings(out string UserId, out string Password, out string SMTPPort, out string Host)
+        {
+            _userRepository.AppSettings(out UserId,out Password,out SMTPPort,out Host);
+        }
+
+        public void SendEmail(string From, string Subject, string Body, string To, string UserID, string Password, string SMTPPort, string Host)
+        {
+            _userRepository.SendEmail(From, Subject, Body, To, UserID, Password, SMTPPort, Host);
+        }
     }
 }

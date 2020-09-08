@@ -10,13 +10,15 @@
 namespace MangalWeb.Model.Entity
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class User_Category
+    public partial class GL_SanctionDisburse_KYC_RTR_Result
     {
-        public int usercateid { get; set; }
-        public string name { get; set; }
-        public Nullable<int> hierarchyid { get; set; }
-        public Nullable<int> status { get; set; }
+        public int Record_ID { get; set; }
+        public string Customer_ID { get; set; }
+        public string Applied_Date { get; set; }
+        public string Gold_Loan_No { get; set; }
+        public string Customer_Name { get; set; }
+        public string PAN_No { get; set; }
+        public string Mobile_No { get; set; }
     }
 }

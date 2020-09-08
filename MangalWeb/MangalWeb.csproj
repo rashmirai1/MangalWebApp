@@ -131,6 +131,7 @@
     <Compile Include="Controllers\DocumentUploadController.cs" />
     <Compile Include="Controllers\DocumentVerificationController.cs" />
     <Compile Include="Controllers\FinancialYearController.cs" />
+    <Compile Include="Controllers\ForgotPasswordController.cs" />
     <Compile Include="Controllers\GSTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KYCController.cs" />
@@ -2098,6 +2099,10 @@
     <Content Include="Views\UserAuthorization\UserAuthorization.cshtml" />
     <Content Include="Views\User\UserMaster.cshtml" />
     <Content Include="Views\User\_UserMasterList.cshtml" />
+    <Content Include="Views\ForgotPassword\ForgotPassword.cshtml" />
+    <Content Include="Views\ForgotPassword\ResetPassword.cshtml" />
+    <Content Include="Views\ForgotPassword\SendLinkSuccess.cshtml" />
+    <Content Include="Views\ForgotPassword\ResetPasswordSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

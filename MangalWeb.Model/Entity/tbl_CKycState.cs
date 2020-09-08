@@ -12,13 +12,10 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class TSchemeMaster_EffectiveROI
+    public partial class tbl_CKycState
     {
-        public int ROIID { get; set; }
-        public int SID { get; set; }
-        public int NoofDefaultMonths { get; set; }
-        public decimal EffROI { get; set; }
-    
-        public virtual TSchemeMaster_BasicDetails TSchemeMaster_BasicDetails { get; set; }
+        public int Id { get; set; }
+        public string StateCode { get; set; }
+        public string StateName { get; set; }
     }
 }
