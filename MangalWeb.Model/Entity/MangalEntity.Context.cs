@@ -116,6 +116,8 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tblStateMaster> tblStateMasters { get; set; }
         public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
         public virtual DbSet<tbl_PreSanctionDetails> tbl_PreSanctionDetails { get; set; }
+        public virtual DbSet<tbl_ResidenceVerification> tbl_ResidenceVerification { get; set; }
+        public virtual DbSet<tblStandardEndTime> tblStandardEndTimes { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

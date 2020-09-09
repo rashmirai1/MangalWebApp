@@ -109,6 +109,9 @@
         <AssociationConnector Association="MangalDBNewModel.FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_PreSanctionDetails" Width="1.5" PointX="19.625" PointY="35.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_ResidenceVerification" Width="1.5" PointX="21.875" PointY="35.375" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tblStandardEndTime" Width="1.5" PointX="11.375" PointY="20.75" />
+        <AssociationConnector Association="MangalDBNewModel.FK__tbl_Resid__PreSa__39AD8A7F" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

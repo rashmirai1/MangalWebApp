@@ -250,6 +250,9 @@
     <Compile Include="Entity\tblSchemeTransMonth.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tblStandardEndTime.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tblStateMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -275,6 +278,9 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tbl_PreSanctionDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tbl_ResidenceVerification.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tbl_SentJVCustHistory.cs">
