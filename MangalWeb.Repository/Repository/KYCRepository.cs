@@ -28,7 +28,7 @@ namespace MangalWeb.Repository.Repository
                             .OrderByDescending(x => x.AppliedDate)
                             .Select(x => x.KYCID).FirstOrDefault();
                     string refNo = Convert.ToString(kycId);
-
+                    tGLKYC_Basic.AddressCategory = "02";
                     tGLKYC_Basic.Age = model.Age;
                     tGLKYC_Basic.AppFName = model.AppFName;
                     tGLKYC_Basic.AppliedDate = DateTime.Now;

@@ -129,6 +129,7 @@
     <Compile Include="Controllers\DeviationController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\DocumentUploadController.cs" />
+    <Compile Include="Controllers\ResidenceVerificationController.cs" />
     <Compile Include="Controllers\PreSanctionController.cs" />
     <Compile Include="Controllers\DocumentVerificationController.cs" />
     <Compile Include="Controllers\FinancialYearController.cs" />
@@ -2105,6 +2106,8 @@
     <Content Include="Views\SanctionDisbursement\SanctionDisbursement.cshtml" />
     <Content Include="Views\PreSanction\_CustomerDetails.cshtml" />
     <Content Include="Views\PreSanction\Index.cshtml" />
+    <Content Include="Views\ResidenceVerification\_CustomerDetails.cshtml" />
+    <Content Include="Views\ResidenceVerification\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

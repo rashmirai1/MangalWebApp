@@ -16,7 +16,7 @@
                     <tbody>
                         @foreach (KYCBasicDetailsVM item in Model)
                         {
-                            <tr class="gradeX" style="cursor:pointer;" onclick='window.document.location="/PreSanction/GetCustomerById?Id=@item.KYCID"'>
+                            <tr class="gradeX" style="cursor:pointer;" onclick='window.document.location="/ResidenceVerification/GetCustomerById?Id=@item.KYCID"'>
                                 <td id="@item.KYCID">@item.CustomerID</td>
                                 <td id="@item.ApplicationNo">@item.ApplicationNo</td>
                                 <td id="@item.AppliedDate">@item.AppliedDate</td>
