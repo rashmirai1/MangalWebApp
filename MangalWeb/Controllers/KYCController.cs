@@ -188,12 +188,12 @@ namespace MangalWeb.Controllers
 
         #region Insert Document Data
 
-        public bool InsertDocumentData(List<KYCDocumentUpload> lstDocUploadTrn)
+        public bool InsertDocumentData(List<DocumentUploadDetailsVM> lstDocUploadTrn)
         {
             bool retVal = false;
             try
             {
-                lstDocUploadTrn = (List<KYCDocumentUpload>)Session["sub"];
+                lstDocUploadTrn = (List<DocumentUploadDetailsVM>)Session["sub"];
                 _kycService.SaveDocument(lstDocUploadTrn);
                 retVal = true;
             }

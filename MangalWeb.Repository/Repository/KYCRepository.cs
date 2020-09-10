@@ -546,7 +546,7 @@ namespace MangalWeb.Repository.Repository
         /// Save Kyc Docs
         /// </summary>
         /// <param name="lstDocUploadTrn"></param>
-        public void SaveDocument(List<KYCDocumentUpload> lstDocUploadTrn)
+        public void SaveDocument(List<DocumentUploadDetailsVM> lstDocUploadTrn)
         {
             Trn_DocUploadDetails trn_DocUploadDetails = new Trn_DocUploadDetails();
             if (lstDocUploadTrn != null || lstDocUploadTrn.Count > 0)

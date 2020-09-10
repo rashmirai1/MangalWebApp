@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "ShowCity";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    HtmlHelper.ClientValidationEnabled = false;
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
 
@@ -1319,7 +1320,7 @@ new { @class= "form-control" })
     </section>
 }
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@*<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
 @section javascriptsection{
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
@@ -1340,6 +1341,7 @@ new { @class= "form-control" })
             }
             var form = e.target;
             if (form.getAttribute("enctype") === "multipart/form-data") {
+                
                 if (form.dataset.ajax) {
                     e.preventDefault();
                     e.stopImmediatePropagation();
@@ -1670,7 +1672,7 @@ new { @class= "form-control" })
                     $("#DocumentUploadVM_DocumentId").removeAttr('disabled')
                 },
                 error: function (ex) {
-                    alert('Failed to retrieve data.' + ex);
+                    //alert('Failed to retrieve data.' + ex);
                 }
             });
             return false;
@@ -1692,7 +1694,7 @@ new { @class= "form-control" })
                     }
                 },
                 error: function (ex) {
-                    alert('Failed to retrieve data.' + ex);
+                    //alert('Failed to retrieve data.' + ex);
                 }
             });
             return false;
@@ -1860,25 +1862,28 @@ new { @class= "form-control" })
                         }
                         else {
                             $("#negativeCustomerErr").text("");
-                            $.each(result, function (key, value) {
-                                if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
-                                    value = new Date(parseInt(value.replace('/Date(', '')));
-                                    var day = value.getDate();
-                                    var month = value.getMonth() + 1;
-                                    var year = value.getFullYear();
-                                    value = day + "/" + month + "/" + year;
-                                }
+                            var adhar = $("#AdhaarNo").val();
+                            if (adhar.length == 0) {
+                                $.each(result, function (key, value) {
+                                    if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
+                                        value = new Date(parseInt(value.replace('/Date(', '')));
+                                        var day = value.getDate();
+                                        var month = value.getMonth() + 1;
+                                        var year = value.getFullYear();
+                                        value = day + "/" + month + "/" + year;
+                                    }
 
-                                $("#" + key + "").val(value);
-                            });
-                            $.each(result.Trans_KYCAddresses, function (i) {
-                                $.each(result.Trans_KYCAddresses[i], function (key, val) {
-                                    $("#Trans_KYCAddresses_" + i + "__" + key +"").val(val);
+                                    $("#" + key + "").val(value);
                                 });
-                            });
-                            if (result.ImageName != null) {
-                                $("#kycPhoto").append('<td><a href="/KYC/Download/' + result.KYCID + '" target=_blank>' + result.ImageName + '</a></td>');
-                                IsImageExist(true);
+                                $.each(result.Trans_KYCAddresses, function (i) {
+                                    $.each(result.Trans_KYCAddresses[i], function (key, val) {
+                                        $("#Trans_KYCAddresses_" + i + "__" + key + "").val(val);
+                                    });
+                                });
+                                if (result.ImageName != null) {
+                                    $("#kycPhoto").append('<td><a href="/KYC/Download/' + result.KYCID + '" target=_blank>' + result.ImageName + '</a></td>');
+                                    IsImageExist(true);
+                                }
                             }
                             FillAddressByPinCode(result.PinCode);
                             FillAddressByPinCodePermanentAdd(result.Trans_KYCAddresses[0].PinCode);
@@ -1917,29 +1922,33 @@ new { @class= "form-control" })
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
+                    debugger;
                     if (result.isPanAdharExist == true) {
                         if (result.isNegativeCustomer) {
                             $("#negativeCustomerErr").text("Your account has been blocked ! Please contact customer care for further details");
                             $("#disabledFields").hide();
                         }
                         else {
-                            $.each(result, function (key, value) {
-                                if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
-                                    value = new Date(parseInt(value.replace('/Date(', '')));
-                                    var day = value.getDate();
-                                    var month = value.getMonth() + 1;
-                                    var year = value.getFullYear();
-                                    value = day + "/" + month + "/" + year;
-                                }
-                                $("#" + key + "").val(value);
-                            });
-                            $.each(result.Trans_KYCAddresses, function (i) {
-                                $.each(result.Trans_KYCAddresses[i], function (key, val) {
-                                    $("#Trans_KYCAddresses_" + i + "__" + key + "").val(val);
+                            var pan = $("#PANNo").val();
+                            if (pan.length == 0) {
+                                $.each(result, function (key, value) {
+                                    if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
+                                        value = new Date(parseInt(value.replace('/Date(', '')));
+                                        var day = value.getDate();
+                                        var month = value.getMonth() + 1;
+                                        var year = value.getFullYear();
+                                        value = day + "/" + month + "/" + year;
+                                    }
+                                    $("#" + key + "").val(value);
                                 });
-                            });
-                            if (result.ImageName != null) {
-                                $("#kycPhoto").append('<td><a href="/KYC/Download/' + result.KYCID + '" target=_blank>' + result.ImageName + '</a></td>');
+                                $.each(result.Trans_KYCAddresses, function (i) {
+                                    $.each(result.Trans_KYCAddresses[i], function (key, val) {
+                                        $("#Trans_KYCAddresses_" + i + "__" + key + "").val(val);
+                                    });
+                                });
+                                if (result.ImageName != null) {
+                                    $("#kycPhoto").append('<td><a href="/KYC/Download/' + result.KYCID + '" target=_blank>' + result.ImageName + '</a></td>');
+                                }
                             }
                             $("#area").val(result.Area);
                             $('#disabledFields').find(':input').prop('disabled', true);
@@ -1960,7 +1969,7 @@ new { @class= "form-control" })
                             $('#btn_save').prop('disabled', true);
                         }
 
-                        CheckPanAvailable(pan);
+                       // CheckPanAvailable(pan);
                     }
                 },
                 error: function (xhr, status, error) {
