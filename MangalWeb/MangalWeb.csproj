@@ -144,6 +144,7 @@
     <Compile Include="Controllers\RequestFormController.cs" />
     <Compile Include="Controllers\SchemeController.cs" />
     <Compile Include="Controllers\SourceofApplicationController.cs" />
+    <Compile Include="Controllers\StatdardEndTimeController.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\UserAuthorizationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -2103,6 +2104,7 @@
     <Content Include="Views\ForgotPassword\ResetPassword.cshtml" />
     <Content Include="Views\ForgotPassword\SendLinkSuccess.cshtml" />
     <Content Include="Views\ForgotPassword\ResetPasswordSuccess.cshtml" />
+    <Content Include="Views\StatdardEndTime\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

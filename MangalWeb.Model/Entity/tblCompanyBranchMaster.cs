@@ -34,7 +34,7 @@ namespace MangalWeb.Model.Entity
         public Nullable<int> RecordCreatedBy { get; set; }
         public Nullable<int> RecordUpdatedBy { get; set; }
     
-        public virtual Mst_PinCode Mst_PinCode { get; set; }
         public virtual Mst_BranchType Mst_BranchType { get; set; }
+        public virtual Mst_PinCode Mst_PinCode { get; set; }
     }
 }

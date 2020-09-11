@@ -14,6 +14,12 @@ namespace MangalWeb.Model.Entity
     
     public partial class tbl_PreSanctionDetails
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tbl_PreSanctionDetails()
+        {
+            this.tbl_ResidenceVerification = new HashSet<tbl_ResidenceVerification>();
+        }
+    
         public int Id { get; set; }
         public Nullable<int> KycId { get; set; }
         public string TransactionId { get; set; }
@@ -35,6 +41,8 @@ namespace MangalWeb.Model.Entity
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_ResidenceVerification> tbl_ResidenceVerification { get; set; }
         public virtual TGLKYC_BasicDetails TGLKYC_BasicDetails { get; set; }
     }
 }

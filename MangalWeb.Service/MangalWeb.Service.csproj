@@ -97,6 +97,7 @@
     <Compile Include="Service\RequestFormService.cs" />
     <Compile Include="Service\SchemeService.cs" />
     <Compile Include="Service\SourcefApplicationService.cs" />
+    <Compile Include="Service\StandardEndTimeService.cs" />
     <Compile Include="Service\StateService.cs" />
     <Compile Include="Service\UserAuthorizationService.cs" />
     <Compile Include="Service\UserService.cs" />

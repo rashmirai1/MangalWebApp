@@ -26,8 +26,8 @@ namespace MangalWeb.Model.Entity
         public string CityStdCode { get; set; }
         public string CityBlackListed { get; set; }
     
-        public virtual tblStateMaster tblStateMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mst_PinCode> Mst_PinCode { get; set; }
+        public virtual tblStateMaster tblStateMaster { get; set; }
     }
 }

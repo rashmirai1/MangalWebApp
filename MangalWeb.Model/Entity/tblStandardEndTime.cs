@@ -12,12 +12,9 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_KYCMobileOTP
+    public partial class tblStandardEndTime
     {
-        public int ID { get; set; }
-        public string CustomerId { get; set; }
-        public string Mobile { get; set; }
-        public string OTP { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public int Id { get; set; }
+        public string StatdardEndTime { get; set; }
     }
 }

@@ -12,12 +12,16 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_KYCMobileOTP
+    public partial class TGLSanctionDisburse_ChargesDetails
     {
-        public int ID { get; set; }
-        public string CustomerId { get; set; }
-        public string Mobile { get; set; }
-        public string OTP { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public int CHID { get; set; }
+        public Nullable<int> SDID { get; set; }
+        public Nullable<int> CID { get; set; }
+        public Nullable<int> Serialno { get; set; }
+        public Nullable<decimal> Charges { get; set; }
+        public Nullable<decimal> Amount { get; set; }
+        public Nullable<int> AccountID { get; set; }
+        public string AccountName { get; set; }
+        public Nullable<int> ID { get; set; }
     }
 }
