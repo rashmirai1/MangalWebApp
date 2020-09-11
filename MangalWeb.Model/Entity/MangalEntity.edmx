@@ -1238,6 +1238,100 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLOutwardForm_GoldDetails' does n
           <Property Name="OutwardToLocation" Type="varchar" MaxLength="50" />
           <Property Name="StockLocation" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="TGLSanctionDisburse_BasicDetails">
+          <Key>
+            <PropertyRef Name="SDID" />
+          </Key>
+          <Property Name="SDID" Type="int" Nullable="false" />
+          <Property Name="RefType" Type="nvarchar" MaxLength="50" />
+          <Property Name="RefMon" Type="nvarchar" MaxLength="5" />
+          <Property Name="RefYr" Type="nvarchar" MaxLength="5" />
+          <Property Name="RefID" Type="int" />
+          <Property Name="LoanType" Type="nvarchar" MaxLength="20" />
+          <Property Name="LoanDate" Type="smalldatetime" />
+          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
+          <Property Name="KYCID" Type="int" />
+          <Property Name="OperatorID" Type="int" />
+          <Property Name="EligibleLoanAmt" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="NetLoanPayable" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="BankCashAccID" Type="int" />
+          <Property Name="CheqNEFTDD" Type="nvarchar" MaxLength="50" />
+          <Property Name="CheqNEFTDDNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="CheqNEFTDDDate" Type="smalldatetime" />
+          <Property Name="TotalGrossWeight" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="TotalNetWeight" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="TotalQuantity" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="Totalvalue" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="TotalRate" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="SID" Type="int" />
+          <Property Name="DueDate" Type="smalldatetime" />
+          <Property Name="OwnershipProofImagePath" Type="nvarchar" MaxLength="50" />
+          <Property Name="CIBILScore" Type="nvarchar" MaxLength="20" />
+          <Property Name="ItemImage" Type="image" />
+          <Property Name="BCPID" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="smalldatetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="smalldatetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="smalldatetime" />
+          <Property Name="FYID" Type="int" />
+          <Property Name="BranchID" Type="int" />
+          <Property Name="CMPID" Type="int" />
+          <Property Name="isActive" Type="nvarchar" MaxLength="100" />
+          <Property Name="CashInOutID" Type="int" />
+          <Property Name="GLInOutID" Type="int" />
+          <Property Name="CashOutWardById" Type="int" />
+          <Property Name="GoldInWardById" Type="int" />
+          <Property Name="CashAccID" Type="int" />
+          <Property Name="BankAmount" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="CashAmount" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TGLSanctionDisburse_ChargesDetails">
+          <Key>
+            <PropertyRef Name="CHID" />
+          </Key>
+          <Property Name="CHID" Type="int" Nullable="false" />
+          <Property Name="SDID" Type="int" />
+          <Property Name="CID" Type="int" />
+          <Property Name="Serialno" Type="int" />
+          <Property Name="Charges" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="Amount" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="AccountID" Type="int" />
+          <Property Name="AccountName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID" Type="int" />
+        </EntityType>
+        <EntityType Name="TGLSanctionDisburse_ChargesPostingDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="SDID" Type="int" />
+          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="AccID" Type="int" />
+          <Property Name="Debit" Type="float" />
+          <Property Name="Credit" Type="float" />
+          <Property Name="LedgerID" Type="int" />
+          <Property Name="FYID" Type="int" />
+        </EntityType>
+        <EntityType Name="TGLSanctionDisburse_GoldItemDetails">
+          <Key>
+            <PropertyRef Name="GID" />
+          </Key>
+          <Property Name="GID" Type="int" Nullable="false" />
+          <Property Name="SDID" Type="int" />
+          <Property Name="Serialno" Type="int" />
+          <Property Name="ItemID" Type="int" />
+          <Property Name="GrossWeight" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="NetWeight" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="RateperGram" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="Value" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="Purity" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImgItemPath" Type="nvarchar" MaxLength="500" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TGLSmsHistory">
@@ -1379,15 +1473,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Property Name="NoofDefaultMonths" Type="int" Nullable="false" />
           <Property Name="EffROI" Type="decimal" Precision="11" Scale="2" Nullable="false" />
         </EntityType>
-        <EntityType Name="User_Category">
-          <Key>
-            <PropertyRef Name="usercateid" />
-          </Key>
-          <Property Name="usercateid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="varchar" MaxLength="100" />
-          <Property Name="hierarchyid" Type="int" />
-          <Property Name="status" Type="int" />
-        </EntityType>
         <EntityType Name="User_Category_Hierarchy">
           <Key>
             <PropertyRef Name="id" />
@@ -1425,11 +1510,12 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Property Name="EmployeeCode" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="EmpAddress" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="MobileNo" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="EmailId" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="EmailId" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="createdby" Type="int" />
           <Property Name="createddate" Type="datetime" />
           <Property Name="updatedby" Type="int" />
           <Property Name="updateddate" Type="datetime" />
+          <Property Name="IsVerified" Type="int" />
         </EntityType>
         <Association Name="FK__tbl_UserC__Organ__51BA1E3A">
           <End Role="User_Category_Hierarchy" Type="Self.User_Category_Hierarchy" Multiplicity="0..1" />
@@ -1655,6 +1741,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Parameter Name="FinancialYearId" Type="int" Mode="In" />
           <Parameter Name="Message" Type="int" Mode="InOut" />
         </Function>
+        <Function Name="GetCustomerRecordinSanction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetDocumentUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetDocumentUploadById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -1665,6 +1752,14 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
         </Function>
         <Function Name="GetKYCDetailsForRequestForm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="KycId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Gl_SanctionDisburse_GoldLoanNo_RTR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LoanDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="GL_SanctionDisburse_KYC_RTR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LoanType" Type="nvarchar" Mode="In" />
+          <Parameter Name="FYID" Type="int" Mode="In" />
+          <Parameter Name="BranchId" Type="int" Mode="In" />
         </Function>
         <Function Name="NumberSuffix" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="val" Type="int" Mode="In" />
@@ -1759,13 +1854,16 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <EntitySet Name="tblStateMaster" EntityType="Self.tblStateMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblZonemaster" EntityType="Self.tblZonemaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TGLKYC_BasicDetails" EntityType="Self.TGLKYC_BasicDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TGLSanctionDisburse_BasicDetails" EntityType="Self.TGLSanctionDisburse_BasicDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TGLSanctionDisburse_ChargesDetails" EntityType="Self.TGLSanctionDisburse_ChargesDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TGLSanctionDisburse_ChargesPostingDetails" EntityType="Self.TGLSanctionDisburse_ChargesPostingDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TGLSanctionDisburse_GoldItemDetails" EntityType="Self.TGLSanctionDisburse_GoldItemDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trans_KYCAddresses" EntityType="Self.Trans_KYCAddresses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trn_DocumentUpload" EntityType="Self.Trn_DocumentUpload" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trn_DocUploadDetails" EntityType="Self.Trn_DocUploadDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trn_RequestForm" EntityType="Self.Trn_RequestForm" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TSchemeMaster_BasicDetails" EntityType="Self.TSchemeMaster_BasicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TSchemeMaster_EffectiveROI" EntityType="Self.TSchemeMaster_EffectiveROI" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User_Category" EntityType="Self.User_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Category_Hierarchy" EntityType="Self.User_Category_Hierarchy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAuthorizations" EntityType="Self.UserAuthorizations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
@@ -3186,7 +3284,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           </FunctionImport>
           <FunctionImport Name="GetDocumentUpload" ReturnType="Collection(MangalDBNewModel.GetDocumentUpload_Result)" />
           <EntitySet Name="Mst_BranchType" EntityType="MangalDBNewModel.Mst_BranchType" />
-          <EntitySet Name="User_Category" EntityType="MangalDBNewModel.User_Category" />
           <EntitySet Name="User_Category_Hierarchy" EntityType="MangalDBNewModel.User_Category_Hierarchy" />
           <AssociationSet Name="FK_tblCompanyBranchMaster_Mst_BranchType" Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType">
             <End Role="Mst_BranchType" EntitySet="Mst_BranchType" />
@@ -3267,6 +3364,19 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
             <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
             <End Role="TSchemeMaster_EffectiveROI" EntitySet="TSchemeMaster_EffectiveROI" />
           </AssociationSet>
+          <FunctionImport Name="GetCustomerRecordinSanction" ReturnType="Collection(MangalDBNewModel.GetCustomerRecordinSanction_Result)" />
+          <FunctionImport Name="Gl_SanctionDisburse_GoldLoanNo_RTR" ReturnType="Collection(String)">
+          <Parameter Name="LoanDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GL_SanctionDisburse_KYC_RTR" ReturnType="Collection(MangalDBNewModel.GL_SanctionDisburse_KYC_RTR_Result)">
+            <Parameter Name="LoanType" Mode="In" Type="String" />
+            <Parameter Name="FYID" Mode="In" Type="Int32" />
+            <Parameter Name="BranchId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="TGLSanctionDisburse_ChargesDetails" EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesDetails" />
+          <EntitySet Name="TGLSanctionDisburse_ChargesPostingDetails" EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesPostingDetails" />
+          <EntitySet Name="TGLSanctionDisburse_GoldItemDetails" EntityType="MangalDBNewModel.TGLSanctionDisburse_GoldItemDetails" />
+          <EntitySet Name="TGLSanctionDisburse_BasicDetails" EntityType="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" />
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3913,15 +4023,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblCompanyBranchMasters" Relationship="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType" FromRole="Mst_BranchType" ToRole="tblCompanyBranchMaster" />
         </EntityType>
-        <EntityType Name="User_Category">
-          <Key>
-            <PropertyRef Name="usercateid" />
-          </Key>
-          <Property Name="usercateid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="hierarchyid" Type="Int32" />
-          <Property Name="status" Type="Int32" />
-        </EntityType>
         <EntityType Name="User_Category_Hierarchy">
           <Key>
             <PropertyRef Name="id" />
@@ -4250,12 +4351,13 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <Property Name="EmployeeCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="EmpAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="EmailId" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="EmailId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="createdby" Type="Int32" />
           <Property Name="createddate" Type="DateTime" Precision="3" />
           <Property Name="updatedby" Type="Int32" />
           <Property Name="updateddate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tbl_UserCategory" Relationship="MangalDBNewModel.FK_UserDetails_tbl_UserCategory" FromRole="UserDetail" ToRole="tbl_UserCategory" />
+          <Property Name="IsVerified" Type="Int32" />
         </EntityType>
         <Association Name="FK_UserDetails_tbl_UserCategory">
           <End Type="MangalDBNewModel.tbl_UserCategory" Role="tbl_UserCategory" Multiplicity="1" />
@@ -4335,6 +4437,126 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GetCustomerRecordinSanction_Result">
+          <Property Type="String" Name="CustomerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="NewTopUp" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="92" />
+          <Property Type="String" Name="Gender" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="BirthDate" Nullable="false" MaxLength="12" />
+          <Property Type="String" Name="PANNo" Nullable="false" MaxLength="12" />
+          <Property Type="String" Name="MaritalStatus" Nullable="false" MaxLength="30" />
+          <Property Type="Int32" Name="Age" Nullable="false" />
+          <Property Type="String" Name="CustomerAddress" Nullable="false" MaxLength="224" />
+          <Property Type="String" Name="NomineeName" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="NomineeRelation" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="SchemeNo" Nullable="false" />
+          <Property Type="String" Name="Tenure" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="MaximumLoanAmount" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GL_SanctionDisburse_KYC_RTR_Result">
+          <Property Type="Int32" Name="Record_ID" Nullable="false" />
+          <Property Type="String" Name="Customer_ID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Applied_Date" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Gold_Loan_No" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="Customer_Name" Nullable="true" MaxLength="92" />
+          <Property Type="String" Name="PAN_No" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="Mobile_No" Nullable="true" MaxLength="15" />
+        </ComplexType>
+        <EntityType Name="TGLSanctionDisburse_ChargesDetails">
+          <Key>
+            <PropertyRef Name="CHID" />
+          </Key>
+          <Property Name="CHID" Type="Int32" Nullable="false" />
+          <Property Name="SDID" Type="Int32" />
+          <Property Name="CID" Type="Int32" />
+          <Property Name="Serialno" Type="Int32" />
+          <Property Name="Charges" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="Amount" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="AccountID" Type="Int32" />
+          <Property Name="AccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TGLSanctionDisburse_ChargesPostingDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="SDID" Type="Int32" />
+          <Property Name="GoldLoanNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccID" Type="Int32" />
+          <Property Name="Debit" Type="Double" />
+          <Property Name="Credit" Type="Double" />
+          <Property Name="LedgerID" Type="Int32" />
+          <Property Name="FYID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TGLSanctionDisburse_GoldItemDetails">
+          <Key>
+            <PropertyRef Name="GID" />
+          </Key>
+          <Property Name="GID" Type="Int32" Nullable="false" />
+          <Property Name="SDID" Type="Int32" />
+          <Property Name="Serialno" Type="Int32" />
+          <Property Name="ItemID" Type="Int32" />
+          <Property Name="GrossWeight" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="NetWeight" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="RateperGram" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="Value" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="Purity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImgItemPath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TGLSanctionDisburse_BasicDetails">
+          <Key>
+            <PropertyRef Name="SDID" />
+          </Key>
+          <Property Name="SDID" Type="Int32" Nullable="false" />
+          <Property Name="RefType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RefMon" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="RefYr" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="RefID" Type="Int32" />
+          <Property Name="LoanType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LoanDate" Type="DateTime" Precision="0" />
+          <Property Name="GoldLoanNo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="KYCID" Type="Int32" />
+          <Property Name="OperatorID" Type="Int32" />
+          <Property Name="EligibleLoanAmt" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NetLoanAmtSanctioned" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NetLoanPayable" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="BankCashAccID" Type="Int32" />
+          <Property Name="CheqNEFTDD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CheqNEFTDDNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CheqNEFTDDDate" Type="DateTime" Precision="0" />
+          <Property Name="TotalGrossWeight" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="TotalNetWeight" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="TotalQuantity" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="Totalvalue" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="TotalRate" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="SID" Type="Int32" />
+          <Property Name="DueDate" Type="DateTime" Precision="0" />
+          <Property Name="OwnershipProofImagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CIBILScore" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ItemImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="BCPID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
+          <Property Name="FYID" Type="Int32" />
+          <Property Name="BranchID" Type="Int32" />
+          <Property Name="CMPID" Type="Int32" />
+          <Property Name="isActive" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CashInOutID" Type="Int32" />
+          <Property Name="GLInOutID" Type="Int32" />
+          <Property Name="CashOutWardById" Type="Int32" />
+          <Property Name="GoldInWardById" Type="Int32" />
+          <Property Name="CashAccID" Type="Int32" />
+          <Property Name="BankAmount" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="CashAmount" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5522,16 +5744,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="User_Category">
-            <EntityTypeMapping TypeName="MangalDBNewModel.User_Category">
-              <MappingFragment StoreEntitySet="User_Category">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="hierarchyid" ColumnName="hierarchyid" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="usercateid" ColumnName="usercateid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="User_Category_Hierarchy">
             <EntityTypeMapping TypeName="MangalDBNewModel.User_Category_Hierarchy">
               <MappingFragment StoreEntitySet="User_Category_Hierarchy">
@@ -5850,6 +6062,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
           <EntitySetMapping Name="UserDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.UserDetail">
               <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
                 <ScalarProperty Name="updateddate" ColumnName="updateddate" />
                 <ScalarProperty Name="updatedby" ColumnName="updatedby" />
                 <ScalarProperty Name="createddate" ColumnName="createddate" />
@@ -5893,6 +6106,139 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLSmsHistory' does not have a pri
                 <ScalarProperty Name="NoofDefaultMonths" ColumnName="NoofDefaultMonths" />
                 <ScalarProperty Name="SID" ColumnName="SID" />
                 <ScalarProperty Name="ROIID" ColumnName="ROIID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetCustomerRecordinSanction" FunctionName="MangalDBNewModel.Store.GetCustomerRecordinSanction">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.GetCustomerRecordinSanction_Result">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="NewTopUp" ColumnName="NewTopUp" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+                <ScalarProperty Name="NomineeName" ColumnName="NomineeName" />
+                <ScalarProperty Name="NomineeRelation" ColumnName="NomineeRelation" />
+                <ScalarProperty Name="SchemeNo" ColumnName="SchemeNo" />
+                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
+                <ScalarProperty Name="MaximumLoanAmount" ColumnName="MaximumLoanAmount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Gl_SanctionDisburse_GoldLoanNo_RTR" FunctionName="MangalDBNewModel.Store.Gl_SanctionDisburse_GoldLoanNo_RTR" />
+          <FunctionImportMapping FunctionImportName="GL_SanctionDisburse_KYC_RTR" FunctionName="MangalDBNewModel.Store.GL_SanctionDisburse_KYC_RTR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.GL_SanctionDisburse_KYC_RTR_Result">
+                <ScalarProperty Name="Record_ID" ColumnName="Record ID" />
+                <ScalarProperty Name="Customer_ID" ColumnName="Customer ID" />
+                <ScalarProperty Name="Applied_Date" ColumnName="Applied Date" />
+                <ScalarProperty Name="Gold_Loan_No" ColumnName="Gold Loan No" />
+                <ScalarProperty Name="Customer_Name" ColumnName="Customer Name" />
+                <ScalarProperty Name="PAN_No" ColumnName="PAN No" />
+                <ScalarProperty Name="Mobile_No" ColumnName="Mobile No" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="TGLSanctionDisburse_ChargesDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLSanctionDisburse_ChargesDetails">
+              <MappingFragment StoreEntitySet="TGLSanctionDisburse_ChargesDetails">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Charges" ColumnName="Charges" />
+                <ScalarProperty Name="Serialno" ColumnName="Serialno" />
+                <ScalarProperty Name="CID" ColumnName="CID" />
+                <ScalarProperty Name="SDID" ColumnName="SDID" />
+                <ScalarProperty Name="CHID" ColumnName="CHID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TGLSanctionDisburse_ChargesPostingDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLSanctionDisburse_ChargesPostingDetails">
+              <MappingFragment StoreEntitySet="TGLSanctionDisburse_ChargesPostingDetails">
+                <ScalarProperty Name="FYID" ColumnName="FYID" />
+                <ScalarProperty Name="LedgerID" ColumnName="LedgerID" />
+                <ScalarProperty Name="Credit" ColumnName="Credit" />
+                <ScalarProperty Name="Debit" ColumnName="Debit" />
+                <ScalarProperty Name="AccID" ColumnName="AccID" />
+                <ScalarProperty Name="GoldLoanNo" ColumnName="GoldLoanNo" />
+                <ScalarProperty Name="SDID" ColumnName="SDID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TGLSanctionDisburse_GoldItemDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLSanctionDisburse_GoldItemDetails">
+              <MappingFragment StoreEntitySet="TGLSanctionDisburse_GoldItemDetails">
+                <ScalarProperty Name="ImgItemPath" ColumnName="ImgItemPath" />
+                <ScalarProperty Name="Purity" ColumnName="Purity" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="RateperGram" ColumnName="RateperGram" />
+                <ScalarProperty Name="NetWeight" ColumnName="NetWeight" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="GrossWeight" ColumnName="GrossWeight" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="Serialno" ColumnName="Serialno" />
+                <ScalarProperty Name="SDID" ColumnName="SDID" />
+                <ScalarProperty Name="GID" ColumnName="GID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TGLSanctionDisburse_BasicDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLSanctionDisburse_BasicDetails">
+              <MappingFragment StoreEntitySet="TGLSanctionDisburse_BasicDetails">
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="CashAmount" ColumnName="CashAmount" />
+                <ScalarProperty Name="BankAmount" ColumnName="BankAmount" />
+                <ScalarProperty Name="CashAccID" ColumnName="CashAccID" />
+                <ScalarProperty Name="GoldInWardById" ColumnName="GoldInWardById" />
+                <ScalarProperty Name="CashOutWardById" ColumnName="CashOutWardById" />
+                <ScalarProperty Name="GLInOutID" ColumnName="GLInOutID" />
+                <ScalarProperty Name="CashInOutID" ColumnName="CashInOutID" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="CMPID" ColumnName="CMPID" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="FYID" ColumnName="FYID" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="BCPID" ColumnName="BCPID" />
+                <ScalarProperty Name="ItemImage" ColumnName="ItemImage" />
+                <ScalarProperty Name="CIBILScore" ColumnName="CIBILScore" />
+                <ScalarProperty Name="OwnershipProofImagePath" ColumnName="OwnershipProofImagePath" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="TotalRate" ColumnName="TotalRate" />
+                <ScalarProperty Name="Totalvalue" ColumnName="Totalvalue" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="TotalNetWeight" ColumnName="TotalNetWeight" />
+                <ScalarProperty Name="TotalGrossWeight" ColumnName="TotalGrossWeight" />
+                <ScalarProperty Name="CheqNEFTDDDate" ColumnName="CheqNEFTDDDate" />
+                <ScalarProperty Name="CheqNEFTDDNo" ColumnName="CheqNEFTDDNo" />
+                <ScalarProperty Name="CheqNEFTDD" ColumnName="CheqNEFTDD" />
+                <ScalarProperty Name="BankCashAccID" ColumnName="BankCashAccID" />
+                <ScalarProperty Name="NetLoanPayable" ColumnName="NetLoanPayable" />
+                <ScalarProperty Name="NetLoanAmtSanctioned" ColumnName="NetLoanAmtSanctioned" />
+                <ScalarProperty Name="EligibleLoanAmt" ColumnName="EligibleLoanAmt" />
+                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+                <ScalarProperty Name="GoldLoanNo" ColumnName="GoldLoanNo" />
+                <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
+                <ScalarProperty Name="LoanType" ColumnName="LoanType" />
+                <ScalarProperty Name="RefID" ColumnName="RefID" />
+                <ScalarProperty Name="RefYr" ColumnName="RefYr" />
+                <ScalarProperty Name="RefMon" ColumnName="RefMon" />
+                <ScalarProperty Name="RefType" ColumnName="RefType" />
+                <ScalarProperty Name="SDID" ColumnName="SDID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -84,7 +84,7 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Email Id<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                        @Html.EditorFor(model => model.EmailId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email Id",@type="Email", @maxlength = "30" } })
+                                                        @Html.EditorFor(model => model.EmailId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email Id",@type="Email", @maxlength = "50" } })
                                                         <span class="text-danger small">@Html.ValidationMessageFor(m => m.EmailId)</span>
                                                         <i class="arrow"></i>
                                             </div>

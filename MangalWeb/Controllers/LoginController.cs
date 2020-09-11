@@ -30,13 +30,13 @@ namespace MangalWeb.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult Login(LoginViewModel login)
         {
-            login.Password = PasswordEncryptionDecryption.Encrypt(login.Password);
-
-            var user = _context.UserDetails.Where(x => x.UserName.ToLower() == login.UserName.ToLower() &&
-                                                    x.Password == login.Password
-                                                    ).FirstOrDefault();
             if (ModelState.IsValid)
             {
+                login.Password = PasswordEncryptionDecryption.Encrypt(login.Password);
+
+                var user = _context.UserDetails.Where(x => x.UserName.ToLower() == login.UserName.ToLower() &&
+                                                        x.Password == login.Password
+                                                        ).FirstOrDefault();
                 if (user != null)
                 {
                     FormsAuthentication.RedirectFromLoginPage(login.UserName, false);

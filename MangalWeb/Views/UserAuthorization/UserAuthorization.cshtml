@@ -303,21 +303,21 @@
                                         <thead>
                                             <tr>
                                                 <th class="col-md-1 btn-primary">
-                                                    Visible <input type="checkbox" id="checkAllvisible" />
+                                                    Visible
                                                 </th>
                                                 <th class="col-md-3 btn-primary"> Form Name</th>
                                                 <th class="col-md-3 btn-primary">Main Form</th>
                                                 <th class="col-md-1 btn-primary">
-                                                    Edit <input type="checkbox" id="checkAllEdit" />
+                                                    Edit 
                                                 </th>
                                                 <th class="col-md-1 btn-primary">
-                                                    Save <input type="checkbox" id="checkAllSave" />
+                                                    Save
                                                 </th>
                                                 <th class="col-md-1 btn-primary">
-                                                    Delete <input type="checkbox" id="checkAllDelete" />
+                                                    Delete 
                                                 </th>
                                                 <th class="col-md-1 btn-primary">
-                                                    View <input type="checkbox" id="checkAllView" />
+                                                    View
                                                 </th>
                                             </tr>
                                         </thead>
@@ -365,70 +365,6 @@
         var btnsuccess = document.getElementById('btn_successmessage');
         btnsuccess.click();
     }
-
-    $("#checkAllvisible").click(function () {
-        //Determine the reference CheckBox in Header row.
-        var chkAll = this;
-        //Fetch all row CheckBoxes in the Table.
-        var chkRows = $("#tblFormslist").find(".visible_id");
-        //Execute loop over the CheckBoxes and check and uncheck based on
-        //checked status of Header row CheckBox.
-        chkRows.each(function () {
-            $(this)[0].checked = chkAll.checked;
-        });
-    });
-
-    $("#checkAllEdit").click(function () {
-        //Determine the reference CheckBox in Header row.
-        var chkAll = this;
-        //Fetch all row CheckBoxes in the Table.
-        var chkRows = $("#tblFormslist").find(".isEdit");
-        //Execute loop over the CheckBoxes and check and uncheck based on
-        //checked status of Header row CheckBox.
-        chkRows.each(function () {
-            $(this)[0].checked = chkAll.checked;
-        });
-    });
-
-
-    $("#checkAllSave").click(function () {
-        //Determine the reference CheckBox in Header row.
-        var chkAll = this;
-        //Fetch all row CheckBoxes in the Table.
-        var chkRows = $("#tblFormslist").find(".isSave");
-        //Execute loop over the CheckBoxes and check and uncheck based on
-        //checked status of Header row CheckBox.
-        chkRows.each(function () {
-            $(this)[0].checked = chkAll.checked;
-        });
-    });
-
-
-    $("#checkAllDelete").click(function () {
-        //Determine the reference CheckBox in Header row.
-        var chkAll = this;
-        //Fetch all row CheckBoxes in the Table.
-        var chkRows = $("#tblFormslist").find(".isDelete");
-        //Execute loop over the CheckBoxes and check and uncheck based on
-        //checked status of Header row CheckBox.
-        chkRows.each(function () {
-            $(this)[0].checked = chkAll.checked;
-        });
-    });
-
-
-    $("#checkAllView").click(function () {
-        //Determine the reference CheckBox in Header row.
-        var chkAll = this;
-        //Fetch all row CheckBoxes in the Table.
-        var chkRows = $("#tblFormslist").find(".isView");
-        //Execute loop over the CheckBoxes and check and uncheck based on
-        //checked status of Header row CheckBox.
-        chkRows.each(function () {
-            $(this)[0].checked = chkAll.checked;
-        });
-    });
-
 
     function hide_popup() {
         document.getElementById('popup').style.display = 'none';

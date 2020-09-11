@@ -103,7 +103,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tbl_UserCategory> tbl_UserCategory { get; set; }
         public virtual DbSet<Trn_DocumentUpload> Trn_DocumentUpload { get; set; }
         public virtual DbSet<Mst_BranchType> Mst_BranchType { get; set; }
-        public virtual DbSet<User_Category> User_Category { get; set; }
         public virtual DbSet<User_Category_Hierarchy> User_Category_Hierarchy { get; set; }
         public virtual DbSet<tbl_KYCMobileOTP> tbl_KYCMobileOTP { get; set; }
         public virtual DbSet<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
@@ -116,6 +115,10 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tbl_CKycState> tbl_CKycState { get; set; }
         public virtual DbSet<tblStateMaster> tblStateMasters { get; set; }
         public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
+        public virtual DbSet<TGLSanctionDisburse_ChargesDetails> TGLSanctionDisburse_ChargesDetails { get; set; }
+        public virtual DbSet<TGLSanctionDisburse_ChargesPostingDetails> TGLSanctionDisburse_ChargesPostingDetails { get; set; }
+        public virtual DbSet<TGLSanctionDisburse_GoldItemDetails> TGLSanctionDisburse_GoldItemDetails { get; set; }
+        public virtual DbSet<TGLSanctionDisburse_BasicDetails> TGLSanctionDisburse_BasicDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -302,6 +305,37 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("KycId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetKYCDetailsForRequestForm_Result>("GetKYCDetailsForRequestForm", kycIdParameter);
+        }
+    
+        public virtual ObjectResult<GetCustomerRecordinSanction_Result> GetCustomerRecordinSanction()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCustomerRecordinSanction_Result>("GetCustomerRecordinSanction");
+        }
+    
+        public virtual ObjectResult<string> Gl_SanctionDisburse_GoldLoanNo_RTR(Nullable<System.DateTime> loanDate)
+        {
+            var loanDateParameter = loanDate.HasValue ?
+                new ObjectParameter("LoanDate", loanDate) :
+                new ObjectParameter("LoanDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Gl_SanctionDisburse_GoldLoanNo_RTR", loanDateParameter);
+        }
+    
+        public virtual ObjectResult<GL_SanctionDisburse_KYC_RTR_Result> GL_SanctionDisburse_KYC_RTR(string loanType, Nullable<int> fYID, Nullable<int> branchId)
+        {
+            var loanTypeParameter = loanType != null ?
+                new ObjectParameter("LoanType", loanType) :
+                new ObjectParameter("LoanType", typeof(string));
+    
+            var fYIDParameter = fYID.HasValue ?
+                new ObjectParameter("FYID", fYID) :
+                new ObjectParameter("FYID", typeof(int));
+    
+            var branchIdParameter = branchId.HasValue ?
+                new ObjectParameter("BranchId", branchId) :
+                new ObjectParameter("BranchId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_RTR_Result>("GL_SanctionDisburse_KYC_RTR", loanTypeParameter, fYIDParameter, branchIdParameter);
         }
     }
 }

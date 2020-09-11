@@ -30,7 +30,7 @@ namespace MangalWeb.Model.Utilities
         public string MobileNo { get; set; }
 
         [Required]
-        [StringLength(30)]
+        [StringLength(50)]
         [DataType(DataType.EmailAddress)]
         public string EmailId { get; set; }
 

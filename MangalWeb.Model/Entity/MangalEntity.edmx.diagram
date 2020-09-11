@@ -90,7 +90,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_UserCategory" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocumentUpload" Width="1.5" PointX="21.375" PointY="29.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_BranchType" Width="1.5" PointX="5.375" PointY="18.875" />
-        <EntityTypeShape EntityType="MangalDBNewModel.User_Category" Width="1.5" PointX="28.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.User_Category_Hierarchy" Width="1.5" PointX="28.375" PointY="24.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_KYCMobileOTP" Width="1.5" PointX="30.375" PointY="0.75" />
@@ -108,6 +107,10 @@
         <AssociationConnector Association="MangalDBNewModel.FK_tblCityMaster_tblStateMaster" />
         <EntityTypeShape EntityType="MangalDBNewModel.TSchemeMaster_EffectiveROI" Width="1.5" PointX="29.875" PointY="30.875" />
         <AssociationConnector Association="MangalDBNewModel.FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesDetails" Width="1.5" PointX="3.375" PointY="30.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesPostingDetails" Width="1.5" PointX="30.375" PointY="12.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_GoldItemDetails" Width="1.5" PointX="30.375" PointY="21.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" Width="1.5" PointX="23.375" PointY="29.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

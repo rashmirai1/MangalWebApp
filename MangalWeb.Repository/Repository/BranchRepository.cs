@@ -94,6 +94,7 @@ namespace MangalWeb.Repository.Repository
                     tblBranch.RecordCreatedBy = branch.CreatedBy;
                     tblBranch.RecordUpdated = DateTime.Now;
                     tblBranch.RecordUpdatedBy = branch.UpdatedBy;
+                    tblBranch.CompID = 1;
                     _context.tblCompanyBranchMasters.Add(tblBranch);
                 }
                 else
@@ -129,6 +130,7 @@ namespace MangalWeb.Repository.Repository
                         tblBranch.RecordUpdatedBy = branch.UpdatedBy;
                         tblBranch.RecordCreated = DateTime.Now;
                         tblBranch.RecordCreatedBy = branch.CreatedBy;
+                        tblBranch.CompID = 1;
                         _context.tblCompanyBranchMasters.Add(tblBranch);
                     }
                     else

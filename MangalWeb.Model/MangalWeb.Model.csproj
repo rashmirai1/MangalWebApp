@@ -85,6 +85,9 @@
     <Compile Include="Entity\Bharat_tbl_SentJVCustHistory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\GetCustomerRecordinSanction_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\GetDocumentUploadById_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -98,6 +101,9 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\GetKYCDetailsForRequestForm_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\GL_SanctionDisburse_KYC_RTR_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\ImageKyc.cs">
@@ -340,6 +346,18 @@
     <Compile Include="Entity\TGLOutwardForm_GoldDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\TGLSanctionDisburse_BasicDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLSanctionDisburse_ChargesDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLSanctionDisburse_ChargesPostingDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLSanctionDisburse_GoldItemDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\TGLSmsHistory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -388,9 +406,6 @@
     <Compile Include="Entity\UserDetail.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\User_Category.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\User_Category_Hierarchy.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -421,6 +436,7 @@
     <Compile Include="Masters\ZoneViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\PasswordEncryptionDecryption.cs" />
+    <Compile Include="Transaction\EligibleLoanAmountValuationDetailsVM.cs" />
     <Compile Include="Transaction\GLBorrowerCopyReport.cs" />
     <Compile Include="Transaction\KYCDocumentUpload.cs" />
     <Compile Include="Transaction\DocumentUploadDetailsVM.cs" />
