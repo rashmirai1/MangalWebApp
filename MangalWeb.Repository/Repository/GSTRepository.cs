@@ -55,7 +55,7 @@ namespace MangalWeb.Repository.Repository
             {
                 tblGst = _context.Mst_GstMaster.Where(x => x.Gst_RefId == gstvm.ID).FirstOrDefault();
             }
-            tblGst.Gst_EffectiveFrom = gstvm.EffectiveFrom;
+            tblGst.Gst_EffectiveFrom =Convert.ToDateTime(gstvm.EffectiveFrom);
             tblGst.Gst_CGST = gstvm.CGST;
             tblGst.Gst_SGST = gstvm.SGST;
             tblGst.Gst_IGST = gstvm.IGST;
@@ -69,7 +69,7 @@ namespace MangalWeb.Repository.Repository
             GstViewModel gstvm = new GstViewModel();
             gstvm.ID = tblGst.Gst_RefId;
             gstvm.EditID = tblGst.Gst_RefId;
-            gstvm.EffectiveFrom = tblGst.Gst_EffectiveFrom;
+            gstvm.EffectiveFrom = tblGst.Gst_EffectiveFrom.ToShortDateString();
             gstvm.CGST = tblGst.Gst_CGST;
             gstvm.SGST = tblGst.Gst_SGST;
             gstvm.IGST = tblGst.Gst_IGST;

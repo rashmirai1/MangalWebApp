@@ -31,9 +31,9 @@ namespace MangalWeb.Service.Service
             return ornament;
         }
 
-        public string CheckOrnamentNameExists(string name)
+        public string CheckOrnamentNameExists(string name,int id)
         {
-            var reasonname = _ornamentRepository.CheckOrnamentNameExists(name);
+            var reasonname = _ornamentRepository.CheckOrnamentNameExists(name,id);
             return reasonname;
         }
 

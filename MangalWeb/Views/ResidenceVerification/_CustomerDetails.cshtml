@@ -1,0 +1,32 @@
+﻿@model IList<MangalWeb.Model.Transaction.KYCBasicDetailsVM>
+@using MangalWeb.Model.Transaction
+<div class="modal-content">
+    <div class="modal-body" style="height:inherit; overflow:auto;">
+        <div class="panel-body panel-no-padding" style="height:inherit; overflow:auto;">
+            <div id="demo1">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="CustomerDetailsTable">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left;">Customer Id</th>
+                            <th style="text-align:left;">Application No</th>
+                            <th style="text-align:left;">Applied Date</th>
+                            @*<th style="text-align:left;">Status</th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (KYCBasicDetailsVM item in Model)
+                        {
+                            <tr class="gradeX" style="cursor:pointer;" onclick='window.document.location="/ResidenceVerification/GetCustomerById?Id=@item.KYCID"'>
+                                <td id="@item.KYCID">@item.CustomerID</td>
+                                <td id="@item.ApplicationNo">@item.ApplicationNo</td>
+                                <td id="@item.AppliedDate">@item.AppliedDate</td>
+                                @*<td>@item.Status</td>*@
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+

@@ -18,7 +18,7 @@ namespace MangalWeb.Model.Transaction
         [DataType(DataType.DateTime)]
         [Required(ErrorMessage = "Date is Required")]
         public string DocDate { get; set; }
-        [Required(ErrorMessage = "Customer Selection is Required")]
+        [Required(ErrorMessage = "Please Select Customer")]
         public string CustomerId { get; set; }
         public string ApplicationNo { get; set; }
         public string LoanAccountNo { get; set; }

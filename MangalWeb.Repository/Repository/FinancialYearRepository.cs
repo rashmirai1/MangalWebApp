@@ -2,10 +2,12 @@
 using MangalWeb.Model.Masters;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MangalWeb.Repository.Repository
 {
@@ -35,14 +37,28 @@ namespace MangalWeb.Repository.Repository
             }
         }
 
-        public void SaveUpdateRecord()
+        public int SaveUpdateRecord()
         {
+            int Status;
             tblFinancialyear tblfinancial = new tblFinancialyear();
             var financial = new FinancialYearViewModel();
+            financial.ID =Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
             tblfinancial = _context.tblFinancialyears.Where(x => x.FinancialyearID == financial.ID).FirstOrDefault();
             if (tblfinancial != null)
             {
-                var financialyear = _context.Database.SqlQuery<FinancialYearViewModel>("generatefinancialyear").ToList();
+                var localPar = new SqlParameter("@FinancialYearId", financial.ID);
+                var Paramater2 = new SqlParameter("@Message", "");
+                Paramater2.Direction = ParameterDirection.Output;
+                //Paramater2.Size = 50;
+                Paramater2.DbType = DbType.Int32;
+
+                var parameters = new List<SqlParameter>();
+                parameters.Add(localPar);
+                parameters.Add(Paramater2);
+
+                var result = _context.Database.SqlQuery<object>("EXEC generatefinancialyear @FinancialYearId=@FinancialYearId,@Message=@Message OUTPUT", parameters.ToArray());
+                var x = result.FirstOrDefault();
+                Status =Convert.ToInt32(Paramater2.Value);
             }
             else
             {
@@ -61,8 +77,10 @@ namespace MangalWeb.Repository.Repository
                 tblfinancial.Financialyear = "April" + tblfinancial.Financialyearfrom.Year + "-" + "March" + tblfinancial.Financialyearto.Year;
                 _context.tblFinancialyears.Add(tblfinancial);
                 _context.SaveChanges();
+                Status = 1;
             }
-            financial.ID = _context.tblFinancialyears.Max(x => x.FinancialyearID); ;
+            financial.ID = _context.tblFinancialyears.Max(x => x.FinancialyearID);
+            return Status;
         }
 
         public FinancialYearViewModel SetRecordinEdit(tblFinancialyear tblyear)

@@ -26,9 +26,9 @@ namespace MangalWeb.Service.Service
             return state;
         }
 
-        public string CheckStateNameExists(string name)
+        public string CheckStateNameExists(string name,int id)
         {
-            var statename = _stateRepository.CheckStateNameExists(name);
+            var statename = _stateRepository.CheckStateNameExists(name,id);
             return statename;
         }
 
@@ -42,6 +42,11 @@ namespace MangalWeb.Service.Service
         {
             var list = _stateRepository.GetCountryMasterList();
             return list;
+        }
+
+        public dynamic GetCKycStateist()
+        {
+            return _stateRepository.GetCKycStateist();
         }
 
         public int CheckCityExistsByStateId(int id)

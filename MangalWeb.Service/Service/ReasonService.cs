@@ -25,9 +25,9 @@ namespace MangalWeb.Service.Service
             return source;
         }
 
-        public string CheckReasonNameExists(string name)
+        public string CheckReasonNameExists(string name,int id)
         {
-            var reasonname = _reasonRepository.CheckReasonNameExists(name);
+            var reasonname = _reasonRepository.CheckReasonNameExists(name,id);
             return reasonname;
         }
 

@@ -57,38 +57,12 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tbl_UserCategory> tbl_UserCategory { get; set; }
         public virtual DbSet<tblaccountmaster> tblaccountmasters { get; set; }
         public virtual DbSet<tblBankMaster> tblBankMasters { get; set; }
-        public virtual DbSet<tblCityMaster> tblCityMasters { get; set; }
-        public virtual DbSet<tblCompanyBranchMaster> tblCompanyBranchMasters { get; set; }
-        public virtual DbSet<tblDocumentMaster> tblDocumentMasters { get; set; }
-        public virtual DbSet<tblFinancialyear> tblFinancialyears { get; set; }
-        public virtual DbSet<tblGroupMaster> tblGroupMasters { get; set; }
-        public virtual DbSet<tblINV_ItemMaster> tblINV_ItemMaster { get; set; }
-        public virtual DbSet<tblItemMaster> tblItemMasters { get; set; }
-        public virtual DbSet<tblPenaltySlabtMaster> tblPenaltySlabtMasters { get; set; }
-        public virtual DbSet<tblPrimaryGroup> tblPrimaryGroups { get; set; }
-        public virtual DbSet<tblSchemeMaster> tblSchemeMasters { get; set; }
-        public virtual DbSet<tblSchemeTransMaster> tblSchemeTransMasters { get; set; }
-        public virtual DbSet<tblStandardEndTime> tblStandardEndTimes { get; set; }
-        public virtual DbSet<tblStateMaster> tblStateMasters { get; set; }
-        public virtual DbSet<tblZonemaster> tblZonemasters { get; set; }
-        public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
-        public virtual DbSet<TGLSanctionDisburse_BasicDetails> TGLSanctionDisburse_BasicDetails { get; set; }
-        public virtual DbSet<TGLSanctionDisburse_ChargesDetails> TGLSanctionDisburse_ChargesDetails { get; set; }
-        public virtual DbSet<TGLSanctionDisburse_ChargesPostingDetails> TGLSanctionDisburse_ChargesPostingDetails { get; set; }
-        public virtual DbSet<TGLSanctionDisburse_GoldItemDetails> TGLSanctionDisburse_GoldItemDetails { get; set; }
-        public virtual DbSet<Trn_DocumentUpload> Trn_DocumentUpload { get; set; }
-        public virtual DbSet<Trn_DocUploadDetails> Trn_DocUploadDetails { get; set; }
-        public virtual DbSet<Trn_RequestForm> Trn_RequestForm { get; set; }
-        public virtual DbSet<TSchemeMaster_BasicDetails> TSchemeMaster_BasicDetails { get; set; }
-        public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
-        public virtual DbSet<User_Category_Hierarchy> User_Category_Hierarchy { get; set; }
-        public virtual DbSet<UserAuthorization> UserAuthorizations { get; set; }
-        public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<Bharat_tbl_SentJVCustHistory> Bharat_tbl_SentJVCustHistory { get; set; }
         public virtual DbSet<Bharat01012017tbl_SentJVCustHistory> Bharat01012017tbl_SentJVCustHistory { get; set; }
         public virtual DbSet<bharatTGLGoldInOutDetail> bharatTGLGoldInOutDetails { get; set; }
         public virtual DbSet<ImageKyc> ImageKycs { get; set; }
         public virtual DbSet<Imagestore> Imagestores { get; set; }
+        public virtual DbSet<KycImageStore> KycImageStores { get; set; }
         public virtual DbSet<M_Words> M_Words { get; set; }
         public virtual DbSet<new1bharatTGLGoldStock> new1bharatTGLGoldStock { get; set; }
         public virtual DbSet<newauthorize> newauthorizes { get; set; }
@@ -99,9 +73,9 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tbl_SentJVCustHistory> tbl_SentJVCustHistory { get; set; }
         public virtual DbSet<tblCreateCompanyMaster> tblCreateCompanyMasters { get; set; }
         public virtual DbSet<tblLogin> tblLogins { get; set; }
-        public virtual DbSet<tblSchemeTransMonth> tblSchemeTransMonths { get; set; }
         public virtual DbSet<TestDB> TestDBs { get; set; }
         public virtual DbSet<TGL_DefaultOSPercentage> TGL_DefaultOSPercentage { get; set; }
+        public virtual DbSet<TGL_FormAuthorizationDetails> TGL_FormAuthorizationDetails { get; set; }
         public virtual DbSet<TGL_FormDetails> TGL_FormDetails { get; set; }
         public virtual DbSet<TGLCash_Denomination_Details> TGLCash_Denomination_Details { get; set; }
         public virtual DbSet<TGLCashAuth_BasicDetails> TGLCashAuth_BasicDetails { get; set; }
@@ -122,6 +96,54 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLOutwardForm_DocDetails> TGLOutwardForm_DocDetails { get; set; }
         public virtual DbSet<TGLOutwardForm_GoldDetails> TGLOutwardForm_GoldDetails { get; set; }
         public virtual DbSet<TGLSmsHistory> TGLSmsHistories { get; set; }
+        public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
+        public virtual DbSet<tbl_CountryMaster> tbl_CountryMaster { get; set; }
+        public virtual DbSet<tblDocumentMaster> tblDocumentMasters { get; set; }
+        public virtual DbSet<tblINV_ItemMaster> tblINV_ItemMaster { get; set; }
+        public virtual DbSet<tblPenaltySlabtMaster> tblPenaltySlabtMasters { get; set; }
+        public virtual DbSet<tblSchemeMaster> tblSchemeMasters { get; set; }
+        public virtual DbSet<tblSchemeTransMaster> tblSchemeTransMasters { get; set; }
+        public virtual DbSet<tblStateMaster> tblStateMasters { get; set; }
+        public virtual DbSet<tblZonemaster> tblZonemasters { get; set; }
+        public virtual DbSet<tblSchemeTransMonth> tblSchemeTransMonths { get; set; }
+        public virtual DbSet<tblCityMaster> tblCityMasters { get; set; }
+        public virtual DbSet<Mst_PinCode> Mst_PinCode { get; set; }
+        public virtual DbSet<Mst_DocumentType> Mst_DocumentType { get; set; }
+        public virtual DbSet<Mst_ChildDeviation> Mst_ChildDeviation { get; set; }
+        public virtual DbSet<Mst_GstMaster> Mst_GstMaster { get; set; }
+        public virtual DbSet<Mst_ParentDeviation> Mst_ParentDeviation { get; set; }
+        public virtual DbSet<Mst_PurityMaster> Mst_PurityMaster { get; set; }
+        public virtual DbSet<Mst_Reason> Mst_Reason { get; set; }
+        public virtual DbSet<Mst_SchemePurity> Mst_SchemePurity { get; set; }
+        public virtual DbSet<tblaccountmaster> tblaccountmasters { get; set; }
+        public virtual DbSet<tblGroupMaster> tblGroupMasters { get; set; }
+        public virtual DbSet<tblPrimaryGroup> tblPrimaryGroups { get; set; }
+        public virtual DbSet<tbl_GLChargeMaster_BasicInfo> tbl_GLChargeMaster_BasicInfo { get; set; }
+        public virtual DbSet<tbl_GLChargeMaster_Details> tbl_GLChargeMaster_Details { get; set; }
+        public virtual DbSet<tblFinancialyear> tblFinancialyears { get; set; }
+        public virtual DbSet<tblCompanyBranchMaster> tblCompanyBranchMasters { get; set; }
+        public virtual DbSet<Mst_PenaltySlab> Mst_PenaltySlab { get; set; }
+        public virtual DbSet<Mst_SourceofApplication> Mst_SourceofApplication { get; set; }
+        public virtual DbSet<Mst_AuditCategory> Mst_AuditCategory { get; set; }
+        public virtual DbSet<Mst_AuditCheckList> Mst_AuditCheckList { get; set; }
+        public virtual DbSet<Mst_Product> Mst_Product { get; set; }
+        public virtual DbSet<Mst_ProductRate> Mst_ProductRate { get; set; }
+        public virtual DbSet<Mst_ProductRateDetails> Mst_ProductRateDetails { get; set; }
+        public virtual DbSet<tblItemMaster> tblItemMasters { get; set; }
+        public virtual DbSet<TSchemeMaster_BasicDetails> TSchemeMaster_BasicDetails { get; set; }
+        public virtual DbSet<tbl_UserCategory> tbl_UserCategory { get; set; }
+        public virtual DbSet<Trn_DocumentUpload> Trn_DocumentUpload { get; set; }
+        public virtual DbSet<Mst_BranchType> Mst_BranchType { get; set; }
+        public virtual DbSet<User_Category> User_Category { get; set; }
+        public virtual DbSet<User_Category_Hierarchy> User_Category_Hierarchy { get; set; }
+        public virtual DbSet<tbl_KYCMobileOTP> tbl_KYCMobileOTP { get; set; }
+        public virtual DbSet<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
+        public virtual DbSet<Menu> Menus { get; set; }
+        public virtual DbSet<UserAuthorization> UserAuthorizations { get; set; }
+        public virtual DbSet<Trn_DocUploadDetails> Trn_DocUploadDetails { get; set; }
+        public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
+        public virtual DbSet<Trn_RequestForm> Trn_RequestForm { get; set; }
+        public virtual DbSet<UserDetail> UserDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -308,69 +330,6 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("KycId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetKYCDetailsForRequestForm_Result>("GetKYCDetailsForRequestForm", kycIdParameter);
-        }
-    
-        public virtual ObjectResult<GetCustomerById_Result> GetCustomerById(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCustomerById_Result>("GetCustomerById", idParameter);
-        }
-    
-        public virtual ObjectResult<GetPreSanctionCustomerList_Result> GetPreSanctionCustomerList()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPreSanctionCustomerList_Result>("GetPreSanctionCustomerList");
-        }
-    
-        public virtual ObjectResult<GL_SanctionDisburse_KYC_RTR_Result> GL_SanctionDisburse_KYC_RTR(Nullable<int> fYID, Nullable<int> branchId)
-        {
-            var fYIDParameter = fYID.HasValue ?
-                new ObjectParameter("FYID", fYID) :
-                new ObjectParameter("FYID", typeof(int));
-    
-            var branchIdParameter = branchId.HasValue ?
-                new ObjectParameter("BranchId", branchId) :
-                new ObjectParameter("BranchId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_RTR_Result>("GL_SanctionDisburse_KYC_RTR", fYIDParameter, branchIdParameter);
-        }
-    
-        public virtual ObjectResult<GetCustomerRecordinSanction_Result> GetCustomerRecordinSanction()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCustomerRecordinSanction_Result>("GetCustomerRecordinSanction");
-        }
-    
-        public virtual ObjectResult<string> Gl_SanctionDisburse_GoldLoanNo_RTR(Nullable<System.DateTime> loanDate)
-        {
-            var loanDateParameter = loanDate.HasValue ?
-                new ObjectParameter("LoanDate", loanDate) :
-                new ObjectParameter("LoanDate", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Gl_SanctionDisburse_GoldLoanNo_RTR", loanDateParameter);
-        }
-    
-        public virtual ObjectResult<GetResidenceVerificationCustomerList_Result> GetResidenceVerificationCustomerList()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResidenceVerificationCustomerList_Result>("GetResidenceVerificationCustomerList");
-        }
-    
-        public virtual ObjectResult<GL_SanctionDisburse_KYC_Details_RTR_Result> GL_SanctionDisburse_KYC_Details_RTR(Nullable<int> kYCID, Nullable<int> fYID, Nullable<int> branchId)
-        {
-            var kYCIDParameter = kYCID.HasValue ?
-                new ObjectParameter("KYCID", kYCID) :
-                new ObjectParameter("KYCID", typeof(int));
-    
-            var fYIDParameter = fYID.HasValue ?
-                new ObjectParameter("FYID", fYID) :
-                new ObjectParameter("FYID", typeof(int));
-    
-            var branchIdParameter = branchId.HasValue ?
-                new ObjectParameter("BranchId", branchId) :
-                new ObjectParameter("BranchId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_Details_RTR_Result>("GL_SanctionDisburse_KYC_Details_RTR", kYCIDParameter, fYIDParameter, branchIdParameter);
         }
     }
 }

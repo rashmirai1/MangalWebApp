@@ -18,19 +18,15 @@ namespace MangalWeb.Controllers
         {
             try
             {
-                scheme.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
-                scheme.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
-
-                if (scheme.EditID <= 0)
+                if (ModelState.IsValid)
                 {
-                    var data = _schemeService.CheckSchemeNameExists(scheme.SchemeName);
-                    if (data != null)
-                    {
-                        ModelState.AddModelError("SchemeName", "Scheme Name Already Exists");
-                        return Json(scheme);
-                    }
+                    scheme.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
+                    scheme.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
+                    scheme.SchemeEffectiveROIList = (List<SchemeEffectiveROIVM>)Session["EffectiveROI"];
+                    _schemeService.SaveUpdateRecord(scheme);
                 }
-                _schemeService.SaveUpdateRecord(scheme);
+                ViewBag.PurityList = new SelectList(_schemeService.GetPurityMasterList(), "Id", "PurityName");
+                ViewBag.ProductList = new SelectList(_schemeService.GetProductList(), "Id", "Name");
             }
             catch (Exception ex)
             {
@@ -49,6 +45,7 @@ namespace MangalWeb.Controllers
             {
                 model = _schemeService.SetDataOnEdit(tblscheme);
             }
+            Session["EffectiveROI"] = model.SchemeEffectiveROIList;
             model.operation = operation;
             ViewBag.PurityList = new SelectList(_schemeService.GetPurityById(model.Product).ToList(), "Id", "PurityName");
             ViewBag.ProductList = new SelectList(_schemeService.GetProductList(), "Id", "Name");
@@ -62,10 +59,16 @@ namespace MangalWeb.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesSchemeNameExist(string SchemeName)
+        public JsonResult CheckRecordonEditMode(int Id)
+        {
+            string data = "";
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult doesSchemeNameExist(string SchemeName,int Id)
         {
             var result = "";
-            var data = _schemeService.CheckSchemeNameExists(SchemeName);
+            var data = _schemeService.CheckSchemeNameExists(SchemeName,Id);
             //Check if city name already exists
             if (data != null)
             {
@@ -88,8 +91,34 @@ namespace MangalWeb.Controllers
             ViewBag.PurityList = new SelectList(_schemeService.GetPurityMasterList(), "Id", "PurityName");
             ViewBag.ProductList = new SelectList(_schemeService.GetProductList(), "Id", "Name");
             model.SchemeId = _schemeService.GetMaxPkNo();
+            Session["EffectiveROI"] = null;
             return View(model);
         }
+
+        public JsonResult AddDocument(SchemeEffectiveROIVM model)
+        {
+            var sessionlist = (List<SchemeEffectiveROIVM>)Session["EffectiveROI"];
+            var roimodel = new SchemeEffectiveROIVM();
+            if (sessionlist == null)
+            {
+                sessionlist = new List<SchemeEffectiveROIVM>();
+            }
+            roimodel.ID = model.NoofDefaultMonths;
+            roimodel.NoofDefaultMonths = model.NoofDefaultMonths;
+            roimodel.EffectiveROIPerc = model.EffectiveROIPerc;
+            sessionlist.Add(roimodel);
+            Session["EffectiveROI"] = sessionlist;
+            return Json(roimodel, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Remove(int id)
+        {
+            var list = (List<SchemeEffectiveROIVM>)Session["EffectiveROI"];
+            list.Remove(list.Where(x => x.ID == id).FirstOrDefault());
+            Session["EffectiveROI"] = list;
+            return Json(1, JsonRequestBehavior.AllowGet);
+        }
+
 
         public JsonResult GetPurity(int id)
         {

@@ -13,50 +13,21 @@ namespace MangalWeb.Controllers
         AuditChecklistService _auditService = new AuditChecklistService();
 
         [HttpPost]
-        public ActionResult Insert(AuditCheckListViewModel objViewModel)
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateEdit(AuditCheckListViewModel audit)
         {
-            ModelState.Remove("Id");
-            if (objViewModel.ID == 0)
-            {
-                if (InsertData(objViewModel))
-                {
-                    return Json(1, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json(3, JsonRequestBehavior.AllowGet);
-                }
-            }
-            else
-            {
-                if (InsertData(objViewModel))
-                {
-                    return Json(2, JsonRequestBehavior.AllowGet);
-                }
-            }
-            return View("Index", objViewModel);
-        }
-
-        #region Insert Data
-
-        public bool InsertData(AuditCheckListViewModel audit)
-        {
-            bool retVal = false;
             audit.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
             audit.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
             try
             {
                 _auditService.SaveUpdateRecord(audit);
-                retVal = true;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-            return retVal;
+            return Json(audit);
         }
-
-        #endregion Insert Data
 
         public ActionResult GetAuditCheckListById(int ID)
         {
@@ -78,6 +49,12 @@ namespace MangalWeb.Controllers
         {
             _auditService.DeleteRecord(id);
             return Json(JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CheckRecordonEditMode(int Id)
+        {
+            string data = "";
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult AuditCheckList()

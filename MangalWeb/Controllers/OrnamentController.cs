@@ -18,15 +18,6 @@ namespace MangalWeb.Controllers
         {
             try
             {
-                if (ornament.ID <= 0)
-                {
-                    var data = _ornamentService.CheckOrnamentNameExists(ornament.OrnamentName);
-                    if (data != null)
-                    {
-                        ModelState.AddModelError("OrnamentName", "Ornament Name Already Exists");
-                        return Json(ornament);
-                    }
-                }
                 _ornamentService.SaveUpdateRecord(ornament);
             }
             catch (Exception ex)
@@ -58,9 +49,9 @@ namespace MangalWeb.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesOrnamentNameExist(string OrnamentName)
+        public JsonResult doesOrnamentNameExist(string OrnamentName,int Id)
         {
-            var data = _ornamentService.CheckOrnamentNameExists(OrnamentName);
+            var data = _ornamentService.CheckOrnamentNameExists(OrnamentName,Id);
             var result = "";
             //Check if document name already exists
             if (data != null)
@@ -80,8 +71,9 @@ namespace MangalWeb.Controllers
         public ActionResult Ornament()
         {
             ButtonVisiblity("Index");
+            var model = new OrnamentViewModel();
             ViewBag.ProductList = new SelectList(_ornamentService.GetProductList(), "Id", "Name");
-            return View();
+            return View(model);
         }
 
         public ActionResult GetOrnamentTable(string Operation)

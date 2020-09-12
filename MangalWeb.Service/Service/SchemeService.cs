@@ -23,9 +23,9 @@ namespace MangalWeb.Service.Service
             return _schemeRepository.GetSchemeMasterById(id);
         }
 
-        public string CheckSchemeNameExists(string name)
+        public string CheckSchemeNameExists(string name,int id)
         {
-            return _schemeRepository.CheckSchemeNameExists(name);
+            return _schemeRepository.CheckSchemeNameExists(name,id);
         }
 
         public SchemeViewModel SetDataOnEdit(TSchemeMaster_BasicDetails tblScheme)

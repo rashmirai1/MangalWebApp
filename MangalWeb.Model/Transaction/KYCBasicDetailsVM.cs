@@ -156,6 +156,8 @@ namespace MangalWeb.Model.Transaction
         public List<KYCDocumentUpload> DocumentUploadList { get; set; }
         public virtual IList<KYCAddressesVM> Trans_KYCAddresses { get; set; }
         public string ResidenceCode { get; set; }
+        public string Status { get; set; }
+        public string AddressCategory { get; set; }
 
     }
 }

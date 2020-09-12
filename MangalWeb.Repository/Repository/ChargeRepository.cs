@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MangalWeb.Repository.Repository
 {
@@ -37,9 +38,9 @@ namespace MangalWeb.Repository.Repository
             tblCharge.ChargeName = chargeViewModel.ChargeName;
             tblCharge.ReferenceDate = chargeViewModel.ReferenceDate;
             tblCharge.Status = chargeViewModel.Status;
-            tblCharge.FYID = 1;
-            tblCharge.BranchID = 1;
-            tblCharge.CMPId = 1;
+            tblCharge.BranchID = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            tblCharge.CMPId = Convert.ToInt32(HttpContext.Current.Session["CompanyId"]);
+            tblCharge.FYID = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
             tblCharge.CreatedDate = DateTime.Now;
             tblCharge.CreatedBy = chargeViewModel.CreatedBy;
             tblCharge.UpdatedDate = DateTime.Now;
@@ -75,6 +76,9 @@ namespace MangalWeb.Repository.Repository
             chargeObj.Status = chargeViewModel.Status;
             chargeObj.UpdatedBy = chargeViewModel.UpdatedBy;
             chargeObj.UpdatedDate = DateTime.Now;
+            chargeObj.BranchID = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            chargeObj.CMPId = Convert.ToInt32(HttpContext.Current.Session["CompanyId"]);
+            chargeObj.FYID = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
 
             List<tbl_GLChargeMaster_Details> NewChargeDetailsList = new List<tbl_GLChargeMaster_Details>();
 
@@ -125,10 +129,16 @@ namespace MangalWeb.Repository.Repository
 
         }
 
-        public string CheckChargeNameExists(string Name)
+        public string CheckChargeNameExists(string Name, int id)
         {
-            var charge = _context.tbl_GLChargeMaster_BasicInfo.Where(x => x.ChargeName == Name).Select(x => x.ChargeName).FirstOrDefault();
-            return charge;
+            if (id > 0)
+            {
+                return _context.tbl_GLChargeMaster_BasicInfo.Where(x => x.ChargeName == Name && x.CID != id).Select(x => x.ChargeName).FirstOrDefault();
+            }
+            else
+            {
+                return _context.tbl_GLChargeMaster_BasicInfo.Where(x => x.ChargeName == Name).Select(x => x.ChargeName).FirstOrDefault();
+            }
         }
 
         public List<ChargeViewModel> SetDataofModalList()

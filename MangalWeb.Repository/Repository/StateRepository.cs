@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MangalWeb.Repository.Repository
 {
-   public class StateRepository
+    public class StateRepository
     {
         MangalDBNewEntities _context = new MangalDBNewEntities();
 
@@ -16,6 +16,16 @@ namespace MangalWeb.Repository.Repository
         {
             var list = _context.tblStateMasters.ToList();
             return list;
+        }
+
+        public dynamic GetCKycStateist()
+        {
+            var ckyclist = _context.tbl_CKycState.Select(x => new
+            {
+                StateId = x.Id,
+                StateName = x.StateCode + " - " + x.StateName + ""
+            }).ToList();
+            return ckyclist;
         }
 
         public List<tbl_CountryMaster> GetCountryMasterList()
@@ -26,13 +36,13 @@ namespace MangalWeb.Repository.Repository
 
         public tblStateMaster GetStateMasterById(int id)
         {
-            var state = _context.tblStateMasters.Where(x=>x.StateID==id).FirstOrDefault();
+            var state = _context.tblStateMasters.Where(x => x.StateID == id).FirstOrDefault();
             return state;
         }
 
         public int CheckCityExistsByStateId(int id)
         {
-            var city = _context.tblCityMasters.Where(x => x.StateID == id).Select(x=>x.CityID).FirstOrDefault();
+            var city = _context.tblCityMasters.Where(x => x.StateID == id).Select(x => x.CityID).FirstOrDefault();
             return city;
         }
 
@@ -49,7 +59,7 @@ namespace MangalWeb.Repository.Repository
         public void SaveUpdateRecord(StateViewModel model)
         {
             tblStateMaster tblstate = new tblStateMaster();
-            if(model.ID<=0)
+            if (model.ID <= 0)
             {
                 model.ID = _context.tblStateMasters.Any() ? _context.tblStateMasters.Max(x => x.StateID) + 1 : 1;
                 tblstate.StateID = model.ID;
@@ -62,13 +72,20 @@ namespace MangalWeb.Repository.Repository
             tblstate.StateCode = model.StateCode;
             tblstate.StateName = model.StateName;
             tblstate.countryID = model.CountryId;
+            tblstate.CkycStateId = model.CkycStateId;
             _context.SaveChanges();
         }
 
-        public string CheckStateNameExists(string Name)
+        public string CheckStateNameExists(string Name,int id)
         {
-            var state = _context.tblStateMasters.Where(x => x.StateName == Name).Select(x=>x.StateName).FirstOrDefault();
-            return state;
+            if (id > 0)
+            {
+                return _context.tblStateMasters.Where(x => x.StateName == Name && x.StateID!=id).Select(x => x.StateName).FirstOrDefault();
+            }
+            else
+            {
+                return _context.tblStateMasters.Where(x => x.StateName == Name).Select(x => x.StateName).FirstOrDefault();
+            }
         }
 
         public StateViewModel SetRecordinEdit(tblStateMaster tblstate)
@@ -78,6 +95,7 @@ namespace MangalWeb.Repository.Repository
             state.StateCode = tblstate.StateCode;
             state.StateName = tblstate.StateName;
             state.CountryId = tblstate.countryID;
+            state.CkycStateId = (int)tblstate.CkycStateId;
             return state;
         }
     }

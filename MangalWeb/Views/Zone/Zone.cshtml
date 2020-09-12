@@ -16,7 +16,7 @@
         </div><!--end of col-md-5-->
         <div class="col-md-7 col-sm-8 col-xs-12">
             <div class="topbar-right" id="headerbutton">
-                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal" class="btn btn-warning btn-sm light fw600 ml10"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
+                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
                 <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
                 <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
                 <button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]"
@@ -45,8 +45,9 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Zone Name<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
-                                                @Html.EditorFor(model => model.ZoneName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Zone Name", @autofocus = "autofocus" } })
+                                                <span class="text-danger" id="CustomErr"> </span><br />
+                                                <span class="text-danger" id="CustomErrr"> </span>
+                                                @Html.EditorFor(model => model.ZoneName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Zone Name", @autocomplete = "Off", @autofocus = "autofocus" } })
                                                 @Html.ValidationMessageFor(model => model.ZoneName, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -75,7 +76,7 @@
                     $.ajax({
                         type: "POST",
                         url: '@Url.Action("doesZoneNameExist", "Zone")',
-                        data: '{ZoneName: "' + $("#ZoneName").val() + '" }',
+                        data: '{ZoneName: "' + $("#ZoneName").val() + '", Id: "' + $("#ItemID").val() + '"}',
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (result) {
@@ -94,6 +95,31 @@
                         }
                     });
                 });
+
+            $("#ZoneName").on('input', function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CheckRecordonEditMode", "Zone")',
+                    data: '{Id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "") {
+                            $("#CustomErrr").empty();
+                            $("#btn_save").removeAttr('disabled')
+                        }
+                        else {
+                            $("#CustomErrr").text(result);
+                            $("#btn_save").attr('disabled', true)
+                            return false;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(error);
+                    }
+                });
+            });
+
             //}
         });
 

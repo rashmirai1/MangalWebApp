@@ -129,9 +129,11 @@
     <Compile Include="Controllers\DeviationController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\DocumentUploadController.cs" />
+    <Compile Include="Controllers\ResidenceVerificationController.cs" />
+    <Compile Include="Controllers\PreSanctionController.cs" />
     <Compile Include="Controllers\DocumentVerificationController.cs" />
     <Compile Include="Controllers\FinancialYearController.cs" />
-    <Compile Include="Controllers\ForgotPasswordController.cs" />
+    <Compile Include="Controllers\GLBorrowerCopyController.cs" />
     <Compile Include="Controllers\GSTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KYCController.cs" />
@@ -142,9 +144,9 @@
     <Compile Include="Controllers\ProductRateController.cs" />
     <Compile Include="Controllers\ReasonController.cs" />
     <Compile Include="Controllers\RequestFormController.cs" />
+    <Compile Include="Controllers\SanctionDisbursementController.cs" />
     <Compile Include="Controllers\SchemeController.cs" />
     <Compile Include="Controllers\SourceofApplicationController.cs" />
-    <Compile Include="Controllers\StatdardEndTimeController.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\UserAuthorizationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -2017,6 +2019,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\datepicker.js" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -2100,11 +2103,12 @@
     <Content Include="Views\UserAuthorization\UserAuthorization.cshtml" />
     <Content Include="Views\User\UserMaster.cshtml" />
     <Content Include="Views\User\_UserMasterList.cshtml" />
-    <Content Include="Views\ForgotPassword\ForgotPassword.cshtml" />
-    <Content Include="Views\ForgotPassword\ResetPassword.cshtml" />
-    <Content Include="Views\ForgotPassword\SendLinkSuccess.cshtml" />
-    <Content Include="Views\ForgotPassword\ResetPasswordSuccess.cshtml" />
-    <Content Include="Views\StatdardEndTime\Index.cshtml" />
+    <Content Include="Views\GLBorrowerCopy\GLBorrowerCopy.cshtml" />
+    <Content Include="Views\SanctionDisbursement\SanctionDisbursement.cshtml" />
+    <Content Include="Views\PreSanction\_CustomerDetails.cshtml" />
+    <Content Include="Views\PreSanction\Index.cshtml" />
+    <Content Include="Views\ResidenceVerification\_CustomerDetails.cshtml" />
+    <Content Include="Views\ResidenceVerification\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

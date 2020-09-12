@@ -13,43 +13,21 @@ namespace MangalWeb.Controllers
         PenaltySlabService _penaltySlabService = new PenaltySlabService();
 
         [HttpPost]
-        public ActionResult Insert(PenaltySlabViewModel objViewModel)
+        [ValidateAntiForgeryToken]
+        public JsonResult CreateEdit(PenaltySlabViewModel penalty)
         {
-            ModelState.Remove("Id");
-            if (objViewModel.ID == 0)
-            {
-                if (InsertData(objViewModel))
-                {
-                    return Json(1, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json(3, JsonRequestBehavior.AllowGet);
-                }
-            }
-            else
-            {
-                if (InsertData(objViewModel))
-                {
-                    return Json(2, JsonRequestBehavior.AllowGet);
-                }
-            }
-            return View("Index", objViewModel);
-        }
-
-        #region Insert Data
-
-        public bool InsertData(PenaltySlabViewModel penalty)
-        {
-            bool retVal = false;
             penalty.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
             penalty.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
-            _penaltySlabService.SaveUpdateRecord(penalty);
-            retVal = true;
-            return retVal;
+            try
+            {
+                _penaltySlabService.SaveUpdateRecord(penalty);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return Json(penalty);
         }
-
-        #endregion Insert Data
 
         public ActionResult GetPenaltySlabById(int ID)
         {
@@ -70,6 +48,12 @@ namespace MangalWeb.Controllers
         {
             _penaltySlabService.DeleteRecord(id);
             return Json(JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CheckRecordonEditMode(int Id)
+        {
+            string data = "";
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult PenaltySlab()

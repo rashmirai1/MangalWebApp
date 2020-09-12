@@ -20,15 +20,6 @@ namespace MangalWeb.Controllers
             source.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
             try
             {
-                if (source.EditID <= 0)
-                {
-                    var data = _sourceofApplicationService.CheckSourceNameExists(source.SourceName);
-                    if (data != null)
-                    {
-                        ModelState.AddModelError("SourceName", "Source Name Already Exists");
-                        return Json(source);
-                    }
-                }
                 _sourceofApplicationService.SaveUpdateRecord(source);
             }
             catch (Exception ex)
@@ -57,13 +48,19 @@ namespace MangalWeb.Controllers
         {
             string data = "";
             _sourceofApplicationService.DeleteRecord(id);
-            return Json(JsonRequestBehavior.AllowGet);
+            return Json(data,JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesSourceNameExist(string SourceName)
+        public JsonResult CheckRecordonEditMode(int Id)
+        {
+            string data = "";
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult doesSourceNameExist(string SourceName,int Id)
         {
             var result = "";
-            var data = _sourceofApplicationService.CheckSourceNameExists(SourceName);
+            var data = _sourceofApplicationService.CheckSourceNameExists(SourceName,Id);
             //Check if city name already exists
             if (data != null)
             {

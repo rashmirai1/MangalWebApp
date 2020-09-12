@@ -18,7 +18,7 @@
         </div><!--end of col-md-5-->
         <div class="col-md-7 col-sm-8 col-xs-12">
             <div class="topbar-right" id="headerbutton">
-                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal" class="btn btn-warning btn-sm light fw600 ml10"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
+                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
                 <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
                 <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
                 <button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]"
@@ -59,7 +59,7 @@
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.EffectiveFrom, new { htmlAttributes = new { @class = "form-control", @placeholder = "Effective From", @autocomplete = "Off" } })
                                                 <span class="text-danger" id="CustomErrr"> </span>
-                                                @*@Html.ValidationMessageFor(model => model.EffectiveFrom, "", new { @class = "text-danger" })*@
+                                                @Html.ValidationMessageFor(model => model.EffectiveFrom, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                         <br />
@@ -117,6 +117,29 @@
             $("#EffectiveFrom").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
         });
 
+        $("#EffectiveFrom").on('change', function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("CheckRecordonEditMode", "GST")',
+                data: '{Id: "' + $("#ItemID").val() + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result == "") {
+                        $("#CustomErrr").empty();
+                        $("#btn_save").removeAttr('disabled')
+                    }
+                    else {
+                        $("#CustomErrr").text(result);
+                        $("#btn_save").attr('disabled', true)
+                        return false;
+                    }
+                },
+                error: function (xhr, status, error) {
+                    //alert(error);
+                }
+            });
+        });
 
         $("#btn_save").click(function () {
             SaveAuditCheckList();
@@ -124,12 +147,26 @@
 
         function SaveAuditCheckList() {
             debugger;
-            var EffectiveFrom = $("#EffectiveFrom").val();
-            if (EffectiveFrom == "") {
-                $("#CustomErrr").text("Please Enter Effective From");
-                $("#EffectiveDate").focus();
+            //var EffectiveFrom = $("#EffectiveFrom").val();
+            //if (EffectiveFrom == "") {
+            //    $("#CustomErrr").text("Please Enter Effective From");
+            //    $("#EffectiveDate").focus();
+            //    return;
+            //}
+            if ($('#CGST').val() == 0 && $('#IGST').val()==0)
+            {
+                $("#CustomErr").text("Please Enter CGST OR IGST");
+                $("#CGST").focus();
                 return;
             }
+
+            if ($('#CGST').val() > 0 && $('#SGST').val() == 0)
+            {
+                $("#CustomErr").text("Please Enter SGST");
+                $("#SGST").focus();
+                return;
+            }
+
             $("#btn_save").prop("disabled", true);
             var GSTViewModel = {};
             GSTViewModel.ID = $('#ItemID').val();

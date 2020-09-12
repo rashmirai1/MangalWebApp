@@ -40,8 +40,8 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Date<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
                                                 @Html.EditorFor(model => model.ProductRateDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Date", @autocomplete = "Off" } })
+                                                <span class="text-danger small">@Html.ValidationMessageFor(m => m.ProductRateDate)</span>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Product<span class="text-danger"> * </span></label>
@@ -66,6 +66,7 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label"> Purity <span class="text-danger"> * </span></label>
                                         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <span class="text-danger" id="CustomErr"> </span>
                                             <div class="section">
                                                 <label class="field select">
                                                     @Html.DropDownListFor(m => m.ProductDetailsViewModel.Purity, (SelectList)ViewBag.PurityList, "--Select Purity--", htmlAttributes: new { @class = "form-control" })
@@ -184,6 +185,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
                 </div>
             </div>
     </section>
@@ -338,52 +341,72 @@
                     '<td width="20%">' + NetRate + '</td>' +
                     '<td id=' + srno + '' + actions + '</td>' +
                     '</tr>';
-                if (currentRow) {
-                    $("#tblProductRateDetails tbody").find($(currentRow)).replaceWith(row);
-                    $("#ProductDetailsViewModel_Purity").val("");
-                    $("#ProductDetailsViewModel_GrossRate").val("");
-                    $("#ProductDetailsViewModel_DeductionAmount").val("");
-                    $("#ProductDetailsViewModel_NetRate").val("");
-                    currentRow = null;
+                var isExist = false;
+                $("#tblProductRateDetails TBODY tr").each(function() {
+                    // get row
+                    debugger;
+                    var row = $(this);
+                    // get first and second td
+                    var first = row.find('td:nth-child(2)').attr('id');
+                    // if exists, remove the tr
+                    if (first == PurityNo) {
+                        isExist = true;
+                    }
+                });
+                if(isExist)
+                {
+                    alert("The same Purity already Exist");
+                    return false;
                 }
-                else {
-                    if (PurityName != "" && DeductionTypeName != "") {
-                        $("#tblProductRateDetails tbody").append(row);
+                else
+                {
+                    if (currentRow) {
+                        $("#tblProductRateDetails tbody").find($(currentRow)).replaceWith(row);
                         $("#ProductDetailsViewModel_Purity").val("");
                         $("#ProductDetailsViewModel_GrossRate").val("");
                         $("#ProductDetailsViewModel_DeductionAmount").val("");
                         $("#ProductDetailsViewModel_NetRate").val("");
-                        $("#divProductRate").show();
+                        currentRow = null;
                     }
+                    else {
+                        if (PurityName != "" && DeductionTypeName != "" && GrossRate!="" && DeductionTypeName!="" && DeductionAmt!="") {
+                            $("#tblProductRateDetails tbody").append(row);
+                            $("#ProductDetailsViewModel_Purity").val("");
+                            $("#ProductDetailsViewModel_GrossRate").val("");
+                            $("#ProductDetailsViewModel_DeductionAmount").val("");
+                            $("#ProductDetailsViewModel_NetRate").val("");
+                            $("#divProductRate").show();
+                        }
+                    }
+                    $("#tblProductRateDetails TBODY TR").on("click", ".edit", function () {
+                        debugger;
+                        var tr = $(this).closest('tr');
+                        currentRow = $(this).parents('tr');
+                        debugger;
+                        //sr_no = tr.find('td:eq(0)').html();
+                        sr_no = tr.find('td:eq(0)').html();
+                        trid =tr.attr('id'); // table row ID
+                        var purityNo = tr.find("td").eq(1).attr('id');
+                        var grossRate = tr.find('td:eq(2)').html();
+                        var deductionType = tr.find("td").eq(3).attr('id');
+                        var deductionAmount = tr.find('td:eq(4)').html();
+                        var netRate = tr.find('td:eq(5)').html();
+
+                        $("#ProductDetailsViewModel_Purity").val(purityNo);
+                        $("#ProductDetailsViewModel_GrossRate").val(grossRate);
+                        $("#ProductDetailsViewModel_DeductionsType").val(deductionType);
+                        $("#ProductDetailsViewModel_DeductionAmount").val(deductionAmount);
+                        $("#ProductDetailsViewModel_NetRate").val(netRate);
+                    })
+
+                    $("#tblProductRateDetails TBODY TR").on("click", ".delete", function () {
+                        if (confirm('Are you sure to remove?')) {
+                            $(this).parents('tr').remove();
+                            return false;
+                        }
+                    })
                 }
-                $("#tblProductRateDetails TBODY TR").on("click", ".edit", function () {
-                    debugger;
-                    var tr = $(this).closest('tr');
-                    currentRow = $(this).parents('tr');
-                    debugger;
-                    //sr_no = tr.find('td:eq(0)').html();
-                    sr_no = tr.find('td:eq(0)').html();
-                    trid =tr.attr('id'); // table row ID
-                    var purityNo = tr.find("td").eq(1).attr('id');
-                    var grossRate = tr.find('td:eq(2)').html();
-                    var deductionType = tr.find("td").eq(3).attr('id');
-                    var deductionAmount = tr.find('td:eq(4)').html();
-                    var netRate = tr.find('td:eq(5)').html();
-
-                    $("#ProductDetailsViewModel_Purity").val(purityNo);
-                    $("#ProductDetailsViewModel_GrossRate").val(grossRate);
-                    $("#ProductDetailsViewModel_DeductionsType").val(deductionType);
-                    $("#ProductDetailsViewModel_DeductionAmount").val(deductionAmount);
-                    $("#ProductDetailsViewModel_NetRate").val(netRate);
                 })
-
-                $("#tblProductRateDetails TBODY TR").on("click", ".delete", function () {
-                    if (confirm('Are you sure to remove?')) {
-                        $(this).parents('tr').remove();
-                        return false;
-                    }
-                })
-            })
         });
 
 

@@ -1,0 +1,275 @@
+﻿@model MangalWeb.Model.Transaction.PreSanctionDetailsVM
+@{
+    ViewBag.Title = "DocumentVerification";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+@using (Ajax.BeginForm("Insert", "PreSanction", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.KycId)
+    <header id="topbar" class="affix">
+        <div class="col-md-5 col-sm-4 col-xs-12">
+            <div class="topbar-left">
+                <h4>Pre Sanction Form</h4>
+            </div><!--end of topbar-left-->
+        </div><!--end of col-md-5-->
+        <div class="col-md-7 col-sm-8 col-xs-12">
+            <div class="topbar-right" id="headerbutton" @TempData["headerbutton"]>
+                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
+                <a href="@Html.Raw(@Url.Action("Index", "PreSanction"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+            </div><!--end of topbar-right-->
+        </div><!--end of col-md-7-->
+
+    </header>
+    <!-- Begin: Content -->
+    <section id="content" class="animated fadeIn content_height">
+        <!-- Dashboard Tiles -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel1 panel-primary">
+                    <div class="admin-form">
+                        <div class="panel-body">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Customer Id<span class="text-danger">*</span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.CustomerId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Id", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
+                                                <div class="input-group-btn" style="display:inline;">
+                                                    <button type="button" data-toggle="modal" data-target="#editModal" onclick="ShowClientTableList();" class="btn btn-info btn_info1">...</button>
+                                                    @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Application No<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.ApplicationNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Application No", @readonly = true } })
+                                                @Html.ValidationMessageFor(model => model.ApplicationNo, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Transaction Id<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>
+                                                @Html.EditorFor(model => model.TransactionId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Id", @readonly = true } })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Date<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                @Html.EditorFor(model => model.AppliedDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Applied Date", @autocomplete = "Off" } })
+                                                @Html.ValidationMessageFor(model => model.AppliedDate, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                New / Top Up
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.NewTopUp,
+new List<SelectListItem> {
+new SelectListItem { Value = "New" , Text = "New" },
+new SelectListItem { Value = "Top Up" , Text = "Top Up" }
+},
+new { @class= "form-control" })
+                                                @Html.ValidationMessageFor(model => model.NewTopUp, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">RM Name<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                @Html.DropDownListFor(m => m.RM, (SelectList)ViewBag.RMList, "--Select RM--", htmlAttributes: new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.RM, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                Product
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.Product,
+new List<SelectListItem> {
+new SelectListItem { Value = "Gold" , Text = "Gold" },
+new SelectListItem { Value = "Diamond" , Text = "Diamond" }
+},
+new { @class= "form-control" })
+                                                @Html.ValidationMessageFor(model => model.Product, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Purpose Of Loan<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                @Html.DropDownListFor(m => m.PurposeofLoan, new SelectList(ViewBag.LoanPurpose, "Value", "Text"), new { @class = "form-control select2" })
+                                                @Html.ValidationMessageFor(model => model.PurposeofLoan, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                Scheme name
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>  @Html.DropDownListFor(m => m.Scheme, (SelectList)ViewBag.Schemes, "--Select Schemes--", htmlAttributes: new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.Scheme, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                Req. loan Amount
+                                                <span class="text-danger"> * </span>
+                                            </label>
+                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                @Html.EditorFor(model => model.ReqLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Req. loan Amount" } })
+                                                @Html.ValidationMessageFor(model => model.ReqLoanAmount, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                Tenure
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>
+                                                @Html.EditorFor(model => model.Tenure, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tenure" } })
+                                                @Html.ValidationMessageFor(model => model.Tenure, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                Residence Verification
+                                                <span class="text-danger"> * </span>
+                                            </label>
+                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                @Html.DropDownListFor(model => model.ResidenceVerification,
+new List<SelectListItem> {
+new SelectListItem { Value = "Yes" , Text = "Yes" },
+new SelectListItem { Value = "NO" , Text = "NO" },
+new SelectListItem { Value = "Not Applicable" , Text = "Not Applicable" }
+},
+new { @class= "form-control" })
+                                                @Html.ValidationMessageFor(model => model.ResidenceVerification, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                ROI%
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                <span class="text-danger" id="CustomErr"> </span>
+                                                @Html.EditorFor(model => model.ROI, new { htmlAttributes = new { @class = "form-control", @placeholder = "ROI" } })
+                                                @Html.ValidationMessageFor(model => model.ROI, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                LTV%
+                                                <span class="text-danger"> * </span>
+                                            </label>
+                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                @Html.EditorFor(model => model.LTV, new { htmlAttributes = new { @class = "form-control", @placeholder = "LTV" } })
+                                                @Html.ValidationMessageFor(model => model.LTV, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Comments<span class="text-danger">*</span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Comments", @cols = "20", @rows = "2" })
+                                                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+                                                }
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@section javascriptsection{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type=datetime]').datepicker({
+                dateFormat: "dd/M/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-60:+0"
+            });
+
+            $("#Scheme").on('change', function () {
+                var scheme = $(this).val();
+                FillSchemeDetailsById(scheme);
+            });
+        });
+
+        function FillSchemeDetailsById(scheme) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("FillSchemeDetailsById", "PreSanction")',
+                data: '{id: "' + scheme + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    $("#ReqLoanAmount").val(result.MaxLoanAmt);
+                    $("#Tenure").val(result.Tenure);
+                    $("#ROI").val(result.ROI);
+                    $("#LTV").val(result.Ltv);
+                },
+                error: function (xhr, status, error) {
+                    alert("something went wrong!");
+                }
+            });
+        }
+        function ShowClientTableList() {
+            $('#divviewfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetCustomerDetails", "PreSanction")',
+                success: function (data) {
+                    $('#diveditfilldata').empty();
+                    $('#diveditfilldata').html(data);
+                    $('#CustomerDetailsTable').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+        
+       
+        var urlRedirect = '@Html.Raw(@Url.Action("Index", "PreSanction"))';
+
+        function OnSuccess(response) {
+            $("#saveModal").modal('show');
+            $(document).click(function () {
+                window.location.href = urlRedirect;
+            });
+        }
+
+        function OnFailure(response) {
+            alert('Error Occured');
+        }
+
+    </script>
+}

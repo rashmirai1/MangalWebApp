@@ -18,15 +18,6 @@ namespace MangalWeb.Controllers
         {
             try
             {
-                if (document.ID <= 0)
-                {
-                    var data = _documentService.CheckDocumentNameExists(document.DocumentName);
-                    if (data != null)
-                    {
-                        ModelState.AddModelError("DocumentName", "Document Name Already Exists");
-                        return Json(document);
-                    }
-                }
                 _documentService.SaveUpdateRecord(document);
             }
             catch (Exception ex)
@@ -58,9 +49,15 @@ namespace MangalWeb.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesDocumentNameExist(string DocumentName)
+        public JsonResult CheckRecordonEditMode(int Id)
         {
-            var data = _documentService.CheckDocumentNameExists(DocumentName);
+            string data = "";
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult doesDocumentNameExist(string DocumentName,int Id)
+        {
+            var data = _documentService.CheckDocumentNameExists(DocumentName,Id);
             var result = "";
             //Check if document name already exists
             if (data != null)
@@ -80,8 +77,9 @@ namespace MangalWeb.Controllers
         public ActionResult Document()
         {
             ButtonVisiblity("Index");
+            var model = new DocumentViewModel();
             ViewBag.DocumentTypeList = new SelectList(_documentService.GetDcoumentTypeList(), "Id", "Name");
-            return View();
+            return View(model);
         }
 
         public ActionResult GetDocumentTable(string Operation)

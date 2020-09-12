@@ -13,7 +13,7 @@ namespace MangalWeb.Model.Masters
         [Required(ErrorMessage = "Effective Date is Required")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
-        public DateTime EffectiveDate { get; set; }
+        public string EffectiveDate { get; set; }
 
         [Required(ErrorMessage = "Please Select Category Audit")]
         public int CategoryAudit { get; set; }

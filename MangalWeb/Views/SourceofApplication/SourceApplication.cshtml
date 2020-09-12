@@ -47,7 +47,8 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Source Id</label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
+                                                <span class="text-danger" id="CustomErr"> </span><br />
+                                                <span class="text-danger" id="CustomErrr"> </span>
                                                 @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Source ID",@disabled=true} })
                                             </div>
                                         </div>
@@ -57,7 +58,7 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Source Name<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.SourceName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Source Name", @autofocus = "autofocus" } })
+                                                @Html.EditorFor(model => model.SourceName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Source Name",@maxlength="30",@autofocus = "autofocus" } })
                                                 @Html.ValidationMessageFor(model => model.SourceName, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -132,7 +133,7 @@
                     $.ajax({
                         type: "POST",
                         url: '@Url.Action("doesSourceNameExist", "SourceofApplication")',
-                        data: '{SourceName: "' + $("#SourceName").val() + '" }',
+                        data: '{SourceName: "' + $("#SourceName").val() + '", Id: "' + $("#ItemID").val() + '"}',
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (result) {
@@ -149,6 +150,30 @@
                         error: function (xhr, status, error) {
                             //alert(error);
                         }
+                    });
+
+                    $("#SourceName").on('input', function () {
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("CheckRecordonEditMode", "SourceofApplication")',
+                            data: '{Id: "' + $("#ItemID").val() + '" }',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (result) {
+                                if (result == "") {
+                                    $("#CustomErrr").empty();
+                                    $("#btn_save").removeAttr('disabled')
+                                }
+                                else {
+                                    $("#CustomErrr").text(result);
+                                    $("#btn_save").attr('disabled', true)
+                                    return false;
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                //alert(error);
+                            }
+                        });
                     });
                 });
             //}

@@ -14,7 +14,7 @@ namespace MangalWeb.Model.Masters
         [Required(ErrorMessage = "Effective From is Required")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
-        public DateTime EffectiveFrom { get; set; }
+        public string EffectiveFrom { get; set; }
 
         public string CGST { get; set; }
 

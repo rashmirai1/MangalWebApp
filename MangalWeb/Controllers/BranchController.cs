@@ -20,15 +20,6 @@ namespace MangalWeb.Controllers
             branch.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
             try
             {
-                if (branch.ID <= 0)
-                {
-                    var data = _branchService.CheckBranchNameExists(branch.BranchName);
-                    if (data != null)
-                    {
-                        ModelState.AddModelError("BranchName", "Branch Name Already Exists");
-                        return Json(branch);
-                    }
-                }
                 _branchService.SaveUpdateRecord(branch);
             }
             catch (Exception ex)
@@ -61,9 +52,15 @@ namespace MangalWeb.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesBranchNameExist(string BranchName)
+        public JsonResult CheckRecordonEditMode(int Id)
         {
-            var data = _branchService.CheckBranchNameExists(BranchName);
+            string data = "";
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult doesBranchNameExist(string BranchName,int Id)
+        {
+            var data = _branchService.CheckBranchNameExists(BranchName,Id);
             var result = "";
             //Check if branch name already exists
             if (data != null)

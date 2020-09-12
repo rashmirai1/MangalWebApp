@@ -15,33 +15,34 @@ namespace MangalWeb.Repository.Repository
 
         public List<Mst_PinCode> GetAllPincodeMasters()
         {
-            var list = _context.Mst_PinCode.ToList();
-            return list;
+            return _context.Mst_PinCode.ToList();
+        }
+
+        public int CheckBranchExistsByPincodeId(int id)
+        {
+            return _context.tblCompanyBranchMasters.Where(x => x.Pincode == id).Select(x => x.Pincode).Count();
         }
 
         public List<tblCityMaster> GetCityMasterList()
         {
-            var list = _context.tblCityMasters.ToList();
-            return list;
+            return _context.tblCityMasters.ToList();
         }
 
         public List<tblZonemaster> GetZoneMasterList()
         {
-            var list = _context.tblZonemasters.ToList();
-            return list;
+            return _context.tblZonemasters.ToList();
         }
 
         public string GetStateName(int id)
         {
-            var stateid =_context.tblCityMasters.Where(x => x.CityID ==id).Select(x => x.StateID).FirstOrDefault();
+            var stateid = _context.tblCityMasters.Where(x => x.CityID == id).Select(x => x.StateID).FirstOrDefault();
             var statename = _context.tblStateMasters.Where(x => x.StateID == stateid).Select(x => x.StateName).FirstOrDefault();
             return statename;
         }
 
         public Mst_PinCode GetPincodeById(int id)
         {
-            var pincode = _context.Mst_PinCode.Where(x => x.Pc_Id == id).FirstOrDefault();
-            return pincode;
+            return _context.Mst_PinCode.Where(x => x.Pc_Id == id).FirstOrDefault();
         }
 
         public void DeleteRecord(int id)
@@ -76,10 +77,16 @@ namespace MangalWeb.Repository.Repository
             _context.SaveChanges();
         }
 
-        public string CheckPincodeExists(string Name)
+        public string CheckPincodeExists(string pincode, int id)
         {
-            var pincode = _context.Mst_PinCode.Where(x => x.Pc_AreaName == Name).Select(x => x.Pc_AreaName).FirstOrDefault();
-            return pincode;
+            if (id > 0)
+            {
+                return _context.Mst_PinCode.Where(x => x.Pc_Desc == pincode && x.Pc_Id != id).Select(x => x.Pc_Desc).FirstOrDefault();
+            }
+            else
+            {
+                return _context.Mst_PinCode.Where(x => x.Pc_Desc == pincode).Select(x => x.Pc_Desc).FirstOrDefault();
+            }
         }
 
         public PincodeViewModel SetRecordinEdit(Mst_PinCode tblpincode)

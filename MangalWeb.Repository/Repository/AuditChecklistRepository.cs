@@ -53,7 +53,7 @@ namespace MangalWeb.Repository.Repository
             {
                 tblAudit = _context.Mst_AuditCheckList.Where(x => x.Acl_Id == audit.ID).FirstOrDefault();
             }
-            tblAudit.Acl_EffectiveDate = audit.EffectiveDate;
+            tblAudit.Acl_EffectiveDate =Convert.ToDateTime(audit.EffectiveDate);
             tblAudit.Acl_Categoryofaudit = audit.CategoryAudit;
             tblAudit.Acl_CheckPoint = audit.AuditCheckPoint;
             tblAudit.Acl_Status = audit.Status;
@@ -72,7 +72,7 @@ namespace MangalWeb.Repository.Repository
         {
             var audit = new AuditCheckListViewModel();
             audit.ID = tblAudit.Acl_Id;
-            audit.EffectiveDate = tblAudit.Acl_EffectiveDate;
+            audit.EffectiveDate =tblAudit.Acl_EffectiveDate.ToShortDateString();
             audit.CategoryAudit = tblAudit.Acl_Categoryofaudit;
             audit.AuditCheckPoint = tblAudit.Acl_CheckPoint;
             audit.Status = tblAudit.Acl_Status;
@@ -88,7 +88,7 @@ namespace MangalWeb.Repository.Repository
             {
                 model = new AuditCheckListViewModel();
                 model.ID = item.Acl_Id;
-                model.EffectiveDate = item.Acl_EffectiveDate;
+                model.EffectiveDate = item.Acl_EffectiveDate.ToShortDateString();
                 model.CategoryAuditStr = _context.Mst_AuditCategory.Where(x => x.Id == item.Acl_Categoryofaudit).Select(x=>x.Name).FirstOrDefault();
                 model.AuditCheckPoint = item.Acl_CheckPoint;
                 model.Status = item.Acl_Status;

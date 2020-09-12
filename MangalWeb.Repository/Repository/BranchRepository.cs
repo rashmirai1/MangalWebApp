@@ -14,8 +14,7 @@ namespace MangalWeb.Repository.Repository
 
         public List<tblCompanyBranchMaster> GetAllBranchMasters()
         {
-            var list = _context.tblCompanyBranchMasters.ToList();
-            return list;
+            return _context.tblCompanyBranchMasters.Where(x => x.Status == 1).ToList();
         }
 
         public tblCompanyBranchMaster GetBranchMasterById(int id)
@@ -37,8 +36,7 @@ namespace MangalWeb.Repository.Repository
                 model.BranchCode = item.BranchCode;
                 model.DateInception = item.InceptionDate.ToShortDateString();
                 model.DateWEF = Convert.ToDateTime(item.DateWEF).ToShortDateString();
-                //model.PincodeStr = item.ms.Pc_Desc;
-                //model.AreaName = item.Mst_PinCode.Pc_AreaName;
+                model.PincodeStr = item.Mst_PinCode.Pc_Desc;
                 model.StatusStr = item.Status == 1 ? "Active" : "Inactive";
                 list.Add(model);
             }
@@ -167,10 +165,16 @@ namespace MangalWeb.Repository.Repository
             }
         }
 
-        public string CheckBranchNameExists(string Name)
+        public string CheckBranchNameExists(string Name, int id)
         {
-            var branch = _context.tblCompanyBranchMasters.Where(x => x.BranchName == Name).Select(x => x.BranchName).FirstOrDefault();
-            return branch;
+            if (id > 0)
+            {
+                return _context.tblCompanyBranchMasters.Where(x => x.BranchName == Name && x.BID != id).Select(x => x.BranchName).FirstOrDefault();
+            }
+            else
+            {
+                return _context.tblCompanyBranchMasters.Where(x => x.BranchName == Name).Select(x => x.BranchName).FirstOrDefault();
+            }
         }
 
         public BranchViewModel SetRecordinEdit(tblCompanyBranchMaster tblBranch)
@@ -190,7 +194,7 @@ namespace MangalWeb.Repository.Repository
             branch.OutTime = tblBranch.OutTime;
             branch.Status = (short)tblBranch.Status;
             //ViewBag.PincodeList = new SelectList(dd._context.Mst_PinCode.ToList(), "Pc_Id", "Pc_Desc");
-            var pincodelist =_context.Mst_PinCode.Select(x => new
+            var pincodelist = _context.Mst_PinCode.Select(x => new
             {
                 PcId = x.Pc_Id,
                 PincodeWithArea = x.Pc_Desc + "(" + x.Pc_AreaName + ")"
@@ -199,7 +203,7 @@ namespace MangalWeb.Repository.Repository
             var pincodemodel = _context.Mst_PinCode.Where(x => x.Pc_Id == branch.Pincode).Select(x => new PincodeViewModel { CityId = x.Pc_CityId, ZoneId = x.Pc_ZoneId, AreaName = x.Pc_AreaName }).FirstOrDefault();
             var ZoneName = _context.tblZonemasters.Where(x => x.ZoneID == pincodemodel.ZoneId).Select(x => x.Zone).FirstOrDefault();
             var cityname = _context.tblCityMasters.Where(x => x.CityID == pincodemodel.CityId).Select(x => new CityViewModel { CityName = x.CityName, StateId = (int)x.StateID }).FirstOrDefault();
-            var statename =_context.tblStateMasters.Where(x => x.StateID == cityname.StateId).Select(x => x.StateName).FirstOrDefault();
+            var statename = _context.tblStateMasters.Where(x => x.StateID == cityname.StateId).Select(x => x.StateName).FirstOrDefault();
             branch.AreaName = pincodemodel.AreaName;
             branch.ZoneName = ZoneName;
             branch.CityName = cityname.CityName;

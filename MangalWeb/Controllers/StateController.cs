@@ -18,21 +18,7 @@ namespace MangalWeb.Controllers
         {
             try
             {
-                if (state.ID <= 0)
-                {
-                    var data = _stateService.CheckStateNameExists(state.StateName);
-                    if (data != null)
-                    {
-                        ModelState.AddModelError("StateName", "State Name Already Exists");
-                        return Json(state);
-                    }
-                    _stateService.SaveUpdateRecord(state);
-                }
-                else
-                {
-                    _stateService.SaveUpdateRecord(state);
-                }
-                
+                _stateService.SaveUpdateRecord(state);
             }
             catch (Exception ex)
             {
@@ -59,6 +45,7 @@ namespace MangalWeb.Controllers
             }
             model.operation = operation;
             ViewBag.CountryList = new SelectList(_stateService.GetCountryList(), "CountryID", "CountryName");
+            ViewBag.CkycStateList = new SelectList(_stateService.GetCKycStateist(), "StateId", "StateName");
             return View("State", model);
         }
 
@@ -69,19 +56,27 @@ namespace MangalWeb.Controllers
             if (_stateService.CheckCityExistsByStateId(id) > 0)
             {
                 data = "Record Cannot Be Deleted Already In Use!";
-
-                return Json(data, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 _stateService.DeleteStateRecord(id);
-                return Json(JsonRequestBehavior.AllowGet);
             }
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesStateNameExist(string StateName)
+        public JsonResult CheckRecordonEditMode(int Id)
         {
-            var data = _stateService.CheckStateNameExists(StateName);
+            string data = "";
+            if (_stateService.CheckCityExistsByStateId(Id) > 0)
+            {
+                data = "Record Cannot Be Edit Already In Use!";
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult doesStateNameExist(string StateName,int Id)
+        {
+            var data = _stateService.CheckStateNameExists(StateName,Id);
             var result = "";
             //Check if state name already exists
             if (data != null)
@@ -103,6 +98,7 @@ namespace MangalWeb.Controllers
             ButtonVisiblity("Index");
             var model = new StateViewModel();
             ViewBag.CountryList = new SelectList(_stateService.GetCountryList(), "CountryID", "CountryName");
+            ViewBag.CkycStateList = new SelectList(_stateService.GetCKycStateist(), "StateId", "StateName");
             return View(model);
         }
 

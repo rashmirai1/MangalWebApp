@@ -31,10 +31,9 @@ namespace MangalWeb.Service.Service
             return Sourceid;
         }
 
-        public string CheckSourceNameExists(string name)
+        public string CheckSourceNameExists(string name,int id)
         {
-            var sourcename = _sourceRepository.CheckSourceNameExists(name);
-            return sourcename;
+            return _sourceRepository.CheckSourceNameExists(name,id);
         }
 
         public SourceofApplicationViewModel SetDataOnEdit(Mst_SourceofApplication tblsource)

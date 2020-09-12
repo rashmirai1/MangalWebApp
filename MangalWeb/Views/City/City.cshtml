@@ -48,8 +48,9 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">City Name<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
-                                                @Html.EditorFor(model => model.CityName, new { htmlAttributes = new { @class = "form-control", @placeholder = "City Name", @autofocus = "autofocus" } })
+                                                <span class="text-danger" id="CustomErr"> </span><br />
+                                                <span class="text-danger" id="CustomErrr"> </span>
+                                                @Html.EditorFor(model => model.CityName, new { htmlAttributes = new { @class = "form-control", @placeholder = "City Name", @autocomplete = "Off", @autofocus = "autofocus" } })
                                                 @Html.ValidationMessageFor(model => model.CityName, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -109,7 +110,7 @@
                     $.ajax({
                         type: "POST",
                         url: '@Url.Action("doesCityNameExist", "City")',
-                        data: '{CityName: "' + $("#CityName").val() + '" }',
+                        data: '{CityName: "' + $("#CityName").val() + '", Id: "' + $("#ItemID").val() + '"}',
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (result) {
@@ -128,6 +129,30 @@
                         }
                     });
                 });
+
+            $("#CityName").on('input', function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CheckRecordonEditMode", "City")',
+                    data: '{Id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "") {
+                            $("#CustomErrr").empty();
+                            $("#btn_save").removeAttr('disabled')
+                        }
+                        else {
+                            $("#CustomErrr").text(result);
+                            $("#btn_save").attr('disabled', true)
+                            return false;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(error);
+                    }
+                });
+            });
             //}
 
             //Dropdownlist Selectedchange event

@@ -163,18 +163,18 @@
                                             @{int j = 1;}
                                             @foreach (var item in Model.DocumentUploadList)
                                             {
-                                                <tr id="@item.ID">
-                                                    <td>@j</td>
-                                                    <td id="@item.DocumentTypeId">@item.DocumentTypeName</td>
-                                                    <td id="@item.DocumentId">@item.DocumentName</td>
-                                                    <td>@item.SpecifyOther</td>
-                                                    <td>@item.NameonDocument</td>
-                                                    <td>@item.ExpiryDate</td>
-                                                    <td><a href="/DocumentUpload/Download/@item.ID" target=_blank>@item.FileName</a></td>
-                                                    <td>
-                                                        <a class="delete"><i class="fa fa-trash"></i></a>
-                                                    </td>
-                                                </tr>
+                                            <tr id="@item.ID">
+                                                <td>@j</td>
+                                                <td id="@item.DocumentTypeId">@item.DocumentTypeName</td>
+                                                <td id="@item.DocumentId">@item.DocumentName</td>
+                                                <td>@item.SpecifyOther</td>
+                                                <td>@item.NameonDocument</td>
+                                                <td>@item.ExpiryDate</td>
+                                                <td><a href="/DocumentUpload/Download/@item.ID" target=_blank>@item.FileName</a></td>
+                                                <td>
+                                                    <a class="delete"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
                                                 j++;
                                             }
                                         </tbody>
@@ -185,6 +185,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
                                                 }
 
@@ -241,7 +242,6 @@
                 {
                     var tr = $(this).closest('tr');
                     trid =tr.attr('id'); // table row ID
-                    var tr = $(this).closest('tr');
                     tr.remove();
                     $.ajax({
                         url: '/DocumentUpload/Remove?id='+trid,
@@ -370,24 +370,6 @@
                         }
                     }
                 }
-                //$("#tblDocumentDetails TBODY TR").on("click", ".edit", function () {
-                //    debugger;
-                //    var tr = $(this).closest('tr');
-                //    currentRow= $(this).parents('tr');
-                //    debugger;
-                //    sr_no = tr.find('td:eq(0)').html();
-                //    trid =tr.attr('id'); // table row ID
-
-                //    var DocumentTypeId =tr.find("td").eq(1).attr('id');
-                //    var DocumentId = tr.find("td").eq(2).attr('id');
-                //    var ExpiryDate =tr.find('td:eq(3)').html();
-                //    var FileName =tr.find('td:eq(4)').val();
-
-                //    $("#DocumentUploadVM_DocumentTypeId").val(DocumentTypeId);
-                //    $("#DocumentUploadVM_DocumentId").val(DocumentId);
-                //    $("#DocumentUploadVM_ExpiryDate").val(ExpiryDate);
-                //    $("#UploadedFile").val(FileName);
-                //})
 
                 $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
                     if(confirm('Are you sure to remove?'))
@@ -430,7 +412,6 @@
         }
 
         $("#diveditfilldata").on("click", "tr", function () {
-            debugger;
             var tr = $(this).closest('tr');
             var CustomerId =tr.find('td:eq(0)').html();
             var KycId =tr.find("td").eq(0).attr('id');
@@ -449,7 +430,6 @@
         });
 
         function SaveDocument() {
-            debugger;
             var DocDate = $("#DocDate").val();
             if (DocDate == "") {
                 $("#CustomErr").text("Please Enter Date");

@@ -19,15 +19,6 @@ namespace MangalWeb.Controllers
             reason.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
             try
             {
-                if (reason.ID <= 0)
-                {
-                    var data = _reasonService.CheckReasonNameExists(reason.ReasonName);
-                    if (data != null)
-                    {
-                        ModelState.AddModelError("Reason", "Reason Already Exists");
-                        return Json(reason);
-                    }
-                }
                 _reasonService.SaveUpdateRecord(reason);
             }
             catch (Exception ex)
@@ -58,9 +49,9 @@ namespace MangalWeb.Controllers
             return Json(JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesReasonExist(string Reason)
+        public JsonResult doesReasonExist(string Reason,int Id)
         {
-            var data = _reasonService.CheckReasonNameExists(Reason);
+            var data = _reasonService.CheckReasonNameExists(Reason,Id);
             var result = "";
             //Check if record already exists
             if (data != null)
@@ -80,7 +71,8 @@ namespace MangalWeb.Controllers
         public ActionResult Reason()
         {
             ButtonVisiblity("Index");
-            return View();
+            var model = new ReasonViewModel();
+            return View(model);
         }
 
         public ActionResult GetReasonTable(string Operation)

@@ -69,16 +69,23 @@ namespace MangalWeb.Repository.Repository
             _context.SaveChanges();
         }
 
-        public string CheckEmployeeCodeExists(string EmpCode)
+        public string CheckEmployeeCodeExists(string EmpCode, int id)
         {
-            return _context.UserDetails.Where(x => x.EmployeeCode == EmpCode).Select(x => x.EmployeeCode).FirstOrDefault();
+            if (id > 0)
+            {
+                return _context.UserDetails.Where(x => x.EmployeeCode == EmpCode && x.UserID != id).Select(x => x.EmployeeCode).FirstOrDefault();
+            }
+            else
+            {
+                return _context.UserDetails.Where(x => x.EmployeeCode == EmpCode).Select(x => x.EmployeeCode).FirstOrDefault();
+            }
         }
 
         public UserViewModel SetRecordinEdit(UserDetail tblUser)
         {
             UserViewModel user = new UserViewModel();
             user.ID = tblUser.UserID;
-            user.EditId = tblUser.UserID; 
+            user.EditId = tblUser.UserID;
             user.EmployeeName = tblUser.EmployeeName;
             user.EmployeeCode = tblUser.EmployeeCode;
             user.Address = tblUser.EmpAddress;
@@ -86,7 +93,7 @@ namespace MangalWeb.Repository.Repository
             user.EmailId = tblUser.EmailId;
             user.UserCategoryId = tblUser.UserTypeID;
             user.UserName = tblUser.UserName;
-            user.Password =PasswordEncryptionDecryption.Decrypt(tblUser.Password);
+            user.Password = PasswordEncryptionDecryption.Decrypt(tblUser.Password);
             return user;
         }
 

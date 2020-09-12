@@ -55,10 +55,16 @@ namespace MangalWeb.Repository
             _context.SaveChanges();
         }
 
-        public string CheckReasonNameExists(string Name)
+        public string CheckReasonNameExists(string Name, int id)
         {
-            var source = _context.Mst_Reason.Where(x => x.Re_Desc == Name).Select(x => x.Re_Desc).FirstOrDefault();
-            return source;
+            if (id > 0)
+            {
+                return _context.Mst_Reason.Where(x => x.Re_Desc == Name && x.Re_No != id).Select(x => x.Re_Desc).FirstOrDefault();
+            }
+            else
+            {
+                return _context.Mst_Reason.Where(x => x.Re_Desc == Name).Select(x => x.Re_Desc).FirstOrDefault();
+            }
         }
 
 

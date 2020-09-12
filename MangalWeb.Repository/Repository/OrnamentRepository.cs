@@ -57,10 +57,16 @@ namespace MangalWeb.Repository.Repository
             _context.SaveChanges();
         }
 
-        public string CheckOrnamentNameExists(string Name)
+        public string CheckOrnamentNameExists(string Name, int id)
         {
-            var item = _context.tblItemMasters.Where(x => x.ItemName == Name).Select(x => x.ItemName).FirstOrDefault();
-            return item;
+            if (id > 0)
+            {
+                return _context.tblItemMasters.Where(x => x.ItemName == Name && x.ItemID != id).Select(x => x.ItemName).FirstOrDefault();
+            }
+            else
+            {
+                return _context.tblItemMasters.Where(x => x.ItemName == Name).Select(x => x.ItemName).FirstOrDefault();
+            }
         }
 
 
@@ -70,7 +76,7 @@ namespace MangalWeb.Repository.Repository
             ornament.ID = tblOrnament.ItemID;
             ornament.OrnamentName = tblOrnament.ItemName;
             ornament.Product = tblOrnament.Product;
-            ornament.Status =tblOrnament.Status;
+            ornament.Status = tblOrnament.Status;
             return ornament;
         }
 

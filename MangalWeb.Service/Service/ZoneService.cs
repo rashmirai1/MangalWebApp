@@ -25,9 +25,14 @@ namespace MangalWeb.Service.Service
             return zone;
         }
 
-        public string CheckZoneNameExists(string name)
+        public int CheckPincodeExistsByZoneId(int id)
         {
-            var statename = _zoneRepository.CheckZoneNameExists(name);
+            return _zoneRepository.CheckPincodeExistsByZoneId(id);
+        }
+
+        public string CheckZoneNameExists(string name,int id)
+        {
+            var statename = _zoneRepository.CheckZoneNameExists(name,id);
             return statename;
         }
 

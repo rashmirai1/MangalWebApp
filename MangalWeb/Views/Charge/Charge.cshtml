@@ -39,10 +39,10 @@
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Charge Name<span class="text-danger"> * </span></label>
-                                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
                                                 <span class="text-danger" id="CustomErr"> </span>
                                                 <span class="text-danger" id="CustomErrr"> </span>
-                                                @Html.EditorFor(model => model.ChargeName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Charge Name", @maxlength = "20",@autofocus = "autofocus" } })
+                                                @Html.EditorFor(model => model.ChargeName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Charge Name", @maxlength = "20", @autofocus = "autofocus" } })
                                                 @*@Html.ValidationMessageFor(model => model.ChargeName, "", new { @class = "text-danger" })*@
                                             </div>
                                         </div>
@@ -55,8 +55,6 @@
                                                 <span class="text-danger" id="CustomErr"> </span>
                                                 @Html.EditorFor(model => model.ReferenceDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Reference Date" } })
                                             </div>
-                                        </div>
-                                        <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
                                                 <div class="section">
@@ -71,7 +69,7 @@
                                                         }
                                                         @Html.DropDownListFor(m => m.Status, statuslist)
                                                         @*<span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>*@
-                                                            <i class="arrow"></i>
+                                                        <i class="arrow"></i>
                                                     </label>
                                                 </div>
                                             </div>
@@ -81,14 +79,14 @@
                             </div>
                             <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
                             <hr style="margin-top:0px;" />
-                            <label><b>Charge Details</b></label><br /><br />
+                            <label><b>Charges configuration as Below :</b></label><br /><br />
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="col-md-2 control-label"> Loan Amount >= <span class="text-danger"> * </span></label>
                                         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                             <div class="section">
-                                                @Html.EditorFor(model => model.chargeDetailsViewModel.LoanAmountGreaterthan, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Loan Amount >=" , @maxlength = "10" } })
+                                                @Html.EditorFor(model => model.chargeDetailsViewModel.LoanAmountGreaterthan, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Loan Amount >=", @maxlength = "10", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                                 @*<span class="text-danger">@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.LoanAmountGreaterthan)</span>*@
                                                 <i class="arrow"></i>
                                             </div>
@@ -97,7 +95,7 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label" id="lblSerialNumber"> Loan Amount<= <span class="text-danger"> * </span></label>
                                         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                            @Html.EditorFor(model => model.chargeDetailsViewModel.LoanAmountLessthan, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Loan Amount <=", @maxlength = "10" } })
+                                            @Html.EditorFor(model => model.chargeDetailsViewModel.LoanAmountLessthan, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Loan Amount <=", @maxlength = "10", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                             @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.LoanAmountLessthan, "", new { @class = "text-danger" })*@
                                         </div>
                                     </div>
@@ -106,15 +104,13 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label"> Charges<span class="text-danger"> * </span> </label>
                                         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                            @Html.EditorFor(model => model.chargeDetailsViewModel.ChargeAmount, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Charges", @maxlength = "10" } })
+                                            @Html.EditorFor(model => model.chargeDetailsViewModel.ChargeAmount, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Charges", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                             @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
                                         </div>
                                     </div>
-                                    <br />
-                                    <br />
                                     <div class="form-group">
                                         <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Charge Type<span class="text-danger"> * </span></label>
-                                        <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
                                             <div class="section">
                                                 <label class="field select">
                                                     @{
@@ -129,15 +125,9 @@
                                                     <i class="arrow"></i>
                                                 </label>
                                             </div>
-
                                         </div>
+                                        <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnAddChargeDetails" />
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <input type="button" style="margin-top: -5px;" value="Add" class="btn btn-sm btn-primary" id="btnAddChargeDetails" />
-                                        </div>
-                                    </div>
-                                    <br />
                                     <br />
                                 </div>
                             </div>
@@ -157,19 +147,19 @@
                                         <tbody>
                                             @{int j = 1;}
                                             @foreach (var item in Model.chargeDetailsCollection)
-                                            {
-                                                <tr id="@item.ID">
-                                                    <td>@j</td>
-                                                    <td>@item.LoanAmountGreaterthan</td>
-                                                    <td>@item.LoanAmountLessthan</td>
-                                                    <td>@item.ChargeAmount</td>
-                                                    <td id="@item.ChargeType">@item.ChargeType</td>
-                                                    <td>
-                                                        <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
-                                                    </td>
-                                                </tr>
-                                                j++;
-                                            }
+                                        {
+                                        <tr id="@item.ID">
+                                            <td>@j</td>
+                                            <td>@item.LoanAmountGreaterthan</td>
+                                            <td>@item.LoanAmountLessthan</td>
+                                            <td>@item.ChargeAmount</td>
+                                            <td id="@item.ChargeType">@item.ChargeType</td>
+                                            <td>
+                                                <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                            j++;
+                                        }
                                         </tbody>
                                     </table>
                                 </div>
@@ -203,14 +193,38 @@
             $("#ChargeName").on('input', function () {
                 $.ajax({
                     type: "POST",
+                    url: '@Url.Action("CheckRecordonEditMode", "Charge")',
+                    data: '{Id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result == "") {
+                            $("#CustomErrr").empty();
+                            $("#btn_save").removeAttr('disabled')
+                        }
+                        else {
+                            $("#CustomErrr").text(result);
+                            $("#btn_save").attr('disabled', true)
+                            return false;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        //alert(error);
+                    }
+                });
+            });
+
+            $("#ChargeName").on('input', function () {
+                $.ajax({
+                    type: "POST",
                     url: '@Url.Action("doesChargeNameExist", "Charge")',
-                    data: '{ChargeName: "' + $("#ChargeName").val() + '" }',
+                    data: '{ChargeName: "' + $("#ChargeName").val() + '", Id: "' + $("#ItemID").val() + '"}',
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (result) {
                         if (result == "") {
                             $("#CustomErr").empty();
-                            $("#btn_save").removeAttr('disabled')
+                            //$("#btn_save").removeAttr('disabled')
                         }
                         else {
                             $("#CustomErr").text(result);
@@ -232,8 +246,8 @@
                 var tr = $(this).closest('tr');
                 currentRow= $(this).parents('tr');
                 sr_no = tr.find('td:eq(0)').html();
-                trid =tr.attr('id'); // table row ID 
-                //sr_no =$('tr').attr('id'); // table row ID 
+                trid =tr.attr('id'); // table row ID
+                //sr_no =$('tr').attr('id'); // table row ID
                 var LoanAmountGreaterThan =  tr.find('td:eq(1)').html();
                 var LoanAmountLessThan = tr.find('td:eq(2)').html();
                 var Charges = tr.find('td:eq(3)').html();
@@ -245,7 +259,7 @@
                 $("#chargeDetailsViewModel_ChargeType").val(ChargeType);
             })
 
-            $("#tblChargeDetails TBODY TR").on("click", ".delete", function () {
+            $("#tblChargeDetails TBODY TR td").on("click", ".delete", function () {
                 if(confirm('Are you sure to remove?'))
                 {
                     //var tr = $(this).closest('tr');
@@ -279,7 +293,7 @@
                 var ChargeAmount = $("#chargeDetailsViewModel_ChargeAmount").val();
                 var ChargeTypeId = $("#chargeDetailsViewModel_ChargeType").val();
                 var ChargeType = $("#chargeDetailsViewModel_ChargeType option:selected").text();
-                
+
                 if (parseFloat(LoanAmountGr) >= parseFloat(LoanAmountLe)) {
                     alert('Loan Amount(>=) Should Be Less Than Loan Amount(<=) ');
                     return false;
@@ -302,7 +316,7 @@
                 }
                 else
                 {
-                    if (LoanAmountGr!="" && LoanAmountLe!="") {
+                    if (LoanAmountGr!="" && LoanAmountLe!="" && ChargeAmount!="" && ChargeType!="") {
                         $("#tblChargeDetails tbody").append(row);
                         $("#chargeDetailsViewModel_LoanAmountGreaterthan").val("");
                         $("#chargeDetailsViewModel_LoanAmountLessthan").val("");
@@ -316,7 +330,7 @@
                     currentRow= $(this).parents('tr');
                     debugger;
                     sr_no = tr.find('td:eq(0)').html();
-                    trid =tr.attr('id'); // table row ID 
+                    trid =tr.attr('id'); // table row ID
                     var LoanAmountGreaterThan =  tr.find('td:eq(1)').html();
                     var LoanAmountLessThan = tr.find('td:eq(2)').html();
                     var Charges = tr.find('td:eq(3)').html();
@@ -328,7 +342,7 @@
                     $("#chargeDetailsViewModel_ChargeType").val(ChargeType);
                 })
 
-                $("#tblChargeDetails TBODY TR").on("click", ".delete", function () {
+                $("#tblChargeDetails TBODY TR td").on("click", ".delete", function () {
                     if(confirm('Are you sure to remove?'))
                     {
                         //var tr = $(this).closest('tr');
@@ -338,36 +352,6 @@
                     }
                 })
             })
-        });
-
-        $("#chargeDetailsViewModel_LoanAmountGreaterthan").keypress(function (e) {
-            //if the letter is not digit then display error and don't type anything
-            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                //display error message
-                e.preventDefault();
-                //$("#errmsg").html("Only Number field allow").show().fadeOut("slow");
-                return false;
-            }
-        });
-
-        $("#chargeDetailsViewModel_LoanAmountLessthan").keypress(function (e) {
-            //if the letter is not digit then display error and don't type anything
-            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                //display error message
-                e.preventDefault();
-                //$("#errmsg").html("Only Number field allow").show().fadeOut("slow");
-                return false;
-            }
-        });
-        
-        $("#chargeDetailsViewModel_ChargeAmount").keypress(function (e) {
-            //if the letter is not digit then display error and don't type anything
-            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                //display error message
-                e.preventDefault();
-                //$("#errmsg").html("Only Number field allow").show().fadeOut("slow");
-                return false;
-            }
         });
 
         $("#btn_save").click(function () {

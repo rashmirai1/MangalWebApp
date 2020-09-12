@@ -19,15 +19,20 @@ namespace MangalWeb.Service.Service
             return list;
         }
 
+        public int CheckBranchExistsByPincodeId(int id)
+        {
+            return _pincodeRepository.CheckBranchExistsByPincodeId(id);
+        }
+
         public Mst_PinCode GetPincodeById(int id)
         {
             var pincode = _pincodeRepository.GetPincodeById(id);
             return pincode;
         }
 
-        public string CheckPinAreaExists(string name)
+        public string CheckPinAreaExists(string pincode,int id)
         {
-            var statename = _pincodeRepository.CheckPincodeExists(name);
+            var statename = _pincodeRepository.CheckPincodeExists(pincode,id);
             return statename;
         }
 

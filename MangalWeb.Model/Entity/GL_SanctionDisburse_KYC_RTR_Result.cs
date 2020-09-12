@@ -13,12 +13,12 @@ namespace MangalWeb.Model.Entity
     
     public partial class GL_SanctionDisburse_KYC_RTR_Result
     {
-        public int Record_ID { get; set; }
-        public string Customer_ID { get; set; }
-        public string Applied_Date { get; set; }
-        public string Gold_Loan_No { get; set; }
-        public string Customer_Name { get; set; }
-        public string PAN_No { get; set; }
-        public string Mobile_No { get; set; }
+        public int KYCID { get; set; }
+        public string CustomerID { get; set; }
+        public string AppliedDate { get; set; }
+        public string LoanAccountNo { get; set; }
+        public string CustomerName { get; set; }
+        public string PANNo { get; set; }
+        public string MobileNo { get; set; }
     }
 }

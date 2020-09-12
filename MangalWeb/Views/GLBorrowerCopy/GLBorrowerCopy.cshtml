@@ -1,0 +1,51 @@
+﻿@model MangalWeb.Model.Transaction.GLBorrowerCopyReport
+@{
+    ViewBag.Title = "GLBorrowerCopy";
+}
+<h2>Gold Loan Borrower Copy</h2>
+<section id="content" class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel1 panel-primary">
+                <div class="admin-form">
+                    <div class="panel-body">
+                        <div class="section row mbn">
+                            <div class="form-horizontal">
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Name of the Applicant:</label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.LabelFor(x => x.ApplicantName)
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Loan A/c No:<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.LabelFor(x => x.LoanAccountNo)
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Cust Id:</label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.LabelFor(x => x.ApplicantName)
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Loan A/c No:<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.LabelFor(x => x.LoanAccountNo)
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
