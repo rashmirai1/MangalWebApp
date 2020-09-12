@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
-@using (Ajax.BeginForm("Insert", "DocumentUpload", new AjaxOptions { }, new { enctype = "multipart/form-data" }))
+@using (Ajax.BeginForm("", "", new AjaxOptions { }, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
@@ -445,7 +445,7 @@
                 $("#CustomerId").focus();
                 return;
             }
-
+            var check=true;
             debugger;
             if ($('#tblDocumentDetails tbody tr').length == 0) {
                 var DocumentTypeId= $("#DocumentTypeId").val();
@@ -473,19 +473,17 @@
                 if (UploadedFile == "") {
                     $("#CustomErr").text("Please Select Upload File");
                     $("#UploadedFile").focus();
-                    return;
+                    check=false;
                 }
             }
-
+            debugger;
             var length=$('#tblDocumentDetails tbody tr').length;
             if(length==0)
             {
                 $("#CustomErr").text("Please Click Add button then save record");
                 $("#tblDocumentDetails").focus();
-                return true;
             }
 
-            $("#btn_save").prop("disabled", true);
             var DocUploadViewModel = {};
             var lstDocUploadTrn = [];
 
@@ -537,36 +535,39 @@
             //fileData.append("ApplicationNo",$('#ApplicationNo').val())
             //fileData.append("LoanAccountNo",$('#LoanAccountNo').val())
             //fileData.append("Comments",$('#Comments').val())
-
-            $.ajax({
-                type: "POST",
-                url: "/DocumentUpload/Insert",
-                data: JSON.stringify(DocUploadViewModel),
-                contentType: "application/json; charset=utf-8",
-                //contentType: false, // Not to set any content header
-                //processData: false, // Not to process data
-                dataType: "json",
-                success: function (r) {
-                    debugger;
-                    if (r == 1) {
-                        $("#saveModal").modal('show');
-                        $(document).click(function () {
-                            window.location.href = urlRedirect;
-                        });
+            if(check==true)
+            {
+                $("#btn_save").prop("disabled", true);
+                $.ajax({
+                    type: "POST",
+                    url: "/DocumentUpload/Insert",
+                    data: JSON.stringify(DocUploadViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    //contentType: false, // Not to set any content header
+                    //processData: false, // Not to process data
+                    dataType: "json",
+                    success: function (r) {
+                        debugger;
+                        if (r == 1) {
+                            $("#saveModal").modal('show');
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                        else if(r==2){
+                            $("#saveModal").modal('show');
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                        else
+                        {   $("#CustomErr").text(r);
+                            $("#btn_save").prop("disabled", false);
+                            return false;
+                        }
                     }
-                    else if(r==2){
-                        $("#saveModal").modal('show');
-                        $(document).click(function () {
-                            window.location.href = urlRedirect;
-                        });
-                    }
-                    else
-                    {   $("#CustomErr").text(r);
-                        $("#btn_save").prop("disabled", false);
-                        return false;
-                    }
-                }
-            });
+                });
+            }
         }
 
         $("#DocumentUploadVM_DocumentTypeId").change(function () {

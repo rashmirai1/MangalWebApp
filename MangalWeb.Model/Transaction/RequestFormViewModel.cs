@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace MangalWeb.Model.Transaction
         public string AdhaarNo { get; set; }
         public string ApplicationNo { get; set; }
         public string LoanAccountNo { get; set; }
+        [Required]
         public string CustomerID { get; set; }
         public string DisburseDate { get; set; }
         public string KYCDate { get; set; }

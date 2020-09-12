@@ -69,8 +69,8 @@
                                                 @Html.EditorFor(model => model.CustomerID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Id", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
                                                 <div class="input-group-btn" style="display:inline;">
                                                     <button type="button" data-toggle="modal" data-target="#editModal" onclick="ShowClientTableList();" class="btn btn-info btn_info1">...</button>
-                                                    @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
                                                 </div>
+                                                @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Loan Account No<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -363,12 +363,13 @@
                                                 </label>
                                                 <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
                                                     <span class="text-danger" id="CustomErr"> </span>
-                                                    <select name="Trans_KYCAddresses[0].PinCode" id="Trans_KYCAddresses_0__PinCode" class="form-control">
+                                                    @*<select name="Trans_KYCAddresses[0].PinCode" id="Trans_KYCAddresses_0__PinCode" class="form-control">
                                                         @foreach (var item in ViewBag.PinCodes)
                                                         {
                                                             <option value="@item.Pc_Id">@item.Pc_Desc</option>
                                                         }
-                                                    </select>
+                                                    </select>*@
+                                                    @Html.DropDownListFor(m => m.Trans_KYCAddresses[0].PinCode, (SelectList)ViewBag.PinCodeList, "--Select Pin Code--", htmlAttributes: new { @class = "form-control" })
                                                 </div>
                                             </div>
                                         </div>
@@ -537,12 +538,13 @@
                                                 </label>
                                                 <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
                                                     <span class="text-danger" id="CustomErr"> </span>
-                                                    <select name="Trans_KYCAddresses[1].PinCode" id="Trans_KYCAddresses_1__PinCode" class="form-control">
+                                                    @*<select name="Trans_KYCAddresses[1].PinCode" id="Trans_KYCAddresses_1__PinCode" class="form-control">
                                                         @foreach (var item in ViewBag.PinCodes)
-                                                        {
+                                                        
                                                             <option value="@item.Pc_Id">@item.Pc_Desc</option>
                                                         }
-                                                    </select>
+                                                    </select>*@
+                                                    @Html.DropDownListFor(m => m.Trans_KYCAddresses[1].PinCode, (SelectList)ViewBag.PinCodeList, "--Select Pin Code--", htmlAttributes: new { @class = "form-control" })
                                                 </div>
                                             </div>
                                         </div>

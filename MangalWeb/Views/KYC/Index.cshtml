@@ -1338,6 +1338,13 @@ new { @class= "form-control" })
                 inp.focus();
                 return false;
             }
+            var length=$('#tblDocumentDetails tbody tr').length;
+            if(length==0)
+            {
+                $("#CustomErr").text("Please Click Add Document Details");
+                $("#tblDocumentDetails").focus();
+                return true;
+            }
             var form = e.target;
             if (form.getAttribute("enctype") === "multipart/form-data") {
                 if (form.dataset.ajax) {

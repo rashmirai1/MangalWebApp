@@ -156,6 +156,8 @@
     <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(document).ready(function () {
+            
+            $("#DocDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
 
             $("#divDocumentDetails").hide();
 
@@ -207,7 +209,12 @@
 
         function SaveDocument() {
             debugger;
-
+            var CustomerId = $("#CustomerId").val();
+            if (CustomerId == "") {
+                $("#CustomErr").text("Please Select Customer Id");
+                $("#CustomerId").focus();
+                return;
+            }
             var DocUploadViewModel = {};
             var lstDocUploadTrn = [];
 

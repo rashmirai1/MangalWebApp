@@ -146,6 +146,7 @@ namespace MangalWeb.Model.Transaction
         [Required(ErrorMessage = "This Field is Required.")]
         public string PinCode { get; set; }
         public Boolean isPanAdharExist { get; set; }
+        [Required(ErrorMessage ="Plese Select Upload Photo !")]
         public byte[] KycPhoto { get; set; }
         public string ContentType { get; set; }
         public string ImageName { get; set; }
