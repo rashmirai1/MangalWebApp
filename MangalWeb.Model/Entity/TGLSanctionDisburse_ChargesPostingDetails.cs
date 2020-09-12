@@ -12,11 +12,15 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class TGLOutwardForm_DocDetails
+    public partial class TGLSanctionDisburse_ChargesPostingDetails
     {
-        public int DocOutwardID { get; set; }
-        public Nullable<int> OutwordID { get; set; }
-        public Nullable<int> DocID { get; set; }
-        public string StockLocation { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> SDID { get; set; }
+        public string GoldLoanNo { get; set; }
+        public Nullable<int> AccID { get; set; }
+        public Nullable<double> Debit { get; set; }
+        public Nullable<double> Credit { get; set; }
+        public Nullable<int> LedgerID { get; set; }
+        public Nullable<int> FYID { get; set; }
     }
 }

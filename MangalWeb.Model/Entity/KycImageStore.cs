@@ -18,9 +18,9 @@ namespace MangalWeb.Model.Entity
         public byte[] KycPhoto { get; set; }
         public string Operation { get; set; }
         public string Refno { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
         public string ImageName { get; set; }
         public string ContentType { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
     }
 }

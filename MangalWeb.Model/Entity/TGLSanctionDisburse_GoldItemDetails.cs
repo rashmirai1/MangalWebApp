@@ -12,14 +12,18 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class TGLCash_Denomination_Details
+    public partial class TGLSanctionDisburse_GoldItemDetails
     {
-        public int DenoId { get; set; }
-        public Nullable<int> InOutId { get; set; }
+        public int GID { get; set; }
+        public Nullable<int> SDID { get; set; }
         public Nullable<int> Serialno { get; set; }
-        public string DenoRs { get; set; }
+        public Nullable<int> ItemID { get; set; }
+        public Nullable<decimal> GrossWeight { get; set; }
         public Nullable<int> Quantity { get; set; }
-        public Nullable<decimal> Total { get; set; }
-        public string NoteNos { get; set; }
+        public Nullable<decimal> NetWeight { get; set; }
+        public Nullable<decimal> RateperGram { get; set; }
+        public Nullable<decimal> Value { get; set; }
+        public string Purity { get; set; }
+        public string ImgItemPath { get; set; }
     }
 }
