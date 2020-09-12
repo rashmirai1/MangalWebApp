@@ -12,9 +12,16 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class tblSchemeMaster
+    public partial class TGLSanctionDisburse_ChargesDetails
     {
-        public int SchemeID { get; set; }
-        public string SchemeName { get; set; }
+        public int CHID { get; set; }
+        public Nullable<int> SDID { get; set; }
+        public Nullable<int> CID { get; set; }
+        public Nullable<int> Serialno { get; set; }
+        public Nullable<decimal> Charges { get; set; }
+        public Nullable<decimal> Amount { get; set; }
+        public Nullable<int> AccountID { get; set; }
+        public string AccountName { get; set; }
+        public Nullable<int> ID { get; set; }
     }
 }

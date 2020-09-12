@@ -27,5 +27,7 @@ namespace MangalWeb.Model.Entity
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string isActive { get; set; }
         public int ParentID { get; set; }
+        public Nullable<int> BranchId { get; set; }
+        public Nullable<int> BackDatedVoucher { get; set; }
     }
 }

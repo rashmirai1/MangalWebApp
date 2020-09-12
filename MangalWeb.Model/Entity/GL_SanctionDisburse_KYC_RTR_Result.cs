@@ -10,13 +10,15 @@
 namespace MangalWeb.Model.Entity
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblPenaltySlabtMaster
+    public partial class GL_SanctionDisburse_KYC_RTR_Result
     {
-        public int PSlabID { get; set; }
-        public string PenaltyType { get; set; }
-        public string PenaltySlabName { get; set; }
-        public double Interest { get; set; }
+        public int KYCID { get; set; }
+        public string CustomerID { get; set; }
+        public string AppliedDate { get; set; }
+        public string LoanAccountNo { get; set; }
+        public string CustomerName { get; set; }
+        public string PANNo { get; set; }
+        public string MobileNo { get; set; }
     }
 }

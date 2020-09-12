@@ -15,6 +15,6 @@ namespace MangalWeb.Model.Entity
     public partial class tblStandardEndTime
     {
         public int Id { get; set; }
-        public System.TimeSpan StatdardEndTime { get; set; }
+        public string StatdardEndTime { get; set; }
     }
 }
