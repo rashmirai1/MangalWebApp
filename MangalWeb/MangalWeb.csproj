@@ -2126,7 +2126,7 @@
       <Name>MangalWeb.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\MangalWeb.Repository\MangalWeb.Repository.csproj">
-      <Project>{72487520-BC13-4BE8-8AC8-4A28442E59BD}</Project>
+      <Project>{72487520-bc13-4be8-8ac8-4a28442e59bd}</Project>
       <Name>MangalWeb.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\MangalWeb.Service\MangalWeb.Service.csproj">

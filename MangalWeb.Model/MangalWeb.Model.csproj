@@ -76,13 +76,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entity\Bharat01012017tbl_SentJVCustHistory.cs">
+    <Compile Include="Entity\FCompanyYearEndClosing.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\bharatTGLGoldInOutDetail.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Bharat_tbl_SentJVCustHistory.cs">
+    <Compile Include="Entity\FLedgerMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\GetCustomerRecordinSanction_Result.cs">
@@ -103,10 +100,10 @@
     <Compile Include="Entity\GetKYCDetailsForRequestForm_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\GL_SanctionDisburse_KYC_RTR_Result.cs">
+    <Compile Include="Entity\GL_SanctionDisburse_KYC_Details_RTR_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\ImageKyc.cs">
+    <Compile Include="Entity\GL_SanctionDisburse_KYC_RTR_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Imagestore.cs">
@@ -181,24 +178,6 @@
     <Compile Include="Entity\Mst_SourceofApplication.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\M_Words.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\new1bharatTGLGoldStock.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\newauthorize.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\Newbharat.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\newbharatTGLGoldInOutDetail.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\newbharatTGLGoldStock.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\SplitValue_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -206,6 +185,12 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\SplitWords_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TBankCash_PaymentDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TBankCash_ReceiptDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tblaccountmaster.cs">
@@ -220,40 +205,16 @@
     <Compile Include="Entity\tblCompanyBranchMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\tblCreateCompanyMaster.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\tblDocumentMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tblFinancialyear.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\tblGroupMaster.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\tblINV_ItemMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tblItemMaster.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\tblLogin.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\tblPenaltySlabtMaster.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\tblPrimaryGroup.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\tblSchemeMaster.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\tblSchemeTransMaster.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\tblSchemeTransMonth.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tblStateMaster.cs">
@@ -280,70 +241,10 @@
     <Compile Include="Entity\tbl_KYCMobileOTP.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\tbl_SentJVCustHistory.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\tbl_UserCategory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\TestDB.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLCashAuth_BasicDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLCashAuth_Denomination_Details.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLCashAuth_ReceiptDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLCashInOutDetail.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLCash_Denomination_Details.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLDefault_OSLevel.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLExcessAmount_Login.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLGoldInOutDetail.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLGoldStock.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLInterest_Details.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLInwardForm_BasicDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLInwardForm_DocDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLInwardForm_GoldDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\TGLKYC_BasicDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLKYC_DocumentDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLKYC_SourceOfApplication.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLOutwardForm_BasicDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLOutwardForm_DocDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLOutwardForm_GoldDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\TGLSanctionDisburse_BasicDetails.cs">
@@ -356,18 +257,6 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\TGLSanctionDisburse_GoldItemDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLSmsHistory.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGL_DefaultOSPercentage.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGL_FormAuthorizationDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGL_FormDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\Trans_KYCAddresses.cs">
@@ -436,6 +325,7 @@
     <Compile Include="Masters\ZoneViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\PasswordEncryptionDecryption.cs" />
+    <Compile Include="Transaction\ChargeSanctionVM.cs" />
     <Compile Include="Transaction\EligibleLoanAmountValuationDetailsVM.cs" />
     <Compile Include="Transaction\GLBorrowerCopyReport.cs" />
     <Compile Include="Transaction\KYCDocumentUpload.cs" />

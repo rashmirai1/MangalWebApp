@@ -14,26 +14,22 @@ namespace MangalWeb.Repository.Repository
 
         public List<Mst_PenaltySlab> GetPenaltySlabMasters()
         {
-            var list = _context.Mst_PenaltySlab.ToList();
-            return list;
+            return _context.Mst_PenaltySlab.ToList();
         }
 
         public List<tblaccountmaster> GetAccountHeadList()
         {
-            var list = _context.tblaccountmasters.ToList();
-            return list;
+            return _context.tblaccountmasters.Where(x=>x.GPID==91).ToList();
         }
 
         public Mst_PenaltySlab GetPenaltySlabById(int id)
         {
-            var penalty = _context.Mst_PenaltySlab.Where(x => x.Ps_Id == id).FirstOrDefault();
-            return penalty;
+            return _context.Mst_PenaltySlab.Where(x => x.Ps_Id == id).FirstOrDefault();
         }
 
         public int GetMaxPkNo()
         {
-            var id = _context.Mst_PenaltySlab.Any() ? _context.Mst_PenaltySlab.Max(m => m.Ps_Id) + 1 : 1;
-            return id;
+            return _context.Mst_PenaltySlab.Any() ? _context.Mst_PenaltySlab.Max(m => m.Ps_Id) + 1 : 1;
         }
 
         public void DeleteRecord(int id)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MangalWeb.Model.Masters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace MangalWeb.Model.Transaction
         public SanctionDisbursementVM()
         {
             EligibleLoanAmountValuationDetailsVMList = new List<EligibleLoanAmountValuationDetailsVM>();
+            ChargeDetailList = new List<ChargeSanctionVM>();
+            ChargeVM = new ChargeSanctionVM();
         }
 
         public int ID { get; set; }
@@ -30,16 +33,19 @@ namespace MangalWeb.Model.Transaction
         public string BirthDate { get; set; }
         public string PANNo { get; set; }
         public string MobileNo { get; set; }
+        public string EmailId{get;set;}
         public string MaritalStatus { get; set; }
         public int Age { get; set; }
         public string CustomerAddress { get; set; }
+        public int AreaId { get; set; }
+        public string TelephoneNo { get; set; }
         public string NomineeName { get; set; }
         public string NomineeRelation { get; set; }
         public decimal GoldItemDetails { get; set; }
         public string SchemeName { get; set; }
         public int SchemeId { get; set; }
-        public int Tenure { get; set; }
-        public decimal MaximumLoanAmount { get; set; }
+        public string Tenure { get; set; }
+        public string MaximumLoanAmount { get; set; }
         //Outstanding Details
         public decimal Principal { get; set; }
         public decimal Interest { get; set; }
@@ -87,5 +93,9 @@ namespace MangalWeb.Model.Transaction
         public DateTime? UpdatedDate { get; set; }
 
         public List<EligibleLoanAmountValuationDetailsVM> EligibleLoanAmountValuationDetailsVMList { get; set; }
+
+        public ChargeSanctionVM ChargeVM { get; set; }
+
+        public List<ChargeSanctionVM> ChargeDetailList { get; set; }
     }
 }

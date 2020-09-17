@@ -17,7 +17,9 @@ namespace MangalWeb.Controllers
             ViewBag.BankAccountList =new SelectList(_sanctionService.BankAccountList(), "AccountID", "Name");
             ViewBag.CashAccountList =new SelectList(_sanctionService.CashAccountList(), "AccountID", "Name");
             ViewBag.CashOutwardList =new SelectList(_sanctionService.GetCashOutwardList(),"UserID", "UserName"); 
-            ViewBag.GoldInwardList =new SelectList(_sanctionService.GetGoldInwardList(),"UserID", "UserName"); 
+            ViewBag.GoldInwardList =new SelectList(_sanctionService.GetGoldInwardList(),"UserID", "UserName");
+            ViewBag.ChargeMasterList = new SelectList(_sanctionService.FillChargeList(), "CID", "ChargeName");
+            ViewBag.ChargeAccountList = new SelectList(_sanctionService.ChargeAccountList(), "AccountID", "Name");
         }
 
         [HttpPost]
@@ -26,7 +28,7 @@ namespace MangalWeb.Controllers
         {
             try
             {
-                _sanctionService.SaveUpdateRecord(sanction);
+                _sanctionService.SanctionDisbursment_PRI("Save","0",sanction);
             }
             catch (Exception ex)
             {

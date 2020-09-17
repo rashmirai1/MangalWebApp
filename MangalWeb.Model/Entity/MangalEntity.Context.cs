@@ -28,53 +28,12 @@ namespace MangalWeb.Model.Entity
         }
     
         public virtual DbSet<tblBankMaster> tblBankMasters { get; set; }
-        public virtual DbSet<Bharat_tbl_SentJVCustHistory> Bharat_tbl_SentJVCustHistory { get; set; }
-        public virtual DbSet<Bharat01012017tbl_SentJVCustHistory> Bharat01012017tbl_SentJVCustHistory { get; set; }
-        public virtual DbSet<bharatTGLGoldInOutDetail> bharatTGLGoldInOutDetails { get; set; }
-        public virtual DbSet<ImageKyc> ImageKycs { get; set; }
-        public virtual DbSet<Imagestore> Imagestores { get; set; }
         public virtual DbSet<KycImageStore> KycImageStores { get; set; }
-        public virtual DbSet<M_Words> M_Words { get; set; }
-        public virtual DbSet<new1bharatTGLGoldStock> new1bharatTGLGoldStock { get; set; }
-        public virtual DbSet<newauthorize> newauthorizes { get; set; }
-        public virtual DbSet<Newbharat> Newbharats { get; set; }
-        public virtual DbSet<newbharatTGLGoldInOutDetail> newbharatTGLGoldInOutDetails { get; set; }
-        public virtual DbSet<newbharatTGLGoldStock> newbharatTGLGoldStocks { get; set; }
         public virtual DbSet<tbl_GLDocumentMaster> tbl_GLDocumentMaster { get; set; }
-        public virtual DbSet<tbl_SentJVCustHistory> tbl_SentJVCustHistory { get; set; }
-        public virtual DbSet<tblCreateCompanyMaster> tblCreateCompanyMasters { get; set; }
-        public virtual DbSet<tblLogin> tblLogins { get; set; }
-        public virtual DbSet<TestDB> TestDBs { get; set; }
-        public virtual DbSet<TGL_DefaultOSPercentage> TGL_DefaultOSPercentage { get; set; }
-        public virtual DbSet<TGL_FormAuthorizationDetails> TGL_FormAuthorizationDetails { get; set; }
-        public virtual DbSet<TGL_FormDetails> TGL_FormDetails { get; set; }
-        public virtual DbSet<TGLCash_Denomination_Details> TGLCash_Denomination_Details { get; set; }
-        public virtual DbSet<TGLCashAuth_BasicDetails> TGLCashAuth_BasicDetails { get; set; }
-        public virtual DbSet<TGLCashAuth_Denomination_Details> TGLCashAuth_Denomination_Details { get; set; }
-        public virtual DbSet<TGLCashAuth_ReceiptDetails> TGLCashAuth_ReceiptDetails { get; set; }
-        public virtual DbSet<TGLCashInOutDetail> TGLCashInOutDetails { get; set; }
-        public virtual DbSet<TGLDefault_OSLevel> TGLDefault_OSLevel { get; set; }
-        public virtual DbSet<TGLExcessAmount_Login> TGLExcessAmount_Login { get; set; }
-        public virtual DbSet<TGLGoldInOutDetail> TGLGoldInOutDetails { get; set; }
-        public virtual DbSet<TGLGoldStock> TGLGoldStocks { get; set; }
-        public virtual DbSet<TGLInterest_Details> TGLInterest_Details { get; set; }
-        public virtual DbSet<TGLInwardForm_BasicDetails> TGLInwardForm_BasicDetails { get; set; }
-        public virtual DbSet<TGLInwardForm_DocDetails> TGLInwardForm_DocDetails { get; set; }
-        public virtual DbSet<TGLInwardForm_GoldDetails> TGLInwardForm_GoldDetails { get; set; }
-        public virtual DbSet<TGLKYC_DocumentDetails> TGLKYC_DocumentDetails { get; set; }
-        public virtual DbSet<TGLKYC_SourceOfApplication> TGLKYC_SourceOfApplication { get; set; }
-        public virtual DbSet<TGLOutwardForm_BasicDetails> TGLOutwardForm_BasicDetails { get; set; }
-        public virtual DbSet<TGLOutwardForm_DocDetails> TGLOutwardForm_DocDetails { get; set; }
-        public virtual DbSet<TGLOutwardForm_GoldDetails> TGLOutwardForm_GoldDetails { get; set; }
-        public virtual DbSet<TGLSmsHistory> TGLSmsHistories { get; set; }
         public virtual DbSet<tbl_CountryMaster> tbl_CountryMaster { get; set; }
         public virtual DbSet<tblDocumentMaster> tblDocumentMasters { get; set; }
         public virtual DbSet<tblINV_ItemMaster> tblINV_ItemMaster { get; set; }
-        public virtual DbSet<tblPenaltySlabtMaster> tblPenaltySlabtMasters { get; set; }
-        public virtual DbSet<tblSchemeMaster> tblSchemeMasters { get; set; }
-        public virtual DbSet<tblSchemeTransMaster> tblSchemeTransMasters { get; set; }
         public virtual DbSet<tblZonemaster> tblZonemasters { get; set; }
-        public virtual DbSet<tblSchemeTransMonth> tblSchemeTransMonths { get; set; }
         public virtual DbSet<tblCityMaster> tblCityMasters { get; set; }
         public virtual DbSet<Mst_PinCode> Mst_PinCode { get; set; }
         public virtual DbSet<Mst_DocumentType> Mst_DocumentType { get; set; }
@@ -85,8 +44,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<Mst_Reason> Mst_Reason { get; set; }
         public virtual DbSet<Mst_SchemePurity> Mst_SchemePurity { get; set; }
         public virtual DbSet<tblaccountmaster> tblaccountmasters { get; set; }
-        public virtual DbSet<tblGroupMaster> tblGroupMasters { get; set; }
-        public virtual DbSet<tblPrimaryGroup> tblPrimaryGroups { get; set; }
         public virtual DbSet<tbl_GLChargeMaster_BasicInfo> tbl_GLChargeMaster_BasicInfo { get; set; }
         public virtual DbSet<tbl_GLChargeMaster_Details> tbl_GLChargeMaster_Details { get; set; }
         public virtual DbSet<tblFinancialyear> tblFinancialyears { get; set; }
@@ -112,13 +69,18 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<Trn_RequestForm> Trn_RequestForm { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
-        public virtual DbSet<tbl_CKycState> tbl_CKycState { get; set; }
         public virtual DbSet<tblStateMaster> tblStateMasters { get; set; }
         public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
         public virtual DbSet<TGLSanctionDisburse_ChargesDetails> TGLSanctionDisburse_ChargesDetails { get; set; }
         public virtual DbSet<TGLSanctionDisburse_ChargesPostingDetails> TGLSanctionDisburse_ChargesPostingDetails { get; set; }
         public virtual DbSet<TGLSanctionDisburse_GoldItemDetails> TGLSanctionDisburse_GoldItemDetails { get; set; }
         public virtual DbSet<TGLSanctionDisburse_BasicDetails> TGLSanctionDisburse_BasicDetails { get; set; }
+        public virtual DbSet<tbl_CKycState> tbl_CKycState { get; set; }
+        public virtual DbSet<FLedgerMaster> FLedgerMasters { get; set; }
+        public virtual DbSet<TBankCash_PaymentDetails> TBankCash_PaymentDetails { get; set; }
+        public virtual DbSet<TBankCash_ReceiptDetails> TBankCash_ReceiptDetails { get; set; }
+        public virtual DbSet<FCompanyYearEndClosing> FCompanyYearEndClosings { get; set; }
+        public virtual DbSet<Imagestore> Imagestores { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -321,11 +283,213 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Gl_SanctionDisburse_GoldLoanNo_RTR", loanDateParameter);
         }
     
-        public virtual ObjectResult<GL_SanctionDisburse_KYC_RTR_Result> GL_SanctionDisburse_KYC_RTR(string loanType, Nullable<int> fYID, Nullable<int> branchId)
+        public virtual ObjectResult<GL_SanctionDisburse_KYC_RTR_Result> GL_SanctionDisburse_KYC_RTR(Nullable<int> fYID, Nullable<int> branchId)
         {
+            var fYIDParameter = fYID.HasValue ?
+                new ObjectParameter("FYID", fYID) :
+                new ObjectParameter("FYID", typeof(int));
+    
+            var branchIdParameter = branchId.HasValue ?
+                new ObjectParameter("BranchId", branchId) :
+                new ObjectParameter("BranchId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_RTR_Result>("GL_SanctionDisburse_KYC_RTR", fYIDParameter, branchIdParameter);
+        }
+    
+        public virtual int GL_SanctionDisburse_PRI(string operation, string flag, Nullable<int> sDID, string loanType, Nullable<System.DateTime> loanDate, string goldLoanNo, Nullable<int> kYCID, Nullable<decimal> eligibleLoanAmt, Nullable<decimal> netLoanAmtSanctioned, Nullable<decimal> chargesTotal, Nullable<decimal> netLoanPayable, string cheqNEFTDD, string cheqNEFTDDNo, Nullable<System.DateTime> cheqNEFTDDDate, Nullable<decimal> totalGrossWeight, Nullable<decimal> totalNetWeight, Nullable<decimal> totalQuantity, Nullable<decimal> totalvalue, Nullable<decimal> totalRate, Nullable<int> sID, Nullable<System.DateTime> dueDate, string ownershipProofImagePath, string cIBILScore, Nullable<int> bCPID, Nullable<int> cashOutWardById, Nullable<int> goldInWardById, Nullable<int> createdBy, Nullable<int> fYID, Nullable<int> branchID, Nullable<int> cMPID, Nullable<int> cashAccID, Nullable<decimal> cashAmount, Nullable<int> bankCashAccID, Nullable<decimal> bankAmount, string paymentMode, Nullable<int> lineno, Nullable<int> gID, Nullable<int> iSerialno, Nullable<int> itemID, Nullable<decimal> grossWeight, Nullable<int> quantity, Nullable<decimal> netWeight, Nullable<decimal> rateperGram, Nullable<decimal> value, string purity, string imgItemPath)
+        {
+            var operationParameter = operation != null ?
+                new ObjectParameter("Operation", operation) :
+                new ObjectParameter("Operation", typeof(string));
+    
+            var flagParameter = flag != null ?
+                new ObjectParameter("Flag", flag) :
+                new ObjectParameter("Flag", typeof(string));
+    
+            var sDIDParameter = sDID.HasValue ?
+                new ObjectParameter("SDID", sDID) :
+                new ObjectParameter("SDID", typeof(int));
+    
             var loanTypeParameter = loanType != null ?
                 new ObjectParameter("LoanType", loanType) :
                 new ObjectParameter("LoanType", typeof(string));
+    
+            var loanDateParameter = loanDate.HasValue ?
+                new ObjectParameter("LoanDate", loanDate) :
+                new ObjectParameter("LoanDate", typeof(System.DateTime));
+    
+            var goldLoanNoParameter = goldLoanNo != null ?
+                new ObjectParameter("GoldLoanNo", goldLoanNo) :
+                new ObjectParameter("GoldLoanNo", typeof(string));
+    
+            var kYCIDParameter = kYCID.HasValue ?
+                new ObjectParameter("KYCID", kYCID) :
+                new ObjectParameter("KYCID", typeof(int));
+    
+            var eligibleLoanAmtParameter = eligibleLoanAmt.HasValue ?
+                new ObjectParameter("EligibleLoanAmt", eligibleLoanAmt) :
+                new ObjectParameter("EligibleLoanAmt", typeof(decimal));
+    
+            var netLoanAmtSanctionedParameter = netLoanAmtSanctioned.HasValue ?
+                new ObjectParameter("NetLoanAmtSanctioned", netLoanAmtSanctioned) :
+                new ObjectParameter("NetLoanAmtSanctioned", typeof(decimal));
+    
+            var chargesTotalParameter = chargesTotal.HasValue ?
+                new ObjectParameter("ChargesTotal", chargesTotal) :
+                new ObjectParameter("ChargesTotal", typeof(decimal));
+    
+            var netLoanPayableParameter = netLoanPayable.HasValue ?
+                new ObjectParameter("NetLoanPayable", netLoanPayable) :
+                new ObjectParameter("NetLoanPayable", typeof(decimal));
+    
+            var cheqNEFTDDParameter = cheqNEFTDD != null ?
+                new ObjectParameter("CheqNEFTDD", cheqNEFTDD) :
+                new ObjectParameter("CheqNEFTDD", typeof(string));
+    
+            var cheqNEFTDDNoParameter = cheqNEFTDDNo != null ?
+                new ObjectParameter("CheqNEFTDDNo", cheqNEFTDDNo) :
+                new ObjectParameter("CheqNEFTDDNo", typeof(string));
+    
+            var cheqNEFTDDDateParameter = cheqNEFTDDDate.HasValue ?
+                new ObjectParameter("CheqNEFTDDDate", cheqNEFTDDDate) :
+                new ObjectParameter("CheqNEFTDDDate", typeof(System.DateTime));
+    
+            var totalGrossWeightParameter = totalGrossWeight.HasValue ?
+                new ObjectParameter("TotalGrossWeight", totalGrossWeight) :
+                new ObjectParameter("TotalGrossWeight", typeof(decimal));
+    
+            var totalNetWeightParameter = totalNetWeight.HasValue ?
+                new ObjectParameter("TotalNetWeight", totalNetWeight) :
+                new ObjectParameter("TotalNetWeight", typeof(decimal));
+    
+            var totalQuantityParameter = totalQuantity.HasValue ?
+                new ObjectParameter("TotalQuantity", totalQuantity) :
+                new ObjectParameter("TotalQuantity", typeof(decimal));
+    
+            var totalvalueParameter = totalvalue.HasValue ?
+                new ObjectParameter("Totalvalue", totalvalue) :
+                new ObjectParameter("Totalvalue", typeof(decimal));
+    
+            var totalRateParameter = totalRate.HasValue ?
+                new ObjectParameter("TotalRate", totalRate) :
+                new ObjectParameter("TotalRate", typeof(decimal));
+    
+            var sIDParameter = sID.HasValue ?
+                new ObjectParameter("SID", sID) :
+                new ObjectParameter("SID", typeof(int));
+    
+            var dueDateParameter = dueDate.HasValue ?
+                new ObjectParameter("DueDate", dueDate) :
+                new ObjectParameter("DueDate", typeof(System.DateTime));
+    
+            var ownershipProofImagePathParameter = ownershipProofImagePath != null ?
+                new ObjectParameter("OwnershipProofImagePath", ownershipProofImagePath) :
+                new ObjectParameter("OwnershipProofImagePath", typeof(string));
+    
+            var cIBILScoreParameter = cIBILScore != null ?
+                new ObjectParameter("CIBILScore", cIBILScore) :
+                new ObjectParameter("CIBILScore", typeof(string));
+    
+            var bCPIDParameter = bCPID.HasValue ?
+                new ObjectParameter("BCPID", bCPID) :
+                new ObjectParameter("BCPID", typeof(int));
+    
+            var cashOutWardByIdParameter = cashOutWardById.HasValue ?
+                new ObjectParameter("CashOutWardById", cashOutWardById) :
+                new ObjectParameter("CashOutWardById", typeof(int));
+    
+            var goldInWardByIdParameter = goldInWardById.HasValue ?
+                new ObjectParameter("GoldInWardById", goldInWardById) :
+                new ObjectParameter("GoldInWardById", typeof(int));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var fYIDParameter = fYID.HasValue ?
+                new ObjectParameter("FYID", fYID) :
+                new ObjectParameter("FYID", typeof(int));
+    
+            var branchIDParameter = branchID.HasValue ?
+                new ObjectParameter("BranchID", branchID) :
+                new ObjectParameter("BranchID", typeof(int));
+    
+            var cMPIDParameter = cMPID.HasValue ?
+                new ObjectParameter("CMPID", cMPID) :
+                new ObjectParameter("CMPID", typeof(int));
+    
+            var cashAccIDParameter = cashAccID.HasValue ?
+                new ObjectParameter("CashAccID", cashAccID) :
+                new ObjectParameter("CashAccID", typeof(int));
+    
+            var cashAmountParameter = cashAmount.HasValue ?
+                new ObjectParameter("CashAmount", cashAmount) :
+                new ObjectParameter("CashAmount", typeof(decimal));
+    
+            var bankCashAccIDParameter = bankCashAccID.HasValue ?
+                new ObjectParameter("BankCashAccID", bankCashAccID) :
+                new ObjectParameter("BankCashAccID", typeof(int));
+    
+            var bankAmountParameter = bankAmount.HasValue ?
+                new ObjectParameter("BankAmount", bankAmount) :
+                new ObjectParameter("BankAmount", typeof(decimal));
+    
+            var paymentModeParameter = paymentMode != null ?
+                new ObjectParameter("PaymentMode", paymentMode) :
+                new ObjectParameter("PaymentMode", typeof(string));
+    
+            var linenoParameter = lineno.HasValue ?
+                new ObjectParameter("Lineno", lineno) :
+                new ObjectParameter("Lineno", typeof(int));
+    
+            var gIDParameter = gID.HasValue ?
+                new ObjectParameter("GID", gID) :
+                new ObjectParameter("GID", typeof(int));
+    
+            var iSerialnoParameter = iSerialno.HasValue ?
+                new ObjectParameter("ISerialno", iSerialno) :
+                new ObjectParameter("ISerialno", typeof(int));
+    
+            var itemIDParameter = itemID.HasValue ?
+                new ObjectParameter("ItemID", itemID) :
+                new ObjectParameter("ItemID", typeof(int));
+    
+            var grossWeightParameter = grossWeight.HasValue ?
+                new ObjectParameter("GrossWeight", grossWeight) :
+                new ObjectParameter("GrossWeight", typeof(decimal));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("Quantity", quantity) :
+                new ObjectParameter("Quantity", typeof(int));
+    
+            var netWeightParameter = netWeight.HasValue ?
+                new ObjectParameter("NetWeight", netWeight) :
+                new ObjectParameter("NetWeight", typeof(decimal));
+    
+            var rateperGramParameter = rateperGram.HasValue ?
+                new ObjectParameter("RateperGram", rateperGram) :
+                new ObjectParameter("RateperGram", typeof(decimal));
+    
+            var valueParameter = value.HasValue ?
+                new ObjectParameter("Value", value) :
+                new ObjectParameter("Value", typeof(decimal));
+    
+            var purityParameter = purity != null ?
+                new ObjectParameter("Purity", purity) :
+                new ObjectParameter("Purity", typeof(string));
+    
+            var imgItemPathParameter = imgItemPath != null ?
+                new ObjectParameter("ImgItemPath", imgItemPath) :
+                new ObjectParameter("ImgItemPath", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GL_SanctionDisburse_PRI", operationParameter, flagParameter, sDIDParameter, loanTypeParameter, loanDateParameter, goldLoanNoParameter, kYCIDParameter, eligibleLoanAmtParameter, netLoanAmtSanctionedParameter, chargesTotalParameter, netLoanPayableParameter, cheqNEFTDDParameter, cheqNEFTDDNoParameter, cheqNEFTDDDateParameter, totalGrossWeightParameter, totalNetWeightParameter, totalQuantityParameter, totalvalueParameter, totalRateParameter, sIDParameter, dueDateParameter, ownershipProofImagePathParameter, cIBILScoreParameter, bCPIDParameter, cashOutWardByIdParameter, goldInWardByIdParameter, createdByParameter, fYIDParameter, branchIDParameter, cMPIDParameter, cashAccIDParameter, cashAmountParameter, bankCashAccIDParameter, bankAmountParameter, paymentModeParameter, linenoParameter, gIDParameter, iSerialnoParameter, itemIDParameter, grossWeightParameter, quantityParameter, netWeightParameter, rateperGramParameter, valueParameter, purityParameter, imgItemPathParameter);
+        }
+    
+        public virtual ObjectResult<GL_SanctionDisburse_KYC_Details_RTR_Result> GL_SanctionDisburse_KYC_Details_RTR(Nullable<int> kYCID, Nullable<int> fYID, Nullable<int> branchId)
+        {
+            var kYCIDParameter = kYCID.HasValue ?
+                new ObjectParameter("KYCID", kYCID) :
+                new ObjectParameter("KYCID", typeof(int));
     
             var fYIDParameter = fYID.HasValue ?
                 new ObjectParameter("FYID", fYID) :
@@ -335,7 +499,7 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("BranchId", branchId) :
                 new ObjectParameter("BranchId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_RTR_Result>("GL_SanctionDisburse_KYC_RTR", loanTypeParameter, fYIDParameter, branchIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_Details_RTR_Result>("GL_SanctionDisburse_KYC_Details_RTR", kYCIDParameter, fYIDParameter, branchIdParameter);
         }
     }
 }

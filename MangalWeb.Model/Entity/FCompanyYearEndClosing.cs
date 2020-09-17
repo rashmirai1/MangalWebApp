@@ -12,18 +12,17 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class tblCreateCompanyMaster
+    public partial class FCompanyYearEndClosing
     {
+        public Nullable<int> ID { get; set; }
+        public int FinancialyearID { get; set; }
         public int CompID { get; set; }
-        public string Name { get; set; }
-        public string MailingName { get; set; }
-        public string Address { get; set; }
-        public string State { get; set; }
-        public Nullable<int> PinCode { get; set; }
-        public string PANNo { get; set; }
-        public string TANNo { get; set; }
-        public string Email { get; set; }
-        public Nullable<int> Phone { get; set; }
-        public string Financialyear { get; set; }
+        public int AccountID { get; set; }
+        public Nullable<double> OpeningBalanceDebit { get; set; }
+        public Nullable<double> OpeningBalanceCredit { get; set; }
+        public Nullable<double> CurrentDebit { get; set; }
+        public Nullable<double> CurrentCredit { get; set; }
+        public Nullable<double> ClosingBalanceDebit { get; set; }
+        public Nullable<double> ClosingBalanceCredit { get; set; }
     }
 }

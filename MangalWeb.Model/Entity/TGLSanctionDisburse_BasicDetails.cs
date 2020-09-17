@@ -36,7 +36,7 @@ namespace MangalWeb.Model.Entity
         public Nullable<decimal> TotalQuantity { get; set; }
         public Nullable<decimal> Totalvalue { get; set; }
         public Nullable<decimal> TotalRate { get; set; }
-        public int SID { get; set; }
+        public Nullable<int> SID { get; set; }
         public Nullable<System.DateTime> DueDate { get; set; }
         public string OwnershipProofImagePath { get; set; }
         public string CIBILScore { get; set; }

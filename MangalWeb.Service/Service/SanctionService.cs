@@ -13,6 +13,11 @@ namespace MangalWeb.Service.Service
     {
         SanctionRepository _sanctionRepository = new SanctionRepository();
 
+        public void SanctionDisbursment_PRI(string operation,string value,SanctionDisbursementVM model)
+        {
+            _sanctionRepository.SanctionDisbursment_PRI(operation,value,model);
+        }
+
         public string GetLoanDate()
         {
             return _sanctionRepository.GetLoanDate();
@@ -41,6 +46,16 @@ namespace MangalWeb.Service.Service
         public List<tblaccountmaster> CashAccountList()
         {
             return _sanctionRepository.FillCashAccount();
+        }
+
+        public List<tblaccountmaster> ChargeAccountList()
+        {
+            return _sanctionRepository.FillChargeAccount();
+        }
+
+        public List<tbl_GLChargeMaster_BasicInfo> FillChargeList()
+        {
+            return _sanctionRepository.FillChargeList();
         }
 
         public int GetMaxTransactionId()
