@@ -82,9 +82,6 @@
     <Compile Include="Entity\GetCustomerRecordinSanction_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\Bharat_tbl_SentJVCustHistory.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\GetDocumentUploadById_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -100,7 +97,7 @@
     <Compile Include="Entity\GetKYCDetailsForRequestForm_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\ImageKyc.cs">
+    <Compile Include="Entity\GetPreSanctionCustomerList_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\GetResidenceVerificationCustomerList_Result.cs">
@@ -184,9 +181,6 @@
     <Compile Include="Entity\SplitValue_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\SplitWords1_Result.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\SplitWords_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -226,15 +220,6 @@
     <Compile Include="Entity\tbl_CKycState.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\tblSchemeTransMonth.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\tblStateMaster.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\tblZonemaster.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\tbl_CountryMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -250,10 +235,7 @@
     <Compile Include="Entity\tbl_KYCMobileOTP.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\tbl_SentJVCustHistory.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\tbl_UserCategory.cs">
+    <Compile Include="Entity\tbl_PreSanctionDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tbl_ResidenceVerification.cs">
@@ -265,22 +247,7 @@
     <Compile Include="Entity\TGLKYC_BasicDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\TGLKYC_DocumentDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLKYC_SourceOfApplication.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLOutwardForm_BasicDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLOutwardForm_DocDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLOutwardForm_GoldDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\TGLSmsHistory.cs">
+    <Compile Include="Entity\TGLSanctionDisburse_BasicDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\TGLSanctionDisburse_ChargesDetails.cs">
@@ -368,6 +335,10 @@
     <Compile Include="Transaction\KYCDocumentDetailsVM.cs" />
     <Compile Include="Transaction\PreSanctionDetailsVM.cs" />
     <Compile Include="Transaction\RequestFormViewModel.cs" />
+    <Compile Include="Transaction\ResidenceVerificationVM.cs" />
+    <Compile Include="Transaction\SanctionDisbursementVM.cs" />
+    <Compile Include="Transaction\SchemeDetailsVM.cs" />
+    <Compile Include="Utilties\ForgotPasswordViewModel.cs" />
     <Compile Include="Utilties\LoginViewModel.cs" />
     <Compile Include="Utilties\MenusViewModel.cs" />
     <Compile Include="Utilties\StandardEndTime.cs" />
@@ -380,23 +351,22 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="Entity\MangalEntity.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MangalEntity.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="Entity\MangalEntity.edmx.diagram">
       <DependentUpon>MangalEntity.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Entity\MangalEntity.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MangalEntity.Context.cs</LastGenOutput>
       <DependentUpon>MangalEntity.edmx</DependentUpon>
+      <LastGenOutput>MangalEntity.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Entity\MangalEntity.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -404,7 +374,6 @@
       <LastGenOutput>MangalEntity.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

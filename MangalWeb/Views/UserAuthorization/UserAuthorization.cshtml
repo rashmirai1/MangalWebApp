@@ -13,6 +13,7 @@
         var url = '@Url.Action("GetUser", "UserAuthorization")';
         $("#UserAuthorizationForms_UserID").empty();
         $('#UserAuthorizationForms_FormID').empty();
+        $('#UserAuthorizationForms_BranchID').empty();
         $.ajax({
             url: url,
             data: { UserCategoryId: usercategoryid },
@@ -31,8 +32,14 @@
                         items1 += "<option value='" + result.SecondList[x].FormID + "'>" + result.SecondList[x].FormName + "</option>";
                         $('#UserAuthorizationForms_FormID').html(items1);
                     }
+                    var items2 = "<option value='0'>--Select Branch--</option>";
+                    for (var x = 0; x < result.ThirdList.length; x++) {
+                        items2 += "<option value='" + result.ThirdList[x].BranchID + "'>" + result.ThirdList[x].BranchName + "</option>";
+                        $('#UserAuthorizationForms_BranchID').html(items2);
+                    }
                     $("#tblForm").hide();
                     $('#UserAuthorizationForms_FormID  option:first-child').attr("selected", "selected");
+                    $('#UserAuthorizationForms_BranchID  option:first-child').attr("selected", "selected");
                 }
                 else {
                     var items = "<option value='0'>--Select User--</option>";
@@ -46,8 +53,27 @@
         });
     }
 
+    function GetBackDatedVoucher(ParentFormID, UserID, BranchId) {
+        if (UserID != 0 && BranchId != 0)
+            var url = '@Url.Action("GetBackDatedVoucher", "UserAuthorization")';
+        $("#UserAuthorizationForms_BackDatedVoucher").val(0);
+        $.ajax({
+            url: url,
+            data: { ParentId: ParentFormID, Userid: UserID, BranchId: BranchId },
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (data) {
+                if (data != "") {
+                    $("#UserAuthorizationForms_BackDatedVoucher").val(data);
+                }
+                else {
+                    $("#UserAuthorizationForms_BackDatedVoucher").val(0);
+                }
+            }
+        })
+    }
 
-    function GetAllChildFormsParentIdWise(ParentFormID, UserID) {
+    function GetAllChildFormsParentIdWise(ParentFormID, UserID, BranchID) {
         if (UserID != 0) {
             var UserCategoryID = $('#UserAuthorizationForms_UserCategoryID').val();
             var url = '@Url.Action("GetForms", "UserAuthorization")';
@@ -55,7 +81,7 @@
             $("#tblFormslist").empty();
             $.ajax({
                 url: url,
-                data: { ParentId: ParentFormID, Userid: UserID, UserCategoryID: UserCategoryID },
+                data: { ParentId: ParentFormID, Userid: UserID, UserCategoryID: UserCategoryID, BranchId: BranchID },
                 type: 'POST',
                 dataType: 'json',
                 success: function (data) {
@@ -141,6 +167,8 @@
         var visible = 0;
         var formid = 0;
         var parentformid = 0;
+        var branchid = 0;
+        var backdatedvoucher = 0;
         var edit = 0;
         var save = 0;
         var delete_id = 0;
@@ -149,6 +177,8 @@
             visible = $("input[name=visible_id" + i + "]").attr('checked');
             formid = $(this).children("td:nth-child(2)").attr('value');
             parentformid = $(this).children("td:nth-child(3)").attr('value');
+            branchid = $("#UserAuthorizationForms_BranchID").val();
+            backdatedvoucher = $("#UserAuthorizationForms_BackDatedVoucher").val();
             edit = $("input[name=isEdit" + i + "]").attr('checked');
             save = $("input[name=isSave" + i + "]").attr('checked');
             delete_id = $("input[name=isDelete" + i + "]").attr('checked');
@@ -158,7 +188,7 @@
             $.ajax({
                 url: url,
                 //data: { formid: formid, parentformid: parentformid, visible: CheckStatus(visible), },
-                data: { index: i, UserID: UserID, formid: formid, parentformid: parentformid, visible: CheckStatus(visible), edit: CheckStatus(edit), save: CheckStatus(save), delete_id: CheckStatus(delete_id), view: CheckStatus(view) },
+                data: { index: i, UserID: UserID, formid: formid, parentformid: parentformid, branchid: branchid, backdatedvoucher: backdatedvoucher, visible: CheckStatus(visible), edit: CheckStatus(edit), save: CheckStatus(save), delete_id: CheckStatus(delete_id), view: CheckStatus(view) },
                 type: 'POST',
                 dataType: 'json',
                 cache: false,
@@ -170,8 +200,12 @@
                     $("#UserAuthorizationForms_UserID").val(0);
                     var theText = "--Select Menu--";
                     var theText1 = "--Select User Category--";
+                    var theText2 = "--Select Branch--";
+                    var theText3 = "--Select Back Dated Voucher--";
                     $("#UserAuthorizationForms_FormID option:contains(" + theText + ")").attr('selected', 'selected');
                     $("#UserAuthorizationForms_UserCategoryID option:contains(" + theText1 + ")").attr('selected', 'selected');
+                    $("#UserAuthorizationForms_BranchID option:contains(" + theText2 + ")").attr('selected', 'selected');
+                    $("#UserAuthorizationForms_BackDatedVoucher option:contains(" + theText3 + ")").attr('selected', 'selected');
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     // alert(errorThrown);
@@ -214,6 +248,10 @@
 
     $(function () {
         $("#tblForm").hide();
+
+        //$('#UserAuthorizationForms_UserID').change(function () {
+        //)}
+
         $('#UserAuthorizationForms_UserCategoryID').change(function () {
             debugger;
             $("#tblForm").hide();
@@ -221,13 +259,30 @@
             $('#UserAuthorizationForms_UserID').html(items);
             var items1 = "<option value='0'>--Select Menu--</option>";
             $('#UserAuthorizationForms_FormID').html(items1);
+            var items2 = "<option value>--Select Menu--</option>";
+            $('#UserAuthorizationForms_BranchID').html(items2);
             GetUser();
         });
-        $('#UserAuthorizationForms_FormID').change(function () {
+        //$('#UserAuthorizationForms_FormID').change(function () {
+        //    var ParentFormID = $('#UserAuthorizationForms_FormID').val();
+        //    var UserID = $('#UserAuthorizationForms_UserID').val();
+        //    if (ParentFormID != 0) {
+        //        GetAllChildFormsParentIdWise(ParentFormID, UserID);
+        //        $("#tblForm").show();
+        //    }
+        //    else {
+
+        //        $("#tblForm").hide();
+        //    }
+
+        //});
+        $('#UserAuthorizationForms_BranchID').change(function () {
             var ParentFormID = $('#UserAuthorizationForms_FormID').val();
             var UserID = $('#UserAuthorizationForms_UserID').val();
+            var BranchId = $('#UserAuthorizationForms_BranchID').val();
             if (ParentFormID != 0) {
-                GetAllChildFormsParentIdWise(ParentFormID, UserID);
+                GetBackDatedVoucher(ParentFormID, UserID, BranchId)
+                GetAllChildFormsParentIdWise(ParentFormID, UserID, BranchId);
                 $("#tblForm").show();
             }
             else {
@@ -296,6 +351,26 @@
                             </div>
                             <div class="form-group">
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label" for="inputDefault">Branch</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(tuple => tuple.UserAuthorizationForms.BranchID, new SelectList(ViewBag.userbranch, "Value", "Text"), "--Select Branch--", new { @class = "form-control" })
+                                        <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.BranchID)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label" for="inputDefault">Back Dated Voucher</label>
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(tuple => tuple.UserAuthorizationForms.BackDatedVoucher, new { @class = "form-control" })
+                                        <span item="11" class="text-danger">@Html.ValidationMessageFor(tuple => tuple.UserAuthorizationForms.BackDatedVoucher)</span>
+                                    </div>
+                                </div>
+                            </div>
                             <br />
                             <div class="col-md-12">
                                 <div class="table-responsive" id="tblUserAuthoriztion">
@@ -303,6 +378,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="col-md-1 btn-primary">
+                                                    <input style="float:left" type="checkbox" id="checkAll" />
                                                     Visible <input type="checkbox" id="checkAllvisible" />
                                                 </th>
                                                 <th class="col-md-3 btn-primary"> Form Name</th>
@@ -365,6 +441,29 @@
         var btnsuccess = document.getElementById('btn_successmessage');
         btnsuccess.click();
     }
+
+    $("#checkAll").click(function () {
+        var chkAll = this;
+        var checkboxes = $(this).closest('form').find(':checkbox');
+        //checkboxes.prop('checked', true);
+        checkboxes.prop('checked', $(this).is(':checked'));
+        $("#tblFormslist").find(':checkbox').attr('checked', true);
+        //checkboxes.each(function () {
+        //    $(this)[0].checked = chkAll.checked;
+        //});
+        if ($(this).is(':checked')) {
+            checkboxes.removeAttr("disabled");
+        }
+        else {
+            checkboxes.attr("disabled", true);
+            var headchk = $(this).closest('tr').find(':checkbox');
+            headchk.removeAttr("disabled");
+            $("#tblFormslist").find(".visible_id").each(function () {
+                $(this).removeAttr("disabled");
+            });
+        }
+        
+    });
 
     $("#checkAllvisible").click(function () {
         //Determine the reference CheckBox in Header row.

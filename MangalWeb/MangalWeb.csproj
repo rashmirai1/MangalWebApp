@@ -129,6 +129,7 @@
     <Compile Include="Controllers\DeviationController.cs" />
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\DocumentUploadController.cs" />
+    <Compile Include="Controllers\ForgotPasswordController.cs" />
     <Compile Include="Controllers\ResidenceVerificationController.cs" />
     <Compile Include="Controllers\PreSanctionController.cs" />
     <Compile Include="Controllers\DocumentVerificationController.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Controllers\SanctionDisbursementController.cs" />
     <Compile Include="Controllers\SchemeController.cs" />
     <Compile Include="Controllers\SourceofApplicationController.cs" />
+    <Compile Include="Controllers\StatdardEndTimeController.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\UserAuthorizationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -2132,7 +2134,7 @@
       <Name>MangalWeb.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\MangalWeb.Repository\MangalWeb.Repository.csproj">
-      <Project>{72487520-BC13-4BE8-8AC8-4A28442E59BD}</Project>
+      <Project>{72487520-bc13-4be8-8ac8-4a28442e59bd}</Project>
       <Name>MangalWeb.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\MangalWeb.Service\MangalWeb.Service.csproj">

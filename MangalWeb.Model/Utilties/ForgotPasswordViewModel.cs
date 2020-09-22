@@ -15,6 +15,7 @@ namespace MangalWeb.Model.Utilities
         //public string UserName { get; set; }
 
         [Required(ErrorMessage = "Email Address required")]
+
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email Address")]
         public string EmailId { get; set; }

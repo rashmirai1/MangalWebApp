@@ -24,6 +24,11 @@ namespace MangalWeb.Service.Service
             return _userAuthorizationRepository.GetUserCategory();
         }
 
+        public List<tblCompanyBranchMaster> GetBranch()
+        {
+            return _userAuthorizationRepository.GetBranch();
+        }
+
         public List<UserDetail> GetUser(int catid)
         {
             return _userAuthorizationRepository.GetUser(catid);
@@ -34,9 +39,13 @@ namespace MangalWeb.Service.Service
             return _userAuthorizationRepository.GetMenuList();
         }
 
-        public List<UserAuthorizationForms> GetForms(int parentid, int userid, int usercategoryid)
+        public int GetBackDatedVoucher(int parentid, int UserId, int BranchId)
         {
-            return _userAuthorizationRepository.GetForms(parentid, userid, usercategoryid);
+            return _userAuthorizationRepository.GetBackDatedVoucher(parentid, UserId, BranchId);
+        }
+        public List<UserAuthorizationForms> GetForms(int parentid, int userid, int usercategoryid, int branchid)
+        {
+            return _userAuthorizationRepository.GetForms(parentid, userid, usercategoryid, branchid);
         }
 
         public int InsertUserAuthorization_DetailsUserWise(UserAuthorizationForms uaf)
@@ -49,9 +58,9 @@ namespace MangalWeb.Service.Service
             return _userAuthorizationRepository.UserAuthorization_ParentPage(Userid);
         }
 
-        public List<MenusViewModel> GetAuthorizeSubPagesList_PrentidWise(int Userid, int ParentId)
+        public List<MenusViewModel> GetAuthorizeSubPagesList_PrentidWise(int Userid, int ParentId, int BranchId)
         {
-            return _userAuthorizationRepository.GetAuthorizeSubPagesList_PrentidWise(Userid,ParentId);
+            return _userAuthorizationRepository.GetAuthorizeSubPagesList_PrentidWise(Userid,ParentId,BranchId);
         }
     }
 }

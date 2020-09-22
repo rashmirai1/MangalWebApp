@@ -21,7 +21,7 @@ namespace MangalWeb.Model.Entity
         public bool isDelete { get; set; }
         public bool isView { get; set; }
         public int FormID { get; set; }
-        public string Name { get; set; }
+        public string FormName { get; set; }
         public Nullable<int> ParentID { get; set; }
         public string ParentForm { get; set; }
     }

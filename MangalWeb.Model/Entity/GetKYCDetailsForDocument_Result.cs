@@ -17,5 +17,7 @@ namespace MangalWeb.Model.Entity
         public string CustomerId { get; set; }
         public string ApplicationNo { get; set; }
         public string LoanAccountNo { get; set; }
+        public string KYCDate { get; set; }
+        public string DisburseDate { get; set; }
     }
 }

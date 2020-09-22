@@ -30,6 +30,11 @@ namespace MangalWeb.Model.Entity
         public string Distance { get; set; }
         public string PinCode { get; set; }
         public string Area { get; set; }
-        public Nullable<System.DateTime> KYCDate { get; set; }
+        public string KYCDate { get; set; }
+        public string CityName { get; set; }
+        public string StateName { get; set; }
+        public string ZoneName { get; set; }
+        public string DisburseDate { get; set; }
+        public string ResidenceCode { get; set; }
     }
 }

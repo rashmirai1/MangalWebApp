@@ -15,6 +15,7 @@ namespace MangalWeb.Controllers
         public ActionResult UserAuthorization()
         {
             GetUserCategory();
+            GetBranch();
             IList<UserAuthorizationForms> userauth = new List<UserAuthorizationForms>();
             ViewBag.user = new SelectList(userauth, "UserID", "User");
             ViewBag.menus = new SelectList(userauth, "FormID", "FormName");
@@ -31,6 +32,12 @@ namespace MangalWeb.Controllers
             ViewBag.usercategory = new SelectList(usercategory, "refid", "Name");
         }
 
+        private void GetBranch()
+        {
+            var branch = _userAuthorizationService.GetBranch();
+            ViewBag.userbranch = new SelectList(branch, "BID", "BranchName");
+        }
+        
         [HttpPost]
         public ActionResult GetUser(int UserCategoryId)
         {
@@ -38,6 +45,8 @@ namespace MangalWeb.Controllers
             ViewBag.user = new SelectList(user, "UserID", "UserName");
             var forms = _userAuthorizationService.GetMenuList();
             ViewBag.menus = new SelectList(forms, "ID", "Name");
+            var branch = _userAuthorizationService.GetBranch();
+            ViewBag.userbranch = new SelectList(branch, "BID", "BranchName");
             var viewModel = user.Select(x => new
             {
                 UserID = x.UserID,
@@ -48,25 +57,39 @@ namespace MangalWeb.Controllers
                 FormID = x.ID,
                 FormName = x.Name,
             });
+            var viewModel2 = branch.Select(x => new
+            {
+                BranchID = x.BID,
+                BranchName = x.BranchName,
+            });
 
-            return Json(new { FirstList = viewModel, SecondList = viewModel1 }, JsonRequestBehavior.AllowGet);
+            return Json(new { FirstList = viewModel, SecondList = viewModel1, ThirdList = viewModel2 }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetBackDatedVoucher(int parentid, int UserId, int BranchId)
+        {
+            var voucher = _userAuthorizationService.GetBackDatedVoucher(parentid, UserId, BranchId);
+            var jsonresult = Json(voucher, JsonRequestBehavior.AllowGet);
+            return jsonresult;
         }
 
         #region GetForms
-        public ActionResult GetForms(int parentid, int UserId, int UserCategoryID)
+        public ActionResult GetForms(int parentid, int UserId, int UserCategoryID, int BranchId)
         {
-            var d = _userAuthorizationService.GetForms(parentid, UserId, UserCategoryID);
+            var d = _userAuthorizationService.GetForms(parentid, UserId, UserCategoryID, BranchId);
             var jsonResult = Json(d, JsonRequestBehavior.AllowGet);
             return jsonResult;
         }
         #endregion
-        public ActionResult SaveUserAuthorization(int index, int UserID, int formid, int parentformid, bool visible, bool edit, bool save, bool delete_id, bool view)
+        public ActionResult SaveUserAuthorization(int index, int UserID, int formid, int parentformid, int branchid, string backdatedvoucher, bool visible, bool edit, bool save, bool delete_id, bool view)
         {
             UserAuthorizationForms rm = new UserAuthorizationForms();
             rm.index = index;
             rm.FormID = formid;
             rm.UserID = UserID;
             rm.ParentID = parentformid;
+            rm.BranchID = branchid;
+            rm.BackDatedVoucher = backdatedvoucher;
             rm.isVisible = visible;
             rm.isDelete = delete_id;
             rm.isEdit = edit;
