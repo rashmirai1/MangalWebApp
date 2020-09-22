@@ -5,7 +5,7 @@
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
 
-@using (Ajax.BeginForm("CreateEdit", "SanctionDisbursement", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+@using (Ajax.BeginForm("", "", new AjaxOptions { }, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
@@ -27,6 +27,7 @@
             </div><!--end of topbar-right-->
         </div><!--end of col-md-7-->
     </header>
+
     <section id="content" class="animated fadeIn content_height">
         <div class="row">
             <div class="col-md-12">
@@ -41,12 +42,25 @@
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 <span class="text-danger" id="CustomErr"> </span>
                                                 @Html.EditorFor(model => model.TransactionId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction ID", @readonly = true } })
+                                                @Html.HiddenFor(x => x.AreaId)
+                                                @Html.HiddenFor(x => x.MobileNo)
+                                                @Html.HiddenFor(x => x.TelephoneNo)
+                                                @Html.HiddenFor(x => x.EmailId)
+                                                @Html.HiddenFor(x => x.KYCID)
+                                                @Html.HiddenFor(x => x.SchemeProcessingType)
+                                                @Html.HiddenFor(x => x.SchemeProcessingCharge)
+                                                @Html.HiddenFor(x => x.SchemeProcessingLimit)
+                                                @Html.HiddenFor(x => x.StateID)
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Transaction Date<span class="text-danger"></span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.EditorFor(model => model.TransactionDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Date", @autocomplete = "Off" } })
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Customer ID<span class="text-danger">*</span></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Customer<span class="text-danger">*</span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 @Html.EditorFor(model => model.CustomerID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer ID", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
                                                 <div class="input-group-btn" style="display:inline;">
@@ -136,8 +150,8 @@
                                         <hr style="margin-top:0px;" />
                                         <label><b><u>Gold Item Details</u></b></label><br />
                                         <div class="panel-body panel-no-padding">
-                                            <div id="divProductRate">
-                                                <table cellpadding="0" style="width:90%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblProductRateDetails">
+                                            <div>
+                                                <table cellpadding="0" style="width:100%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblGoldItemDetails">
                                                     <thead>
                                                         <tr>
                                                             <th style="text-align:left">Sr. No.</th>
@@ -146,27 +160,13 @@
                                                             <th style="text-align:left">Purity</th>
                                                             <th style="text-align:left">Gross Wt.(g)</th>
                                                             <th style="text-align:left">Deduction</th>
-                                                            <th style="text-align:left">Net Wt.(g)</th>
                                                             <th style="text-align:left">Rate Per Gram</th>
+                                                            <th style="text-align:left">Net Wt.(g)</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        @{int j = 1;}
-                                                        @foreach (var item in Model.EligibleLoanAmountValuationDetailsVMList)
-                                                        {
-                                                            <tr id="@item.ID">
-                                                                <td>@j</td>
-                                                                <td id="@item.OrnamentId">@item.OrnamentName</td>
-                                                                <td>@item.Qty</td>
-                                                                <td id="@item.PurityNo">@item.PurityName</td>
-                                                                <td>@item.GrossWeight</td>
-                                                                <td>@item.Deductions</td>
-                                                                <td>@item.NetWeight</td>
-                                                                <td>@item.RatePerGram</td>
-                                                            </tr>
-                                                            j++;
-                                                        }
-                                                    </tbody>
+                                                    <tbody></tbody>
+                                                    <tfoot>
+                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>
@@ -192,9 +192,9 @@
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 @Html.EditorFor(model => model.Tenure, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tenure", @readonly = true } })
                                             </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Sanction Loan Amount<span class="text-danger"></span></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Sanction Loan Amt.<span class="text-danger">*</span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.SanctionLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Sanction Loan Amount" } })
+                                                @Html.EditorFor(model => model.SanctionLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Sanction Loan Amount", @autocomplete = "Off" } })
                                             </div>
                                         </div>
                                         <div>
@@ -213,30 +213,11 @@
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <hr style="margin-top:0px;" />
                                         <label><b><u>Charge Details</u></b></label><br /><br />
-                                        <table cellpadding="0" style="width:100%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblChargeDetails">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width:40%">Charge Name</th>
-                                                    <th style="width:15%">Charges</th>
-                                                    <th style="width:15%">Type</th>
-                                                    <th style="width:15%">Amount</th>
-                                                    <th style="width:15%">Account</th>
-                                                    <th style="width:15%">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @*@foreach (var item in Model.ChargeDetailList)
-                    {
-                        <tr>
-                            <td>@item.ChargeName</td>
-                            <td>@item.chargeDetailsViewModel.ChargeAmount</td>
-                            <td><input type="button" value="Remove" onclick="Remove(this)" /></td>
-                        </tr>
-                    }*@
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="col-md-1 control-label"> Charge <span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
                                                         <div class="section">
                                                             <label class="field select">
                                                                 @Html.DropDownListFor(m => m.ChargeVM.ChargeId, (SelectList)ViewBag.ChargeMasterList, "-- Select Charge --", htmlAttributes: new { @class = "form-control" })
@@ -244,21 +225,70 @@
                                                                 <i class="arrow"></i>
                                                             </label>
                                                         </div>
-                                                    </td>
-                                                    <td><label id="lblAmount"></label></td>
-                                                    <td><label id="lblCharges"></label></td>
-                                                    <td><label id="lblAmount"></label></td>
-                                                    <td><div class="section">
-    <label class="field select">
-        @Html.DropDownListFor(m => m.ChargeVM.AccountId, (SelectList)ViewBag.ChargeAccountList, "-- Select Account --", htmlAttributes: new { @class = "form-control" })
-        <span class="text-danger small">@Html.ValidationMessageFor(m => m.ChargeVM.AccountId)</span>
-        <i class="arrow"></i>
-    </label>
-</div></td>
-                                                    <td><input type="button" id="btnChargeAdd" value="Add" /></td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
+                                                    </div>
+                                                    <label class="col-md-1 control-label" id="lblSerialNumber"> Charges <span class="text-danger">  </span></label>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                        @Html.TextBoxFor(x => x.ChargeVM.Charges, new { @class = "form-control input-sm", @readonly = true })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-1 control-label" id="lblSerialNumber"> Type <span class="text-danger">  </span></label>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                        @Html.TextBoxFor(x => x.ChargeVM.ChargeType, new { @class = "form-control input-sm", @readonly = true })
+                                                    </div>
+                                                    <label class="col-md-1 control-label" id="lblSerialNumber"> Amount <span class="text-danger">  </span></label>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                                        @Html.TextBoxFor(x => x.ChargeVM.Amount, new { @class = "form-control input-sm", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)",@maxlength="8" })
+                                                    </div>
+                                                    <label class="col-md-1 control-label"> Account <span class="text-danger"> * </span></label>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="section">
+                                                            <label class="field select">
+                                                                @Html.DropDownListFor(m => m.ChargeVM.AccountId, (SelectList)ViewBag.ChargeAccountList, "-- Select Account --", htmlAttributes: new { @class = "form-control" })
+                                                                <span class="text-danger small">@Html.ValidationMessageFor(m => m.ChargeVM.AccountId)</span>
+                                                                <i class="arrow"></i>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                        <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnAddChargeDetails" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body panel-no-padding">
+                                            <div id="divChargeDetails">
+                                                <table cellpadding="0" style="width:100%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblChargeDetails">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-sm-2" style="width:2%">Sr.No.</th>
+                                                            <th style="width:30%">Charge</th>
+                                                            <th style="width:10%">Charges</th>
+                                                            <th style="width:10%">Type</th>
+                                                            <th style="width:10%">Amount</th>
+                                                            <th style="width:30%">Account</th>
+                                                            <th style="width:10%">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @{int j = 1;}
+                                                        @foreach (var item in Model.ChargeDetailList)
+                                                        {
+                                                            <tr id="@item.ID">
+                                                                <td>@j</td>
+                                                                <td id="@item.ChargeId">@item.ChargeName</td>
+                                                                <td>@item.Charges</td>
+                                                                <td>@item.ChargeType</td>
+                                                                <td>@item.Amount</td>
+                                                                <td id="@item.AccountId">@item.AccountName</td>
+                                                                <td>
+                                                                    <a class="delete"><i class="fa fa-trash"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                            j++;
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <hr style="margin-top:0px;" />
@@ -270,7 +300,7 @@
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Interest Repayment Date<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.BankPaymentDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Interest Repayment Date", @readonly = true } })
+                                                @Html.EditorFor(model => model.InterestRepaymentDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Interest Repayment Date", @readonly = true } })
                                             </div>
 
                                         </div>
@@ -295,11 +325,12 @@
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
                                                 Proof of Ownership
-                                                (If gross weight more than 20g)<span class="text-danger"></span>
+                                                (If gross weight more than 20g)<span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <input type="file" name="OwnershipImage" id="OwnershipImage" class="form-data" accept=".png,.jpg,.jpeg,.gif,.pdf" />
-                                          </div>
+                                                <input type="file" name="ProofOfOwnerShipFile" id="ProofOfOwnerShipFile" class="form-data" accept=".png,.jpg,.jpeg,.gif,.pdf" />
+                                                @Html.ValidationMessageFor(model => model.ProofOfOwnerShipFile, "", new { @class = "text-danger" })
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
@@ -310,7 +341,7 @@
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Packet Weight<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.PacketWeight, new { htmlAttributes = new { @class = "form-control", @placeholder = "Packet Weight" } })
+                                                @Html.EditorFor(model => model.PacketWeight, new { htmlAttributes = new { @class = "form-control", @placeholder = "Packet Weight", @autocomplete = "Off" } })
                                             </div>
                                         </div>
                                     </div>
@@ -322,7 +353,7 @@
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Locker No<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.LockerNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Locker No", @maxlength = "10" } })
+                                                @Html.EditorFor(model => model.LockerNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Locker No", @maxlength = "10", @autocomplete = "Off" } })
                                             </div>
                                         </div>
                                     </div>
@@ -352,6 +383,12 @@
                                                     </label>
                                                 </div>
                                             </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Bank A/c<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 <div class="section">
@@ -362,17 +399,9 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Transaction Date<span class="text-danger"></span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.TransactionDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Date" } })
-                                            </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Bank Payment Date<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.BankPaymentDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Bank Payment Date" } })
+                                                @Html.EditorFor(model => model.BankPaymentDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Bank Payment Date", @autocomplete = "Off" } })
                                             </div>
                                         </div>
                                     </div>
@@ -399,7 +428,7 @@
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Chq/DD/NEFT No.<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.ChqDDNEFTNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Chq/DD/NEFT No." } })
+                                                @Html.EditorFor(model => model.ChqDDNEFTNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Chq/DD/NEFT No.", @autocomplete = "Off" } })
                                             </div>
                                         </div>
                                     </div>
@@ -407,11 +436,11 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Chq/DD/NEFT Date<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.ChqDDNEFTDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Chq/DD/NEFT Date" } })
+                                                @Html.EditorFor(model => model.ChqDDNEFTDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Chq/DD/NEFT Date", @autocomplete = "Off" } })
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Amount<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.BankAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount" } })
+                                                @Html.EditorFor(model => model.BankAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount", @autocomplete = "Off", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                             </div>
                                         </div>
                                     </div>
@@ -431,7 +460,7 @@
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Amount<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.CashAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cash Amount" } })
+                                                @Html.EditorFor(model => model.CashAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Cash Amount", @autocomplete = "Off", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                             </div>
                                         </div>
                                     </div>
@@ -465,7 +494,7 @@
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Rack No<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.RackNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Rack No" } })
+                                                @Html.EditorFor(model => model.RackNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Rack No", @autocomplete = "Off" } })
                                             </div>
                                         </div>
                                     </div>
@@ -473,16 +502,16 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Remark<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control", @placeholder = "Remark" } })
+                                                @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control", @placeholder = "Remark", @autocomplete = "Off" } })
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Gold Inward    Date<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.GoldInwardDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Gold Inward Date" } })
+                                                @Html.EditorFor(model => model.GoldInwardDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Gold Inward Date", @autocomplete = "Off" } })
                                             </div>
                                         </div>
                                     </div>
-                                    
-                                    </div>
+
+                                </div>
                                 <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
                             </div>
                         </div>
@@ -499,7 +528,198 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
     <script type="text/javascript">
+        $(document).ready(function () {
 
+            $("#divGoldItemDetails").hide();
+            if (@Model.EligibleLoanAmountValuationDetailsVMList.Count() > 0) {
+                $("#divGoldItemDetails").show();
+            }
+
+            $("#divChargeDetails").hide();
+            if (@Model.ChargeDetailList.Count() > 0) {
+                $("#divChargeDetails").show();
+            }
+
+            $("#TransactionDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
+            $("#BankPaymentDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
+            $("#ChqDDNEFTDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
+            $("#GoldInwardDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
+        });
+
+        $("#SanctionLoanAmount").on('keyup', function () {
+            var sanctionamount = $("#SanctionLoanAmount").val();
+            var EligibleLoanAmount = $("#EligibleLoanAmount").val();
+            if (parseFloat(sanctionamount) > parseFloat(EligibleLoanAmount)) {
+                alert('Sanction Loan Amount can not be greater than Eligible Loan Amount');
+                $("#SanctionLoanAmount").val(0);
+                $("#NetPayable").val(0);
+                $("#SanctionLoanAmount").focus()
+                return;
+            }
+            if (sanctionamount == 0) {
+                $("#NetPayable").val(0);
+            }
+            else {
+                $("#NetPayable").val(parseFloat(sanctionamount).toFixed(0));
+            }
+        });
+
+        $("#btn_save").click(function () {
+            SaveSanctionDisbursement();
+        });
+
+        function SaveSanctionDisbursement() {
+            debugger;
+            var SanctionViewModel = {};
+            var check=true;
+            SanctionViewModel.CustomerId = $("#CustomerID").val();
+            SanctionViewModel.KYCID = $("#KYCID").val();
+            SanctionViewModel.AreaId=$("#AreaId").val();
+            SanctionViewModel.MobileNo=$("#MobileNo").val();
+            SanctionViewModel.TelephoneNo=$("#TelephoneNo").val();
+            SanctionViewModel.EmailId=$("#EmailId").val();
+            SanctionViewModel.TransactionDate = $("#TransactionDate").val();
+            SanctionViewModel.LoanType = $("#LoanType").val();
+            SanctionViewModel.LoanAccountNo = $("#LoanAccountNo").val();
+            SanctionViewModel.CustomerName = $("#CustomerName").val();
+            SanctionViewModel.PANNo = $("#PANNo").val();
+            SanctionViewModel.CustomerAddress=$("#CustomerAddress").val();
+            SanctionViewModel.EligibleLoanAmount = $("#EligibleLoanAmount").val();
+            SanctionViewModel.SanctionLoanAmount = $("#SanctionLoanAmount").val();
+            SanctionViewModel.NetPayable = $("#NetPayable").val();
+            SanctionViewModel.InterestRepaymentDate = $("#InterestRepaymentDate").val();
+            SanctionViewModel.PacketWeight=$("#PacketWeight").val();
+            SanctionViewModel.LockerNo=$("#LockerNo").val();
+            SanctionViewModel.SchemeId=$("#SchemeId").val();
+            SanctionViewModel.PaymentMode = $("#PaymentMode").val();
+            SanctionViewModel.BankAccountNo = $("#BankAccountNo").val();
+            SanctionViewModel.BankPaymentDate=$("#BankPaymentDate").val();
+            SanctionViewModel.ChqDDNEFT=$("#ChqDDNEFT").val();
+            SanctionViewModel.ChqDDNEFTNo=$("#ChqDDNEFTNo").val();
+            SanctionViewModel.ChqDDNEFTDate = $("#ChqDDNEFTDate").val();
+            SanctionViewModel.BankAmount = $("#BankAmount").val();
+            SanctionViewModel.CashAccountNo=$("#CashAccountNo").val();
+            SanctionViewModel.CashAmount=$("#CashAmount").val();
+            SanctionViewModel.CashOutwardbyNo=$("#CashOutwardbyNo").val();
+            SanctionViewModel.GoldInwardByNo = $("#GoldInwardByNo").val();
+            SanctionViewModel.RackNo = $("#RackNo").val();
+            SanctionViewModel.Remark=$("#Remark").val();
+            SanctionViewModel.GoldInwardDate=$("#GoldInwardDate").val();
+
+            if (SanctionViewModel.CustomerId == 0) {
+                $("#CustomErr").text("Please Select Customer");
+                $("#CustomerID").focus();
+                check=false;
+                return;
+            }
+            var inp = document.getElementById('ProofOfOwnerShipFile');
+            if (inp.files.length === 0) {
+                $("#CustomErr").text("Upload Proof Of OwnerShip Image!");
+                inp.focus();
+                return false;
+            }
+            if ($('#tblChargeDetails tbody tr').length == 0) {
+                var ChargeId= $("#ChargeVM_ChargeId").val();
+                if (ChargeId == 0) {
+                    $("#CustomErr").text("Please Select Charge");
+                    $("#ChargeVM_ChargeId").focus();
+                    check=false;
+                    return;
+                }
+                var AccountId= $("#ChargeVM_AccountId").val();
+                if (AccountId == 0) {
+                    $("#CustomErr").text("Please Select Account");
+                    $("#ChargeVM_AccountId").focus();
+                    check=false;
+                    return;
+                }
+            }
+            var length=$('#tblChargeDetails tbody tr').length;
+            if(length==0)
+            {
+                $("#CustomErr").text("Please Click Add button then save record");
+                $("#tblChargeDetails").focus();
+                check=false;
+                return check;
+            }
+
+            $("#btn_save").prop("disabled", true);
+            var lstChargeTrn = [];
+            var lstGoldItemTrn = [];
+
+            $("#tblChargeDetails TBODY TR").each(function () {
+                var row = $(this);
+                var rowChargeTrn = {};
+                debugger;
+                rowChargeTrn.ID = row.attr('id');
+                rowChargeTrn.ChargeId = row.find("td").eq(1).attr('id');
+                rowChargeTrn.Charges = row.find("TD").eq(2).html();
+                rowChargeTrn.ChargeType = row.find("TD").eq(3).html();
+                rowChargeTrn.Amount = row.find("TD").eq(4).html();
+                rowChargeTrn.AccountId = row.find("td").eq(5).attr('id');
+                lstChargeTrn.push(rowChargeTrn);
+            });
+
+            $("#tblGoldItemDetails TBODY TR").each(function () {
+                var row = $(this);
+                var rowGoldItemTrn = {};
+                debugger;
+                rowGoldItemTrn.ID = row.attr('id');
+                rowGoldItemTrn.OrnamentId = row.find("td").eq(1).attr('id');
+                rowGoldItemTrn.Qty = row.find("TD").eq(2).html();
+                rowGoldItemTrn.PurityNo = row.find("td").eq(3).attr('id');
+                rowGoldItemTrn.GrossWeight = row.find("TD").eq(4).html();
+                rowGoldItemTrn.Deductions =  row.find("TD").eq(5).html();
+                rowGoldItemTrn.RatePerGram =  row.find("TD").eq(6).html();
+                rowGoldItemTrn.NetWeight = row.find("TD").eq(7).html();
+                lstGoldItemTrn.push(rowGoldItemTrn);
+            });
+
+            $("#tblGoldItemDetails tfoot TR").each(function () {
+                var row = $(this);
+                var rowGoldItemTrn = {};
+                SanctionViewModel.TotalQuantity = row.find("TD").eq(2).text();
+                SanctionViewModel.TotalGrossWeight = row.find("TD").eq(4).text();
+                SanctionViewModel.TotalDeductions = row.find("TD").eq(5).text();
+                SanctionViewModel.TotalRatePerGram =  row.find("TD").eq(6).text();
+                SanctionViewModel.TotalValue =  row.find("TD").eq(7).text();
+            });
+            debugger;
+            SanctionViewModel.ChargeDetailList = lstChargeTrn;
+            SanctionViewModel.EligibleLoanAmountValuationDetailsVMList = lstGoldItemTrn;
+
+            SanctionViewModel.ID = $('#ItemID').val();
+            if(check==true)
+            {
+                $.ajax({
+                    type: "POST",
+                    url: "/SanctionDisbursement/Insert",
+                    data: JSON.stringify(SanctionViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        debugger;
+                        if (r == 1) {
+                            $("#saveModal").modal('show');
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                        else if(r==2){
+                            $("#saveModal").modal('show');
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                        else
+                        {   $("#CustomErr").text(r);
+                            $("#btn_save").prop("disabled", false);
+                            return false;
+                        }
+                    }
+                });
+            }
+        }
         var urlRedirect = '@Html.Raw(@Url.Action("SanctionDisbursement", "SanctionDisbursement"))';
         function OnSuccess(response) {
 
@@ -529,50 +749,144 @@
                 }
             });
         }
+        
+        $("#ProofOfOwnerShipFile").change(function () {
 
-        $("body").on("click", "#btnChargeAdd", function () {
-            //Reference the Name and Country TextBoxes.
-            var txtChargeName = $("#txtChargeName");
-            var txtAmount = $("#txtAmount");
-
-            //Get the reference of the Table's TBODY element.
-            var tBody = $("#tblChargeDetails > TBODY")[0];
-
-            //Add Row.
-            var row = tBody.insertRow(-1);
-
-            //Add Name cell.
-            var cell = $(row.insertCell(-1));
-            cell.html(txtChargeName.val());
-
-            //Add Country cell.
-            cell = $(row.insertCell(-1));
-            cell.html(txtAmount.val());
-
-            //Add Button cell.
-            cell = $(row.insertCell(-1));
-            var btnRemove = $("<input />");
-            btnRemove.attr("type", "button");
-            btnRemove.attr("onclick", "Remove(this);");
-            btnRemove.val("Remove");
-            cell.append(btnRemove);
-
-            //Clear the TextBoxes.
-            txtChargeName.val("");
-            txtAmount.val("");
-        });
-
-        function Remove(button) {
-            //Determine the reference of the Row using the Button.
-            var row = $(button).closest("TR");
-            var name = $("TD", row).eq(0).html();
-            if (confirm("Do you want to delete: " + name)) {
-                //Get the reference of the Table.
-                var table = $("#tblChargeDetails")[0];
-                //Delete the Table row using it's Index.
-                table.deleteRow(row[0].rowIndex);
+            var fileUpload = $("#ProofOfOwnerShipFile").get(0);
+            var files = fileUpload.files;
+            // Create FormData object
+            fileData = new FormData();
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append("ProofOfOwnerShipFile", files[i]);
             }
-        };
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UploadProofOfOwnershipImage", "SanctionDisbursement")', // we are calling json method
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (data) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+            return false;
+        })
+
+        //Dropdownlist Selectedchange event
+        $("#ChargeVM_ChargeId").change(function () {
+            var sanctionamount = $("#SanctionLoanAmount").val();
+            if (sanctionamount == 0) {
+                alert('Please Enter Sanction Loan Amount')
+                $("#SanctionLoanAmount").focus()
+                $("#ChargeVM_ChargeId").val("");
+                return;
+            }
+            if ($("#ChargeVM_ChargeId").val() > 0) {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetChargeDetails", "SanctionDisbursement")', // we are calling json method
+                    dataType: 'json',
+                    data: { ChargeId: $("#ChargeVM_ChargeId").val(), SanctionLoanAmount: sanctionamount },
+                    //as inputto json method GetStatesfr
+                    success: function (data) {
+                        $("#ChargeVM_Charges").val(data.Charges);
+                        $("#ChargeVM_ChargeType").val(data.ChargeType);
+                        $("#ChargeVM_Amount").val(data.Amount);
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve data.' + ex);
+                    }
+                });
+                return false;
+            }
+            else {
+                alert('Please Select Proper Charge')
+                $("#ChargeVM_ChargeId").focus();
+                return;
+            }
+        })
+
+        var sr_no = 0;
+        var trid = 0;
+        $("#btnAddChargeDetails").click(function () {
+            $("#CustomErrr").text("");
+            $('[data-toggle="tooltip"]').tooltip();
+            var actions = "<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+            var index = $("#tblChargeDetails tbody tr:last").index();
+            debugger;
+            var ChargeId = $("#ChargeVM_ChargeId").val();
+            var ChargeName = $("#ChargeVM_ChargeId option:selected").text();
+            var Charges = $("#ChargeVM_Charges").val();
+            var ChargeType = $("#ChargeVM_ChargeType").val();
+            var Amount = $("#ChargeVM_Amount").val();
+            var AccountId = $("#ChargeVM_AccountId").val();
+            var AccountName = $("#ChargeVM_AccountId option:selected").text();
+
+            if (ChargeId == 0) {
+                alert('Please Select Charge')
+                $("#ChargeVM_ChargeId").focus();
+                return;
+            }
+
+            if (AccountId == 0) {
+                alert('Please Select Account')
+                $("#ChargeVM_AccountId").focus();
+                return;
+            }
+
+            var srno = 0;
+            var newtrno = trid;
+            if (sr_no == 0) {
+                srno = index + 2;
+                newtrno = 0;
+            }
+            else {
+                srno = sr_no;
+                //var no = parseInt(srno) - 1;
+                //$("#tblChargeDetails tbody tr:eq(" + no + ")").remove();
+            }
+            sr_no = 0;
+            trid = 0;
+            var row = '<tr id=' + newtrno + '>' +
+                '<td width="10%">' + srno + '</td>' +
+                '<td width="30%" id="' + ChargeId + '">' + ChargeName + '</td>' +
+                '<td width="10%">' + Charges + '</td>' +
+                '<td width="10%">' + ChargeType + '</td>' +
+                '<td width="10%">' + Amount + '</td>' +
+                '<td width="30%" id="' + AccountId + '">' + AccountName + '</td>' +
+                '<td id=' + srno + '' + actions + '</td>' +
+                '</tr>';
+            if (ChargeId != "" && AccountId != "") {
+                $("#tblChargeDetails tbody").append(row);
+                //get sanction loan amount
+                //net payable = sanction-(charge+GST)
+                var netpayable = $("#NetPayable").val();
+                $("#NetPayable").val(parseFloat(parseFloat(netpayable) - parseFloat(Amount)).toFixed(0));
+                $("#ChargeVM_ChargeId").val("");
+                $("#ChargeVM_Charges").val("");
+                $("#ChargeVM_ChargeType").val("");
+                $("#ChargeVM_Amount").val("");
+                $("#ChargeVM_AccountId").val("");
+                $("#divChargeDetails").show();
+            }
+
+            $("#tblChargeDetails tbody tr").on("click", ".delete", function () {
+                if (confirm('Are you sure to remove?')) {
+                    //var tr = $(this).closest('tr');
+                    //tr.remove();
+                    debugger;
+                    var row = $(this).closest("tr");
+                    var amount = $("TD", row).eq(4).html();
+                    $(this).parents('tr').remove();
+                    var netpayable = $("#NetPayable").val();
+                    $("#NetPayable").val(parseFloat(parseFloat(netpayable) + parseFloat(amount)).toFixed(0));
+                    return false;
+                }
+            })
+        })
 
         $("#diveditfilldata").on("click", "tr", function () {
             debugger;
@@ -608,8 +922,29 @@
                             value = day + "/" + month + "/" + year;
                         }
                         $("#" + key + "").val(value);
+
                     });
                     $("#ItemID").val(result.KYCID);
+                    $.each(result.EligibleLoanAmountValuationDetailsVMList, function (key, val) {
+                        var rowCount = $('#tblGoldItemDetails >tbody >tr').length + 1;
+                        var value = "";
+                        $('#tblGoldItemDetails tbody').append('<tr id=' + val.ID + '><td width="10%">' + rowCount +
+                         '<td width="20%" id="' + val.OrnamentId + '">' + val.OrnamentName + '</td>' +
+                         '<td width="10%">' + val.Qty + '</td>' +
+                           '<td width="20%" id="' + val.PurityNo + '">' + val.PurityName + '</td>' +
+                           '<td width="10%">' + val.GrossWeight + '</td>' +
+                           '<td width="10%">' + val.Deductions + '</td>' +
+                           '<td width="10%">' + val.RatePerGram + '</td>' +
+                           '<td width="10%">' + val.NetWeight + '</td>' +
+                           '</tr>');
+                    });
+                    var foot = $("#tblGoldItemDetails").find('tfoot');
+                    if (!foot.length) foot = $('<tfoot>').appendTo("#tblGoldItemDetails");
+                    foot.append($('<tr><td><b>Total</b></td><td></td><td><b>' + result.TotalQuantity + '</b></td><td></td>' +
+                                                            '<td><b>' + result.TotalGrossWeight + '</b></td>' +
+                                                            '<td><b>' + result.TotalDeductions + '</b></td>' +
+                                                            '<td><b>' + result.TotalRatePerGram + '</b></td>' +
+                                                            '<td><b>' + result.TotalNetWeight + '</b></td></tr>'));
                 }
             });
         }

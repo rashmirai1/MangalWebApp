@@ -11,15 +11,13 @@ namespace MangalWeb.Model.Entity
 {
     using System;
     
-    public partial class T_Forms_UserAuthorization_ParentPage_Result
+    public partial class GL_SanctionDisburse_Charges_RTR_Result
     {
-        public string FormName { get; set; }
-        public int ParentId { get; set; }
-        public string sequence { get; set; }
-        public string FormUrl { get; set; }
-        public string ToolTip { get; set; }
-        public string IconPath { get; set; }
-        public string Name { get; set; }
-        public bool isVisible { get; set; }
+        public int CID { get; set; }
+        public string ChargeName { get; set; }
+        public double Charges { get; set; }
+        public string ChargeType { get; set; }
+        public int ID { get; set; }
+        public Nullable<double> Amount { get; set; }
     }
 }

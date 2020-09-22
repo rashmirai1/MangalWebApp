@@ -82,6 +82,9 @@
     <Compile Include="Entity\FLedgerMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\FSystemGeneratedEntryMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\GetCustomerRecordinSanction_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -98,6 +101,9 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\GetKYCDetailsForRequestForm_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\GL_SanctionDisburse_Charges_RTR_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\GL_SanctionDisburse_KYC_Details_RTR_Result.cs">
@@ -277,9 +283,6 @@
     <Compile Include="Entity\TSchemeMaster_EffectiveROI.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\T_Forms_UserAuthorization_ParentPage_Result.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\T_GetAuthorizeSubPagesList_PrentidWise_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -324,6 +327,7 @@
     <Compile Include="Masters\TenureDeviationVM.cs" />
     <Compile Include="Masters\ZoneViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\ModelReflection.cs" />
     <Compile Include="Security\PasswordEncryptionDecryption.cs" />
     <Compile Include="Transaction\ChargeSanctionVM.cs" />
     <Compile Include="Transaction\EligibleLoanAmountValuationDetailsVM.cs" />

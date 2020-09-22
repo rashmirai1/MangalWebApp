@@ -14,8 +14,17 @@ namespace MangalWeb.Model.Entity
     
     public partial class Mst_PurityMaster
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Mst_PurityMaster()
+        {
+            this.TGLSanctionDisburse_GoldItemDetails = new HashSet<TGLSanctionDisburse_GoldItemDetails>();
+        }
+    
         public int id { get; set; }
         public string PurityName { get; set; }
         public Nullable<int> PurityType { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TGLSanctionDisburse_GoldItemDetails> TGLSanctionDisburse_GoldItemDetails { get; set; }
     }
 }

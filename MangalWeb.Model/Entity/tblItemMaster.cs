@@ -14,11 +14,19 @@ namespace MangalWeb.Model.Entity
     
     public partial class tblItemMaster
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblItemMaster()
+        {
+            this.TGLSanctionDisburse_GoldItemDetails = new HashSet<TGLSanctionDisburse_GoldItemDetails>();
+        }
+    
         public int ItemID { get; set; }
         public string ItemName { get; set; }
         public int Product { get; set; }
         public string Status { get; set; }
     
         public virtual Mst_Product Mst_Product { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TGLSanctionDisburse_GoldItemDetails> TGLSanctionDisburse_GoldItemDetails { get; set; }
     }
 }

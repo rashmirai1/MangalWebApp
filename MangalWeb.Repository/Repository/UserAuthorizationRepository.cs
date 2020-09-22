@@ -159,16 +159,14 @@ namespace MangalWeb.Repository.Repository
         {
             try
             {
-                var list = _context.Database.SqlQuery<MenusViewModel>("T_GetAuthorizeSubPagesList_PrentidWise @UserId,@ParentId",
+                var list = _context.Database.SqlQuery<MenusViewModel>("T_GetAuthorizeSubPagesList_PrentidWise @UserId,@ParentId,@BranchId",
                            new SqlParameter("UserID", Userid), new SqlParameter("ParentId", ParentId)).ToList();
                 return list;
             }
-
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-
     }
 }

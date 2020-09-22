@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fc080b8f0dcd4ead8cf66be6dcd2c195" Name="Diagram1" ZoomLevel="61">
+      <Diagram DiagramId="fc080b8f0dcd4ead8cf66be6dcd2c195" Name="Diagram1" ZoomLevel="58">
         <EntityTypeShape EntityType="MangalDBNewModel.tblBankMaster" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.KycImageStore" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_GLDocumentMaster" Width="1.5" PointX="10.75" PointY="8.75" IsExpanded="true" />
@@ -66,14 +66,17 @@
         <AssociationConnector Association="MangalDBNewModel.FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesDetails" Width="1.5" PointX="3.375" PointY="30.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesPostingDetails" Width="1.5" PointX="30.375" PointY="12.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_GoldItemDetails" Width="1.5" PointX="30.375" PointY="21.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" Width="1.5" PointX="23.375" PointY="29.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_CKycState" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.FLedgerMaster" Width="1.5" PointX="3.75" PointY="3.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TBankCash_PaymentDetails" Width="1.5" PointX="0.75" PointY="4.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TBankCash_ReceiptDetails" Width="1.5" PointX="5.75" PointY="4.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.FCompanyYearEndClosing" Width="1.5" PointX="2.75" PointY="7.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Imagestore" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_GoldItemDetails" Width="1.5" PointX="32.875" PointY="10.5" />
+        <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_GoldItemDetails_Mst_PurityMaster" />
+        <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_GoldItemDetails_tblItemMaster" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.FSystemGeneratedEntryMaster" Width="1.5" PointX="10.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

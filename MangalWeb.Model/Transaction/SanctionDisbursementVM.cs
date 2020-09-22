@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MangalWeb.Model.Transaction
 {
@@ -38,14 +39,26 @@ namespace MangalWeb.Model.Transaction
         public int Age { get; set; }
         public string CustomerAddress { get; set; }
         public int AreaId { get; set; }
+        public int StateID { get; set; }
         public string TelephoneNo { get; set; }
         public string NomineeName { get; set; }
         public string NomineeRelation { get; set; }
         public decimal GoldItemDetails { get; set; }
         public string SchemeName { get; set; }
         public int SchemeId { get; set; }
+        public string SchemeProcessingType { get; set; }
+        public decimal SchemeProcessingCharge { get; set; }
+        public decimal SchemeProcessingLimit { get; set; }
         public string Tenure { get; set; }
         public string MaximumLoanAmount { get; set; }
+
+        //gold item details
+        public int? TotalQuantity { get; set; }
+        public decimal? TotalGrossWeight { get; set; }
+        public decimal? TotalDeductions { get; set; }
+        public decimal? TotalNetWeight { get; set; }
+        public decimal? TotalRatePerGram { get; set; }
+        public decimal? TotalValue { get; set; }
         //Outstanding Details
         public decimal Principal { get; set; }
         public decimal Interest { get; set; }
@@ -60,23 +73,25 @@ namespace MangalWeb.Model.Transaction
         public decimal NetPayable { get; set; }
         public string InterestRepaymentDate { get; set; }
         public string GoldItemImage { get; set; }
-        public string ProofOfOwnerShipImage { get; set; }
+        [Required]
+        public HttpPostedFileBase ProofOfOwnerShipFile { get; set; }
+        public byte[] ProofOfOwnerShipImageFile { get; set; }
         public decimal PacketWeight { get; set; }
         public string LockerNo { get; set; }
         //accounting part
         public string PaymentMode { get; set; }
-        public int CashAccountNo { get; set; }
+        public int? CashAccountNo { get; set; }
         public decimal BankAmount { get; set; }
         public decimal CashAmount { get; set; }
-        public int CashOutwardbyNo { get; set; }
+        public int? CashOutwardbyNo { get; set; }
         public string TransactionDate { get; set; }
         public string BankPaymentDate { get; set; }
-        public int BankAccountNo { get; set; }
+        public int? BankAccountNo { get; set; }
         public string ChqDDNEFT { get; set; }
         public string ChqDDNEFTNo { get; set; }
         public string ChqDDNEFTDate { get; set; }
         public string Remark { get; set; }
-        public int GoldInwardByNo { get; set; }
+        public int? GoldInwardByNo { get; set; }
         public string RackNo { get; set; }
         public string GoldInwardDate { get; set; }
 

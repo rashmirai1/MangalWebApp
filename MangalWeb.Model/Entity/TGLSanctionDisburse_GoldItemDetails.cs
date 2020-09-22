@@ -16,14 +16,18 @@ namespace MangalWeb.Model.Entity
     {
         public int GID { get; set; }
         public Nullable<int> SDID { get; set; }
-        public Nullable<int> Serialno { get; set; }
-        public Nullable<int> ItemID { get; set; }
+        public Nullable<int> KycId { get; set; }
+        public int ItemID { get; set; }
+        public int Purity { get; set; }
         public Nullable<decimal> GrossWeight { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<decimal> NetWeight { get; set; }
         public Nullable<decimal> RateperGram { get; set; }
         public Nullable<decimal> Value { get; set; }
-        public string Purity { get; set; }
         public string ImgItemPath { get; set; }
+        public Nullable<decimal> Deduction { get; set; }
+    
+        public virtual Mst_PurityMaster Mst_PurityMaster { get; set; }
+        public virtual tblItemMaster tblItemMaster { get; set; }
     }
 }

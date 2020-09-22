@@ -63,6 +63,11 @@ namespace MangalWeb.Service.Service
             return _sanctionRepository.GetMaxTransactionId();
         }
 
+        public ChargeSanctionVM GetChargeDetails(int chargeid,decimal sanctionloanamt)
+        {
+            return _sanctionRepository.GetChargeDetails(chargeid,sanctionloanamt);
+        }
+
         public List<SanctionDisbursementVM> GetSanctionDisbursementList()
         {
             return _sanctionRepository.GetSanctionDisbursementList();

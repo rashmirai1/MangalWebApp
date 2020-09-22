@@ -38,7 +38,7 @@ namespace MangalWeb.Model.Entity
         public Nullable<decimal> TotalRate { get; set; }
         public Nullable<int> SID { get; set; }
         public Nullable<System.DateTime> DueDate { get; set; }
-        public string OwnershipProofImagePath { get; set; }
+        public byte[] OwnershipProofImagePath { get; set; }
         public string CIBILScore { get; set; }
         public byte[] ItemImage { get; set; }
         public Nullable<int> BCPID { get; set; }
