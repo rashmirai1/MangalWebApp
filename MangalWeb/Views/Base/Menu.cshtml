@@ -44,7 +44,7 @@
                                 </a>
                                 <ul class="nav sub-nav">
                                     @{
-                                        IList<MenusViewModel> clist = menu.GetAuthorizeSubPagesList_PrentidWise(Convert.ToInt32(Session["UserLoginID"].ToString()), pitem.ParentId);
+                                        IList<MenusViewModel> clist = menu.GetAuthorizeSubPagesList_PrentidWise(Convert.ToInt32(Session["UserLoginID"].ToString()), pitem.ParentId, Convert.ToInt32(Session["BranchId"].ToString()));
                                         if (clist != null && clist.Count > 0)
                                         {
                                             foreach (var citem in clist)

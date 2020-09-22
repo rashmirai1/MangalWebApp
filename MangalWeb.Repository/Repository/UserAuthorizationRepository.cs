@@ -33,6 +33,11 @@ namespace MangalWeb.Repository.Repository
             return _context.tbl_UserCategory.ToList();
         }
 
+        public List<tblCompanyBranchMaster> GetBranch()
+        {
+            return _context.tblCompanyBranchMasters.ToList();
+        }
+
         #region GetUser
         /// <summary>
         /// 
@@ -58,12 +63,19 @@ namespace MangalWeb.Repository.Repository
         }
         #endregion
 
-        public List<UserAuthorizationForms> GetForms(int parentid, int UserId, int UserCategoryID)
+        public int GetBackDatedVoucher(int parentid, int UserId, int BranchId)
         {
-            var list = _context.Database.SqlQuery<UserAuthorizationForms>("T_UserAuthorization_Forms @ParentID,@UserID,@UserCategoryID",
+            return _context.UserAuthorizations.Where(x => x.ParentID == parentid && x.UserID == UserId && x.BranchId == BranchId)
+                .Select(x => x.BackDatedVoucher ?? 0).FirstOrDefault();
+        }
+
+        public List<UserAuthorizationForms> GetForms(int parentid, int UserId, int UserCategoryID, int BranchId)
+        {
+            var list = _context.Database.SqlQuery<UserAuthorizationForms>("T_UserAuthorization_Forms @ParentID,@UserID,@UserCategoryID,@BranchId",
                  new SqlParameter("@ParentID", parentid),
                  new SqlParameter("@UserID", UserId),
-                 new SqlParameter("@UserCategoryID", UserCategoryID)).ToList();
+                 new SqlParameter("@UserCategoryID", UserCategoryID),
+                 new SqlParameter("@BranchId", BranchId)).ToList();
             return list;
         }
 
@@ -84,7 +96,7 @@ namespace MangalWeb.Repository.Repository
                     city.isDelete = false;
                     city.isSearch = false;
                 }
-                
+
                 //var state = _context.Database.SqlQuery<UserAuthorizationForms>("T_Update_UserAuthorization_DetailsUserWise @index,@UserID,@ParentID,@FormID,@isVisible,@isEdit,@isView,isSave,@isDelete",
                 //new SqlParameter("index", city.index),
                 //new SqlParameter("UserID", city.UserID),
@@ -97,13 +109,15 @@ namespace MangalWeb.Repository.Repository
                 //new SqlParameter("isDelete", city.isDelete)).FirstOrDefault();
 
                 UserAuthorization tblUserAuthorization = new UserAuthorization();
-                tblUserAuthorization = _context.UserAuthorizations.Where(x => x.UserID == city.UserID && x.FormID == city.FormID && x.isActive == "Y").FirstOrDefault();
+                tblUserAuthorization = _context.UserAuthorizations.Where(x => x.UserID == city.UserID && x.FormID == city.FormID && x.BranchId == city.BranchID && x.isActive == "Y").FirstOrDefault();
                 if (tblUserAuthorization == null)
                 {
                     tblUserAuthorization = new UserAuthorization();
                     tblUserAuthorization.FormID = city.FormID;
                     tblUserAuthorization.UserID = city.UserID;
                     tblUserAuthorization.ParentID = city.ParentID;
+                    tblUserAuthorization.BranchId = city.BranchID;
+                    tblUserAuthorization.BackDatedVoucher = Convert.ToInt32(city.BackDatedVoucher);
                     tblUserAuthorization.isVisible = city.isVisible;
                     tblUserAuthorization.isEdit = city.isEdit;
                     tblUserAuthorization.isSave = city.isSave;
@@ -121,6 +135,8 @@ namespace MangalWeb.Repository.Repository
                     tblUserAuthorization.FormID = city.FormID;
                     tblUserAuthorization.UserID = city.UserID;
                     tblUserAuthorization.ParentID = city.ParentID;
+                    tblUserAuthorization.BranchId = city.BranchID;
+                    tblUserAuthorization.BackDatedVoucher = Convert.ToInt32(city.BackDatedVoucher);
                     tblUserAuthorization.isVisible = city.isVisible;
                     tblUserAuthorization.isEdit = city.isEdit;
                     tblUserAuthorization.isSave = city.isSave;
@@ -155,18 +171,20 @@ namespace MangalWeb.Repository.Repository
             }
         }
 
-        public List<MenusViewModel> GetAuthorizeSubPagesList_PrentidWise(int Userid, int ParentId)
+        public List<MenusViewModel> GetAuthorizeSubPagesList_PrentidWise(int Userid, int ParentId, int BranchId)
         {
             try
             {
                 var list = _context.Database.SqlQuery<MenusViewModel>("T_GetAuthorizeSubPagesList_PrentidWise @UserId,@ParentId,@BranchId",
-                           new SqlParameter("UserID", Userid), new SqlParameter("ParentId", ParentId)).ToList();
+                           new SqlParameter("UserID", Userid), new SqlParameter("ParentId", ParentId), new SqlParameter("Branchid", BranchId)).ToList();
                 return list;
             }
+
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+
     }
 }
