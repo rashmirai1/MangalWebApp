@@ -5,7 +5,7 @@
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
 
-@using (Ajax.BeginForm("CreateEdit", "GST", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+@using (Ajax.BeginForm("Insert", "GST", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
@@ -94,6 +94,16 @@
                                         </div>
                                         <br />
                                     </div>
+                                    <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Account Head<span class="text-danger"> * </span></label>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="section">
+                                            <label class="field select">
+                                                @Html.DropDownListFor(m => m.AccountNo, (SelectList)ViewBag.GSTAccountList, "-- Select Account Head--", htmlAttributes: new { @class = "form-control" })
+                                                <span class="text-danger small">@Html.ValidationMessageFor(m => m.AccountNo)</span>
+                                                <i class="arrow"></i>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -142,17 +152,17 @@
         });
 
         $("#btn_save").click(function () {
-            SaveAuditCheckList();
+            SaveGST();
         });
 
-        function SaveAuditCheckList() {
+        function SaveGST() {
             debugger;
-            //var EffectiveFrom = $("#EffectiveFrom").val();
-            //if (EffectiveFrom == "") {
-            //    $("#CustomErrr").text("Please Enter Effective From");
-            //    $("#EffectiveDate").focus();
-            //    return;
-            //}
+            var AccountHeadNo = $("#AccountNo").val();
+            if (AccountHeadNo == "") {
+                //$("#CustomErr").text("Please Select Account Head");
+                $("#AccountNo").focus();
+                return;
+            }
             if ($('#CGST').val() == 0 && $('#IGST').val()==0)
             {
                 $("#CustomErr").text("Please Enter CGST OR IGST");
@@ -175,6 +185,7 @@
             GSTViewModel.CGST = $('#CGST').val();
             GSTViewModel.SGST = $('#SGST').val();
             GSTViewModel.IGST = $('#IGST').val();
+            GSTViewModel.AccountNo = $('#AccountNo').val();
 
             $.ajax({
                 type: "POST",

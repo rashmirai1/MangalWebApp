@@ -229,6 +229,7 @@
                                                     <label class="col-md-1 control-label" id="lblSerialNumber"> Charges <span class="text-danger">  </span></label>
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                         @Html.TextBoxFor(x => x.ChargeVM.Charges, new { @class = "form-control input-sm", @readonly = true })
+                                                        @Html.TextBoxFor(x => x.ChargeVM.CDetailsID, new { @class = "form-control input-sm", @readonly = true, @style = "display:none;" })
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -238,7 +239,7 @@
                                                     </div>
                                                     <label class="col-md-1 control-label" id="lblSerialNumber"> Amount <span class="text-danger">  </span></label>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                                                        @Html.TextBoxFor(x => x.ChargeVM.Amount, new { @class = "form-control input-sm", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)",@maxlength="8" })
+                                                        @Html.TextBoxFor(x => x.ChargeVM.Amount, new { @class = "form-control input-sm", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @maxlength = "8" })
                                                     </div>
                                                     <label class="col-md-1 control-label"> Account <span class="text-danger"> * </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -250,7 +251,7 @@
                                                             </label>
                                                         </div>
                                                     </div>
-                                                        <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnAddChargeDetails" />
+                                                    <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnAddChargeDetails" />
                                                 </div>
                                             </div>
                                         </div>
@@ -275,7 +276,7 @@
                                                             <tr id="@item.ID">
                                                                 <td>@j</td>
                                                                 <td id="@item.ChargeId">@item.ChargeName</td>
-                                                                <td>@item.Charges</td>
+                                                                <td id="@item.CDetailsID">@item.Charges</td>
                                                                 <td>@item.ChargeType</td>
                                                                 <td>@item.Amount</td>
                                                                 <td id="@item.AccountId">@item.AccountName</td>
@@ -372,9 +373,7 @@
                                                                 new SelectListItem { Text = "Select Mode"},
                                                                 new SelectListItem { Text = "Chq/DD/NEFT", Value = "Chq/DD/NEFT"},
                                                                 new SelectListItem { Text = "Cash", Value = "Cash"},
-                                                                new SelectListItem { Text = "Both", Value = "Both"},
-                                                                new SelectListItem { Text = "Online", Value = "Online"},
-                                                                new SelectListItem { Text = "UPI", Value = "UPI"},
+                                                                new SelectListItem { Text = "Both", Value = "Both"}
                                                                     }, "Value", "Text");
                                                         }
                                                         @Html.DropDownListFor(m => m.PaymentMode, PaymentModeList)
@@ -414,7 +413,7 @@
                                                         @{
                                                             var ModeList = new SelectList(new[]
                                                             {
-                                                                new SelectListItem { Text = "Select Mode"},
+                                                                new SelectListItem { Text = "Select Chq/DD/NEFT"},
                                                                 new SelectListItem { Text = "Cheque", Value = "Cheque"},
                                                                 new SelectListItem { Text = "DD", Value = "DD"},
                                                                 new SelectListItem { Text = "NEFT", Value = "NEFT"},
@@ -530,6 +529,37 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            $("#CashAmount").on('keyup', function () {
+                var sanctionamount = $("#SanctionLoanAmount").val();
+                var CashAmount = $("#CashAmount").val();
+                if (parseFloat(CashAmount) > parseFloat(sanctionamount)) {
+                    alert('Cash Amount can not be greater than Sanction Loan Amount');
+                    $("#CashAmount").val(0);
+                    $("#CashAmount").focus()
+                    return;
+                }
+            });
+
+            $("#BankAmount").on('keyup', function () {
+                var sanctionamount = $("#SanctionLoanAmount").val();
+                var BankAmount = $("#BankAmount").val();
+                if (parseFloat(BankAmount) > parseFloat(sanctionamount)) {
+                    alert('Bank Amount can not be greater than Sanction Loan Amount');
+                    $("#BankAmount").val(0);
+                    $("#BankAmount").focus()
+                    return;
+                }
+            });
+
+            $("#CashAccountNo").attr('disabled','disabled');
+            $("#CashAmount").attr('disabled','disabled');
+            $("#BankAccountNo").attr('disabled','disabled');
+            $("#BankPaymentDate").attr('disabled','disabled');
+            $("#ChqDDNEFT").attr('disabled','disabled');
+            $("#ChqDDNEFTNo").attr('disabled','disabled');
+            $("#ChqDDNEFTDate").attr('disabled','disabled');
+            $("#BankAmount").attr('disabled','disabled');
+
             $("#divGoldItemDetails").hide();
             if (@Model.EligibleLoanAmountValuationDetailsVMList.Count() > 0) {
                 $("#divGoldItemDetails").show();
@@ -540,8 +570,8 @@
                 $("#divChargeDetails").show();
             }
 
-            $("#TransactionDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
-            $("#BankPaymentDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
+            $("#TransactionDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,maxDate:new Date() });
+            $("#BankPaymentDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,maxDate:new Date() });
             $("#ChqDDNEFTDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
             $("#GoldInwardDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
         });
@@ -572,6 +602,7 @@
             debugger;
             var SanctionViewModel = {};
             var check=true;
+            SanctionViewModel.TransactionId = $("#TransactionId").val();
             SanctionViewModel.CustomerId = $("#CustomerID").val();
             SanctionViewModel.KYCID = $("#KYCID").val();
             SanctionViewModel.AreaId=$("#AreaId").val();
@@ -605,6 +636,10 @@
             SanctionViewModel.RackNo = $("#RackNo").val();
             SanctionViewModel.Remark=$("#Remark").val();
             SanctionViewModel.GoldInwardDate=$("#GoldInwardDate").val();
+            SanctionViewModel.StateID = $("#StateID").val();
+            SanctionViewModel.SchemeProcessingType = $("#SchemeProcessingType").val();
+            SanctionViewModel.SchemeProcessingCharge=$("#SchemeProcessingCharge").val();
+            SanctionViewModel.SchemeProcessingLimit=$("#SchemeProcessingLimit").val();
 
             if (SanctionViewModel.CustomerId == 0) {
                 $("#CustomErr").text("Please Select Customer");
@@ -643,7 +678,7 @@
                 return check;
             }
 
-            $("#btn_save").prop("disabled", true);
+            //$("#btn_save").prop("disabled", true);
             var lstChargeTrn = [];
             var lstGoldItemTrn = [];
 
@@ -653,6 +688,7 @@
                 debugger;
                 rowChargeTrn.ID = row.attr('id');
                 rowChargeTrn.ChargeId = row.find("td").eq(1).attr('id');
+                rowChargeTrn.CDetailsID = row.find("td").eq(2).attr('id');
                 rowChargeTrn.Charges = row.find("TD").eq(2).html();
                 rowChargeTrn.ChargeType = row.find("TD").eq(3).html();
                 rowChargeTrn.Amount = row.find("TD").eq(4).html();
@@ -749,7 +785,7 @@
                 }
             });
         }
-        
+
         $("#ProofOfOwnerShipFile").change(function () {
 
             var fileUpload = $("#ProofOfOwnerShipFile").get(0);
@@ -775,6 +811,44 @@
             return false;
         })
 
+        //Dropdownlist Selectedchange event of payment mode
+        $("#PaymentMode").change(function () {
+            var paymentmode = $("#PaymentMode").val();
+            $("#CashAccountNo").attr('disabled','disabled');
+            $("#CashAmount").attr('disabled','disabled');
+            $("#BankAccountNo").attr('disabled','disabled');
+            $("#BankPaymentDate").attr('disabled','disabled');
+            $("#ChqDDNEFT").attr('disabled','disabled');
+            $("#ChqDDNEFTNo").attr('disabled','disabled');
+            $("#ChqDDNEFTDate").attr('disabled','disabled');
+            $("#BankAmount").attr('disabled','disabled');
+
+            if (paymentmode == "Chq/DD/NEFT") {
+                $("#BankAccountNo").removeAttr('disabled');
+                $("#BankPaymentDate").removeAttr('disabled');
+                $("#ChqDDNEFT").removeAttr('disabled');
+                $("#ChqDDNEFTNo").removeAttr('disabled');
+                $("#ChqDDNEFTDate").removeAttr('disabled');
+                $("#BankAmount").removeAttr('disabled');
+            }
+            else if(paymentmode=="Both")
+            {
+                $("#BankAccountNo").removeAttr('disabled');
+                $("#BankPaymentDate").removeAttr('disabled');
+                $("#ChqDDNEFT").removeAttr('disabled');
+                $("#ChqDDNEFTNo").removeAttr('disabled');
+                $("#ChqDDNEFTDate").removeAttr('disabled');
+                $("#BankAmount").removeAttr('disabled');
+                $("#CashAccountNo").removeAttr('disabled');
+                $("#CashAmount").removeAttr('disabled');
+            }
+            else
+            {
+                $("#CashAccountNo").removeAttr('disabled');
+                $("#CashAmount").removeAttr('disabled');
+            }
+        });
+
         //Dropdownlist Selectedchange event
         $("#ChargeVM_ChargeId").change(function () {
             var sanctionamount = $("#SanctionLoanAmount").val();
@@ -792,6 +866,7 @@
                     data: { ChargeId: $("#ChargeVM_ChargeId").val(), SanctionLoanAmount: sanctionamount },
                     //as inputto json method GetStatesfr
                     success: function (data) {
+                        $("#ChargeVM_CDetailsID").val(data.CDetailsID);
                         $("#ChargeVM_Charges").val(data.Charges);
                         $("#ChargeVM_ChargeType").val(data.ChargeType);
                         $("#ChargeVM_Amount").val(data.Amount);
@@ -818,6 +893,7 @@
             var index = $("#tblChargeDetails tbody tr:last").index();
             debugger;
             var ChargeId = $("#ChargeVM_ChargeId").val();
+            var ChargeDetailsId = $("#ChargeVM_CDetailsID").val();
             var ChargeName = $("#ChargeVM_ChargeId option:selected").text();
             var Charges = $("#ChargeVM_Charges").val();
             var ChargeType = $("#ChargeVM_ChargeType").val();
@@ -853,7 +929,7 @@
             var row = '<tr id=' + newtrno + '>' +
                 '<td width="10%">' + srno + '</td>' +
                 '<td width="30%" id="' + ChargeId + '">' + ChargeName + '</td>' +
-                '<td width="10%">' + Charges + '</td>' +
+                '<td width="10%" id="'+ChargeDetailsId+'">' + Charges + '</td>' +
                 '<td width="10%">' + ChargeType + '</td>' +
                 '<td width="10%">' + Amount + '</td>' +
                 '<td width="30%" id="' + AccountId + '">' + AccountName + '</td>' +
@@ -922,9 +998,7 @@
                             value = day + "/" + month + "/" + year;
                         }
                         $("#" + key + "").val(value);
-
                     });
-                    $("#ItemID").val(result.KYCID);
                     $.each(result.EligibleLoanAmountValuationDetailsVMList, function (key, val) {
                         var rowCount = $('#tblGoldItemDetails >tbody >tr').length + 1;
                         var value = "";

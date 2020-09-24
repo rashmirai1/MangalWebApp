@@ -49,6 +49,7 @@ namespace MangalWeb.Controllers
                     }
                 }
                 objViewModel.ChargeDetailList = new List<ChargeSanctionVM>();
+                BindList();
                 return View("SanctionDisbursement", objViewModel);
             }
             catch (Exception ex)
@@ -70,7 +71,7 @@ namespace MangalWeb.Controllers
             sanctionViewModel.BranchId = Convert.ToInt32(Session["BranchId"]);
             sanctionViewModel.CompanyId = Convert.ToInt32(Session["CompanyId"]);
             sanctionViewModel.ProofOfOwnerShipFile =(HttpPostedFileBase)Session["Proofofownership"];
-            _sanctionService.SanctionDisbursment_PRI("Save", "0", sanctionViewModel);
+            _sanctionService.SanctionDisbursment_PRI("Save", sanctionViewModel);
             retVal = true;
             return retVal;
         }
@@ -84,7 +85,7 @@ namespace MangalWeb.Controllers
             bool retVal = false;
             sanctionViewModel.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
             sanctionViewModel.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
-            _sanctionService.SanctionDisbursment_PRI("Save", "0", sanctionViewModel);
+            _sanctionService.SanctionDisbursment_PRI("Save", sanctionViewModel);
             retVal = true;
             return retVal;
         }

@@ -106,7 +106,13 @@
     <Compile Include="Entity\GL_SanctionDisburse_Charges_RTR_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\GL_SanctionDisburse_Charges_RTR_Result1.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\GL_SanctionDisburse_KYC_Details_RTR_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\GL_SanctionDisburse_KYC_Details_RTR_Result1.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\GL_SanctionDisburse_KYC_RTR_Result.cs">
@@ -217,10 +223,16 @@
     <Compile Include="Entity\tblFinancialyear.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tblGroupmaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tblINV_ItemMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tblItemMaster.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tblPrimaryGroup.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tblStateMaster.cs">

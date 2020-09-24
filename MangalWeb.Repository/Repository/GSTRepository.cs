@@ -12,22 +12,41 @@ namespace MangalWeb.Repository.Repository
     {
         MangalDBNewEntities _context = new MangalDBNewEntities();
 
-        public List<Mst_GstMaster> GetAllGSTMasters()
+        public List<GstViewModel> GetAllGSTMasters()
         {
-            var list = _context.Mst_GstMaster.ToList();
+            List<GstViewModel> list = new List<GstViewModel>();
+            var tbllist=_context.Mst_GstMaster.ToList();
+            foreach (var item in tbllist)
+            {
+                GstViewModel gstvm = new GstViewModel();
+                gstvm.ID = item.Gst_RefId;
+                gstvm.EditID = item.Gst_RefId;
+                gstvm.EffectiveFrom = item.Gst_EffectiveFrom.ToShortDateString();
+                gstvm.CGST = item.Gst_CGST;
+                gstvm.SGST = item.Gst_SGST;
+                gstvm.IGST = item.Gst_IGST;
+                gstvm.AccountNo = item.Gst_AccountId;
+                gstvm.AccountName = _context.tblaccountmasters.Where(x => x.AccountID == item.Gst_AccountId).Select(x => x.Name).FirstOrDefault();
+                list.Add(gstvm);
+            }
             return list;
         }
 
+        #region FillGSTAccount
+        public List<tblaccountmaster> FillGSTAccount()
+        {
+            return _context.tblaccountmasters.Where(x => x.GPID == 20 || x.GPID==21 || x.GPID==61 || x.GPID==100).OrderBy(x => x.Name).ToList();
+        }
+        #endregion
+
         public Mst_GstMaster GetGSTById(int id)
         {
-            var gst = _context.Mst_GstMaster.Where(x => x.Gst_RefId == id).FirstOrDefault();
-            return gst;
+            return _context.Mst_GstMaster.Where(x => x.Gst_RefId == id).FirstOrDefault();
         }
 
         public int GetMaxId()
         {
-            var id = _context.Mst_GstMaster.Any() ? _context.Mst_GstMaster.Max(m => m.Gst_RefId) + 1 : 1;
-            return id;
+            return _context.Mst_GstMaster.Any() ? _context.Mst_GstMaster.Max(m => m.Gst_RefId) + 1 : 1;
         }
 
         public void DeleteRecord(int id)
@@ -59,6 +78,7 @@ namespace MangalWeb.Repository.Repository
             tblGst.Gst_CGST = gstvm.CGST;
             tblGst.Gst_SGST = gstvm.SGST;
             tblGst.Gst_IGST = gstvm.IGST;
+            tblGst.Gst_AccountId = gstvm.AccountNo;
             tblGst.Gst_RecordUpdated = DateTime.Now;
             tblGst.Gst_RecordUpdatedBy = gstvm.UpdatedBy;
             _context.SaveChanges();
@@ -73,8 +93,8 @@ namespace MangalWeb.Repository.Repository
             gstvm.CGST = tblGst.Gst_CGST;
             gstvm.SGST = tblGst.Gst_SGST;
             gstvm.IGST = tblGst.Gst_IGST;
+            gstvm.AccountNo = tblGst.Gst_AccountId;
             return gstvm;
         }
-
     }
 }

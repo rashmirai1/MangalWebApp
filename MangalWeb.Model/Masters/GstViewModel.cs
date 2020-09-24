@@ -22,6 +22,9 @@ namespace MangalWeb.Model.Masters
 
         public string IGST { get; set; }
 
+        public int AccountNo { get; set; }
+        public string AccountName { get; set; }
+
         public string operation { get; set; }
 
         public int? CreatedBy { get; set; }

@@ -16,12 +16,13 @@ namespace MangalWeb.Model.Entity
     {
         public int CHID { get; set; }
         public Nullable<int> SDID { get; set; }
-        public Nullable<int> CID { get; set; }
-        public Nullable<int> Serialno { get; set; }
+        public Nullable<int> ChargeDetailsID { get; set; }
         public Nullable<decimal> Charges { get; set; }
         public Nullable<decimal> Amount { get; set; }
         public Nullable<int> AccountID { get; set; }
-        public string AccountName { get; set; }
-        public Nullable<int> ID { get; set; }
+        public Nullable<int> ChargeID { get; set; }
+    
+        public virtual TGLSanctionDisburse_ChargesDetails TGLSanctionDisburse_ChargesDetails1 { get; set; }
+        public virtual TGLSanctionDisburse_ChargesDetails TGLSanctionDisburse_ChargesDetails2 { get; set; }
     }
 }

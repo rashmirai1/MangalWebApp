@@ -19,9 +19,12 @@ namespace MangalWeb.Model.Entity
         public string Gst_CGST { get; set; }
         public string Gst_SGST { get; set; }
         public string Gst_IGST { get; set; }
+        public int Gst_AccountId { get; set; }
         public Nullable<System.DateTime> Gst_RecordCreated { get; set; }
         public Nullable<System.DateTime> Gst_RecordUpdated { get; set; }
         public Nullable<int> Gst_RecordCreatedBy { get; set; }
         public Nullable<int> Gst_RecordUpdatedBy { get; set; }
+    
+        public virtual tblaccountmaster tblaccountmaster { get; set; }
     }
 }

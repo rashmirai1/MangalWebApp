@@ -38,7 +38,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<Mst_PinCode> Mst_PinCode { get; set; }
         public virtual DbSet<Mst_DocumentType> Mst_DocumentType { get; set; }
         public virtual DbSet<Mst_ChildDeviation> Mst_ChildDeviation { get; set; }
-        public virtual DbSet<Mst_GstMaster> Mst_GstMaster { get; set; }
         public virtual DbSet<Mst_ParentDeviation> Mst_ParentDeviation { get; set; }
         public virtual DbSet<Mst_PurityMaster> Mst_PurityMaster { get; set; }
         public virtual DbSet<Mst_Reason> Mst_Reason { get; set; }
@@ -71,17 +70,20 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<tblStateMaster> tblStateMasters { get; set; }
         public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
-        public virtual DbSet<TGLSanctionDisburse_ChargesDetails> TGLSanctionDisburse_ChargesDetails { get; set; }
         public virtual DbSet<TGLSanctionDisburse_ChargesPostingDetails> TGLSanctionDisburse_ChargesPostingDetails { get; set; }
         public virtual DbSet<tbl_CKycState> tbl_CKycState { get; set; }
         public virtual DbSet<FLedgerMaster> FLedgerMasters { get; set; }
         public virtual DbSet<TBankCash_PaymentDetails> TBankCash_PaymentDetails { get; set; }
         public virtual DbSet<TBankCash_ReceiptDetails> TBankCash_ReceiptDetails { get; set; }
-        public virtual DbSet<FCompanyYearEndClosing> FCompanyYearEndClosings { get; set; }
         public virtual DbSet<Imagestore> Imagestores { get; set; }
         public virtual DbSet<TGLSanctionDisburse_GoldItemDetails> TGLSanctionDisburse_GoldItemDetails { get; set; }
-        public virtual DbSet<TGLSanctionDisburse_BasicDetails> TGLSanctionDisburse_BasicDetails { get; set; }
         public virtual DbSet<FSystemGeneratedEntryMaster> FSystemGeneratedEntryMasters { get; set; }
+        public virtual DbSet<TGLSanctionDisburse_BasicDetails> TGLSanctionDisburse_BasicDetails { get; set; }
+        public virtual DbSet<FCompanyYearEndClosing> FCompanyYearEndClosings { get; set; }
+        public virtual DbSet<TGLSanctionDisburse_ChargesDetails> TGLSanctionDisburse_ChargesDetails { get; set; }
+        public virtual DbSet<Mst_GstMaster> Mst_GstMaster { get; set; }
+        public virtual DbSet<tblGroupmaster> tblGroupmasters { get; set; }
+        public virtual DbSet<tblPrimaryGroup> tblPrimaryGroups { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -252,7 +254,7 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("T_Forms_UserAuthorization_ParentPage", userIdParameter);
         }
     
-        public virtual ObjectResult<T_GetAuthorizeSubPagesList_PrentidWise_Result> T_GetAuthorizeSubPagesList_PrentidWise(Nullable<int> userID, Nullable<int> parentID)
+        public virtual ObjectResult<T_GetAuthorizeSubPagesList_PrentidWise_Result> T_GetAuthorizeSubPagesList_PrentidWise(Nullable<int> userID, Nullable<int> parentID, Nullable<int> branchId)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
@@ -262,7 +264,11 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("ParentID", parentID) :
                 new ObjectParameter("ParentID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<T_GetAuthorizeSubPagesList_PrentidWise_Result>("T_GetAuthorizeSubPagesList_PrentidWise", userIDParameter, parentIDParameter);
+            var branchIdParameter = branchId.HasValue ?
+                new ObjectParameter("BranchId", branchId) :
+                new ObjectParameter("BranchId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<T_GetAuthorizeSubPagesList_PrentidWise_Result>("T_GetAuthorizeSubPagesList_PrentidWise", userIDParameter, parentIDParameter, branchIdParameter);
         }
     
         public virtual ObjectResult<GetKYCDetailsForRequestForm_Result> GetKYCDetailsForRequestForm(Nullable<int> kycId)
@@ -299,23 +305,6 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("BranchId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_RTR_Result>("GL_SanctionDisburse_KYC_RTR", fYIDParameter, branchIdParameter);
-        }
-    
-        public virtual ObjectResult<GL_SanctionDisburse_KYC_Details_RTR_Result> GL_SanctionDisburse_KYC_Details_RTR(Nullable<int> kYCID, Nullable<int> fYID, Nullable<int> branchId)
-        {
-            var kYCIDParameter = kYCID.HasValue ?
-                new ObjectParameter("KYCID", kYCID) :
-                new ObjectParameter("KYCID", typeof(int));
-    
-            var fYIDParameter = fYID.HasValue ?
-                new ObjectParameter("FYID", fYID) :
-                new ObjectParameter("FYID", typeof(int));
-    
-            var branchIdParameter = branchId.HasValue ?
-                new ObjectParameter("BranchId", branchId) :
-                new ObjectParameter("BranchId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_Details_RTR_Result>("GL_SanctionDisburse_KYC_Details_RTR", kYCIDParameter, fYIDParameter, branchIdParameter);
         }
     
         public virtual int SP_InsertRecordInAccountMaster(string accountName, string loanAccountNo, Nullable<int> gPID, string panNo, string address, Nullable<int> areaID, string telephone, string mobile, string email, Nullable<int> financialYearId)
@@ -363,19 +352,6 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertRecordInAccountMaster", accountNameParameter, loanAccountNoParameter, gPIDParameter, panNoParameter, addressParameter, areaIDParameter, telephoneParameter, mobileParameter, emailParameter, financialYearIdParameter);
         }
     
-        public virtual ObjectResult<GL_SanctionDisburse_Charges_RTR_Result> GL_SanctionDisburse_Charges_RTR(Nullable<int> cID, Nullable<decimal> sanctionAmt)
-        {
-            var cIDParameter = cID.HasValue ?
-                new ObjectParameter("CID", cID) :
-                new ObjectParameter("CID", typeof(int));
-    
-            var sanctionAmtParameter = sanctionAmt.HasValue ?
-                new ObjectParameter("SanctionAmt", sanctionAmt) :
-                new ObjectParameter("SanctionAmt", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_Charges_RTR_Result>("GL_SanctionDisburse_Charges_RTR", cIDParameter, sanctionAmtParameter);
-        }
-    
         public virtual int GL_SanctionDisburse_PRV(string operation, Nullable<int> sDID, string goldLoanNo, Nullable<int> sID, Nullable<int> kYCID, Nullable<int> cID, string loanType, Nullable<decimal> value, Nullable<decimal> sanctionAmount)
         {
             var operationParameter = operation != null ?
@@ -417,7 +393,147 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GL_SanctionDisburse_PRV", operationParameter, sDIDParameter, goldLoanNoParameter, sIDParameter, kYCIDParameter, cIDParameter, loanTypeParameter, valueParameter, sanctionAmountParameter);
         }
     
-        public virtual int GL_SanctionDisburse_PRI(string operation, string flag, Nullable<int> sDID, string loanType, Nullable<System.DateTime> loanDate, string goldLoanNo, Nullable<int> kYCID, Nullable<decimal> eligibleLoanAmt, Nullable<decimal> netLoanAmtSanctioned, Nullable<decimal> chargesTotal, Nullable<decimal> netLoanPayable, string cheqNEFTDD, string cheqNEFTDDNo, Nullable<System.DateTime> cheqNEFTDDDate, Nullable<decimal> totalGrossWeight, Nullable<decimal> totalNetWeight, Nullable<decimal> totalQuantity, Nullable<decimal> totalvalue, Nullable<decimal> totalRate, Nullable<int> sID, Nullable<System.DateTime> dueDate, byte[] ownershipProofImagePath, string cIBILScore, Nullable<int> bCPID, Nullable<int> cashOutWardById, Nullable<int> goldInWardById, Nullable<int> createdBy, Nullable<int> fYID, Nullable<int> branchID, Nullable<int> cMPID, Nullable<int> cashAccID, Nullable<decimal> cashAmount, Nullable<int> bankCashAccID, Nullable<decimal> bankAmount, string paymentMode, Nullable<int> lineno, Nullable<int> gID, Nullable<int> iSerialno, Nullable<int> itemID, Nullable<decimal> grossWeight, Nullable<int> quantity, Nullable<decimal> netWeight, Nullable<decimal> rateperGram, Nullable<decimal> value, string purity, string imgItemPath)
+        public virtual int SP_InsertRecordInFSystemGeneratedEntryMaster(Nullable<int> dJEID, string refType, Nullable<int> refNo, string referenceNo, string loginId, Nullable<int> financialYearId)
+        {
+            var dJEIDParameter = dJEID.HasValue ?
+                new ObjectParameter("DJEID", dJEID) :
+                new ObjectParameter("DJEID", typeof(int));
+    
+            var refTypeParameter = refType != null ?
+                new ObjectParameter("RefType", refType) :
+                new ObjectParameter("RefType", typeof(string));
+    
+            var refNoParameter = refNo.HasValue ?
+                new ObjectParameter("RefNo", refNo) :
+                new ObjectParameter("RefNo", typeof(int));
+    
+            var referenceNoParameter = referenceNo != null ?
+                new ObjectParameter("ReferenceNo", referenceNo) :
+                new ObjectParameter("ReferenceNo", typeof(string));
+    
+            var loginIdParameter = loginId != null ?
+                new ObjectParameter("loginId", loginId) :
+                new ObjectParameter("loginId", typeof(string));
+    
+            var financialYearIdParameter = financialYearId.HasValue ?
+                new ObjectParameter("FinancialYearId", financialYearId) :
+                new ObjectParameter("FinancialYearId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertRecordInFSystemGeneratedEntryMaster", dJEIDParameter, refTypeParameter, refNoParameter, referenceNoParameter, loginIdParameter, financialYearIdParameter);
+        }
+    
+        public virtual int SP_InsertRecordInChargePostingDetails(Nullable<int> iD, Nullable<int> sDID, string goldLoanNo, Nullable<int> accID, Nullable<double> debit, Nullable<double> credit, Nullable<int> ledgerID, Nullable<int> financialYearId)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var sDIDParameter = sDID.HasValue ?
+                new ObjectParameter("SDID", sDID) :
+                new ObjectParameter("SDID", typeof(int));
+    
+            var goldLoanNoParameter = goldLoanNo != null ?
+                new ObjectParameter("GoldLoanNo", goldLoanNo) :
+                new ObjectParameter("GoldLoanNo", typeof(string));
+    
+            var accIDParameter = accID.HasValue ?
+                new ObjectParameter("AccID", accID) :
+                new ObjectParameter("AccID", typeof(int));
+    
+            var debitParameter = debit.HasValue ?
+                new ObjectParameter("Debit", debit) :
+                new ObjectParameter("Debit", typeof(double));
+    
+            var creditParameter = credit.HasValue ?
+                new ObjectParameter("Credit", credit) :
+                new ObjectParameter("Credit", typeof(double));
+    
+            var ledgerIDParameter = ledgerID.HasValue ?
+                new ObjectParameter("LedgerID", ledgerID) :
+                new ObjectParameter("LedgerID", typeof(int));
+    
+            var financialYearIdParameter = financialYearId.HasValue ?
+                new ObjectParameter("FinancialYearId", financialYearId) :
+                new ObjectParameter("FinancialYearId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertRecordInChargePostingDetails", iDParameter, sDIDParameter, goldLoanNoParameter, accIDParameter, debitParameter, creditParameter, ledgerIDParameter, financialYearIdParameter);
+        }
+    
+        public virtual int SP_InsertRecordInTBankCashPaymentDetails(Nullable<int> bCPID, string refType, Nullable<int> refNo, string referenceNo, Nullable<System.DateTime> refDate, Nullable<int> voucherNo, Nullable<int> bankCashAccID, Nullable<int> paidTo, Nullable<double> amount, string chqNo, Nullable<System.DateTime> chqDate, string narration, Nullable<int> financialYearId)
+        {
+            var bCPIDParameter = bCPID.HasValue ?
+                new ObjectParameter("BCPID", bCPID) :
+                new ObjectParameter("BCPID", typeof(int));
+    
+            var refTypeParameter = refType != null ?
+                new ObjectParameter("RefType", refType) :
+                new ObjectParameter("RefType", typeof(string));
+    
+            var refNoParameter = refNo.HasValue ?
+                new ObjectParameter("RefNo", refNo) :
+                new ObjectParameter("RefNo", typeof(int));
+    
+            var referenceNoParameter = referenceNo != null ?
+                new ObjectParameter("ReferenceNo", referenceNo) :
+                new ObjectParameter("ReferenceNo", typeof(string));
+    
+            var refDateParameter = refDate.HasValue ?
+                new ObjectParameter("RefDate", refDate) :
+                new ObjectParameter("RefDate", typeof(System.DateTime));
+    
+            var voucherNoParameter = voucherNo.HasValue ?
+                new ObjectParameter("VoucherNo", voucherNo) :
+                new ObjectParameter("VoucherNo", typeof(int));
+    
+            var bankCashAccIDParameter = bankCashAccID.HasValue ?
+                new ObjectParameter("BankCashAccID", bankCashAccID) :
+                new ObjectParameter("BankCashAccID", typeof(int));
+    
+            var paidToParameter = paidTo.HasValue ?
+                new ObjectParameter("PaidTo", paidTo) :
+                new ObjectParameter("PaidTo", typeof(int));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(double));
+    
+            var chqNoParameter = chqNo != null ?
+                new ObjectParameter("ChqNo", chqNo) :
+                new ObjectParameter("ChqNo", typeof(string));
+    
+            var chqDateParameter = chqDate.HasValue ?
+                new ObjectParameter("ChqDate", chqDate) :
+                new ObjectParameter("ChqDate", typeof(System.DateTime));
+    
+            var narrationParameter = narration != null ?
+                new ObjectParameter("Narration", narration) :
+                new ObjectParameter("Narration", typeof(string));
+    
+            var financialYearIdParameter = financialYearId.HasValue ?
+                new ObjectParameter("FinancialYearId", financialYearId) :
+                new ObjectParameter("FinancialYearId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertRecordInTBankCashPaymentDetails", bCPIDParameter, refTypeParameter, refNoParameter, referenceNoParameter, refDateParameter, voucherNoParameter, bankCashAccIDParameter, paidToParameter, amountParameter, chqNoParameter, chqDateParameter, narrationParameter, financialYearIdParameter);
+        }
+    
+        public virtual ObjectResult<GL_SanctionDisburse_KYC_Details_RTR_Result1> GL_SanctionDisburse_KYC_Details_RTR(Nullable<int> kYCID, Nullable<int> fYID, Nullable<int> branchId)
+        {
+            var kYCIDParameter = kYCID.HasValue ?
+                new ObjectParameter("KYCID", kYCID) :
+                new ObjectParameter("KYCID", typeof(int));
+    
+            var fYIDParameter = fYID.HasValue ?
+                new ObjectParameter("FYID", fYID) :
+                new ObjectParameter("FYID", typeof(int));
+    
+            var branchIdParameter = branchId.HasValue ?
+                new ObjectParameter("BranchId", branchId) :
+                new ObjectParameter("BranchId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_Details_RTR_Result1>("GL_SanctionDisburse_KYC_Details_RTR", kYCIDParameter, fYIDParameter, branchIdParameter);
+        }
+    
+        public virtual int SP_SanctionDisburse_PRI(string operation, string flag, Nullable<int> sDID, string loanType, Nullable<System.DateTime> loanDate, string goldLoanNo, Nullable<int> kYCID, Nullable<decimal> eligibleLoanAmt, Nullable<decimal> netLoanAmtSanctioned, Nullable<decimal> chargesTotal, Nullable<decimal> netLoanPayable, string cheqNEFTDD, string cheqNEFTDDNo, Nullable<System.DateTime> cheqNEFTDDDate, Nullable<decimal> totalGrossWeight, Nullable<decimal> totalNetWeight, Nullable<decimal> totalQuantity, Nullable<decimal> totalvalue, Nullable<decimal> totalRate, Nullable<int> sID, Nullable<System.DateTime> dueDate, byte[] ownershipProofImagePath, string cIBILScore, Nullable<int> bCPID, Nullable<int> cashOutWardById, Nullable<int> goldInWardById, Nullable<int> createdBy, Nullable<int> fYID, Nullable<int> branchID, Nullable<int> cMPID, Nullable<int> cashAccID, Nullable<decimal> cashAmount, Nullable<int> bankCashAccID, Nullable<decimal> bankAmount, string paymentMode, Nullable<int> lineno, Nullable<System.DateTime> bankPaymentDate, Nullable<int> gID)
         {
             var operationParameter = operation != null ?
                 new ObjectParameter("Operation", operation) :
@@ -563,47 +679,61 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("Lineno", lineno) :
                 new ObjectParameter("Lineno", typeof(int));
     
+            var bankPaymentDateParameter = bankPaymentDate.HasValue ?
+                new ObjectParameter("BankPaymentDate", bankPaymentDate) :
+                new ObjectParameter("BankPaymentDate", typeof(System.DateTime));
+    
             var gIDParameter = gID.HasValue ?
                 new ObjectParameter("GID", gID) :
                 new ObjectParameter("GID", typeof(int));
     
-            var iSerialnoParameter = iSerialno.HasValue ?
-                new ObjectParameter("ISerialno", iSerialno) :
-                new ObjectParameter("ISerialno", typeof(int));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_PRI", operationParameter, flagParameter, sDIDParameter, loanTypeParameter, loanDateParameter, goldLoanNoParameter, kYCIDParameter, eligibleLoanAmtParameter, netLoanAmtSanctionedParameter, chargesTotalParameter, netLoanPayableParameter, cheqNEFTDDParameter, cheqNEFTDDNoParameter, cheqNEFTDDDateParameter, totalGrossWeightParameter, totalNetWeightParameter, totalQuantityParameter, totalvalueParameter, totalRateParameter, sIDParameter, dueDateParameter, ownershipProofImagePathParameter, cIBILScoreParameter, bCPIDParameter, cashOutWardByIdParameter, goldInWardByIdParameter, createdByParameter, fYIDParameter, branchIDParameter, cMPIDParameter, cashAccIDParameter, cashAmountParameter, bankCashAccIDParameter, bankAmountParameter, paymentModeParameter, linenoParameter, bankPaymentDateParameter, gIDParameter);
+        }
     
-            var itemIDParameter = itemID.HasValue ?
-                new ObjectParameter("ItemID", itemID) :
-                new ObjectParameter("ItemID", typeof(int));
+        public virtual int SP_InsertRecordInSanctionChargeDetails(Nullable<int> cHID, Nullable<int> sDID, Nullable<int> chargeDetailsID, Nullable<double> charges, Nullable<double> amount, Nullable<int> accountId, Nullable<int> chargeId)
+        {
+            var cHIDParameter = cHID.HasValue ?
+                new ObjectParameter("CHID", cHID) :
+                new ObjectParameter("CHID", typeof(int));
     
-            var grossWeightParameter = grossWeight.HasValue ?
-                new ObjectParameter("GrossWeight", grossWeight) :
-                new ObjectParameter("GrossWeight", typeof(decimal));
+            var sDIDParameter = sDID.HasValue ?
+                new ObjectParameter("SDID", sDID) :
+                new ObjectParameter("SDID", typeof(int));
     
-            var quantityParameter = quantity.HasValue ?
-                new ObjectParameter("Quantity", quantity) :
-                new ObjectParameter("Quantity", typeof(int));
+            var chargeDetailsIDParameter = chargeDetailsID.HasValue ?
+                new ObjectParameter("ChargeDetailsID", chargeDetailsID) :
+                new ObjectParameter("ChargeDetailsID", typeof(int));
     
-            var netWeightParameter = netWeight.HasValue ?
-                new ObjectParameter("NetWeight", netWeight) :
-                new ObjectParameter("NetWeight", typeof(decimal));
+            var chargesParameter = charges.HasValue ?
+                new ObjectParameter("Charges", charges) :
+                new ObjectParameter("Charges", typeof(double));
     
-            var rateperGramParameter = rateperGram.HasValue ?
-                new ObjectParameter("RateperGram", rateperGram) :
-                new ObjectParameter("RateperGram", typeof(decimal));
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(double));
     
-            var valueParameter = value.HasValue ?
-                new ObjectParameter("Value", value) :
-                new ObjectParameter("Value", typeof(decimal));
+            var accountIdParameter = accountId.HasValue ?
+                new ObjectParameter("AccountId", accountId) :
+                new ObjectParameter("AccountId", typeof(int));
     
-            var purityParameter = purity != null ?
-                new ObjectParameter("Purity", purity) :
-                new ObjectParameter("Purity", typeof(string));
+            var chargeIdParameter = chargeId.HasValue ?
+                new ObjectParameter("ChargeId", chargeId) :
+                new ObjectParameter("ChargeId", typeof(int));
     
-            var imgItemPathParameter = imgItemPath != null ?
-                new ObjectParameter("ImgItemPath", imgItemPath) :
-                new ObjectParameter("ImgItemPath", typeof(string));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertRecordInSanctionChargeDetails", cHIDParameter, sDIDParameter, chargeDetailsIDParameter, chargesParameter, amountParameter, accountIdParameter, chargeIdParameter);
+        }
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GL_SanctionDisburse_PRI", operationParameter, flagParameter, sDIDParameter, loanTypeParameter, loanDateParameter, goldLoanNoParameter, kYCIDParameter, eligibleLoanAmtParameter, netLoanAmtSanctionedParameter, chargesTotalParameter, netLoanPayableParameter, cheqNEFTDDParameter, cheqNEFTDDNoParameter, cheqNEFTDDDateParameter, totalGrossWeightParameter, totalNetWeightParameter, totalQuantityParameter, totalvalueParameter, totalRateParameter, sIDParameter, dueDateParameter, ownershipProofImagePathParameter, cIBILScoreParameter, bCPIDParameter, cashOutWardByIdParameter, goldInWardByIdParameter, createdByParameter, fYIDParameter, branchIDParameter, cMPIDParameter, cashAccIDParameter, cashAmountParameter, bankCashAccIDParameter, bankAmountParameter, paymentModeParameter, linenoParameter, gIDParameter, iSerialnoParameter, itemIDParameter, grossWeightParameter, quantityParameter, netWeightParameter, rateperGramParameter, valueParameter, purityParameter, imgItemPathParameter);
+        public virtual ObjectResult<GL_SanctionDisburse_Charges_RTR_Result1> GL_SanctionDisburse_Charges_RTR(Nullable<int> cID, Nullable<decimal> sanctionAmt)
+        {
+            var cIDParameter = cID.HasValue ?
+                new ObjectParameter("CID", cID) :
+                new ObjectParameter("CID", typeof(int));
+    
+            var sanctionAmtParameter = sanctionAmt.HasValue ?
+                new ObjectParameter("SanctionAmt", sanctionAmt) :
+                new ObjectParameter("SanctionAmt", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_Charges_RTR_Result1>("GL_SanctionDisburse_Charges_RTR", cIDParameter, sanctionAmtParameter);
         }
     }
 }

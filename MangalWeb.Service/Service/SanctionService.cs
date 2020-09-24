@@ -13,9 +13,9 @@ namespace MangalWeb.Service.Service
     {
         SanctionRepository _sanctionRepository = new SanctionRepository();
 
-        public void SanctionDisbursment_PRI(string operation,string value,SanctionDisbursementVM model)
+        public void SanctionDisbursment_PRI(string operation,SanctionDisbursementVM model)
         {
-            _sanctionRepository.SanctionDisbursment_PRI(operation,value,model);
+            _sanctionRepository.SanctionDisbursment_PRI(operation,model);
         }
 
         public string GetLoanDate()

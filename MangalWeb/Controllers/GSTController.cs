@@ -34,6 +34,7 @@ namespace MangalWeb.Controllers
                     return Json(2, JsonRequestBehavior.AllowGet);
                 }
             }
+            ViewBag.GSTAccountList = new SelectList(_gstService.GSTAccountList(), "AccountID", "Name");
             return View("Index", objViewModel);
         }
 
@@ -69,6 +70,7 @@ namespace MangalWeb.Controllers
                 gstvm = _gstService.SetDataOnEdit(tblgst);
             }
             gstvm.operation = operation;
+            ViewBag.GSTAccountList = new SelectList(_gstService.GSTAccountList(), "AccountID", "Name");
             return View("GST", gstvm);
         }
 
@@ -90,6 +92,7 @@ namespace MangalWeb.Controllers
             ButtonVisiblity("Index");
             var model = new GstViewModel();
             model.ID = _gstService.GetMaxId();
+            ViewBag.GSTAccountList = new SelectList(_gstService.GSTAccountList(), "AccountID", "Name");
             return View(model);
         }
 

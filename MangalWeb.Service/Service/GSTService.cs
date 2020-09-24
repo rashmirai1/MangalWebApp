@@ -13,28 +13,29 @@ namespace MangalWeb.Service.Service
     {
         GSTRepository _gstRepository = new GSTRepository();
 
-        public List<Mst_GstMaster> GetAllGSTMasters()
+        public List<GstViewModel> GetAllGSTMasters()
         {
-            var list = _gstRepository.GetAllGSTMasters();
-            return list;
+            return _gstRepository.GetAllGSTMasters();
+        }
+
+        public List<tblaccountmaster> GSTAccountList()
+        {
+            return _gstRepository.FillGSTAccount();
         }
 
         public int GetMaxId()
         {
-            var id = _gstRepository.GetMaxId();
-            return id;
+            return _gstRepository.GetMaxId();
         }
 
         public Mst_GstMaster GetGSTById(int id)
         {
-            var gst = _gstRepository.GetGSTById(id);
-            return gst;
+            return _gstRepository.GetGSTById(id);
         }
 
         public GstViewModel SetDataOnEdit(Mst_GstMaster tblgst)
         {
-            var item = _gstRepository.SetRecordinEdit(tblgst);
-            return item;
+            return _gstRepository.SetRecordinEdit(tblgst);
         }
 
         public void DeleteRecord(int id)

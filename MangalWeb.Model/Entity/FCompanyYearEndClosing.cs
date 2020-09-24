@@ -14,7 +14,7 @@ namespace MangalWeb.Model.Entity
     
     public partial class FCompanyYearEndClosing
     {
-        public Nullable<int> ID { get; set; }
+        public int ID { get; set; }
         public int FinancialyearID { get; set; }
         public int CompID { get; set; }
         public int AccountID { get; set; }

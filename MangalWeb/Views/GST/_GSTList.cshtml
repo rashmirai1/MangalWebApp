@@ -1,5 +1,5 @@
-﻿@model IList<MangalWeb.Model.Entity.Mst_GstMaster>
-@using MangalWeb.Model.Entity
+﻿@model IList<MangalWeb.Model.Masters.GstViewModel>
+@using MangalWeb.Model.Masters
 <div class="modal-content">
     <div class="modal-body" style="height:inherit; overflow:auto;">
         <div class="panel-body panel-no-padding" style="height:inherit; overflow:auto;">
@@ -11,16 +11,18 @@
                             <th>CGST</th>
                             <th>SGST</th>
                             <th>IGST</th>
+                            <th>Account Head</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (Mst_GstMaster item in Model)
+                        @foreach (GstViewModel item in Model)
                         {
-                            <tr class="gradeX" onclick='window.document.location="/GST/GetGSTById?ID=@item.Gst_RefId"'>
-                                <td>@item.Gst_EffectiveFrom.ToString("dd/MM/yyyy")</td>
-                                <td>@item.Gst_CGST</td>
-                                <td>@item.Gst_SGST</td>
-                                <td>@item.Gst_IGST</td>
+                            <tr class="gradeX" onclick='window.document.location="/GST/GetGSTById?ID=@item.ID"'>
+                                <td>@item.EffectiveFrom</td>
+                                <td>@item.CGST</td>
+                                <td>@item.SGST</td>
+                                <td>@item.IGST</td>
+                                <td>@item.AccountName</td>
                             </tr>
                         }
                     </tbody>

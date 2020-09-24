@@ -14,6 +14,12 @@ namespace MangalWeb.Model.Entity
     
     public partial class tblaccountmaster
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblaccountmaster()
+        {
+            this.Mst_GstMaster = new HashSet<Mst_GstMaster>();
+        }
+    
         public int AccountID { get; set; }
         public string Name { get; set; }
         public string Alies { get; set; }
@@ -36,5 +42,8 @@ namespace MangalWeb.Model.Entity
         public string Email { get; set; }
         public string Suspended { get; set; }
         public string GSTIN { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Mst_GstMaster> Mst_GstMaster { get; set; }
     }
 }

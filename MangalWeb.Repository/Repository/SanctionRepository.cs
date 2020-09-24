@@ -24,49 +24,78 @@ namespace MangalWeb.Repository.Repository
             var model = new ChargeSanctionVM();
             //_context.GL_SanctionDisburse_PRV("Charges", 0, "", 0, 0, chargeid,"", 0, sanctionloanamt);
             var data = _context.GL_SanctionDisburse_Charges_RTR(chargeid, sanctionloanamt).FirstOrDefault();
-            ModelReflection.MapObjects(data, model);
+            if (data != null)
+            {
+                ModelReflection.MapObjects(data, model);
+            }
             return model;
         }
         #endregion
 
         #region [SanctionDisbursment_PRI]
-        public void SanctionDisbursment_PRI(string operation, string value, SanctionDisbursementVM model)
+        public void SanctionDisbursment_PRI(string operation, SanctionDisbursementVM model)
         {
             using (DbContextTransaction transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
+                    int value = model.TransactionId;
                     if (operation != "Delete")
                     {
                         #region Save
                         if (operation == "Save")
                         {
-                            var getMaxSanctionId = _context.TGLSanctionDisburse_BasicDetails.Any() ? _context.TGLSanctionDisburse_BasicDetails.Max(x => x.SDID) + 1 : 1;
-                            value = getMaxSanctionId.ToString();
                         }
-
-                        DateTime? strChqDate = null;
-                        Stream fs1 = model.ProofOfOwnerShipFile.InputStream;
-                        BinaryReader br1 = new BinaryReader(fs1);
-                        model.ProofOfOwnerShipImageFile = br1.ReadBytes((Int32)fs1.Length);
-                        if (model.PaymentMode == "Chq/DD/NEFT" && model.PaymentMode == "Both")
+                        int GetBranchPinCode = _context.tblCompanyBranchMasters.Where(x => x.BID == model.BranchId).Select(x => x.Pincode).FirstOrDefault();
+                        int GetCityId = _context.Mst_PinCode.Where(x => x.Pc_Id == GetBranchPinCode).Select(x => x.Pc_CityId).FirstOrDefault();
+                        int GetStateId = _context.tblCityMasters.Where(x => x.CityID == GetCityId).Select(x => x.StateID).FirstOrDefault();
+                        //if state same of customer present address state and selected branch state then CGST or SGST ,if not match then IGST
+                        if (GetStateId == model.StateID)
                         {
-                            if (model.ChqDDNEFTDate.Trim() != "")
-                            {
-                                strChqDate = Convert.ToDateTime(model.ChqDDNEFTDate);
-                            }
+                            var getgst = _context.Mst_GstMaster.Where(x => x.Gst_CGST != null && x.Gst_SGST != null)
+                                .OrderByDescending(x => x.Gst_RefId).Take(1).FirstOrDefault();
+                            decimal CGST = Convert.ToDecimal(getgst.Gst_CGST);
+                            decimal SGST = Convert.ToDecimal(getgst.Gst_SGST);
                         }
                         else
                         {
-                            strChqDate = null; model.ChqDDNEFTNo = "";
+                            var getgst = _context.Mst_GstMaster.Where(x => x.Gst_IGST != "")
+                                                           .OrderByDescending(x => x.Gst_RefId).Take(1).FirstOrDefault();
+                            decimal IGST = Convert.ToDecimal(getgst.Gst_IGST);
+                        }
+                        DateTime? strChqDate = null;
+                        DateTime? strBankPaymentDate = null;
+                        if (model.ProofOfOwnerShipFile != null)
+                        {
+                            Stream fs = model.ProofOfOwnerShipFile.InputStream;
+                            BinaryReader br = new BinaryReader(fs);
+                            Byte[] bytes = br.ReadBytes(model.ProofOfOwnerShipFile.ContentLength);
+                            //base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
+                            model.ProofOfOwnerShipImageFile = bytes;
+                        }
+                        else
+                        {
+                            model.ProofOfOwnerShipImageFile = null;
+                        }
+                        if (model.PaymentMode == "Chq/DD/NEFT" || model.PaymentMode == "Both")
+                        {
+                            if (model.ChqDDNEFTDate.Trim() != "" && model.BankPaymentDate.Trim() != "")
+                            {
+                                strChqDate = Convert.ToDateTime(model.ChqDDNEFTDate);
+                                strBankPaymentDate = Convert.ToDateTime(model.BankPaymentDate);
+                            }
+                            else
+                            {
+                                strChqDate = null; model.ChqDDNEFTNo = ""; strBankPaymentDate = null;
+                            }
                         }
                         //insert record in sanction disbursement details table
-                        var count = _context.GL_SanctionDisburse_PRI(operation, "GOLDITEM", Convert.ToInt32(value), model.LoanType, Convert.ToDateTime(model.TransactionDate),
+                        var count = _context.SP_SanctionDisburse_PRI(operation, "GOLDITEM", value, model.LoanType, Convert.ToDateTime(model.TransactionDate),
                             model.LoanAccountNo, model.KYCID, model.EligibleLoanAmount, model.SanctionLoanAmount, 0, model.NetPayable, model.ChqDDNEFT, model.ChqDDNEFTNo,
-                           strChqDate, 0, 0, 0, 0, 0, model.SchemeId, Convert.ToDateTime(model.InterestRepaymentDate), model.ProofOfOwnerShipImageFile,
+                           strChqDate, model.TotalGrossWeight, model.TotalNetWeight, model.TotalQuantity, model.TotalValue, model.TotalRatePerGram,
+                           model.SchemeId, Convert.ToDateTime(model.InterestRepaymentDate), model.ProofOfOwnerShipImageFile,
                             "", 0, model.CashOutwardbyNo, model.GoldInwardByNo, model.CreatedBy, model.FinancialYearId, model.BranchId, model.CompanyId,
-                            model.CashAccountNo, model.CashAmount, model.BankAccountNo, model.BankAmount, model.PaymentMode,
-                            0, 0, 0, 1, model.TotalGrossWeight, model.TotalQuantity, model.TotalNetWeight, model.TotalRatePerGram, model.TotalValue, "", "");
+                            model.CashAccountNo, model.CashAmount, model.BankAccountNo, model.BankAmount, model.PaymentMode, 0, strBankPaymentDate, 0);
                         //update gold item details
                         var tblgolditem = _context.TGLSanctionDisburse_GoldItemDetails.Where(x => x.KycId == model.KYCID).ToList();
                         foreach (var golditem in tblgolditem)
@@ -74,9 +103,14 @@ namespace MangalWeb.Repository.Repository
                             golditem.SDID = Convert.ToInt32(value);
                             _context.SaveChanges();
                         }
+                        //insert record in charge details table
+                        foreach(var citem in model.ChargeDetailList)
+                        {
+                            citem.ID = _context.TGLSanctionDisburse_ChargesDetails.Any() ? _context.TGLSanctionDisburse_ChargesDetails.Max(x => x.CHID) + 1 : 1;
+                            count = _context.SP_InsertRecordInSanctionChargeDetails(citem.ID, value, citem.CDetailsID, citem.Charges, citem.Amount, citem.AccountId, citem.ChargeId);
+                        }
                         int GPID = 67; //Group ID of Sundry Debtors
                         int LedgerID = 0;
-                        int DJEID = 0;
                         int DJERefNo = 0;
                         string DJERefType = "DJEGL";
                         string DJEReferenceNo = string.Empty;
@@ -113,27 +147,12 @@ namespace MangalWeb.Repository.Repository
                         {
                             Amount = Convert.ToDouble(model.SanctionLoanAmount);
                         }
-
-                        DJEReferenceNo = DJERefType + "/" + Convert.ToString(DJEID);//1st entry
-                                                                                    //Insert record in Bank Payment details
+                        DJEReferenceNo = DJERefType + "/" + Convert.ToString(DJERefNo);//1st entry
+                        //Insert record in Bank Payment details
                         int ContraAccID = 0;
                         //entry in bank cash payment table
-                        TBankCash_PaymentDetails tblBankCash_PaymentDetails = new TBankCash_PaymentDetails();
-                        tblBankCash_PaymentDetails.BCPID = BCPID;
-                        tblBankCash_PaymentDetails.RefType = DJERefType;
-                        tblBankCash_PaymentDetails.RefNo = DJERefNo;
-                        tblBankCash_PaymentDetails.ReferenceNo = DJEReferenceNo;
-                        tblBankCash_PaymentDetails.RefDate = Convert.ToDateTime(model.TransactionDate);
-                        tblBankCash_PaymentDetails.VoucherNo = VoucherNo;
-                        tblBankCash_PaymentDetails.BankCashAccID = BankCashAccID;
-                        tblBankCash_PaymentDetails.PaidTo = AccountID;
-                        tblBankCash_PaymentDetails.Amount = Amount;
-                        tblBankCash_PaymentDetails.ChqNo = model.ChqDDNEFTNo;
-                        tblBankCash_PaymentDetails.ChqDate = Convert.ToDateTime(model.ChqDDNEFTDate);
-                        tblBankCash_PaymentDetails.Narration = Narration;
-                        tblBankCash_PaymentDetails.LedgerID = 0;
-                        tblBankCash_PaymentDetails.FinancialyearID = model.FinancialYearId;
-                        _context.TBankCash_PaymentDetails.Add(tblBankCash_PaymentDetails);
+                        count = _context.SP_InsertRecordInTBankCashPaymentDetails(BCPID, DJERefType, DJERefNo, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), VoucherNo,
+                            BankCashAccID, AccountID, Amount, model.ChqDDNEFTNo, strChqDate, Narration, model.FinancialYearId);
                         //Entry in fledger master
                         //Debit Entry in FLedger(Main Ledger Entry)
                         int AccID = AccountID;
@@ -149,7 +168,6 @@ namespace MangalWeb.Repository.Repository
                         if (model.LoanType == "New")     //for New Loan
                         {
                             DebitAmount = Convert.ToDouble(model.SanctionLoanAmount); //for entry in closing A/C
-                            Narration = "Payment made against New Gold Loan sanctioned";
                         }
                         //insert record in fledger master of debit entry of sanction loan amount of customer to bank
                         double CreditAmount = 0;
@@ -165,30 +183,20 @@ namespace MangalWeb.Repository.Repository
                         updatepayment.LedgerID = LedgerID;
                         _context.SaveChanges();
                         //update fsystem generated entry masters of ledger id with djeid
-                        var FSystemGenerated = _context.FSystemGeneratedEntryMasters.Where(x => x.DJEID == DJEID).FirstOrDefault();
+                        var FSystemGenerated = _context.FSystemGeneratedEntryMasters.Where(x => x.DJEID == DJERefNo).FirstOrDefault();
                         FSystemGenerated.LedgerID = LedgerID;
                         _context.SaveChanges();
                         //update TGLSanctionDisburse_BasicDetails of bcpid 
-                        var sanctiondetails = _context.TGLSanctionDisburse_BasicDetails.Where(x => x.SDID == Convert.ToInt32(value)).FirstOrDefault();
+                        var sanctiondetails = _context.TGLSanctionDisburse_BasicDetails.Where(x => x.SDID == value).FirstOrDefault();
                         sanctiondetails.BCPID = BCPID;
                         _context.SaveChanges();
                         //Ledger Account for Bank Entry
                         //credit start
                         if (model.BankAmount > 0)
                         {
-                            DJEID = _context.FSystemGeneratedEntryMasters.Any() ? _context.FSystemGeneratedEntryMasters.Max(x => x.DJEID) + 1 : 1;
+                            DJERefNo = _context.FSystemGeneratedEntryMasters.Any() ? _context.FSystemGeneratedEntryMasters.Max(x => x.DJEID) + 1 : 1;
                             //insert record in FSystemGeneratedEntryMaster table
-                            FSystemGeneratedEntryMaster fSystemGeneratedEntryMaster = new FSystemGeneratedEntryMaster();
-                            fSystemGeneratedEntryMaster.DJEID = DJEID;
-                            fSystemGeneratedEntryMaster.RefType = DJERefType;
-                            fSystemGeneratedEntryMaster.RefNo = DJERefNo;
-                            fSystemGeneratedEntryMaster.ReferenceNo = DJEReferenceNo;
-                            fSystemGeneratedEntryMaster.LoginID = model.LoanAccountNo;
-                            fSystemGeneratedEntryMaster.LedgerID = 0;
-                            fSystemGeneratedEntryMaster.FinancialyearID = model.FinancialYearId;
-                            _context.FSystemGeneratedEntryMasters.Add(fSystemGeneratedEntryMaster);
-                            _context.SaveChanges();
-
+                            count = _context.SP_InsertRecordInFSystemGeneratedEntryMaster(DJERefNo, DJERefType, DJERefNo, DJEReferenceNo, model.LoanAccountNo, model.FinancialYearId);
                             if (model.LoanType == "New")     //for New Loan
                             {
                                 if (model.PaymentMode == "Chq/DD/NEFT" || model.PaymentMode == "Both")
@@ -202,7 +210,7 @@ namespace MangalWeb.Repository.Repository
                                     }
                                 }
                             }
-                            if (model.PaymentMode == "Chq/DD/NEFT" && model.PaymentMode == "Both")
+                            if (model.PaymentMode == "Chq/DD/NEFT" || model.PaymentMode == "Both")
                             {
                                 if (model.ChqDDNEFTDate.Trim() != "")
                                 {
@@ -213,9 +221,6 @@ namespace MangalWeb.Repository.Repository
                             {
                                 strChqDate = null; model.ChqDDNEFTNo = "";
                             }
-                            BCPID = _context.TBankCash_PaymentDetails.Any() ? _context.TBankCash_PaymentDetails.Max(x => x.BCPID) + 1 : 1;
-                            VoucherNo = _context.TBankCash_PaymentDetails.Any() ? _context.TBankCash_PaymentDetails.Max(x => x.VoucherNo) + 1 : 1;
-
                             CreditAmount = 0;
                             datasaved = false;
                             LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, CreditAmount, DebitBankAmount, ContraAccID, BankNarration, model.FinancialYearId);
@@ -224,26 +229,16 @@ namespace MangalWeb.Repository.Repository
                                 datasaved = CompanyWiseYearEndAccountClosingonSave(Convert.ToInt32(model.FinancialYearId), Convert.ToInt32(model.CompanyId), Convert.ToInt32(model.BranchId), AccID, CreditAmount, DebitBankAmount);
                             }
                             //update fsystem generated entry masters of ledger id with djeid
-                            FSystemGenerated = _context.FSystemGeneratedEntryMasters.Where(x => x.DJEID == DJEID).FirstOrDefault();
+                            FSystemGenerated = _context.FSystemGeneratedEntryMasters.Where(x => x.DJEID == DJERefNo).FirstOrDefault();
                             FSystemGenerated.LedgerID = LedgerID;
                             _context.SaveChanges();
                         }
                         //Ledger Account for cash entry
                         if (model.CashAmount > 0)
                         {
-                            DJEID = _context.FSystemGeneratedEntryMasters.Any() ? _context.FSystemGeneratedEntryMasters.Max(x => x.DJEID) + 1 : 1;
+                            DJERefNo = _context.FSystemGeneratedEntryMasters.Any() ? _context.FSystemGeneratedEntryMasters.Max(x => x.DJEID) + 1 : 1;
                             //insert record in FSystemGeneratedEntryMaster table
-                            FSystemGeneratedEntryMaster fSystemGeneratedEntryMaster = new FSystemGeneratedEntryMaster();
-                            fSystemGeneratedEntryMaster.DJEID = DJEID;
-                            fSystemGeneratedEntryMaster.RefType = DJERefType;
-                            fSystemGeneratedEntryMaster.RefNo = DJERefNo;
-                            fSystemGeneratedEntryMaster.ReferenceNo = DJEReferenceNo;
-                            fSystemGeneratedEntryMaster.LoginID = model.LoanAccountNo;
-                            fSystemGeneratedEntryMaster.LedgerID = 0;
-                            fSystemGeneratedEntryMaster.FinancialyearID = model.FinancialYearId;
-                            _context.FSystemGeneratedEntryMasters.Add(fSystemGeneratedEntryMaster);
-                            _context.SaveChanges();
-
+                            count = _context.SP_InsertRecordInFSystemGeneratedEntryMaster(DJERefNo, DJERefType, DJERefNo, DJEReferenceNo, model.LoanAccountNo, model.FinancialYearId);
                             int CashAccID = Convert.ToInt32(model.CashAccountNo);
                             string CashNarration = "";
                             if (model.LoanType == "New")     //for New Loan
@@ -264,7 +259,7 @@ namespace MangalWeb.Repository.Repository
                                 datasaved = CompanyWiseYearEndAccountClosingonSave(Convert.ToInt32(model.FinancialYearId), Convert.ToInt32(model.CompanyId), Convert.ToInt32(model.BranchId), AccID, CreditAmount, CashAmount);
                             }
                             //update fsystem generated entry masters of ledger id with djeid
-                            FSystemGenerated = _context.FSystemGeneratedEntryMasters.Where(x => x.DJEID == DJEID).FirstOrDefault();
+                            FSystemGenerated = _context.FSystemGeneratedEntryMasters.Where(x => x.DJEID == DJERefNo).FirstOrDefault();
                             FSystemGenerated.LedgerID = LedgerID;
                             _context.SaveChanges();
                         }
@@ -287,17 +282,7 @@ namespace MangalWeb.Repository.Repository
                                         //retrive max id from charge posting details
                                         var maxpostingid = _context.TGLSanctionDisburse_ChargesPostingDetails.Any() ? _context.TGLSanctionDisburse_ChargesPostingDetails.Max(x => x.ID) + 1 : 1;
                                         //insert record in charge posting details
-                                        TGLSanctionDisburse_ChargesPostingDetails tblGLSanctionDisburse_ChargesPostingDetail = new TGLSanctionDisburse_ChargesPostingDetails();
-                                        tblGLSanctionDisburse_ChargesPostingDetail.ID = maxpostingid;
-                                        tblGLSanctionDisburse_ChargesPostingDetail.SDID = Convert.ToInt32(value);
-                                        tblGLSanctionDisburse_ChargesPostingDetail.GoldLoanNo = model.LoanAccountNo;
-                                        tblGLSanctionDisburse_ChargesPostingDetail.AccID = AccID;
-                                        tblGLSanctionDisburse_ChargesPostingDetail.Debit = DebitAmount;
-                                        tblGLSanctionDisburse_ChargesPostingDetail.Credit = CreditAmount;
-                                        tblGLSanctionDisburse_ChargesPostingDetail.LedgerID = LedgerID;
-                                        tblGLSanctionDisburse_ChargesPostingDetail.FYID = model.FinancialYearId;
-                                        _context.TGLSanctionDisburse_ChargesPostingDetails.Add(tblGLSanctionDisburse_ChargesPostingDetail);
-                                        _context.SaveChanges();
+                                        count = _context.SP_InsertRecordInChargePostingDetails(maxpostingid, value, model.LoanAccountNo, AccID, DebitAmount, CreditAmount, LedgerID, model.FinancialYearId);
                                     }
                                     // Contra Entry in FLedger (Ledger Entry for Charges)      
                                     AccID = AccountID;
@@ -310,23 +295,13 @@ namespace MangalWeb.Repository.Repository
                                         datasaved = CompanyWiseYearEndAccountClosingonSave(Convert.ToInt32(model.FinancialYearId), Convert.ToInt32(model.CompanyId), Convert.ToInt32(model.BranchId), ContraAccID, DebitAmount, CreditAmount);
                                     }
                                     //update fsystem generated entry masters of ledger id with djeid
-                                    FSystemGenerated = _context.FSystemGeneratedEntryMasters.Where(x => x.DJEID == DJEID).FirstOrDefault();
+                                    FSystemGenerated = _context.FSystemGeneratedEntryMasters.Where(x => x.DJEID == DJERefNo).FirstOrDefault();
                                     FSystemGenerated.LedgerID = LedgerID;
                                     _context.SaveChanges();
                                     //insert record in TGLSanctionDisburse_ChargesPostingDetails
                                     var maxchargepostingid = _context.TGLSanctionDisburse_ChargesPostingDetails.Any() ? _context.TGLSanctionDisburse_ChargesPostingDetails.Max(x => x.ID) + 1 : 1;
                                     //insert record in charge posting details
-                                    TGLSanctionDisburse_ChargesPostingDetails tblGLSanctionDisburse_ChargesPostingDetails = new TGLSanctionDisburse_ChargesPostingDetails();
-                                    tblGLSanctionDisburse_ChargesPostingDetails.ID = maxchargepostingid;
-                                    tblGLSanctionDisburse_ChargesPostingDetails.SDID = Convert.ToInt32(value);
-                                    tblGLSanctionDisburse_ChargesPostingDetails.GoldLoanNo = model.LoanAccountNo;
-                                    tblGLSanctionDisburse_ChargesPostingDetails.AccID = ContraAccID;
-                                    tblGLSanctionDisburse_ChargesPostingDetails.Debit = DebitAmount;
-                                    tblGLSanctionDisburse_ChargesPostingDetails.Credit = CreditAmount;
-                                    tblGLSanctionDisburse_ChargesPostingDetails.LedgerID = LedgerID;
-                                    tblGLSanctionDisburse_ChargesPostingDetails.FYID = model.FinancialYearId;
-                                    _context.TGLSanctionDisburse_ChargesPostingDetails.Add(tblGLSanctionDisburse_ChargesPostingDetails);
-                                    _context.SaveChanges();
+                                    count = _context.SP_InsertRecordInChargePostingDetails(maxchargepostingid, value, model.LoanAccountNo, ContraAccID, DebitAmount, CreditAmount, LedgerID, model.FinancialYearId);
                                 }
                             }
                         }
@@ -362,32 +337,16 @@ namespace MangalWeb.Repository.Repository
                                 CreditAmt = (CreditAmt + CreditAmt * Convert.ToDouble(12) / 100);
                                 CreditAmt = Convert.ToDouble(Decimal.Round(Convert.ToDecimal(CreditAmt), 2));
                             }
-                            LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitAmt, CreditAmt, ContraAccID, Narration, model.FinancialYearId);
+                            LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitAmt, CreditAmt, ConAccID, Narration, model.FinancialYearId);
                             if (LedgerID > 0)
                             {
-                                datasaved = CompanyWiseYearEndAccountClosingonSave(Convert.ToInt32(model.FinancialYearId), Convert.ToInt32(model.CompanyId), Convert.ToInt32(model.BranchId), ContraAccID, DebitAmt, CreditAmt);
+                                datasaved = CompanyWiseYearEndAccountClosingonSave(Convert.ToInt32(model.FinancialYearId), Convert.ToInt32(model.CompanyId), Convert.ToInt32(model.BranchId), ConAccID, DebitAmt, CreditAmt);
                             }
                         }
                         //***************************** Accounting Entries for Other Charges End *********************************
 
                         //***************************** Accounting Entries for GST Charges Start *********************************
-                        int GetBranchPinCode = _context.tblCompanyBranchMasters.Where(x => x.BID == model.BranchId).Select(x => x.Pincode).FirstOrDefault();
-                        int GetCityId = _context.Mst_PinCode.Where(x => x.Pc_Id ==GetBranchPinCode).Select(x => x.Pc_CityId).FirstOrDefault();
-                        int GetStateId = _context.tblCityMasters.Where(x => x.CityID == GetCityId).Select(x => x.StateID).FirstOrDefault();
-                        //if state same of customer present address state and selected branch state then CGST or SGST ,if not match then IGST
-                        if(GetStateId==model.StateID)
-                        {
-                            var getgst = _context.Mst_GstMaster.Where(x => x.Gst_CGST != "" && x.Gst_SGST != "" && x.Gst_EffectiveFrom <= DateTime.Now)
-                                .OrderByDescending(x=>x.Gst_RefId).Take(1).FirstOrDefault();
-                            decimal CGST =Convert.ToDecimal(getgst.Gst_CGST);
-                            decimal SGST = Convert.ToDecimal(getgst.Gst_SGST);
-                        }
-                        else
-                        {
-                            var getgst = _context.Mst_GstMaster.Where(x =>x.Gst_IGST!="" && x.Gst_EffectiveFrom <= DateTime.Now)
-                                                           .OrderByDescending(x => x.Gst_RefId).Take(1).FirstOrDefault();
-                            decimal IGST = Convert.ToDecimal(getgst.Gst_SGST);
-                        }
+
                         //***************************** Accounting Entries for GST Charges End *********************************
 
                         //credit end
@@ -452,7 +411,7 @@ namespace MangalWeb.Repository.Repository
 
                 //to check whether AccountID is present in " FCompanyYearEndClosing table " for the selected financial year.
                 var FCompanyID = _context.FCompanyYearEndClosings.Where(x => x.FinancialyearID == FYID && x.AccountID == accountID).Select(x => x.ID).FirstOrDefault();
-                if (FCompanyID > 0)
+                if (FCompanyID != null && FCompanyID > 0)
                 {
                     ID = (int)FCompanyID;
                 }
@@ -494,7 +453,7 @@ namespace MangalWeb.Repository.Repository
                     ID = 0;
                     //getting MAX ID
                     int? FID = _context.FCompanyYearEndClosings.Any() ? _context.FCompanyYearEndClosings.Max(x => x.ID) + 1 : 1;
-                    if (FID > 0)
+                    if (FID != null && FID > 0)
                     {
                         ID = (int)FID;
                     }
@@ -509,6 +468,8 @@ namespace MangalWeb.Repository.Repository
                     fCompanyYearEndClosing.CurrentCredit = currentCredit;
                     fCompanyYearEndClosing.ClosingBalanceDebit = closingBalanceDebit;
                     fCompanyYearEndClosing.ClosingBalanceCredit = closingBalanceCredit;
+                    _context.FCompanyYearEndClosings.Add(fCompanyYearEndClosing);
+                    _context.SaveChanges();
                 }
                 #endregion [if Account ID does not exist]
 
@@ -607,7 +568,7 @@ namespace MangalWeb.Repository.Repository
         #region GetMaxTransactionId
         public int GetMaxTransactionId()
         {
-            return _context.TGLSanctionDisburse_BasicDetails.Any() ? _context.TGLSanctionDisburse_BasicDetails.Max(x => (int)x.SID) + 1 : 1;
+            return _context.TGLSanctionDisburse_BasicDetails.Any() ? _context.TGLSanctionDisburse_BasicDetails.Max(x => (int)x.SDID) + 1 : 1;
         }
         #endregion
 
@@ -653,14 +614,14 @@ namespace MangalWeb.Repository.Repository
         #region FillBankAccount
         public List<tblaccountmaster> FillBankAccount()
         {
-            return _context.tblaccountmasters.Where(x => x.GPID == 71 || x.GPID == 11).ToList();
+            return _context.tblaccountmasters.Where(x => x.GPID == 71 || x.GPID == 11).OrderBy(x=>x.Name).ToList();
         }
         #endregion
 
         #region FillCashAccount
         public List<tblaccountmaster> FillCashAccount()
         {
-            return _context.tblaccountmasters.Where(x => x.GPID == 70).ToList();
+            return _context.tblaccountmasters.Where(x => x.GPID == 70).OrderBy(x=>x.Name).ToList();
         }
         #endregion
 
