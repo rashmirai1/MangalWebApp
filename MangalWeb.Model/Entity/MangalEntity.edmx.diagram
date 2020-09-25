@@ -77,10 +77,10 @@
         <EntityTypeShape EntityType="MangalDBNewModel.FCompanyYearEndClosing" Width="1.5" PointX="3.375" PointY="11.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesDetails" Width="1.5" PointX="5.375" PointY="11.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_ChargesDetails_TGLSanctionDisburse_ChargesDetails" />
-        <EntityTypeShape EntityType="MangalDBNewModel.Mst_GstMaster" Width="1.5" PointX="3" PointY="30.875" />
-        <AssociationConnector Association="MangalDBNewModel.FK_Mst_GstMaster_tblaccountmaster" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblGroupmaster" Width="1.5" PointX="7.375" PointY="11.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblPrimaryGroup" Width="1.5" PointX="9.375" PointY="11.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Mst_GstMaster" Width="1.5" PointX="3" PointY="30.75" />
+        <AssociationConnector Association="MangalDBNewModel.FK_Mst_GstMaster_tblaccountmaster" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

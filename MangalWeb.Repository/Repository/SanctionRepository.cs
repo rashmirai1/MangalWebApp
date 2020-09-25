@@ -45,33 +45,16 @@ namespace MangalWeb.Repository.Repository
                         #region Save
                         if (operation == "Save")
                         {
-                        }
-                        int GetBranchPinCode = _context.tblCompanyBranchMasters.Where(x => x.BID == model.BranchId).Select(x => x.Pincode).FirstOrDefault();
-                        int GetCityId = _context.Mst_PinCode.Where(x => x.Pc_Id == GetBranchPinCode).Select(x => x.Pc_CityId).FirstOrDefault();
-                        int GetStateId = _context.tblCityMasters.Where(x => x.CityID == GetCityId).Select(x => x.StateID).FirstOrDefault();
-                        //if state same of customer present address state and selected branch state then CGST or SGST ,if not match then IGST
-                        if (GetStateId == model.StateID)
-                        {
-                            var getgst = _context.Mst_GstMaster.Where(x => x.Gst_CGST != null && x.Gst_SGST != null)
-                                .OrderByDescending(x => x.Gst_RefId).Take(1).FirstOrDefault();
-                            decimal CGST = Convert.ToDecimal(getgst.Gst_CGST);
-                            decimal SGST = Convert.ToDecimal(getgst.Gst_SGST);
-                        }
-                        else
-                        {
-                            var getgst = _context.Mst_GstMaster.Where(x => x.Gst_IGST != "")
-                                                           .OrderByDescending(x => x.Gst_RefId).Take(1).FirstOrDefault();
-                            decimal IGST = Convert.ToDecimal(getgst.Gst_IGST);
-                        }
+                        }                       
                         DateTime? strChqDate = null;
                         DateTime? strBankPaymentDate = null;
                         if (model.ProofOfOwnerShipFile != null)
                         {
-                            Stream fs = model.ProofOfOwnerShipFile.InputStream;
-                            BinaryReader br = new BinaryReader(fs);
-                            Byte[] bytes = br.ReadBytes(model.ProofOfOwnerShipFile.ContentLength);
+                            //Stream fs = model.ProofOfOwnerShipFile.InputStream;
+                            //BinaryReader br = new BinaryReader(fs);
+                            //Byte[] bytes = br.ReadBytes(model.ProofOfOwnerShipFile.ContentLength);
                             //base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
-                            model.ProofOfOwnerShipImageFile = bytes;
+                           // model.ProofOfOwnerShipImageFile = bytes;
                         }
                         else
                         {
@@ -89,13 +72,20 @@ namespace MangalWeb.Repository.Repository
                                 strChqDate = null; model.ChqDDNEFTNo = ""; strBankPaymentDate = null;
                             }
                         }
+                        DateTime? GoldInwardDate = null;
+                        if (model.GoldInwardDate != null)
+                        {
+                            GoldInwardDate = Convert.ToDateTime(model.GoldInwardDate);
+                        }
                         //insert record in sanction disbursement details table
                         var count = _context.SP_SanctionDisburse_PRI(operation, "GOLDITEM", value, model.LoanType, Convert.ToDateTime(model.TransactionDate),
                             model.LoanAccountNo, model.KYCID, model.EligibleLoanAmount, model.SanctionLoanAmount, 0, model.NetPayable, model.ChqDDNEFT, model.ChqDDNEFTNo,
                            strChqDate, model.TotalGrossWeight, model.TotalNetWeight, model.TotalQuantity, model.TotalValue, model.TotalRatePerGram,
                            model.SchemeId, Convert.ToDateTime(model.InterestRepaymentDate), model.ProofOfOwnerShipImageFile,
                             "", 0, model.CashOutwardbyNo, model.GoldInwardByNo, model.CreatedBy, model.FinancialYearId, model.BranchId, model.CompanyId,
-                            model.CashAccountNo, model.CashAmount, model.BankAccountNo, model.BankAmount, model.PaymentMode, 0, strBankPaymentDate, 0);
+                            model.CashAccountNo, model.CashAmount, model.BankAccountNo, model.BankAmount, model.PaymentMode, 0, strBankPaymentDate,model.LockerNo,
+                            model.PacketWeight,model.RackNo,model.Remark,GoldInwardDate);
+
                         //update gold item details
                         var tblgolditem = _context.TGLSanctionDisburse_GoldItemDetails.Where(x => x.KycId == model.KYCID).ToList();
                         foreach (var golditem in tblgolditem)
@@ -307,6 +297,30 @@ namespace MangalWeb.Repository.Repository
                         }
                         //***************************** Accounting Entries for Charges end ***************************************
                         //***************************** Accounting Entries for Other Charges Start *********************************
+                        int GetBranchPinCode = _context.tblCompanyBranchMasters.Where(x => x.BID == model.BranchId).Select(x => x.Pincode).FirstOrDefault();
+                        int GetCityId = _context.Mst_PinCode.Where(x => x.Pc_Id == GetBranchPinCode).Select(x => x.Pc_CityId).FirstOrDefault();
+                        int GetStateId = _context.tblCityMasters.Where(x => x.CityID == GetCityId).Select(x => x.StateID).FirstOrDefault();
+                        //if state same of customer present address state and selected branch state then CGST or SGST ,if not match then IGST
+                        double CGSTTax = 0;
+                        double SGSTTax = 0;
+                        int CGSTAccountNo = 0;
+                        int? SGSTAccountNo = 0;
+                        if (GetStateId == model.StateID)
+                        {
+                            var getgst = _context.Mst_GstMaster.Where(x => x.Gst_CGST != null && x.Gst_SGST != null)
+                                .OrderByDescending(x => x.Gst_RefId).Take(1).FirstOrDefault();
+                            CGSTAccountNo = getgst.Gst_CgstAccountId;
+                            SGSTAccountNo = getgst.Gst_SgstAccountId;
+                            CGSTTax = Convert.ToDouble(getgst.Gst_CGST);
+                            SGSTTax = Convert.ToDouble(getgst.Gst_SGST);
+                        }
+                        else
+                        {
+                            var getgst = _context.Mst_GstMaster.Where(x => x.Gst_IGST != "")
+                                                           .OrderByDescending(x => x.Gst_RefId).Take(1).FirstOrDefault();
+                            CGSTTax = Convert.ToDouble(getgst.Gst_IGST);
+                            CGSTAccountNo = getgst.Gst_CgstAccountId;
+                        }
                         if (model.LoanType == "New")
                         {
                             Narration = "Amount received against Gold Loan processing charges";
@@ -324,7 +338,8 @@ namespace MangalWeb.Repository.Repository
                                 {
                                     CreditAmt = Convert.ToDouble(model.SchemeProcessingLimit);
                                 }
-                                CreditAmt = (CreditAmt + CreditAmt * Convert.ToDouble(12) / 100);
+                                CreditAmt = (CreditAmt + CreditAmt * Convert.ToDouble(CGSTTax) / 100);
+                                CreditAmt = (CreditAmt + CreditAmt * Convert.ToDouble(SGSTTax) / 100);
                                 CreditAmt = Convert.ToDouble(Decimal.Round(Convert.ToDecimal(CreditAmt), 2));
                             }
                             else
@@ -334,7 +349,8 @@ namespace MangalWeb.Repository.Repository
                                 {
                                     CreditAmt = Convert.ToDouble(model.SchemeProcessingLimit);
                                 }
-                                CreditAmt = (CreditAmt + CreditAmt * Convert.ToDouble(12) / 100);
+                                CreditAmt = (CreditAmt + CreditAmt * Convert.ToDouble(CGSTTax) / 100);
+                                CreditAmt = (CreditAmt + CreditAmt * Convert.ToDouble(SGSTTax) / 100);
                                 CreditAmt = Convert.ToDouble(Decimal.Round(Convert.ToDecimal(CreditAmt), 2));
                             }
                             LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitAmt, CreditAmt, ConAccID, Narration, model.FinancialYearId);
@@ -346,9 +362,31 @@ namespace MangalWeb.Repository.Repository
                         //***************************** Accounting Entries for Other Charges End *********************************
 
                         //***************************** Accounting Entries for GST Charges Start *********************************
-
+                        AccID = CGSTAccountNo;
+                        double DebitGstAmt = 0;
+                        double CreditGstAmt = 0;
+                        ContraAccID = AccountID;
+                        DebitGstAmt = 0;
+                        CreditGstAmt = 0;
+                        CreditGstAmt = CGSTTax;
+                        LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitGstAmt, CreditGstAmt, ContraAccID, Narration, model.FinancialYearId);
+                        if (LedgerID > 0)
+                        {
+                            datasaved = CompanyWiseYearEndAccountClosingonSave(Convert.ToInt32(model.FinancialYearId), Convert.ToInt32(model.CompanyId), Convert.ToInt32(model.BranchId), ContraAccID, DebitGstAmt, CreditGstAmt);
+                        }
+                        AccID =Convert.ToInt32(SGSTAccountNo);
+                        DebitGstAmt = 0;
+                        CreditGstAmt = 0;
+                        ContraAccID = AccountID;
+                        DebitGstAmt = 0;
+                        CreditGstAmt = 0;
+                        CreditGstAmt = SGSTTax;
+                        LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitGstAmt, CreditGstAmt, ContraAccID, Narration, model.FinancialYearId);
+                        if (LedgerID > 0)
+                        {
+                            datasaved = CompanyWiseYearEndAccountClosingonSave(Convert.ToInt32(model.FinancialYearId), Convert.ToInt32(model.CompanyId), Convert.ToInt32(model.BranchId), ContraAccID, DebitGstAmt, CreditGstAmt);
+                        }
                         //***************************** Accounting Entries for GST Charges End *********************************
-
                         //credit end
                         _context.SaveChanges();
                         transaction.Commit();
@@ -685,18 +723,19 @@ namespace MangalWeb.Repository.Repository
             var model = new SanctionDisbursementVM();
             int fyid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
             int branchid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
-            var KycIdPar = new SqlParameter("@KYCID", KycId);
-            var FyIdPar = new SqlParameter("@FYID", fyid);
-            var BranchIdPar = new SqlParameter("@BranchId", branchid);
-            var parameters = new List<SqlParameter>();
-            parameters.Add(KycIdPar);
-            parameters.Add(FyIdPar);
-            parameters.Add(BranchIdPar);
-
-            model = _context.Database.SqlQuery<SanctionDisbursementVM>("EXEC GL_SanctionDisburse_KYC_Details_RTR @KYCID=@KYCID,@FYID=@FYID,@BranchId=@BranchId", parameters.ToArray()).FirstOrDefault();
-
-            //var result = _context.GL_SanctionDisburse_KYC_Details_RTR(KycId, fyid, branchid).FirstOrDefault();
-
+            //var KycIdPar = new SqlParameter("@KYCID", KycId);
+            //var FyIdPar = new SqlParameter("@FYID", fyid);
+            //var BranchIdPar = new SqlParameter("@BranchId", branchid);
+            //var parameters = new List<SqlParameter>();
+            //parameters.Add(KycIdPar);
+            //parameters.Add(FyIdPar);
+            //parameters.Add(BranchIdPar);
+            //model = _context.Database.SqlQuery<SanctionDisbursementVM>("EXEC GL_SanctionDisburse_KYC_Details_RTR @KYCID=@KYCID,@FYID=@FYID,@BranchId=@BranchId", parameters.ToArray()).FirstOrDefault();
+            var result = _context.GL_SanctionDisburse_KYC_Details_RTR(KycId, fyid, branchid).FirstOrDefault();
+            if (result != null)
+            {
+                ModelReflection.MapObjects(result, model);
+            }
             model.EligibleLoanAmountValuationDetailsVMList = new List<EligibleLoanAmountValuationDetailsVM>();
             var valuationlist = _context.TGLSanctionDisburse_GoldItemDetails.ToList();
             int? TotalQuantity = 0;
@@ -704,6 +743,7 @@ namespace MangalWeb.Repository.Repository
             decimal? TotalGrossWeight = 0;
             decimal? TotalDeductions = 0;
             decimal? TotalNetWeight = 0;
+            decimal? TotalNetValue = 0;
             foreach (var item in valuationlist)
             {
                 var gold = new EligibleLoanAmountValuationDetailsVM();
@@ -724,6 +764,7 @@ namespace MangalWeb.Repository.Repository
                 TotalGrossWeight = TotalGrossWeight + gold.GrossWeight;
                 TotalNetWeight = TotalNetWeight + gold.NetWeight;
                 TotalDeductions = TotalDeductions + gold.Deductions;
+                TotalNetValue = TotalNetValue + gold.Value;
                 model.EligibleLoanAmountValuationDetailsVMList.Add(gold);
             }
             model.TotalQuantity = TotalQuantity;
@@ -731,6 +772,7 @@ namespace MangalWeb.Repository.Repository
             model.TotalGrossWeight = TotalGrossWeight;
             model.TotalNetWeight = TotalNetWeight;
             model.TotalDeductions = TotalDeductions;
+            model.TotalValue = TotalNetValue;
             return model;
         }
         #endregion

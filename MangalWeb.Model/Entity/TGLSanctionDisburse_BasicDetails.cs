@@ -61,5 +61,8 @@ namespace MangalWeb.Model.Entity
         public Nullable<decimal> CashAmount { get; set; }
         public string PaymentMode { get; set; }
         public Nullable<System.DateTime> BankPaymentDate { get; set; }
+        public string Packetweight { get; set; }
+        public string LockerNo { get; set; }
+        public string Remark { get; set; }
     }
 }

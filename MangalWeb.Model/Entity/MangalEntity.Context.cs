@@ -81,9 +81,9 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLSanctionDisburse_BasicDetails> TGLSanctionDisburse_BasicDetails { get; set; }
         public virtual DbSet<FCompanyYearEndClosing> FCompanyYearEndClosings { get; set; }
         public virtual DbSet<TGLSanctionDisburse_ChargesDetails> TGLSanctionDisburse_ChargesDetails { get; set; }
-        public virtual DbSet<Mst_GstMaster> Mst_GstMaster { get; set; }
         public virtual DbSet<tblGroupmaster> tblGroupmasters { get; set; }
         public virtual DbSet<tblPrimaryGroup> tblPrimaryGroups { get; set; }
+        public virtual DbSet<Mst_GstMaster> Mst_GstMaster { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -533,7 +533,53 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_Details_RTR_Result1>("GL_SanctionDisburse_KYC_Details_RTR", kYCIDParameter, fYIDParameter, branchIdParameter);
         }
     
-        public virtual int SP_SanctionDisburse_PRI(string operation, string flag, Nullable<int> sDID, string loanType, Nullable<System.DateTime> loanDate, string goldLoanNo, Nullable<int> kYCID, Nullable<decimal> eligibleLoanAmt, Nullable<decimal> netLoanAmtSanctioned, Nullable<decimal> chargesTotal, Nullable<decimal> netLoanPayable, string cheqNEFTDD, string cheqNEFTDDNo, Nullable<System.DateTime> cheqNEFTDDDate, Nullable<decimal> totalGrossWeight, Nullable<decimal> totalNetWeight, Nullable<decimal> totalQuantity, Nullable<decimal> totalvalue, Nullable<decimal> totalRate, Nullable<int> sID, Nullable<System.DateTime> dueDate, byte[] ownershipProofImagePath, string cIBILScore, Nullable<int> bCPID, Nullable<int> cashOutWardById, Nullable<int> goldInWardById, Nullable<int> createdBy, Nullable<int> fYID, Nullable<int> branchID, Nullable<int> cMPID, Nullable<int> cashAccID, Nullable<decimal> cashAmount, Nullable<int> bankCashAccID, Nullable<decimal> bankAmount, string paymentMode, Nullable<int> lineno, Nullable<System.DateTime> bankPaymentDate, Nullable<int> gID)
+        public virtual int SP_InsertRecordInSanctionChargeDetails(Nullable<int> cHID, Nullable<int> sDID, Nullable<int> chargeDetailsID, Nullable<double> charges, Nullable<double> amount, Nullable<int> accountId, Nullable<int> chargeId)
+        {
+            var cHIDParameter = cHID.HasValue ?
+                new ObjectParameter("CHID", cHID) :
+                new ObjectParameter("CHID", typeof(int));
+    
+            var sDIDParameter = sDID.HasValue ?
+                new ObjectParameter("SDID", sDID) :
+                new ObjectParameter("SDID", typeof(int));
+    
+            var chargeDetailsIDParameter = chargeDetailsID.HasValue ?
+                new ObjectParameter("ChargeDetailsID", chargeDetailsID) :
+                new ObjectParameter("ChargeDetailsID", typeof(int));
+    
+            var chargesParameter = charges.HasValue ?
+                new ObjectParameter("Charges", charges) :
+                new ObjectParameter("Charges", typeof(double));
+    
+            var amountParameter = amount.HasValue ?
+                new ObjectParameter("Amount", amount) :
+                new ObjectParameter("Amount", typeof(double));
+    
+            var accountIdParameter = accountId.HasValue ?
+                new ObjectParameter("AccountId", accountId) :
+                new ObjectParameter("AccountId", typeof(int));
+    
+            var chargeIdParameter = chargeId.HasValue ?
+                new ObjectParameter("ChargeId", chargeId) :
+                new ObjectParameter("ChargeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertRecordInSanctionChargeDetails", cHIDParameter, sDIDParameter, chargeDetailsIDParameter, chargesParameter, amountParameter, accountIdParameter, chargeIdParameter);
+        }
+    
+        public virtual ObjectResult<GL_SanctionDisburse_Charges_RTR_Result1> GL_SanctionDisburse_Charges_RTR(Nullable<int> cID, Nullable<decimal> sanctionAmt)
+        {
+            var cIDParameter = cID.HasValue ?
+                new ObjectParameter("CID", cID) :
+                new ObjectParameter("CID", typeof(int));
+    
+            var sanctionAmtParameter = sanctionAmt.HasValue ?
+                new ObjectParameter("SanctionAmt", sanctionAmt) :
+                new ObjectParameter("SanctionAmt", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_Charges_RTR_Result1>("GL_SanctionDisburse_Charges_RTR", cIDParameter, sanctionAmtParameter);
+        }
+    
+        public virtual int SP_SanctionDisburse_PRI(string operation, string flag, Nullable<int> sDID, string loanType, Nullable<System.DateTime> loanDate, string goldLoanNo, Nullable<int> kYCID, Nullable<decimal> eligibleLoanAmt, Nullable<decimal> netLoanAmtSanctioned, Nullable<decimal> chargesTotal, Nullable<decimal> netLoanPayable, string cheqNEFTDD, string cheqNEFTDDNo, Nullable<System.DateTime> cheqNEFTDDDate, Nullable<decimal> totalGrossWeight, Nullable<decimal> totalNetWeight, Nullable<decimal> totalQuantity, Nullable<decimal> totalvalue, Nullable<decimal> totalRate, Nullable<int> sID, Nullable<System.DateTime> dueDate, byte[] ownershipProofImagePath, string cIBILScore, Nullable<int> bCPID, Nullable<int> cashOutWardById, Nullable<int> goldInWardById, Nullable<int> createdBy, Nullable<int> fYID, Nullable<int> branchID, Nullable<int> cMPID, Nullable<int> cashAccID, Nullable<decimal> cashAmount, Nullable<int> bankCashAccID, Nullable<decimal> bankAmount, string paymentMode, Nullable<int> lineno, Nullable<System.DateTime> bankPaymentDate, string lockerNo, Nullable<decimal> packetWeight, string rackNo, string remark, Nullable<System.DateTime> goldInwardDate)
         {
             var operationParameter = operation != null ?
                 new ObjectParameter("Operation", operation) :
@@ -683,57 +729,27 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("BankPaymentDate", bankPaymentDate) :
                 new ObjectParameter("BankPaymentDate", typeof(System.DateTime));
     
-            var gIDParameter = gID.HasValue ?
-                new ObjectParameter("GID", gID) :
-                new ObjectParameter("GID", typeof(int));
+            var lockerNoParameter = lockerNo != null ?
+                new ObjectParameter("LockerNo", lockerNo) :
+                new ObjectParameter("LockerNo", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_PRI", operationParameter, flagParameter, sDIDParameter, loanTypeParameter, loanDateParameter, goldLoanNoParameter, kYCIDParameter, eligibleLoanAmtParameter, netLoanAmtSanctionedParameter, chargesTotalParameter, netLoanPayableParameter, cheqNEFTDDParameter, cheqNEFTDDNoParameter, cheqNEFTDDDateParameter, totalGrossWeightParameter, totalNetWeightParameter, totalQuantityParameter, totalvalueParameter, totalRateParameter, sIDParameter, dueDateParameter, ownershipProofImagePathParameter, cIBILScoreParameter, bCPIDParameter, cashOutWardByIdParameter, goldInWardByIdParameter, createdByParameter, fYIDParameter, branchIDParameter, cMPIDParameter, cashAccIDParameter, cashAmountParameter, bankCashAccIDParameter, bankAmountParameter, paymentModeParameter, linenoParameter, bankPaymentDateParameter, gIDParameter);
-        }
+            var packetWeightParameter = packetWeight.HasValue ?
+                new ObjectParameter("PacketWeight", packetWeight) :
+                new ObjectParameter("PacketWeight", typeof(decimal));
     
-        public virtual int SP_InsertRecordInSanctionChargeDetails(Nullable<int> cHID, Nullable<int> sDID, Nullable<int> chargeDetailsID, Nullable<double> charges, Nullable<double> amount, Nullable<int> accountId, Nullable<int> chargeId)
-        {
-            var cHIDParameter = cHID.HasValue ?
-                new ObjectParameter("CHID", cHID) :
-                new ObjectParameter("CHID", typeof(int));
+            var rackNoParameter = rackNo != null ?
+                new ObjectParameter("RackNo", rackNo) :
+                new ObjectParameter("RackNo", typeof(string));
     
-            var sDIDParameter = sDID.HasValue ?
-                new ObjectParameter("SDID", sDID) :
-                new ObjectParameter("SDID", typeof(int));
+            var remarkParameter = remark != null ?
+                new ObjectParameter("Remark", remark) :
+                new ObjectParameter("Remark", typeof(string));
     
-            var chargeDetailsIDParameter = chargeDetailsID.HasValue ?
-                new ObjectParameter("ChargeDetailsID", chargeDetailsID) :
-                new ObjectParameter("ChargeDetailsID", typeof(int));
+            var goldInwardDateParameter = goldInwardDate.HasValue ?
+                new ObjectParameter("GoldInwardDate", goldInwardDate) :
+                new ObjectParameter("GoldInwardDate", typeof(System.DateTime));
     
-            var chargesParameter = charges.HasValue ?
-                new ObjectParameter("Charges", charges) :
-                new ObjectParameter("Charges", typeof(double));
-    
-            var amountParameter = amount.HasValue ?
-                new ObjectParameter("Amount", amount) :
-                new ObjectParameter("Amount", typeof(double));
-    
-            var accountIdParameter = accountId.HasValue ?
-                new ObjectParameter("AccountId", accountId) :
-                new ObjectParameter("AccountId", typeof(int));
-    
-            var chargeIdParameter = chargeId.HasValue ?
-                new ObjectParameter("ChargeId", chargeId) :
-                new ObjectParameter("ChargeId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertRecordInSanctionChargeDetails", cHIDParameter, sDIDParameter, chargeDetailsIDParameter, chargesParameter, amountParameter, accountIdParameter, chargeIdParameter);
-        }
-    
-        public virtual ObjectResult<GL_SanctionDisburse_Charges_RTR_Result1> GL_SanctionDisburse_Charges_RTR(Nullable<int> cID, Nullable<decimal> sanctionAmt)
-        {
-            var cIDParameter = cID.HasValue ?
-                new ObjectParameter("CID", cID) :
-                new ObjectParameter("CID", typeof(int));
-    
-            var sanctionAmtParameter = sanctionAmt.HasValue ?
-                new ObjectParameter("SanctionAmt", sanctionAmt) :
-                new ObjectParameter("SanctionAmt", typeof(decimal));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_Charges_RTR_Result1>("GL_SanctionDisburse_Charges_RTR", cIDParameter, sanctionAmtParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_PRI", operationParameter, flagParameter, sDIDParameter, loanTypeParameter, loanDateParameter, goldLoanNoParameter, kYCIDParameter, eligibleLoanAmtParameter, netLoanAmtSanctionedParameter, chargesTotalParameter, netLoanPayableParameter, cheqNEFTDDParameter, cheqNEFTDDNoParameter, cheqNEFTDDDateParameter, totalGrossWeightParameter, totalNetWeightParameter, totalQuantityParameter, totalvalueParameter, totalRateParameter, sIDParameter, dueDateParameter, ownershipProofImagePathParameter, cIBILScoreParameter, bCPIDParameter, cashOutWardByIdParameter, goldInWardByIdParameter, createdByParameter, fYIDParameter, branchIDParameter, cMPIDParameter, cashAccIDParameter, cashAmountParameter, bankCashAccIDParameter, bankAmountParameter, paymentModeParameter, linenoParameter, bankPaymentDateParameter, lockerNoParameter, packetWeightParameter, rackNoParameter, remarkParameter, goldInwardDateParameter);
         }
     }
 }

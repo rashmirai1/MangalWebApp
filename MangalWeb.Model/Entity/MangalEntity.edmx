@@ -150,7 +150,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Property Name="Gst_CGST" Type="varchar" MaxLength="6" />
           <Property Name="Gst_SGST" Type="varchar" MaxLength="6" />
           <Property Name="Gst_IGST" Type="varchar" MaxLength="6" />
-          <Property Name="Gst_AccountId" Type="int" Nullable="false" />
+          <Property Name="Gst_CgstAccountId" Type="int" Nullable="false" />
+          <Property Name="Gst_SgstAccountId" Type="int" />
           <Property Name="Gst_RecordCreated" Type="datetime" />
           <Property Name="Gst_RecordUpdated" Type="datetime" />
           <Property Name="Gst_RecordCreatedBy" Type="int" />
@@ -660,7 +661,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="NetLoanPayable" Type="decimal" Precision="18" Scale="0" />
           <Property Name="BankCashAccID" Type="int" />
           <Property Name="CheqNEFTDD" Type="nvarchar" MaxLength="50" />
-          <Property Name="CheqNEFTDDNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="CheqNEFTDDNo" Type="nvarchar" MaxLength="40" />
           <Property Name="CheqNEFTDDDate" Type="smalldatetime" />
           <Property Name="TotalGrossWeight" Type="decimal" Precision="11" Scale="2" />
           <Property Name="TotalNetWeight" Type="decimal" Precision="11" Scale="2" />
@@ -692,6 +693,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="CashAmount" Type="decimal" Precision="11" Scale="2" />
           <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
           <Property Name="BankPaymentDate" Type="datetime" />
+          <Property Name="Packetweight" Type="varchar" MaxLength="10" />
+          <Property Name="LockerNo" Type="varchar" MaxLength="10" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="TGLSanctionDisburse_ChargesDetails">
           <Key>
@@ -940,7 +944,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
               <PropertyRef Name="AccountID" />
             </Principal>
             <Dependent Role="Mst_GstMaster">
-              <PropertyRef Name="Gst_AccountId" />
+              <PropertyRef Name="Gst_CgstAccountId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1302,7 +1306,11 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Parameter Name="PaymentMode" Type="varchar" Mode="In" />
           <Parameter Name="Lineno" Type="int" Mode="In" />
           <Parameter Name="BankPaymentDate" Type="datetime" Mode="In" />
-          <Parameter Name="GID" Type="int" Mode="In" />
+          <Parameter Name="LockerNo" Type="varchar" Mode="In" />
+          <Parameter Name="PacketWeight" Type="decimal" Mode="In" />
+          <Parameter Name="RackNo" Type="varchar" Mode="In" />
+          <Parameter Name="Remark" Type="varchar" Mode="In" />
+          <Parameter Name="GoldInwardDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="SplitValue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="String" Type="varchar" Mode="In" />
@@ -1817,6 +1825,27 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
             <Parameter Name="BranchId" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="TGLSanctionDisburse_BasicDetails" EntityType="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" />
+          <EntitySet Name="FCompanyYearEndClosings" EntityType="MangalDBNewModel.FCompanyYearEndClosing" />
+          <FunctionImport Name="SP_InsertRecordInSanctionChargeDetails">
+            <Parameter Name="CHID" Mode="In" Type="Int32" />
+            <Parameter Name="SDID" Mode="In" Type="Int32" />
+            <Parameter Name="ChargeDetailsID" Mode="In" Type="Int32" />
+            <Parameter Name="Charges" Mode="In" Type="Double" />
+            <Parameter Name="Amount" Mode="In" Type="Double" />
+            <Parameter Name="AccountId" Mode="In" Type="Int32" />
+            <Parameter Name="ChargeId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="TGLSanctionDisburse_ChargesDetails" EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesDetails" />
+          <AssociationSet Name="FK_TGLSanctionDisburse_ChargesDetails_TGLSanctionDisburse_ChargesDetails" Association="MangalDBNewModel.FK_TGLSanctionDisburse_ChargesDetails_TGLSanctionDisburse_ChargesDetails">
+            <End Role="TGLSanctionDisburse_ChargesDetails" EntitySet="TGLSanctionDisburse_ChargesDetails" />
+            <End Role="TGLSanctionDisburse_ChargesDetails1" EntitySet="TGLSanctionDisburse_ChargesDetails" />
+          </AssociationSet>
+          <FunctionImport Name="GL_SanctionDisburse_Charges_RTR" ReturnType="Collection(MangalDBNewModel.GL_SanctionDisburse_Charges_RTR_Result1)">
+            <Parameter Name="CID" Mode="In" Type="Int32" />
+            <Parameter Name="SanctionAmt" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <EntitySet Name="tblGroupmasters" EntityType="MangalDBNewModel.tblGroupmaster" />
+          <EntitySet Name="tblPrimaryGroups" EntityType="MangalDBNewModel.tblPrimaryGroup" />
           <FunctionImport Name="SP_SanctionDisburse_PRI">
             <Parameter Name="Operation" Mode="In" Type="String" />
             <Parameter Name="Flag" Mode="In" Type="String" />
@@ -1855,34 +1884,17 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
             <Parameter Name="PaymentMode" Mode="In" Type="String" />
             <Parameter Name="Lineno" Mode="In" Type="Int32" />
             <Parameter Name="BankPaymentDate" Mode="In" Type="DateTime" />
-            <Parameter Name="GID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="FCompanyYearEndClosings" EntityType="MangalDBNewModel.FCompanyYearEndClosing" />
-          <FunctionImport Name="SP_InsertRecordInSanctionChargeDetails">
-            <Parameter Name="CHID" Mode="In" Type="Int32" />
-            <Parameter Name="SDID" Mode="In" Type="Int32" />
-            <Parameter Name="ChargeDetailsID" Mode="In" Type="Int32" />
-            <Parameter Name="Charges" Mode="In" Type="Double" />
-            <Parameter Name="Amount" Mode="In" Type="Double" />
-            <Parameter Name="AccountId" Mode="In" Type="Int32" />
-            <Parameter Name="ChargeId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="TGLSanctionDisburse_ChargesDetails" EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesDetails" />
-          <AssociationSet Name="FK_TGLSanctionDisburse_ChargesDetails_TGLSanctionDisburse_ChargesDetails" Association="MangalDBNewModel.FK_TGLSanctionDisburse_ChargesDetails_TGLSanctionDisburse_ChargesDetails">
-            <End Role="TGLSanctionDisburse_ChargesDetails" EntitySet="TGLSanctionDisburse_ChargesDetails" />
-            <End Role="TGLSanctionDisburse_ChargesDetails1" EntitySet="TGLSanctionDisburse_ChargesDetails" />
-          </AssociationSet>
-          <FunctionImport Name="GL_SanctionDisburse_Charges_RTR" ReturnType="Collection(MangalDBNewModel.GL_SanctionDisburse_Charges_RTR_Result1)">
-            <Parameter Name="CID" Mode="In" Type="Int32" />
-            <Parameter Name="SanctionAmt" Mode="In" Type="Decimal" />
+            <Parameter Name="LockerNo" Mode="In" Type="String" />
+            <Parameter Name="PacketWeight" Mode="In" Type="Decimal" />
+            <Parameter Name="RackNo" Mode="In" Type="String" />
+            <Parameter Name="Remark" Mode="In" Type="String" />
+            <Parameter Name="GoldInwardDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="Mst_GstMaster" EntityType="MangalDBNewModel.Mst_GstMaster" />
           <AssociationSet Name="FK_Mst_GstMaster_tblaccountmaster" Association="MangalDBNewModel.FK_Mst_GstMaster_tblaccountmaster">
             <End Role="tblaccountmaster" EntitySet="tblaccountmasters" />
             <End Role="Mst_GstMaster" EntitySet="Mst_GstMaster" />
           </AssociationSet>
-          <EntitySet Name="tblGroupmasters" EntityType="MangalDBNewModel.tblGroupmaster" />
-          <EntitySet Name="tblPrimaryGroups" EntityType="MangalDBNewModel.tblPrimaryGroup" />
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3162,7 +3174,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="NetLoanPayable" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="BankCashAccID" Type="Int32" />
           <Property Name="CheqNEFTDD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CheqNEFTDDNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CheqNEFTDDNo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="CheqNEFTDDDate" Type="DateTime" Precision="0" />
           <Property Name="TotalGrossWeight" Type="Decimal" Precision="11" Scale="2" />
           <Property Name="TotalNetWeight" Type="Decimal" Precision="11" Scale="2" />
@@ -3194,6 +3206,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="CashAmount" Type="Decimal" Precision="11" Scale="2" />
           <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="BankPaymentDate" Type="DateTime" Precision="3" />
+          <Property Name="Packetweight" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LockerNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="FCompanyYearEndClosing">
           <Key>
@@ -3244,34 +3259,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Type="Int32" Name="CDetailsID" Nullable="false" />
           <Property Type="Double" Name="Amount" Nullable="true" />
         </ComplexType>
-        <EntityType Name="Mst_GstMaster">
-          <Key>
-            <PropertyRef Name="Gst_RefId" />
-          </Key>
-          <Property Name="Gst_RefId" Type="Int32" Nullable="false" />
-          <Property Name="Gst_EffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Gst_CGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="Gst_SGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="Gst_IGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="Gst_AccountId" Type="Int32" Nullable="false" />
-          <Property Name="Gst_RecordCreated" Type="DateTime" Precision="3" />
-          <Property Name="Gst_RecordUpdated" Type="DateTime" Precision="3" />
-          <Property Name="Gst_RecordCreatedBy" Type="Int32" />
-          <Property Name="Gst_RecordUpdatedBy" Type="Int32" />
-          <NavigationProperty Name="tblaccountmaster" Relationship="MangalDBNewModel.FK_Mst_GstMaster_tblaccountmaster" FromRole="Mst_GstMaster" ToRole="tblaccountmaster" />
-        </EntityType>
-        <Association Name="FK_Mst_GstMaster_tblaccountmaster">
-          <End Type="MangalDBNewModel.tblaccountmaster" Role="tblaccountmaster" Multiplicity="1" />
-          <End Type="MangalDBNewModel.Mst_GstMaster" Role="Mst_GstMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblaccountmaster">
-              <PropertyRef Name="AccountID" />
-            </Principal>
-            <Dependent Role="Mst_GstMaster">
-              <PropertyRef Name="Gst_AccountId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tblGroupmaster">
           <Key>
             <PropertyRef Name="GPID" />
@@ -3292,6 +3279,35 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="PgID" Type="Int32" Nullable="false" />
           <Property Name="PgName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Mst_GstMaster">
+          <Key>
+            <PropertyRef Name="Gst_RefId" />
+          </Key>
+          <Property Name="Gst_RefId" Type="Int32" Nullable="false" />
+          <Property Name="Gst_EffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Gst_CGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Gst_SGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Gst_IGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="Gst_CgstAccountId" Type="Int32" Nullable="false" />
+          <Property Name="Gst_SgstAccountId" Type="Int32" />
+          <Property Name="Gst_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Gst_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Gst_RecordCreatedBy" Type="Int32" />
+          <Property Name="Gst_RecordUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="tblaccountmaster" Relationship="MangalDBNewModel.FK_Mst_GstMaster_tblaccountmaster" FromRole="Mst_GstMaster" ToRole="tblaccountmaster" />
+        </EntityType>
+        <Association Name="FK_Mst_GstMaster_tblaccountmaster">
+          <End Type="MangalDBNewModel.tblaccountmaster" Role="tblaccountmaster" Multiplicity="1" />
+          <End Type="MangalDBNewModel.Mst_GstMaster" Role="Mst_GstMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblaccountmaster">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Mst_GstMaster">
+              <PropertyRef Name="Gst_CgstAccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4357,6 +4373,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <EntitySetMapping Name="TGLSanctionDisburse_BasicDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.TGLSanctionDisburse_BasicDetails">
               <MappingFragment StoreEntitySet="TGLSanctionDisburse_BasicDetails">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="LockerNo" ColumnName="LockerNo" />
+                <ScalarProperty Name="Packetweight" ColumnName="Packetweight" />
                 <ScalarProperty Name="BankPaymentDate" ColumnName="BankPaymentDate" />
                 <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
                 <ScalarProperty Name="CashAmount" ColumnName="CashAmount" />
@@ -4407,7 +4426,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_PRI" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_PRI" />
           <EntitySetMapping Name="FCompanyYearEndClosings">
             <EntityTypeMapping TypeName="MangalDBNewModel.FCompanyYearEndClosing">
               <MappingFragment StoreEntitySet="FCompanyYearEndClosing">
@@ -4450,22 +4468,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Mst_GstMaster">
-            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_GstMaster">
-              <MappingFragment StoreEntitySet="Mst_GstMaster">
-                <ScalarProperty Name="Gst_RecordUpdatedBy" ColumnName="Gst_RecordUpdatedBy" />
-                <ScalarProperty Name="Gst_RecordCreatedBy" ColumnName="Gst_RecordCreatedBy" />
-                <ScalarProperty Name="Gst_RecordUpdated" ColumnName="Gst_RecordUpdated" />
-                <ScalarProperty Name="Gst_RecordCreated" ColumnName="Gst_RecordCreated" />
-                <ScalarProperty Name="Gst_AccountId" ColumnName="Gst_AccountId" />
-                <ScalarProperty Name="Gst_IGST" ColumnName="Gst_IGST" />
-                <ScalarProperty Name="Gst_SGST" ColumnName="Gst_SGST" />
-                <ScalarProperty Name="Gst_CGST" ColumnName="Gst_CGST" />
-                <ScalarProperty Name="Gst_EffectiveFrom" ColumnName="Gst_EffectiveFrom" />
-                <ScalarProperty Name="Gst_RefId" ColumnName="Gst_RefId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblGroupmasters">
             <EntityTypeMapping TypeName="MangalDBNewModel.tblGroupmaster">
               <MappingFragment StoreEntitySet="tblGroupmaster">
@@ -4485,6 +4487,24 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
               <MappingFragment StoreEntitySet="tblPrimaryGroup">
                 <ScalarProperty Name="PgName" ColumnName="PgName" />
                 <ScalarProperty Name="PgID" ColumnName="PgID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_PRI" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_PRI" />
+          <EntitySetMapping Name="Mst_GstMaster">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_GstMaster">
+              <MappingFragment StoreEntitySet="Mst_GstMaster">
+                <ScalarProperty Name="Gst_RecordUpdatedBy" ColumnName="Gst_RecordUpdatedBy" />
+                <ScalarProperty Name="Gst_RecordCreatedBy" ColumnName="Gst_RecordCreatedBy" />
+                <ScalarProperty Name="Gst_RecordUpdated" ColumnName="Gst_RecordUpdated" />
+                <ScalarProperty Name="Gst_RecordCreated" ColumnName="Gst_RecordCreated" />
+                <ScalarProperty Name="Gst_SgstAccountId" ColumnName="Gst_SgstAccountId" />
+                <ScalarProperty Name="Gst_CgstAccountId" ColumnName="Gst_CgstAccountId" />
+                <ScalarProperty Name="Gst_IGST" ColumnName="Gst_IGST" />
+                <ScalarProperty Name="Gst_SGST" ColumnName="Gst_SGST" />
+                <ScalarProperty Name="Gst_CGST" ColumnName="Gst_CGST" />
+                <ScalarProperty Name="Gst_EffectiveFrom" ColumnName="Gst_EffectiveFrom" />
+                <ScalarProperty Name="Gst_RefId" ColumnName="Gst_RefId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

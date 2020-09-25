@@ -35,6 +35,7 @@ namespace MangalWeb.Controllers
                 }
             }
             ViewBag.GSTAccountList = new SelectList(_gstService.GSTAccountList(), "AccountID", "Name");
+            ViewBag.IGSTAccountList = new SelectList(_gstService.GSTAccountList(), "AccountID", "Name");
             return View("Index", objViewModel);
         }
 
@@ -71,6 +72,7 @@ namespace MangalWeb.Controllers
             }
             gstvm.operation = operation;
             ViewBag.GSTAccountList = new SelectList(_gstService.GSTAccountList(), "AccountID", "Name");
+            ViewBag.IGSTAccountList = new SelectList(_gstService.GSTAccountList(), "AccountID", "Name");
             return View("GST", gstvm);
         }
 

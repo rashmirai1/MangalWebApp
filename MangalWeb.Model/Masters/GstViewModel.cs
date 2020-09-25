@@ -22,8 +22,11 @@ namespace MangalWeb.Model.Masters
 
         public string IGST { get; set; }
 
-        public int AccountNo { get; set; }
-        public string AccountName { get; set; }
+        [Required(ErrorMessage = "Account Head 1")]
+        public int CGSTAccountNo { get; set; }
+        public int? SGSTAccountNo { get; set; }
+        public string CGSTAccountName { get; set; }
+        public string SGSTAccountName { get; set; }
 
         public string operation { get; set; }
 

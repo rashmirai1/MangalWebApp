@@ -162,6 +162,7 @@
                                                             <th style="text-align:left">Deduction</th>
                                                             <th style="text-align:left">Rate Per Gram</th>
                                                             <th style="text-align:left">Net Wt.(g)</th>
+                                                            <th style="text-align:left">Total Value</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
@@ -708,6 +709,7 @@
                 rowGoldItemTrn.Deductions =  row.find("TD").eq(5).html();
                 rowGoldItemTrn.RatePerGram =  row.find("TD").eq(6).html();
                 rowGoldItemTrn.NetWeight = row.find("TD").eq(7).html();
+                rowGoldItemTrn.Value = row.find("TD").eq(8).html();
                 lstGoldItemTrn.push(rowGoldItemTrn);
             });
 
@@ -718,7 +720,8 @@
                 SanctionViewModel.TotalGrossWeight = row.find("TD").eq(4).text();
                 SanctionViewModel.TotalDeductions = row.find("TD").eq(5).text();
                 SanctionViewModel.TotalRatePerGram =  row.find("TD").eq(6).text();
-                SanctionViewModel.TotalValue =  row.find("TD").eq(7).text();
+                SanctionViewModel.TotalNetWeight =  row.find("TD").eq(7).text();
+                SanctionViewModel.TotalValue =  row.find("TD").eq(8).text();
             });
             debugger;
             SanctionViewModel.ChargeDetailList = lstChargeTrn;
@@ -866,10 +869,18 @@
                     data: { ChargeId: $("#ChargeVM_ChargeId").val(), SanctionLoanAmount: sanctionamount },
                     //as inputto json method GetStatesfr
                     success: function (data) {
-                        $("#ChargeVM_CDetailsID").val(data.CDetailsID);
-                        $("#ChargeVM_Charges").val(data.Charges);
-                        $("#ChargeVM_ChargeType").val(data.ChargeType);
-                        $("#ChargeVM_Amount").val(data.Amount);
+                        if(data.ID>0)
+                        {
+                            $("#ChargeVM_CDetailsID").val(data.CDetailsID);
+                            $("#ChargeVM_Charges").val(data.Charges);
+                            $("#ChargeVM_ChargeType").val(data.ChargeType);
+                            $("#ChargeVM_Amount").val(data.Amount);
+                        }
+                        else
+                        {
+                            alert('Can not apply charge for selected Sanction Loan Amount');
+                            return;
+                        }
                     },
                     error: function (ex) {
                         alert('Failed to retrieve data.' + ex);
@@ -1005,11 +1016,12 @@
                         $('#tblGoldItemDetails tbody').append('<tr id=' + val.ID + '><td width="10%">' + rowCount +
                          '<td width="20%" id="' + val.OrnamentId + '">' + val.OrnamentName + '</td>' +
                          '<td width="10%">' + val.Qty + '</td>' +
-                           '<td width="20%" id="' + val.PurityNo + '">' + val.PurityName + '</td>' +
+                           '<td width="10%" id="' + val.PurityNo + '">' + val.PurityName + '</td>' +
                            '<td width="10%">' + val.GrossWeight + '</td>' +
                            '<td width="10%">' + val.Deductions + '</td>' +
                            '<td width="10%">' + val.RatePerGram + '</td>' +
                            '<td width="10%">' + val.NetWeight + '</td>' +
+                           '<td width="10%">' + val.Value + '</td>' +
                            '</tr>');
                     });
                     var foot = $("#tblGoldItemDetails").find('tfoot');
@@ -1018,7 +1030,8 @@
                                                             '<td><b>' + result.TotalGrossWeight + '</b></td>' +
                                                             '<td><b>' + result.TotalDeductions + '</b></td>' +
                                                             '<td><b>' + result.TotalRatePerGram + '</b></td>' +
-                                                            '<td><b>' + result.TotalNetWeight + '</b></td></tr>'));
+                                                            '<td><b>' + result.TotalNetWeight + '</b></td>'+
+                                                            '<td><b>' + result.TotalValue + '</b></td></tr>'));
                 }
             });
         }

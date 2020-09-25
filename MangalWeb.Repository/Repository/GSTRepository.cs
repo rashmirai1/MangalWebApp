@@ -15,7 +15,7 @@ namespace MangalWeb.Repository.Repository
         public List<GstViewModel> GetAllGSTMasters()
         {
             List<GstViewModel> list = new List<GstViewModel>();
-            var tbllist=_context.Mst_GstMaster.ToList();
+            var tbllist = _context.Mst_GstMaster.ToList();
             foreach (var item in tbllist)
             {
                 GstViewModel gstvm = new GstViewModel();
@@ -25,8 +25,10 @@ namespace MangalWeb.Repository.Repository
                 gstvm.CGST = item.Gst_CGST;
                 gstvm.SGST = item.Gst_SGST;
                 gstvm.IGST = item.Gst_IGST;
-                gstvm.AccountNo = item.Gst_AccountId;
-                gstvm.AccountName = _context.tblaccountmasters.Where(x => x.AccountID == item.Gst_AccountId).Select(x => x.Name).FirstOrDefault();
+                gstvm.CGSTAccountNo = item.Gst_CgstAccountId;
+                gstvm.SGSTAccountNo = item.Gst_SgstAccountId;
+                gstvm.CGSTAccountName = _context.tblaccountmasters.Where(x => x.AccountID == item.Gst_CgstAccountId).Select(x => x.Name).FirstOrDefault();
+                gstvm.SGSTAccountName = _context.tblaccountmasters.Where(x => x.AccountID == item.Gst_SgstAccountId).Select(x => x.Name).FirstOrDefault();
                 list.Add(gstvm);
             }
             return list;
@@ -35,7 +37,7 @@ namespace MangalWeb.Repository.Repository
         #region FillGSTAccount
         public List<tblaccountmaster> FillGSTAccount()
         {
-            return _context.tblaccountmasters.Where(x => x.GPID == 20 || x.GPID==21 || x.GPID==61 || x.GPID==100).OrderBy(x => x.Name).ToList();
+            return _context.tblaccountmasters.Where(x => x.GPID == 20 || x.GPID == 21 || x.GPID == 61 || x.GPID == 100).OrderBy(x => x.Name).ToList();
         }
         #endregion
 
@@ -74,11 +76,12 @@ namespace MangalWeb.Repository.Repository
             {
                 tblGst = _context.Mst_GstMaster.Where(x => x.Gst_RefId == gstvm.ID).FirstOrDefault();
             }
-            tblGst.Gst_EffectiveFrom =Convert.ToDateTime(gstvm.EffectiveFrom);
+            tblGst.Gst_EffectiveFrom = Convert.ToDateTime(gstvm.EffectiveFrom);
             tblGst.Gst_CGST = gstvm.CGST;
             tblGst.Gst_SGST = gstvm.SGST;
             tblGst.Gst_IGST = gstvm.IGST;
-            tblGst.Gst_AccountId = gstvm.AccountNo;
+            tblGst.Gst_CgstAccountId = gstvm.CGSTAccountNo;
+            tblGst.Gst_SgstAccountId = gstvm.SGSTAccountNo ?? 0;
             tblGst.Gst_RecordUpdated = DateTime.Now;
             tblGst.Gst_RecordUpdatedBy = gstvm.UpdatedBy;
             _context.SaveChanges();
@@ -93,7 +96,8 @@ namespace MangalWeb.Repository.Repository
             gstvm.CGST = tblGst.Gst_CGST;
             gstvm.SGST = tblGst.Gst_SGST;
             gstvm.IGST = tblGst.Gst_IGST;
-            gstvm.AccountNo = tblGst.Gst_AccountId;
+            gstvm.CGSTAccountNo = tblGst.Gst_CgstAccountId;
+            gstvm.SGSTAccountNo = tblGst.Gst_SgstAccountId;
             return gstvm;
         }
     }

@@ -5,7 +5,7 @@
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
 
-@using (Ajax.BeginForm("Insert", "GST", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+@using (Ajax.BeginForm("", "", new AjaxOptions { OnSuccess = "", OnFailure = "s" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
@@ -50,11 +50,6 @@
                                                 <span class="text-danger" id="CustomErr"> </span>
                                                 @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ref ID", @disabled = true } })
                                             </div>
-                                        </div>
-                                        <br />
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Effective From<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.EffectiveFrom, new { htmlAttributes = new { @class = "form-control", @placeholder = "Effective From", @autocomplete = "Off" } })
@@ -62,44 +57,47 @@
                                                 @Html.ValidationMessageFor(model => model.EffectiveFrom, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
-                                        <br />
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">CGST<span class="text-danger">  </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.CGST, new { htmlAttributes = new { @class = "form-control", @maxlength="4", @placeholder = "CGST", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.CGST, new { htmlAttributes = new { @class = "form-control", @maxlength = "4", @placeholder = "CGST", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)",@autocomplete="off" } })
                                                 @Html.ValidationMessageFor(model => model.CGST, "", new { @class = "text-danger" })
                                             </div>
-                                        </div>
-                                        <br />
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">SGST<span class="text-danger">  </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.SGST, new { htmlAttributes = new { @class = "form-control", @maxlength = "4", @placeholder = "SGST", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.SGST, new { htmlAttributes = new { @class = "form-control", @maxlength = "4", @placeholder = "SGST", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @autocomplete = "off" } })
                                                 @Html.ValidationMessageFor(model => model.SGST, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
-                                        <br />
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">IGST<span class="text-danger"> </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.IGST, new { htmlAttributes = new { @class = "form-control", @maxlength = "4", @placeholder = "IGST", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.IGST, new { htmlAttributes = new { @class = "form-control", @maxlength = "4", @placeholder = "IGST", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @autocomplete = "off" } })
                                                 @Html.ValidationMessageFor(model => model.IGST, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                         <br />
                                     </div>
-                                    <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Account Head<span class="text-danger"> * </span></label>
+                                    <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Account Head 1 <span class="text-danger"> * </span></label>
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                         <div class="section">
                                             <label class="field select">
-                                                @Html.DropDownListFor(m => m.AccountNo, (SelectList)ViewBag.GSTAccountList, "-- Select Account Head--", htmlAttributes: new { @class = "form-control" })
-                                                <span class="text-danger small">@Html.ValidationMessageFor(m => m.AccountNo)</span>
+                                                @Html.DropDownListFor(m => m.CGSTAccountNo, (SelectList)ViewBag.GSTAccountList, "-- Select Account Head--", htmlAttributes: new { @class = "form-control" })
+                                                <span class="text-danger small">@Html.ValidationMessageFor(m => m.CGSTAccountNo)</span>
+                                                <i class="arrow"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Account Head 2<span class="text-danger"> * </span></label>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <div class="section">
+                                            <label class="field select">
+                                                @Html.DropDownListFor(m => m.SGSTAccountNo, (SelectList)ViewBag.GSTAccountList, "-- Select Account Head --", htmlAttributes: new { @class = "form-control" })
+                                                <span class="text-danger small">@Html.ValidationMessageFor(m => m.SGSTAccountNo)</span>
                                                 <i class="arrow"></i>
                                             </label>
                                         </div>
@@ -113,19 +111,49 @@
         </div>
         <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
     </section>
-                                                            }
+}
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 @section javascriptsection{
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-<link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/jquery.validate.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#EffectiveFrom").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
         });
+        if ($("#ItemID").val() == 0) {
+            $("#CGSTAccountNo").attr('disabled', 'disabled');
+            $("#SGSTAccountNo").attr('disabled', 'disabled');
+            $("#SGST").attr('disabled', 'disabled');
+        }
+        $("#CGST").on('keyup', function () {
+            debugger;
+            $("#CGSTAccountNo").removeAttr('disabled');
+            $("#SGSTAccountNo").removeAttr('disabled');
+            $("#SGST").removeAttr('disabled');
+            $("#IGST").val(0);
+        });
+
+        $("#SGST").on('keyup', function () {
+            debugger;
+            $("#CGSTAccountNo").removeAttr('disabled');
+            $("#SGSTAccountNo").removeAttr('disabled');
+            $("#IGST").attr('disabled', 'disabled');
+            $("#IGST").val(0);
+        });
+
+        $("#IGST").on('keypress', function () {
+            debugger;
+            $("#SGSTAccountNo").attr('disabled', 'disabled');
+            $("#SGST").attr('disabled', 'disabled');
+            $("#CGSTAccountNo").removeAttr('disabled');
+            $("#CGST").val(0);
+            $("#SGST").val(0);
+        });
+
 
         $("#EffectiveFrom").on('change', function () {
             $.ajax({
@@ -156,27 +184,29 @@
         });
 
         function SaveGST() {
-            debugger;
-            var AccountHeadNo = $("#AccountNo").val();
-            if (AccountHeadNo == "") {
-                //$("#CustomErr").text("Please Select Account Head");
-                $("#AccountNo").focus();
-                return;
-            }
-            if ($('#CGST').val() == 0 && $('#IGST').val()==0)
-            {
-                $("#CustomErr").text("Please Enter CGST OR IGST");
+            if ($('#CGST').val() == 0 && $('#IGST').val() == 0) {
+                $("#CustomErr").text("Please Enter (CGST and SGST) OR IGST");
                 $("#CGST").focus();
                 return;
             }
 
-            if ($('#CGST').val() > 0 && $('#SGST').val() == 0)
-            {
+            if ($('#CGST').val() > 0 && $('#SGST').val() == 0) {
                 $("#CustomErr").text("Please Enter SGST");
                 $("#SGST").focus();
                 return;
             }
-
+            debugger;
+            if ($('#CGST').val() > 0 && $('#SGST').val() > 0 && $("#SGSTAccountNo").val()==0) {
+                $("#CustomErr").text("Please Select Account Head 2");
+                $("#SGSTAccountNo").focus();
+                return;
+            }
+            var AccountHeadNo = $("#CGSTAccountNo").val();
+            if (AccountHeadNo == "") {
+                //$("#CustomErr").text("Please Select Account Head");
+                $("#CGSTAccountNo").focus();
+                return;
+            }
             $("#btn_save").prop("disabled", true);
             var GSTViewModel = {};
             GSTViewModel.ID = $('#ItemID').val();
@@ -185,7 +215,8 @@
             GSTViewModel.CGST = $('#CGST').val();
             GSTViewModel.SGST = $('#SGST').val();
             GSTViewModel.IGST = $('#IGST').val();
-            GSTViewModel.AccountNo = $('#AccountNo').val();
+            GSTViewModel.CGSTAccountNo = $('#CGSTAccountNo').val();
+            GSTViewModel.SGSTAccountNo = $('#SGSTAccountNo').val();
 
             $.ajax({
                 type: "POST",
