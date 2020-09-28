@@ -147,9 +147,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           </Key>
           <Property Name="Gst_RefId" Type="int" Nullable="false" />
           <Property Name="Gst_EffectiveFrom" Type="datetime" Nullable="false" />
-          <Property Name="Gst_CGST" Type="varchar" MaxLength="6" />
-          <Property Name="Gst_SGST" Type="varchar" MaxLength="6" />
-          <Property Name="Gst_IGST" Type="varchar" MaxLength="6" />
+          <Property Name="Gst_CGST" Type="float" />
+          <Property Name="Gst_SGST" Type="float" />
+          <Property Name="Gst_IGST" Type="float" />
           <Property Name="Gst_CgstAccountId" Type="int" Nullable="false" />
           <Property Name="Gst_SgstAccountId" Type="int" />
           <Property Name="Gst_RecordCreated" Type="datetime" />
@@ -1856,11 +1856,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           </FunctionImport>
           <EntitySet Name="tblGroupmasters" EntityType="MangalDBNewModel.tblGroupmaster" />
           <EntitySet Name="tblPrimaryGroups" EntityType="MangalDBNewModel.tblPrimaryGroup" />
-          <EntitySet Name="Mst_GstMaster" EntityType="MangalDBNewModel.Mst_GstMaster" />
-          <AssociationSet Name="FK_Mst_GstMaster_tblaccountmaster" Association="MangalDBNewModel.FK_Mst_GstMaster_tblaccountmaster">
-            <End Role="tblaccountmaster" EntitySet="tblaccountmasters" />
-            <End Role="Mst_GstMaster" EntitySet="Mst_GstMaster" />
-          </AssociationSet>
           <FunctionImport Name="GL_SanctionDisburse_RTR" ReturnType="Collection(MangalDBNewModel.GL_SanctionDisburse_RTR_Result)">
             <Parameter Name="FYID" Mode="In" Type="Int32" />
             <Parameter Name="BranchId" Mode="In" Type="Int32" />
@@ -1912,9 +1907,14 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
             <Parameter Name="Remark" Mode="In" Type="String" />
             <Parameter Name="GoldInwardDate" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="SP_SanctionDisburse_Delete" ReturnType="Collection(MangalDBNewModel.SP_SanctionDisburse_Delete_Result)">
-            <Parameter Name="SDID" Mode="In" Type="Int32" />
+          <FunctionImport Name="SP_SanctionDisburse_Delete">
+          <Parameter Name="SDID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Mst_GstMaster" EntityType="MangalDBNewModel.Mst_GstMaster" />
+          <AssociationSet Name="FK_Mst_GstMaster_tblaccountmaster" Association="MangalDBNewModel.FK_Mst_GstMaster_tblaccountmaster">
+            <End Role="tblaccountmaster" EntitySet="tblaccountmasters" />
+            <End Role="Mst_GstMaster" EntitySet="Mst_GstMaster" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3299,35 +3299,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="PgID" Type="Int32" Nullable="false" />
           <Property Name="PgName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Mst_GstMaster">
-          <Key>
-            <PropertyRef Name="Gst_RefId" />
-          </Key>
-          <Property Name="Gst_RefId" Type="Int32" Nullable="false" />
-          <Property Name="Gst_EffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Gst_CGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="Gst_SGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="Gst_IGST" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="Gst_CgstAccountId" Type="Int32" Nullable="false" />
-          <Property Name="Gst_SgstAccountId" Type="Int32" />
-          <Property Name="Gst_RecordCreated" Type="DateTime" Precision="3" />
-          <Property Name="Gst_RecordUpdated" Type="DateTime" Precision="3" />
-          <Property Name="Gst_RecordCreatedBy" Type="Int32" />
-          <Property Name="Gst_RecordUpdatedBy" Type="Int32" />
-          <NavigationProperty Name="tblaccountmaster" Relationship="MangalDBNewModel.FK_Mst_GstMaster_tblaccountmaster" FromRole="Mst_GstMaster" ToRole="tblaccountmaster" />
-        </EntityType>
-        <Association Name="FK_Mst_GstMaster_tblaccountmaster">
-          <End Type="MangalDBNewModel.tblaccountmaster" Role="tblaccountmaster" Multiplicity="1" />
-          <End Type="MangalDBNewModel.Mst_GstMaster" Role="Mst_GstMaster" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblaccountmaster">
-              <PropertyRef Name="AccountID" />
-            </Principal>
-            <Dependent Role="Mst_GstMaster">
-              <PropertyRef Name="Gst_CgstAccountId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="GL_SanctionDisburse_RTR_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="CustomerID" Nullable="true" MaxLength="20" />
@@ -3423,6 +3394,35 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Type="Int32" Name="GLInOutID" Nullable="true" />
           <Property Type="Int32" Name="CashInOutID" Nullable="true" />
         </ComplexType>
+        <EntityType Name="Mst_GstMaster">
+          <Key>
+            <PropertyRef Name="Gst_RefId" />
+          </Key>
+          <Property Name="Gst_RefId" Type="Int32" Nullable="false" />
+          <Property Name="Gst_EffectiveFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Gst_CGST" Type="Double" />
+          <Property Name="Gst_SGST" Type="Double" />
+          <Property Name="Gst_IGST" Type="Double" />
+          <Property Name="Gst_CgstAccountId" Type="Int32" Nullable="false" />
+          <Property Name="Gst_SgstAccountId" Type="Int32" />
+          <Property Name="Gst_RecordCreated" Type="DateTime" Precision="3" />
+          <Property Name="Gst_RecordUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Gst_RecordCreatedBy" Type="Int32" />
+          <Property Name="Gst_RecordUpdatedBy" Type="Int32" />
+          <NavigationProperty Name="tblaccountmaster" Relationship="MangalDBNewModel.FK_Mst_GstMaster_tblaccountmaster" FromRole="Mst_GstMaster" ToRole="tblaccountmaster" />
+        </EntityType>
+        <Association Name="FK_Mst_GstMaster_tblaccountmaster">
+          <End Type="MangalDBNewModel.tblaccountmaster" Role="tblaccountmaster" Multiplicity="1" />
+          <End Type="MangalDBNewModel.Mst_GstMaster" Role="Mst_GstMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblaccountmaster">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Mst_GstMaster">
+              <PropertyRef Name="Gst_CgstAccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4605,23 +4605,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Mst_GstMaster">
-            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_GstMaster">
-              <MappingFragment StoreEntitySet="Mst_GstMaster">
-                <ScalarProperty Name="Gst_RecordUpdatedBy" ColumnName="Gst_RecordUpdatedBy" />
-                <ScalarProperty Name="Gst_RecordCreatedBy" ColumnName="Gst_RecordCreatedBy" />
-                <ScalarProperty Name="Gst_RecordUpdated" ColumnName="Gst_RecordUpdated" />
-                <ScalarProperty Name="Gst_RecordCreated" ColumnName="Gst_RecordCreated" />
-                <ScalarProperty Name="Gst_SgstAccountId" ColumnName="Gst_SgstAccountId" />
-                <ScalarProperty Name="Gst_CgstAccountId" ColumnName="Gst_CgstAccountId" />
-                <ScalarProperty Name="Gst_IGST" ColumnName="Gst_IGST" />
-                <ScalarProperty Name="Gst_SGST" ColumnName="Gst_SGST" />
-                <ScalarProperty Name="Gst_CGST" ColumnName="Gst_CGST" />
-                <ScalarProperty Name="Gst_EffectiveFrom" ColumnName="Gst_EffectiveFrom" />
-                <ScalarProperty Name="Gst_RefId" ColumnName="Gst_RefId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GL_SanctionDisburse_RTR" FunctionName="MangalDBNewModel.Store.GL_SanctionDisburse_RTR">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MangalDBNewModel.GL_SanctionDisburse_RTR_Result">
@@ -4720,16 +4703,24 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_PRI" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_PRI" />
-          <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_Delete" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_Delete">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MangalDBNewModel.SP_SanctionDisburse_Delete_Result">
-                <ScalarProperty Name="createdby" ColumnName="createdby" />
-                <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
-                <ScalarProperty Name="GLInOutID" ColumnName="GLInOutID" />
-                <ScalarProperty Name="CashInOutID" ColumnName="CashInOutID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_Delete" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_Delete" />
+          <EntitySetMapping Name="Mst_GstMaster">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_GstMaster">
+              <MappingFragment StoreEntitySet="Mst_GstMaster">
+                <ScalarProperty Name="Gst_RecordUpdatedBy" ColumnName="Gst_RecordUpdatedBy" />
+                <ScalarProperty Name="Gst_RecordCreatedBy" ColumnName="Gst_RecordCreatedBy" />
+                <ScalarProperty Name="Gst_RecordUpdated" ColumnName="Gst_RecordUpdated" />
+                <ScalarProperty Name="Gst_RecordCreated" ColumnName="Gst_RecordCreated" />
+                <ScalarProperty Name="Gst_SgstAccountId" ColumnName="Gst_SgstAccountId" />
+                <ScalarProperty Name="Gst_CgstAccountId" ColumnName="Gst_CgstAccountId" />
+                <ScalarProperty Name="Gst_IGST" ColumnName="Gst_IGST" />
+                <ScalarProperty Name="Gst_SGST" ColumnName="Gst_SGST" />
+                <ScalarProperty Name="Gst_CGST" ColumnName="Gst_CGST" />
+                <ScalarProperty Name="Gst_EffectiveFrom" ColumnName="Gst_EffectiveFrom" />
+                <ScalarProperty Name="Gst_RefId" ColumnName="Gst_RefId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

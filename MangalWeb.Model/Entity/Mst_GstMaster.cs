@@ -16,9 +16,9 @@ namespace MangalWeb.Model.Entity
     {
         public int Gst_RefId { get; set; }
         public System.DateTime Gst_EffectiveFrom { get; set; }
-        public string Gst_CGST { get; set; }
-        public string Gst_SGST { get; set; }
-        public string Gst_IGST { get; set; }
+        public Nullable<double> Gst_CGST { get; set; }
+        public Nullable<double> Gst_SGST { get; set; }
+        public Nullable<double> Gst_IGST { get; set; }
         public int Gst_CgstAccountId { get; set; }
         public Nullable<int> Gst_SgstAccountId { get; set; }
         public Nullable<System.DateTime> Gst_RecordCreated { get; set; }

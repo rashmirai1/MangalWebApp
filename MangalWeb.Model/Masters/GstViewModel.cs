@@ -16,11 +16,11 @@ namespace MangalWeb.Model.Masters
         [DataType(DataType.DateTime)]
         public string EffectiveFrom { get; set; }
 
-        public string CGST { get; set; }
+        public double? CGST { get; set; }
 
-        public string SGST { get; set; }
+        public double? SGST { get; set; }
 
-        public string IGST { get; set; }
+        public double? IGST { get; set; }
 
         [Required(ErrorMessage = "Account Head 1")]
         public int CGSTAccountNo { get; set; }

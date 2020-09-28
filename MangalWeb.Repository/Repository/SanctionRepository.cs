@@ -36,9 +36,10 @@ namespace MangalWeb.Repository.Repository
         public void DeleteRecord(int id)
         {
             var count = _context.SP_SanctionDisburse_Delete(id);
-            if (count != null)
+            if (count > 0)
             {
-                SanctionDisbursementVM model=new SanctionDisbursementVM();
+                SanctionDisbursementVM model = new SanctionDisbursementVM();
+                model.ID = id;
                 SanctionDisbursment_PRI("Delete", model);
             }
         }
@@ -325,8 +326,8 @@ namespace MangalWeb.Repository.Repository
                         }
                         else
                         {
-                            var getgst = _context.Mst_GstMaster.Where(x => x.Gst_IGST != "")
-                                                           .OrderByDescending(x => x.Gst_RefId).Take(1).FirstOrDefault();
+                            var getgst = _context.Mst_GstMaster.Where(x => x.Gst_IGST > 0)
+                                         .OrderByDescending(x => x.Gst_RefId).Take(1).FirstOrDefault();
                             CGSTTax = Convert.ToDouble(getgst.Gst_IGST);
                             CGSTAccountNo = getgst.Gst_CgstAccountId;
                         }
@@ -365,35 +366,32 @@ namespace MangalWeb.Repository.Repository
                             LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitAmt, CreditAmt, ConAccID, Narration, model.FinancialYearId);
                             if (LedgerID > 0)
                             {
-                                datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, ConAccID, DebitAmt, CreditAmt);
+                                datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, AccID, DebitAmt, CreditAmt);
                             }
                         }
                         //***************************** Accounting Entries for Other Charges End *********************************
-
                         //***************************** Accounting Entries for GST Charges Start *********************************
+                        Narration = "Amount received against Gold Loan processing charges";
                         AccID = CGSTAccountNo;
                         double DebitGstAmt = 0;
                         double CreditGstAmt = 0;
                         ContraAccID = AccountID;
                         DebitGstAmt = 0;
-                        CreditGstAmt = 0;
                         CreditGstAmt = CGSTTax;
                         LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitGstAmt, CreditGstAmt, ContraAccID, Narration, model.FinancialYearId);
                         if (LedgerID > 0)
                         {
-                            datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, ContraAccID, DebitGstAmt, CreditGstAmt);
+                            datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, AccID, DebitGstAmt, CreditGstAmt);
                         }
                         AccID = Convert.ToInt32(SGSTAccountNo);
                         DebitGstAmt = 0;
                         CreditGstAmt = 0;
                         ContraAccID = AccountID;
-                        DebitGstAmt = 0;
-                        CreditGstAmt = 0;
                         CreditGstAmt = SGSTTax;
                         LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitGstAmt, CreditGstAmt, ContraAccID, Narration, model.FinancialYearId);
                         if (LedgerID > 0)
                         {
-                            datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, ContraAccID, DebitGstAmt, CreditGstAmt);
+                            datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, AccID, DebitGstAmt, CreditGstAmt);
                         }
                         //***************************** Accounting Entries for GST Charges End *********************************
                         //credit end
@@ -693,7 +691,7 @@ namespace MangalWeb.Repository.Repository
                         }
                         else
                         {
-                            var getgst = _context.Mst_GstMaster.Where(x => x.Gst_IGST != "")
+                            var getgst = _context.Mst_GstMaster.Where(x => x.Gst_IGST > 0)
                                                            .OrderByDescending(x => x.Gst_RefId).Take(1).FirstOrDefault();
                             CGSTTax = Convert.ToDouble(getgst.Gst_IGST);
                             CGSTAccountNo = getgst.Gst_CgstAccountId;
@@ -775,6 +773,7 @@ namespace MangalWeb.Repository.Repository
                         DateTime dtRefDate;
                         bool datasaved = false;
                         var count = _context.TGLSanctionDisburse_BasicDetails.Where(x => x.SDID == model.ID).Count();
+                        model.LoanAccountNo = _context.TGLSanctionDisburse_BasicDetails.Where(x => x.SDID == model.ID).Select(x => x.GoldLoanNo).FirstOrDefault();
                         if (count > 0)
                         {
                             var refno = _context.FSystemGeneratedEntryMasters.Where(x => x.LoginID == model.LoanAccountNo).Select(x => x.ReferenceNo).FirstOrDefault();
@@ -793,7 +792,7 @@ namespace MangalWeb.Repository.Repository
                                 }
                             }
                             //delete data from FLedgerMasters using sdidd
-                            var deleteledger1 = _context.FLedgerMasters.Where(x => x.AccountID == accid && x.ContraAccID == accid).ToList();
+                            var deleteledger1 = _context.FLedgerMasters.Where(x => x.AccountID == accid || x.ContraAccID == accid).ToList();
                             if (deleteledger1 != null && deleteledger1.Count > 0)
                             {
                                 foreach (var item4 in deleteledger1)
@@ -828,6 +827,38 @@ namespace MangalWeb.Repository.Repository
                             {
                                 _context.tblaccountmasters.Remove(tblaccount);
                                 _context.SaveChanges();
+                            }
+
+                            //delete TGLSanctionDisburse_GoldItemDetails
+                            var tblgolditem = _context.TGLSanctionDisburse_GoldItemDetails.Where(x => x.SDID == model.ID).ToList();
+                            if (tblgolditem != null && tblgolditem.Count > 0)
+                            {
+                                foreach (var item5 in tblgolditem)
+                                {
+                                    item5.SDID = 0;
+                                    _context.SaveChanges();
+                                }
+                            }
+
+                            //delete TGLSanctionDisburse_ChargesDetails
+                            var tblcharge = _context.TGLSanctionDisburse_ChargesDetails.Where(x => x.SDID == model.ID).ToList();
+                            if (tblcharge != null && tblcharge.Count > 0)
+                            {
+                                foreach (var item6 in tblcharge)
+                                {
+                                    _context.TGLSanctionDisburse_ChargesDetails.Remove(item6);
+                                    _context.SaveChanges();
+                                }
+                            }
+                            //delete TGLSanctionDisburse_GoldItemDetails
+                            var tblchargeposting = _context.TGLSanctionDisburse_ChargesPostingDetails.Where(x => x.SDID == model.ID).ToList();
+                            if (tblchargeposting != null && tblchargeposting.Count > 0)
+                            {
+                                foreach (var item7 in tblchargeposting)
+                                {
+                                    _context.TGLSanctionDisburse_ChargesPostingDetails.Remove(item7);
+                                    _context.SaveChanges();
+                                }
                             }
                             _context.SaveChanges();
                             transaction.Commit();

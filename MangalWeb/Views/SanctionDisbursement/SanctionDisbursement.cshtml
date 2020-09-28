@@ -609,7 +609,7 @@
             SanctionViewModel.AreaId=$("#AreaId").val();
             SanctionViewModel.MobileNo=$("#MobileNo").val();
             SanctionViewModel.TelephoneNo=$("#TelephoneNo").val();
-            SanctionViewModel.EmailId=$("#EmailId").val();
+            SanctionViewModel.EmailID=$("#EmailID").val();
             SanctionViewModel.TransactionDate = $("#TransactionDate").val();
             SanctionViewModel.LoanType = $("#LoanType").val();
             SanctionViewModel.LoanAccountNo = $("#LoanAccountNo").val();
@@ -1093,6 +1093,8 @@
                     $.each(result, function (key, value) {
                         $("#" + key + "").val(value);
                     });
+                    $("#ItemID").val(result.ID);
+                    $("#btnDelete").removeAttr('disabled');
                     $.each(result.EligibleLoanAmountValuationDetailsVMList, function (key, val) {
                         var rowCount = $('#tblGoldItemDetails >tbody >tr').length + 1;
                         var value = "";

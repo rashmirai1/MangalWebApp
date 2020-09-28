@@ -774,13 +774,13 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_PRI", operationParameter, flagParameter, sDIDParameter, loanTypeParameter, loanDateParameter, goldLoanNoParameter, kYCIDParameter, eligibleLoanAmtParameter, netLoanAmtSanctionedParameter, chargesTotalParameter, netLoanPayableParameter, cheqNEFTDDParameter, cheqNEFTDDNoParameter, cheqNEFTDDDateParameter, totalGrossWeightParameter, totalNetWeightParameter, totalQuantityParameter, totalvalueParameter, totalRateParameter, sIDParameter, dueDateParameter, ownershipProofImagePathParameter, cIBILScoreParameter, bCPIDParameter, cashOutWardByIdParameter, goldInWardByIdParameter, createdByParameter, fYIDParameter, branchIDParameter, cMPIDParameter, cashAccIDParameter, cashAmountParameter, bankCashAccIDParameter, bankAmountParameter, paymentModeParameter, linenoParameter, bankPaymentDateParameter, lockerNoParameter, packetWeightParameter, rackNoParameter, remarkParameter, goldInwardDateParameter);
         }
     
-        public virtual ObjectResult<SP_SanctionDisburse_Delete_Result> SP_SanctionDisburse_Delete(Nullable<int> sDID)
+        public virtual int SP_SanctionDisburse_Delete(Nullable<int> sDID)
         {
             var sDIDParameter = sDID.HasValue ?
                 new ObjectParameter("SDID", sDID) :
                 new ObjectParameter("SDID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SanctionDisburse_Delete_Result>("SP_SanctionDisburse_Delete", sDIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_Delete", sDIDParameter);
         }
     }
 }

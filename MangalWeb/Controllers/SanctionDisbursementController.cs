@@ -194,10 +194,9 @@ namespace MangalWeb.Controllers
         {
             var model = _sanctionService.GetSanctionDisbursementListById(Id);
             BindList();
-            //return View("RequestForm", model);
             string operation = Session["Operation"].ToString();
-            model.operation = operation;
             ButtonVisiblity(operation);
+            model.operation = operation;
             return Json(model, JsonRequestBehavior.AllowGet);
         }
         #endregion
