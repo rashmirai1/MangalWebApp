@@ -34,7 +34,7 @@ namespace MangalWeb.Model.Transaction
         public string BirthDate { get; set; }
         public string PANNo { get; set; }
         public string MobileNo { get; set; }
-        public string EmailId{get;set;}
+        public string EmailID{get;set;}
         public string MaritalStatus { get; set; }
         public int Age { get; set; }
         public string CustomerAddress { get; set; }
@@ -76,7 +76,7 @@ namespace MangalWeb.Model.Transaction
         [Required]
         public HttpPostedFileBase ProofOfOwnerShipFile { get; set; }
         public byte[] ProofOfOwnerShipImageFile { get; set; }
-        public decimal PacketWeight { get; set; }
+        public string PacketWeight { get; set; }
         public string LockerNo { get; set; }
         //accounting part
         public string PaymentMode { get; set; }

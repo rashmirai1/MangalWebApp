@@ -15,10 +15,10 @@ namespace MangalWeb.Controllers
 
         public void BindList()
         {
-            ViewBag.BankAccountList =new SelectList(_sanctionService.BankAccountList(), "AccountID", "Name");
-            ViewBag.CashAccountList =new SelectList(_sanctionService.CashAccountList(), "AccountID", "Name");
-            ViewBag.CashOutwardList =new SelectList(_sanctionService.GetCashOutwardList(),"UserID", "UserName"); 
-            ViewBag.GoldInwardList =new SelectList(_sanctionService.GetGoldInwardList(),"UserID", "UserName");
+            ViewBag.BankAccountList = new SelectList(_sanctionService.BankAccountList(), "AccountID", "Name");
+            ViewBag.CashAccountList = new SelectList(_sanctionService.CashAccountList(), "AccountID", "Name");
+            ViewBag.CashOutwardList = new SelectList(_sanctionService.GetCashOutwardList(), "UserID", "UserName");
+            ViewBag.GoldInwardList = new SelectList(_sanctionService.GetGoldInwardList(), "UserID", "UserName");
             ViewBag.ChargeMasterList = new SelectList(_sanctionService.FillChargeList(), "CID", "ChargeName");
             ViewBag.ChargeAccountList = new SelectList(_sanctionService.ChargeAccountList(), "AccountID", "Name");
         }
@@ -67,10 +67,13 @@ namespace MangalWeb.Controllers
             bool retVal = false;
             sanctionViewModel.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
             sanctionViewModel.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
-            sanctionViewModel.FinancialYearId= Convert.ToInt32(Session["FinancialYearId"]);
+            sanctionViewModel.FinancialYearId = Convert.ToInt32(Session["FinancialYearId"]);
             sanctionViewModel.BranchId = Convert.ToInt32(Session["BranchId"]);
             sanctionViewModel.CompanyId = Convert.ToInt32(Session["CompanyId"]);
-            sanctionViewModel.ProofOfOwnerShipFile =(HttpPostedFileBase)Session["Proofofownership"];
+            if (Session["Proofofownership"] != null)
+            {
+                sanctionViewModel.ProofOfOwnerShipFile = (HttpPostedFileBase)Session["Proofofownership"];
+            }
             _sanctionService.SanctionDisbursment_PRI("Save", sanctionViewModel);
             retVal = true;
             return retVal;
@@ -85,12 +88,20 @@ namespace MangalWeb.Controllers
             bool retVal = false;
             sanctionViewModel.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
             sanctionViewModel.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
-            _sanctionService.SanctionDisbursment_PRI("Save", sanctionViewModel);
+            sanctionViewModel.FinancialYearId = Convert.ToInt32(Session["FinancialYearId"]);
+            sanctionViewModel.BranchId = Convert.ToInt32(Session["BranchId"]);
+            sanctionViewModel.CompanyId = Convert.ToInt32(Session["CompanyId"]);
+            if (Session["Proofofownership"] != null)
+            {
+                sanctionViewModel.ProofOfOwnerShipFile = (HttpPostedFileBase)Session["Proofofownership"];
+            }
+            _sanctionService.SanctionDisbursment_PRI("Update", sanctionViewModel);
             retVal = true;
             return retVal;
         }
         #endregion Update Data
 
+        #region UploadProofOfOwnershipImage
         [HttpPost]
         public JsonResult UploadProofOfOwnershipImage()
         {
@@ -106,7 +117,9 @@ namespace MangalWeb.Controllers
             Session["Proofofownership"] = postedFile;
             return Json(1, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region Remove
         public ActionResult Remove(int id)
         {
             //var list = (List<DocumentUploadDetailsVM>)Session["sub"];
@@ -114,6 +127,7 @@ namespace MangalWeb.Controllers
             //Session["sub"] = list;
             return Json(1, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
         #region SanctionDisbursement
         // GET: SanctionDisbursement
@@ -133,10 +147,19 @@ namespace MangalWeb.Controllers
         #endregion
 
         #region GetChargeDetails
-        public JsonResult GetChargeDetails(int ChargeId,decimal SanctionLoanAmount)
+        public JsonResult GetChargeDetails(int ChargeId, decimal SanctionLoanAmount)
         {
-            var data = _sanctionService.GetChargeDetails(ChargeId,SanctionLoanAmount);
+            var data = _sanctionService.GetChargeDetails(ChargeId, SanctionLoanAmount);
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region GetCustomerTable
+        public ActionResult GetCustomerTable(string Operation)
+        {
+            Session["Operation"] = Operation;
+            //ButtonVisiblity(Operation);
+            return PartialView("_CustomerDetails", _sanctionService.GetKycDetailsList());
         }
         #endregion
 
@@ -145,7 +168,24 @@ namespace MangalWeb.Controllers
         {
             Session["Operation"] = Operation;
             //ButtonVisiblity(Operation);
-            return PartialView("_CustomerDetails", _sanctionService.GetSanctionDisbursementList());
+            return PartialView("_SanctionDetails", _sanctionService.GetSanctionDisbursementList());
+        }
+        #endregion
+
+        #region GetKycDetails
+        public ActionResult GetKycDetails(int Id)
+        {
+            var model = _sanctionService.GetKYCListById(Id);
+            model.TransactionId = _sanctionService.GetMaxTransactionId();
+            model.InterestRepaymentDate = DateTime.Now.AddMonths(1).ToShortDateString();
+            model.EmployeeName = Session["UserName"].ToString();
+            model.TransactionDate = _sanctionService.GetLoanDate();
+            model.LoanAccountNo = _sanctionService.GetLoanNo();
+            BindList();
+            string operation = Session["Operation"].ToString();
+            model.operation = operation;
+            ButtonVisiblity(operation);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -153,14 +193,22 @@ namespace MangalWeb.Controllers
         public ActionResult GetSanctionDisbursementDetails(int Id)
         {
             var model = _sanctionService.GetSanctionDisbursementListById(Id);
-            model.TransactionId = _sanctionService.GetMaxTransactionId();
-            model.InterestRepaymentDate = DateTime.Now.AddMonths(1).ToShortDateString();
-            model.EmployeeName = Session["UserName"].ToString();
-            model.TransactionDate = _sanctionService.GetLoanDate();
-            model.LoanAccountNo = _sanctionService.GetLoanNo();
             BindList();
             //return View("RequestForm", model);
+            string operation = Session["Operation"].ToString();
+            model.operation = operation;
+            ButtonVisiblity(operation);
             return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Delete
+        // GETDelete/5
+        public ActionResult Delete(int id)
+        {
+            string data = "";
+            _sanctionService.DeleteRecord(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

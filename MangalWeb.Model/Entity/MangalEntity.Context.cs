@@ -579,7 +579,29 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_Charges_RTR_Result1>("GL_SanctionDisburse_Charges_RTR", cIDParameter, sanctionAmtParameter);
         }
     
-        public virtual int SP_SanctionDisburse_PRI(string operation, string flag, Nullable<int> sDID, string loanType, Nullable<System.DateTime> loanDate, string goldLoanNo, Nullable<int> kYCID, Nullable<decimal> eligibleLoanAmt, Nullable<decimal> netLoanAmtSanctioned, Nullable<decimal> chargesTotal, Nullable<decimal> netLoanPayable, string cheqNEFTDD, string cheqNEFTDDNo, Nullable<System.DateTime> cheqNEFTDDDate, Nullable<decimal> totalGrossWeight, Nullable<decimal> totalNetWeight, Nullable<decimal> totalQuantity, Nullable<decimal> totalvalue, Nullable<decimal> totalRate, Nullable<int> sID, Nullable<System.DateTime> dueDate, byte[] ownershipProofImagePath, string cIBILScore, Nullable<int> bCPID, Nullable<int> cashOutWardById, Nullable<int> goldInWardById, Nullable<int> createdBy, Nullable<int> fYID, Nullable<int> branchID, Nullable<int> cMPID, Nullable<int> cashAccID, Nullable<decimal> cashAmount, Nullable<int> bankCashAccID, Nullable<decimal> bankAmount, string paymentMode, Nullable<int> lineno, Nullable<System.DateTime> bankPaymentDate, string lockerNo, Nullable<decimal> packetWeight, string rackNo, string remark, Nullable<System.DateTime> goldInwardDate)
+        public virtual ObjectResult<GL_SanctionDisburse_RTR_Result> GL_SanctionDisburse_RTR(Nullable<int> fYID, Nullable<int> branchId)
+        {
+            var fYIDParameter = fYID.HasValue ?
+                new ObjectParameter("FYID", fYID) :
+                new ObjectParameter("FYID", typeof(int));
+    
+            var branchIdParameter = branchId.HasValue ?
+                new ObjectParameter("BranchId", branchId) :
+                new ObjectParameter("BranchId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_RTR_Result>("GL_SanctionDisburse_RTR", fYIDParameter, branchIdParameter);
+        }
+    
+        public virtual ObjectResult<GL_SanctionDisburseDetails_RTR_Result> GL_SanctionDisburseDetails_RTR(Nullable<int> sDID)
+        {
+            var sDIDParameter = sDID.HasValue ?
+                new ObjectParameter("SDID", sDID) :
+                new ObjectParameter("SDID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburseDetails_RTR_Result>("GL_SanctionDisburseDetails_RTR", sDIDParameter);
+        }
+    
+        public virtual int SP_SanctionDisburse_PRI(string operation, string flag, Nullable<int> sDID, string loanType, Nullable<System.DateTime> loanDate, string goldLoanNo, Nullable<int> kYCID, Nullable<decimal> eligibleLoanAmt, Nullable<decimal> netLoanAmtSanctioned, Nullable<decimal> chargesTotal, Nullable<decimal> netLoanPayable, string cheqNEFTDD, string cheqNEFTDDNo, Nullable<System.DateTime> cheqNEFTDDDate, Nullable<decimal> totalGrossWeight, Nullable<decimal> totalNetWeight, Nullable<decimal> totalQuantity, Nullable<decimal> totalvalue, Nullable<decimal> totalRate, Nullable<int> sID, Nullable<System.DateTime> dueDate, byte[] ownershipProofImagePath, string cIBILScore, Nullable<int> bCPID, Nullable<int> cashOutWardById, Nullable<int> goldInWardById, Nullable<int> createdBy, Nullable<int> fYID, Nullable<int> branchID, Nullable<int> cMPID, Nullable<int> cashAccID, Nullable<decimal> cashAmount, Nullable<int> bankCashAccID, Nullable<decimal> bankAmount, string paymentMode, Nullable<int> lineno, Nullable<System.DateTime> bankPaymentDate, string lockerNo, string packetWeight, string rackNo, string remark, Nullable<System.DateTime> goldInwardDate)
         {
             var operationParameter = operation != null ?
                 new ObjectParameter("Operation", operation) :
@@ -733,9 +755,9 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("LockerNo", lockerNo) :
                 new ObjectParameter("LockerNo", typeof(string));
     
-            var packetWeightParameter = packetWeight.HasValue ?
+            var packetWeightParameter = packetWeight != null ?
                 new ObjectParameter("PacketWeight", packetWeight) :
-                new ObjectParameter("PacketWeight", typeof(decimal));
+                new ObjectParameter("PacketWeight", typeof(string));
     
             var rackNoParameter = rackNo != null ?
                 new ObjectParameter("RackNo", rackNo) :
@@ -750,6 +772,15 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("GoldInwardDate", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_PRI", operationParameter, flagParameter, sDIDParameter, loanTypeParameter, loanDateParameter, goldLoanNoParameter, kYCIDParameter, eligibleLoanAmtParameter, netLoanAmtSanctionedParameter, chargesTotalParameter, netLoanPayableParameter, cheqNEFTDDParameter, cheqNEFTDDNoParameter, cheqNEFTDDDateParameter, totalGrossWeightParameter, totalNetWeightParameter, totalQuantityParameter, totalvalueParameter, totalRateParameter, sIDParameter, dueDateParameter, ownershipProofImagePathParameter, cIBILScoreParameter, bCPIDParameter, cashOutWardByIdParameter, goldInWardByIdParameter, createdByParameter, fYIDParameter, branchIDParameter, cMPIDParameter, cashAccIDParameter, cashAmountParameter, bankCashAccIDParameter, bankAmountParameter, paymentModeParameter, linenoParameter, bankPaymentDateParameter, lockerNoParameter, packetWeightParameter, rackNoParameter, remarkParameter, goldInwardDateParameter);
+        }
+    
+        public virtual ObjectResult<SP_SanctionDisburse_Delete_Result> SP_SanctionDisburse_Delete(Nullable<int> sDID)
+        {
+            var sDIDParameter = sDID.HasValue ?
+                new ObjectParameter("SDID", sDID) :
+                new ObjectParameter("SDID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_SanctionDisburse_Delete_Result>("SP_SanctionDisburse_Delete", sDIDParameter);
         }
     }
 }

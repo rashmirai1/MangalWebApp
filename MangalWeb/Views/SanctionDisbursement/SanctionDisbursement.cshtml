@@ -17,10 +17,10 @@
         </div><!--end of col-md-5-->
         <div class="col-md-7 col-sm-8 col-xs-12">
             <div class="topbar-right" id="headerbutton" @TempData["headerbutton"]>
-                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
+                <button href="#editSanctionModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
                 <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
                 <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
-                <button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]" type="button" data-toggle="modal">
+                <button href="#editSanctionModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]" type="button" data-toggle="modal">
                     <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
                 </button>
                 <a href="@Html.Raw(@Url.Action("SanctionDisbursement", "SanctionDisbursement"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
@@ -45,7 +45,7 @@
                                                 @Html.HiddenFor(x => x.AreaId)
                                                 @Html.HiddenFor(x => x.MobileNo)
                                                 @Html.HiddenFor(x => x.TelephoneNo)
-                                                @Html.HiddenFor(x => x.EmailId)
+                                                @Html.HiddenFor(x => x.EmailID)
                                                 @Html.HiddenFor(x => x.KYCID)
                                                 @Html.HiddenFor(x => x.SchemeProcessingType)
                                                 @Html.HiddenFor(x => x.SchemeProcessingCharge)
@@ -330,7 +330,7 @@
                                                 (If gross weight more than 20g)<span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <input type="file" name="ProofOfOwnerShipFile" id="ProofOfOwnerShipFile" class="form-data" accept=".png,.jpg,.jpeg,.gif,.pdf" />
+                                                <input type="file" name="uploadFile" id="uploadFile" class="form-data" accept=".png,.jpg,.jpeg,.gif,.pdf" />
                                                 @Html.ValidationMessageFor(model => model.ProofOfOwnerShipFile, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -648,12 +648,14 @@
                 check=false;
                 return;
             }
-            var inp = document.getElementById('ProofOfOwnerShipFile');
-            if (inp.files.length === 0) {
-                $("#CustomErr").text("Upload Proof Of OwnerShip Image!");
-                inp.focus();
-                return false;
-            }
+
+            //var inp = document.getElementById('ProofOfOwnerShipFile');
+            //if (inp.files.length === 0) {
+            //    $("#CustomErr").text("Upload Proof Of OwnerShip Image!");
+            //    inp.focus();
+            //    return false;
+            //}
+
             if ($('#tblChargeDetails tbody tr').length == 0) {
                 var ChargeId= $("#ChargeVM_ChargeId").val();
                 if (ChargeId == 0) {
@@ -771,11 +773,48 @@
         function OnFailure(response) {
             alert("Error occured.");
         }
-        function ShowClientTableList() {
+
+        function ShowEditTableList() {
             $('#divviewfilldata').empty();
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("GetSanctionTable", "SanctionDisbursement")',
+                dataType: "html",
+                data: { Operation: "Edit" },
+                success: function (data) {
+                    $('#divsanctionfilldata').empty();
+                    $('#divsanctionfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+
+        function ShowViewTableList() {
+            $('#diveditfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetSanctionTable", "SanctionDisbursement")',
+                dataType: "html",
+                data: { Operation: "View" },
+                success: function (data) {
+                    $('#divsanctionfilldata').empty();
+                    $('#divsanctionfilldata').html(data);
+                    $('#example').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+        
+        function ShowClientTableList() {
+            $('#divviewfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetCustomerTable", "SanctionDisbursement")',
                 dataType: "html",
                 data: { Operation: "Edit" },
                 success: function (data) {
@@ -789,15 +828,15 @@
             });
         }
 
-        $("#ProofOfOwnerShipFile").change(function () {
+        $("#uploadFile").change(function () {
 
-            var fileUpload = $("#ProofOfOwnerShipFile").get(0);
+            var fileUpload = $("#uploadFile").get(0);
             var files = fileUpload.files;
             // Create FormData object
             fileData = new FormData();
             // Looping over all files and add it to FormData object
             for (var i = 0; i < files.length; i++) {
-                fileData.append("ProofOfOwnerShipFile", files[i]);
+                fileData.append("uploadFile", files[i]);
             }
             $.ajax({
                 type: 'POST',
@@ -978,28 +1017,23 @@
         $("#diveditfilldata").on("click", "tr", function () {
             debugger;
             var tr = $(this).closest('tr');
-            //var CustomerId = tr.find('td:eq(0)').html();
             var KycId = tr.find("td").eq(0).attr('id');
-            //var AppliedDate = tr.find('td:eq(1)').html();
-            //var LoanAccountNo = tr.find('td:eq(2)').html();
-            //var CustomerName = tr.find('td:eq(3)').html();
-            //var PanNo = tr.find('td:eq(4)').html();
-            //var MobileNo = tr.find('td:eq(5)').html();
-
             $("#editModal").hide();
-            SetSanctionDetails(KycId);
+            SetKycDetails(KycId);
         })
 
-        function SetSanctionDetails(id) {
+        function SetKycDetails(id) {
             debugger;
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("GetSanctionDisbursementDetails", "SanctionDisbursement")',
+                url: '@Url.Action("GetKycDetails", "SanctionDisbursement")',
                 data: "{Id: " + id + "}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
                     debugger;
+                    $("#tblGoldItemDetails tbody tr").empty();
+                    $("#tblGoldItemDetails tfoot tr").empty();
                     $.each(result, function (key, value) {
                         if (key == "AppliedDate") {
                             value = new Date(parseInt(value.replace('/Date(', '')));
@@ -1035,6 +1069,89 @@
                 }
             });
         }
+
+        $("#divsanctionfilldata").on("click", "tr", function () {
+            debugger;
+            var tr = $(this).closest('tr');
+            var Id = tr.find("td").eq(0).attr('id');
+            $("#editSanctionModal").hide();
+            SetSanctionDisbursementDetails(Id);
+        })
+
+        function SetSanctionDisbursementDetails(id) {
+            debugger;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetSanctionDisbursementDetails", "SanctionDisbursement")',
+                data: "{Id: " + id + "}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    $("#tblGoldItemDetails tbody tr").empty();
+                    $("#tblGoldItemDetails tfoot tr").empty();
+                    $.each(result, function (key, value) {
+                        $("#" + key + "").val(value);
+                    });
+                    $.each(result.EligibleLoanAmountValuationDetailsVMList, function (key, val) {
+                        var rowCount = $('#tblGoldItemDetails >tbody >tr').length + 1;
+                        var value = "";
+                        $('#tblGoldItemDetails tbody').append('<tr id=' + val.ID + '><td width="10%">' + rowCount +
+                         '<td width="20%" id="' + val.OrnamentId + '">' + val.OrnamentName + '</td>' +
+                         '<td width="10%">' + val.Qty + '</td>' +
+                           '<td width="10%" id="' + val.PurityNo + '">' + val.PurityName + '</td>' +
+                           '<td width="10%">' + val.GrossWeight + '</td>' +
+                           '<td width="10%">' + val.Deductions + '</td>' +
+                           '<td width="10%">' + val.RatePerGram + '</td>' +
+                           '<td width="10%">' + val.NetWeight + '</td>' +
+                           '<td width="10%">' + val.Value + '</td>' +
+                           '</tr>');
+                    });
+                    var foot = $("#tblGoldItemDetails").find('tfoot');
+                    if (!foot.length) foot = $('<tfoot>').appendTo("#tblGoldItemDetails");
+                    foot.append($('<tr><td><b>Total</b></td><td></td><td><b>' + result.TotalQuantity + '</b></td><td></td>' +
+                                                            '<td><b>' + result.TotalGrossWeight + '</b></td>' +
+                                                            '<td><b>' + result.TotalDeductions + '</b></td>' +
+                                                            '<td><b>' + result.TotalRatePerGram + '</b></td>' +
+                                                            '<td><b>' + result.TotalNetWeight + '</b></td>'+
+                                                            '<td><b>' + result.TotalValue + '</b></td></tr>'));
+                }
+            });
+        }
+
+
+        $(function () {
+            var url = '@Html.Raw(@Url.Action("Delete", "SanctionDisbursement"))';
+            $("#btnDelete").click(function () {
+                $("#deleteModal").modal('show');
+            });
+            $("#btnDeleteConfirm").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: '{id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != "") {
+                            $("#CustomErr").text(data);
+                            return false;
+                        }
+                        else {
+                            $("#CustomErr").empty();
+                            $("#DeleteSuccessModal").modal('show');
+
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            });
+        });
     </script>
 }
 

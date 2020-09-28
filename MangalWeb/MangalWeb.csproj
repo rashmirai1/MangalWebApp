@@ -2103,6 +2103,7 @@
     <Content Include="Views\GLBorrowerCopy\GLBorrowerCopy.cshtml" />
     <Content Include="Views\SanctionDisbursement\SanctionDisbursement.cshtml" />
     <Content Include="Views\SanctionDisbursement\_CustomerDetails.cshtml" />
+    <Content Include="Views\SanctionDisbursement\_SanctionDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

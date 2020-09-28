@@ -152,7 +152,7 @@ namespace MangalWeb.Repository.Repository
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
         #endregion
@@ -167,7 +167,7 @@ namespace MangalWeb.Repository.Repository
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 

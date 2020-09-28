@@ -1211,6 +1211,13 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Parameter Name="Value" Type="numeric" Mode="In" />
           <Parameter Name="SanctionAmount" Type="numeric" Mode="In" />
         </Function>
+        <Function Name="GL_SanctionDisburse_RTR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FYID" Type="int" Mode="In" />
+          <Parameter Name="BranchId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GL_SanctionDisburseDetails_RTR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SDID" Type="int" Mode="In" />
+        </Function>
         <Function Name="NumberSuffix" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="val" Type="int" Mode="In" />
         </Function>
@@ -1268,6 +1275,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Parameter Name="Narration" Type="varchar" Mode="In" />
           <Parameter Name="FinancialYearId" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_SanctionDisburse_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SDID" Type="int" Mode="In" />
+        </Function>
         <Function Name="SP_SanctionDisburse_PRI" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Operation" Type="varchar" Mode="In" />
           <Parameter Name="Flag" Type="nvarchar" Mode="In" />
@@ -1307,7 +1317,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Parameter Name="Lineno" Type="int" Mode="In" />
           <Parameter Name="BankPaymentDate" Type="datetime" Mode="In" />
           <Parameter Name="LockerNo" Type="varchar" Mode="In" />
-          <Parameter Name="PacketWeight" Type="decimal" Mode="In" />
+          <Parameter Name="PacketWeight" Type="varchar" Mode="In" />
           <Parameter Name="RackNo" Type="varchar" Mode="In" />
           <Parameter Name="Remark" Type="varchar" Mode="In" />
           <Parameter Name="GoldInwardDate" Type="datetime" Mode="In" />
@@ -1846,6 +1856,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           </FunctionImport>
           <EntitySet Name="tblGroupmasters" EntityType="MangalDBNewModel.tblGroupmaster" />
           <EntitySet Name="tblPrimaryGroups" EntityType="MangalDBNewModel.tblPrimaryGroup" />
+          <EntitySet Name="Mst_GstMaster" EntityType="MangalDBNewModel.Mst_GstMaster" />
+          <AssociationSet Name="FK_Mst_GstMaster_tblaccountmaster" Association="MangalDBNewModel.FK_Mst_GstMaster_tblaccountmaster">
+            <End Role="tblaccountmaster" EntitySet="tblaccountmasters" />
+            <End Role="Mst_GstMaster" EntitySet="Mst_GstMaster" />
+          </AssociationSet>
+          <FunctionImport Name="GL_SanctionDisburse_RTR" ReturnType="Collection(MangalDBNewModel.GL_SanctionDisburse_RTR_Result)">
+            <Parameter Name="FYID" Mode="In" Type="Int32" />
+            <Parameter Name="BranchId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GL_SanctionDisburseDetails_RTR" ReturnType="Collection(MangalDBNewModel.GL_SanctionDisburseDetails_RTR_Result)">
+          <Parameter Name="SDID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="SP_SanctionDisburse_PRI">
             <Parameter Name="Operation" Mode="In" Type="String" />
             <Parameter Name="Flag" Mode="In" Type="String" />
@@ -1885,16 +1907,14 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
             <Parameter Name="Lineno" Mode="In" Type="Int32" />
             <Parameter Name="BankPaymentDate" Mode="In" Type="DateTime" />
             <Parameter Name="LockerNo" Mode="In" Type="String" />
-            <Parameter Name="PacketWeight" Mode="In" Type="Decimal" />
+            <Parameter Name="PacketWeight" Mode="In" Type="String" />
             <Parameter Name="RackNo" Mode="In" Type="String" />
             <Parameter Name="Remark" Mode="In" Type="String" />
             <Parameter Name="GoldInwardDate" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <EntitySet Name="Mst_GstMaster" EntityType="MangalDBNewModel.Mst_GstMaster" />
-          <AssociationSet Name="FK_Mst_GstMaster_tblaccountmaster" Association="MangalDBNewModel.FK_Mst_GstMaster_tblaccountmaster">
-            <End Role="tblaccountmaster" EntitySet="tblaccountmasters" />
-            <End Role="Mst_GstMaster" EntitySet="Mst_GstMaster" />
-          </AssociationSet>
+          <FunctionImport Name="SP_SanctionDisburse_Delete" ReturnType="Collection(MangalDBNewModel.SP_SanctionDisburse_Delete_Result)">
+            <Parameter Name="SDID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3308,6 +3328,101 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GL_SanctionDisburse_RTR_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="CustomerID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="LoanType" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="LoanAccountNo" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="TransactionDate" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="92" />
+          <Property Type="String" Name="PANNo" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="15" />
+        </ComplexType>
+        <ComplexType Name="GL_SanctionDisburseDetails_RTR_Result">
+          <Property Type="Int32" Name="SDID" Nullable="false" />
+          <Property Type="String" Name="RefType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="RefMon" Nullable="true" MaxLength="5" />
+          <Property Type="String" Name="RefYr" Nullable="true" MaxLength="5" />
+          <Property Type="Int32" Name="RefID" Nullable="true" />
+          <Property Type="String" Name="CustomerID" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="KYCID" Nullable="false" />
+          <Property Type="Int32" Name="StateID" Nullable="true" />
+          <Property Type="Int32" Name="CityID" Nullable="true" />
+          <Property Type="Int32" Name="AreaID" Nullable="true" />
+          <Property Type="Int32" Name="ZoneID" Nullable="true" />
+          <Property Type="String" Name="LoanType" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="LoanDate" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="GoldLoanNo" Nullable="true" MaxLength="40" />
+          <Property Type="Int32" Name="KYCID1" Nullable="true" />
+          <Property Type="Int32" Name="OperatorID" Nullable="true" />
+          <Property Type="Decimal" Name="EligibleLoanAmt" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="NetLoanAmtSanctioned" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="NetLoanPayable" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="BankCashAccID" Nullable="false" />
+          <Property Type="String" Name="CheqNEFTDD" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CheqNEFTDDNo" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="CheqNEFTDDDate" Nullable="true" MaxLength="12" />
+          <Property Type="Decimal" Name="TotalGrossWeight" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="TotalNetWeight" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="TotalQuantity" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="Totalvalue" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="TotalRate" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="Int32" Name="SID" Nullable="true" />
+          <Property Type="String" Name="DueDate" Nullable="true" MaxLength="12" />
+          <Property Type="Binary" Name="OwnershipProofImagePath" Nullable="true" />
+          <Property Type="String" Name="CIBILScore" Nullable="true" MaxLength="20" />
+          <Property Type="Binary" Name="ItemImage" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="BCPID" Nullable="true" />
+          <Property Type="Int32" Name="GID" Nullable="false" />
+          <Property Type="Int32" Name="ItemID" Nullable="false" />
+          <Property Type="Decimal" Name="GrossWeight" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="Decimal" Name="NetWeight" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="RateperGram" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="Value" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="Int32" Name="Purity" Nullable="false" />
+          <Property Type="String" Name="ImgItemPath" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="Tenure" Nullable="true" />
+          <Property Type="Decimal" Name="MaxLoanAmt" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="EMI" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="String" Name="ProChargeType" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="ProCharge" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="AmtLmtTo" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="ServiceTax" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Int32" Name="KYCID2" Nullable="false" />
+          <Property Type="String" Name="CustomerID1" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ExistingCustomerID" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="ExistingPLCaseNo" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Applicantname" Nullable="true" MaxLength="92" />
+          <Property Type="String" Name="AppPhotoPath" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="AppSignPath" Nullable="true" MaxLength="100" />
+          <Property Type="Binary" Name="AppPhoto" Nullable="true" MaxLength="Max" />
+          <Property Type="Binary" Name="AppSign" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="Gender" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="MaritalStatus" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="BirthDate" Nullable="true" MaxLength="12" />
+          <Property Type="Int32" Name="Age" Nullable="true" />
+          <Property Type="String" Name="PANNo" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="ExistingPLCaseNo1" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="251" />
+          <Property Type="String" Name="Landmark" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Nominee" Nullable="true" MaxLength="92" />
+          <Property Type="String" Name="NomRelation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="NomAddress" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="CashOutWardById" Nullable="true" />
+          <Property Type="Int32" Name="GoldInWardById" Nullable="true" />
+          <Property Type="Int32" Name="CashAccID" Nullable="false" />
+          <Property Type="Decimal" Name="BankAmount" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="CashAmount" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="String" Name="PaymentMode" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SP_SanctionDisburse_Delete_Result">
+          <Property Type="Int32" Name="createdby" Nullable="true" />
+          <Property Type="DateTime" Name="LoanDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="GLInOutID" Nullable="true" />
+          <Property Type="Int32" Name="CashInOutID" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4490,7 +4605,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_PRI" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_PRI" />
           <EntitySetMapping Name="Mst_GstMaster">
             <EntityTypeMapping TypeName="MangalDBNewModel.Mst_GstMaster">
               <MappingFragment StoreEntitySet="Mst_GstMaster">
@@ -4508,6 +4622,114 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GL_SanctionDisburse_RTR" FunctionName="MangalDBNewModel.Store.GL_SanctionDisburse_RTR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.GL_SanctionDisburse_RTR_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="LoanType" ColumnName="LoanType" />
+                <ScalarProperty Name="LoanAccountNo" ColumnName="LoanAccountNo" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GL_SanctionDisburseDetails_RTR" FunctionName="MangalDBNewModel.Store.GL_SanctionDisburseDetails_RTR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.GL_SanctionDisburseDetails_RTR_Result">
+                <ScalarProperty Name="SDID" ColumnName="SDID" />
+                <ScalarProperty Name="RefType" ColumnName="RefType" />
+                <ScalarProperty Name="RefMon" ColumnName="RefMon" />
+                <ScalarProperty Name="RefYr" ColumnName="RefYr" />
+                <ScalarProperty Name="RefID" ColumnName="RefID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="ZoneID" ColumnName="ZoneID" />
+                <ScalarProperty Name="LoanType" ColumnName="LoanType" />
+                <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
+                <ScalarProperty Name="GoldLoanNo" ColumnName="GoldLoanNo" />
+                <ScalarProperty Name="KYCID1" ColumnName="KYCID1" />
+                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
+                <ScalarProperty Name="EligibleLoanAmt" ColumnName="EligibleLoanAmt" />
+                <ScalarProperty Name="NetLoanAmtSanctioned" ColumnName="NetLoanAmtSanctioned" />
+                <ScalarProperty Name="NetLoanPayable" ColumnName="NetLoanPayable" />
+                <ScalarProperty Name="BankCashAccID" ColumnName="BankCashAccID" />
+                <ScalarProperty Name="CheqNEFTDD" ColumnName="CheqNEFTDD" />
+                <ScalarProperty Name="CheqNEFTDDNo" ColumnName="CheqNEFTDDNo" />
+                <ScalarProperty Name="CheqNEFTDDDate" ColumnName="CheqNEFTDDDate" />
+                <ScalarProperty Name="TotalGrossWeight" ColumnName="TotalGrossWeight" />
+                <ScalarProperty Name="TotalNetWeight" ColumnName="TotalNetWeight" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="Totalvalue" ColumnName="Totalvalue" />
+                <ScalarProperty Name="TotalRate" ColumnName="TotalRate" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="OwnershipProofImagePath" ColumnName="OwnershipProofImagePath" />
+                <ScalarProperty Name="CIBILScore" ColumnName="CIBILScore" />
+                <ScalarProperty Name="ItemImage" ColumnName="ItemImage" />
+                <ScalarProperty Name="BCPID" ColumnName="BCPID" />
+                <ScalarProperty Name="GID" ColumnName="GID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="GrossWeight" ColumnName="GrossWeight" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="NetWeight" ColumnName="NetWeight" />
+                <ScalarProperty Name="RateperGram" ColumnName="RateperGram" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Purity" ColumnName="Purity" />
+                <ScalarProperty Name="ImgItemPath" ColumnName="ImgItemPath" />
+                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
+                <ScalarProperty Name="MaxLoanAmt" ColumnName="MaxLoanAmt" />
+                <ScalarProperty Name="EMI" ColumnName="EMI" />
+                <ScalarProperty Name="ProChargeType" ColumnName="ProChargeType" />
+                <ScalarProperty Name="ProCharge" ColumnName="ProCharge" />
+                <ScalarProperty Name="AmtLmtTo" ColumnName="AmtLmtTo" />
+                <ScalarProperty Name="ServiceTax" ColumnName="ServiceTax" />
+                <ScalarProperty Name="KYCID2" ColumnName="KYCID2" />
+                <ScalarProperty Name="CustomerID1" ColumnName="CustomerID1" />
+                <ScalarProperty Name="ExistingCustomerID" ColumnName="ExistingCustomerID" />
+                <ScalarProperty Name="ExistingPLCaseNo" ColumnName="ExistingPLCaseNo" />
+                <ScalarProperty Name="Applicantname" ColumnName="Applicantname" />
+                <ScalarProperty Name="AppPhotoPath" ColumnName="AppPhotoPath" />
+                <ScalarProperty Name="AppSignPath" ColumnName="AppSignPath" />
+                <ScalarProperty Name="AppPhoto" ColumnName="AppPhoto" />
+                <ScalarProperty Name="AppSign" ColumnName="AppSign" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="ExistingPLCaseNo1" ColumnName="ExistingPLCaseNo1" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="Nominee" ColumnName="Nominee" />
+                <ScalarProperty Name="NomRelation" ColumnName="NomRelation" />
+                <ScalarProperty Name="NomAddress" ColumnName="NomAddress" />
+                <ScalarProperty Name="CashOutWardById" ColumnName="CashOutWardById" />
+                <ScalarProperty Name="GoldInWardById" ColumnName="GoldInWardById" />
+                <ScalarProperty Name="CashAccID" ColumnName="CashAccID" />
+                <ScalarProperty Name="BankAmount" ColumnName="BankAmount" />
+                <ScalarProperty Name="CashAmount" ColumnName="CashAmount" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_PRI" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_PRI" />
+          <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_Delete" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_Delete">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.SP_SanctionDisburse_Delete_Result">
+                <ScalarProperty Name="createdby" ColumnName="createdby" />
+                <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
+                <ScalarProperty Name="GLInOutID" ColumnName="GLInOutID" />
+                <ScalarProperty Name="CashInOutID" ColumnName="CashInOutID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

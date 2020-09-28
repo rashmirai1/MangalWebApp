@@ -20,7 +20,6 @@ namespace MangalWeb.Model
                                    join dp in destinationProperties on new { sp.Name } equals
                                        new { dp.Name }
                                    select new { sp, dp };
-
             foreach (var match in commonproperties)
             {
                 try
@@ -29,9 +28,8 @@ namespace MangalWeb.Model
                 }
                 catch (Exception ex)
                 {
-
+                    throw ex;
                 }
-
             }
         }
     }

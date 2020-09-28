@@ -73,6 +73,16 @@ namespace MangalWeb.Service.Service
             return _sanctionRepository.GetSanctionDisbursementList();
         }
 
+        public List<SanctionDisbursementVM> GetKycDetailsList()
+        {
+            return _sanctionRepository.GetKycDetailsList();
+        }
+
+        public SanctionDisbursementVM GetKYCListById(int Id)
+        {
+            return _sanctionRepository.GetKycListById(Id);
+        }
+
         public SanctionDisbursementVM GetSanctionDisbursementListById(int Id)
         {
             return _sanctionRepository.GetSanctionDisbursementListById(Id);
@@ -81,6 +91,11 @@ namespace MangalWeb.Service.Service
         public void SaveUpdateRecord(SanctionDisbursementVM model)
         {
             _sanctionRepository.SaveUpdateRecord(model);
+        }
+
+        public void DeleteRecord(int id)
+        {
+            _sanctionRepository.DeleteRecord(id);
         }
     }
 }
