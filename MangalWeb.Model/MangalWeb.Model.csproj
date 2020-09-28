@@ -105,7 +105,6 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\GetPreSanctionCustomerList_Result.cs" />
-    <Compile Include="Entity\GetResidenceVerificationCustomerList_Result.cs" />
     <Compile Include="Entity\GL_SanctionDisburseDetails_RTR_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -289,8 +288,12 @@
     <Compile Include="Entity\TGLGoldInOutDetail.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\TGLGoldStock.cs" />
-    <Compile Include="Entity\TGLInterest_Details.cs" />
+    <Compile Include="Entity\TGLGoldStock.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLInterest_Details.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\TGLKYC_BasicDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -309,7 +312,9 @@
     <Compile Include="Entity\Trans_KYCAddresses.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\Tran_ValuationOneDetails.cs" />
+    <Compile Include="Entity\Tran_ValuationOneDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Trn_DocumentUpload.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -406,6 +411,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
+    <None Include="Entity\et" />
+    <None Include="Entity\GL_SanctionDisburse_KYC_RTR" />
     <None Include="Entity\MangalEntity.edmx.diagram">
       <DependentUpon>MangalEntity.edmx</DependentUpon>
     </None>

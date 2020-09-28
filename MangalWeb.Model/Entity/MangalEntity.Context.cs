@@ -72,7 +72,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
         public virtual DbSet<tbl_CKycState> tbl_CKycState { get; set; }
         public virtual DbSet<FLedgerMaster> FLedgerMasters { get; set; }
-        public virtual DbSet<TBankCash_PaymentDetails> TBankCash_PaymentDetails { get; set; }
         public virtual DbSet<TBankCash_ReceiptDetails> TBankCash_ReceiptDetails { get; set; }
         public virtual DbSet<Imagestore> Imagestores { get; set; }
         public virtual DbSet<TGLSanctionDisburse_GoldItemDetails> TGLSanctionDisburse_GoldItemDetails { get; set; }
@@ -89,6 +88,10 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLGoldInOutDetail> TGLGoldInOutDetails { get; set; }
         public virtual DbSet<FCompanyYearEndClosing> FCompanyYearEndClosings { get; set; }
         public virtual DbSet<tblStandardEndTime> tblStandardEndTimes { get; set; }
+        public virtual DbSet<Tran_ValuationOneDetails> Tran_ValuationOneDetails { get; set; }
+        public virtual DbSet<TGLGoldStock> TGLGoldStocks { get; set; }
+        public virtual DbSet<TGLInterest_Details> TGLInterest_Details { get; set; }
+        public virtual DbSet<TBankCash_PaymentDetails> TBankCash_PaymentDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

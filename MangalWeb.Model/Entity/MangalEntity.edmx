@@ -693,6 +693,37 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLGoldInOutDetails' does not have
           <Property Name="CMPID" Type="int" />
           <Property Name="isActive" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MangalDBNew.dbo.TGLGoldStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TGLGoldStock">
+          <Key>
+            <PropertyRef Name="StockId" />
+          </Key>
+          <Property Name="StockId" Type="int" Nullable="false" />
+          <Property Name="Date_Time" Type="smalldatetime" />
+          <Property Name="OpeningBalance" Type="int" />
+          <Property Name="TotalDeposit" Type="int" />
+          <Property Name="TotalRelease" Type="int" />
+          <Property Name="ClosingBalance" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'MangalDBNew.dbo.TGLInterest_Details' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TGLInterest_Details">
+          <Key>
+            <PropertyRef Name="InterestDetID" />
+          </Key>
+          <Property Name="InterestDetID" Type="int" Nullable="false" />
+          <Property Name="ReceiptID" Type="int" />
+          <Property Name="FromDate" Type="smalldatetime" />
+          <Property Name="ToDate" Type="smalldatetime" />
+          <Property Name="LoanAmount" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="TotalDays" Type="int" />
+          <Property Name="AllDaysTillDate" Type="int" />
+          <Property Name="ROI" Type="int" />
+          <Property Name="InterestAmount" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="PrevOSInterest" Type="decimal" Precision="11" Scale="2" />
+          <Property Name="ROIRowID" Type="int" />
+        </EntityType>
         <EntityType Name="TGLKYC_BasicDetails">
           <Key>
             <PropertyRef Name="KYCID" />
@@ -875,6 +906,19 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLGoldInOutDetails' does not have
           <Property Name="Value" Type="decimal" Precision="11" Scale="2" />
           <Property Name="ImgItemPath" Type="nvarchar" MaxLength="500" />
           <Property Name="Deduction" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Tran_ValuationOneDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PreSanctionId" Type="int" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerID" Type="nvarchar" MaxLength="50" />
+          <Property Name="ApplicationNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="Trans_KYCAddresses">
           <Key>
@@ -1581,6 +1625,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLGoldInOutDetails' does not have
           <EntitySet Name="TGLSanctionDisburse_ChargesDetails" EntityType="Self.TGLSanctionDisburse_ChargesDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TGLSanctionDisburse_ChargesPostingDetails" EntityType="Self.TGLSanctionDisburse_ChargesPostingDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TGLSanctionDisburse_GoldItemDetails" EntityType="Self.TGLSanctionDisburse_GoldItemDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tran_ValuationOneDetails" EntityType="Self.Tran_ValuationOneDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trans_KYCAddresses" EntityType="Self.Trans_KYCAddresses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trn_DocumentUpload" EntityType="Self.Trn_DocumentUpload" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Trn_DocUploadDetails" EntityType="Self.Trn_DocUploadDetails" Schema="dbo" store:Type="Tables" />
@@ -1661,6 +1706,31 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLGoldInOutDetails' does not have
     [TGLGoldInOutDetails].[CMPID] AS [CMPID], 
     [TGLGoldInOutDetails].[isActive] AS [isActive]
     FROM [dbo].[TGLGoldInOutDetails] AS [TGLGoldInOutDetails]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TGLGoldStock" EntityType="Self.TGLGoldStock" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TGLGoldStock].[StockId] AS [StockId], 
+    [TGLGoldStock].[Date_Time] AS [Date_Time], 
+    [TGLGoldStock].[OpeningBalance] AS [OpeningBalance], 
+    [TGLGoldStock].[TotalDeposit] AS [TotalDeposit], 
+    [TGLGoldStock].[TotalRelease] AS [TotalRelease], 
+    [TGLGoldStock].[ClosingBalance] AS [ClosingBalance]
+    FROM [dbo].[TGLGoldStock] AS [TGLGoldStock]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TGLInterest_Details" EntityType="Self.TGLInterest_Details" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TGLInterest_Details].[InterestDetID] AS [InterestDetID], 
+    [TGLInterest_Details].[ReceiptID] AS [ReceiptID], 
+    [TGLInterest_Details].[FromDate] AS [FromDate], 
+    [TGLInterest_Details].[ToDate] AS [ToDate], 
+    [TGLInterest_Details].[LoanAmount] AS [LoanAmount], 
+    [TGLInterest_Details].[TotalDays] AS [TotalDays], 
+    [TGLInterest_Details].[AllDaysTillDate] AS [AllDaysTillDate], 
+    [TGLInterest_Details].[ROI] AS [ROI], 
+    [TGLInterest_Details].[InterestAmount] AS [InterestAmount], 
+    [TGLInterest_Details].[PrevOSInterest] AS [PrevOSInterest], 
+    [TGLInterest_Details].[ROIRowID] AS [ROIRowID]
+    FROM [dbo].[TGLInterest_Details] AS [TGLInterest_Details]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__tbl_Resid__PreSa__39AD8A7F" Association="Self.FK__tbl_Resid__PreSa__39AD8A7F">
             <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
@@ -1988,7 +2058,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLGoldInOutDetails' does not have
           </FunctionImport>
           <EntitySet Name="tbl_CKycState" EntityType="MangalDBNewModel.tbl_CKycState" />
           <EntitySet Name="FLedgerMasters" EntityType="MangalDBNewModel.FLedgerMaster" />
-          <EntitySet Name="TBankCash_PaymentDetails" EntityType="MangalDBNewModel.TBankCash_PaymentDetails" />
           <EntitySet Name="TBankCash_ReceiptDetails" EntityType="MangalDBNewModel.TBankCash_ReceiptDetails" />
           <EntitySet Name="Imagestores" EntityType="MangalDBNewModel.Imagestore" />
           <FunctionImport Name="SP_InsertRecordInAccountMaster">
@@ -2157,6 +2226,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLGoldInOutDetails' does not have
           <EntitySet Name="TGLGoldInOutDetails" EntityType="MangalDBNewModel.TGLGoldInOutDetail" />
           <EntitySet Name="FCompanyYearEndClosings" EntityType="MangalDBNewModel.FCompanyYearEndClosing" />
           <EntitySet Name="tblStandardEndTimes" EntityType="MangalDBNewModel.tblStandardEndTime" />
+          <EntitySet Name="Tran_ValuationOneDetails" EntityType="MangalDBNewModel.Tran_ValuationOneDetails" />
+          <EntitySet Name="TGLGoldStocks" EntityType="MangalDBNewModel.TGLGoldStock" />
+          <EntitySet Name="TGLInterest_Details" EntityType="MangalDBNewModel.TGLInterest_Details" />
+          <EntitySet Name="TBankCash_PaymentDetails" EntityType="MangalDBNewModel.TBankCash_PaymentDetails" />
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3173,26 +3246,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLGoldInOutDetails' does not have
           <Property Name="ReconcileDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="FinanceYear" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="TBankCash_PaymentDetails">
-          <Key>
-            <PropertyRef Name="BCPID" />
-            <PropertyRef Name="ReferenceNo" />
-          </Key>
-          <Property Name="BCPID" Type="Int32" Nullable="false" />
-          <Property Name="RefType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RefNo" Type="Int32" Nullable="false" />
-          <Property Name="ReferenceNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="RefDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="VoucherNo" Type="Int32" Nullable="false" />
-          <Property Name="BankCashAccID" Type="Int32" Nullable="false" />
-          <Property Name="PaidTo" Type="Int32" Nullable="false" />
-          <Property Name="Amount" Type="Double" />
-          <Property Name="ChqNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ChqDate" Type="DateTime" Precision="3" />
-          <Property Name="Narration" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="LedgerID" Type="Int32" />
-          <Property Name="FinancialyearID" Type="Int32" />
-        </EntityType>
         <EntityType Name="TBankCash_ReceiptDetails">
           <Key>
             <PropertyRef Name="BCRID" />
@@ -3823,6 +3876,66 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLGoldInOutDetails' does not have
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StatdardEndTime" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Tran_ValuationOneDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PreSanctionId" Type="Int32" />
+          <Property Name="TransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TGLGoldStock">
+          <Key>
+            <PropertyRef Name="StockId" />
+          </Key>
+          <Property Name="StockId" Type="Int32" Nullable="false" />
+          <Property Name="Date_Time" Type="DateTime" Precision="0" />
+          <Property Name="OpeningBalance" Type="Int32" />
+          <Property Name="TotalDeposit" Type="Int32" />
+          <Property Name="TotalRelease" Type="Int32" />
+          <Property Name="ClosingBalance" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TGLInterest_Details">
+          <Key>
+            <PropertyRef Name="InterestDetID" />
+          </Key>
+          <Property Name="InterestDetID" Type="Int32" Nullable="false" />
+          <Property Name="ReceiptID" Type="Int32" />
+          <Property Name="FromDate" Type="DateTime" Precision="0" />
+          <Property Name="ToDate" Type="DateTime" Precision="0" />
+          <Property Name="LoanAmount" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="TotalDays" Type="Int32" />
+          <Property Name="AllDaysTillDate" Type="Int32" />
+          <Property Name="ROI" Type="Int32" />
+          <Property Name="InterestAmount" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="PrevOSInterest" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="ROIRowID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TBankCash_PaymentDetails">
+          <Key>
+            <PropertyRef Name="BCPID" />
+            <PropertyRef Name="ReferenceNo" />
+          </Key>
+          <Property Name="BCPID" Type="Int32" Nullable="false" />
+          <Property Name="RefType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RefNo" Type="Int32" Nullable="false" />
+          <Property Name="ReferenceNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RefDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="VoucherNo" Type="Int32" Nullable="false" />
+          <Property Name="BankCashAccID" Type="Int32" Nullable="false" />
+          <Property Name="PaidTo" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Double" />
+          <Property Name="ChqNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ChqDate" Type="DateTime" Precision="3" />
+          <Property Name="Narration" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LedgerID" Type="Int32" />
+          <Property Name="FinancialyearID" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4714,26 +4827,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLGoldInOutDetails' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TBankCash_PaymentDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.TBankCash_PaymentDetails">
-              <MappingFragment StoreEntitySet="TBankCash_PaymentDetails">
-                <ScalarProperty Name="FinancialyearID" ColumnName="FinancialyearID" />
-                <ScalarProperty Name="LedgerID" ColumnName="LedgerID" />
-                <ScalarProperty Name="Narration" ColumnName="Narration" />
-                <ScalarProperty Name="ChqDate" ColumnName="ChqDate" />
-                <ScalarProperty Name="ChqNo" ColumnName="ChqNo" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="PaidTo" ColumnName="PaidTo" />
-                <ScalarProperty Name="BankCashAccID" ColumnName="BankCashAccID" />
-                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
-                <ScalarProperty Name="RefDate" ColumnName="RefDate" />
-                <ScalarProperty Name="ReferenceNo" ColumnName="ReferenceNo" />
-                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
-                <ScalarProperty Name="RefType" ColumnName="RefType" />
-                <ScalarProperty Name="BCPID" ColumnName="BCPID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TBankCash_ReceiptDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.TBankCash_ReceiptDetails">
               <MappingFragment StoreEntitySet="TBankCash_ReceiptDetails">
@@ -5255,6 +5348,69 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLGoldInOutDetails' does not have
               <MappingFragment StoreEntitySet="tblStandardEndTime">
                 <ScalarProperty Name="StatdardEndTime" ColumnName="StatdardEndTime" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tran_ValuationOneDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Tran_ValuationOneDetails">
+              <MappingFragment StoreEntitySet="Tran_ValuationOneDetails">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="PreSanctionId" ColumnName="PreSanctionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TGLGoldStocks">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLGoldStock">
+              <MappingFragment StoreEntitySet="TGLGoldStock">
+                <ScalarProperty Name="ClosingBalance" ColumnName="ClosingBalance" />
+                <ScalarProperty Name="TotalRelease" ColumnName="TotalRelease" />
+                <ScalarProperty Name="TotalDeposit" ColumnName="TotalDeposit" />
+                <ScalarProperty Name="OpeningBalance" ColumnName="OpeningBalance" />
+                <ScalarProperty Name="Date_Time" ColumnName="Date_Time" />
+                <ScalarProperty Name="StockId" ColumnName="StockId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TGLInterest_Details">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLInterest_Details">
+              <MappingFragment StoreEntitySet="TGLInterest_Details">
+                <ScalarProperty Name="ROIRowID" ColumnName="ROIRowID" />
+                <ScalarProperty Name="PrevOSInterest" ColumnName="PrevOSInterest" />
+                <ScalarProperty Name="InterestAmount" ColumnName="InterestAmount" />
+                <ScalarProperty Name="ROI" ColumnName="ROI" />
+                <ScalarProperty Name="AllDaysTillDate" ColumnName="AllDaysTillDate" />
+                <ScalarProperty Name="TotalDays" ColumnName="TotalDays" />
+                <ScalarProperty Name="LoanAmount" ColumnName="LoanAmount" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="ReceiptID" ColumnName="ReceiptID" />
+                <ScalarProperty Name="InterestDetID" ColumnName="InterestDetID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBankCash_PaymentDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TBankCash_PaymentDetails">
+              <MappingFragment StoreEntitySet="TBankCash_PaymentDetails">
+                <ScalarProperty Name="FinancialyearID" ColumnName="FinancialyearID" />
+                <ScalarProperty Name="LedgerID" ColumnName="LedgerID" />
+                <ScalarProperty Name="Narration" ColumnName="Narration" />
+                <ScalarProperty Name="ChqDate" ColumnName="ChqDate" />
+                <ScalarProperty Name="ChqNo" ColumnName="ChqNo" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaidTo" ColumnName="PaidTo" />
+                <ScalarProperty Name="BankCashAccID" ColumnName="BankCashAccID" />
+                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="RefDate" ColumnName="RefDate" />
+                <ScalarProperty Name="ReferenceNo" ColumnName="ReferenceNo" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="RefType" ColumnName="RefType" />
+                <ScalarProperty Name="BCPID" ColumnName="BCPID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
