@@ -131,6 +131,7 @@
     <Compile Include="Controllers\DocumentUploadController.cs" />
     <Compile Include="Controllers\DocumentVerificationController.cs" />
     <Compile Include="Controllers\FinancialYearController.cs" />
+    <Compile Include="Controllers\ForgotPasswordController.cs" />
     <Compile Include="Controllers\GLBorrowerCopyController.cs" />
     <Compile Include="Controllers\GSTController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -139,12 +140,15 @@
     <Compile Include="Controllers\OrnamentController.cs" />
     <Compile Include="Controllers\PenaltySlabController.cs" />
     <Compile Include="Controllers\PincodeController.cs" />
+    <Compile Include="Controllers\PreSanctionController.cs" />
     <Compile Include="Controllers\ProductRateController.cs" />
     <Compile Include="Controllers\ReasonController.cs" />
     <Compile Include="Controllers\RequestFormController.cs" />
+    <Compile Include="Controllers\ResidenceVerificationController.cs" />
     <Compile Include="Controllers\SanctionDisbursementController.cs" />
     <Compile Include="Controllers\SchemeController.cs" />
     <Compile Include="Controllers\SourceofApplicationController.cs" />
+    <Compile Include="Controllers\StatdardEndTimeController.cs" />
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\UserAuthorizationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
