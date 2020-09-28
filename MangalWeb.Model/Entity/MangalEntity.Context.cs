@@ -70,7 +70,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<tblStateMaster> tblStateMasters { get; set; }
         public virtual DbSet<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
-        public virtual DbSet<TGLSanctionDisburse_ChargesPostingDetails> TGLSanctionDisburse_ChargesPostingDetails { get; set; }
         public virtual DbSet<tbl_CKycState> tbl_CKycState { get; set; }
         public virtual DbSet<FLedgerMaster> FLedgerMasters { get; set; }
         public virtual DbSet<TBankCash_PaymentDetails> TBankCash_PaymentDetails { get; set; }
@@ -79,11 +78,17 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLSanctionDisburse_GoldItemDetails> TGLSanctionDisburse_GoldItemDetails { get; set; }
         public virtual DbSet<FSystemGeneratedEntryMaster> FSystemGeneratedEntryMasters { get; set; }
         public virtual DbSet<TGLSanctionDisburse_BasicDetails> TGLSanctionDisburse_BasicDetails { get; set; }
-        public virtual DbSet<FCompanyYearEndClosing> FCompanyYearEndClosings { get; set; }
         public virtual DbSet<TGLSanctionDisburse_ChargesDetails> TGLSanctionDisburse_ChargesDetails { get; set; }
         public virtual DbSet<tblGroupmaster> tblGroupmasters { get; set; }
-        public virtual DbSet<tblPrimaryGroup> tblPrimaryGroups { get; set; }
         public virtual DbSet<Mst_GstMaster> Mst_GstMaster { get; set; }
+        public virtual DbSet<tbl_PreSanctionDetails> tbl_PreSanctionDetails { get; set; }
+        public virtual DbSet<tbl_ResidenceVerification> tbl_ResidenceVerification { get; set; }
+        public virtual DbSet<TGLSanctionDisburse_ChargesPostingDetails> TGLSanctionDisburse_ChargesPostingDetails { get; set; }
+        public virtual DbSet<tblPrimaryGroup> tblPrimaryGroups { get; set; }
+        public virtual DbSet<TGLCashInOutDetail> TGLCashInOutDetails { get; set; }
+        public virtual DbSet<TGLGoldInOutDetail> TGLGoldInOutDetails { get; set; }
+        public virtual DbSet<FCompanyYearEndClosing> FCompanyYearEndClosings { get; set; }
+        public virtual DbSet<tblStandardEndTime> tblStandardEndTimes { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

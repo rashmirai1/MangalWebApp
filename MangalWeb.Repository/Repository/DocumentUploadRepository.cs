@@ -221,8 +221,8 @@ namespace MangalWeb.Repository.Repository
         {
             DocumentUploadViewModel documentUploadViewModel = new DocumentUploadViewModel();
             //get document upload table
-            var docupload = _context.Trn_DocumentUpload.Where(x => x.DocId == id).FirstOrDefault();
-            var docuploaddetails = _context.Trn_DocUploadDetails.Where(x => x.KycId == docupload.KycId).ToList();
+            var docupload = _context.Trn_DocumentUpload?.Where(x => x.DocId == id)?.FirstOrDefault() ?? new Trn_DocumentUpload();
+            var docuploaddetails = _context.Trn_DocUploadDetails?.Where(x => x.KycId == docupload.KycId)?.ToList() ?? new List<Trn_DocUploadDetails>();
             documentUploadViewModel = ToViewModelDocUpload(docupload, docuploaddetails);
             return documentUploadViewModel;
         }

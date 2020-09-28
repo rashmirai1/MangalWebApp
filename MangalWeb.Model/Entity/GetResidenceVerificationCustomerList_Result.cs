@@ -10,17 +10,9 @@
 namespace MangalWeb.Model.Entity
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TGLKYC_BasicDetails
+    public partial class GetResidenceVerificationCustomerList_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TGLKYC_BasicDetails()
-        {
-            this.Trans_KYCAddresses = new HashSet<Trans_KYCAddresses>();
-            this.tbl_PreSanctionDetails = new HashSet<tbl_PreSanctionDetails>();
-        }
-    
         public int KYCID { get; set; }
         public string CustomerID { get; set; }
         public Nullable<System.DateTime> AppliedDate { get; set; }
@@ -102,10 +94,5 @@ namespace MangalWeb.Model.Entity
         public string Area { get; set; }
         public string ResidenceCode { get; set; }
         public string AddressCategory { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_PreSanctionDetails> tbl_PreSanctionDetails { get; set; }
     }
 }

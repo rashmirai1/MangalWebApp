@@ -63,7 +63,6 @@
         <AssociationConnector Association="MangalDBNewModel.FK_tblCityMaster_tblStateMaster" />
         <EntityTypeShape EntityType="MangalDBNewModel.TSchemeMaster_EffectiveROI" Width="1.5" PointX="29.875" PointY="30.875" />
         <AssociationConnector Association="MangalDBNewModel.FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails" />
-        <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesPostingDetails" Width="1.5" PointX="30.375" PointY="12.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_CKycState" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.FLedgerMaster" Width="1.5" PointX="3.75" PointY="3.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TBankCash_PaymentDetails" Width="1.5" PointX="0.75" PointY="4.75" />
@@ -74,13 +73,21 @@
         <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_GoldItemDetails_tblItemMaster" />
         <EntityTypeShape EntityType="MangalDBNewModel.FSystemGeneratedEntryMaster" Width="1.5" PointX="10.375" PointY="3.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" Width="1.5" PointX="0.75" PointY="11.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.FCompanyYearEndClosing" Width="1.5" PointX="3.375" PointY="11.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesDetails" Width="1.5" PointX="5.375" PointY="11.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_ChargesDetails_TGLSanctionDisburse_ChargesDetails" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblGroupmaster" Width="1.5" PointX="7.375" PointY="11.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tblPrimaryGroup" Width="1.5" PointX="9.375" PointY="11.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_GstMaster" Width="1.5" PointX="3" PointY="30.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_Mst_GstMaster_tblaccountmaster" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_PreSanctionDetails" Width="1.5" PointX="19.625" PointY="35.75" />
+        <AssociationConnector Association="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_ResidenceVerification" Width="1.5" PointX="21.875" PointY="35.375" />
+        <AssociationConnector Association="MangalDBNewModel.FK__tbl_Resid__PreSa__39AD8A7F" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesPostingDetails" Width="1.5" PointX="13.375" PointY="5.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tblPrimaryGroup" Width="1.5" PointX="13.375" PointY="9.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLCashInOutDetail" Width="1.5" PointX="13.375" PointY="12.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLGoldInOutDetail" Width="1.5" PointX="9.375" PointY="14.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.FCompanyYearEndClosing" Width="1.5" PointX="15.375" PointY="5.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tblStandardEndTime" Width="1.5" PointX="9.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

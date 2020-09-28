@@ -85,6 +85,7 @@
     <Compile Include="Entity\FSystemGeneratedEntryMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\GetCustomerById_Result.cs" />
     <Compile Include="Entity\GetCustomerRecordinSanction_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -103,6 +104,8 @@
     <Compile Include="Entity\GetKYCDetailsForRequestForm_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\GetPreSanctionCustomerList_Result.cs" />
+    <Compile Include="Entity\GetResidenceVerificationCustomerList_Result.cs" />
     <Compile Include="Entity\GL_SanctionDisburseDetails_RTR_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -244,6 +247,9 @@
     <Compile Include="Entity\tblPrimaryGroup.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tblStandardEndTime.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tblStateMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -268,9 +274,23 @@
     <Compile Include="Entity\tbl_KYCMobileOTP.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tbl_PreSanctionDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tbl_ResidenceVerification.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tbl_UserCategory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\TGLCashInOutDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLGoldInOutDetail.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\TGLGoldStock.cs" />
+    <Compile Include="Entity\TGLInterest_Details.cs" />
     <Compile Include="Entity\TGLKYC_BasicDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -289,6 +309,7 @@
     <Compile Include="Entity\Trans_KYCAddresses.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Tran_ValuationOneDetails.cs" />
     <Compile Include="Entity\Trn_DocumentUpload.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -360,12 +381,18 @@
     <Compile Include="Transaction\KYCAddressesVM.cs" />
     <Compile Include="Transaction\KYCBasicDetailsVM.cs" />
     <Compile Include="Transaction\KYCDocumentDetailsVM.cs" />
+    <Compile Include="Transaction\PreSanctionDetailsVM.cs" />
     <Compile Include="Transaction\RequestFormViewModel.cs" />
+    <Compile Include="Transaction\ResidenceVerificationVM.cs" />
     <Compile Include="Transaction\SanctionDisbursementVM.cs" />
+    <Compile Include="Transaction\SchemeDetailsVM.cs" />
+    <Compile Include="Utilties\ForgotPasswordViewModel.cs" />
     <Compile Include="Utilties\LoginViewModel.cs" />
     <Compile Include="Utilties\MenusViewModel.cs" />
+    <Compile Include="Utilties\StandardEndTime.cs" />
     <Compile Include="Utilties\UserAuthorizations.cs" />
     <Compile Include="Utilties\UserAuthorizationForms.cs" />
+    <Compile Include="Utilties\UserCategoryVM.cs" />
     <Compile Include="Utilties\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

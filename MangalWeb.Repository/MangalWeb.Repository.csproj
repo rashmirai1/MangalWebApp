@@ -80,6 +80,8 @@
     <Compile Include="Repository\ChargeRepository.cs" />
     <Compile Include="Repository\DocumentRepository.cs" />
     <Compile Include="Repository\DocumentUploadRepository.cs" />
+    <Compile Include="Repository\ResidenceVerificationRepository.cs" />
+    <Compile Include="Repository\PreSanctionRepository.cs" />
     <Compile Include="Repository\DocumentVerificationRepository.cs" />
     <Compile Include="Repository\FinancialYearRepository.cs" />
     <Compile Include="Repository\GSTRepository.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="Repository\SanctionRepository.cs" />
     <Compile Include="Repository\SchemeRepository.cs" />
     <Compile Include="Repository\SourceofApplicationRepository.cs" />
+    <Compile Include="Repository\StandardEndTimeRepository.cs" />
     <Compile Include="Repository\StateRepository.cs" />
     <Compile Include="Repository\UserAuthorizationRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />

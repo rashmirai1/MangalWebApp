@@ -385,6 +385,71 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="OTP" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="tbl_PreSanctionDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KycId" Type="int" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="50" />
+          <Property Name="NewTopUp" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerId" Type="nvarchar" MaxLength="50" />
+          <Property Name="AppliedDate" Type="datetime" />
+          <Property Name="ResidenceVerification" Type="nvarchar" MaxLength="50" />
+          <Property Name="ApplicationNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="RM" Type="nvarchar" MaxLength="50" />
+          <Property Name="Product" Type="nvarchar" MaxLength="50" />
+          <Property Name="PurposeofLoan" Type="nvarchar" MaxLength="50" />
+          <Property Name="Scheme" Type="int" />
+          <Property Name="ReqLoanAmount" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tenure" Type="nvarchar" MaxLength="50" />
+          <Property Name="ROI" Type="nvarchar" MaxLength="50" />
+          <Property Name="LTV" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_ResidenceVerification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PreSanctionId" Type="int" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="50" />
+          <Property Name="ApplicationNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateofVisit" Type="datetime" />
+          <Property Name="TimeofVisit" Type="time" Precision="7" />
+          <Property Name="CustomerId" Type="nvarchar" MaxLength="50" />
+          <Property Name="AppliedDate" Type="datetime" />
+          <Property Name="PersonVisitedName" Type="nvarchar" MaxLength="50" />
+          <Property Name="RelationWithCustomer" Type="nvarchar" MaxLength="50" />
+          <Property Name="FamilyMemberDetails" Type="nvarchar" MaxLength="50" />
+          <Property Name="ResidingAtThisAddress_Years" Type="int" />
+          <Property Name="ResidingAtThisAddress_Months" Type="int" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Designation" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmployeeCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="50" />
+          <Property Name="BldgHouseName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Road" Type="nvarchar" MaxLength="50" />
+          <Property Name="BldgPlotNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoomBlockNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="StateID" Type="int" />
+          <Property Name="CityID" Type="int" />
+          <Property Name="AreaID" Type="int" />
+          <Property Name="ZoneID" Type="int" />
+          <Property Name="Landmark" Type="nvarchar" MaxLength="50" />
+          <Property Name="Distance" Type="nvarchar" MaxLength="50" />
+          <Property Name="PinCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Area" Type="nvarchar" MaxLength="50" />
+          <Property Name="ResidenceCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressCategory" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsApproved" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
         <EntityType Name="tbl_UserCategory">
           <Key>
             <PropertyRef Name="refid" />
@@ -537,6 +602,13 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="PgID" Type="int" Nullable="false" />
           <Property Name="PgName" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblStandardEndTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatdardEndTime" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblStateMaster">
           <Key>
             <PropertyRef Name="StateID" />
@@ -555,6 +627,71 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="ZoneID" Type="int" Nullable="false" />
           <Property Name="Zone" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="AreaID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'Time' in the table 'MangalDBNew.dbo.TGLCashInOutDetails' was excluded.
+warning 6002: The table/view 'MangalDBNew.dbo.TGLCashInOutDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TGLCashInOutDetails">
+          <Key>
+            <PropertyRef Name="InOutID" />
+          </Key>
+          <Property Name="InOutID" Type="int" Nullable="false" />
+          <Property Name="RefType" Type="nvarchar" MaxLength="20" />
+          <Property Name="RefNo" Type="int" />
+          <Property Name="ReferenceType" Type="nvarchar" MaxLength="20" />
+          <Property Name="FName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Date_time" Type="smalldatetime" />
+          <Property Name="InOutMode" Type="varchar" MaxLength="20" />
+          <Property Name="InOutTo" Type="varchar" MaxLength="20" />
+          <Property Name="InOutToID" Type="int" />
+          <Property Name="InOutFrom" Type="varchar" MaxLength="20" />
+          <Property Name="InOutFromID" Type="int" />
+          <Property Name="InOutBy" Type="int" />
+          <Property Name="FYID" Type="int" />
+          <Property Name="CmpID" Type="int" />
+          <Property Name="BranchId" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="smalldatetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="smalldatetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="smalldatetime" />
+          <Property Name="isActive" Type="nvarchar" MaxLength="50" />
+          <Property Name="TotalCash" Type="decimal" Precision="11" Scale="2" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'Time' in the table 'MangalDBNew.dbo.TGLGoldInOutDetails' was excluded.
+warning 6002: The table/view 'MangalDBNew.dbo.TGLGoldInOutDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TGLGoldInOutDetails">
+          <Key>
+            <PropertyRef Name="GLInOutID" />
+          </Key>
+          <Property Name="GLInOutID" Type="int" Nullable="false" />
+          <Property Name="RefType" Type="nvarchar" MaxLength="20" />
+          <Property Name="RefNo" Type="int" />
+          <Property Name="ReferenceType" Type="nvarchar" MaxLength="20" />
+          <Property Name="Date_time" Type="smalldatetime" />
+          <Property Name="SDID" Type="int" />
+          <Property Name="KYCID" Type="int" />
+          <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
+          <Property Name="PouchNo" Type="int" />
+          <Property Name="GLInOutMode" Type="nvarchar" MaxLength="40" />
+          <Property Name="InOutLoc" Type="nvarchar" MaxLength="40" />
+          <Property Name="LocName" Type="int" />
+          <Property Name="LocResiName" Type="nvarchar" MaxLength="200" />
+          <Property Name="LocDetails" Type="nvarchar" MaxLength="200" />
+          <Property Name="NarrationID" Type="int" />
+          <Property Name="InOutBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="smalldatetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="smalldatetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="smalldatetime" />
+          <Property Name="FYID" Type="int" />
+          <Property Name="BranchID" Type="int" />
+          <Property Name="CMPID" Type="int" />
+          <Property Name="isActive" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="TGLKYC_BasicDetails">
           <Key>
@@ -900,6 +1037,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="updateddate" Type="datetime" />
           <Property Name="IsVerified" Type="int" />
         </EntityType>
+        <Association Name="FK__tbl_Resid__PreSa__39AD8A7F">
+          <End Role="tbl_PreSanctionDetails" Type="Self.tbl_PreSanctionDetails" Multiplicity="1" />
+          <End Role="tbl_ResidenceVerification" Type="Self.tbl_ResidenceVerification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_PreSanctionDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_ResidenceVerification">
+              <PropertyRef Name="PreSanctionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__tbl_UserC__Organ__51BA1E3A">
           <End Role="User_Category_Hierarchy" Type="Self.User_Category_Hierarchy" Multiplicity="0..1" />
           <End Role="tbl_UserCategory" Type="Self.tbl_UserCategory" Multiplicity="*" />
@@ -1005,6 +1154,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
             </Principal>
             <Dependent Role="tbl_GLChargeMaster_Details">
               <PropertyRef Name="CID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+          <End Role="TGLKYC_BasicDetails" Type="Self.TGLKYC_BasicDetails" Multiplicity="0..1" />
+          <End Role="tbl_PreSanctionDetails" Type="Self.tbl_PreSanctionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TGLKYC_BasicDetails">
+              <PropertyRef Name="KYCID" />
+            </Principal>
+            <Dependent Role="tbl_PreSanctionDetails">
+              <PropertyRef Name="KycId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1399,6 +1560,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <EntitySet Name="tbl_GLChargeMaster_BasicInfo" EntityType="Self.tbl_GLChargeMaster_BasicInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_GLChargeMaster_Details" EntityType="Self.tbl_GLChargeMaster_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_KYCMobileOTP" EntityType="Self.tbl_KYCMobileOTP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_PreSanctionDetails" EntityType="Self.tbl_PreSanctionDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ResidenceVerification" EntityType="Self.tbl_ResidenceVerification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserCategory" EntityType="Self.tbl_UserCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblaccountmaster" EntityType="Self.tblaccountmaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBankMaster" EntityType="Self.tblBankMaster" Schema="dbo" store:Type="Tables" />
@@ -1410,6 +1573,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <EntitySet Name="tblINV_ItemMaster" EntityType="Self.tblINV_ItemMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblItemMaster" EntityType="Self.tblItemMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPrimaryGroup" EntityType="Self.tblPrimaryGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStandardEndTime" EntityType="Self.tblStandardEndTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStateMaster" EntityType="Self.tblStateMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblZonemaster" EntityType="Self.tblZonemaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TGLKYC_BasicDetails" EntityType="Self.TGLKYC_BasicDetails" Schema="dbo" store:Type="Tables" />
@@ -1441,6 +1605,67 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
     [tbl_GLDocumentMaster].[DocumentName] AS [DocumentName]
     FROM [dbo].[tbl_GLDocumentMaster] AS [tbl_GLDocumentMaster]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="TGLCashInOutDetails" EntityType="Self.TGLCashInOutDetails" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TGLCashInOutDetails].[InOutID] AS [InOutID], 
+    [TGLCashInOutDetails].[RefType] AS [RefType], 
+    [TGLCashInOutDetails].[RefNo] AS [RefNo], 
+    [TGLCashInOutDetails].[ReferenceType] AS [ReferenceType], 
+    [TGLCashInOutDetails].[FName] AS [FName], 
+    [TGLCashInOutDetails].[Date_time] AS [Date_time], 
+    [TGLCashInOutDetails].[InOutMode] AS [InOutMode], 
+    [TGLCashInOutDetails].[InOutTo] AS [InOutTo], 
+    [TGLCashInOutDetails].[InOutToID] AS [InOutToID], 
+    [TGLCashInOutDetails].[InOutFrom] AS [InOutFrom], 
+    [TGLCashInOutDetails].[InOutFromID] AS [InOutFromID], 
+    [TGLCashInOutDetails].[InOutBy] AS [InOutBy], 
+    [TGLCashInOutDetails].[FYID] AS [FYID], 
+    [TGLCashInOutDetails].[CmpID] AS [CmpID], 
+    [TGLCashInOutDetails].[BranchId] AS [BranchId], 
+    [TGLCashInOutDetails].[CreatedBy] AS [CreatedBy], 
+    [TGLCashInOutDetails].[CreatedDate] AS [CreatedDate], 
+    [TGLCashInOutDetails].[UpdatedBy] AS [UpdatedBy], 
+    [TGLCashInOutDetails].[UpdatedDate] AS [UpdatedDate], 
+    [TGLCashInOutDetails].[DeletedBy] AS [DeletedBy], 
+    [TGLCashInOutDetails].[DeletedDate] AS [DeletedDate], 
+    [TGLCashInOutDetails].[isActive] AS [isActive], 
+    [TGLCashInOutDetails].[TotalCash] AS [TotalCash]
+    FROM [dbo].[TGLCashInOutDetails] AS [TGLCashInOutDetails]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TGLGoldInOutDetails" EntityType="Self.TGLGoldInOutDetails" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TGLGoldInOutDetails].[GLInOutID] AS [GLInOutID], 
+    [TGLGoldInOutDetails].[RefType] AS [RefType], 
+    [TGLGoldInOutDetails].[RefNo] AS [RefNo], 
+    [TGLGoldInOutDetails].[ReferenceType] AS [ReferenceType], 
+    [TGLGoldInOutDetails].[Date_time] AS [Date_time], 
+    [TGLGoldInOutDetails].[SDID] AS [SDID], 
+    [TGLGoldInOutDetails].[KYCID] AS [KYCID], 
+    [TGLGoldInOutDetails].[GoldLoanNo] AS [GoldLoanNo], 
+    [TGLGoldInOutDetails].[PouchNo] AS [PouchNo], 
+    [TGLGoldInOutDetails].[GLInOutMode] AS [GLInOutMode], 
+    [TGLGoldInOutDetails].[InOutLoc] AS [InOutLoc], 
+    [TGLGoldInOutDetails].[LocName] AS [LocName], 
+    [TGLGoldInOutDetails].[LocResiName] AS [LocResiName], 
+    [TGLGoldInOutDetails].[LocDetails] AS [LocDetails], 
+    [TGLGoldInOutDetails].[NarrationID] AS [NarrationID], 
+    [TGLGoldInOutDetails].[InOutBy] AS [InOutBy], 
+    [TGLGoldInOutDetails].[CreatedBy] AS [CreatedBy], 
+    [TGLGoldInOutDetails].[CreatedDate] AS [CreatedDate], 
+    [TGLGoldInOutDetails].[UpdatedBy] AS [UpdatedBy], 
+    [TGLGoldInOutDetails].[UpdatedDate] AS [UpdatedDate], 
+    [TGLGoldInOutDetails].[DeletedBy] AS [DeletedBy], 
+    [TGLGoldInOutDetails].[DeletedDate] AS [DeletedDate], 
+    [TGLGoldInOutDetails].[FYID] AS [FYID], 
+    [TGLGoldInOutDetails].[BranchID] AS [BranchID], 
+    [TGLGoldInOutDetails].[CMPID] AS [CMPID], 
+    [TGLGoldInOutDetails].[isActive] AS [isActive]
+    FROM [dbo].[TGLGoldInOutDetails] AS [TGLGoldInOutDetails]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__tbl_Resid__PreSa__39AD8A7F" Association="Self.FK__tbl_Resid__PreSa__39AD8A7F">
+            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
+            <End Role="tbl_ResidenceVerification" EntitySet="tbl_ResidenceVerification" />
+          </AssociationSet>
           <AssociationSet Name="FK__tbl_UserC__Organ__51BA1E3A" Association="Self.FK__tbl_UserC__Organ__51BA1E3A">
             <End Role="User_Category_Hierarchy" EntitySet="User_Category_Hierarchy" />
             <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
@@ -1476,6 +1701,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <AssociationSet Name="FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo" Association="Self.FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo">
             <End Role="tbl_GLChargeMaster_BasicInfo" EntitySet="tbl_GLChargeMaster_BasicInfo" />
             <End Role="tbl_GLChargeMaster_Details" EntitySet="tbl_GLChargeMaster_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" Association="Self.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_tblCityMaster_tblStateMaster" Association="Self.FK_tblCityMaster_tblStateMaster">
             <End Role="tblStateMaster" EntitySet="tblStateMaster" />
@@ -1757,7 +1986,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
             <Parameter Name="FYID" Mode="In" Type="Int32" />
             <Parameter Name="BranchId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="TGLSanctionDisburse_ChargesPostingDetails" EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesPostingDetails" />
           <EntitySet Name="tbl_CKycState" EntityType="MangalDBNewModel.tbl_CKycState" />
           <EntitySet Name="FLedgerMasters" EntityType="MangalDBNewModel.FLedgerMaster" />
           <EntitySet Name="TBankCash_PaymentDetails" EntityType="MangalDBNewModel.TBankCash_PaymentDetails" />
@@ -1835,7 +2063,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
             <Parameter Name="BranchId" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="TGLSanctionDisburse_BasicDetails" EntityType="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" />
-          <EntitySet Name="FCompanyYearEndClosings" EntityType="MangalDBNewModel.FCompanyYearEndClosing" />
           <FunctionImport Name="SP_InsertRecordInSanctionChargeDetails">
             <Parameter Name="CHID" Mode="In" Type="Int32" />
             <Parameter Name="SDID" Mode="In" Type="Int32" />
@@ -1855,7 +2082,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
             <Parameter Name="SanctionAmt" Mode="In" Type="Decimal" />
           </FunctionImport>
           <EntitySet Name="tblGroupmasters" EntityType="MangalDBNewModel.tblGroupmaster" />
-          <EntitySet Name="tblPrimaryGroups" EntityType="MangalDBNewModel.tblPrimaryGroup" />
           <FunctionImport Name="GL_SanctionDisburse_RTR" ReturnType="Collection(MangalDBNewModel.GL_SanctionDisburse_RTR_Result)">
             <Parameter Name="FYID" Mode="In" Type="Int32" />
             <Parameter Name="BranchId" Mode="In" Type="Int32" />
@@ -1915,6 +2141,22 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
             <End Role="tblaccountmaster" EntitySet="tblaccountmasters" />
             <End Role="Mst_GstMaster" EntitySet="Mst_GstMaster" />
           </AssociationSet>
+          <EntitySet Name="tbl_PreSanctionDetails" EntityType="MangalDBNewModel.tbl_PreSanctionDetails" />
+          <AssociationSet Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" Association="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
+          </AssociationSet>
+          <EntitySet Name="tbl_ResidenceVerification" EntityType="MangalDBNewModel.tbl_ResidenceVerification" />
+          <AssociationSet Name="FK__tbl_Resid__PreSa__39AD8A7F" Association="MangalDBNewModel.FK__tbl_Resid__PreSa__39AD8A7F">
+            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
+            <End Role="tbl_ResidenceVerification" EntitySet="tbl_ResidenceVerification" />
+          </AssociationSet>
+          <EntitySet Name="TGLSanctionDisburse_ChargesPostingDetails" EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesPostingDetails" />
+          <EntitySet Name="tblPrimaryGroups" EntityType="MangalDBNewModel.tblPrimaryGroup" />
+          <EntitySet Name="TGLCashInOutDetails" EntityType="MangalDBNewModel.TGLCashInOutDetail" />
+          <EntitySet Name="TGLGoldInOutDetails" EntityType="MangalDBNewModel.TGLGoldInOutDetail" />
+          <EntitySet Name="FCompanyYearEndClosings" EntityType="MangalDBNewModel.FCompanyYearEndClosing" />
+          <EntitySet Name="tblStandardEndTimes" EntityType="MangalDBNewModel.tblStandardEndTime" />
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -2768,6 +3010,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="ResidenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AddressCategory" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Trans_KYCAddresses" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="Trans_KYCAddresses" />
+          <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="tbl_PreSanctionDetails" />
         </EntityType>
         <Association Name="fk_TGLKYC_BasicDetails">
           <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="1" />
@@ -2906,19 +3149,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Type="String" Name="PAN_No" Nullable="true" MaxLength="12" />
           <Property Type="String" Name="Mobile_No" Nullable="true" MaxLength="15" />
         </ComplexType>
-        <EntityType Name="TGLSanctionDisburse_ChargesPostingDetails">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="SDID" Type="Int32" />
-          <Property Name="GoldLoanNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="AccID" Type="Int32" />
-          <Property Name="Debit" Type="Double" />
-          <Property Name="Credit" Type="Double" />
-          <Property Name="LedgerID" Type="Int32" />
-          <Property Name="FYID" Type="Int32" />
-        </EntityType>
         <EntityType Name="tbl_CKycState">
           <Key>
             <PropertyRef Name="Id" />
@@ -3230,21 +3460,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="LockerNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="FCompanyYearEndClosing">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="FinancialyearID" Type="Int32" Nullable="false" />
-          <Property Name="CompID" Type="Int32" Nullable="false" />
-          <Property Name="AccountID" Type="Int32" Nullable="false" />
-          <Property Name="OpeningBalanceDebit" Type="Double" />
-          <Property Name="OpeningBalanceCredit" Type="Double" />
-          <Property Name="CurrentDebit" Type="Double" />
-          <Property Name="CurrentCredit" Type="Double" />
-          <Property Name="ClosingBalanceDebit" Type="Double" />
-          <Property Name="ClosingBalanceCredit" Type="Double" />
-        </EntityType>
         <EntityType Name="TGLSanctionDisburse_ChargesDetails">
           <Key>
             <PropertyRef Name="CHID" />
@@ -3291,13 +3506,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="PrintSchedule" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ScheduleNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Remark" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tblPrimaryGroup">
-          <Key>
-            <PropertyRef Name="PgID" />
-          </Key>
-          <Property Name="PgID" Type="Int32" Nullable="false" />
-          <Property Name="PgName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <ComplexType Name="GL_SanctionDisburse_RTR_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -3423,6 +3631,199 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tbl_PreSanctionDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KycId" Type="Int32" />
+          <Property Name="TransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NewTopUp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppliedDate" Type="DateTime" Precision="3" />
+          <Property Name="ResidenceVerification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Product" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PurposeofLoan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Scheme" Type="Int32" />
+          <Property Name="ReqLoanAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tenure" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ROI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LTV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="tbl_PreSanctionDetails" ToRole="TGLKYC_BasicDetails" />
+          <NavigationProperty Name="tbl_ResidenceVerification" Relationship="MangalDBNewModel.FK__tbl_Resid__PreSa__39AD8A7F" FromRole="tbl_PreSanctionDetails" ToRole="tbl_ResidenceVerification" />
+        </EntityType>
+        <Association Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+          <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.tbl_PreSanctionDetails" Role="tbl_PreSanctionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TGLKYC_BasicDetails">
+              <PropertyRef Name="KYCID" />
+            </Principal>
+            <Dependent Role="tbl_PreSanctionDetails">
+              <PropertyRef Name="KycId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_ResidenceVerification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PreSanctionId" Type="Int32" Nullable="false" />
+          <Property Name="TransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateofVisit" Type="DateTime" Precision="3" />
+          <Property Name="TimeofVisit" Type="Time" Precision="7" />
+          <Property Name="CustomerId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppliedDate" Type="DateTime" Precision="3" />
+          <Property Name="PersonVisitedName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RelationWithCustomer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FamilyMemberDetails" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResidingAtThisAddress_Years" Type="Int32" />
+          <Property Name="ResidingAtThisAddress_Months" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BldgHouseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Road" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BldgPlotNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoomBlockNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateID" Type="Int32" />
+          <Property Name="CityID" Type="Int32" />
+          <Property Name="AreaID" Type="Int32" />
+          <Property Name="ZoneID" Type="Int32" />
+          <Property Name="Landmark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Distance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PinCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResidenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsApproved" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK__tbl_Resid__PreSa__39AD8A7F" FromRole="tbl_ResidenceVerification" ToRole="tbl_PreSanctionDetails" />
+        </EntityType>
+        <Association Name="FK__tbl_Resid__PreSa__39AD8A7F">
+          <End Type="MangalDBNewModel.tbl_PreSanctionDetails" Role="tbl_PreSanctionDetails" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tbl_ResidenceVerification" Role="tbl_ResidenceVerification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_PreSanctionDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_ResidenceVerification">
+              <PropertyRef Name="PreSanctionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TGLSanctionDisburse_ChargesPostingDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="SDID" Type="Int32" />
+          <Property Name="GoldLoanNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccID" Type="Int32" />
+          <Property Name="Debit" Type="Double" />
+          <Property Name="Credit" Type="Double" />
+          <Property Name="LedgerID" Type="Int32" />
+          <Property Name="FYID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tblPrimaryGroup">
+          <Key>
+            <PropertyRef Name="PgID" />
+          </Key>
+          <Property Name="PgID" Type="Int32" Nullable="false" />
+          <Property Name="PgName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TGLCashInOutDetail">
+          <Key>
+            <PropertyRef Name="InOutID" />
+          </Key>
+          <Property Name="InOutID" Type="Int32" Nullable="false" />
+          <Property Name="RefType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RefNo" Type="Int32" />
+          <Property Name="ReferenceType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Date_time" Type="DateTime" Precision="0" />
+          <Property Name="InOutMode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="InOutTo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="InOutToID" Type="Int32" />
+          <Property Name="InOutFrom" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="InOutFromID" Type="Int32" />
+          <Property Name="InOutBy" Type="Int32" />
+          <Property Name="FYID" Type="Int32" />
+          <Property Name="CmpID" Type="Int32" />
+          <Property Name="BranchId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
+          <Property Name="isActive" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalCash" Type="Decimal" Precision="11" Scale="2" />
+        </EntityType>
+        <EntityType Name="TGLGoldInOutDetail">
+          <Key>
+            <PropertyRef Name="GLInOutID" />
+          </Key>
+          <Property Name="GLInOutID" Type="Int32" Nullable="false" />
+          <Property Name="RefType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RefNo" Type="Int32" />
+          <Property Name="ReferenceType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Date_time" Type="DateTime" Precision="0" />
+          <Property Name="SDID" Type="Int32" />
+          <Property Name="KYCID" Type="Int32" />
+          <Property Name="GoldLoanNo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="PouchNo" Type="Int32" />
+          <Property Name="GLInOutMode" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="InOutLoc" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="LocName" Type="Int32" />
+          <Property Name="LocResiName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LocDetails" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="NarrationID" Type="Int32" />
+          <Property Name="InOutBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
+          <Property Name="FYID" Type="Int32" />
+          <Property Name="BranchID" Type="Int32" />
+          <Property Name="CMPID" Type="Int32" />
+          <Property Name="isActive" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="FCompanyYearEndClosing">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="FinancialyearID" Type="Int32" Nullable="false" />
+          <Property Name="CompID" Type="Int32" Nullable="false" />
+          <Property Name="AccountID" Type="Int32" Nullable="false" />
+          <Property Name="OpeningBalanceDebit" Type="Double" />
+          <Property Name="OpeningBalanceCredit" Type="Double" />
+          <Property Name="CurrentDebit" Type="Double" />
+          <Property Name="CurrentCredit" Type="Double" />
+          <Property Name="ClosingBalanceDebit" Type="Double" />
+          <Property Name="ClosingBalanceCredit" Type="Double" />
+        </EntityType>
+        <EntityType Name="tblStandardEndTime">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatdardEndTime" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4287,20 +4688,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="TGLSanctionDisburse_ChargesPostingDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.TGLSanctionDisburse_ChargesPostingDetails">
-              <MappingFragment StoreEntitySet="TGLSanctionDisburse_ChargesPostingDetails">
-                <ScalarProperty Name="FYID" ColumnName="FYID" />
-                <ScalarProperty Name="LedgerID" ColumnName="LedgerID" />
-                <ScalarProperty Name="Credit" ColumnName="Credit" />
-                <ScalarProperty Name="Debit" ColumnName="Debit" />
-                <ScalarProperty Name="AccID" ColumnName="AccID" />
-                <ScalarProperty Name="GoldLoanNo" ColumnName="GoldLoanNo" />
-                <ScalarProperty Name="SDID" ColumnName="SDID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_CKycState">
             <EntityTypeMapping TypeName="MangalDBNewModel.tbl_CKycState">
               <MappingFragment StoreEntitySet="tbl_CKycState">
@@ -4541,22 +4928,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FCompanyYearEndClosings">
-            <EntityTypeMapping TypeName="MangalDBNewModel.FCompanyYearEndClosing">
-              <MappingFragment StoreEntitySet="FCompanyYearEndClosing">
-                <ScalarProperty Name="ClosingBalanceCredit" ColumnName="ClosingBalanceCredit" />
-                <ScalarProperty Name="ClosingBalanceDebit" ColumnName="ClosingBalanceDebit" />
-                <ScalarProperty Name="CurrentCredit" ColumnName="CurrentCredit" />
-                <ScalarProperty Name="CurrentDebit" ColumnName="CurrentDebit" />
-                <ScalarProperty Name="OpeningBalanceCredit" ColumnName="OpeningBalanceCredit" />
-                <ScalarProperty Name="OpeningBalanceDebit" ColumnName="OpeningBalanceDebit" />
-                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
-                <ScalarProperty Name="CompID" ColumnName="CompID" />
-                <ScalarProperty Name="FinancialyearID" ColumnName="FinancialyearID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_InsertRecordInSanctionChargeDetails" FunctionName="MangalDBNewModel.Store.SP_InsertRecordInSanctionChargeDetails" />
           <EntitySetMapping Name="TGLSanctionDisburse_ChargesDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.TGLSanctionDisburse_ChargesDetails">
@@ -4594,14 +4965,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
                 <ScalarProperty Name="GPType" ColumnName="GPType" />
                 <ScalarProperty Name="GPName" ColumnName="GPName" />
                 <ScalarProperty Name="GPID" ColumnName="GPID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblPrimaryGroups">
-            <EntityTypeMapping TypeName="MangalDBNewModel.tblPrimaryGroup">
-              <MappingFragment StoreEntitySet="tblPrimaryGroup">
-                <ScalarProperty Name="PgName" ColumnName="PgName" />
-                <ScalarProperty Name="PgID" ColumnName="PgID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4718,6 +5081,180 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
                 <ScalarProperty Name="Gst_CGST" ColumnName="Gst_CGST" />
                 <ScalarProperty Name="Gst_EffectiveFrom" ColumnName="Gst_EffectiveFrom" />
                 <ScalarProperty Name="Gst_RefId" ColumnName="Gst_RefId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_PreSanctionDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_PreSanctionDetails">
+              <MappingFragment StoreEntitySet="tbl_PreSanctionDetails">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="LTV" ColumnName="LTV" />
+                <ScalarProperty Name="ROI" ColumnName="ROI" />
+                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
+                <ScalarProperty Name="ReqLoanAmount" ColumnName="ReqLoanAmount" />
+                <ScalarProperty Name="Scheme" ColumnName="Scheme" />
+                <ScalarProperty Name="PurposeofLoan" ColumnName="PurposeofLoan" />
+                <ScalarProperty Name="Product" ColumnName="Product" />
+                <ScalarProperty Name="RM" ColumnName="RM" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="ResidenceVerification" ColumnName="ResidenceVerification" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="NewTopUp" ColumnName="NewTopUp" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ResidenceVerification">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_ResidenceVerification">
+              <MappingFragment StoreEntitySet="tbl_ResidenceVerification">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
+                <ScalarProperty Name="AddressCategory" ColumnName="AddressCategory" />
+                <ScalarProperty Name="ResidenceCode" ColumnName="ResidenceCode" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="ZoneID" ColumnName="ZoneID" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="RoomBlockNo" ColumnName="RoomBlockNo" />
+                <ScalarProperty Name="BldgPlotNo" ColumnName="BldgPlotNo" />
+                <ScalarProperty Name="Road" ColumnName="Road" />
+                <ScalarProperty Name="BldgHouseName" ColumnName="BldgHouseName" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ResidingAtThisAddress_Months" ColumnName="ResidingAtThisAddress_Months" />
+                <ScalarProperty Name="ResidingAtThisAddress_Years" ColumnName="ResidingAtThisAddress_Years" />
+                <ScalarProperty Name="FamilyMemberDetails" ColumnName="FamilyMemberDetails" />
+                <ScalarProperty Name="RelationWithCustomer" ColumnName="RelationWithCustomer" />
+                <ScalarProperty Name="PersonVisitedName" ColumnName="PersonVisitedName" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="TimeofVisit" ColumnName="TimeofVisit" />
+                <ScalarProperty Name="DateofVisit" ColumnName="DateofVisit" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="PreSanctionId" ColumnName="PreSanctionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TGLSanctionDisburse_ChargesPostingDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLSanctionDisburse_ChargesPostingDetails">
+              <MappingFragment StoreEntitySet="TGLSanctionDisburse_ChargesPostingDetails">
+                <ScalarProperty Name="FYID" ColumnName="FYID" />
+                <ScalarProperty Name="LedgerID" ColumnName="LedgerID" />
+                <ScalarProperty Name="Credit" ColumnName="Credit" />
+                <ScalarProperty Name="Debit" ColumnName="Debit" />
+                <ScalarProperty Name="AccID" ColumnName="AccID" />
+                <ScalarProperty Name="GoldLoanNo" ColumnName="GoldLoanNo" />
+                <ScalarProperty Name="SDID" ColumnName="SDID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPrimaryGroups">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblPrimaryGroup">
+              <MappingFragment StoreEntitySet="tblPrimaryGroup">
+                <ScalarProperty Name="PgName" ColumnName="PgName" />
+                <ScalarProperty Name="PgID" ColumnName="PgID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TGLCashInOutDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLCashInOutDetail">
+              <MappingFragment StoreEntitySet="TGLCashInOutDetails">
+                <ScalarProperty Name="TotalCash" ColumnName="TotalCash" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="CmpID" ColumnName="CmpID" />
+                <ScalarProperty Name="FYID" ColumnName="FYID" />
+                <ScalarProperty Name="InOutBy" ColumnName="InOutBy" />
+                <ScalarProperty Name="InOutFromID" ColumnName="InOutFromID" />
+                <ScalarProperty Name="InOutFrom" ColumnName="InOutFrom" />
+                <ScalarProperty Name="InOutToID" ColumnName="InOutToID" />
+                <ScalarProperty Name="InOutTo" ColumnName="InOutTo" />
+                <ScalarProperty Name="InOutMode" ColumnName="InOutMode" />
+                <ScalarProperty Name="Date_time" ColumnName="Date_time" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="ReferenceType" ColumnName="ReferenceType" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="RefType" ColumnName="RefType" />
+                <ScalarProperty Name="InOutID" ColumnName="InOutID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TGLGoldInOutDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLGoldInOutDetail">
+              <MappingFragment StoreEntitySet="TGLGoldInOutDetails">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="CMPID" ColumnName="CMPID" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="FYID" ColumnName="FYID" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="InOutBy" ColumnName="InOutBy" />
+                <ScalarProperty Name="NarrationID" ColumnName="NarrationID" />
+                <ScalarProperty Name="LocDetails" ColumnName="LocDetails" />
+                <ScalarProperty Name="LocResiName" ColumnName="LocResiName" />
+                <ScalarProperty Name="LocName" ColumnName="LocName" />
+                <ScalarProperty Name="InOutLoc" ColumnName="InOutLoc" />
+                <ScalarProperty Name="GLInOutMode" ColumnName="GLInOutMode" />
+                <ScalarProperty Name="PouchNo" ColumnName="PouchNo" />
+                <ScalarProperty Name="GoldLoanNo" ColumnName="GoldLoanNo" />
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+                <ScalarProperty Name="SDID" ColumnName="SDID" />
+                <ScalarProperty Name="Date_time" ColumnName="Date_time" />
+                <ScalarProperty Name="ReferenceType" ColumnName="ReferenceType" />
+                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+                <ScalarProperty Name="RefType" ColumnName="RefType" />
+                <ScalarProperty Name="GLInOutID" ColumnName="GLInOutID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FCompanyYearEndClosings">
+            <EntityTypeMapping TypeName="MangalDBNewModel.FCompanyYearEndClosing">
+              <MappingFragment StoreEntitySet="FCompanyYearEndClosing">
+                <ScalarProperty Name="ClosingBalanceCredit" ColumnName="ClosingBalanceCredit" />
+                <ScalarProperty Name="ClosingBalanceDebit" ColumnName="ClosingBalanceDebit" />
+                <ScalarProperty Name="CurrentCredit" ColumnName="CurrentCredit" />
+                <ScalarProperty Name="CurrentDebit" ColumnName="CurrentDebit" />
+                <ScalarProperty Name="OpeningBalanceCredit" ColumnName="OpeningBalanceCredit" />
+                <ScalarProperty Name="OpeningBalanceDebit" ColumnName="OpeningBalanceDebit" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="CompID" ColumnName="CompID" />
+                <ScalarProperty Name="FinancialyearID" ColumnName="FinancialyearID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStandardEndTimes">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblStandardEndTime">
+              <MappingFragment StoreEntitySet="tblStandardEndTime">
+                <ScalarProperty Name="StatdardEndTime" ColumnName="StatdardEndTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

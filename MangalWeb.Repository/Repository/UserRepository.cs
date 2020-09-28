@@ -3,7 +3,11 @@ using MangalWeb.Model.Security;
 using MangalWeb.Model.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -91,6 +95,46 @@ namespace MangalWeb.Repository.Repository
             user.UserName = tblUser.UserName;
             user.Password = PasswordEncryptionDecryption.Decrypt(tblUser.Password);
             return user;
+        }
+
+        public void SetUserFlag(string emailid,int flag)
+        {
+            var user = _context.UserDetails.SingleOrDefault(x => x.EmailId == emailid);
+            user.IsVerified = flag;
+            _context.Entry(user).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void UpdatePassword(int userid, string password)
+        {
+            var user = _context.UserDetails.SingleOrDefault(x => x.UserID == userid);
+            user.Password = password;
+            _context.Entry(user).State = EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void AppSettings(out string UserId, out string Password, out string SMTPPort, out string Host)
+        {
+            UserId = ConfigurationManager.AppSettings.Get("UserId");
+            Password = ConfigurationManager.AppSettings.Get("Password");
+            SMTPPort = ConfigurationManager.AppSettings.Get("SMTPPort");
+            Host = ConfigurationManager.AppSettings.Get("Host");
+        }
+
+        public void SendEmail(string From, string Subject, string Body, string To, string UserID, string Password, string SMTPPort, string Host)
+        {
+            MailMessage mail = new MailMessage();
+            mail.To.Add(To);
+            mail.From = new MailAddress(From);
+            mail.Subject = Subject;
+            mail.Body = Body;
+            mail.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = Host;
+            smtp.Port = Convert.ToInt16(SMTPPort);
+            smtp.Credentials = new NetworkCredential(UserID, Password);
+            smtp.EnableSsl = false;
+            smtp.Send(mail);
         }
     }
 }

@@ -9,6 +9,10 @@ namespace MangalWeb.Model.Utilities
 {
     public class UserViewModel
     {
+        public UserViewModel()
+        {
+            tbl_UserCategory = new UserCategoryVM();
+        }
         public int ID { get; set; }
         public int EditId { get; set; }
         public int CreatedBy { get; set; }
@@ -48,5 +52,6 @@ namespace MangalWeb.Model.Utilities
         public string Password { get; set; }
 
         public string operation { get; set; }
+        public UserCategoryVM tbl_UserCategory { get; set; }
     }
 }

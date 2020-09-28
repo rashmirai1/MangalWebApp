@@ -412,7 +412,6 @@
         }
 
         $("#diveditfilldata").on("click", "tr", function () {
-            debugger;
             var tr = $(this).closest('tr');
             var CustomerId =tr.find('td:eq(0)').html();
             var KycId =tr.find("td").eq(0).attr('id');
@@ -431,7 +430,6 @@
         });
 
         function SaveDocument() {
-            debugger;
             var DocDate = $("#DocDate").val();
             if (DocDate == "") {
                 $("#CustomErr").text("Please Enter Date");

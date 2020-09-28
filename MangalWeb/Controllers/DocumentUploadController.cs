@@ -202,7 +202,15 @@ namespace MangalWeb.Controllers
         {
             try
             {
-                string operation = Session["Operation"].ToString();
+                string operation = String.Empty;
+                if (Session["Operation"] != null)
+                {
+                    operation = Session["Operation"].ToString();
+                }
+                else
+                {
+                    operation = "Edit";
+                }
                 //get document upload table
                 var documentUploadViewModel = _documentUploadService.GetUploadDocumentById(ID);
                 documentUploadViewModel.operation = operation;
