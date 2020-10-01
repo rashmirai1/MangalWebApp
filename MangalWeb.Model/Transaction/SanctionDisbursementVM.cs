@@ -59,6 +59,14 @@ namespace MangalWeb.Model.Transaction
         public decimal? TotalNetWeight { get; set; }
         public decimal? TotalRatePerGram { get; set; }
         public decimal? TotalValue { get; set; }
+        public decimal? DiscountAmount { get; set; }
+
+        public double CGSTAmount { get; set; }
+        public double? SGSTAmount { get; set; }
+        public int? CGSTAccountId { get; set; }
+        public int? SGSTAccountId { get; set; }
+        public string CGSTAccountName { get; set; }
+        public string SGSTAccountName { get; set; }
         //Outstanding Details
         public decimal Principal { get; set; }
         public decimal Interest { get; set; }

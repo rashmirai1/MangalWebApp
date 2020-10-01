@@ -142,6 +142,7 @@ namespace MangalWeb.Controllers
             model.LoanAccountNo = _sanctionService.GetLoanNo();
             BindList();
             Session["Proofofownership"] = null;
+            Session["ChargeDetails"] = null;
             return View(model);
         }
         #endregion
@@ -197,6 +198,7 @@ namespace MangalWeb.Controllers
             string operation = Session["Operation"].ToString();
             ButtonVisiblity(operation);
             model.operation = operation;
+            Session["ChargeDetails"] = model.ChargeDetailList;
             return Json(model, JsonRequestBehavior.AllowGet);
         }
         #endregion
