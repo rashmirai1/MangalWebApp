@@ -66,7 +66,7 @@ namespace MangalWeb.Repository.Repository
         public int GetBackDatedVoucher(int parentid, int UserId, int BranchId)
         {
             return _context.UserAuthorizations.Where(x => x.ParentID == parentid && x.UserID == UserId && x.BranchId == BranchId)
-                .Select(x => x.BackDatedVoucher ?? 0).FirstOrDefault();
+                .Select(x=>x.BackDatedVoucher??0).FirstOrDefault();
         }
 
         public List<UserAuthorizationForms> GetForms(int parentid, int UserId, int UserCategoryID, int BranchId)
@@ -96,7 +96,7 @@ namespace MangalWeb.Repository.Repository
                     city.isDelete = false;
                     city.isSearch = false;
                 }
-
+                
                 //var state = _context.Database.SqlQuery<UserAuthorizationForms>("T_Update_UserAuthorization_DetailsUserWise @index,@UserID,@ParentID,@FormID,@isVisible,@isEdit,@isView,isSave,@isDelete",
                 //new SqlParameter("index", city.index),
                 //new SqlParameter("UserID", city.UserID),
@@ -109,7 +109,7 @@ namespace MangalWeb.Repository.Repository
                 //new SqlParameter("isDelete", city.isDelete)).FirstOrDefault();
 
                 UserAuthorization tblUserAuthorization = new UserAuthorization();
-                tblUserAuthorization = _context.UserAuthorizations.Where(x => x.UserID == city.UserID && x.FormID == city.FormID && x.BranchId == city.BranchID && x.isActive == "Y").FirstOrDefault();
+                tblUserAuthorization = _context.UserAuthorizations.Where(x => x.UserID == city.UserID && x.FormID == city.FormID && x.BranchId==city.BranchID && x.isActive == "Y").FirstOrDefault();
                 if (tblUserAuthorization == null)
                 {
                     tblUserAuthorization = new UserAuthorization();
@@ -152,7 +152,7 @@ namespace MangalWeb.Repository.Repository
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
         #endregion
@@ -167,7 +167,7 @@ namespace MangalWeb.Repository.Repository
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 

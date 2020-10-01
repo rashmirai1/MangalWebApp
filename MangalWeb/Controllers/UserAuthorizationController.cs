@@ -37,7 +37,7 @@ namespace MangalWeb.Controllers
             var branch = _userAuthorizationService.GetBranch();
             ViewBag.userbranch = new SelectList(branch, "BID", "BranchName");
         }
-
+        
         [HttpPost]
         public ActionResult GetUser(int UserCategoryId)
         {
@@ -96,7 +96,7 @@ namespace MangalWeb.Controllers
             rm.isSave = save;
             rm.isView = view;
             rm.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
-            formid = _userAuthorizationService.InsertUserAuthorization_DetailsUserWise(rm);
+            formid=_userAuthorizationService.InsertUserAuthorization_DetailsUserWise(rm);
             var jsonResult = Json(formid, JsonRequestBehavior.AllowGet);
             return jsonResult;
         }

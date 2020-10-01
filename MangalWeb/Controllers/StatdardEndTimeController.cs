@@ -18,6 +18,7 @@ namespace MangalWeb.Controllers
         {
             ButtonVisiblity("Index");
             var time = _standardEndTimeService.GetTime();
+
             var data = new StandardEndTime()
             {
                 StandadrDateTime = time

@@ -159,16 +159,6 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<string>("[MangalDBNewEntities].[SplitValue1](@String, @Delimiter)", stringParameter, delimiterParameter);
         }
     
-        [DbFunction("MangalDBNewEntities", "SplitWords1")]
-        public virtual IQueryable<SplitWords1_Result> SplitWords1(string text)
-        {
-            var textParameter = text != null ?
-                new ObjectParameter("text", text) :
-                new ObjectParameter("text", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SplitWords1_Result>("[MangalDBNewEntities].[SplitWords1](@text)", textParameter);
-        }
-    
         public virtual ObjectResult<GetDocumentUploadById_Result> GetDocumentUploadById(Nullable<int> id)
         {
             var idParameter = id.HasValue ?

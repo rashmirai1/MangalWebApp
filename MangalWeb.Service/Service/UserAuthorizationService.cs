@@ -60,7 +60,7 @@ namespace MangalWeb.Service.Service
 
         public List<MenusViewModel> GetAuthorizeSubPagesList_PrentidWise(int Userid, int ParentId, int BranchId)
         {
-            return _userAuthorizationRepository.GetAuthorizeSubPagesList_PrentidWise(Userid, ParentId, BranchId);
+            return _userAuthorizationRepository.GetAuthorizeSubPagesList_PrentidWise(Userid,ParentId,BranchId);
         }
     }
 }

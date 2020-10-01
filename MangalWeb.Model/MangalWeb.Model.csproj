@@ -411,7 +411,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="Entity\et" />
     <None Include="Entity\GL_SanctionDisburse_KYC_RTR" />
     <None Include="Entity\MangalEntity.edmx.diagram">
       <DependentUpon>MangalEntity.edmx</DependentUpon>

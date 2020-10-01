@@ -1,10 +1,10 @@
-﻿using MangalWeb.Model.Entity;
-using MangalWeb.Model.Masters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MangalWeb.Model.Entity;
+using MangalWeb.Model.Masters;
 
 namespace MangalWeb.Repository.Repository
 {

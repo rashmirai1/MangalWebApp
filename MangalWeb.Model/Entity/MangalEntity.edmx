@@ -1976,9 +1976,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInterest_Details' does not have
             <Parameter Name="String" Mode="In" Type="String" />
             <Parameter Name="Delimiter" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SplitWords1" IsComposable="true" ReturnType="Collection(MangalDBNewModel.SplitWords1_Result)">
-          <Parameter Name="text" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="tbl_KYCMobileOTP" EntityType="MangalDBNewModel.tbl_KYCMobileOTP" />
           <FunctionImport Name="GetDocumentUploadById" ReturnType="Collection(MangalDBNewModel.GetDocumentUploadById_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
@@ -4431,14 +4428,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInterest_Details' does not have
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SplitValue1" FunctionName="MangalDBNewModel.Store.SplitValue" />
-          <FunctionImportMapping FunctionImportName="SplitWords1" FunctionName="MangalDBNewModel.Store.SplitWords">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MangalDBNewModel.SplitWords1_Result">
-                <ScalarProperty Name="pos" ColumnName="pos" />
-                <ScalarProperty Name="value" ColumnName="value" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="tbl_KYCMobileOTP">
             <EntityTypeMapping TypeName="MangalDBNewModel.tbl_KYCMobileOTP">
               <MappingFragment StoreEntitySet="tbl_KYCMobileOTP">
