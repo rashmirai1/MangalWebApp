@@ -83,14 +83,14 @@
         <AssociationConnector Association="MangalDBNewModel.FK__tbl_Resid__PreSa__39AD8A7F" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesPostingDetails" Width="1.5" PointX="13.375" PointY="5.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblPrimaryGroup" Width="1.5" PointX="13.375" PointY="9.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.TGLCashInOutDetail" Width="1.5" PointX="13.375" PointY="12.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.TGLGoldInOutDetail" Width="1.5" PointX="9.375" PointY="14.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.FCompanyYearEndClosing" Width="1.5" PointX="15.375" PointY="5.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblStandardEndTime" Width="1.5" PointX="9.375" PointY="11.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Tran_ValuationOneDetails" Width="1.5" PointX="15.375" PointY="9.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.TGLGoldStock" Width="1.5" PointX="3.375" PointY="15.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.TGLInterest_Details" Width="1.5" PointX="15.375" PointY="13.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TBankCash_PaymentDetails" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLCashInOutDetail" Width="1.5" PointX="11.375" PointY="12.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLGoldInOutDetail" Width="1.5" PointX="13.375" PointY="13.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLGoldStock" Width="1.5" PointX="3.375" PointY="15.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLInterest_Details" Width="1.5" PointX="7.375" PointY="15.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

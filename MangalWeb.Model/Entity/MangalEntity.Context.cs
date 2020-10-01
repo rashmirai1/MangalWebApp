@@ -84,14 +84,14 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tbl_ResidenceVerification> tbl_ResidenceVerification { get; set; }
         public virtual DbSet<TGLSanctionDisburse_ChargesPostingDetails> TGLSanctionDisburse_ChargesPostingDetails { get; set; }
         public virtual DbSet<tblPrimaryGroup> tblPrimaryGroups { get; set; }
-        public virtual DbSet<TGLCashInOutDetail> TGLCashInOutDetails { get; set; }
-        public virtual DbSet<TGLGoldInOutDetail> TGLGoldInOutDetails { get; set; }
         public virtual DbSet<FCompanyYearEndClosing> FCompanyYearEndClosings { get; set; }
         public virtual DbSet<tblStandardEndTime> tblStandardEndTimes { get; set; }
         public virtual DbSet<Tran_ValuationOneDetails> Tran_ValuationOneDetails { get; set; }
+        public virtual DbSet<TBankCash_PaymentDetails> TBankCash_PaymentDetails { get; set; }
+        public virtual DbSet<TGLCashInOutDetail> TGLCashInOutDetails { get; set; }
+        public virtual DbSet<TGLGoldInOutDetail> TGLGoldInOutDetails { get; set; }
         public virtual DbSet<TGLGoldStock> TGLGoldStocks { get; set; }
         public virtual DbSet<TGLInterest_Details> TGLInterest_Details { get; set; }
-        public virtual DbSet<TBankCash_PaymentDetails> TBankCash_PaymentDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
