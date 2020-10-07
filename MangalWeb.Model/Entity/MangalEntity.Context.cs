@@ -92,6 +92,7 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLGoldInOutDetail> TGLGoldInOutDetails { get; set; }
         public virtual DbSet<TGLGoldStock> TGLGoldStocks { get; set; }
         public virtual DbSet<TGLInterest_Details> TGLInterest_Details { get; set; }
+        public virtual DbSet<TGlReceipt_BasicDetails> TGlReceipt_BasicDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -514,23 +515,6 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertRecordInTBankCashPaymentDetails", bCPIDParameter, refTypeParameter, refNoParameter, referenceNoParameter, refDateParameter, voucherNoParameter, bankCashAccIDParameter, paidToParameter, amountParameter, chqNoParameter, chqDateParameter, narrationParameter, financialYearIdParameter);
         }
     
-        public virtual ObjectResult<GL_SanctionDisburse_KYC_Details_RTR_Result1> GL_SanctionDisburse_KYC_Details_RTR(Nullable<int> kYCID, Nullable<int> fYID, Nullable<int> branchId)
-        {
-            var kYCIDParameter = kYCID.HasValue ?
-                new ObjectParameter("KYCID", kYCID) :
-                new ObjectParameter("KYCID", typeof(int));
-    
-            var fYIDParameter = fYID.HasValue ?
-                new ObjectParameter("FYID", fYID) :
-                new ObjectParameter("FYID", typeof(int));
-    
-            var branchIdParameter = branchId.HasValue ?
-                new ObjectParameter("BranchId", branchId) :
-                new ObjectParameter("BranchId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_Details_RTR_Result1>("GL_SanctionDisburse_KYC_Details_RTR", kYCIDParameter, fYIDParameter, branchIdParameter);
-        }
-    
         public virtual int SP_InsertRecordInSanctionChargeDetails(Nullable<int> cHID, Nullable<int> sDID, Nullable<int> chargeDetailsID, Nullable<double> charges, Nullable<double> amount, Nullable<int> accountId, Nullable<int> chargeId)
         {
             var cHIDParameter = cHID.HasValue ?
@@ -599,15 +583,127 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburseDetails_RTR_Result>("GL_SanctionDisburseDetails_RTR", sDIDParameter);
         }
     
-        public virtual int SP_SanctionDisburse_PRI(string operation, string flag, Nullable<int> sDID, string loanType, Nullable<System.DateTime> loanDate, string goldLoanNo, Nullable<int> kYCID, Nullable<decimal> eligibleLoanAmt, Nullable<decimal> netLoanAmtSanctioned, Nullable<decimal> chargesTotal, Nullable<decimal> netLoanPayable, string cheqNEFTDD, string cheqNEFTDDNo, Nullable<System.DateTime> cheqNEFTDDDate, Nullable<decimal> totalGrossWeight, Nullable<decimal> totalNetWeight, Nullable<decimal> totalQuantity, Nullable<decimal> totalvalue, Nullable<decimal> totalRate, Nullable<int> sID, Nullable<System.DateTime> dueDate, byte[] ownershipProofImagePath, string cIBILScore, Nullable<int> bCPID, Nullable<int> cashOutWardById, Nullable<int> goldInWardById, Nullable<int> createdBy, Nullable<int> fYID, Nullable<int> branchID, Nullable<int> cMPID, Nullable<int> cashAccID, Nullable<decimal> cashAmount, Nullable<int> bankCashAccID, Nullable<decimal> bankAmount, string paymentMode, Nullable<int> lineno, Nullable<System.DateTime> bankPaymentDate, string lockerNo, string packetWeight, string rackNo, string remark, Nullable<System.DateTime> goldInwardDate)
+        public virtual int SP_SanctionDisburse_Delete(Nullable<int> sDID)
+        {
+            var sDIDParameter = sDID.HasValue ?
+                new ObjectParameter("SDID", sDID) :
+                new ObjectParameter("SDID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_Delete", sDIDParameter);
+        }
+    
+        public virtual ObjectResult<GL_SanctionDisburse_KYC_Details_RTR_Result2> GL_SanctionDisburse_KYC_Details_RTR(Nullable<int> preSanctionId, Nullable<int> fYID, Nullable<int> branchId)
+        {
+            var preSanctionIdParameter = preSanctionId.HasValue ?
+                new ObjectParameter("PreSanctionId", preSanctionId) :
+                new ObjectParameter("PreSanctionId", typeof(int));
+    
+            var fYIDParameter = fYID.HasValue ?
+                new ObjectParameter("FYID", fYID) :
+                new ObjectParameter("FYID", typeof(int));
+    
+            var branchIdParameter = branchId.HasValue ?
+                new ObjectParameter("BranchId", branchId) :
+                new ObjectParameter("BranchId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_Details_RTR_Result2>("GL_SanctionDisburse_KYC_Details_RTR", preSanctionIdParameter, fYIDParameter, branchIdParameter);
+        }
+    
+        public virtual int GLReceipt_GoldLoanDetails_RTR_New(Nullable<System.DateTime> rcvDate, Nullable<int> kYCID, Nullable<int> fYID, Nullable<int> branchId)
+        {
+            var rcvDateParameter = rcvDate.HasValue ?
+                new ObjectParameter("RcvDate", rcvDate) :
+                new ObjectParameter("RcvDate", typeof(System.DateTime));
+    
+            var kYCIDParameter = kYCID.HasValue ?
+                new ObjectParameter("KYCID", kYCID) :
+                new ObjectParameter("KYCID", typeof(int));
+    
+            var fYIDParameter = fYID.HasValue ?
+                new ObjectParameter("FYID", fYID) :
+                new ObjectParameter("FYID", typeof(int));
+    
+            var branchIdParameter = branchId.HasValue ?
+                new ObjectParameter("BranchId", branchId) :
+                new ObjectParameter("BranchId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GLReceipt_GoldLoanDetails_RTR_New", rcvDateParameter, kYCIDParameter, fYIDParameter, branchIdParameter);
+        }
+    
+        public virtual int GL_EmiCalculator_RTR(Nullable<System.DateTime> loanDate, Nullable<decimal> loanAmount, Nullable<int> sID, Nullable<int> neworOld, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, Nullable<decimal> paidInt, Nullable<System.DateTime> oSInterestFromDate, Nullable<System.DateTime> oSInterestToDate, Nullable<decimal> oSIntAmt, Nullable<System.DateTime> advInterestFromDate, Nullable<System.DateTime> advInterestToDate, Nullable<decimal> advInterestAmt, Nullable<System.DateTime> calculateFromDate, Nullable<System.DateTime> calculateToDate, Nullable<decimal> lastROIID)
+        {
+            var loanDateParameter = loanDate.HasValue ?
+                new ObjectParameter("LoanDate", loanDate) :
+                new ObjectParameter("LoanDate", typeof(System.DateTime));
+    
+            var loanAmountParameter = loanAmount.HasValue ?
+                new ObjectParameter("LoanAmount", loanAmount) :
+                new ObjectParameter("LoanAmount", typeof(decimal));
+    
+            var sIDParameter = sID.HasValue ?
+                new ObjectParameter("SID", sID) :
+                new ObjectParameter("SID", typeof(int));
+    
+            var neworOldParameter = neworOld.HasValue ?
+                new ObjectParameter("NeworOld", neworOld) :
+                new ObjectParameter("NeworOld", typeof(int));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(System.DateTime));
+    
+            var paidIntParameter = paidInt.HasValue ?
+                new ObjectParameter("PaidInt", paidInt) :
+                new ObjectParameter("PaidInt", typeof(decimal));
+    
+            var oSInterestFromDateParameter = oSInterestFromDate.HasValue ?
+                new ObjectParameter("OSInterestFromDate", oSInterestFromDate) :
+                new ObjectParameter("OSInterestFromDate", typeof(System.DateTime));
+    
+            var oSInterestToDateParameter = oSInterestToDate.HasValue ?
+                new ObjectParameter("OSInterestToDate", oSInterestToDate) :
+                new ObjectParameter("OSInterestToDate", typeof(System.DateTime));
+    
+            var oSIntAmtParameter = oSIntAmt.HasValue ?
+                new ObjectParameter("OSIntAmt", oSIntAmt) :
+                new ObjectParameter("OSIntAmt", typeof(decimal));
+    
+            var advInterestFromDateParameter = advInterestFromDate.HasValue ?
+                new ObjectParameter("AdvInterestFromDate", advInterestFromDate) :
+                new ObjectParameter("AdvInterestFromDate", typeof(System.DateTime));
+    
+            var advInterestToDateParameter = advInterestToDate.HasValue ?
+                new ObjectParameter("AdvInterestToDate", advInterestToDate) :
+                new ObjectParameter("AdvInterestToDate", typeof(System.DateTime));
+    
+            var advInterestAmtParameter = advInterestAmt.HasValue ?
+                new ObjectParameter("AdvInterestAmt", advInterestAmt) :
+                new ObjectParameter("AdvInterestAmt", typeof(decimal));
+    
+            var calculateFromDateParameter = calculateFromDate.HasValue ?
+                new ObjectParameter("CalculateFromDate", calculateFromDate) :
+                new ObjectParameter("CalculateFromDate", typeof(System.DateTime));
+    
+            var calculateToDateParameter = calculateToDate.HasValue ?
+                new ObjectParameter("CalculateToDate", calculateToDate) :
+                new ObjectParameter("CalculateToDate", typeof(System.DateTime));
+    
+            var lastROIIDParameter = lastROIID.HasValue ?
+                new ObjectParameter("LastROIID", lastROIID) :
+                new ObjectParameter("LastROIID", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GL_EmiCalculator_RTR", loanDateParameter, loanAmountParameter, sIDParameter, neworOldParameter, fromDateParameter, toDateParameter, paidIntParameter, oSInterestFromDateParameter, oSInterestToDateParameter, oSIntAmtParameter, advInterestFromDateParameter, advInterestToDateParameter, advInterestAmtParameter, calculateFromDateParameter, calculateToDateParameter, lastROIIDParameter);
+        }
+    
+        public virtual int SP_SanctionDisburse_PRI(string operation, Nullable<int> sDID, string loanType, Nullable<System.DateTime> loanDate, string goldLoanNo, Nullable<int> kYCID, Nullable<decimal> eligibleLoanAmt, Nullable<decimal> netLoanAmtSanctioned, Nullable<decimal> chargesTotal, Nullable<decimal> netLoanPayable, string cheqNEFTDD, string cheqNEFTDDNo, Nullable<System.DateTime> cheqNEFTDDDate, Nullable<decimal> totalGrossWeight, Nullable<decimal> totalNetWeight, Nullable<decimal> totalQuantity, Nullable<decimal> totalvalue, Nullable<decimal> totalRate, Nullable<int> sID, Nullable<System.DateTime> dueDate, byte[] ownershipProofImagePath, string cIBILScore, Nullable<int> bCPID, Nullable<int> cashOutWardById, Nullable<int> goldInWardById, Nullable<int> createdBy, Nullable<int> fYID, Nullable<int> branchID, Nullable<int> cMPID, Nullable<int> cashAccID, Nullable<decimal> cashAmount, Nullable<int> bankCashAccID, Nullable<decimal> bankAmount, string paymentMode, Nullable<int> lineno, Nullable<System.DateTime> bankPaymentDate, string lockerNo, string packetWeight, string rackNo, string remark, Nullable<System.DateTime> goldInwardDate, Nullable<int> preSanctionId)
         {
             var operationParameter = operation != null ?
                 new ObjectParameter("Operation", operation) :
                 new ObjectParameter("Operation", typeof(string));
-    
-            var flagParameter = flag != null ?
-                new ObjectParameter("Flag", flag) :
-                new ObjectParameter("Flag", typeof(string));
     
             var sDIDParameter = sDID.HasValue ?
                 new ObjectParameter("SDID", sDID) :
@@ -769,16 +865,11 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("GoldInwardDate", goldInwardDate) :
                 new ObjectParameter("GoldInwardDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_PRI", operationParameter, flagParameter, sDIDParameter, loanTypeParameter, loanDateParameter, goldLoanNoParameter, kYCIDParameter, eligibleLoanAmtParameter, netLoanAmtSanctionedParameter, chargesTotalParameter, netLoanPayableParameter, cheqNEFTDDParameter, cheqNEFTDDNoParameter, cheqNEFTDDDateParameter, totalGrossWeightParameter, totalNetWeightParameter, totalQuantityParameter, totalvalueParameter, totalRateParameter, sIDParameter, dueDateParameter, ownershipProofImagePathParameter, cIBILScoreParameter, bCPIDParameter, cashOutWardByIdParameter, goldInWardByIdParameter, createdByParameter, fYIDParameter, branchIDParameter, cMPIDParameter, cashAccIDParameter, cashAmountParameter, bankCashAccIDParameter, bankAmountParameter, paymentModeParameter, linenoParameter, bankPaymentDateParameter, lockerNoParameter, packetWeightParameter, rackNoParameter, remarkParameter, goldInwardDateParameter);
-        }
+            var preSanctionIdParameter = preSanctionId.HasValue ?
+                new ObjectParameter("PreSanctionId", preSanctionId) :
+                new ObjectParameter("PreSanctionId", typeof(int));
     
-        public virtual int SP_SanctionDisburse_Delete(Nullable<int> sDID)
-        {
-            var sDIDParameter = sDID.HasValue ?
-                new ObjectParameter("SDID", sDID) :
-                new ObjectParameter("SDID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_Delete", sDIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_PRI", operationParameter, sDIDParameter, loanTypeParameter, loanDateParameter, goldLoanNoParameter, kYCIDParameter, eligibleLoanAmtParameter, netLoanAmtSanctionedParameter, chargesTotalParameter, netLoanPayableParameter, cheqNEFTDDParameter, cheqNEFTDDNoParameter, cheqNEFTDDDateParameter, totalGrossWeightParameter, totalNetWeightParameter, totalQuantityParameter, totalvalueParameter, totalRateParameter, sIDParameter, dueDateParameter, ownershipProofImagePathParameter, cIBILScoreParameter, bCPIDParameter, cashOutWardByIdParameter, goldInWardByIdParameter, createdByParameter, fYIDParameter, branchIDParameter, cMPIDParameter, cashAccIDParameter, cashAmountParameter, bankCashAccIDParameter, bankAmountParameter, paymentModeParameter, linenoParameter, bankPaymentDateParameter, lockerNoParameter, packetWeightParameter, rackNoParameter, remarkParameter, goldInwardDateParameter, preSanctionIdParameter);
         }
     }
 }

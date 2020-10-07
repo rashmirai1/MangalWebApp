@@ -19,7 +19,7 @@ namespace MangalWeb.Model.Transaction
         }
 
         public int ID { get; set; }
-
+        public int PreSanctionId { get; set; }
         public int TransactionId { get; set; }
         public string AppliedDate { get; set; }
         public string LoanType { get; set; }
@@ -34,7 +34,7 @@ namespace MangalWeb.Model.Transaction
         public string BirthDate { get; set; }
         public string PANNo { get; set; }
         public string MobileNo { get; set; }
-        public string EmailID{get;set;}
+        public string EmailId {get;set;}
         public string MaritalStatus { get; set; }
         public int Age { get; set; }
         public string CustomerAddress { get; set; }
@@ -51,7 +51,7 @@ namespace MangalWeb.Model.Transaction
         public decimal SchemeProcessingLimit { get; set; }
         public string Tenure { get; set; }
         public string MaximumLoanAmount { get; set; }
-
+        
         //gold item details
         public int? TotalQuantity { get; set; }
         public decimal? TotalGrossWeight { get; set; }
@@ -60,7 +60,8 @@ namespace MangalWeb.Model.Transaction
         public decimal? TotalRatePerGram { get; set; }
         public decimal? TotalValue { get; set; }
         public decimal? DiscountAmount { get; set; }
-
+        public double CGSTTax { get; set; }
+        public double SGSTTax { get; set; }
         public double CGSTAmount { get; set; }
         public double? SGSTAmount { get; set; }
         public int? CGSTAccountId { get; set; }

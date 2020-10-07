@@ -64,5 +64,8 @@ namespace MangalWeb.Model.Entity
         public string Packetweight { get; set; }
         public string LockerNo { get; set; }
         public string Remark { get; set; }
+        public int PreSanctionId { get; set; }
+    
+        public virtual tbl_PreSanctionDetails tbl_PreSanctionDetails { get; set; }
     }
 }

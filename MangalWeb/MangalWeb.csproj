@@ -2111,6 +2111,13 @@
     <Content Include="Views\PreSanction\Index.cshtml" />
     <Content Include="Views\ResidenceVerification\_CustomerDetails.cshtml" />
     <Content Include="Views\ResidenceVerification\Index.cshtml" />
+    <Content Include="Views\ForgotPassword\ForgotPassword.cshtml" />
+    <Content Include="Views\ForgotPassword\ResetPassword.cshtml" />
+    <Content Include="Views\ForgotPassword\ResetPasswordSuccess.cshtml" />
+    <Content Include="Views\ForgotPassword\SendLinkSuccess.cshtml" />
+    <Content Include="Views\SanctionDisbursement\_CustomerDetails.cshtml" />
+    <Content Include="Views\SanctionDisbursement\_SanctionDetails.cshtml" />
+    <Content Include="Views\StatdardEndTime\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -212,5 +212,66 @@ namespace MangalWeb.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        [HttpPost]
+        public JsonResult AddChargeDetails()
+        {
+            SanctionDisbursementVM model = new SanctionDisbursementVM();
+            var chargeSanctionVM = new ChargeSanctionVM();
+            chargeSanctionVM.ID = Convert.ToInt32(Request.Form["Id"]);
+            chargeSanctionVM.ChargeId = Convert.ToInt32(Request.Form["ChargeId"]);
+            chargeSanctionVM.CDetailsID = Convert.ToInt32(Request.Form["CDetailsID"]);
+            chargeSanctionVM.AccountId = Convert.ToInt32(Request.Form["AccountId"]);
+            chargeSanctionVM.AccountName = Request.Form["AccountName"];
+            chargeSanctionVM.ChargeName = Request.Form["ChargeName"];
+            chargeSanctionVM.Charges = Convert.ToDouble(Request.Form["Charges"]);
+            chargeSanctionVM.Amount = Convert.ToDouble(Request.Form["Amount"]);
+            chargeSanctionVM.ChargeType = Request.Form["ChargeType"];
+            int StateID = Convert.ToInt32(Request.Form["StateID"]);
+            model.ChargeDetailList.Add(chargeSanctionVM);
+            double CGSTTax = 0;
+            double SGSTTax = 0;
+            int CGSTAccountNo = 0;
+            int? SGSTAccountNo = 0;
+            _sanctionService.GetGSTRecord(StateID, ref CGSTAccountNo, ref SGSTAccountNo, ref CGSTTax, ref SGSTTax);
+            model.ChargeDetailList.Add(new ChargeSanctionVM()
+            {
+                ID = chargeSanctionVM.ID,
+                ChargeId = 0,
+                CDetailsID = 0,
+                ChargeName = SGSTAccountNo > 0 ? "CGST" : "IGST",
+                Charges = Convert.ToDouble(CGSTTax),
+                ChargeType = "Percentage",
+                Amount = chargeSanctionVM.Amount * Convert.ToDouble(CGSTTax) / 100,
+                AccountId = CGSTAccountNo,
+                AccountName = _sanctionService.GetAccountName(CGSTAccountNo)
+            });
+            if (SGSTAccountNo > 0)
+            {
+                int sgstaccid = Convert.ToInt32(SGSTAccountNo);
+                model.ChargeDetailList.Add(new ChargeSanctionVM()
+                {
+                    ID = chargeSanctionVM.ID,
+                    ChargeId = 0,
+                    CDetailsID = 0,
+                    ChargeName = "SGST",
+                    Charges = Convert.ToDouble(SGSTTax),
+                    ChargeType = "Percentage",
+                    Amount = chargeSanctionVM.Amount * Convert.ToDouble(SGSTTax) / 100,
+                    AccountId = SGSTAccountNo,
+                    AccountName = _sanctionService.GetAccountName(sgstaccid)
+                });
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult RemoveCharge(int id)
+        {
+            var list = (List<ChargeSanctionVM>)Session["ChargeList"];
+            list.Remove(list.Where(x => x.ID == id).FirstOrDefault());
+            Session["ChargeList"] = list;
+            return Json(1, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

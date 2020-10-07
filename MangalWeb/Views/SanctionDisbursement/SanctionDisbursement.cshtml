@@ -44,7 +44,7 @@
                                                 @Html.HiddenFor(x => x.AreaId)
                                                 @Html.HiddenFor(x => x.MobileNo)
                                                 @Html.HiddenFor(x => x.TelephoneNo)
-                                                @Html.HiddenFor(x => x.EmailID)
+                                                @Html.HiddenFor(x => x.EmailId)
                                                 @Html.HiddenFor(x => x.KYCID)
                                                 @Html.HiddenFor(x => x.SchemeProcessingType)
                                                 @Html.HiddenFor(x => x.SchemeProcessingCharge)
@@ -53,10 +53,13 @@
                                                 @Html.HiddenFor(x => x.DiscountAmount)
                                                 @Html.HiddenFor(x => x.CGSTAmount)
                                                 @Html.HiddenFor(x => x.SGSTAmount)
+                                                @Html.HiddenFor(x => x.CGSTTax)
+                                                @Html.HiddenFor(x => x.SGSTTax)
                                                 @Html.HiddenFor(x => x.CGSTAccountId)
                                                 @Html.HiddenFor(x => x.SGSTAccountId)
                                                 @Html.HiddenFor(x => x.CGSTAccountName)
                                                 @Html.HiddenFor(x => x.SGSTAccountName)
+                                                @Html.HiddenFor(x => x.PreSanctionId)
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Transaction Date<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -289,8 +292,8 @@
                                         <label><b><u>Outstanding Details</u></b></label><br />
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Principal<span class="text-danger"></span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.LabelFor(model => model.Principal, new { htmlAttributes = new { @class = "form-control", @placeholder = "Principal", @readonly = true } })
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="margin-top: 12px;">
+                                                <label id="Principal"></label>
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Interest Repayment Date<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -302,8 +305,8 @@
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Interest<span class="text-danger"></span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.LabelFor(model => model.Interest, new { htmlAttributes = new { @class = "form-control", @placeholder = "Interest", @readonly = true } })
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="margin-top: 12px;">
+                                                <label id="Interest"></label>
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Gold Item Image<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -314,8 +317,8 @@
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Penal Interest<span class="text-danger"></span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.LabelFor(model => model.PenalInterest, new { htmlAttributes = new { @class = "form-control", @placeholder = "Penal Interest", @readonly = true } })
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="margin-top: 12px;">
+                                                <label id="PenalInterest"></label>
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
                                                 Proof of Ownership
@@ -330,8 +333,8 @@
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Charges<span class="text-danger"></span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.LabelFor(model => model.Charges, new { htmlAttributes = new { @class = "form-control", @placeholder = "Charges", @readonly = true } })
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="margin-top: 12px;">
+                                                <label id="Charges"></label>
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Packet Weight<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -342,8 +345,8 @@
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Total<span class="text-danger"></span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.LabelFor(model => model.Total, new { htmlAttributes = new { @class = "form-control", @placeholder = "Total", @readonly = true } })
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="margin-top: 12px;">
+                                                <label id="Total"></label>
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Locker No<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -523,31 +526,9 @@
 
             $(':input[readonly]').css({'background-color':'#faf4b3'});
 
-            $("#CashAmount").on('keyup', function () {
-                var sanctionamount = $("#SanctionLoanAmount").val();
-                var CashAmount = $("#CashAmount").val();
-                if (parseFloat(CashAmount) > parseFloat(sanctionamount)) {
-                    alert('Cash Amount can not be greater than Sanction Loan Amount');
-                    $("#CashAmount").val(0);
-                    $("#CashAmount").focus()
-                    return;
-                }
-            });
-
-            $("#BankAmount").on('keyup', function () {
-                var sanctionamount = $("#SanctionLoanAmount").val();
-                var BankAmount = $("#BankAmount").val();
-                if (parseFloat(BankAmount) > parseFloat(sanctionamount)) {
-                    alert('Bank Amount can not be greater than Sanction Loan Amount');
-                    $("#BankAmount").val(0);
-                    $("#BankAmount").focus()
-                    return;
-                }
-            });
-
-            if (document.URL.indexOf("ID") ==0) {
-                $("#CashAccountNo").attr('disabled','disabled');
-                $("#CashAmount").attr('disabled','disabled');
+            if ($("#ItemID").val() ==0) {
+                //$("#CashAccountNo").attr('disabled','disabled');
+                //$("#CashAmount").attr('disabled','disabled');
                 $("#BankAccountNo").attr('disabled','disabled');
                 $("#BankPaymentDate").attr('disabled','disabled');
                 $("#ChqDDNEFT").attr('disabled','disabled');
@@ -555,6 +536,28 @@
                 $("#ChqDDNEFTDate").attr('disabled','disabled');
                 $("#BankAmount").attr('disabled','disabled');
             }
+
+            $("#CashAmount").on('keyup', function () {
+                var netPayable = $("#NetPayable").val();
+                var CashAmount = $("#CashAmount").val();
+                if (parseFloat(CashAmount) > parseFloat(netPayable)) {
+                    alert('Cash Amount can not be greater than Net Payable');
+                    $("#CashAmount").val(0);
+                    $("#CashAmount").focus()
+                    return;
+                }
+            });
+
+            $("#BankAmount").on('keyup', function () {
+                var netPayable = $("#NetPayable").val();
+                var BankAmount = $("#BankAmount").val();
+                if (parseFloat(BankAmount) > parseFloat(netPayable)) {
+                    alert('Bank Amount can not be greater than Net Payable');
+                    $("#BankAmount").val(0);
+                    $("#BankAmount").focus()
+                    return;
+                }
+            });
 
             $("#divGoldItemDetails").hide();
             if (@Model.EligibleLoanAmountValuationDetailsVMList.Count() > 0) {
@@ -613,7 +616,7 @@
             SanctionViewModel.AreaId=$("#AreaId").val();
             SanctionViewModel.MobileNo=$("#MobileNo").val();
             SanctionViewModel.TelephoneNo=$("#TelephoneNo").val();
-            SanctionViewModel.EmailID=$("#EmailID").val();
+            SanctionViewModel.EmailId=$("#EmailId").val();
             SanctionViewModel.TransactionDate = $("#TransactionDate").val();
             SanctionViewModel.LoanType = $("#LoanType").val();
             SanctionViewModel.LoanAccountNo = $("#LoanAccountNo").val();
@@ -649,6 +652,21 @@
             SanctionViewModel.SGSTAmount = $("#SGSTAmount").val();
             SanctionViewModel.CGSTAccountId=$("#CGSTAccountId").val();
             SanctionViewModel.SGSTAccountId=$("#SGSTAccountId").val();
+            SanctionViewModel.CGSTTax = $("#CGSTTax").val();
+            SanctionViewModel.SGSTTax = $("#SGSTTax").val();
+            SanctionViewModel.PreSanctionId = $("#PreSanctionId").val();
+
+            if(SanctionViewModel.PaymentMode=="Cash")
+            {
+                debugger;
+                if(SanctionViewModel.CashAmount<SanctionViewModel.NetPayable || SanctionViewModel.NetPayable<SanctionViewModel.CashAmount)
+                {
+                    alert("Cash Amount and Net Payable must be equal");
+                    $("#CashAmount").focus();
+                    check=false;
+                    return;
+                }
+            }
 
             if (SanctionViewModel.CustomerId == 0) {
                 $("#CustomErr").text("Please Select Customer");
@@ -981,7 +999,7 @@
             });
             return false;
         })
-
+        
         //Dropdownlist Selectedchange event of payment mode
         $("#PaymentMode").change(function () {
             var paymentmode = $("#PaymentMode").val();
@@ -1065,10 +1083,11 @@
 
         var sr_no = 0;
         var trid = 0;
+        currentRow = null;
         $("#btnAddChargeDetails").click(function () {
             $("#CustomErrr").text("");
             $('[data-toggle="tooltip"]').tooltip();
-            var actions = "<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+            var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
             var index = $("#tblChargeDetails tbody tr:last").index();
             debugger;
             var ChargeId = $("#ChargeVM_ChargeId").val();
@@ -1105,86 +1124,208 @@
             }
             sr_no = 0;
             trid = 0;
-            var row = '<tr id=' + newtrno + '>' +
+            var row = '<tr class=' + ChargeId + '>' +
                 '<td width="10%">' + srno + '</td>' +
                 '<td width="30%" id="' + ChargeId + '">' + ChargeName + '</td>' +
                 '<td width="10%" id="'+ChargeDetailsId+'">' + Charges + '</td>' +
                 '<td width="10%">' + ChargeType + '</td>' +
                 '<td width="10%">' + Amount + '</td>' +
                 '<td width="30%" id="' + AccountId + '">' + AccountName + '</td>' +
-                '<td id=' + srno + '' + actions + '</td>' +
+                '<td '+ actions + '</td>' +
                 '</tr>';
+            var isExist = false;
             if (ChargeId != "" && AccountId != "") {
-                $("#tblChargeDetails tbody").append(row);
-                newtrno=newtrno+1;
-                srno=srno+1;
-                var row = '<tr id=' + newtrno + '>' +
-                '<td width="10%">' + srno + '</td>' +
-                '<td width="30%" id=0>CGST</td>' +
-                '<td width="10%" id=0>' + $("#CGSTAmount").val() + '</td>' +
-                '<td width="10%">Percentage</td>' +
-                '<td width="10%">'+$("#CGSTAmount").val()+'</td>' +
-                '<td width="30%" id="' + $("#CGSTAccountId").val() + '"> '+$("#CGSTAccountName").val()+'</td>' +
-                '<td id=' + srno + '' +  + '</td>' +
-                '</tr>';
-                $("#tblChargeDetails tbody").append(row);
-                newtrno=newtrno+1;
-                srno=srno+1;
-                var row = '<tr id=' + newtrno + '>' +
-                '<td width="10%">' + srno + '</td>' +
-                '<td width="30%" id=0>SGST</td>' +
-                '<td width="10%" id=0>' + $("#SGSTAmount").val() + '</td>' +
-                '<td width="10%">Percentage</td>' +
-                '<td width="10%">'+$("#SGSTAmount").val()+'</td>' +
-                '<td width="30%" id="' + $("#SGSTAccountId").val() + '"> '+$("#SGSTAccountName").val()+'</td>' +
-                '<td id=' + srno + '' +  + '</td>' +
-                '</tr>';
-                $("#tblChargeDetails tbody").append(row);
-                //get sanction loan amount
-                //net payable = sanction-(charge+GST)
-                debugger;
-                var gstamount=parseFloat($("#CGSTAmount").val())+parseFloat($("#SGSTAmount").val());
-                var netpayable = $("#NetPayable").val();
-                $("#NetPayable").val(parseFloat(netpayable).toFixed(0) - ((parseFloat(Amount)+parseFloat(gstamount)).toFixed(0)));
-                $("#ChargeVM_ChargeId").val("");
-                $("#ChargeVM_Charges").val("");
-                $("#ChargeVM_ChargeType").val("");
-                $("#ChargeVM_Amount").val("");
-                $("#ChargeVM_AccountId").val("");
-                $("#divChargeDetails").show();
-            }
-
-            $("#tblChargeDetails tbody tr").on("click", ".delete", function () {
-                if (confirm('Are you sure to remove?')) {
-                    //var tr = $(this).closest('tr');
-                    //tr.remove();
+                $("#tblChargeDetails TBODY tr").each(function() {
+                    // get row
                     debugger;
-                    var row = $(this).closest("tr");
-                    var amount = $("TD", row).eq(4).html();
-                    $(this).parents('tr').remove();
-                    var gstamount=parseFloat($("#CGSTAmount").val())+parseFloat($("#SGSTAmount").val());
-                    var netpayable = parseFloat($("#NetPayable").val());
-                    Amount=parseFloat(Amount);
-                    $("#NetPayable").val(netpayable + (Amount+gstamount));
+                    var row = $(this);
+                    // get first and second td
+                    if(currentRow==null)
+                    {
+                        var first = row.find('td:nth-child(2)').attr('id');
+                        // if exists, remove the tr
+                        if (first == ChargeId) {
+                            isExist = true;
+                        }
+                    }
+                });
+                if(isExist)
+                {
+                    alert("The same Charge already Exist");
                     return false;
                 }
-            })
-        })
+                else
+                {
+                    if(currentRow){
+                        $("#tblChargeDetails tbody").find($(currentRow)).replaceWith(row);
+                        $("#ChargeVM_ChargeId").val("");
+                        $("#ChargeVM_Charges").val("");
+                        $("#ChargeVM_ChargeType").val("");
+                        $("#ChargeVM_Amount").val("");
+                        $("#ChargeVM_AccountId").val("");
+                        currentRow = null;
+                        $("#tblChargeDetails TBODY TR").on("click", ".edit", function () {
+                            debugger;
+                            var tr = $(this).closest('tr');
+                            currentRow= $(this).parents('tr');
+                            sr_no = tr.find('td:eq(0)').html();
+                            trid =tr.attr('id'); // table row ID
+                            var ChargeId =tr.find("td").eq(1).attr('id');
+                            var ChargeName =  tr.find('td:eq(1)').html();
+                            var Charges =  tr.find('td:eq(2)').html();
+                            var ChargeType = tr.find('td:eq(3)').html();
+                            var Amount = tr.find('td:eq(4)').html();
+                            var AccountId =tr.find("td").eq(5).attr('id');
+                            var AccountName =tr.find('td:eq(5)').html();
+
+                            $("#ChargeVM_ChargeId").val(ChargeId);
+                            $("#ChargeVM_Charges").val(Charges);
+                            $("#ChargeVM_ChargeType").val(ChargeType);
+                            $("#ChargeVM_Amount").val(Amount);
+                            $("#ChargeVM_AccountId").val(AccountId);
+                        })
+                        $("#tblChargeDetails tbody tr").on("click", ".delete", function () {
+                            if (confirm('Are you sure to remove?')) {
+                                debugger;
+                                var row = $(this).closest("tr");
+                                var id = row.attr('class'); // table row ID
+                                $('table#tblChargeDetails tr.'+id+'').remove();
+
+                                var gstamount=parseFloat($("#CGSTAmount").val())+parseFloat($("#SGSTAmount").val());
+                                var netpayable = parseFloat($("#NetPayable").val());
+                                Amount=parseFloat(Amount);
+                                $("#NetPayable").val(netpayable + (Amount+gstamount));
+                                $("#ChargeVM_ChargeId").val("");
+                                $("#ChargeVM_Charges").val("");
+                                $("#ChargeVM_ChargeType").val("");
+                                $("#ChargeVM_Amount").val("");
+                                $("#ChargeVM_AccountId").val("");
+                                return false;
+                            }
+                        })
+                    }
+                    else
+                    {
+                        fileData = new FormData();
+                        fileData.append('Id', srno);
+                        fileData.append('CDetailsID', ChargeDetailsId);
+                        fileData.append('ChargeId', ChargeId);
+                        fileData.append('ChargeName', ChargeName);
+                        fileData.append('Charges', Charges);
+                        fileData.append('Amount', Amount);
+                        fileData.append('AccountId', AccountId);
+                        fileData.append('AccountName', AccountName);
+                        fileData.append('ChargeType', ChargeType);
+                        fileData.append('StateID', $("#StateID").val());
+                        $.ajax({
+                            url: '/SanctionDisbursement/AddChargeDetails',
+                            type: "POST",
+                            contentType: false, // Not to set any content header
+                            processData: false, // Not to process data
+                            data: fileData,
+                            success: function (result) {
+                                debugger;
+                                $.each(result.ChargeDetailList, function (key, val) {
+                                    if(val.ChargeId==0)
+                                    {
+                                        actions='';
+                                        $("#CGSTAmount").val(val.Amount);
+                                        $("#SGSTAmount").val(val.Amount);
+                                    }
+                                    var rowCount = $('#tblChargeDetails >tbody >tr').length + 1;
+                                    $('#tblChargeDetails tbody').append('<tr class=' + val.ID + '><td width="10%">' + rowCount +
+                                     '<td width="20%" id="' + val.ChargeId + '">' + val.ChargeName + '</td>' +
+                                     '<td width="10%" id="' + val.CDetailsID + '">' + val.Charges + '</td>' +
+                                     '<td width="10%">' + val.ChargeType + '</td>' +
+                                     '<td width="10%">' + val.Amount + '</td>' +
+                                     '<td width="10%" id="' + val.AccountId + '">' + val.AccountName + '</td>' +
+                                     '<td  '+ actions + '</td>' +
+                                     '</tr>');
+                                });
+                                if($("#SGSTTax").val()>0)
+                                {
+                                    var gstamount=parseFloat($("#CGSTAmount").val())+parseFloat($("#SGSTAmount").val());
+                                    var netpayable = $("#NetPayable").val();
+                                    $("#NetPayable").val(parseFloat(netpayable).toFixed(0) - ((parseFloat(Amount)+parseFloat(gstamount)).toFixed(0)));
+                                }
+                                else
+                                {
+                                    var gstamount=parseFloat($("#CGSTAmount").val());
+                                    var netpayable = $("#NetPayable").val();
+                                    $("#NetPayable").val(parseFloat(netpayable).toFixed(0) - ((parseFloat(Amount)+parseFloat(gstamount)).toFixed(0)));
+                                }
+                                $("#tblChargeDetails TBODY TR").on("click", ".edit", function () {
+                                    debugger;
+                                    var tr = $(this).closest('tr');
+                                    currentRow= $(this).parents('tr');
+                                    sr_no = tr.find('td:eq(0)').html();
+                                    trid =tr.attr('id'); // table row ID
+                                    var ChargeId =tr.find("td").eq(1).attr('id');
+                                    var ChargeName =  tr.find('td:eq(1)').html();
+                                    var Charges =  tr.find('td:eq(2)').html();
+                                    var ChargeType = tr.find('td:eq(3)').html();
+                                    var Amount = tr.find('td:eq(4)').html();
+                                    var AccountId =tr.find("td").eq(5).attr('id');
+                                    var AccountName =tr.find('td:eq(5)').html();
+
+                                    $("#ChargeVM_ChargeId").val(ChargeId);
+                                    $("#ChargeVM_Charges").val(Charges);
+                                    $("#ChargeVM_ChargeType").val(ChargeType);
+                                    $("#ChargeVM_Amount").val(Amount);
+                                    $("#ChargeVM_AccountId").val(AccountId);
+                                })
+                                $("#tblChargeDetails tbody tr").on("click", ".delete", function () {
+                                    if (confirm('Are you sure to remove?')) {
+                                        debugger;
+                                        var row = $(this).closest("tr");
+                                        var id = row.attr('class'); // table row ID
+                                        $('table#tblChargeDetails tr.'+id+'').remove();
+
+                                        var gstamount=parseFloat($("#CGSTAmount").val())+parseFloat($("#SGSTAmount").val());
+                                        var netpayable = parseFloat($("#NetPayable").val());
+                                        Amount=parseFloat(Amount);
+                                        $("#NetPayable").val(netpayable + (Amount+gstamount));
+                                        $("#ChargeVM_ChargeId").val("");
+                                        $("#ChargeVM_Charges").val("");
+                                        $("#ChargeVM_ChargeType").val("");
+                                        $("#ChargeVM_Amount").val("");
+                                        $("#ChargeVM_AccountId").val("");
+                                        return false;
+                                    }
+                                })
+                            },
+                            error: function (err) {
+                                //alert(err.statusText);
+                            }
+                        });
+                    }
+                    //get sanction loan amount
+                    //net payable = sanction-(charge+GST)
+                    debugger;
+                    $("#ChargeVM_ChargeId").val("");
+                    $("#ChargeVM_Charges").val("");
+                    $("#ChargeVM_ChargeType").val("");
+                    $("#ChargeVM_Amount").val("");
+                    $("#ChargeVM_AccountId").val("");
+                    $("#divChargeDetails").show();
+                }
+            }
+        });
 
         $("#diveditfilldata").on("click", "tr", function () {
             debugger;
             var tr = $(this).closest('tr');
-            var KycId = tr.find("td").eq(0).attr('id');
+            var PresanctionId = tr.find("td").eq(1).attr('id');
             $("#editModal").hide();
-            SetKycDetails(KycId);
+            SetKycDetails(PresanctionId);
         })
 
-        function SetKycDetails(id) {
+        function SetKycDetails(PresanctionId) {
             debugger;
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("GetKycDetails", "SanctionDisbursement")',
-                data: "{Id: " + id + "}",
+                data: "{Id: " + PresanctionId + "}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
@@ -1204,11 +1345,19 @@
                         }
                         $("#" + key + "").val(value);
                     });
+                    debugger;
+                    $("#Principal").text(result.Principal);
+                    $("#Interest").text(result.Interest);
+                    $("#PenalInterest").text(result.PenalInterest);
+                    $("#Charges").text(result.Charges);
+                    $("#Total").text(result.Total);
+                    $("#SanctionLoanAmount").val($("#EligibleLoanAmount").val());
+                    $("#NetPayable").val($("#EligibleLoanAmount").val()-$("#DiscountAmount").val());
                     //var actions = "<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>";
                     $.each(result.ChargeDetailList, function (key, val) {
                         var rowCount = $('#tblChargeDetails >tbody >tr').length + 1;
                         var value = "";
-                        $('#tblChargeDetails tbody').append('<tr id=' + val.ID + '><td width="10%">' + rowCount +
+                        $('#tblChargeDetails tbody').append('<tr class=' + val.ID + '><td width="10%">' + rowCount +
                          '<td width="20%" id="' + val.ChargeId + '">' + val.ChargeName + '</td>' +
                          '<td width="10%" id="' + val.CDetailsID + '">' + val.Charges + '</td>' +
                            '<td width="10%">' + val.ChargeType + '</td>' +
@@ -1267,23 +1416,74 @@
                     $.each(result, function (key, value) {
                         $("#" + key + "").val(value);
                     });
+                    $("#Principal").text(result.Principal);
+                    $("#Interest").text(result.Interest);
+                    $("#PenalInterest").text(result.PenalInterest);
+                    $("#Charges").text(result.Charges);
+                    $("#Total").text(result.Total);
                     $("#ItemID").val(result.ID);
-                    $("#btnDelete").removeAttr('disabled');
 
-                    var actions = "<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>";
+                    var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
 
                     $.each(result.ChargeDetailList, function (key, val) {
                         var rowCount = $('#tblChargeDetails >tbody >tr').length + 1;
-                        var value = "";
-                        $('#tblChargeDetails tbody').append('<tr id=' + val.ID + '><td width="10%">' + rowCount +
-                         '<td width="20%" id="' + val.ChargeId + '">' + val.ChargeName + '</td>' +
-                         '<td width="10%" id="' + val.CDetailsID + '">' + val.Charges + '</td>' +
+                        if(val.ChargeId==0)
+                        {
+                            actions='';
+                            $("#CGSTAmount").val(val.Amount);
+                            $("#SGSTAmount").val(val.Amount);
+                        }
+                        $('#tblChargeDetails tbody').append('<tr class=' + val.ID + '><td width="10%">' + rowCount +
+                           '<td width="20%" id="' + val.ChargeId + '">' + val.ChargeName + '</td>' +
+                           '<td width="10%" id="' + val.CDetailsID + '">' + val.Charges + '</td>' +
                            '<td width="10%">' + val.ChargeType + '</td>' +
                            '<td width="10%">' + val.Amount + '</td>' +
                            '<td width="10%" id="' + val.AccountId + '">' + val.AccountName + '</td>' +
-                           '<td id=' + val.ID + '' + actions + '</td>' +
+                           '<td ' + actions + '</td>' +
                            '</tr>');
                     });
+
+                    $("#tblChargeDetails TBODY TR").on("click", ".edit", function () {
+                        debugger;
+                        var tr = $(this).closest('tr');
+                        currentRow= $(this).parents('tr');
+                        sr_no = tr.find('td:eq(0)').html();
+                        trid =tr.attr('id'); // table row ID
+                        var ChargeId =tr.find("td").eq(1).attr('id');
+                        var ChargeName =  tr.find('td:eq(1)').html();
+                        var Charges =  tr.find('td:eq(2)').html();
+                        var ChargeType = tr.find('td:eq(3)').html();
+                        var Amount = tr.find('td:eq(4)').html();
+                        var AccountId =tr.find("td").eq(5).attr('id');
+                        var AccountName =tr.find('td:eq(5)').html();
+
+                        $("#ChargeVM_ChargeId").val(ChargeId);
+                        $("#ChargeVM_Charges").val(Charges);
+                        $("#ChargeVM_ChargeType").val(ChargeType);
+                        $("#ChargeVM_Amount").val(Amount);
+                        $("#ChargeVM_AccountId").val(AccountId);
+                    })
+
+                    $("#tblChargeDetails tbody tr").on("click", ".delete", function () {
+                        if (confirm('Are you sure to remove?')) {
+                            debugger;
+                            var row = $(this).closest("tr");
+                            var id = row.attr('class'); // table row ID
+                            Amount=row.find('td:eq(4)').html();
+                            $('table#tblChargeDetails tr.'+id+'').remove();
+
+                            var gstamount=parseFloat($("#CGSTAmount").val())+parseFloat($("#SGSTAmount").val());
+                            var netpayable = parseFloat($("#NetPayable").val());
+                            Amount=parseFloat(Amount);
+                            $("#NetPayable").val(netpayable + (Amount+gstamount));
+                            $("#ChargeVM_ChargeId").val("");
+                            $("#ChargeVM_Charges").val("");
+                            $("#ChargeVM_ChargeType").val("");
+                            $("#ChargeVM_Amount").val("");
+                            $("#ChargeVM_AccountId").val("");
+                            return false;
+                        }
+                    })
 
                     $.each(result.EligibleLoanAmountValuationDetailsVMList, function (key, val) {
                         var rowCount = $('#tblGoldItemDetails >tbody >tr').length + 1;
@@ -1310,7 +1510,6 @@
                 }
             });
         }
-
 
         $(function () {
             var url = '@Html.Raw(@Url.Action("Delete", "SanctionDisbursement"))';

@@ -120,6 +120,9 @@
     <Compile Include="Entity\GL_SanctionDisburse_KYC_Details_RTR_Result1.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\GL_SanctionDisburse_KYC_Details_RTR_Result2.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\GL_SanctionDisburse_KYC_RTR_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -297,6 +300,9 @@
     <Compile Include="Entity\TGLKYC_BasicDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\TGlReceipt_BasicDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\TGLSanctionDisburse_BasicDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -390,6 +396,8 @@
     <Compile Include="Transaction\RequestFormViewModel.cs" />
     <Compile Include="Transaction\ResidenceVerificationVM.cs" />
     <Compile Include="Transaction\SanctionDisbursementVM.cs" />
+    <Compile Include="Transaction\SanctionEMICalculatorVM.cs" />
+    <Compile Include="Transaction\SanctionTopUpVM.cs" />
     <Compile Include="Transaction\SchemeDetailsVM.cs" />
     <Compile Include="Utilties\ForgotPasswordViewModel.cs" />
     <Compile Include="Utilties\LoginViewModel.cs" />

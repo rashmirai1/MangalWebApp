@@ -347,10 +347,13 @@
                     debugger;
                     var row = $(this);
                     // get first and second td
-                    var first = row.find('td:nth-child(2)').attr('id');
-                    // if exists, remove the tr
-                    if (first == PurityNo) {
-                        isExist = true;
+                    if(currentRow==null)
+                    {
+                        var first = row.find('td:nth-child(2)').attr('id');
+                        // if exists, remove the tr
+                        if (first == PurityNo) {
+                            isExist = true;
+                        }
                     }
                 });
                 if(isExist)

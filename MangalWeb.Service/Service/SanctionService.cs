@@ -55,7 +55,7 @@ namespace MangalWeb.Service.Service
 
         public List<tbl_GLChargeMaster_BasicInfo> FillChargeList()
         {
-            return _sanctionRepository.FillChargeList();
+            return _sanctionRepository.GetChargeList();
         }
 
         public int GetMaxTransactionId()
@@ -96,6 +96,16 @@ namespace MangalWeb.Service.Service
         public void DeleteRecord(int id)
         {
             _sanctionRepository.DeleteRecord(id);
+        }
+
+        public void GetGSTRecord(int pStateId,ref int CGSTAccountNo,ref int? SGSTAccountNo,ref double CGSTTax,ref double SGSTTax)
+        {
+            _sanctionRepository.GetGSTRecord(pStateId,ref CGSTAccountNo,ref SGSTAccountNo,ref CGSTTax,ref SGSTTax);
+        }
+
+        public string GetAccountName(int id)
+        {
+            return _sanctionRepository.GetAccountName(id);
         }
     }
 }
