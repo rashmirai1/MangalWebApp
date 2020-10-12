@@ -18,7 +18,7 @@ namespace MangalWeb.Controllers
             var model = new ValuatorTwoViewModel();
             model.ValuatorTwoDetailsList = new List<ValuatorTwoDetailsViewModel>();
             ViewBag.PurityList = new SelectList(_valuatorTwoService.GetAllPurityMaster(), "Id", "PurityName");
-            ViewBag.ProductList = new SelectList(_valuatorTwoService.GetOrnamentList(), "Id", "ItemName");
+            ViewBag.OrnamentList = new SelectList(_valuatorTwoService.GetOrnamentList(), "ItemId", "ItemName");
             return View(model);
         }
     }

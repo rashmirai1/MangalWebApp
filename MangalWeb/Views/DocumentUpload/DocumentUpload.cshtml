@@ -188,7 +188,6 @@
         </div>
     </section>
                                                 }
-
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -199,14 +198,12 @@
     <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(document).ready(function () {
-
             if (document.URL.indexOf("ID") != -1) {
                 $("#DocumentUploadVM_DocumentId").removeAttr('disabled')
             }
             else {
                 $("#DocumentUploadVM_DocumentId").attr('disabled', 'disabled')
             }
-
             $("#DocDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
             $("#DocumentUploadVM_ExpiryDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
 

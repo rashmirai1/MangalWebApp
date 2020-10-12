@@ -93,6 +93,8 @@
         <EntityTypeShape EntityType="MangalDBNewModel.TGLInterest_Details" Width="1.5" PointX="7.375" PointY="15.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGlReceipt_BasicDetails" Width="1.5" PointX="17.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_OrnamentValuationOneDetails" Width="1.5" PointX="17.625" PointY="14.125" />
+        <AssociationConnector Association="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

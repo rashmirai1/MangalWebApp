@@ -2122,6 +2122,7 @@
     <Content Include="Views\StatdardEndTime\Index.cshtml" />
     <Content Include="Views\ValuatorOne\ValuatorOne.cshtml" />
     <Content Include="Views\ValuatorTwo\ValuatorTwo.cshtml" />
+    <Content Include="Views\ValuatorOne\_CustomerDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

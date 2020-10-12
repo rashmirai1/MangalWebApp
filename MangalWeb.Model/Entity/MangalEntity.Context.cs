@@ -93,6 +93,7 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLGoldStock> TGLGoldStocks { get; set; }
         public virtual DbSet<TGLInterest_Details> TGLInterest_Details { get; set; }
         public virtual DbSet<TGlReceipt_BasicDetails> TGlReceipt_BasicDetails { get; set; }
+        public virtual DbSet<tbl_OrnamentValuationOneDetails> tbl_OrnamentValuationOneDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

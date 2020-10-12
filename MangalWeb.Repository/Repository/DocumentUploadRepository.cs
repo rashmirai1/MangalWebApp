@@ -90,7 +90,6 @@ namespace MangalWeb.Repository.Repository
         public void SaveUpdateRecord(DocumentUploadViewModel DocUploadViewModel)
         {
             Trn_DocumentUpload tblDocUpload = new Trn_DocumentUpload();
-            Trn_DocUploadDetails tbldocuploaddetails = new Trn_DocUploadDetails();
             try
             {
                 string output = Regex.Match(DocUploadViewModel.TransactionNumber, @"\d+").Value;

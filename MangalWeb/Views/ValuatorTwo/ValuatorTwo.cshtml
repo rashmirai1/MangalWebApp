@@ -1,4 +1,4 @@
-﻿@model MangalWeb.Model.Transaction.ValuatorOneViewModel
+﻿@model MangalWeb.Model.Transaction.ValuatorTwoViewModel
 @{
     ViewBag.Title = "ValuatorTwoViewModel";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -88,7 +88,7 @@
                                             <label class="col-md-2 control-label"> Ornament Name <span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 <div class="section">
-                                                    @Html.DropDownListFor(m => m.ValuatorOneDetailsVM.OrnamentId, (SelectList)ViewBag.ProductList, "--Select Ornament--", htmlAttributes: new { @class = "form-control" })
+                                                    @Html.DropDownListFor(m => m.ValuatorTwoDetailsVM.OrnamentId, (SelectList)ViewBag.OrnamentList, "--Select Ornament--", htmlAttributes: new { @class = "form-control" })
                                                     @*<span class="text-danger">@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.LoanAmountGreaterthan)</span>*@
                                                     <i class="arrow"></i>
                                                 </div>
@@ -103,22 +103,22 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label"> Qty <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Qty, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Qty", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.ValuatorTwoDetailsVM.Qty, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Qty", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                                 @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
                                             </div>
                                             <label class="col-md-2 control-label"> Purity <span class="text-danger"> * </span></label>
                                             <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                                 <div class="section">
                                                     <label class="field select">
-                                                        @Html.DropDownListFor(m => m.ValuatorOneDetailsVM.PurityId, (SelectList)ViewBag.PurityList, "--Select Purity--", htmlAttributes: new { @class = "form-control" })
-                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.ValuatorOneDetailsVM.PurityId)</span>
+                                                        @Html.DropDownListFor(m => m.ValuatorTwoDetailsVM.PurityId, (SelectList)ViewBag.PurityList, "--Select Purity--", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.ValuatorTwoDetailsVM.PurityId)</span>
                                                         <i class="arrow"></i>
                                                     </label>
                                                 </div>
                                             </div>
                                             <label class="col-md-2 control-label"> Gross Weight <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.GrossWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Gross Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.ValuatorTwoDetailsVM.GrossWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Gross Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                                 @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
                                             </div>
                                         </div>
@@ -127,22 +127,22 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label"> Deductions <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Duductions, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Duductions", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.ValuatorTwoDetailsVM.Duductions, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Duductions", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                                 @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.Duductions, "", new { @class = "text-danger" })*@
                                             </div>
                                             <label class="col-md-2 control-label"> Net Weight <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.NetWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Net Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.ValuatorTwoDetailsVM.NetWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Net Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                                 @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
                                             </div>
                                             <label class="col-md-2 control-label"> Rate <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Rate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Rate", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.ValuatorTwoDetailsVM.Rate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Rate", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                                 @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.Duductions, "", new { @class = "text-danger" })*@
                                             </div>
                                             <label class="col-md-2 control-label"> Total <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Total, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Total", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.ValuatorTwoDetailsVM.Total, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Total", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                                 @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
                                             </div>
                                             <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnAddValuationDetails" />

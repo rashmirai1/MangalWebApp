@@ -18,7 +18,7 @@ namespace MangalWeb.Model.Transaction
         public int PurityId { get; set; }
         public string PurityName { get; set; }
         public decimal GrossWeight { get; set; }
-        public decimal Duductions { get; set; }
+        public decimal Deductions { get; set; }
         public decimal NetWeight { get; set; }
         public decimal Rate { get; set; }
         public decimal Total { get; set; }

@@ -104,12 +104,23 @@ namespace MangalWeb.Repository.Repository
                         {
                             #region save method
                             //insert record in charge details table
+                            int i = 0;
+                            int tempchargeid = 0;
                             foreach (var citem in model.ChargeDetailList)
                             {
                                 if (citem.ChargeId != null && citem.ChargeId > 0)
                                 {
                                     citem.ID = _context.TGLSanctionDisburse_ChargesDetails.Any() ? _context.TGLSanctionDisburse_ChargesDetails.Max(x => x.CHID) + 1 : 1;
-                                    var countt = _context.SP_InsertRecordInSanctionChargeDetails(citem.ID, value, citem.CDetailsID, Convert.ToDouble(citem.Charges), Convert.ToDouble(citem.Amount), citem.AccountId, citem.ChargeId);
+                                    if (i < 1)
+                                    {
+                                        var countt = _context.SP_InsertRecordInSanctionChargeDetails(citem.ID, value, citem.CDetailsID, Convert.ToDouble(citem.Charges), Convert.ToDouble(citem.Amount), citem.AccountId, citem.ChargeId);
+                                        tempchargeid = citem.ID;
+                                    }
+                                    else
+                                    {
+                                        var countt = _context.SP_InsertRecordInSanctionChargeDetails(citem.ID, value, citem.CDetailsID, Convert.ToDouble(citem.Charges), Convert.ToDouble(citem.Amount), citem.AccountId, tempchargeid);
+                                    }
+                                    i++;
                                 }
                             }
                             int GPID = 67; //Group ID of Sundry Debtors
@@ -283,46 +294,9 @@ namespace MangalWeb.Repository.Repository
                                         {
                                             datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, AccID, CreditAmount, DebitAmount);
                                         }
-                                        //insert record in TGLSanctionDisburse_ChargesPostingDetails
                                         var maxchargepostingid = _context.TGLSanctionDisburse_ChargesPostingDetails.Any() ? _context.TGLSanctionDisburse_ChargesPostingDetails.Max(x => x.ID) + 1 : 1;
                                         //insert record in charge posting details
                                         count = _context.SP_InsertRecordInChargePostingDetails(maxchargepostingid, value, model.LoanAccountNo, ContraAccID, DebitAmount, CreditAmount, LedgerID, model.FinancialYearId);
-                                        CGSTAmount = CreditAmount * Convert.ToDouble(model.CGSTTax) / 100;
-                                        SGSTAmount = CreditAmount * Convert.ToDouble(model.SGSTTax) / 100;
-                                        CreditAmount = Convert.ToDouble(Decimal.Round(Convert.ToDecimal(CreditAmount), 2));
-                                        CGSTAmount = Convert.ToDouble(Decimal.Round(Convert.ToDecimal(CGSTAmount), 2));
-                                        SGSTAmount = Convert.ToDouble(Decimal.Round(Convert.ToDecimal(SGSTAmount), 2));
-                                        //GST charge calculation
-                                        Narration = "Amount received against New GST Charges";
-                                        ContraAccID = AccountID;
-                                        AccID = Convert.ToInt32(model.CGSTAccountId);
-                                        //insert in charge account
-                                        LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitAmount, CGSTAmount, ContraAccID, Narration, model.FinancialYearId);
-                                        if (LedgerID > 0)
-                                        {
-                                            datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, AccID, DebitAmount, CGSTAmount);
-                                        }
-                                        //insert record in customer account
-                                        LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), ContraAccID, CGSTAmount, DebitAmount, AccID, Narration, model.FinancialYearId);
-                                        if (LedgerID > 0)
-                                        {
-                                            datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, ContraAccID, CGSTAmount, DebitAmount);
-                                        }
-                                        if (model.SGSTAccountId > 0)
-                                        {
-                                            AccID = Convert.ToInt32(model.SGSTAccountId);
-                                            LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitAmount, SGSTAmount, ContraAccID, Narration, model.FinancialYearId);
-                                            if (LedgerID > 0)
-                                            {
-                                                datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, AccID, DebitAmount, SGSTAmount);
-                                            }
-                                            LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), ContraAccID, SGSTAmount, DebitAmount, AccID, Narration, model.FinancialYearId);
-                                            if (LedgerID > 0)
-                                            {
-                                                datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, ContraAccID, SGSTAmount, DebitAmount);
-                                            }
-                                        }
-                                        //end
                                     }
                                 }
                             }
@@ -370,7 +344,7 @@ namespace MangalWeb.Repository.Repository
                                 datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, AccID, DebitAmt, CreditAmt);
                             }
                             //debit side in customer account
-                            LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), ContraAccID, CreditAmt, DebitAmt, AccID, Narration, model.FinancialYearId);
+                            LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), ConAccID, CreditAmt, DebitAmt, AccID, Narration, model.FinancialYearId);
                             if (LedgerID > 0)
                             {
                                 datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, ContraAccID, CreditAmt, DebitAmt);
@@ -410,12 +384,24 @@ namespace MangalWeb.Repository.Repository
                         {
                             #region save method
                             //insert record in charge details table
+                            //insert record in charge details table
+                            int i = 0;
+                            int tempchargeid = 0;
                             foreach (var citem in model.ChargeDetailList)
                             {
                                 if (citem.ChargeId != null && citem.ChargeId > 0)
                                 {
                                     citem.ID = _context.TGLSanctionDisburse_ChargesDetails.Any() ? _context.TGLSanctionDisburse_ChargesDetails.Max(x => x.CHID) + 1 : 1;
-                                    var countt = _context.SP_InsertRecordInSanctionChargeDetails(citem.ID, value, citem.CDetailsID, Convert.ToDouble(citem.Charges), Convert.ToDouble(citem.Amount), citem.AccountId, citem.ChargeId);
+                                    if (i < 1)
+                                    {
+                                        var countt = _context.SP_InsertRecordInSanctionChargeDetails(citem.ID, value, citem.CDetailsID, Convert.ToDouble(citem.Charges), Convert.ToDouble(citem.Amount), citem.AccountId, citem.ChargeId);
+                                        tempchargeid = citem.ID;
+                                    }
+                                    else
+                                    {
+                                        var countt = _context.SP_InsertRecordInSanctionChargeDetails(citem.ID, value, citem.CDetailsID, Convert.ToDouble(citem.Charges), Convert.ToDouble(citem.Amount), citem.AccountId, tempchargeid);
+                                    }
+                                    i++;
                                 }
                             }
                             int GPID = 67; //Group ID of Sundry Debtors
@@ -668,15 +654,12 @@ namespace MangalWeb.Repository.Repository
                                         CreditID = Convert.ToInt32(chargeitem.AccountId);
                                         AccID = NewAccountID;
                                         ContraAccID = CreditID;
-                                        if (CreditID > 0)
-                                        {
-                                            DebitAmount = Convert.ToDouble(chargeitem.Amount);
-                                            CreditAmount = 0;
-                                            //retrive max id from charge posting details
-                                            var maxpostingid = _context.TGLSanctionDisburse_ChargesPostingDetails.Any() ? _context.TGLSanctionDisburse_ChargesPostingDetails.Max(x => x.ID) + 1 : 1;
-                                            //insert record in charge posting details
-                                            count = _context.SP_InsertRecordInChargePostingDetails(maxpostingid, value, model.LoanAccountNo, AccID, DebitAmount, CreditAmount, LedgerID, model.FinancialYearId);
-                                        }
+                                        DebitAmount = Convert.ToDouble(chargeitem.Amount);
+                                        CreditAmount = 0;
+                                        //retrive max id from charge posting details
+                                        var maxpostingid = _context.TGLSanctionDisburse_ChargesPostingDetails.Any() ? _context.TGLSanctionDisburse_ChargesPostingDetails.Max(x => x.ID) + 1 : 1;
+                                        //insert record in charge posting details
+                                        count = _context.SP_InsertRecordInChargePostingDetails(maxpostingid, value, model.LoanAccountNo, AccID, DebitAmount, CreditAmount, LedgerID, model.FinancialYearId);
                                         // Contra Entry in FLedger (Ledger Entry for Charges)      
                                         DebitAmount = 0;
                                         CreditAmount = Convert.ToDouble(chargeitem.Amount);
@@ -695,42 +678,6 @@ namespace MangalWeb.Repository.Repository
                                         var maxchargepostingid = _context.TGLSanctionDisburse_ChargesPostingDetails.Any() ? _context.TGLSanctionDisburse_ChargesPostingDetails.Max(x => x.ID) + 1 : 1;
                                         //insert record in charge posting details
                                         count = _context.SP_InsertRecordInChargePostingDetails(maxchargepostingid, value, model.LoanAccountNo, ContraAccID, DebitAmount, CreditAmount, LedgerID, model.FinancialYearId);
-                                        CGSTAmount = CreditAmount * Convert.ToDouble(model.CGSTTax) / 100;
-                                        SGSTAmount = CreditAmount * Convert.ToDouble(model.SGSTTax) / 100;
-                                        CreditAmount = Convert.ToDouble(Decimal.Round(Convert.ToDecimal(CreditAmount), 2));
-                                        CGSTAmount = Convert.ToDouble(Decimal.Round(Convert.ToDecimal(CGSTAmount), 2));
-                                        SGSTAmount = Convert.ToDouble(Decimal.Round(Convert.ToDecimal(SGSTAmount), 2));
-                                        //GST charge calculation
-                                        Narration = "Amount received against GST Charges";
-                                        ContraAccID = NewAccountID;
-                                        AccID = Convert.ToInt32(model.CGSTAccountId);
-                                        //insert in GST Account
-                                        LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitAmount, CGSTAmount, ContraAccID, Narration, model.FinancialYearId);
-                                        if (LedgerID > 0)
-                                        {
-                                            datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, AccID, DebitAmount, CGSTAmount);
-                                        }
-                                        //insert record in customer account
-                                        LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), ContraAccID, CGSTAmount, DebitAmount, AccID, Narration, model.FinancialYearId);
-                                        if (LedgerID > 0)
-                                        {
-                                            datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, ContraAccID, CGSTAmount, DebitAmount);
-                                        }
-                                        if (model.SGSTAccountId > 0)
-                                        {
-                                            AccID = Convert.ToInt32(model.SGSTAccountId);
-                                            LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitAmount, SGSTAmount, ContraAccID, Narration, model.FinancialYearId);
-                                            if (LedgerID > 0)
-                                            {
-                                                datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, AccID, DebitAmount, SGSTAmount);
-                                            }
-                                            LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), ContraAccID, SGSTAmount, DebitAmount, AccID, Narration, model.FinancialYearId);
-                                            if (LedgerID > 0)
-                                            {
-                                                datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, ContraAccID, SGSTAmount, DebitAmount);
-                                            }
-                                        }
-                                        //end
                                     }
                                 }
                             }
@@ -846,12 +793,24 @@ namespace MangalWeb.Repository.Repository
                         }
                         #endregion
                         //insert record in charge details table
+                        //insert record in charge details table
+                        int i = 0;
+                        int tempchargeid = 0;
                         foreach (var citem in model.ChargeDetailList)
                         {
                             if (citem.ChargeId != null && citem.ChargeId > 0)
                             {
                                 citem.ID = _context.TGLSanctionDisburse_ChargesDetails.Any() ? _context.TGLSanctionDisburse_ChargesDetails.Max(x => x.CHID) + 1 : 1;
-                                var countt = _context.SP_InsertRecordInSanctionChargeDetails(citem.ID, value, citem.CDetailsID, Convert.ToDouble(citem.Charges), Convert.ToDouble(citem.Amount), citem.AccountId, citem.ChargeId);
+                                if (i < 1)
+                                {
+                                    var countt = _context.SP_InsertRecordInSanctionChargeDetails(citem.ID, value, citem.CDetailsID, Convert.ToDouble(citem.Charges), Convert.ToDouble(citem.Amount), citem.AccountId, citem.ChargeId);
+                                    tempchargeid = citem.ID;
+                                }
+                                else
+                                {
+                                    var countt = _context.SP_InsertRecordInSanctionChargeDetails(citem.ID, value, citem.CDetailsID, Convert.ToDouble(citem.Charges), Convert.ToDouble(citem.Amount), citem.AccountId, tempchargeid);
+                                }
+                                i++;
                             }
                         }
                         int BCPID = 0;
@@ -1024,17 +983,14 @@ namespace MangalWeb.Repository.Repository
                                     CGSTAmount = 0;
                                     SGSTAmount = 0;
                                     CreditID = Convert.ToInt32(chargeitem.AccountId);
-                                    if (CreditID > 0)
-                                    {
-                                        AccID = accountID;
-                                        ContraAccID = CreditID;
-                                        DebitAmount = Convert.ToDouble(chargeitem.Amount);
-                                        CreditAmount = 0;
-                                        //retrive max id from charge posting details
-                                        var maxpostingid = _context.TGLSanctionDisburse_ChargesPostingDetails.Any() ? _context.TGLSanctionDisburse_ChargesPostingDetails.Max(x => x.ID) + 1 : 1;
-                                        //insert record in charge posting details
-                                        var count1 = _context.SP_InsertRecordInChargePostingDetails(maxpostingid, model.ID, model.LoanAccountNo, AccID, DebitAmount, CreditAmount, LedgerID, model.FinancialYearId);
-                                    }
+                                    AccID = accountID;
+                                    ContraAccID = CreditID;
+                                    DebitAmount = Convert.ToDouble(chargeitem.Amount);
+                                    CreditAmount = 0;
+                                    //retrive max id from charge posting details
+                                    var maxpostingid = _context.TGLSanctionDisburse_ChargesPostingDetails.Any() ? _context.TGLSanctionDisburse_ChargesPostingDetails.Max(x => x.ID) + 1 : 1;
+                                    //insert record in charge posting details
+                                    var count1 = _context.SP_InsertRecordInChargePostingDetails(maxpostingid, model.ID, model.LoanAccountNo, AccID, DebitAmount, CreditAmount, LedgerID, model.FinancialYearId);
                                     // Contra Entry in FLedger (Ledger Entry for Charges)      
                                     ContraAccID = Convert.ToInt32(chargeitem.AccountId);
                                     DebitAmount = 0;
@@ -1054,43 +1010,6 @@ namespace MangalWeb.Repository.Repository
                                     var maxchargepostingid = _context.TGLSanctionDisburse_ChargesPostingDetails.Any() ? _context.TGLSanctionDisburse_ChargesPostingDetails.Max(x => x.ID) + 1 : 1;
                                     //insert record in charge posting details
                                     var count = _context.SP_InsertRecordInChargePostingDetails(maxchargepostingid, value, model.LoanAccountNo, ContraAccID, DebitAmount, CreditAmount, LedgerID, model.FinancialYearId);
-
-                                    CGSTAmount = CreditAmount * Convert.ToDouble(model.CGSTAmount) / 100;
-                                    SGSTAmount = CreditAmount * Convert.ToDouble(model.SGSTAmount) / 100;
-                                    CreditAmount = Convert.ToDouble(Decimal.Round(Convert.ToDecimal(CreditAmount), 2));
-                                    CGSTAmount = Convert.ToDouble(Decimal.Round(Convert.ToDecimal(CGSTAmount), 2));
-                                    SGSTAmount = Convert.ToDouble(Decimal.Round(Convert.ToDecimal(SGSTAmount), 2));
-                                    //GST charge calculation
-                                    Narration = "Amount received against GST Charges";
-                                    ContraAccID = accountID;
-                                    AccID = Convert.ToInt32(model.CGSTAccountId);
-                                    //insert in charge account
-                                    LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitAmount, CGSTAmount, ContraAccID, Narration, model.FinancialYearId);
-                                    if (LedgerID > 0)
-                                    {
-                                        datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, AccID, DebitAmount, CGSTAmount);
-                                    }
-                                    //insert record in customer account
-                                    LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), ContraAccID, CGSTAmount, DebitAmount, AccID, Narration, model.FinancialYearId);
-                                    if (LedgerID > 0)
-                                    {
-                                        datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, ContraAccID, CGSTAmount, DebitAmount);
-                                    }
-                                    if (model.SGSTAccountId > 0)
-                                    {
-                                        AccID = Convert.ToInt32(model.SGSTAccountId);
-                                        LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitAmount, SGSTAmount, ContraAccID, Narration, model.FinancialYearId);
-                                        if (LedgerID > 0)
-                                        {
-                                            datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, AccID, DebitAmount, SGSTAmount);
-                                        }
-                                        LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), ContraAccID, SGSTAmount, DebitAmount, AccID, Narration, model.FinancialYearId);
-                                        if (LedgerID > 0)
-                                        {
-                                            datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, ContraAccID, SGSTAmount, DebitAmount);
-                                        }
-                                    }
-                                    //end
                                 }
                             }
                         }
@@ -1136,7 +1055,7 @@ namespace MangalWeb.Repository.Repository
                             datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, AccID, DebitAmt, CreditAmt);
                         }
                         //debit side in customer account
-                        LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), ContraAccID, CreditAmt, DebitAmt, AccID, Narration, model.FinancialYearId);
+                        LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), ConAccID, CreditAmt, DebitAmt, AccID, Narration, model.FinancialYearId);
                         if (LedgerID > 0)
                         {
                             datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, ContraAccID, CreditAmt, DebitAmt);

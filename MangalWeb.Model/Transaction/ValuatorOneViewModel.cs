@@ -13,10 +13,11 @@ namespace MangalWeb.Model.Transaction
 
         public int TransactionId { get; set; }
         public int KycId { get; set; }
-        public string TransactionNumber { get; set; }
+        public int PreSanctionId { get; set; }
         [Required(ErrorMessage = "Please Select Customer")]
         public string CustomerId { get; set; }
         public string ApplicationNo { get; set; }
+        public string AppliedDate { get; set; }
 
         public string Comments { get; set; }
         public int BranchId { get; set; }

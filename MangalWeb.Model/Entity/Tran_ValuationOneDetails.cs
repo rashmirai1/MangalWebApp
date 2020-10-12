@@ -14,6 +14,12 @@ namespace MangalWeb.Model.Entity
     
     public partial class Tran_ValuationOneDetails
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Tran_ValuationOneDetails()
+        {
+            this.tbl_OrnamentValuationOneDetails = new HashSet<tbl_OrnamentValuationOneDetails>();
+        }
+    
         public int Id { get; set; }
         public Nullable<int> PreSanctionId { get; set; }
         public string TransactionId { get; set; }
@@ -22,5 +28,8 @@ namespace MangalWeb.Model.Entity
         public string Comments { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_OrnamentValuationOneDetails> tbl_OrnamentValuationOneDetails { get; set; }
     }
 }

@@ -385,6 +385,25 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="OTP" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="tbl_OrnamentValuationOneDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ValuationOneID" Type="int" Nullable="false" />
+          <Property Name="OrnamentId" Type="int" Nullable="false" />
+          <Property Name="OrnamentImage" Type="image" />
+          <Property Name="ContentType" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImageName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="PurityId" Type="int" Nullable="false" />
+          <Property Name="GrossWt" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Deduction" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="NtWt" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Rate" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="TotalValuation" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
         <EntityType Name="tbl_PreSanctionDetails">
           <Key>
             <PropertyRef Name="Id" />
@@ -1143,6 +1162,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="updateddate" Type="datetime" />
           <Property Name="IsVerified" Type="int" />
         </EntityType>
+        <Association Name="FK__tbl_Ornam__Valua__536D5C82">
+          <End Role="Tran_ValuationOneDetails" Type="Self.Tran_ValuationOneDetails" Multiplicity="1" />
+          <End Role="tbl_OrnamentValuationOneDetails" Type="Self.tbl_OrnamentValuationOneDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tran_ValuationOneDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_OrnamentValuationOneDetails">
+              <PropertyRef Name="ValuationOneID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__tbl_Resid__PreSa__39AD8A7F">
           <End Role="tbl_PreSanctionDetails" Type="Self.tbl_PreSanctionDetails" Multiplicity="1" />
           <End Role="tbl_ResidenceVerification" Type="Self.tbl_ResidenceVerification" Multiplicity="*" />
@@ -1720,6 +1751,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="tbl_GLChargeMaster_BasicInfo" EntityType="Self.tbl_GLChargeMaster_BasicInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_GLChargeMaster_Details" EntityType="Self.tbl_GLChargeMaster_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_KYCMobileOTP" EntityType="Self.tbl_KYCMobileOTP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_OrnamentValuationOneDetails" EntityType="Self.tbl_OrnamentValuationOneDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_PreSanctionDetails" EntityType="Self.tbl_PreSanctionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ResidenceVerification" EntityType="Self.tbl_ResidenceVerification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserCategory" EntityType="Self.tbl_UserCategory" Schema="dbo" store:Type="Tables" />
@@ -1794,6 +1826,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
     [TGLInterest_Details].[ROIRowID] AS [ROIRowID]
     FROM [dbo].[TGLInterest_Details] AS [TGLInterest_Details]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK__tbl_Ornam__Valua__536D5C82" Association="Self.FK__tbl_Ornam__Valua__536D5C82">
+            <End Role="Tran_ValuationOneDetails" EntitySet="Tran_ValuationOneDetails" />
+            <End Role="tbl_OrnamentValuationOneDetails" EntitySet="tbl_OrnamentValuationOneDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK__tbl_Resid__PreSa__39AD8A7F" Association="Self.FK__tbl_Resid__PreSa__39AD8A7F">
             <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
             <End Role="tbl_ResidenceVerification" EntitySet="tbl_ResidenceVerification" />
@@ -2340,6 +2376,11 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <Parameter Name="ClosingBalanceDebit" Mode="In" Type="Double" />
             <Parameter Name="ClosingBalanceCredit" Mode="In" Type="Double" />
           </FunctionImport>
+          <EntitySet Name="tbl_OrnamentValuationOneDetails" EntityType="MangalDBNewModel.tbl_OrnamentValuationOneDetails" />
+          <AssociationSet Name="FK__tbl_Ornam__Valua__536D5C82" Association="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82">
+            <End Role="Tran_ValuationOneDetails" EntitySet="Tran_ValuationOneDetails" />
+            <End Role="tbl_OrnamentValuationOneDetails" EntitySet="tbl_OrnamentValuationOneDetails" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3943,6 +3984,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" />
+          <NavigationProperty Name="tbl_OrnamentValuationOneDetails" Relationship="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82" FromRole="Tran_ValuationOneDetails" ToRole="tbl_OrnamentValuationOneDetails" />
         </EntityType>
         <EntityType Name="TBankCash_PaymentDetails">
           <Key>
@@ -4182,6 +4224,38 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="TotalAdvInterestAmount" Type="Decimal" Precision="11" Scale="2" />
           <Property Name="OSAdvInterestAmount" Type="Decimal" Precision="11" Scale="2" />
         </EntityType>
+        <EntityType Name="tbl_OrnamentValuationOneDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ValuationOneID" Type="Int32" Nullable="false" />
+          <Property Name="OrnamentId" Type="Int32" Nullable="false" />
+          <Property Name="OrnamentImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="PurityId" Type="Int32" Nullable="false" />
+          <Property Name="GrossWt" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Deduction" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="NtWt" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Rate" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="TotalValuation" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Tran_ValuationOneDetails" Relationship="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82" FromRole="tbl_OrnamentValuationOneDetails" ToRole="Tran_ValuationOneDetails" />
+        </EntityType>
+        <Association Name="FK__tbl_Ornam__Valua__536D5C82">
+          <End Type="MangalDBNewModel.Tran_ValuationOneDetails" Role="Tran_ValuationOneDetails" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tbl_OrnamentValuationOneDetails" Role="tbl_OrnamentValuationOneDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tran_ValuationOneDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_OrnamentValuationOneDetails">
+              <PropertyRef Name="ValuationOneID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5723,6 +5797,26 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_PRI" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_PRI" />
           <FunctionImportMapping FunctionImportName="DeleteSanctionDisbursementData" FunctionName="MangalDBNewModel.Store.DeleteSanctionDisbursementData" />
           <FunctionImportMapping FunctionImportName="SP_InsertrecordinFCompanyYearEndClosing" FunctionName="MangalDBNewModel.Store.SP_InsertrecordinFCompanyYearEndClosing" />
+          <EntitySetMapping Name="tbl_OrnamentValuationOneDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_OrnamentValuationOneDetails">
+              <MappingFragment StoreEntitySet="tbl_OrnamentValuationOneDetails">
+                <ScalarProperty Name="TotalValuation" ColumnName="TotalValuation" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="NtWt" ColumnName="NtWt" />
+                <ScalarProperty Name="Deduction" ColumnName="Deduction" />
+                <ScalarProperty Name="GrossWt" ColumnName="GrossWt" />
+                <ScalarProperty Name="PurityId" ColumnName="PurityId" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="OrnamentImage" ColumnName="OrnamentImage" />
+                <ScalarProperty Name="OrnamentId" ColumnName="OrnamentId" />
+                <ScalarProperty Name="ValuationOneID" ColumnName="ValuationOneID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

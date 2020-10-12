@@ -115,7 +115,7 @@ namespace MangalWeb.Controllers
 
         #endregion Insert Data
 
-
+        #region AddDocument
         [HttpPost]
         public JsonResult AddDocument()
         {
@@ -157,7 +157,9 @@ namespace MangalWeb.Controllers
             Session["sub"] = sessionlist;
             return Json(docupload, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region Remove
         public ActionResult Remove(int id)
         {
             var list = (List<DocumentUploadDetailsVM>)Session["sub"];
@@ -165,12 +167,15 @@ namespace MangalWeb.Controllers
             Session["sub"] = list;
             return Json(1, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region Download
         public FileResult Download(int id)
         {
             var file = _documentUploadService.GetUploadDocuments(id);
             return File(file.UploadFile, file.ContentType);
         }
+        #endregion
 
         #region GetDcoument
         public JsonResult GetDcoument(int id)
@@ -188,6 +193,7 @@ namespace MangalWeb.Controllers
         }
         #endregion
 
+        #region GetDocUploadTable
         public ActionResult GetDocUploadTable(string Operation)
         {
             Session["Operation"] = Operation;
@@ -195,6 +201,7 @@ namespace MangalWeb.Controllers
             var list = _documentUploadService.SetModalList();
             return PartialView("_DocumentUploadList", list);
         }
+        #endregion
 
         #region GetDocUploadDetailsById
 

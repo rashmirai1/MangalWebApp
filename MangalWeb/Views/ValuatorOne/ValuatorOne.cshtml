@@ -8,8 +8,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
-    @Html.HiddenFor(x => x.TransactionId)
-    @Html.HiddenFor(x => x.KycId)
+    @Html.HiddenFor(x => x.PreSanctionId)
     <header id="topbar" class="affix">
         <div class="col-md-5 col-sm-4 col-xs-12">
             <div class="topbar-left">
@@ -44,7 +43,7 @@
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Transaction Id<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 <span class="text-danger" id="CustomErr"> </span>
-                                                @Html.EditorFor(model => model.TransactionNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Id", @readonly = true } })
+                                                @Html.EditorFor(model => model.TransactionId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Id", @readonly = true } })
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Customer Id<span class="text-danger">*</span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -68,124 +67,123 @@
                                                 <input type="file" />
                                             </div>
                                         </div>
-                                        </div>
+                                    </div>
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                            <div class="form-group">
-                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Comments<span class="text-danger">*</span></label>
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                    @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Comments", @cols = "20", @rows = "2", @style = "resize:none;" })
-                                                    @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Comments<span class="text-danger">*</span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Comments", @cols = "20", @rows = "2", @style = "resize:none;" })
+                                                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                     </div>
-                                    <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
-                                    <label><b>Valuation Details :</b></label><br /><br />
-                                    <hr style="margin-top:0px;" />
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label class="col-md-2 control-label"> Ornament Name <span class="text-danger"> * </span></label>
-                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                    <div class="section">
-                                                        @Html.DropDownListFor(m => m.ValuatorOneDetailsVM.OrnamentId, (SelectList)ViewBag.ProductList, "--Select Ornament--", htmlAttributes: new { @class = "form-control" })
-                                                        @*<span class="text-danger">@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.LoanAmountGreaterthan)</span>*@
+                                </div>
+                                <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
+                                <label><b>Valuation Details :</b></label><br /><br />
+                                <hr style="margin-top:0px;" />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"> Ornament Name <span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <div class="section">
+                                                    @Html.DropDownListFor(m => m.ValuatorOneDetailsVM.OrnamentId, (SelectList)ViewBag.OrnamentList, "--Select Ornament--", htmlAttributes: new { @class = "form-control" })
+                                                    @*<span class="text-danger">@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.LoanAmountGreaterthan)</span>*@
+                                                    <i class="arrow"></i>
+                                                </div>
+                                            </div>
+                                            <label class="col-md-2 control-label" id="lblSerialNumber"> Ornament Image <span class="text-danger"> * </span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                <input type="file" id="OrnamentImageUpload" />
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"> Qty <span class="text-danger"> * </span> </label>
+                                            <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Qty, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Qty", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
+                                            </div>
+                                            <label class="col-md-2 control-label"> Purity <span class="text-danger"> * </span></label>
+                                            <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.ValuatorOneDetailsVM.PurityId, (SelectList)ViewBag.PurityList, "--Select Purity--", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.ValuatorOneDetailsVM.PurityId)</span>
                                                         <i class="arrow"></i>
-                                                    </div>
-                                                </div>
-                                                <label class="col-md-2 control-label" id="lblSerialNumber"> Ornament Image <span class="text-danger"> * </span></label>
-                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                    <input type="file" />
+                                                    </label>
                                                 </div>
                                             </div>
-                                            <br />
-                                            <br />
-                                            <div class="form-group">
-                                                <label class="col-md-2 control-label"> Qty <span class="text-danger"> * </span> </label>
-                                                <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                                    @Html.EditorFor(model => model.ValuatorOneDetailsVM.Qty, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Qty", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                                    @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
-                                                </div>
-                                                <label class="col-md-2 control-label"> Purity <span class="text-danger"> * </span></label>
-                                                <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                                    <div class="section">
-                                                        <label class="field select">
-                                                            @Html.DropDownListFor(m => m.ValuatorOneDetailsVM.PurityId, (SelectList)ViewBag.PurityList, "--Select Purity--", htmlAttributes: new { @class = "form-control" })
-                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.ValuatorOneDetailsVM.PurityId)</span>
-                                                            <i class="arrow"></i>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <label class="col-md-2 control-label"> Gross Weight <span class="text-danger"> * </span> </label>
-                                                <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                                    @Html.EditorFor(model => model.ValuatorOneDetailsVM.GrossWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Gross Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                                    @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
-                                                </div>
+                                            <label class="col-md-2 control-label"> Gross Weight <span class="text-danger"> * </span> </label>
+                                            <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.GrossWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Gross Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
                                             </div>
-                                            <br />
-                                            <br />
-                                            <div class="form-group">
-                                                <label class="col-md-2 control-label"> Deductions <span class="text-danger"> * </span> </label>
-                                                <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
-                                                    @Html.EditorFor(model => model.ValuatorOneDetailsVM.Duductions, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Duductions", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                                    @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.Duductions, "", new { @class = "text-danger" })*@
-                                                </div>
-                                                <label class="col-md-2 control-label"> Net Weight <span class="text-danger"> * </span> </label>
-                                                <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
-                                                    @Html.EditorFor(model => model.ValuatorOneDetailsVM.NetWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Net Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                                    @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
-                                                </div>
-                                                <label class="col-md-2 control-label"> Rate <span class="text-danger"> * </span> </label>
-                                                <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
-                                                    @Html.EditorFor(model => model.ValuatorOneDetailsVM.Rate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Rate", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                                    @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.Duductions, "", new { @class = "text-danger" })*@
-                                                </div>
-                                                <label class="col-md-2 control-label"> Total <span class="text-danger"> * </span> </label>
-                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                    @Html.EditorFor(model => model.ValuatorOneDetailsVM.Total, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Total", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                                    @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
-                                                </div>
-                                                <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnAddValuationDetails" />
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label"> Deductions <span class="text-danger"> * </span> </label>
+                                            <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Deductions, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Duductions", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.Duductions, "", new { @class = "text-danger" })*@
                                             </div>
+                                            <label class="col-md-2 control-label"> Net Weight <span class="text-danger"> * </span> </label>
+                                            <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.NetWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Net Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @readonly = true } })
+                                                @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
+                                            </div>
+                                            <label class="col-md-2 control-label"> Rate <span class="text-danger"> * </span> </label>
+                                            <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Rate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Rate", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.Duductions, "", new { @class = "text-danger" })*@
+                                            </div>
+                                            <label class="col-md-2 control-label"> Total <span class="text-danger"> * </span> </label>
+                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Total, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Total", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
+                                            </div>
+                                            <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnAddValuationDetails" />
                                         </div>
                                     </div>
-                                    <div class="panel-body panel-no-padding">
-                                        <div id="divValuationDetails">
-                                            <table cellpadding="0" style="width:90%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblValuationDetails">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="col-sm-2" style="width:2%">Sr.No.</th>
-                                                        <th style="text-align:left">Ornament Name</th>
-                                                        <th style="text-align:left">Ornament Image</th>
-                                                        <th style="text-align:left">Qty</th>
-                                                        <th style="text-align:left">Purity</th>
-                                                        <th style="text-align:left">Gross Weight</th>
-                                                        <th style="text-align:left">Deductions</th>
-                                                        <th style="text-align:left">Net Weight</th>
-                                                        <th style="text-align:left">Rate</th>
-                                                        <th style="text-align:left">Total</th>
-                                                        <th class="text-center" style="width:8%">Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @*@{int j = 1;}
-                                                        @foreach (var item in Model.chargeDetailsCollection)
-                                                        {
-                                                            <tr id="@item.ID">
-                                                                <td>@j</td>
-                                                                <td>@item.LoanAmountGreaterthan</td>
-                                                                <td>@item.LoanAmountLessthan</td>
-                                                                <td>@item.ChargeAmount</td>
-                                                                <td id="@item.ChargeType">@item.ChargeType</td>
-                                                                <td>
-                                                                    <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                            j++;
-                                                        }*@
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                </div>
+                                <div class="panel-body panel-no-padding">
+                                    <div id="divValuationDetails">
+                                        <table cellpadding="0" style="width:100%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblValuationDetails">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-sm-2" style="width:2%">Sr.No.</th>
+                                                    <th style="text-align:left">Ornament Name</th>
+                                                    <th style="text-align:left">Ornament Image</th>
+                                                    <th style="text-align:left">Qty</th>
+                                                    <th style="text-align:left">Purity</th>
+                                                    <th style="text-align:left">Gross Weight</th>
+                                                    <th style="text-align:left">Deductions</th>
+                                                    <th style="text-align:left">Net Weight</th>
+                                                    <th style="text-align:left">Rate</th>
+                                                    <th style="text-align:left">Total</th>
+                                                    <th class="text-center" style="width:8%">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @*@{int j = 1;}
+                                                    @foreach (var item in Model.chargeDetailsCollection)
+                                                    {
+                                                        <tr id="@item.ID">
+                                                            <td>@j</td>
+                                                            <td>@item.LoanAmountGreaterthan</td>
+                                                            <td>@item.LoanAmountLessthan</td>
+                                                            <td>@item.ChargeAmount</td>
+                                                            <td id="@item.ChargeType">@item.ChargeType</td>
+                                                            <td>
+                                                                <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                        j++;
+                                                    }*@
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -193,5 +191,320 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@section javascriptsection{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#divValuationDetails").hide();
+            if (@Model.ValuatorOneDetailsList.Count() > 0) {
+                $("#divValuationDetails").show();
+            }
+
+            $("#ValuatorOneDetailsVM_GrossWeight").on('keyup', function () {
+                var GrossWeight =parseFloat($("#ValuatorOneDetailsVM_GrossWeight").val());
+                var Deductions = parseFloat($("#ValuatorOneDetailsVM_Deductions").val());
+                if(Deductions=="")
+                    Deductions=0;
+                $("#ValuatorOneDetailsVM_NetWeight").val(GrossWeight-Deductions);
+            });
+            $("#ValuatorOneDetailsVM_Deductions").on('keyup', function () {
+                var GrossWeight =parseFloat($("#ValuatorOneDetailsVM_GrossWeight").val());
+                var Deductions = parseFloat($("#ValuatorOneDetailsVM_Deductions").val());
+                $("#ValuatorOneDetailsVM_NetWeight").val(GrossWeight-Deductions);
+            });
+            $("#ValuatorOneDetailsVM_Rate").on('keyup', function () {
+                var NetWeight =parseFloat($("#ValuatorOneDetailsVM_NetWeight").val());
+                var Rate = parseFloat($("#ValuatorOneDetailsVM_Rate").val());
+                $("#ValuatorOneDetailsVM_Total").val(NetWeight*Rate);
+            });
+        });
+        var sr_no = 0;
+        var trid = 0;
+        currentRow = null;
+        $("#btnAddValuationDetails").click(function () {
+            debugger;
+            $("#CustomErrr").text("");
+            $('[data-toggle="tooltip"]').tooltip();
+            var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+            var index = $("#tblValuationDetails tbody tr:last").index();
+            debugger;
+            var srno = 0;
+            var newtrno = trid;
+            if (sr_no == 0) {
+                srno = index + 2;
+                newtrno = 0;
+            }
+            else {
+                srno = sr_no;
+            }
+            sr_no = 0;
+            trid = 0;
+
+            var OrnamentId = $("#ValuatorOneDetailsVM_OrnamentId").val();
+            var OrnamentName = $("#ValuatorOneDetailsVM_OrnamentId option:selected").text();
+            var Qty = $("#ValuatorOneDetailsVM_Qty").val();
+            var PurityId = $("#ValuatorOneDetailsVM_PurityId").val();
+            var PurityName = $("#ValuatorOneDetailsVM_PurityId option:selected").text();
+            var GrossWeight = $("#ValuatorOneDetailsVM_GrossWeight").val();
+            var Deductions = $("#ValuatorOneDetailsVM_Deductions").val();
+            var NetWeight = $("#ValuatorOneDetailsVM_NetWeight").val();
+            var Rate = $("#ValuatorOneDetailsVM_Rate").val();
+            var Total = $("#ValuatorOneDetailsVM_Total").val();
+            //var filename=$("#UploadedFile").val();
+            var filename = $("#OrnamentImageUpload").val();
+            debugger;
+            var isExist = false;
+            $("#tblValuationDetails TBODY tr").each(function () {
+                // get row
+                debugger;
+                var row = $(this);
+                // get first and second td
+                var first = row.find('td:nth-child(2)').attr('id');
+                var second = row.find('td:nth-child(5)').attr('id');
+                // if exists, remove the tr
+                if (first == OrnamentId && second == PurityId) {
+                    isExist = true;
+                }
+            });
+            if (isExist) {
+                alert("The same record already Exist");
+                return false;
+            }
+            else {
+                if (currentRow) {
+                    $("#tblValuationDetails tbody").find($(currentRow)).replaceWith(row);
+                    $("#ValuatorOneDetailsVM_OrnamentId").val("");
+                    $("#ValuatorOneDetailsVM_Qty").val("");
+                    $("#ValuatorOneDetailsVM_PurityId").val("");
+                    $("#ValuatorOneDetailsVM_GrossWeight").val("");
+                    $("#ValuatorOneDetailsVM_Deductions").val("");
+                    $("#ValuatorOneDetailsVM_NetWeight").val("");
+                    $("#ValuatorOneDetailsVM_Rate").val("");
+                    $("#ValuatorOneDetailsVM_Total").val("");
+                    currentRow = null;
+                }
+                else {
+                    if (OrnamentId != "" && PurityId != "") {
+                        var fileUpload = $("#OrnamentImageUpload").get(0);
+                        var files = fileUpload.files;
+                        // Create FormData object
+                        fileData = new FormData();
+                        // Looping over all files and add it to FormData object
+                        for (var i = 0; i < files.length; i++) {
+                            fileData.append("OrnamentImage", files[i]);
+                        }
+                        var row = '<tr id=' + newtrno + '>' +
+                      '<td width="10%">' + srno + '</td>' +
+                      '<td width="20%" id="' + OrnamentId + '">' + OrnamentName + '</td>' +
+                      '<td width="10%"><a href="#">' + files[0].name + '</a></td>"' +
+                      '<td width="8%">' + Qty + '</td>' +
+                      '<td width="20%" id="' + PurityId + '">' + PurityName + '</td>' +
+                      '<td width="8%">' + GrossWeight + '</td>' +
+                      '<td width="8%">' + Deductions + '</td>' +
+                      '<td width="8%">' + NetWeight + '</td>' +
+                      '<td width="8%">' + Rate + '</td>' +
+                      '<td width="8%">' + Total + '</td>' +
+                      '<td id=' + srno + '' + actions + '</td>' +
+                      '</tr>';
+                        $("#tblValuationDetails tbody").append(row);
+                        $("#divValuationDetails").show();
+                        return;
+                        // Adding one more key to FormData object
+                        fileData.append('Id', srno);
+                        fileData.append('DocumentTypeId', DocumentTypeId);
+                        fileData.append('DocumentId', DocumentId);
+                        fileData.append('ExpiryDate', ExpiryDate);
+                        fileData.append('SpecifyOther', SpecifyOther);
+                        fileData.append('NameonDocument', NameonDocument);
+                        $.ajax({
+                            url: '/ValuatorOne/AddDocument',
+                            type: "POST",
+                            contentType: false, // Not to set any content header
+                            processData: false, // Not to process data
+                            data: fileData,
+                            success: function (result) {
+                            },
+                            error: function (err) {
+                                //alert(err.statusText);
+                            }
+                        });
+                        $("#ValuatorOneDetailsVM_OrnamentId").val("");
+                        $("#ValuatorOneDetailsVM_Qty").val("");
+                        $("#ValuatorOneDetailsVM_PurityId").val("");
+                        $("#ValuatorOneDetailsVM_GrossWeight").val("");
+                        $("#ValuatorOneDetailsVM_Deductions").val("");
+                        $("#ValuatorOneDetailsVM_NetWeight").val("");
+                        $("#ValuatorOneDetailsVM_Rate").val("");
+                        $("#ValuatorOneDetailsVM_Total").val("");
+                        $("#divValuationDetails").show();
+                    }
+                }
+
+                $("#tblValuationDetails TBODY TR").on("click", ".delete", function () {
+                    if (confirm('Are you sure to remove?')) {
+                        var tr = $(this).closest('tr');
+                        trid = tr.find('td:eq(0)').html();
+                        tr.remove();
+                        $.ajax({
+                            url: '/DocumentUpload/Remove?id=' + trid,
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (result) {
+                                //$(this).parents('tr').remove();
+                            },
+                            error: function (err) {
+                                alert(err.statusText);
+                            }
+                        });
+                    }
+                })
+            }
+        })
+
+        $("#btn_save").click(function () {
+            SaveValuator1();
+        });
+
+        function SaveValuator1()
+        {
+            var CustomerId = $("#CustomerId").val();
+            if (CustomerId == "") {
+                $("#CustomErr").text("Please Select Customer Id");
+                $("#CustomerId").focus();
+                return;
+            }
+            var check=true;
+            debugger;
+            if ($('#divValuationDetails tbody tr').length == 0) {
+                var OrnamentId= $("#ValuatorOneDetailsVM_OrnamentId").val();
+                if (OrnamentId == "") {
+                    $("#CustomErr").text("Please Select Ornament");
+                    $("#ValuatorOneDetailsVM_OrnamentId").focus();
+                    return;
+                }
+
+                var PurityId= $("#ValuatorOneDetailsVM_PurityId").val();
+                if (PurityId == "") {
+                    $("#CustomErr").text("Please Select Purity");
+                    $("#ValuatorOneDetailsVM_PurityId").focus();
+                    return;
+                }
+
+                //var UploadedFile= $("#UploadedFile").val();
+                //if (UploadedFile == "") {
+                //    $("#CustomErr").text("Please Select Upload File");
+                //    $("#UploadedFile").focus();
+                //    check=false;
+                //}
+            }
+            debugger;
+            var length=$('#tblValuationDetails tbody tr').length;
+            if(length==0)
+            {
+                $("#CustomErr").text("Please Click Add button then save record");
+                $("#tblValuationDetails").focus();
+            }
+
+            var ValuatorOneViewModel = {};
+            var lstValuationDetailsTrn = [];
+
+            var fileData = new FormData();
+            $("#tblValuationDetails TBODY TR").each(function () {
+                var row = $(this);
+                var rowValuationDetailsTrn = {};
+                debugger;
+                rowValuationDetailsTrn.ID = row.attr('id');
+                rowValuationDetailsTrn.OrnamentId =row.find("td").eq(1).attr('id');
+                rowValuationDetailsTrn.Qty = row.find("TD").eq(3).html();
+                rowValuationDetailsTrn.PurityId = row.find("td").eq(4).attr('id');
+                rowValuationDetailsTrn.GrossWeight = row.find("TD").eq(5).html();
+                rowValuationDetailsTrn.Deductions = row.find("TD").eq(6).html();
+                rowValuationDetailsTrn.NetWeight = row.find("TD").eq(7).html();
+                rowValuationDetailsTrn.Rate = row.find("TD").eq(8).html();
+                rowValuationDetailsTrn.Total = row.find("TD").eq(9).html();
+                lstValuationDetailsTrn.push(rowValuationDetailsTrn);
+            });
+
+            ValuatorOneViewModel.ValuatorOneDetailsList = lstValuationDetailsTrn;
+            ValuatorOneViewModel.ID = $('#ItemID').val();
+            ValuatorOneViewModel.TransactionId = $('#TransactionId').val();
+            ValuatorOneViewModel.CustomerId = $('#CustomerId').val();
+            ValuatorOneViewModel.ApplicationNo = $('#ApplicationNo').val();
+            ValuatorOneViewModel.Comments = $('#Comments').val();
+            ValuatorOneViewModel.PreSanctionId=$("#PreSanctionId").val();
+            if(check==true)
+            {
+                $("#btn_save").prop("disabled", true);
+                $.ajax({
+                    type: "POST",
+                    url: "/ValuatorOne/Insert",
+                    data: JSON.stringify(ValuatorOneViewModel),
+                    contentType: "application/json; charset=utf-8",
+                    //contentType: false, // Not to set any content header
+                    //processData: false, // Not to process data
+                    dataType: "json",
+                    success: function (r) {
+                        debugger;
+                        if (r == 1) {
+                            $("#saveModal").modal('show');
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                        else if(r==2){
+                            $("#saveModal").modal('show');
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                        else
+                        {   $("#CustomErr").text(r);
+                            $("#btn_save").prop("disabled", false);
+                            return false;
+                        }
+                    }
+                });
+            }
+        }
+
+
+        function ShowClientTableList() {
+            $('#divviewfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetCustomerDetails", "ValuatorOne")',
+                // dataType: "html",
+                success: function (data) {
+                    $('#diveditfilldata').empty();
+                    $('#diveditfilldata').html(data);
+                    $('#CustomerTable').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+        $("#diveditfilldata").on("click", "tr", function () {
+            debugger;
+            var tr = $(this).closest('tr');
+            var CustomerId =tr.find('td:eq(0)').html();
+            var PreSanctionId =tr.find("td").eq(0).attr('id');
+            var ApplicationNo =tr.find('td:eq(1)').html();
+
+            $("#CustomerId").val(CustomerId);
+            $("#PreSanctionId").val(PreSanctionId);
+            $("#ApplicationNo").val(ApplicationNo);
+            $("#editModal").hide();
+        })
+    </script>
 }
