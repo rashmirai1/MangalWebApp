@@ -104,6 +104,8 @@
     <Compile Include="Service\StateService.cs" />
     <Compile Include="Service\UserAuthorizationService.cs" />
     <Compile Include="Service\UserService.cs" />
+    <Compile Include="Service\ValuatorOneService.cs" />
+    <Compile Include="Service\ValuatorTwoService.cs" />
     <Compile Include="Service\ZoneService.cs" />
   </ItemGroup>
   <ItemGroup>

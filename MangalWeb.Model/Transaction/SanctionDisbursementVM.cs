@@ -95,10 +95,10 @@ namespace MangalWeb.Model.Transaction
         public int? CashOutwardbyNo { get; set; }
         public string TransactionDate { get; set; }
         public string BankPaymentDate { get; set; }
-        public int? BankAccountNo { get; set; }
-        public string ChqDDNEFT { get; set; }
-        public string ChqDDNEFTNo { get; set; }
-        public string ChqDDNEFTDate { get; set; }
+        public int? BankCashAccID { get; set; }
+        public string CheqNEFTDD { get; set; }
+        public string CheqNEFTDDNo { get; set; }
+        public string CheqNEFTDDDate { get; set; }
         public string Remark { get; set; }
         public int? GoldInwardByNo { get; set; }
         public string RackNo { get; set; }

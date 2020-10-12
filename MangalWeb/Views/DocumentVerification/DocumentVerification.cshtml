@@ -108,31 +108,31 @@
                                             @{int j = 1;}
                                             @for (var i = 0; i < Model.DocumentUploadList.Count; i++)
                                             {
-                                                <tr id="@Model.DocumentUploadList[i].ID">
-                                                    <td>@j</td>
-                                                    <td>@Model.DocumentUploadList[i].DocumentTypeName</td>
-                                                    <td>@Model.DocumentUploadList[i].DocumentName</td>
-                                                    <td>@Model.DocumentUploadList[i].SpecifyOther</td>
-                                                    <td>@Model.DocumentUploadList[i].NameonDocument</td>
-                                                    <td>
-                                                        @{
+                                            <tr id="@Model.DocumentUploadList[i].ID">
+                                                <td>@j</td>
+                                                <td>@Model.DocumentUploadList[i].DocumentTypeName</td>
+                                                <td>@Model.DocumentUploadList[i].DocumentName</td>
+                                                <td>@Model.DocumentUploadList[i].SpecifyOther</td>
+                                                <td>@Model.DocumentUploadList[i].NameonDocument</td>
+                                                <td>
+                                                    @{
                                                             string parameterValue =Convert.ToDateTime(Model.DocumentUploadList[i].ExpiryDate).ToString("dd/MM/yyyy");
-                                                        }
-                                                        @Html.DisplayFor(x => parameterValue)
-                                                    </td>
-                                                    <td><a href="/DocumentUpload/Download/@Model.DocumentUploadList[i].ID" target=_blank>@Model.DocumentUploadList[i].FileName</a></td>
-                                                    <td style="width:10%;">
-                                                        <span>@Session["UserName"].ToString()</span>
-                                                    </td>
-                                                    <td>
-                                                        @Html.DropDownListFor(m => m.DocumentUploadList[i].Status, new SelectList(ViewBag.StatusList, "Value", "Text", Model.DocumentUploadList[i].Status), new { @class = "form-control select2", style = "width:165px;" })
-                                                        @Html.ValidationMessageFor(model => model.DocumentUploadList[i].Status, "", new { @class = "text-danger" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextAreaFor(model => model.DocumentUploadList[i].ReasonForRejection, new { @class = "form-control", @style = "width:160px",@cols=2,@rows=2 })
-                                                        @Html.ValidationMessageFor(model => model.DocumentUploadList[i].ReasonForRejection, "", new { @class = "text-danger" })
-                                                    </td>
-                                                </tr>
+                                                    }
+                                                    @Html.DisplayFor(x => parameterValue)
+                                                </td>
+                                                <td><a href="/DocumentUpload/Download/@Model.DocumentUploadList[i].ID" target=_blank>@Model.DocumentUploadList[i].FileName</a></td>
+                                                <td style="width:10%;">
+                                                    <span>@Session["UserName"].ToString()</span>
+                                                </td>
+                                                <td>
+                                                    @Html.DropDownListFor(m => m.DocumentUploadList[i].Status, new SelectList(ViewBag.StatusList, "Value", "Text", Model.DocumentUploadList[i].Status), new { @class = "form-control select2", style = "width:165px;" })
+                                                    @Html.ValidationMessageFor(model => model.DocumentUploadList[i].Status, "", new { @class = "text-danger" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextAreaFor(model => model.DocumentUploadList[i].ReasonForRejection, new { @class = "form-control", @style = "width:160px",@cols=2,@rows=2 })
+                                                    @Html.ValidationMessageFor(model => model.DocumentUploadList[i].ReasonForRejection, "", new { @class = "text-danger" })
+                                                </td>
+                                            </tr>
                                                 j++;
                                             }
                                         </tbody>
@@ -143,8 +143,9 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
-                                                }
+                                                        }
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -156,7 +157,7 @@
     <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(document).ready(function () {
-            
+
             $("#DocDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
 
             $("#divDocumentDetails").hide();

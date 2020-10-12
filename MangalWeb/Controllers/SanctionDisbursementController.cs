@@ -13,6 +13,7 @@ namespace MangalWeb.Controllers
     {
         SanctionService _sanctionService = new SanctionService();
 
+        #region BindList
         public void BindList()
         {
             ViewBag.BankAccountList = new SelectList(_sanctionService.BankAccountList(), "AccountID", "Name");
@@ -22,6 +23,7 @@ namespace MangalWeb.Controllers
             ViewBag.ChargeMasterList = new SelectList(_sanctionService.FillChargeList(), "CID", "ChargeName");
             ViewBag.ChargeAccountList = new SelectList(_sanctionService.ChargeAccountList(), "AccountID", "Name");
         }
+        #endregion
 
         #region Insert
 
@@ -72,7 +74,8 @@ namespace MangalWeb.Controllers
             sanctionViewModel.CompanyId = Convert.ToInt32(Session["CompanyId"]);
             if (Session["Proofofownership"] != null)
             {
-                sanctionViewModel.ProofOfOwnerShipFile = (HttpPostedFileBase)Session["Proofofownership"];
+                // sanctionViewModel.ProofOfOwnerShipFile = (HttpPostedFileBase)Session["Proofofownership"];
+                sanctionViewModel.ProofOfOwnerShipImageFile = (byte[])Session["Proofofownership"];
             }
             _sanctionService.SanctionDisbursment_PRI("Save", sanctionViewModel);
             retVal = true;
@@ -93,7 +96,8 @@ namespace MangalWeb.Controllers
             sanctionViewModel.CompanyId = Convert.ToInt32(Session["CompanyId"]);
             if (Session["Proofofownership"] != null)
             {
-                sanctionViewModel.ProofOfOwnerShipFile = (HttpPostedFileBase)Session["Proofofownership"];
+                // sanctionViewModel.ProofOfOwnerShipFile = (HttpPostedFileBase)Session["Proofofownership"];
+                sanctionViewModel.ProofOfOwnerShipImageFile = (byte[])Session["Proofofownership"];
             }
             _sanctionService.SanctionDisbursment_PRI("Update", sanctionViewModel);
             retVal = true;
@@ -107,14 +111,13 @@ namespace MangalWeb.Controllers
         {
             HttpFileCollectionBase files = Request.Files;
             HttpPostedFileBase postedFile = files[0];
-            //Stream fs = postedFile.InputStream;
-            //BinaryReader br = new BinaryReader(fs);
-            //Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
+            Stream fs = postedFile.InputStream;
+            BinaryReader br = new BinaryReader(fs);
+            Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
             ////base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
-            //SanctionDisbursementVM docupload = null;
-            //docupload = new SanctionDisbursementVM();
+            //var docupload = new SanctionDisbursementVM();
             //docupload.ProofOfOwnerShipImageFile = bytes;
-            Session["Proofofownership"] = postedFile;
+            Session["Proofofownership"] = bytes;
             return Json(1, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -213,6 +216,7 @@ namespace MangalWeb.Controllers
         }
         #endregion
 
+        #region AddChargeDetails
         [HttpPost]
         public JsonResult AddChargeDetails()
         {
@@ -237,7 +241,7 @@ namespace MangalWeb.Controllers
             model.ChargeDetailList.Add(new ChargeSanctionVM()
             {
                 ID = chargeSanctionVM.ID,
-                ChargeId = 0,
+                ChargeId = chargeSanctionVM.ID,
                 CDetailsID = 0,
                 ChargeName = SGSTAccountNo > 0 ? "CGST" : "IGST",
                 Charges = Convert.ToDouble(CGSTTax),
@@ -252,7 +256,7 @@ namespace MangalWeb.Controllers
                 model.ChargeDetailList.Add(new ChargeSanctionVM()
                 {
                     ID = chargeSanctionVM.ID,
-                    ChargeId = 0,
+                    ChargeId = chargeSanctionVM.ID,
                     CDetailsID = 0,
                     ChargeName = "SGST",
                     Charges = Convert.ToDouble(SGSTTax),
@@ -264,7 +268,9 @@ namespace MangalWeb.Controllers
             }
             return Json(model, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region RemoveCharge
         public ActionResult RemoveCharge(int id)
         {
             var list = (List<ChargeSanctionVM>)Session["ChargeList"];
@@ -272,6 +278,14 @@ namespace MangalWeb.Controllers
             Session["ChargeList"] = list;
             return Json(1, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region Download
+        public FileResult Download(int id)
+        {
+            var file = _sanctionService.GetImageById(id);
+            return File(file, "image/jpeg,image/png");
+        }
+        #endregion
     }
 }

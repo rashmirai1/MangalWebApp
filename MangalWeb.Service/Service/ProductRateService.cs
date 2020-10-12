@@ -15,26 +15,22 @@ namespace MangalWeb.Service.Service
 
         public ProductRateViewModel GetProductRateById(int id)
         {
-            var product = _productRateRepository.SetRecordinEdit(id);
-            return product;
+            return _productRateRepository.SetRecordinEdit(id);
         }
 
         public List<Mst_Product> GetProductList()
         {
-            var list = _productRateRepository.GetProductList();
-            return list;
+            return _productRateRepository.GetProductList();
         }
 
         public List<Mst_PurityMaster> GetPurityById(int id)
         {
-            var purity = _productRateRepository.GetPurityMasterById(id);
-            return purity;
+            return _productRateRepository.GetPurityMasterById(id);
         }
 
         public List<Mst_PurityMaster> GetAllPurityMaster()
         {
-            var purity = _productRateRepository.GetPurityMasterList();
-            return purity;
+            return _productRateRepository.GetPurityMasterList();
         }
 
         public void DeleteRecord(int id)
@@ -49,8 +45,7 @@ namespace MangalWeb.Service.Service
 
         public List<ProductRateViewModel> SetDataofModalList()
         {
-            var list = _productRateRepository.SetDataofModalList();
-            return list;
+            return _productRateRepository.SetDataofModalList();
         }
     }
 }

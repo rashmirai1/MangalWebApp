@@ -871,5 +871,71 @@ namespace MangalWeb.Model.Entity
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_PRI", operationParameter, sDIDParameter, loanTypeParameter, loanDateParameter, goldLoanNoParameter, kYCIDParameter, eligibleLoanAmtParameter, netLoanAmtSanctionedParameter, chargesTotalParameter, netLoanPayableParameter, cheqNEFTDDParameter, cheqNEFTDDNoParameter, cheqNEFTDDDateParameter, totalGrossWeightParameter, totalNetWeightParameter, totalQuantityParameter, totalvalueParameter, totalRateParameter, sIDParameter, dueDateParameter, ownershipProofImagePathParameter, cIBILScoreParameter, bCPIDParameter, cashOutWardByIdParameter, goldInWardByIdParameter, createdByParameter, fYIDParameter, branchIDParameter, cMPIDParameter, cashAccIDParameter, cashAmountParameter, bankCashAccIDParameter, bankAmountParameter, paymentModeParameter, linenoParameter, bankPaymentDateParameter, lockerNoParameter, packetWeightParameter, rackNoParameter, remarkParameter, goldInwardDateParameter, preSanctionIdParameter);
         }
+    
+        public virtual int DeleteSanctionDisbursementData(Nullable<int> accountID, string referenceNo, string loanAccountNo, Nullable<int> sDID)
+        {
+            var accountIDParameter = accountID.HasValue ?
+                new ObjectParameter("AccountID", accountID) :
+                new ObjectParameter("AccountID", typeof(int));
+    
+            var referenceNoParameter = referenceNo != null ?
+                new ObjectParameter("ReferenceNo", referenceNo) :
+                new ObjectParameter("ReferenceNo", typeof(string));
+    
+            var loanAccountNoParameter = loanAccountNo != null ?
+                new ObjectParameter("LoanAccountNo", loanAccountNo) :
+                new ObjectParameter("LoanAccountNo", typeof(string));
+    
+            var sDIDParameter = sDID.HasValue ?
+                new ObjectParameter("SDID", sDID) :
+                new ObjectParameter("SDID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteSanctionDisbursementData", accountIDParameter, referenceNoParameter, loanAccountNoParameter, sDIDParameter);
+        }
+    
+        public virtual int SP_InsertrecordinFCompanyYearEndClosing(Nullable<int> iD, Nullable<int> financialyearID, Nullable<int> compID, Nullable<int> accountID, Nullable<double> openingBalanceDebit, Nullable<double> openingBalanceCredit, Nullable<double> currentDebit, Nullable<double> currentCredit, Nullable<double> closingBalanceDebit, Nullable<double> closingBalanceCredit)
+        {
+            var iDParameter = iD.HasValue ?
+                new ObjectParameter("ID", iD) :
+                new ObjectParameter("ID", typeof(int));
+    
+            var financialyearIDParameter = financialyearID.HasValue ?
+                new ObjectParameter("FinancialyearID", financialyearID) :
+                new ObjectParameter("FinancialyearID", typeof(int));
+    
+            var compIDParameter = compID.HasValue ?
+                new ObjectParameter("CompID", compID) :
+                new ObjectParameter("CompID", typeof(int));
+    
+            var accountIDParameter = accountID.HasValue ?
+                new ObjectParameter("AccountID", accountID) :
+                new ObjectParameter("AccountID", typeof(int));
+    
+            var openingBalanceDebitParameter = openingBalanceDebit.HasValue ?
+                new ObjectParameter("OpeningBalanceDebit", openingBalanceDebit) :
+                new ObjectParameter("OpeningBalanceDebit", typeof(double));
+    
+            var openingBalanceCreditParameter = openingBalanceCredit.HasValue ?
+                new ObjectParameter("OpeningBalanceCredit", openingBalanceCredit) :
+                new ObjectParameter("OpeningBalanceCredit", typeof(double));
+    
+            var currentDebitParameter = currentDebit.HasValue ?
+                new ObjectParameter("CurrentDebit", currentDebit) :
+                new ObjectParameter("CurrentDebit", typeof(double));
+    
+            var currentCreditParameter = currentCredit.HasValue ?
+                new ObjectParameter("CurrentCredit", currentCredit) :
+                new ObjectParameter("CurrentCredit", typeof(double));
+    
+            var closingBalanceDebitParameter = closingBalanceDebit.HasValue ?
+                new ObjectParameter("ClosingBalanceDebit", closingBalanceDebit) :
+                new ObjectParameter("ClosingBalanceDebit", typeof(double));
+    
+            var closingBalanceCreditParameter = closingBalanceCredit.HasValue ?
+                new ObjectParameter("ClosingBalanceCredit", closingBalanceCredit) :
+                new ObjectParameter("ClosingBalanceCredit", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertrecordinFCompanyYearEndClosing", iDParameter, financialyearIDParameter, compIDParameter, accountIDParameter, openingBalanceDebitParameter, openingBalanceCreditParameter, currentDebitParameter, currentCreditParameter, closingBalanceDebitParameter, closingBalanceCreditParameter);
+        }
     }
 }

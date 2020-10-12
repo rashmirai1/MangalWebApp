@@ -152,6 +152,8 @@
     <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\UserAuthorizationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\ValuatorOneController.cs" />
+    <Compile Include="Controllers\ValuatorTwoController.cs" />
     <Compile Include="Controllers\ZoneController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2118,6 +2120,8 @@
     <Content Include="Views\SanctionDisbursement\_CustomerDetails.cshtml" />
     <Content Include="Views\SanctionDisbursement\_SanctionDetails.cshtml" />
     <Content Include="Views\StatdardEndTime\Index.cshtml" />
+    <Content Include="Views\ValuatorOne\ValuatorOne.cshtml" />
+    <Content Include="Views\ValuatorTwo\ValuatorTwo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

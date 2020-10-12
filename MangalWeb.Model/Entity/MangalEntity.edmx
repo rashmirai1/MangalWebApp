@@ -628,9 +628,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.tbl_GLDocumentMaster' does not hav
           <Property Name="Zone" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="AreaID" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'Time' in the table 'MangalDBNew.dbo.TGLCashInOutDetails' was excluded.
-warning 6002: The table/view 'MangalDBNew.dbo.TGLCashInOutDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TGLCashInOutDetails">
           <Key>
             <PropertyRef Name="InOutID" />
@@ -641,10 +638,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLCashInOutDetails' does not have
           <Property Name="ReferenceType" Type="nvarchar" MaxLength="20" />
           <Property Name="FName" Type="nvarchar" MaxLength="20" />
           <Property Name="Date_time" Type="smalldatetime" />
-          <Property Name="InOutMode" Type="varchar" MaxLength="20" />
-          <Property Name="InOutTo" Type="varchar" MaxLength="20" />
+          <Property Name="InOutMode" Type="nvarchar" MaxLength="50" />
+          <Property Name="InOutTo" Type="nvarchar" MaxLength="50" />
           <Property Name="InOutToID" Type="int" />
-          <Property Name="InOutFrom" Type="varchar" MaxLength="20" />
+          <Property Name="InOutFrom" Type="nvarchar" MaxLength="50" />
           <Property Name="InOutFromID" Type="int" />
           <Property Name="InOutBy" Type="int" />
           <Property Name="FYID" Type="int" />
@@ -659,9 +656,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLCashInOutDetails' does not have
           <Property Name="isActive" Type="nvarchar" MaxLength="50" />
           <Property Name="TotalCash" Type="decimal" Precision="11" Scale="2" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'Time' in the table 'MangalDBNew.dbo.TGLGoldInOutDetails' was excluded.
-warning 6002: The table/view 'MangalDBNew.dbo.TGLGoldInOutDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TGLGoldInOutDetails">
           <Key>
             <PropertyRef Name="GLInOutID" />
@@ -926,11 +920,11 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="CashAccID" Type="int" />
           <Property Name="BankAmount" Type="decimal" Precision="11" Scale="2" />
           <Property Name="CashAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
+          <Property Name="PaymentMode" Type="nvarchar" MaxLength="50" />
           <Property Name="BankPaymentDate" Type="datetime" />
-          <Property Name="Packetweight" Type="varchar" MaxLength="10" />
-          <Property Name="LockerNo" Type="varchar" MaxLength="10" />
-          <Property Name="Remark" Type="nvarchar" MaxLength="100" />
+          <Property Name="Packetweight" Type="nvarchar" MaxLength="50" />
+          <Property Name="LockerNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="200" />
           <Property Name="PreSanctionId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TGLSanctionDisburse_ChargesDetails">
@@ -1449,6 +1443,12 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteSanctionDisbursementData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AccountID" Type="int" Mode="In" />
+          <Parameter Name="ReferenceNo" Type="varchar" Mode="In" />
+          <Parameter Name="LoanAccountNo" Type="varchar" Mode="In" />
+          <Parameter Name="SDID" Type="int" Mode="In" />
+        </Function>
         <Function Name="fnNumToWords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="Number" Type="numeric" Mode="In" />
           <Parameter Name="CPaise" Type="char" Mode="In" />
@@ -1551,6 +1551,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Parameter Name="Credit" Type="float" Mode="In" />
           <Parameter Name="LedgerID" Type="int" Mode="In" />
           <Parameter Name="FinancialYearId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_InsertrecordinFCompanyYearEndClosing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="FinancialyearID" Type="int" Mode="In" />
+          <Parameter Name="CompID" Type="int" Mode="In" />
+          <Parameter Name="AccountID" Type="int" Mode="In" />
+          <Parameter Name="OpeningBalanceDebit" Type="float" Mode="In" />
+          <Parameter Name="OpeningBalanceCredit" Type="float" Mode="In" />
+          <Parameter Name="CurrentDebit" Type="float" Mode="In" />
+          <Parameter Name="CurrentCredit" Type="float" Mode="In" />
+          <Parameter Name="ClosingBalanceDebit" Type="float" Mode="In" />
+          <Parameter Name="ClosingBalanceCredit" Type="float" Mode="In" />
         </Function>
         <Function Name="SP_InsertRecordInFSystemGeneratedEntryMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DJEID" Type="int" Mode="In" />
@@ -1724,6 +1736,8 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="tblStandardEndTime" EntityType="Self.tblStandardEndTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStateMaster" EntityType="Self.tblStateMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblZonemaster" EntityType="Self.tblZonemaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TGLCashInOutDetails" EntityType="Self.TGLCashInOutDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TGLGoldInOutDetails" EntityType="Self.TGLGoldInOutDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TGLKYC_BasicDetails" EntityType="Self.TGLKYC_BasicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TGlReceipt_BasicDetails" EntityType="Self.TGlReceipt_BasicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TGLSanctionDisburse_BasicDetails" EntityType="Self.TGLSanctionDisburse_BasicDetails" Schema="dbo" store:Type="Tables" />
@@ -1754,63 +1768,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
     [tbl_GLDocumentMaster].[DocumentID] AS [DocumentID], 
     [tbl_GLDocumentMaster].[DocumentName] AS [DocumentName]
     FROM [dbo].[tbl_GLDocumentMaster] AS [tbl_GLDocumentMaster]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="TGLCashInOutDetails" EntityType="Self.TGLCashInOutDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLCashInOutDetails].[InOutID] AS [InOutID], 
-    [TGLCashInOutDetails].[RefType] AS [RefType], 
-    [TGLCashInOutDetails].[RefNo] AS [RefNo], 
-    [TGLCashInOutDetails].[ReferenceType] AS [ReferenceType], 
-    [TGLCashInOutDetails].[FName] AS [FName], 
-    [TGLCashInOutDetails].[Date_time] AS [Date_time], 
-    [TGLCashInOutDetails].[InOutMode] AS [InOutMode], 
-    [TGLCashInOutDetails].[InOutTo] AS [InOutTo], 
-    [TGLCashInOutDetails].[InOutToID] AS [InOutToID], 
-    [TGLCashInOutDetails].[InOutFrom] AS [InOutFrom], 
-    [TGLCashInOutDetails].[InOutFromID] AS [InOutFromID], 
-    [TGLCashInOutDetails].[InOutBy] AS [InOutBy], 
-    [TGLCashInOutDetails].[FYID] AS [FYID], 
-    [TGLCashInOutDetails].[CmpID] AS [CmpID], 
-    [TGLCashInOutDetails].[BranchId] AS [BranchId], 
-    [TGLCashInOutDetails].[CreatedBy] AS [CreatedBy], 
-    [TGLCashInOutDetails].[CreatedDate] AS [CreatedDate], 
-    [TGLCashInOutDetails].[UpdatedBy] AS [UpdatedBy], 
-    [TGLCashInOutDetails].[UpdatedDate] AS [UpdatedDate], 
-    [TGLCashInOutDetails].[DeletedBy] AS [DeletedBy], 
-    [TGLCashInOutDetails].[DeletedDate] AS [DeletedDate], 
-    [TGLCashInOutDetails].[isActive] AS [isActive], 
-    [TGLCashInOutDetails].[TotalCash] AS [TotalCash]
-    FROM [dbo].[TGLCashInOutDetails] AS [TGLCashInOutDetails]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="TGLGoldInOutDetails" EntityType="Self.TGLGoldInOutDetails" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TGLGoldInOutDetails].[GLInOutID] AS [GLInOutID], 
-    [TGLGoldInOutDetails].[RefType] AS [RefType], 
-    [TGLGoldInOutDetails].[RefNo] AS [RefNo], 
-    [TGLGoldInOutDetails].[ReferenceType] AS [ReferenceType], 
-    [TGLGoldInOutDetails].[Date_time] AS [Date_time], 
-    [TGLGoldInOutDetails].[SDID] AS [SDID], 
-    [TGLGoldInOutDetails].[KYCID] AS [KYCID], 
-    [TGLGoldInOutDetails].[GoldLoanNo] AS [GoldLoanNo], 
-    [TGLGoldInOutDetails].[PouchNo] AS [PouchNo], 
-    [TGLGoldInOutDetails].[GLInOutMode] AS [GLInOutMode], 
-    [TGLGoldInOutDetails].[InOutLoc] AS [InOutLoc], 
-    [TGLGoldInOutDetails].[LocName] AS [LocName], 
-    [TGLGoldInOutDetails].[LocResiName] AS [LocResiName], 
-    [TGLGoldInOutDetails].[LocDetails] AS [LocDetails], 
-    [TGLGoldInOutDetails].[NarrationID] AS [NarrationID], 
-    [TGLGoldInOutDetails].[InOutBy] AS [InOutBy], 
-    [TGLGoldInOutDetails].[CreatedBy] AS [CreatedBy], 
-    [TGLGoldInOutDetails].[CreatedDate] AS [CreatedDate], 
-    [TGLGoldInOutDetails].[UpdatedBy] AS [UpdatedBy], 
-    [TGLGoldInOutDetails].[UpdatedDate] AS [UpdatedDate], 
-    [TGLGoldInOutDetails].[DeletedBy] AS [DeletedBy], 
-    [TGLGoldInOutDetails].[DeletedDate] AS [DeletedDate], 
-    [TGLGoldInOutDetails].[FYID] AS [FYID], 
-    [TGLGoldInOutDetails].[BranchID] AS [BranchID], 
-    [TGLGoldInOutDetails].[CMPID] AS [CMPID], 
-    [TGLGoldInOutDetails].[isActive] AS [isActive]
-    FROM [dbo].[TGLGoldInOutDetails] AS [TGLGoldInOutDetails]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="TGLGoldStock" EntityType="Self.TGLGoldStock" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2364,6 +2321,24 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <Parameter Name="Remark" Mode="In" Type="String" />
             <Parameter Name="GoldInwardDate" Mode="In" Type="DateTime" />
             <Parameter Name="PreSanctionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteSanctionDisbursementData">
+            <Parameter Name="AccountID" Mode="In" Type="Int32" />
+            <Parameter Name="ReferenceNo" Mode="In" Type="String" />
+            <Parameter Name="LoanAccountNo" Mode="In" Type="String" />
+            <Parameter Name="SDID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InsertrecordinFCompanyYearEndClosing">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="FinancialyearID" Mode="In" Type="Int32" />
+            <Parameter Name="CompID" Mode="In" Type="Int32" />
+            <Parameter Name="AccountID" Mode="In" Type="Int32" />
+            <Parameter Name="OpeningBalanceDebit" Mode="In" Type="Double" />
+            <Parameter Name="OpeningBalanceCredit" Mode="In" Type="Double" />
+            <Parameter Name="CurrentDebit" Mode="In" Type="Double" />
+            <Parameter Name="CurrentCredit" Mode="In" Type="Double" />
+            <Parameter Name="ClosingBalanceDebit" Mode="In" Type="Double" />
+            <Parameter Name="ClosingBalanceCredit" Mode="In" Type="Double" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
@@ -3642,11 +3617,11 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="CashAccID" Type="Int32" />
           <Property Name="BankAmount" Type="Decimal" Precision="11" Scale="2" />
           <Property Name="CashAmount" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BankPaymentDate" Type="DateTime" Precision="3" />
-          <Property Name="Packetweight" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="LockerNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Packetweight" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LockerNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="PreSanctionId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" FromRole="TGLSanctionDisburse_BasicDetails" ToRole="tbl_PreSanctionDetails" />
         </EntityType>
@@ -3999,10 +3974,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="ReferenceType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="FName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Date_time" Type="DateTime" Precision="0" />
-          <Property Name="InOutMode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="InOutTo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="InOutMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InOutTo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="InOutToID" Type="Int32" />
-          <Property Name="InOutFrom" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="InOutFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="InOutFromID" Type="Int32" />
           <Property Name="InOutBy" Type="Int32" />
           <Property Name="FYID" Type="Int32" />
@@ -5746,6 +5721,8 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GL_EmiCalculator_RTR" FunctionName="MangalDBNewModel.Store.GL_EmiCalculator_RTR" />
           <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_PRI" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_PRI" />
+          <FunctionImportMapping FunctionImportName="DeleteSanctionDisbursementData" FunctionName="MangalDBNewModel.Store.DeleteSanctionDisbursementData" />
+          <FunctionImportMapping FunctionImportName="SP_InsertrecordinFCompanyYearEndClosing" FunctionName="MangalDBNewModel.Store.SP_InsertrecordinFCompanyYearEndClosing" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
