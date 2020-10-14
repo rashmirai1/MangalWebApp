@@ -12,6 +12,7 @@ namespace MangalWeb.Controllers
     {
         PreSanctionService _preSanctionService = new PreSanctionService();
         SchemeService _schemeService = new SchemeService();
+        ProductRateService _productrateService = new ProductRateService();
 
         #region PreSanction
         // GET: PreSanction
@@ -22,6 +23,7 @@ namespace MangalWeb.Controllers
             ViewBag.RMList = new SelectList(_preSanctionService.GetAllRMByBranch(), "UserName", "UserName");
             ViewBag.LoanPurpose = new SelectList(LoanPurposeListMethod(), "Value", "Text");
             ViewBag.Schemes = new SelectList(_schemeService.GetAllSchemeMasters(), "SID", "SchemeName");
+            ViewBag.ProductList = new SelectList(_productrateService.GetProductList(), "Id", "Name");
             return View(model);
         }
         #endregion
@@ -34,6 +36,7 @@ namespace MangalWeb.Controllers
             {
                 ViewBag.LoanPurpose = new SelectList(LoanPurposeListMethod(), "Value", "Text");
                 ViewBag.Schemes = new SelectList(_schemeService.GetAllSchemeMasters(), "SID", "SchemeName");
+                ViewBag.ProductList = new SelectList(_productrateService.GetProductList(), "Id", "Name");
                 ModelState.Remove("Id");
                 if (objViewModel.Id == 0)
                 {
@@ -82,6 +85,7 @@ namespace MangalWeb.Controllers
             ViewBag.RMList = new SelectList(_preSanctionService.GetAllRMByBranch(), "UserID", "UserName");
             ViewBag.LoanPurpose = new SelectList(LoanPurposeListMethod(), "Value", "Text");
             ViewBag.Schemes = new SelectList(_schemeService.GetAllSchemeMasters(), "SID", "SchemeName");
+            ViewBag.ProductList = new SelectList(_productrateService.GetProductList(), "Id", "Name");
             var model = _preSanctionService.GetCustomerById(Id);
             return View("Index", model);
         }
@@ -98,7 +102,7 @@ namespace MangalWeb.Controllers
             list.Add(new ListItem { Text = "business", Value = "business" });
             list.Add(new ListItem { Text = "housing loan", Value = "housing loan" });
             list.Add(new ListItem { Text = "repayments", Value = "repayments" });
-            list.Add(new ListItem { Text = " sister marrige", Value = " sister marrige" });
+            list.Add(new ListItem { Text = "sister marrige", Value = "sister marrige" });
             list.Add(new ListItem { Text = "daughters marrige", Value = "daughters marrige" });
             list.Add(new ListItem { Text = "Purchase Property", Value = "Purchase Property" });
             list.Add(new ListItem { Text = "Others", Value = "Others" });

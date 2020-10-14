@@ -9,8 +9,6 @@ namespace MangalWeb.Controllers
 {
     public class HomeController : Controller
     {
-        HomeService _homeService = new HomeService();
-       
         public ActionResult Index()
         {
             return View();

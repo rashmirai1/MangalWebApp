@@ -95,12 +95,7 @@ new { @class= "form-control" })
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.Product,
-new List<SelectListItem> {
-new SelectListItem { Value = "Gold" , Text = "Gold" },
-new SelectListItem { Value = "Diamond" , Text = "Diamond" }
-},
-new { @class= "form-control" })
+                                                <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(m => m.Product, (SelectList)ViewBag.ProductList, "--Select Product--", htmlAttributes: new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.Product, "", new { @class = "text-danger" })
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Purpose Of Loan<span class="text-danger"> * </span></label>
@@ -196,6 +191,7 @@ new { @class= "form-control" })
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
     </section>
                                                 }

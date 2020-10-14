@@ -29,8 +29,8 @@ namespace MangalWeb.Model.Entity
         public Nullable<System.DateTime> AppliedDate { get; set; }
         public string ResidenceVerification { get; set; }
         public string ApplicationNo { get; set; }
-        public string RM { get; set; }
-        public string Product { get; set; }
+        public int RM { get; set; }
+        public int Product { get; set; }
         public string PurposeofLoan { get; set; }
         public Nullable<int> Scheme { get; set; }
         public string ReqLoanAmount { get; set; }
@@ -42,9 +42,9 @@ namespace MangalWeb.Model.Entity
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
     
-        public virtual TGLKYC_BasicDetails TGLKYC_BasicDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_ResidenceVerification> tbl_ResidenceVerification { get; set; }
+        public virtual TGLKYC_BasicDetails TGLKYC_BasicDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TGLSanctionDisburse_BasicDetails> TGLSanctionDisburse_BasicDetails { get; set; }
     }

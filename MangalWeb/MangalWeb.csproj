@@ -2123,6 +2123,9 @@
     <Content Include="Views\ValuatorOne\ValuatorOne.cshtml" />
     <Content Include="Views\ValuatorTwo\ValuatorTwo.cshtml" />
     <Content Include="Views\ValuatorOne\_CustomerDetails.cshtml" />
+    <Content Include="Views\ValuatorOne\_ValuatorOneDetails.cshtml" />
+    <Content Include="Views\ValuatorTwo\_ValuatorOneDetails.cshtml" />
+    <Content Include="Views\ValuatorTwo\_ValuatorTwoDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,21 +4,30 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MangalWeb.Model.Transaction
 {
     public class ValuatorOneViewModel
     {
+        public ValuatorOneViewModel()
+        {
+            ValuatorOneDetailsVM = new ValuatorOneDetailsViewModel();
+            ValuatorOneDetailsList = new List<ValuatorOneDetailsViewModel>();
+        }
         public int ID { get; set; }
 
-        public int TransactionId { get; set; }
+        public string TransactionId { get; set; }
         public int KycId { get; set; }
         public int PreSanctionId { get; set; }
         [Required(ErrorMessage = "Please Select Customer")]
         public string CustomerId { get; set; }
         public string ApplicationNo { get; set; }
         public string AppliedDate { get; set; }
-
+        public HttpPostedFileBase ConsolidatedImage { get; set; }
+        public byte[] ConsolidatedImageFile { get; set; }
+        public string ContentType { get; set; }
+        public string ImageName { get; set; }
         public string Comments { get; set; }
         public int BranchId { get; set; }
         public int FinancialYearId { get; set; }

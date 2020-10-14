@@ -123,11 +123,13 @@ namespace MangalWeb.Controllers
 
         #endregion Delete
 
+        #region CheckRecordonEditMode
         public JsonResult CheckRecordonEditMode(int Id)
         {
             string data = "";
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
         #region GetChargeTable
 
@@ -159,11 +161,12 @@ namespace MangalWeb.Controllers
         }
         #endregion GetChargeDetailsById
 
+        #region doesChargeNameExist
         public JsonResult doesChargeNameExist(string ChargeName, int Id)
         {
             var result = "";
             var data = _chargeService.CheckChargeNameExists(ChargeName, Id);
-            //Check if city name already exists
+            //Check if Charge name already exists
             if (data != null)
             {
                 if (ChargeName.ToLower() == data.ToLower().ToString())
@@ -177,5 +180,6 @@ namespace MangalWeb.Controllers
             }
             return Json(result);
         }
+        #endregion
     }
 }

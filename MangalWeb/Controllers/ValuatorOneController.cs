@@ -12,16 +12,19 @@ namespace MangalWeb.Controllers
     public class ValuatorOneController : BaseController
     {
         ValuatorOneService _valuatorOneService = new ValuatorOneService();
-        
+
         #region ValuatorOne
         public ActionResult ValuatorOne()
         {
             ButtonVisiblity("Index");
             var model = new ValuatorOneViewModel();
-            model.TransactionId = _valuatorOneService.GetMaxTransactionId();
-            model.ValuatorOneDetailsList = new List<ValuatorOneDetailsViewModel>();
+            model = _valuatorOneService.GetMaxTransactionId();
             ViewBag.PurityList = new SelectList(_valuatorOneService.GetAllPurityMaster(), "Id", "PurityName");
             ViewBag.OrnamentList = new SelectList(_valuatorOneService.GetOrnamentList(), "ItemId", "ItemName");
+            Session["ValuationImageList"] = null;
+            Session["ConsolidatedImage"] = null;
+            Session["ConsolidatedImageName"] = null;
+            Session["ConsolidatedImageContentType"] = null;
             return View(model);
         }
         #endregion
@@ -73,7 +76,25 @@ namespace MangalWeb.Controllers
             model.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
             try
             {
-                //model.ValuatorOneDetailsList = (List<ValuatorOneDetailsViewModel>)Session["sub"];
+                if (Session["ConsolidatedImage"] != null)
+                {
+                    model.ConsolidatedImageFile = (byte[])Session["ConsolidatedImage"];
+                    model.ImageName = Session["ConsolidatedImageName"].ToString();
+                    model.ContentType = Session["ConsolidatedImageContentType"].ToString();
+                }
+                if (Session["ValuationImageList"] != null)
+                {
+                    var list = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageList"];
+                    if (list != null)
+                    {
+                        for (int i = 0; i <= list.Count - 1; i++)
+                        {
+                            model.ValuatorOneDetailsList[i].ValuationImageFile = list[i].ValuationImageFile;
+                            model.ValuatorOneDetailsList[i].ImageName = list[i].ImageName;
+                            model.ValuatorOneDetailsList[i].ContentType = list[i].ContentType;
+                        }
+                    }
+                }
                 _valuatorOneService.SaveRecord(model);
                 retVal = true;
             }
@@ -86,46 +107,29 @@ namespace MangalWeb.Controllers
 
         #endregion Insert Data
 
-        #region AddDocument
+        #region AddValuationImage
         [HttpPost]
-        public JsonResult AddDocument()
+        public JsonResult AddValuationImage()
         {
-            int Id = Convert.ToInt32(Request.Form["Id"]);
-            int DocumentTypeId = Convert.ToInt32(Request.Form["DocumentTypeId"]);
-            int DocumentId = Convert.ToInt32(Request.Form["DocumentId"]);
-            DateTime? ExpiryDate = null;
-            if (Request.Form["ExpiryDate"].ToString() != "")
-            {
-                ExpiryDate = Convert.ToDateTime(Request.Form["ExpiryDate"]);
-            }
             HttpFileCollectionBase files = Request.Files;
-            string pFileName = "";
-            string pFileExtension = "";
             HttpPostedFileBase postedFile = files[0];
             Stream fs = postedFile.InputStream;
-            pFileName = postedFile.FileName;
-            pFileExtension = postedFile.ContentType;
             BinaryReader br = new BinaryReader(fs);
             Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
             //base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
-            DocumentUploadDetailsVM docupload = null;
-            var sessionlist = (List<DocumentUploadDetailsVM>)Session["sub"];
+            ValuatorOneDetailsViewModel docupload = null;
+            var sessionlist = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageList"];
+            docupload = new ValuatorOneDetailsViewModel();
             if (sessionlist == null)
             {
-                sessionlist = new List<DocumentUploadDetailsVM>();
+                sessionlist = new List<ValuatorOneDetailsViewModel>();
             }
-            docupload = new DocumentUploadDetailsVM();
-            docupload.ID = Id;
-            docupload.DocumentTypeId = DocumentTypeId;
-            docupload.DocumentId = DocumentId;
-            docupload.ExpiryDate = ExpiryDate;
-            docupload.UploadDocName = bytes;
-            docupload.FileName = pFileName;
-            docupload.FileExtension = pFileExtension;
-            docupload.SpecifyOther = Request.Form["SpecifyOther"];
-            docupload.NameonDocument = Request.Form["NameonDocument"];
+            docupload.ID = Convert.ToInt32(Request.Form["ID"]);
+            docupload.ValuationImageFile = bytes;
+            docupload.ImageName = postedFile.FileName;
+            docupload.ContentType = postedFile.ContentType;
             sessionlist.Add(docupload);
-            Session["sub"] = sessionlist;
+            Session["ValuationImageList"] = sessionlist;
             return Json(docupload, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -138,5 +142,101 @@ namespace MangalWeb.Controllers
         }
 
         #endregion GetCustomerDetails
+
+        #region GetValuatorOneDetails
+
+        public ActionResult GetValuatorOneDetails()
+        {
+            Session["Operation"] = "Edit";
+            return PartialView("_ValuatorOneDetails", _valuatorOneService.GetValuatorOneList());
+        }
+
+        #endregion GetValuatorOneDetails
+
+        #region GetValuatorOneDetailsById
+        public ActionResult GetValuatorOneDetailsById(int Id)
+        {
+            var model = _valuatorOneService.GetValuatorOneDetailsById(Id);
+            var file = _valuatorOneService.GetConsolidatedImage(model.ID);
+            Session["ConsolidatedImage"] = file.ConsolidatedImage;
+            Session["ConsolidatedImageName"] = model.ImageName;
+            Session["ConsolidatedImageContentType"] = file.ContentType;
+            string operation = Session["Operation"].ToString();
+
+            var sessionlist = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageList"];
+            var docupload = new ValuatorOneDetailsViewModel();
+            if (sessionlist == null)
+            {
+                sessionlist = new List<ValuatorOneDetailsViewModel>();
+            }
+            foreach (var item in model.ValuatorOneDetailsList)
+            {
+                docupload.ID = item.ID;
+                var file1 = _valuatorOneService.GetValuationImage(item.ID);
+                docupload.ValuationImageFile = file1.OrnamentImage;
+                docupload.ImageName = file1.ImageName;
+                docupload.ContentType = file1.ContentType;
+                sessionlist.Add(docupload);
+                Session["ValuationImageList"] = sessionlist;
+            }
+            model.operation = operation;
+            ButtonVisiblity(operation);
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Delete
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                _valuatorOneService.DeleteRecord(id);
+                return Json(JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        #endregion Delete
+
+        #region UploadConsolidatedImage
+        [HttpPost]
+        public JsonResult UploadConsolidatedImage()
+        {
+            HttpFileCollectionBase files = Request.Files;
+            HttpPostedFileBase postedFile = files[0];
+            Stream fs = postedFile.InputStream;
+            BinaryReader br = new BinaryReader(fs);
+            Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
+            Session["ConsolidatedImage"] = bytes;
+            Session["ConsolidatedImageName"] = postedFile.FileName;
+            Session["ConsolidatedImageContentType"] = postedFile.ContentType;
+            return Json(1, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Download
+        public FileResult Download(int id)
+        {
+            var file = _valuatorOneService.GetConsolidatedImage(id);
+            return File(file.ConsolidatedImage, file.ContentType);
+        }
+        #endregion
+
+        #region DownLoadValuationImage
+        public FileResult DownLoadValuationImage(int id)
+        {
+            var file = _valuatorOneService.GetValuationImage(id);
+            return File(file.OrnamentImage, file.ContentType);
+        }
+        #endregion
     }
 }

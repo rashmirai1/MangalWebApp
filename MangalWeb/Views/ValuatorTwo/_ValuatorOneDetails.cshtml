@@ -1,0 +1,29 @@
+﻿@model IList<MangalWeb.Model.Transaction.ValuatorTwoViewModel>
+@using MangalWeb.Model.Transaction
+<div class="modal-content">
+    <div class="modal-body" style="height:inherit; overflow:auto;">
+        <div class="panel-body panel-no-padding" style="height:inherit; overflow:auto;">
+            <div id="demo1">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="CustomerTable">
+                    <label style="margin-left: 320px"><b>Pending Valuator 2 : @Model.Count()</b></label>
+                    <thead>
+                        <tr>
+                            <th style="text-align:left;">Customer ID</th>
+                            <th style="text-align:left;">Application No</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ValuatorTwoViewModel item in Model)
+                        {
+                            <tr class="gradeX" style="cursor:pointer;">
+                                <td id="@item.ID">@item.CustomerId</td>
+                                <td>@item.ApplicationNo</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div><!-- /.modal-content -->
+

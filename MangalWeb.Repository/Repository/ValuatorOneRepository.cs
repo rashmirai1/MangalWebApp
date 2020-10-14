@@ -2,9 +2,11 @@
 using MangalWeb.Model.Transaction;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MangalWeb.Repository.Repository
 {
@@ -34,10 +36,62 @@ namespace MangalWeb.Repository.Repository
         }
         #endregion
 
-        #region GetMaxTransactionId
-        public int GetMaxTransactionId()
+        #region GetValuatorOneList
+        public List<ValuatorOneViewModel> GetValuatorOneList()
         {
-            return _context.Tran_ValuationOneDetails.Any() ? _context.Tran_ValuationOneDetails.Max(x => x.Id) + 1 : 1;
+            var list = _context.Database.SqlQuery<ValuatorOneViewModel>("SP_GetValuatorOneRecord").ToList();
+            return list;
+        }
+        #endregion
+
+        #region GetMaxTransactionId
+        public ValuatorOneViewModel GetMaxTransactionId()
+        {
+            var model = new ValuatorOneViewModel();
+            var transactionid = _context.Tran_ValuationOneDetails.Any() ? _context.Tran_ValuationOneDetails.Max(x => x.Id) + 1 : 1;
+            model.TransactionId = "VO0000" + transactionid;
+            return model;
+        }
+        #endregion
+
+        #region GetValuatorOneDetailsById
+        public ValuatorOneViewModel GetValuatorOneDetailsById(int Id)
+        {
+            var model = new ValuatorOneViewModel();
+            model = _context.Tran_ValuationOneDetails.Where(x => x.Id == Id)
+                .Select(x => new ValuatorOneViewModel()
+                {
+                    ID = x.Id,
+                    TransactionId = x.TransactionId,
+                    CustomerId = x.CustomerID,
+                    ApplicationNo = x.ApplicationNo,
+                    Comments=x.Comments,
+                    ImageName=x.ImageName
+                }).FirstOrDefault();
+
+            var valuatoronedetails = (from a in _context.Tran_ValuationOneDetails
+                                      join b in _context.tbl_OrnamentValuationOneDetails on a.Id equals b.ValuationOneID
+                                      join c in _context.tblItemMasters on b.OrnamentId equals c.ItemID
+                                      join d in _context.Mst_PurityMaster on b.PurityId equals d.id
+                                      where a.Id == Id
+                                      select new ValuatorOneDetailsViewModel()
+                                      {
+                                          ID = b.Id,
+                                          ValuatorOneId = b.ValuationOneID,
+                                          OrnamentId = b.OrnamentId,
+                                          OrnamentName = c.ItemName,
+                                          ImageName = b.ImageName,
+                                          Qty = (int)b.Qty,
+                                          PurityId = b.PurityId,
+                                          PurityName = d.PurityName,
+                                          GrossWeight = (decimal)b.GrossWt,
+                                          Deductions = (decimal)b.Deduction,
+                                          NetWeight = (decimal)b.NtWt,
+                                          Rate = (decimal)b.Rate,
+                                          Total = (decimal)b.Total
+                                      }).ToList();
+            model.ValuatorOneDetailsList = valuatoronedetails;
+            return model;
         }
         #endregion
 
@@ -50,30 +104,32 @@ namespace MangalWeb.Repository.Repository
                 if (model.ID <= 0)
                 {
                     //save the data in Document Upload Details table
-                    tblValOne.TransactionId = model.TransactionId.ToString();
+                    tblValOne.TransactionId = model.TransactionId;
                     tblValOne.PreSanctionId = model.PreSanctionId;
                     tblValOne.CustomerID = model.CustomerId;
                     tblValOne.ApplicationNo = model.ApplicationNo;
                     tblValOne.Comments = model.Comments;
-                    //tblDocUpload.BranchId = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
-                    //tblDocUpload.CompId = Convert.ToInt32(HttpContext.Current.Session["CompanyId"]);
-                    //tblDocUpload.FinancialYearId = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+                    tblValOne.BranchId = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+                    tblValOne.CompId = Convert.ToInt32(HttpContext.Current.Session["CompanyId"]);
+                    tblValOne.FinancialYearId = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
                     tblValOne.CreatedBy = model.CreatedBy;
                     tblValOne.CreatedDate = DateTime.Now;
+                    tblValOne.ConsolidatedImage = model.ConsolidatedImageFile;
+                    tblValOne.ImageName = model.ImageName;
+                    tblValOne.ContentType = model.ContentType;
                     _context.Tran_ValuationOneDetails.Add(tblValOne);
                     _context.SaveChanges();
 
                     int maxid = _context.Tran_ValuationOneDetails.Any() ? _context.Tran_ValuationOneDetails.Max(x => x.Id) : 1;
-
                     foreach (var p in model.ValuatorOneDetailsList)
                     {
                         var trn = new tbl_OrnamentValuationOneDetails
                         {
                             ValuationOneID = maxid,
                             OrnamentId = p.OrnamentId,
-                            OrnamentImage = null,
-                            ContentType = null,
-                            ImageName = null,
+                            OrnamentImage = p.ValuationImageFile,
+                            ImageName = p.ImageName,
+                            ContentType = p.ContentType,
                             Qty = p.Qty,
                             PurityId = p.PurityId,
                             GrossWt = p.GrossWeight,
@@ -81,7 +137,7 @@ namespace MangalWeb.Repository.Repository
                             NtWt = p.NetWeight,
                             Rate = p.Rate,
                             Total = p.Total,
-                            TotalValuation = 0,
+                            TotalValuation = p.Total
                         };
                         _context.tbl_OrnamentValuationOneDetails.Add(trn);
                         _context.SaveChanges();
@@ -98,6 +154,12 @@ namespace MangalWeb.Repository.Repository
                     tblObj.Comments = model.Comments;
                     tblObj.CreatedBy = model.CreatedBy;
                     tblObj.CreatedDate = DateTime.Now;
+                    tblObj.BranchId = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+                    tblObj.CompId = Convert.ToInt32(HttpContext.Current.Session["CompanyId"]);
+                    tblObj.FinancialYearId = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+                    tblObj.ConsolidatedImage = model.ConsolidatedImageFile;
+                    tblObj.ImageName = model.ImageName;
+                    tblObj.ContentType = model.ContentType;
                     _context.SaveChanges();
 
                     List<tbl_OrnamentValuationOneDetails> NewtblDetails = new List<tbl_OrnamentValuationOneDetails>();
@@ -105,16 +167,16 @@ namespace MangalWeb.Repository.Repository
                     //update the data in Charge Details table
                     foreach (var p in model.ValuatorOneDetailsList)
                     {
-                        var Findobject = _context.tbl_OrnamentValuationOneDetails.Where(x => x.ValuationOneID == model.ID && x.Id==p.ID).FirstOrDefault();
+                        var Findobject = _context.tbl_OrnamentValuationOneDetails.Where(x => x.ValuationOneID == model.ID && x.Id == p.ID).FirstOrDefault();
                         if (Findobject == null)
                         {
                             var trn = new tbl_OrnamentValuationOneDetails
                             {
                                 ValuationOneID = p.ValuatorOneId,
                                 OrnamentId = p.OrnamentId,
-                                OrnamentImage = null,
-                                ContentType = null,
-                                ImageName = null,
+                                OrnamentImage = p.ValuationImageFile,
+                                ImageName = p.ImageName,
+                                ContentType = p.ContentType,
                                 Qty = p.Qty,
                                 PurityId = p.PurityId,
                                 GrossWt = p.GrossWeight,
@@ -122,7 +184,7 @@ namespace MangalWeb.Repository.Repository
                                 NtWt = p.NetWeight,
                                 Rate = p.Rate,
                                 Total = p.Total,
-                                TotalValuation = 0,
+                                TotalValuation = p.Total
                             };
                             _context.tbl_OrnamentValuationOneDetails.Add(trn);
                             _context.SaveChanges();
@@ -131,9 +193,9 @@ namespace MangalWeb.Repository.Repository
                         {
                             Findobject.ValuationOneID = tblObj.Id;
                             Findobject.OrnamentId = p.OrnamentId;
-                            Findobject.OrnamentImage = null;
-                            Findobject.ContentType = null;
-                            Findobject.ImageName = null;
+                            Findobject.OrnamentImage = p.ValuationImageFile;
+                            Findobject.ContentType = p.ContentType;
+                            Findobject.ImageName = p.ImageName;
                             Findobject.Qty = p.Qty;
                             Findobject.PurityId = p.PurityId;
                             Findobject.GrossWt = p.GrossWeight;
@@ -170,6 +232,39 @@ namespace MangalWeb.Repository.Repository
             {
                 throw ex;
             }
+        }
+        #endregion
+
+        #region DeleteRecord
+        public void DeleteRecord(int id)
+        {
+            var trndata = _context.tbl_OrnamentValuationOneDetails.Where(x => x.ValuationOneID == id).ToList();
+            //Delete the data from tbl_GLChargeMaster_Details
+            if (trndata != null)
+            {
+                foreach (var trn in trndata)
+                {
+                    _context.tbl_OrnamentValuationOneDetails.Remove(trn);
+                }
+                _context.SaveChanges();
+            }
+            var data = _context.Tran_ValuationOneDetails.Find(id);
+            _context.Tran_ValuationOneDetails.Remove(data);
+            _context.SaveChanges();
+        }
+        #endregion
+
+        #region GetConsolidatedImage
+        public Tran_ValuationOneDetails GetConsolidatedImage(int id)
+        {
+            return _context.Tran_ValuationOneDetails.Where(x => x.Id == id).FirstOrDefault();
+        }
+        #endregion
+
+        #region GetValuationImage
+        public tbl_OrnamentValuationOneDetails GetValuationImage(int id)
+        {
+            return _context.tbl_OrnamentValuationOneDetails.Where(x => x.Id == id).FirstOrDefault();
         }
         #endregion
     }

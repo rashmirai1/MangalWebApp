@@ -89,7 +89,6 @@
     <Compile Include="Repository\ProductRateRepository.cs" />
     <Compile Include="Repository\ReasonRepository.cs" />
     <Compile Include="Repository\CityRepository.cs" />
-    <Compile Include="Repository\HomeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\OrnamentRepository.cs" />
     <Compile Include="Repository\PenaltySlabRepository.cs" />

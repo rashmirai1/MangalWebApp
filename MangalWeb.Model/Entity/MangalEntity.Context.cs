@@ -27,12 +27,9 @@ namespace MangalWeb.Model.Entity
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<tblBankMaster> tblBankMasters { get; set; }
         public virtual DbSet<KycImageStore> KycImageStores { get; set; }
-        public virtual DbSet<tbl_GLDocumentMaster> tbl_GLDocumentMaster { get; set; }
         public virtual DbSet<tbl_CountryMaster> tbl_CountryMaster { get; set; }
         public virtual DbSet<tblDocumentMaster> tblDocumentMasters { get; set; }
-        public virtual DbSet<tblINV_ItemMaster> tblINV_ItemMaster { get; set; }
         public virtual DbSet<tblZonemaster> tblZonemasters { get; set; }
         public virtual DbSet<tblCityMaster> tblCityMasters { get; set; }
         public virtual DbSet<Mst_PinCode> Mst_PinCode { get; set; }
@@ -80,13 +77,11 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLSanctionDisburse_ChargesDetails> TGLSanctionDisburse_ChargesDetails { get; set; }
         public virtual DbSet<tblGroupmaster> tblGroupmasters { get; set; }
         public virtual DbSet<Mst_GstMaster> Mst_GstMaster { get; set; }
-        public virtual DbSet<tbl_PreSanctionDetails> tbl_PreSanctionDetails { get; set; }
         public virtual DbSet<tbl_ResidenceVerification> tbl_ResidenceVerification { get; set; }
         public virtual DbSet<TGLSanctionDisburse_ChargesPostingDetails> TGLSanctionDisburse_ChargesPostingDetails { get; set; }
         public virtual DbSet<tblPrimaryGroup> tblPrimaryGroups { get; set; }
         public virtual DbSet<FCompanyYearEndClosing> FCompanyYearEndClosings { get; set; }
         public virtual DbSet<tblStandardEndTime> tblStandardEndTimes { get; set; }
-        public virtual DbSet<Tran_ValuationOneDetails> Tran_ValuationOneDetails { get; set; }
         public virtual DbSet<TBankCash_PaymentDetails> TBankCash_PaymentDetails { get; set; }
         public virtual DbSet<TGLCashInOutDetail> TGLCashInOutDetails { get; set; }
         public virtual DbSet<TGLGoldInOutDetail> TGLGoldInOutDetails { get; set; }
@@ -94,6 +89,8 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLInterest_Details> TGLInterest_Details { get; set; }
         public virtual DbSet<TGlReceipt_BasicDetails> TGlReceipt_BasicDetails { get; set; }
         public virtual DbSet<tbl_OrnamentValuationOneDetails> tbl_OrnamentValuationOneDetails { get; set; }
+        public virtual DbSet<Tran_ValuationOneDetails> Tran_ValuationOneDetails { get; set; }
+        public virtual DbSet<tbl_PreSanctionDetails> tbl_PreSanctionDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

@@ -771,7 +771,7 @@ namespace MangalWeb.Repository.Repository
                         bool datasaved = false;
                         //first select AccID, Debit, Credit, LedgerID from TGLSanctionDisburse_ChargesPostingDetails with the help of sanction and disbursement id
                         #region ChargePosting
-                        //delete data from TGLSanctionDisburse_ChargesPostingDetails using sdidd
+                        //delete data from TGLSanctionDisburse_ChargesPostingDetails using sdid
                         var deleteposting = _context.TGLSanctionDisburse_ChargesPostingDetails.Where(x => x.SDID == model.ID).ToList();
                         if (deleteposting != null && deleteposting.Count > 0)
                         {
@@ -781,7 +781,7 @@ namespace MangalWeb.Repository.Repository
                                 _context.SaveChanges();
                             }
                         }
-                        //delete data from TGLSanctionDisburse_ChargesDetails using sdidd
+                        //delete data from TGLSanctionDisburse_ChargesDetails using sdid
                         var deletecharge = _context.TGLSanctionDisburse_ChargesDetails.Where(x => x.SDID == model.ID).ToList();
                         if (deletecharge != null && deletecharge.Count > 0)
                         {
@@ -792,7 +792,6 @@ namespace MangalWeb.Repository.Repository
                             }
                         }
                         #endregion
-                        //insert record in charge details table
                         //insert record in charge details table
                         int i = 0;
                         int tempchargeid = 0;

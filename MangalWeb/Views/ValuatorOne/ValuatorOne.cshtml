@@ -17,13 +17,13 @@
         </div><!--end of col-md-5-->
         <div class="col-md-7 col-sm-8 col-xs-12">
             <div class="topbar-right" id="headerbutton" @TempData["headerbutton"]>
-                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
+                <button href="#editSanctionModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
                 <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
-                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
-                <button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]" type="button" data-toggle="modal">
+                <button type="button" id="btnDelete" class="mb -xs mt-xs mr-xs btn btn-danger"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
+                <button href="#editSanctionModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]" type="button" data-toggle="modal">
                     <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
                 </button>
-                <a href="@Html.Raw(@Url.Action("DocumentVerification", "DocumentVerification"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+                <a href="@Html.Raw(@Url.Action("ValuatorOne", "ValuatorOne"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
             </div><!--end of topbar-right-->
         </div><!--end of col-md-7-->
 
@@ -64,7 +64,9 @@
                                             </div>
                                             <label class="col-md-2 control-label" id="lblSerialNumber"> Consolidated Image <span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <input type="file" />
+                                                <input type="file" id="ConsolidatedImage" />
+                                                <div id="ConsolidatedPhoto">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -88,13 +90,13 @@
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 <div class="section">
                                                     @Html.DropDownListFor(m => m.ValuatorOneDetailsVM.OrnamentId, (SelectList)ViewBag.OrnamentList, "--Select Ornament--", htmlAttributes: new { @class = "form-control" })
-                                                    @*<span class="text-danger">@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.LoanAmountGreaterthan)</span>*@
                                                     <i class="arrow"></i>
                                                 </div>
                                             </div>
                                             <label class="col-md-2 control-label" id="lblSerialNumber"> Ornament Image <span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <input type="file" id="OrnamentImageUpload" />
+                                                <input type="file" id="ValuationImage" />
+                                                <div id="ImgPhoto"></div>
                                             </div>
                                         </div>
                                         <br />
@@ -103,7 +105,6 @@
                                             <label class="col-md-2 control-label"> Qty <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.Qty, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Qty", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                                @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
                                             </div>
                                             <label class="col-md-2 control-label"> Purity <span class="text-danger"> * </span></label>
                                             <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
@@ -118,7 +119,6 @@
                                             <label class="col-md-2 control-label"> Gross Weight <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.GrossWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Gross Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                                @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
                                             </div>
                                         </div>
                                         <br />
@@ -127,22 +127,18 @@
                                             <label class="col-md-2 control-label"> Deductions <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.Deductions, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Duductions", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                                @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.Duductions, "", new { @class = "text-danger" })*@
                                             </div>
                                             <label class="col-md-2 control-label"> Net Weight <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.NetWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Net Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @readonly = true } })
-                                                @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
                                             </div>
                                             <label class="col-md-2 control-label"> Rate <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.Rate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Rate", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                                @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.Duductions, "", new { @class = "text-danger" })*@
                                             </div>
                                             <label class="col-md-2 control-label"> Total <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.Total, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Total", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                                @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
                                             </div>
                                             <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnAddValuationDetails" />
                                         </div>
@@ -166,23 +162,7 @@
                                                     <th class="text-center" style="width:8%">Actions</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                @*@{int j = 1;}
-                                                    @foreach (var item in Model.chargeDetailsCollection)
-                                                    {
-                                                        <tr id="@item.ID">
-                                                            <td>@j</td>
-                                                            <td>@item.LoanAmountGreaterthan</td>
-                                                            <td>@item.LoanAmountLessthan</td>
-                                                            <td>@item.ChargeAmount</td>
-                                                            <td id="@item.ChargeType">@item.ChargeType</td>
-                                                            <td>
-                                                                <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                        j++;
-                                                    }*@
-                                            </tbody>
+                                            <tbody></tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -204,32 +184,62 @@
     <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#divValuationDetails").hide();
-            if (@Model.ValuatorOneDetailsList.Count() > 0) {
-                $("#divValuationDetails").show();
-            }
-
             $("#ValuatorOneDetailsVM_GrossWeight").on('keyup', function () {
-                var GrossWeight =parseFloat($("#ValuatorOneDetailsVM_GrossWeight").val());
+                var GrossWeight = parseFloat($("#ValuatorOneDetailsVM_GrossWeight").val());
                 var Deductions = parseFloat($("#ValuatorOneDetailsVM_Deductions").val());
-                if(Deductions=="")
-                    Deductions=0;
-                $("#ValuatorOneDetailsVM_NetWeight").val(GrossWeight-Deductions);
+                if (Deductions == "")
+                    Deductions = 0;
+                $("#ValuatorOneDetailsVM_NetWeight").val(GrossWeight - Deductions);
             });
+
             $("#ValuatorOneDetailsVM_Deductions").on('keyup', function () {
-                var GrossWeight =parseFloat($("#ValuatorOneDetailsVM_GrossWeight").val());
+                var GrossWeight = parseFloat($("#ValuatorOneDetailsVM_GrossWeight").val());
                 var Deductions = parseFloat($("#ValuatorOneDetailsVM_Deductions").val());
-                $("#ValuatorOneDetailsVM_NetWeight").val(GrossWeight-Deductions);
+                $("#ValuatorOneDetailsVM_NetWeight").val(GrossWeight - Deductions);
             });
+
             $("#ValuatorOneDetailsVM_Rate").on('keyup', function () {
-                var NetWeight =parseFloat($("#ValuatorOneDetailsVM_NetWeight").val());
+                var NetWeight = parseFloat($("#ValuatorOneDetailsVM_NetWeight").val());
                 var Rate = parseFloat($("#ValuatorOneDetailsVM_Rate").val());
-                $("#ValuatorOneDetailsVM_Total").val(NetWeight*Rate);
+                $("#ValuatorOneDetailsVM_Total").val(NetWeight * Rate);
             });
         });
         var sr_no = 0;
         var trid = 0;
         currentRow = null;
+
+        $("#tblValuationDetails TBODY TR").on("click", ".edit", function () {
+            debugger;
+            var tr = $(this).closest('tr');
+            currentRow = $(this).parents('tr');
+            debugger;
+            sr_no = tr.find('td:eq(0)').html();
+            trid = tr.attr('id'); // table row ID
+            var OrnamentId = tr.find("td").eq(1).attr('id');
+            var Qty = tr.find('td:eq(2)').html();
+            var PurityId = tr.find("td").eq(3).attr('id');
+            var GrossWeight = tr.find('td:eq(4)').html();
+            var Deductions = tr.find('td:eq(5)').html();
+            var NetWeight = tr.find('td:eq(6)').html();
+            var Rate = tr.find('td:eq(7)').html();
+            var Total = tr.find('td:eq(8)').html();
+
+            $("#ValuatorOneDetailsVM_OrnamentId").val(OrnamentId);
+            $("#ValuatorOneDetailsVM_Qty").val(Qty);
+            $("#ValuatorOneDetailsVM_PurityId").val(PurityId);
+            $("#ValuatorOneDetailsVM_GrossWeight").val(GrossWeight);
+            $("#ValuatorOneDetailsVM_Deductions").val(Deductions);
+            $("#ValuatorOneDetailsVM_NetWeight").val(NetWeight);
+            $("#ValuatorOneDetailsVM_Rate").val(Rate);
+            $("#ValuatorOneDetailsVM_Total").val(Total);
+        })
+
+        $("#tblValuationDetails TBODY TR").on("click", ".delete", function () {
+            if (confirm('Are you sure to remove?')) {
+                var tr = $(this).closest('tr');
+                tr.remove();
+            }
+        })
         $("#btnAddValuationDetails").click(function () {
             debugger;
             $("#CustomErrr").text("");
@@ -260,7 +270,24 @@
             var Rate = $("#ValuatorOneDetailsVM_Rate").val();
             var Total = $("#ValuatorOneDetailsVM_Total").val();
             //var filename=$("#UploadedFile").val();
-            var filename = $("#OrnamentImageUpload").val();
+            var filename = $("#ValuationImage").val();
+
+            var fileUpload = $("#ValuationImage").get(0);
+            var files = fileUpload.files;
+
+            var row = '<tr id=' + newtrno + '>' +
+                     '<td width="10%">' + srno + '</td>' +
+                     '<td width="20%" id="' + OrnamentId + '">' + OrnamentName + '</td>' +
+                     '<td width="10%"><a href="#">' + filles.FileName + '</a></td>"' +
+                     '<td width="8%">' + Qty + '</td>' +
+                     '<td width="20%" id="' + PurityId + '">' + PurityName + '</td>' +
+                     '<td width="8%">' + GrossWeight + '</td>' +
+                     '<td width="8%">' + Deductions + '</td>' +
+                     '<td width="8%">' + NetWeight + '</td>' +
+                     '<td width="8%">' + Rate + '</td>' +
+                     '<td width="8%">' + Total + '</td>' +
+                     '<td id=' + srno + '' + actions + '</td>' +
+                     '</tr>';
             debugger;
             var isExist = false;
             $("#tblValuationDetails TBODY tr").each(function () {
@@ -271,8 +298,10 @@
                 var first = row.find('td:nth-child(2)').attr('id');
                 var second = row.find('td:nth-child(5)').attr('id');
                 // if exists, remove the tr
-                if (first == OrnamentId && second == PurityId) {
-                    isExist = true;
+                if (currentRow == null) {
+                    if (first == OrnamentId && second == PurityId) {
+                        isExist = true;
+                    }
                 }
             });
             if (isExist) {
@@ -294,39 +323,18 @@
                 }
                 else {
                     if (OrnamentId != "" && PurityId != "") {
-                        var fileUpload = $("#OrnamentImageUpload").get(0);
+                        var fileUpload = $("#ValuationImage").get(0);
                         var files = fileUpload.files;
                         // Create FormData object
                         fileData = new FormData();
                         // Looping over all files and add it to FormData object
                         for (var i = 0; i < files.length; i++) {
-                            fileData.append("OrnamentImage", files[i]);
+                            fileData.append("ValuationImage", files[i]);
                         }
-                        var row = '<tr id=' + newtrno + '>' +
-                      '<td width="10%">' + srno + '</td>' +
-                      '<td width="20%" id="' + OrnamentId + '">' + OrnamentName + '</td>' +
-                      '<td width="10%"><a href="#">' + files[0].name + '</a></td>"' +
-                      '<td width="8%">' + Qty + '</td>' +
-                      '<td width="20%" id="' + PurityId + '">' + PurityName + '</td>' +
-                      '<td width="8%">' + GrossWeight + '</td>' +
-                      '<td width="8%">' + Deductions + '</td>' +
-                      '<td width="8%">' + NetWeight + '</td>' +
-                      '<td width="8%">' + Rate + '</td>' +
-                      '<td width="8%">' + Total + '</td>' +
-                      '<td id=' + srno + '' + actions + '</td>' +
-                      '</tr>';
+                        fileData.append("ID", newtrno)
                         $("#tblValuationDetails tbody").append(row);
-                        $("#divValuationDetails").show();
-                        return;
-                        // Adding one more key to FormData object
-                        fileData.append('Id', srno);
-                        fileData.append('DocumentTypeId', DocumentTypeId);
-                        fileData.append('DocumentId', DocumentId);
-                        fileData.append('ExpiryDate', ExpiryDate);
-                        fileData.append('SpecifyOther', SpecifyOther);
-                        fileData.append('NameonDocument', NameonDocument);
                         $.ajax({
-                            url: '/ValuatorOne/AddDocument',
+                            url: '/ValuatorOne/AddValuationImage',
                             type: "POST",
                             contentType: false, // Not to set any content header
                             processData: false, // Not to process data
@@ -349,51 +357,90 @@
                     }
                 }
 
+                $("#tblValuationDetails TBODY TR").on("click", ".edit", function () {
+                    debugger;
+                    var tr = $(this).closest('tr');
+                    currentRow = $(this).parents('tr');
+                    debugger;
+                    sr_no = tr.find('td:eq(0)').html();
+                    trid = tr.attr('id'); // table row ID
+                    var OrnamentId = tr.find("td").eq(1).attr('id');
+                    var imgname = tr.find('td:eq(2)').html();
+                    var Qty = tr.find('td:eq(3)').html();
+                    var PurityId = tr.find("td").eq(4).attr('id');
+                    var GrossWeight = tr.find('td:eq(5)').html();
+                    var Deductions = tr.find('td:eq(6)').html();
+                    var NetWeight = tr.find('td:eq(7)').html();
+                    var Rate = tr.find('td:eq(8)').html();
+                    var Total = tr.find('td:eq(9)').html();
+
+                    $("#ImgPhoto").append('<td><a href="/ValuatorOne/DownLoadValuationImage/' + result.trid + '" target=_blank>' + imgname + '</a></td>');
+
+                    $("#ValuatorOneDetailsVM_OrnamentId").val(OrnamentId);
+                    $("#ValuatorOneDetailsVM_Qty").val(Qty);
+                    $("#ValuatorOneDetailsVM_PurityId").val(PurityId);
+                    $("#ValuatorOneDetailsVM_GrossWeight").val(GrossWeight);
+                    $("#ValuatorOneDetailsVM_Deductions").val(Deductions);
+                    $("#ValuatorOneDetailsVM_NetWeight").val(NetWeight);
+                    $("#ValuatorOneDetailsVM_Rate").val(Rate);
+                    $("#ValuatorOneDetailsVM_Total").val(Total);
+                })
+
                 $("#tblValuationDetails TBODY TR").on("click", ".delete", function () {
                     if (confirm('Are you sure to remove?')) {
                         var tr = $(this).closest('tr');
-                        trid = tr.find('td:eq(0)').html();
                         tr.remove();
-                        $.ajax({
-                            url: '/DocumentUpload/Remove?id=' + trid,
-                            type: "POST",
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (result) {
-                                //$(this).parents('tr').remove();
-                            },
-                            error: function (err) {
-                                alert(err.statusText);
-                            }
-                        });
                     }
                 })
             }
+        })
+
+        $("#ConsolidatedImage").change(function () {
+            var fileUpload = $("#ConsolidatedImage").get(0);
+            var files = fileUpload.files;
+            // Create FormData object
+            fileData = new FormData();
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append("uploadFile", files[i]);
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UploadConsolidatedImage", "ValuatorOne")', // we are calling json method
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (data) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+            return false;
         })
 
         $("#btn_save").click(function () {
             SaveValuator1();
         });
 
-        function SaveValuator1()
-        {
+        function SaveValuator1() {
             var CustomerId = $("#CustomerId").val();
             if (CustomerId == "") {
                 $("#CustomErr").text("Please Select Customer Id");
                 $("#CustomerId").focus();
                 return;
             }
-            var check=true;
+            var check = true;
             debugger;
             if ($('#divValuationDetails tbody tr').length == 0) {
-                var OrnamentId= $("#ValuatorOneDetailsVM_OrnamentId").val();
+                var OrnamentId = $("#ValuatorOneDetailsVM_OrnamentId").val();
                 if (OrnamentId == "") {
                     $("#CustomErr").text("Please Select Ornament");
                     $("#ValuatorOneDetailsVM_OrnamentId").focus();
                     return;
                 }
 
-                var PurityId= $("#ValuatorOneDetailsVM_PurityId").val();
+                var PurityId = $("#ValuatorOneDetailsVM_PurityId").val();
                 if (PurityId == "") {
                     $("#CustomErr").text("Please Select Purity");
                     $("#ValuatorOneDetailsVM_PurityId").focus();
@@ -408,9 +455,8 @@
                 //}
             }
             debugger;
-            var length=$('#tblValuationDetails tbody tr').length;
-            if(length==0)
-            {
+            var length = $('#tblValuationDetails tbody tr').length;
+            if (length == 0) {
                 $("#CustomErr").text("Please Click Add button then save record");
                 $("#tblValuationDetails").focus();
             }
@@ -424,7 +470,7 @@
                 var rowValuationDetailsTrn = {};
                 debugger;
                 rowValuationDetailsTrn.ID = row.attr('id');
-                rowValuationDetailsTrn.OrnamentId =row.find("td").eq(1).attr('id');
+                rowValuationDetailsTrn.OrnamentId = row.find("td").eq(1).attr('id');
                 rowValuationDetailsTrn.Qty = row.find("TD").eq(3).html();
                 rowValuationDetailsTrn.PurityId = row.find("td").eq(4).attr('id');
                 rowValuationDetailsTrn.GrossWeight = row.find("TD").eq(5).html();
@@ -441,9 +487,8 @@
             ValuatorOneViewModel.CustomerId = $('#CustomerId').val();
             ValuatorOneViewModel.ApplicationNo = $('#ApplicationNo').val();
             ValuatorOneViewModel.Comments = $('#Comments').val();
-            ValuatorOneViewModel.PreSanctionId=$("#PreSanctionId").val();
-            if(check==true)
-            {
+            ValuatorOneViewModel.PreSanctionId = $("#PreSanctionId").val();
+            if (check == true) {
                 $("#btn_save").prop("disabled", true);
                 $.ajax({
                     type: "POST",
@@ -461,14 +506,14 @@
                                 window.location.href = urlRedirect;
                             });
                         }
-                        else if(r==2){
-                            $("#saveModal").modal('show');
+                        else if (r == 2) {
+                            $("#updateModal").modal('show');
                             $(document).click(function () {
                                 window.location.href = urlRedirect;
                             });
                         }
-                        else
-                        {   $("#CustomErr").text(r);
+                        else {
+                            $("#CustomErr").text(r);
                             $("#btn_save").prop("disabled", false);
                             return false;
                         }
@@ -477,13 +522,139 @@
             }
         }
 
+        function ShowEditTableList() {
+            $('#divviewfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetValuatorOneDetails", "ValuatorOne")',
+                dataType: "html",
+                data: { Operation: "Edit" },
+                success: function (data) {
+                    $('#divsanctionfilldata').empty();
+                    $('#divsanctionfilldata').html(data);
+                    $('#CustomerTable').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+        function ShowViewTableList() {
+            $('#diveditfilldata').empty();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetValuatorOneDetails", "ValuatorOne")',
+                dataType: "html",
+                data: { Operation: "View" },
+                success: function (data) {
+                    $('#divsanctionfilldata').empty();
+                    $('#divsanctionfilldata').html(data);
+                    $('#CustomerTable').dataTable();
+                },
+                error: function (xhr, status, error) {
+                    alert(error);
+                }
+            });
+        }
+        $("#divsanctionfilldata").on("click", "tr", function () {
+            debugger;
+            var tr = $(this).closest('tr');
+            var Id = tr.find("td").eq(0).attr('id');
+            var TransactionId = tr.find('td:eq(0)').html();
+            var CustomerId = tr.find('td:eq(1)').html();
+            var ApplicationNo = tr.find('td:eq(2)').html();
+
+            $("#ItemID").val(Id);
+            $("#TransactionId").val(TransactionId);
+            $("#CustomerId").val(CustomerId);
+            $("#ApplicationNo").val(ApplicationNo);
+            $("#editSanctionModal").hide();
+            GetValuatorOneDetails(Id);
+        })
+
+        function GetValuatorOneDetails(Id) {
+            debugger;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetValuatorOneDetailsById", "ValuatorOne")',
+                data: "{Id: " + Id + "}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    $("#CustomErr").text("");
+                    $("#tblValuationDetails tbody tr").empty();
+                    $("#divValuationDetails").show();
+                    $.each(result, function (key, value) {
+                        $("#" + key + "").val(value);
+                    });
+
+                    if (result.ImageName != null) {
+                        $("#ConsolidatedPhoto").append('<td><a href="/ValuatorOne/Download/' + result.ID + '" target=_blank>' + result.ImageName + '</a></td>');
+                    }
+                    debugger;
+                    var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+                    $.each(result.ValuatorOneDetailsList, function (key, val) {
+                        var rowCount = $('#tblValuationDetails >tbody >tr').length + 1;
+                        $('#divValuationDetails tbody').append('<tr id=' + val.ID + '>' +
+                      '<td width="10%">' + rowCount + '</td>' +
+                      '<td width="20%" id="' + val.OrnamentId + '">' + val.OrnamentName + '</td>' +
+                      '<td width="10%"><a href="/ValuatorOne/DownLoadValuationImage/' + val.ID + '" target=_blank>' + val.ImageName + '</a></td>"' +
+                      '<td width="8%">' + val.Qty + '</td>' +
+                      '<td width="20%" id="' + val.PurityId + '">' + val.PurityName + '</td>' +
+                      '<td width="8%">' + val.GrossWeight + '</td>' +
+                      '<td width="8%">' + val.Deductions + '</td>' +
+                      '<td width="8%">' + val.NetWeight + '</td>' +
+                      '<td width="8%">' + val.Rate + '</td>' +
+                      '<td width="8%">' + val.Total + '</td>' +
+                      '<td>' + actions + '</td>' +
+                      '</tr>');
+                    });
+                    $("#tblValuationDetails TBODY TR").on("click", ".edit", function () {
+                        debugger;
+                        var tr = $(this).closest('tr');
+                        currentRow = $(this).parents('tr');
+                        debugger;
+                        sr_no = tr.find('td:eq(0)').html();
+                        trid = tr.attr('id'); // table row ID
+                        var OrnamentId = tr.find("td").eq(1).attr('id');
+                        var imgname = tr.find('td:eq(2)').html();
+                        var Qty = tr.find('td:eq(3)').html();
+                        var PurityId = tr.find("td").eq(4).attr('id');
+                        var GrossWeight = tr.find('td:eq(5)').html();
+                        var Deductions = tr.find('td:eq(6)').html();
+                        var NetWeight = tr.find('td:eq(7)').html();
+                        var Rate = tr.find('td:eq(8)').html();
+                        var Total = tr.find('td:eq(9)').html();
+
+                        $("#ImgPhoto").append('<td><a href="/ValuatorOne/DownLoadValuationImage/' + result.trid + '" target=_blank>' + imgname + '</a></td>');
+
+                        $("#ValuatorOneDetailsVM_OrnamentId").val(OrnamentId);
+                        $("#ValuatorOneDetailsVM_Qty").val(Qty);
+                        $("#ValuatorOneDetailsVM_PurityId").val(PurityId);
+                        $("#ValuatorOneDetailsVM_GrossWeight").val(GrossWeight);
+                        $("#ValuatorOneDetailsVM_Deductions").val(Deductions);
+                        $("#ValuatorOneDetailsVM_NetWeight").val(NetWeight);
+                        $("#ValuatorOneDetailsVM_Rate").val(Rate);
+                        $("#ValuatorOneDetailsVM_Total").val(Total);
+                    })
+
+                    $("#tblValuationDetails TBODY TR").on("click", ".delete", function () {
+                        if (confirm('Are you sure to remove?')) {
+                            var tr = $(this).closest('tr');
+                            tr.remove();
+                        }
+                    })
+                }
+            });
+        }
 
         function ShowClientTableList() {
             $('#divviewfilldata').empty();
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("GetCustomerDetails", "ValuatorOne")',
-                // dataType: "html",
+                dataType: "html",
                 success: function (data) {
                     $('#diveditfilldata').empty();
                     $('#diveditfilldata').html(data);
@@ -497,14 +668,48 @@
         $("#diveditfilldata").on("click", "tr", function () {
             debugger;
             var tr = $(this).closest('tr');
-            var CustomerId =tr.find('td:eq(0)').html();
-            var PreSanctionId =tr.find("td").eq(0).attr('id');
-            var ApplicationNo =tr.find('td:eq(1)').html();
+            var CustomerId = tr.find('td:eq(0)').html();
+            var PreSanctionId = tr.find("td").eq(0).attr('id');
+            var ApplicationNo = tr.find('td:eq(1)').html();
 
             $("#CustomerId").val(CustomerId);
             $("#PreSanctionId").val(PreSanctionId);
             $("#ApplicationNo").val(ApplicationNo);
             $("#editModal").hide();
         })
+        var urlRedirect = '@Html.Raw(@Url.Action("ValuatorOne", "ValuatorOne"))';
+        $(function () {
+            var url = '@Html.Raw(@Url.Action("Delete", "ValuatorOne"))';
+            $("#btnDelete").click(function () {
+                $("#deleteModal").modal('show');
+            });
+            $("#btnDeleteConfirm").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: '{id: "' + $("#ItemID").val() + '" }',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data != "") {
+                            $("#CustomErr").text(data);
+                            return false;
+                        }
+                        else {
+                            $("#CustomErr").empty();
+                            $("#DeleteSuccessModal").modal('show');
+
+                            $(document).click(function () {
+                                window.location.href = urlRedirect;
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            });
+        });
+
     </script>
 }

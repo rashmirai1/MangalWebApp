@@ -35,7 +35,7 @@ namespace MangalWeb.Service.Service
         #endregion
 
         #region GetMaxTransactionId
-        public int GetMaxTransactionId()
+        public ValuatorOneViewModel GetMaxTransactionId()
         {
             return _valuatorOneRepository.GetMaxTransactionId();
         }
@@ -45,6 +45,41 @@ namespace MangalWeb.Service.Service
         public void SaveRecord(ValuatorOneViewModel model)
         {
             _valuatorOneRepository.SaveUpdateRecord(model);
+        }
+        #endregion
+
+        #region GetValuatorOneList
+        public List<ValuatorOneViewModel> GetValuatorOneList()
+        {
+            return _valuatorOneRepository.GetValuatorOneList();
+        }
+        #endregion
+
+        #region GetValuatorOneDetailsById
+        public ValuatorOneViewModel GetValuatorOneDetailsById(int Id)
+        {
+            return _valuatorOneRepository.GetValuatorOneDetailsById(Id);
+        }
+        #endregion
+
+        #region DeleteRecord
+        public void DeleteRecord(int id)
+        {
+            _valuatorOneRepository.DeleteRecord(id);
+        }
+        #endregion
+
+        #region GetConsolidatedImage
+        public Tran_ValuationOneDetails GetConsolidatedImage(int id)
+        {
+            return _valuatorOneRepository.GetConsolidatedImage(id);
+        }
+        #endregion
+
+        #region GetValuationImage
+        public tbl_OrnamentValuationOneDetails GetValuationImage(int id)
+        {
+            return _valuatorOneRepository.GetValuationImage(id);
         }
         #endregion
     }

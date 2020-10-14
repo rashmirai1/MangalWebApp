@@ -23,9 +23,9 @@ namespace MangalWeb.Model.Transaction
         [Required]
         public string ApplicationNo { get; set; }
         [Required]
-        public string RM { get; set; }
+        public int RM { get; set; }
         [Required]
-        public string Product { get; set; }
+        public int Product { get; set; }
         [Required]
         public string PurposeofLoan { get; set; }
         [Required]
