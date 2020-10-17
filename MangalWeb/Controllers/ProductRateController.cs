@@ -12,6 +12,7 @@ namespace MangalWeb.Controllers
     {
         ProductRateService _productrateService = new ProductRateService();
 
+        #region Insert
         [HttpPost]
         public ActionResult Insert(ProductRateViewModel objViewModel)
         {
@@ -36,6 +37,7 @@ namespace MangalWeb.Controllers
             }
             return View("ProductRate", objViewModel);
         }
+        #endregion
 
         #region Insert Data
 
@@ -58,6 +60,7 @@ namespace MangalWeb.Controllers
 
         #endregion Insert Data
 
+        #region GetProductRateById
         public ActionResult GetProductRateById(int ID)
         {
             string operation = Session["Operation"].ToString();
@@ -67,14 +70,18 @@ namespace MangalWeb.Controllers
             ViewBag.ProductList = new SelectList(_productrateService.GetProductList(), "Id", "Name");
             return View("ProductRate", productRatevm);
         }
+        #endregion
 
+        #region Delete
         // GETDelete/5
         public ActionResult Delete(int id)
         {
             _productrateService.DeleteRecord(id);
             return Json(JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region ProductRate
         public ActionResult ProductRate()
         {
             ButtonVisiblity("Index");
@@ -84,13 +91,17 @@ namespace MangalWeb.Controllers
             ViewBag.ProductList = new SelectList(_productrateService.GetProductList(), "Id", "Name");
             return View(model);
         }
+        #endregion
 
+        #region GetPurity
         public JsonResult GetPurity(int id)
         {
             var data = new SelectList(_productrateService.GetPurityById(id), "Id", "PurityName");
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region GetProductRateTable
         public ActionResult GetProductRateTable(string Operation)
         {
             Session["Operation"] = Operation;
@@ -98,6 +109,7 @@ namespace MangalWeb.Controllers
             var list = _productrateService.SetDataofModalList();
             return PartialView("_ProductRateList", list);
         }
+        #endregion
     }
 }
 

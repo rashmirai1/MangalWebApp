@@ -1535,16 +1535,12 @@
                             debugger;
                             var row = $(this).closest("tr");
                             $('#divChargeDetails tbody>tr').each(function () {
-                                var row1 = $(this).closest("tr");
+                                //var row1 = $(this).closest("tr");
                                 if (row.attr('id') == $(this).attr('id')) {
                                     $(this).closest('tr').remove();
                                 }
                             });
-                            var totamt=0;
-                            $('#divChargeDetails tbody>tr').each(function () {
-                                var row = $(this).closest("tr");
-                                totamt=totamt+parseFloat(row.find('td:eq(4)').html());
-                            });
+                           
                             var totamt=0;
                             $('#divChargeDetails tbody>tr').each(function () {
                                 var row = $(this).closest("tr");

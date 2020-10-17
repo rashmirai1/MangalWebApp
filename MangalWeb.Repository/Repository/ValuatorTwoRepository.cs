@@ -9,7 +9,7 @@ using System.Web;
 
 namespace MangalWeb.Repository.Repository
 {
-   public class ValuatorTwoRepository
+    public class ValuatorTwoRepository
     {
         MangalDBNewEntities _context = new MangalDBNewEntities();
 
@@ -28,15 +28,15 @@ namespace MangalWeb.Repository.Repository
         #endregion
 
         #region GetPreSanctionList
-        public List<ValuatorTwoViewModel> GetPreSanctionList()
+        public List<ValuatorTwoViewModel> GetValuatorOneList()
         {
-            var list = _context.Database.SqlQuery<ValuatorTwoViewModel>("GetPreSanctionListFromValuatorOne").ToList();
+            var list = _context.Database.SqlQuery<ValuatorTwoViewModel>("GetValuatorOneList").ToList();
             return list;
         }
         #endregion
 
         #region GetValuatorOneList
-        public List<ValuatorTwoViewModel> GetValuatorOneList()
+        public List<ValuatorTwoViewModel> GetValuatorTwoList()
         {
             var list = _context.Database.SqlQuery<ValuatorTwoViewModel>("SP_GetValuatorOneRecord").ToList();
             return list;
@@ -57,16 +57,20 @@ namespace MangalWeb.Repository.Repository
         public ValuatorTwoViewModel GetValuatorOneDetailsById(int Id)
         {
             var model = new ValuatorTwoViewModel();
-            model = _context.Tran_ValuationOneDetails.Where(x => x.Id == Id)
-                .Select(x => new ValuatorTwoViewModel()
-                {
-                    ID = x.Id,
-                    TransactionId = x.TransactionId,
-                    CustomerId = x.CustomerID,
-                    ApplicationNo = x.ApplicationNo,
-                    Comments = x.Comments,
-                    ImageName = x.ImageName
-                }).FirstOrDefault();
+            model = (from a in _context.Tran_ValuationOneDetails
+                     join b in _context.tbl_PreSanctionDetails on a.PreSanctionId equals b.Id
+                     join c in _context.TSchemeMaster_BasicDetails on b.Scheme equals c.SID
+                     where a.Id == Id
+                     select new ValuatorTwoViewModel()
+                     {
+                         ID = a.Id,
+                         TransactionId = a.TransactionId,
+                         CustomerId = a.CustomerID,
+                         ApplicationNo = a.ApplicationNo,
+                         Comments = a.Comments,
+                         ImageName = a.ImageName,
+                         MaxLtv = (decimal)c.MaxLtv
+                     }).FirstOrDefault();
 
             var valuatoronedetails = (from a in _context.Tran_ValuationOneDetails
                                       join b in _context.tbl_OrnamentValuationOneDetails on a.Id equals b.ValuationOneID

@@ -24,6 +24,7 @@ namespace MangalWeb.Model.Transaction
         public string ApplicationNo { get; set; }
         public decimal EligibleLoanAmount { get; set; }
         public decimal LTVPerc { get; set; }
+        public decimal MaxLtv { get; set; }
         public decimal SanctionLoanAmount { get; set; }
 
         public string Comments { get; set; }

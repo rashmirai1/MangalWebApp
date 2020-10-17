@@ -113,6 +113,7 @@ namespace MangalWeb.Controllers
         {
             HttpFileCollectionBase files = Request.Files;
             HttpPostedFileBase postedFile = files[0];
+            int id = Convert.ToInt32(Request.Form["ID"]);
             Stream fs = postedFile.InputStream;
             BinaryReader br = new BinaryReader(fs);
             Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
@@ -123,12 +124,19 @@ namespace MangalWeb.Controllers
             if (sessionlist == null)
             {
                 sessionlist = new List<ValuatorOneDetailsViewModel>();
+                docupload.ID = id;
+                docupload.ValuationImageFile = bytes;
+                docupload.ImageName = postedFile.FileName;
+                docupload.ContentType = postedFile.ContentType;
+                sessionlist.Add(docupload);
             }
-            docupload.ID = Convert.ToInt32(Request.Form["ID"]);
-            docupload.ValuationImageFile = bytes;
-            docupload.ImageName = postedFile.FileName;
-            docupload.ContentType = postedFile.ContentType;
-            sessionlist.Add(docupload);
+            else
+            {
+                docupload = sessionlist.Where(x => x.ID == id).FirstOrDefault();
+                docupload.ValuationImageFile = bytes;
+                docupload.ImageName = postedFile.FileName;
+                docupload.ContentType = postedFile.ContentType;
+            }
             Session["ValuationImageList"] = sessionlist;
             return Json(docupload, JsonRequestBehavior.AllowGet);
         }
@@ -164,13 +172,13 @@ namespace MangalWeb.Controllers
             string operation = Session["Operation"].ToString();
 
             var sessionlist = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageList"];
-            var docupload = new ValuatorOneDetailsViewModel();
             if (sessionlist == null)
             {
                 sessionlist = new List<ValuatorOneDetailsViewModel>();
             }
             foreach (var item in model.ValuatorOneDetailsList)
             {
+                var docupload = new ValuatorOneDetailsViewModel();
                 docupload.ID = item.ID;
                 var file1 = _valuatorOneService.GetValuationImage(item.ID);
                 docupload.ValuationImageFile = file1.OrnamentImage;
@@ -236,6 +244,14 @@ namespace MangalWeb.Controllers
         {
             var file = _valuatorOneService.GetValuationImage(id);
             return File(file.OrnamentImage, file.ContentType);
+        }
+        #endregion
+
+        #region GetOrnamentProductWise
+        public JsonResult GetOrnamentProductWise(int id)
+        {
+            var data = new SelectList(_valuatorOneService.GetOrnamentProductWise(id), "ItemID", "ItemName");
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

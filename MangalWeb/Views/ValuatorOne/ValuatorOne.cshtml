@@ -9,6 +9,7 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
     @Html.HiddenFor(x => x.PreSanctionId)
+    @Html.HiddenFor(x => x.ProductId)
     <header id="topbar" class="affix">
         <div class="col-md-5 col-sm-4 col-xs-12">
             <div class="topbar-left">
@@ -166,6 +167,10 @@
                                         </table>
                                     </div>
                                 </div>
+                                <div>
+                                    <label id="headerTotalValuation">Total Valuation :</label>
+                                    <label id="lblTotalValuation"></label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -184,6 +189,13 @@
     <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $("#divValuationDetails").hide();
+            $("#headerTotalValuation").css('display', 'none');
+
+            $("#ValuatorOneDetailsVM_PurityId").attr('disabled', 'disabled');
+            $("#ValuatorOneDetailsVM_OrnamentId").attr('disabled', 'disabled');
+
             $("#ValuatorOneDetailsVM_GrossWeight").on('keyup', function () {
                 var GrossWeight = parseFloat($("#ValuatorOneDetailsVM_GrossWeight").val());
                 var Deductions = parseFloat($("#ValuatorOneDetailsVM_Deductions").val());
@@ -238,6 +250,12 @@
             if (confirm('Are you sure to remove?')) {
                 var tr = $(this).closest('tr');
                 tr.remove();
+                var totamt = 0;
+                $('#tblValuationDetails tbody>tr').each(function () {
+                    var row = $(this).closest("tr");
+                    totamt = totamt + parseFloat(row.find('td:eq(9)').html());
+                });
+                $("#lblTotalValuation").text(totamt)
             }
         })
         $("#btnAddValuationDetails").click(function () {
@@ -269,16 +287,21 @@
             var NetWeight = $("#ValuatorOneDetailsVM_NetWeight").val();
             var Rate = $("#ValuatorOneDetailsVM_Rate").val();
             var Total = $("#ValuatorOneDetailsVM_Total").val();
-            //var filename=$("#UploadedFile").val();
-            var filename = $("#ValuationImage").val();
-
             var fileUpload = $("#ValuationImage").get(0);
             var files = fileUpload.files;
-
+            var filename = files[0].name;
+            if (typeof(filename) == 'undefined')
+            {
+                filename= $("#ImgPhoto").find("td:last-child").text()
+            }
+            else
+            {
+                $("#ImgPhoto").empty();
+            }
             var row = '<tr id=' + newtrno + '>' +
                      '<td width="10%">' + srno + '</td>' +
                      '<td width="20%" id="' + OrnamentId + '">' + OrnamentName + '</td>' +
-                     '<td width="10%"><a href="#">' + filles.FileName + '</a></td>"' +
+                     '<td width="10%"><a href="#">' + filename  + '</a></td>"' +
                      '<td width="8%">' + Qty + '</td>' +
                      '<td width="20%" id="' + PurityId + '">' + PurityName + '</td>' +
                      '<td width="8%">' + GrossWeight + '</td>' +
@@ -311,6 +334,33 @@
             else {
                 if (currentRow) {
                     $("#tblValuationDetails tbody").find($(currentRow)).replaceWith(row);
+                    var fileUpload = $("#ValuationImage").get(0);
+                    var files = fileUpload.files;
+                    // Create FormData object
+                    fileData = new FormData();
+                    // Looping over all files and add it to FormData object
+                    for (var i = 0; i < files.length; i++) {
+                        fileData.append("ValuationImage", files[i]);
+                    }
+                    fileData.append("ID", newtrno)
+                    $.ajax({
+                        url: '/ValuatorOne/AddValuationImage',
+                        type: "POST",
+                        contentType: false, // Not to set any content header
+                        processData: false, // Not to process data
+                        data: fileData,
+                        success: function (result) {
+                        },
+                        error: function (err) {
+                            //alert(err.statusText);
+                        }
+                    });
+                    var totamt = 0;
+                    $('#tblValuationDetails tbody>tr').each(function () {
+                        var row = $(this).closest("tr");
+                        totamt = totamt + parseFloat(row.find('td:eq(9)').html());
+                    });
+                    $("#lblTotalValuation").text(totamt)
                     $("#ValuatorOneDetailsVM_OrnamentId").val("");
                     $("#ValuatorOneDetailsVM_Qty").val("");
                     $("#ValuatorOneDetailsVM_PurityId").val("");
@@ -345,6 +395,15 @@
                                 //alert(err.statusText);
                             }
                         });
+                        var totamt = 0;
+                        $('#tblValuationDetails tbody>tr').each(function () {
+                            var row = $(this).closest("tr");
+                            totamt = totamt + parseFloat(row.find('td:eq(9)').html());
+                        });
+
+                        $("#divValuationDetails").show();
+                        $("#headerTotalValuation").css('display', 'block');
+                        $("#lblTotalValuation").text(totamt)
                         $("#ValuatorOneDetailsVM_OrnamentId").val("");
                         $("#ValuatorOneDetailsVM_Qty").val("");
                         $("#ValuatorOneDetailsVM_PurityId").val("");
@@ -358,7 +417,6 @@
                 }
 
                 $("#tblValuationDetails TBODY TR").on("click", ".edit", function () {
-                    debugger;
                     var tr = $(this).closest('tr');
                     currentRow = $(this).parents('tr');
                     debugger;
@@ -374,7 +432,8 @@
                     var Rate = tr.find('td:eq(8)').html();
                     var Total = tr.find('td:eq(9)').html();
 
-                    $("#ImgPhoto").append('<td><a href="/ValuatorOne/DownLoadValuationImage/' + result.trid + '" target=_blank>' + imgname + '</a></td>');
+                    $("#ImgPhoto").empty();
+                    $("#ImgPhoto").append('<td><a href="/ValuatorOne/DownLoadValuationImage/' + trid + '" target=_blank>' + imgname + '</a></td>');
 
                     $("#ValuatorOneDetailsVM_OrnamentId").val(OrnamentId);
                     $("#ValuatorOneDetailsVM_Qty").val(Qty);
@@ -390,6 +449,12 @@
                     if (confirm('Are you sure to remove?')) {
                         var tr = $(this).closest('tr');
                         tr.remove();
+                        var totamt = 0;
+                        $('#tblValuationDetails tbody>tr').each(function () {
+                            var row = $(this).closest("tr");
+                            totamt = totamt + parseFloat(row.find('td:eq(9)').html());
+                        });
+                        $("#lblTotalValuation").text(totamt)
                     }
                 })
             }
@@ -488,6 +553,7 @@
             ValuatorOneViewModel.ApplicationNo = $('#ApplicationNo').val();
             ValuatorOneViewModel.Comments = $('#Comments').val();
             ValuatorOneViewModel.PreSanctionId = $("#PreSanctionId").val();
+            ValuatorOneViewModel.TotalValuation = $("#lblTotalValuation").text();
             if (check == true) {
                 $("#btn_save").prop("disabled", true);
                 $.ajax({
@@ -594,8 +660,10 @@
                     }
                     debugger;
                     var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+                    var TotalValuation = 0;
                     $.each(result.ValuatorOneDetailsList, function (key, val) {
                         var rowCount = $('#tblValuationDetails >tbody >tr').length + 1;
+                        TotalValuation = TotalValuation + val.Total;
                         $('#divValuationDetails tbody').append('<tr id=' + val.ID + '>' +
                       '<td width="10%">' + rowCount + '</td>' +
                       '<td width="20%" id="' + val.OrnamentId + '">' + val.OrnamentName + '</td>' +
@@ -610,6 +678,57 @@
                       '<td>' + actions + '</td>' +
                       '</tr>');
                     });
+
+                    $("#lblTotalValuation").text(TotalValuation);
+                    $("#divValuationDetails").show();
+                        $("#headerTotalValuation").css('display', 'block');
+
+                    //Dropdownlist Selectedchange event
+                    $("#ValuatorOneDetailsVM_PurityId").empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("GetPurity","ProductRate")', // we are calling json method
+                        dataType: 'json',
+                        data: { id: $("#ProductId").val() },
+                        // here we are get value of selected country and passing same value
+                        success: function (data) {
+                            var purity = "<select id='ValuatorOneDetailsVM_PurityId'>";
+                            purity = purity + '<option value="">--Select Purity--</option>';
+                            for (var i = 0; i < data.length; i++) {
+                                purity = purity + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                            }
+                            purity = purity + '</select>';
+                            $('#ValuatorOneDetailsVM_PurityId').html(purity);
+                            $("#ValuatorOneDetailsVM_PurityId").removeAttr('disabled')
+                        },
+                        error: function (ex) {
+                            alert('Failed to retrieve data.' + ex);
+                        }
+                    })
+                    //load ornament product wise
+                    $("#ValuatorOneDetailsVM_OrnamentId").empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("GetOrnamentProductWise","ValuatorOne")', // we are calling json method
+                        dataType: 'json',
+                        data: { id: $("#ProductId").val() },
+                        // here we are get value of selected country and passing same value
+                        //as inputto json method GetStates.
+                        success: function (data) {
+                            var ornament = "<select id='ValuatorOneDetailsVM_OrnamentId'>";
+                            ornament = ornament + '<option value="">--Select Ornament--</option>';
+                            for (var i = 0; i < data.length; i++) {
+                                ornament = ornament + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                            }
+                            ornament = ornament + '</select>';
+                            $('#ValuatorOneDetailsVM_OrnamentId').html(ornament);
+                            $("#ValuatorOneDetailsVM_OrnamentId").removeAttr('disabled')
+                        },
+                        error: function (ex) {
+                            alert('Failed to retrieve data.' + ex);
+                        }
+                    })
+
                     $("#tblValuationDetails TBODY TR").on("click", ".edit", function () {
                         debugger;
                         var tr = $(this).closest('tr');
@@ -627,6 +746,7 @@
                         var Rate = tr.find('td:eq(8)').html();
                         var Total = tr.find('td:eq(9)').html();
 
+                        $("#ImgPhoto").empty();
                         $("#ImgPhoto").append('<td><a href="/ValuatorOne/DownLoadValuationImage/' + result.trid + '" target=_blank>' + imgname + '</a></td>');
 
                         $("#ValuatorOneDetailsVM_OrnamentId").val(OrnamentId);
@@ -643,10 +763,16 @@
                         if (confirm('Are you sure to remove?')) {
                             var tr = $(this).closest('tr');
                             tr.remove();
+                            var totamt = 0;
+                            $('#tblValuationDetails tbody>tr').each(function () {
+                                var row = $(this).closest("tr");
+                                totamt = totamt + parseFloat(row.find('td:eq(9)').html());
+                            });
+                            $("#lblTotalValuation").text(totamt)
                         }
                     })
                 }
-            });
+            })
         }
 
         function ShowClientTableList() {
@@ -665,18 +791,67 @@
                 }
             });
         }
+
         $("#diveditfilldata").on("click", "tr", function () {
             debugger;
             var tr = $(this).closest('tr');
             var CustomerId = tr.find('td:eq(0)').html();
             var PreSanctionId = tr.find("td").eq(0).attr('id');
+            var ProductId = tr.find("td").eq(1).attr('id');
             var ApplicationNo = tr.find('td:eq(1)').html();
 
             $("#CustomerId").val(CustomerId);
             $("#PreSanctionId").val(PreSanctionId);
             $("#ApplicationNo").val(ApplicationNo);
             $("#editModal").hide();
+            //Dropdownlist Selectedchange event
+            $("#ValuatorOneDetailsVM_PurityId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetPurity","ProductRate")', // we are calling json method
+                dataType: 'json',
+                data: { id: ProductId },
+                // here we are get value of selected country and passing same value
+                success: function (data) {
+                    var purity = "<select id='ValuatorOneDetailsVM_PurityId'>";
+                    purity = purity + '<option value="">--Select Purity--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        purity = purity + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                    }
+                    purity = purity + '</select>';
+                    $('#ValuatorOneDetailsVM_PurityId').html(purity);
+                    $("#ValuatorOneDetailsVM_PurityId").removeAttr('disabled')
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+            //load ornament product wise
+            $("#ValuatorOneDetailsVM_OrnamentId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetOrnamentProductWise","ValuatorOne")', // we are calling json method
+                dataType: 'json',
+                data: { id: ProductId },
+                // here we are get value of selected country and passing same value
+                //as inputto json method GetStates.
+                success: function (data) {
+                    var ornament = "<select id='ValuatorOneDetailsVM_OrnamentId'>";
+                    ornament = ornament + '<option value="">--Select Ornament--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        ornament = ornament + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                    }
+                    ornament = ornament + '</select>';
+                    $('#ValuatorOneDetailsVM_OrnamentId').html(ornament);
+                    $("#ValuatorOneDetailsVM_OrnamentId").removeAttr('disabled')
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+
         })
+
         var urlRedirect = '@Html.Raw(@Url.Action("ValuatorOne", "ValuatorOne"))';
         $(function () {
             var url = '@Html.Raw(@Url.Action("Delete", "ValuatorOne"))';

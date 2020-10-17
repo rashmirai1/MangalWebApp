@@ -27,12 +27,6 @@ namespace MangalWeb.Service.Service
         }
         #endregion
 
-        #region GetPreSanctionList
-        public List<ValuatorTwoViewModel> GetPreSanctionList()
-        {
-            return _valuatorTwoRepository.GetPreSanctionList();
-        }
-        #endregion
 
         #region GetMaxTransactionId
         public ValuatorTwoViewModel GetMaxTransactionId()
@@ -52,6 +46,13 @@ namespace MangalWeb.Service.Service
         public List<ValuatorTwoViewModel> GetValuatorOneList()
         {
             return _valuatorTwoRepository.GetValuatorOneList();
+        }
+        #endregion
+
+        #region GetValuatorOneList
+        public List<ValuatorTwoViewModel> GetValuatorTwoList()
+        {
+            return _valuatorTwoRepository.GetValuatorTwoList();
         }
         #endregion
 

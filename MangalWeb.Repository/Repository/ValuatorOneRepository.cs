@@ -58,22 +58,26 @@ namespace MangalWeb.Repository.Repository
         public ValuatorOneViewModel GetValuatorOneDetailsById(int Id)
         {
             var model = new ValuatorOneViewModel();
-            model = _context.Tran_ValuationOneDetails.Where(x => x.Id == Id)
-                .Select(x => new ValuatorOneViewModel()
-                {
-                    ID = x.Id,
-                    TransactionId = x.TransactionId,
-                    CustomerId = x.CustomerID,
-                    ApplicationNo = x.ApplicationNo,
-                    Comments=x.Comments,
-                    ImageName=x.ImageName
-                }).FirstOrDefault();
+            model = (from a in _context.Tran_ValuationOneDetails
+                     join b in _context.tbl_PreSanctionDetails on a.PreSanctionId equals b.Id
+                     where a.Id == Id
+                     select new ValuatorOneViewModel()
+                     {
+                         ID = a.Id,
+                         TransactionId = a.TransactionId,
+                         CustomerId = a.CustomerID,
+                         ApplicationNo = a.ApplicationNo,
+                         Comments = a.Comments,
+                         ImageName = a.ImageName,
+                         ProductId = b.Product,
+                         PreSanctionId = (int)a.PreSanctionId
+                     }).FirstOrDefault();
 
             var valuatoronedetails = (from a in _context.Tran_ValuationOneDetails
                                       join b in _context.tbl_OrnamentValuationOneDetails on a.Id equals b.ValuationOneID
                                       join c in _context.tblItemMasters on b.OrnamentId equals c.ItemID
                                       join d in _context.Mst_PurityMaster on b.PurityId equals d.id
-                                      where a.Id == Id
+                                      where b.ValuationOneID == Id
                                       select new ValuatorOneDetailsViewModel()
                                       {
                                           ID = b.Id,
@@ -172,7 +176,7 @@ namespace MangalWeb.Repository.Repository
                         {
                             var trn = new tbl_OrnamentValuationOneDetails
                             {
-                                ValuationOneID = p.ValuatorOneId,
+                                ValuationOneID = model.ID,
                                 OrnamentId = p.OrnamentId,
                                 OrnamentImage = p.ValuationImageFile,
                                 ImageName = p.ImageName,
@@ -187,7 +191,6 @@ namespace MangalWeb.Repository.Repository
                                 TotalValuation = p.Total
                             };
                             _context.tbl_OrnamentValuationOneDetails.Add(trn);
-                            _context.SaveChanges();
                         }
                         else
                         {
@@ -265,6 +268,13 @@ namespace MangalWeb.Repository.Repository
         public tbl_OrnamentValuationOneDetails GetValuationImage(int id)
         {
             return _context.tbl_OrnamentValuationOneDetails.Where(x => x.Id == id).FirstOrDefault();
+        }
+        #endregion
+
+        #region GetOrnamentProductWise
+        public List<tblItemMaster> GetOrnamentProductWise(int id)
+        {
+            return _context.tblItemMasters.Where(x => x.Product == id && x.Status != "Not Allowed").ToList();
         }
         #endregion
     }

@@ -138,7 +138,7 @@ namespace MangalWeb.Controllers
 
         public ActionResult GetCustomerDetails()
         {
-            return PartialView("_CustomerDetails", _valuatorTwoService.GetPreSanctionList());
+            return PartialView("_ValuatorOneDetails", _valuatorTwoService.GetValuatorOneList());
         }
 
         #endregion GetCustomerDetails
@@ -148,7 +148,7 @@ namespace MangalWeb.Controllers
         public ActionResult GetValuatorOneDetails()
         {
             Session["Operation"] = "Edit";
-            return PartialView("_ValuatorOneDetails", _valuatorTwoService.GetValuatorOneList());
+            return PartialView("_ValuatorTwoDetails", _valuatorTwoService.GetValuatorTwoList());
         }
 
         #endregion GetValuatorOneDetails
@@ -161,7 +161,6 @@ namespace MangalWeb.Controllers
             Session["ConsolidatedImage"] = file.ConsolidatedImage;
             Session["ConsolidatedImageName"] = model.ImageName;
             Session["ConsolidatedImageContentType"] = file.ContentType;
-            string operation = Session["Operation"].ToString();
 
             var sessionlist = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageList"];
             var docupload = new ValuatorOneDetailsViewModel();
@@ -179,8 +178,6 @@ namespace MangalWeb.Controllers
                 sessionlist.Add(docupload);
                 Session["ValuationImageList"] = sessionlist;
             }
-            model.operation = operation;
-            ButtonVisiblity(operation);
             return Json(model, JsonRequestBehavior.AllowGet);
         }
         #endregion

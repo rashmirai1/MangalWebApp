@@ -82,5 +82,10 @@ namespace MangalWeb.Service.Service
             return _valuatorOneRepository.GetValuationImage(id);
         }
         #endregion
+
+        public List<tblItemMaster> GetOrnamentProductWise(int id)
+        {
+            return _valuatorOneRepository.GetOrnamentProductWise(id);
+        }
     }
 }
