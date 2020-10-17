@@ -555,6 +555,8 @@ namespace MangalWeb.Repository.Repository
                 {
                     trn_DocUploadDetails.DocumentId = item.DocumentId.Value;
                     trn_DocUploadDetails.UploadFile = item.UploadDocName;
+                    trn_DocUploadDetails.NameonDocument = item.NameonDocument;
+                    trn_DocUploadDetails.SpecifyOther = item.SpecifyOther;
                     trn_DocUploadDetails.ContentType = item.FileExtension;
                     trn_DocUploadDetails.FileName = item.FileName;
                     trn_DocUploadDetails.DocumentTypeId = item.DocumentTypeId.Value;

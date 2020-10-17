@@ -105,7 +105,7 @@
                                         <div class="form-group">
                                             <label class="col-md-2 control-label"> Qty <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Qty, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Qty", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Qty, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Qty", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @min = "0" } })
                                             </div>
                                             <label class="col-md-2 control-label"> Purity <span class="text-danger"> * </span></label>
                                             <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
@@ -125,11 +125,11 @@
                                         <br />
                                         <br />
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label"> Deductions <span class="text-danger"> * </span> </label>
+                                            <label class="col-md-2 control-label"> Deductions <span class="text-danger"></span> </label>
                                             <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.Deductions, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Duductions", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                             </div>
-                                            <label class="col-md-2 control-label"> Net Weight <span class="text-danger"> * </span> </label>
+                                            <label class="col-md-2 control-label"> Net Weight <span class="text-danger">  </span> </label>
                                             <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.NetWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Net Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @readonly = true } })
                                             </div>
@@ -137,9 +137,9 @@
                                             <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.Rate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Rate", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                             </div>
-                                            <label class="col-md-2 control-label"> Total <span class="text-danger"> * </span> </label>
+                                            <label class="col-md-2 control-label"> Total <span class="text-danger">  </span> </label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Total, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Total", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Total, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Total", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @readonly = true } })
                                             </div>
                                             <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnAddValuationDetails" />
                                         </div>
@@ -187,6 +187,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/bootbox.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -201,6 +202,8 @@
                 var Deductions = parseFloat($("#ValuatorOneDetailsVM_Deductions").val());
                 if (Deductions == "")
                     Deductions = 0;
+                if (GrossWeight == "" || typeof (GrossWeight) == 'NaN')
+                    GrossWeight = 0;
                 $("#ValuatorOneDetailsVM_NetWeight").val(GrossWeight - Deductions);
             });
 
@@ -289,19 +292,23 @@
             var Total = $("#ValuatorOneDetailsVM_Total").val();
             var fileUpload = $("#ValuationImage").get(0);
             var files = fileUpload.files;
-            var filename = files[0].name;
-            if (typeof(filename) == 'undefined')
-            {
-                filename= $("#ImgPhoto").find("td:last-child").text()
+            var filename = "";
+            if (files.length > 0) {
+                filename = files[0].name;
+                if (typeof (filename) == 'undefined') {
+                    filename = $("#ImgPhoto").find("td:last-child").text()
+                }
+                else {
+                    $("#ImgPhoto").empty();
+                }
             }
-            else
-            {
-                $("#ImgPhoto").empty();
+            else {
+                bootbox.alert("This is the default alert!");
             }
             var row = '<tr id=' + newtrno + '>' +
                      '<td width="10%">' + srno + '</td>' +
                      '<td width="20%" id="' + OrnamentId + '">' + OrnamentName + '</td>' +
-                     '<td width="10%"><a href="#">' + filename  + '</a></td>"' +
+                     '<td width="10%"><a href="#">' + filename + '</a></td>"' +
                      '<td width="8%">' + Qty + '</td>' +
                      '<td width="20%" id="' + PurityId + '">' + PurityName + '</td>' +
                      '<td width="8%">' + GrossWeight + '</td>' +
@@ -343,6 +350,7 @@
                         fileData.append("ValuationImage", files[i]);
                     }
                     fileData.append("ID", newtrno)
+                    fileData.append("SRNO", srno)
                     $.ajax({
                         url: '/ValuatorOne/AddValuationImage',
                         type: "POST",
@@ -372,7 +380,7 @@
                     currentRow = null;
                 }
                 else {
-                    if (OrnamentId != "" && PurityId != "") {
+                    if (OrnamentId != "" && PurityId != "" && Qty > 0 && GrossWeight > 0 && Rate > 0) {
                         var fileUpload = $("#ValuationImage").get(0);
                         var files = fileUpload.files;
                         // Create FormData object
@@ -382,6 +390,7 @@
                             fileData.append("ValuationImage", files[i]);
                         }
                         fileData.append("ID", newtrno)
+                        fileData.append("SRNO", srno)
                         $("#tblValuationDetails tbody").append(row);
                         $.ajax({
                             url: '/ValuatorOne/AddValuationImage',
@@ -412,6 +421,8 @@
                         $("#ValuatorOneDetailsVM_NetWeight").val("");
                         $("#ValuatorOneDetailsVM_Rate").val("");
                         $("#ValuatorOneDetailsVM_Total").val("");
+                        $("#ValuationImage").val("");
+                        $("#ImgPhoto").val("");
                         $("#divValuationDetails").show();
                     }
                 }
@@ -681,7 +692,7 @@
 
                     $("#lblTotalValuation").text(TotalValuation);
                     $("#divValuationDetails").show();
-                        $("#headerTotalValuation").css('display', 'block');
+                    $("#headerTotalValuation").css('display', 'block');
 
                     //Dropdownlist Selectedchange event
                     $("#ValuatorOneDetailsVM_PurityId").empty();

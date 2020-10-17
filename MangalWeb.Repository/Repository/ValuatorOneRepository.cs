@@ -68,7 +68,7 @@ namespace MangalWeb.Repository.Repository
                          CustomerId = a.CustomerID,
                          ApplicationNo = a.ApplicationNo,
                          Comments = a.Comments,
-                         ImageName = a.ImageName,
+                         ImageName = a.ImageName??"",
                          ProductId = b.Product,
                          PreSanctionId = (int)a.PreSanctionId
                      }).FirstOrDefault();
@@ -84,7 +84,7 @@ namespace MangalWeb.Repository.Repository
                                           ValuatorOneId = b.ValuationOneID,
                                           OrnamentId = b.OrnamentId,
                                           OrnamentName = c.ItemName,
-                                          ImageName = b.ImageName,
+                                          ImageName = b.ImageName??"",
                                           Qty = (int)b.Qty,
                                           PurityId = b.PurityId,
                                           PurityName = d.PurityName,
@@ -141,7 +141,7 @@ namespace MangalWeb.Repository.Repository
                             NtWt = p.NetWeight,
                             Rate = p.Rate,
                             Total = p.Total,
-                            TotalValuation = p.Total
+                            TotalValuation = model.TotalValuation
                         };
                         _context.tbl_OrnamentValuationOneDetails.Add(trn);
                         _context.SaveChanges();
@@ -206,7 +206,7 @@ namespace MangalWeb.Repository.Repository
                             Findobject.NtWt = p.NetWeight;
                             Findobject.Rate = p.Rate;
                             Findobject.Total = p.Total;
-                            Findobject.TotalValuation = p.TotalValuation;
+                            Findobject.TotalValuation = model.TotalValuation;
                         }
                         NewtblDetails.Add(Findobject);
                     }

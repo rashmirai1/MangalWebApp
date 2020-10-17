@@ -405,7 +405,6 @@
     <Compile Include="Transaction\FillAddressByPinCode.cs" />
     <Compile Include="Transaction\KYCAddressesVM.cs" />
     <Compile Include="Transaction\KYCBasicDetailsVM.cs" />
-    <Compile Include="Transaction\KYCDocumentDetailsVM.cs" />
     <Compile Include="Transaction\PreSanctionDetailsVM.cs" />
     <Compile Include="Transaction\RequestFormViewModel.cs" />
     <Compile Include="Transaction\ResidenceVerificationVM.cs" />

@@ -8,7 +8,7 @@ namespace MangalWeb.Model.Transaction
     {
         public KYCBasicDetailsVM()
         {
-            DocumentUploadList = new List<KYCDocumentUpload>();
+            DocumentUploadList = new List<DocumentUploadDetailsVM>();
             Trans_KYCAddresses = new List<KYCAddressesVM>();
         }
         public Nullable<int> KYCID { get; set; }
@@ -153,8 +153,8 @@ namespace MangalWeb.Model.Transaction
 
         [Required(ErrorMessage = "This Field is Required.")]
         public string Area { get; set; }
-        public KYCDocumentUpload DocumentUploadVM { get; set; }
-        public List<KYCDocumentUpload> DocumentUploadList { get; set; }
+        public DocumentUploadDetailsVM DocumentUploadVM { get; set; }
+        public List<DocumentUploadDetailsVM> DocumentUploadList { get; set; }
         public virtual IList<KYCAddressesVM> Trans_KYCAddresses { get; set; }
         public string ResidenceCode { get; set; }
         public string Status { get; set; }

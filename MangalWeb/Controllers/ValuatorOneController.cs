@@ -114,6 +114,11 @@ namespace MangalWeb.Controllers
             HttpFileCollectionBase files = Request.Files;
             HttpPostedFileBase postedFile = files[0];
             int id = Convert.ToInt32(Request.Form["ID"]);
+            int SRNO = Convert.ToInt32(Request.Form["SRNO"]);
+            if (id == 0)
+            {
+                id = SRNO;
+            }
             Stream fs = postedFile.InputStream;
             BinaryReader br = new BinaryReader(fs);
             Byte[] bytes = br.ReadBytes(postedFile.ContentLength);

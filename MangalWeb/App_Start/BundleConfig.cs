@@ -11,7 +11,8 @@ namespace MangalWeb
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Content/datatables/js/datatables.bootstrap.min.js",
-                        "~/Content/DataTables/js/jquery.dataTables.min.js"));
+                        "~/Content/DataTables/js/jquery.dataTables.min.js",
+                        "~/Scripts/bootbox.min.js"));
 
             //bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
             //            "~/Scripts/jquery-{version}.js"));
@@ -29,6 +30,7 @@ namespace MangalWeb
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/DataTables/css/dataTables.bootstrap.min.css",
                       "~/Content/site.css"));
         }
     }

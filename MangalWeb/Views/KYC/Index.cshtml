@@ -19,13 +19,13 @@
         </div><!--end of col-md-5-->
         <div class="col-md-7 col-sm-8 col-xs-12">
             <div class="topbar-right" id="headerbutton">
-                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" disabled="disabled" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
+                @*<button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" disabled="disabled" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>*@
                 <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]" disabled="disabled"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
-                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]" disabled="disabled"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
-                <button href="#viewModal" id="btn_view"  disabled="disabled" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]"
+                @*<button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]" disabled="disabled"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>*@
+                @*<button href="#viewModal" id="btn_view"  disabled="disabled" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]"
                         type="button" data-toggle="modal">
                     <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
-                </button>
+                </button>*@
                 <a href="@Html.Raw(@Url.Action("Index", "KYC"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
             </div><!--end of topbar-right-->
 
@@ -1228,7 +1228,6 @@ new { @class= "form-control" })
                                             </div>
                                             <hr style="border: 1px solid #DDD;margin-bottom: 20px;">
                                             <label style="padding-left:20px;"><b>Document Details</b></label>
-
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
@@ -1255,6 +1254,18 @@ new { @class= "form-control" })
                                                         <br />
                                                     </div>
                                                     <br />
+                                                    <div class="form-group">
+                                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Specify Other</label>
+                                                        <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                            @Html.EditorFor(model => model.DocumentUploadVM.SpecifyOther, new { htmlAttributes = new { @class = "form-control", @placeholder = "Specify Other", @autocomplete = "Off" } })
+                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.DocumentUploadVM.SpecifyOther)</span>
+                                                        </div>
+                                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Name on Document</label>
+                                                        <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                            @Html.EditorFor(model => model.DocumentUploadVM.NameonDocument, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name on Document", @autocomplete = "Off" } })
+                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.DocumentUploadVM.NameonDocument)</span>
+                                                        </div>
+                                                    </div>
                                                     <br />
                                                     <div class="form-group">
                                                         <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Expiry Date</label>
@@ -1282,6 +1293,8 @@ new { @class= "form-control" })
                                                                 <th class="col-sm-2" style="width:2%">Sr. No.</th>
                                                                 <th style="text-align:left">Document Type</th>
                                                                 <th style="text-align:left">Document Name</th>
+                                                                <th style="text-align:left">Specify Other</th>
+                                                                <th style="text-align:left">Name on Document</th>
                                                                 <th style="text-align:left">Expiry Date</th>
                                                                 <th style="text-align:left">Upload File</th>
                                                                 <th class="text-center" style="width:8%">Actions</th>
@@ -1293,8 +1306,10 @@ new { @class= "form-control" })
                                                             {
                                                                 <tr id="@item.ID">
                                                                     <td>@j</td>
-                                                                    <td>@item.DocumentTypeName</td>
-                                                                    <td>@item.DocumentName</td>
+                                                                    <td id="@item.DocumentTypeId">@item.DocumentTypeName</td>
+                                                                    <td id="@item.DocumentId">@item.DocumentName</td>
+                                                                    <td>@item.SpecifyOther</td>
+                                                                    <td>@item.NameonDocument</td>
                                                                     <td>@item.ExpiryDate</td>
                                                                     <td><a href="/DocumentUpload/Download/@item.ID" target=_blank>@item.FileName</a></td>
                                                                     <td>

@@ -2024,6 +2024,7 @@
     <Content Include="Content\vendor\plugins\slick\fonts\slick.eot" />
     <Content Include="Content\vendor\plugins\slick\fonts\slick.ttf" />
     <Content Include="Content\vendor\plugins\slick\fonts\slick.woff" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\datepicker.js" />

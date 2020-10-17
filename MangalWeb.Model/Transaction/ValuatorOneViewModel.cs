@@ -33,7 +33,7 @@ namespace MangalWeb.Model.Transaction
         public int BranchId { get; set; }
         public int FinancialYearId { get; set; }
         public int CompanyId { get; set; }
-
+        public decimal TotalValuation { get; set; }
         public string operation { get; set; }
 
         public int? CreatedBy { get; set; }
