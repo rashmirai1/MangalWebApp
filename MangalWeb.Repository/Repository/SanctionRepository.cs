@@ -20,7 +20,7 @@ namespace MangalWeb.Repository.Repository
         MangalDBNewEntities _context = new MangalDBNewEntities();
 
         #region GetChargeDetails
-        public ChargeSanctionVM GetChargeDetails(int chargeid, decimal sanctionloanamt)
+        public ChargeSanctionVM GetChargeDetails(int chargeid, decimal sanctionloanamt, string ptype, double pcharge)
         {
             var model = new ChargeSanctionVM();
             //_context.GL_SanctionDisburse_PRV("Charges", 0, "", 0, 0, chargeid,"", 0, sanctionloanamt);
@@ -29,10 +29,20 @@ namespace MangalWeb.Repository.Repository
             {
                 ModelReflection.MapObjects(data, model);
             }
-            if (model.Amount > 100)
-            {
-                model.Amount = 100;
-            }
+            //if (ptype == "Amount")
+            //{
+            //    if (model.Amount > pcharge)
+            //    {
+            //        model.Amount = pcharge;
+            //    }
+            //}
+            //else if (ptype == "Percentage")
+            //{
+            //    if (model.Amount > pcharge)
+            //    {
+            //        model.Amount =Convert.ToDouble(sanctionloanamt) * pcharge / 100;
+            //    }
+            //}
             return model;
         }
         #endregion

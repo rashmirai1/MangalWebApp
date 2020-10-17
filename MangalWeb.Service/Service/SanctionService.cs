@@ -84,9 +84,9 @@ namespace MangalWeb.Service.Service
         #endregion
 
         #region GetChargeDetails
-        public ChargeSanctionVM GetChargeDetails(int chargeid,decimal sanctionloanamt)
+        public ChargeSanctionVM GetChargeDetails(int chargeid,decimal sanctionloanamt,string schemeproctype,double schemepcharge)
         {
-            return _sanctionRepository.GetChargeDetails(chargeid,sanctionloanamt);
+            return _sanctionRepository.GetChargeDetails(chargeid,sanctionloanamt,schemeproctype,schemepcharge);
         }
         #endregion
 

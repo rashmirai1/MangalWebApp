@@ -1057,7 +1057,7 @@
                     type: 'POST',
                     url: '@Url.Action("GetChargeDetails", "SanctionDisbursement")', // we are calling json method
                     dataType: 'json',
-                    data: { ChargeId: $("#ChargeVM_ChargeId").val(), SanctionLoanAmount: sanctionamount },
+                    data: { ChargeId: $("#ChargeVM_ChargeId").val(), SanctionLoanAmount: sanctionamount,SchemeProcessingType:$("#SchemeProcessingType").val(), SchemeProcessingCharge:$("#SchemeProcessingCharge").val() },
                     //as inputto json method GetStatesfr
                     success: function (data) {
                         if(data.ID>0)
@@ -1194,7 +1194,7 @@
                         var SanctionLoanAmount = parseFloat($("#SanctionLoanAmount").val());
                         var netpayable = parseFloat($("#NetPayable").val());
                         $("#NetPayable").val(parseFloat(SanctionLoanAmount)-(parseFloat(totamt)));
-                        
+
                         $("#ChargeVM_ChargeId").val("");
                         $("#ChargeVM_Charges").val("");
                         $("#ChargeVM_ChargeType").val("");
@@ -1540,7 +1540,7 @@
                                     $(this).closest('tr').remove();
                                 }
                             });
-                           
+
                             var totamt=0;
                             $('#divChargeDetails tbody>tr').each(function () {
                                 var row = $(this).closest("tr");

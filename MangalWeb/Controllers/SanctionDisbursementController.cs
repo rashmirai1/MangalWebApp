@@ -151,9 +151,9 @@ namespace MangalWeb.Controllers
         #endregion
 
         #region GetChargeDetails
-        public JsonResult GetChargeDetails(int ChargeId, decimal SanctionLoanAmount)
+        public JsonResult GetChargeDetails(int ChargeId, decimal SanctionLoanAmount,string SchemeProcessingType,double SchemeProcessingCharge)
         {
-            var data = _sanctionService.GetChargeDetails(ChargeId, SanctionLoanAmount);
+            var data = _sanctionService.GetChargeDetails(ChargeId, SanctionLoanAmount,SchemeProcessingType,SchemeProcessingCharge);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         #endregion
