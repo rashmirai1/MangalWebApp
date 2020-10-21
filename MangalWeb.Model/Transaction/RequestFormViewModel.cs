@@ -43,7 +43,7 @@ namespace MangalWeb.Model.Transaction
         public string ZoneName { get; set; }
         public string Landmark { get; set; }
         public string OfficeAddress { get; set; }
-        public string PinCode { get; set; }
+        public int PinCode { get; set; }
         public string Distance { get; set; }
         public Nullable<int> FYID { get; set; }
         public Nullable<int> CmpID { get; set; }

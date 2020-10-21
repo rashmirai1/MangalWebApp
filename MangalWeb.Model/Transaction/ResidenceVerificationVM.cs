@@ -23,7 +23,7 @@ namespace MangalWeb.Model.Transaction
         [Required]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
-        public Nullable<System.DateTime> AppliedDate { get; set; }
+        public string AppliedDate { get; set; }
         [Required]
         public string PersonVisitedName { get; set; }
         [Required]
@@ -63,7 +63,7 @@ namespace MangalWeb.Model.Transaction
         [Required]
         public string Distance { get; set; }
         [Required]
-        public string PinCode { get; set; }
+        public int? PinCode { get; set; }
         [Required]
         public string Area { get; set; }
         public string city { get; set; }

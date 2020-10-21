@@ -309,6 +309,8 @@
                         $("#tblDocumentDetails tbody").find($(currentRow)).replaceWith(row);
                         $("#DocumentUploadVM_DocumentTypeId").val("");
                         $("#DocumentUploadVM_DocumentId").val("");
+                        $("#DocumentUploadVM_SpecifyOther").val("");
+                        $("#DocumentUploadVM_NameonDocument").val("");
                         $("#DocumentUploadVM_ExpiryDate").val("");
                         $("#UploadedFile").val("");
                         currentRow = null;
@@ -492,16 +494,9 @@
                 rowDocUploadTrn.DocumentId = row.find("td").eq(2).attr('id');
                 rowDocUploadTrn.ExpiryDate = row.find("TD").eq(3).html();
                 rowDocUploadTrn.UploadDocName =row.find("TD").eq(4).val();
+                rowDocUploadTrn.SpecifyOther = row.find("TD").eq(5).html();
+                rowDocUploadTrn.NameonDocument = row.find("TD").eq(6).val();
                 lstDocUploadTrn.push(rowDocUploadTrn);
-
-                //var fileUpload = $("#UploadedFile").get(0);
-                //var files = fileUpload.files;
-                //// Create FormData object
-                //fileData = new FormData();
-                //// Looping over all files and add it to FormData object
-                //for (var i = 0; i < files.length; i++) {
-                //    fileData.append("UploadedFile", files[i]);
-                //}
             });
 
             DocUploadViewModel.DocumentUploadList = lstDocUploadTrn;

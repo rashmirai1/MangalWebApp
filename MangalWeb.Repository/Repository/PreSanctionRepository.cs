@@ -21,14 +21,6 @@ namespace MangalWeb.Repository.Repository
             foreach(var item in kYCBasicDetailsVMs)
             {
                 DateTime now = DateTime.Now;
-                if (item.AppliedDate > now.AddHours(-24) && item.AppliedDate <= now)
-                {
-                    item.Status = "";
-                }
-                else
-                {
-                    item.Status = "System Rejected";
-                }
             }
             return kYCBasicDetailsVMs;
         }
@@ -41,7 +33,7 @@ namespace MangalWeb.Repository.Repository
                 tbl_PreSanctionDetails.CreatedBy = model.CreatedBy;
                 tbl_PreSanctionDetails.CreatedDate = DateTime.Now;
                 tbl_PreSanctionDetails.ApplicationNo = model.ApplicationNo;
-                tbl_PreSanctionDetails.AppliedDate = model.AppliedDate;
+                tbl_PreSanctionDetails.AppliedDate =Convert.ToDateTime(model.AppliedDate);
                 tbl_PreSanctionDetails.Comments = model.Comments;
                 tbl_PreSanctionDetails.CustomerId = model.CustomerId;
                 tbl_PreSanctionDetails.IsActive = true;

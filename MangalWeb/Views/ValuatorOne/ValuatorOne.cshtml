@@ -88,25 +88,25 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="col-md-2 control-label"> Ornament Name <span class="text-danger"> * </span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
                                                 <div class="section">
                                                     @Html.DropDownListFor(m => m.ValuatorOneDetailsVM.OrnamentId, (SelectList)ViewBag.OrnamentList, "--Select Ornament--", htmlAttributes: new { @class = "form-control" })
                                                     <i class="arrow"></i>
                                                 </div>
                                             </div>
-                                            <label class="col-md-2 control-label" id="lblSerialNumber"> Ornament Image <span class="text-danger"> * </span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <label class="col-md-2 control-label"> Ornament Image <span class="text-danger"> * </span></label>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                 <input type="file" id="ValuationImage" />
                                                 <div id="ImgPhoto"></div>
+                                            </div>
+                                            <label class="col-md-1 control-label"> Qty <span class="text-danger"> * </span> </label>
+                                            <div class="col-lg-1 col-md-1 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Qty, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Qty", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @min = "0",@style="width:90px;margin-left:-30+px;" } })
                                             </div>
                                         </div>
                                         <br />
                                         <br />
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label"> Qty <span class="text-danger"> * </span> </label>
-                                            <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Qty, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Qty", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @min = "0" } })
-                                            </div>
                                             <label class="col-md-2 control-label"> Purity <span class="text-danger"> * </span></label>
                                             <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                                 <div class="section">
@@ -122,23 +122,23 @@
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.GrossWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Gross Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                             </div>
                                         </div>
+                                        <label class="col-md-1 control-label"> Deductions <span class="text-danger"></span> </label>
+                                        <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
+                                            @Html.EditorFor(model => model.ValuatorOneDetailsVM.Deductions, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Duductions", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                        </div>
                                         <br />
                                         <br />
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label"> Deductions <span class="text-danger"></span> </label>
-                                            <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Deductions, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Duductions", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                            </div>
                                             <label class="col-md-2 control-label"> Net Weight <span class="text-danger">  </span> </label>
-                                            <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
+                                            <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.NetWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Net Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @readonly = true } })
                                             </div>
                                             <label class="col-md-2 control-label"> Rate <span class="text-danger"> * </span> </label>
-                                            <div class="col-lg-2 col-md-4 col-sm-5 col-xs-12">
+                                            <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.Rate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Rate", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                             </div>
-                                            <label class="col-md-2 control-label"> Total <span class="text-danger">  </span> </label>
-                                            <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                            <label class="col-md-1 control-label"> Total <span class="text-danger">  </span> </label>
+                                            <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.Total, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Total", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @readonly = true } })
                                             </div>
                                             <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnAddValuationDetails" />
@@ -187,7 +187,6 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/bootbox.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -205,12 +204,18 @@
                 if (GrossWeight == "" || typeof (GrossWeight) == 'NaN')
                     GrossWeight = 0;
                 $("#ValuatorOneDetailsVM_NetWeight").val(GrossWeight - Deductions);
+                var NetWeight = parseFloat($("#ValuatorOneDetailsVM_NetWeight").val());
+                var Rate = parseFloat($("#ValuatorOneDetailsVM_Rate").val());
+                $("#ValuatorOneDetailsVM_Total").val(NetWeight * Rate);
             });
 
             $("#ValuatorOneDetailsVM_Deductions").on('keyup', function () {
                 var GrossWeight = parseFloat($("#ValuatorOneDetailsVM_GrossWeight").val());
                 var Deductions = parseFloat($("#ValuatorOneDetailsVM_Deductions").val());
                 $("#ValuatorOneDetailsVM_NetWeight").val(GrossWeight - Deductions);
+                var NetWeight = parseFloat($("#ValuatorOneDetailsVM_NetWeight").val());
+                var Rate = parseFloat($("#ValuatorOneDetailsVM_Rate").val());
+                $("#ValuatorOneDetailsVM_Total").val(NetWeight * Rate);
             });
 
             $("#ValuatorOneDetailsVM_Rate").on('keyup', function () {
@@ -263,7 +268,7 @@
         })
         $("#btnAddValuationDetails").click(function () {
             debugger;
-            $("#CustomErrr").text("");
+            $("#CustomErr").text("");
             $('[data-toggle="tooltip"]').tooltip();
             var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
             var index = $("#tblValuationDetails tbody tr:last").index();
@@ -293,7 +298,7 @@
             var fileUpload = $("#ValuationImage").get(0);
             var files = fileUpload.files;
             var filename = "";
-            if (files.length > 0) {
+            if (files.length > 0 && currentRow==null) {
                 filename = files[0].name;
                 if (typeof (filename) == 'undefined') {
                     filename = $("#ImgPhoto").find("td:last-child").text()
@@ -303,7 +308,11 @@
                 }
             }
             else {
-                bootbox.alert("This is the default alert!");
+                return;
+            }
+            if (currentRow != null)
+            {
+                filename = $("#ImgPhoto").find("td:last-child").text();
             }
             var row = '<tr id=' + newtrno + '>' +
                      '<td width="10%">' + srno + '</td>' +
@@ -334,6 +343,7 @@
                     }
                 }
             });
+
             if (isExist) {
                 alert("The same record already Exist");
                 return false;
@@ -370,13 +380,13 @@
                     });
                     $("#lblTotalValuation").text(totamt)
                     $("#ValuatorOneDetailsVM_OrnamentId").val("");
-                    $("#ValuatorOneDetailsVM_Qty").val("");
+                    $("#ValuatorOneDetailsVM_Qty").val(0);
                     $("#ValuatorOneDetailsVM_PurityId").val("");
-                    $("#ValuatorOneDetailsVM_GrossWeight").val("");
-                    $("#ValuatorOneDetailsVM_Deductions").val("");
-                    $("#ValuatorOneDetailsVM_NetWeight").val("");
-                    $("#ValuatorOneDetailsVM_Rate").val("");
-                    $("#ValuatorOneDetailsVM_Total").val("");
+                    $("#ValuatorOneDetailsVM_GrossWeight").val(0);
+                    $("#ValuatorOneDetailsVM_Deductions").val(0);
+                    $("#ValuatorOneDetailsVM_NetWeight").val(0);
+                    $("#ValuatorOneDetailsVM_Rate").val(0);
+                    $("#ValuatorOneDetailsVM_Total").val(0);
                     currentRow = null;
                 }
                 else {
@@ -390,7 +400,6 @@
                             fileData.append("ValuationImage", files[i]);
                         }
                         fileData.append("ID", newtrno)
-                        fileData.append("SRNO", srno)
                         $("#tblValuationDetails tbody").append(row);
                         $.ajax({
                             url: '/ValuatorOne/AddValuationImage',
@@ -414,13 +423,13 @@
                         $("#headerTotalValuation").css('display', 'block');
                         $("#lblTotalValuation").text(totamt)
                         $("#ValuatorOneDetailsVM_OrnamentId").val("");
-                        $("#ValuatorOneDetailsVM_Qty").val("");
+                        $("#ValuatorOneDetailsVM_Qty").val(0);
                         $("#ValuatorOneDetailsVM_PurityId").val("");
-                        $("#ValuatorOneDetailsVM_GrossWeight").val("");
-                        $("#ValuatorOneDetailsVM_Deductions").val("");
-                        $("#ValuatorOneDetailsVM_NetWeight").val("");
-                        $("#ValuatorOneDetailsVM_Rate").val("");
-                        $("#ValuatorOneDetailsVM_Total").val("");
+                        $("#ValuatorOneDetailsVM_GrossWeight").val(0);
+                        $("#ValuatorOneDetailsVM_Deductions").val(0);
+                        $("#ValuatorOneDetailsVM_NetWeight").val(0);
+                        $("#ValuatorOneDetailsVM_Rate").val(0);
+                        $("#ValuatorOneDetailsVM_Total").val(0);
                         $("#ValuationImage").val("");
                         $("#ImgPhoto").val("");
                         $("#divValuationDetails").show();
@@ -469,6 +478,25 @@
                     }
                 })
             }
+        })
+
+        $("#ValuatorOneDetailsVM_PurityId").change(function () {
+            var purityid = $("#ValuatorOneDetailsVM_PurityId").val();
+            debugger;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SetRateOfSelectedPurity", "ValuatorOne")',
+                data: '{ProductId: "' + $("#ProductId").val() + '", PurityId: "' + purityid + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    $("#ValuatorOneDetailsVM_Rate").val(data);
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+            return false;
         })
 
         $("#ConsolidatedImage").change(function () {
@@ -812,6 +840,7 @@
             var ApplicationNo = tr.find('td:eq(1)').html();
 
             $("#CustomerId").val(CustomerId);
+            $("#ProductId").val(ProductId);
             $("#PreSanctionId").val(PreSanctionId);
             $("#ApplicationNo").val(ApplicationNo);
             $("#editModal").hide();

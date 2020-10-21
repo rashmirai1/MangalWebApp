@@ -83,9 +83,25 @@ namespace MangalWeb.Service.Service
         }
         #endregion
 
+        #region Goldrates
+        public double Goldrates()
+        {
+            return _valuatorOneRepository.Goldrates();
+        }
+        #endregion
+
+        #region GetOrnamentProductWise
         public List<tblItemMaster> GetOrnamentProductWise(int id)
         {
             return _valuatorOneRepository.GetOrnamentProductWise(id);
         }
+        #endregion
+
+        #region GetRateFromProductRate
+        public double GetRateFromProductRate(int pProductId,int pPurityId)
+        {
+            return _valuatorOneRepository.GetRateFromProductRate(pProductId,pPurityId);
+        }
+        #endregion
     }
 }

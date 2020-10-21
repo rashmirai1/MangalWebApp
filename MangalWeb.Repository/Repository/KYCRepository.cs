@@ -27,42 +27,39 @@ namespace MangalWeb.Repository.Repository
                             .Where(x => x.CustomerID == model.CustomerID)
                             .OrderByDescending(x => x.AppliedDate)
                             .Select(x => x.KYCID).FirstOrDefault();
-                    string refNo = Convert.ToString(kycId);
+                    if (kycId == 0)
+                    {
+                        _context.TGLKYC_BasicDetails.Add(tGLKYC_Basic);
+                    }
+                    else
+                    {
+                        tGLKYC_Basic = _context.TGLKYC_BasicDetails.Where(x => x.KYCID == kycId && x.isActive == true).FirstOrDefault();
+                        model.KYCID = tGLKYC_Basic.KYCID;
+                    }
                     tGLKYC_Basic.AddressCategory = "02";
+                    tGLKYC_Basic.KycType = model.KycType;
                     tGLKYC_Basic.Age = model.Age;
                     tGLKYC_Basic.AppFName = model.AppFName;
                     tGLKYC_Basic.AppliedDate = DateTime.Now;
                     tGLKYC_Basic.AppLName = model.AppLName;
                     tGLKYC_Basic.AppMName = model.AppMName;
-                    tGLKYC_Basic.AppPhoto = model.AppPhoto;
-                    tGLKYC_Basic.AppPhotoPath = model.AppPhotoPath;
-                    tGLKYC_Basic.AppSign = model.AppSign;
-                    tGLKYC_Basic.AppSignPath = model.AppSignPath;
-                    tGLKYC_Basic.AreaID = model.AreaID;
-                    tGLKYC_Basic.BirthDate = model.BirthDate;
+                    tGLKYC_Basic.AppPhoto = model.KycPhoto;
+                    tGLKYC_Basic.BirthDate = Convert.ToDateTime(model.BirthDate);
                     tGLKYC_Basic.BldgHouseName = model.BldgHouseName;
                     tGLKYC_Basic.BldgPlotNo = model.BldgPlotNo;
                     tGLKYC_Basic.BranchID = model.BranchID;
-                    tGLKYC_Basic.Children = model.Children;
-                    tGLKYC_Basic.CityID = model.CityID;
                     tGLKYC_Basic.CmpID = model.CmpID;
                     tGLKYC_Basic.CreatedBy = model.CreatedBy;
-                    tGLKYC_Basic.CreatedDate = model.CreatedDate;
+                    tGLKYC_Basic.CreatedDate = DateTime.Now;
                     tGLKYC_Basic.CustomerID = model.CustomerID;
-                    tGLKYC_Basic.DealerID = model.DealerID;
-                    tGLKYC_Basic.DeletedBy = model.DeletedBy;
-                    tGLKYC_Basic.DeletedDate = model.DeletedDate;
                     tGLKYC_Basic.Designation = model.Designation;
                     tGLKYC_Basic.EmailID = model.EmailID;
-                    tGLKYC_Basic.EmploymentType = model.EmploymentType;
-                    tGLKYC_Basic.ExistingCustomerID = model.ExistingCustomerID;
                     tGLKYC_Basic.ExistingPLCaseNo = model.ExistingPLCaseNo;
                     tGLKYC_Basic.FYID = model.FYID;
                     tGLKYC_Basic.Gender = model.Gender;
                     tGLKYC_Basic.IndustriesType = model.IndustriesType;
                     tGLKYC_Basic.isActive = true;
                     tGLKYC_Basic.Landmark = model.Landmark;
-                    tGLKYC_Basic.LoanpurposeID = model.LoanpurposeID;
                     tGLKYC_Basic.MaritalStatus = model.MaritalStatus;
                     tGLKYC_Basic.MobileNo = model.MobileNo;
                     tGLKYC_Basic.NomAddress = model.NomAddress;
@@ -71,35 +68,24 @@ namespace MangalWeb.Repository.Repository
                     tGLKYC_Basic.NomMName = model.NomMName;
                     tGLKYC_Basic.NomRelation = model.NomRelation;
                     tGLKYC_Basic.Occupation = model.Occupation;
-                    tGLKYC_Basic.OfficeAddress = model.OfficeAddress;
-                    tGLKYC_Basic.OperatorID = model.OperatorID;
+                    tGLKYC_Basic.OperatorID = model.CreatedBy;
                     tGLKYC_Basic.OrganizationName = model.OrganizationName;
                     tGLKYC_Basic.PANNo = model.PANNo;
                     tGLKYC_Basic.PresentIncome = model.PresentIncome;
                     tGLKYC_Basic.Road = model.Road;
                     tGLKYC_Basic.RoomBlockNo = model.RoomBlockNo;
-                    tGLKYC_Basic.SourceofApplication = model.SourceofApplication;
                     tGLKYC_Basic.SourceofApplicationID = model.SourceofApplicationID;
-                    tGLKYC_Basic.SourceSpecification = model.SourceSpecification;
-                    tGLKYC_Basic.SpecifyEmployment = model.SpecifyEmployment;
-                    tGLKYC_Basic.SpecifyIndustries = model.SpecifyIndustries;
-                    tGLKYC_Basic.SpecifyLoanPurpose = model.SpecifyLoanPurpose;
                     tGLKYC_Basic.Spouse = model.Spouse;
-                    tGLKYC_Basic.StateID = model.StateID;
                     tGLKYC_Basic.TelephoneNo = model.TelephoneNo;
                     tGLKYC_Basic.UpdatedBy = model.UpdatedBy;
                     tGLKYC_Basic.UpdatedDate = DateTime.Now;
-                    tGLKYC_Basic.VerificationCode = model.VerificationCode;
-                    tGLKYC_Basic.ZoneID = model.ZoneID;
                     tGLKYC_Basic.KYCDate = DateTime.Now;
                     tGLKYC_Basic.AdhaarNo = model.AdhaarNo;
                     tGLKYC_Basic.ApplicationNo = model.ApplicationNo;
-                    tGLKYC_Basic.SourceofApplicationID = model.SourceofApplicationID;
                     tGLKYC_Basic.ApplicantPrefix = model.ApplicantPrefix;
                     tGLKYC_Basic.MotherName = model.MotherName;
                     tGLKYC_Basic.Father_Spouse = model.Father_Spouse;
                     tGLKYC_Basic.CKYCNo = model.CKYCNo;
-                    tGLKYC_Basic.SourceType = model.SourceType;
                     tGLKYC_Basic.OccupationOther = model.OccupationOther;
                     tGLKYC_Basic.IndustryOther = model.IndustryOther;
                     tGLKYC_Basic.NomineeMobileNo = model.NomineeMobileNo;
@@ -107,71 +93,90 @@ namespace MangalWeb.Repository.Repository
                     tGLKYC_Basic.NomineeAdharNo = model.NomineeAdharNo;
                     tGLKYC_Basic.PinCode = model.PinCode;
                     tGLKYC_Basic.Distance = model.Distance;
-                    tGLKYC_Basic.Area = model.Area;
                     tGLKYC_Basic.ResidenceCode = model.ResidenceCode;
-                    _context.TGLKYC_BasicDetails.Add(tGLKYC_Basic);
+                    tGLKYC_Basic.FatherPrefix = model.FatherPrefix;
+                    tGLKYC_Basic.CibilGender = model.Gender == 1 ? "F" : "M";
                     _context.SaveChanges();
-                    HttpContext.Current.Session["KycId"] = tGLKYC_Basic.KYCID;
 
-                    if (model.KycPhoto != null)
+                    int kycid = _context.TGLKYC_BasicDetails.Max(x => x.KYCID);
+                    if (model.KYCID == 0)
                     {
-                        KycImageStore kycImageStore = new KycImageStore();
-                        kycImageStore.KycPhoto = model.KycPhoto;
-                        kycImageStore.Operation = "Save";
-                        kycImageStore.Refno = Convert.ToString(tGLKYC_Basic.KYCID);
-                        kycImageStore.ContentType = model.ContentType;
-                        kycImageStore.ImageName = model.ImageName;
-                        kycImageStore.CreatedDate = DateTime.Now;
-                        _context.KycImageStores.Add(kycImageStore);
-                        _context.SaveChanges();
+                        model.KYCID = kycid;
                     }
 
-                    else if (IsImageExist && model.KycPhoto == null)
-                    {
-                        //If Image already exist for the current customer and no new image is been uploaded add an existing image
-                        KycImageStore kycImageStore = new KycImageStore();
-                        var existingImage = _context.KycImageStores.Where(x => x.Refno == refNo).FirstOrDefault();
-                        kycImageStore.KycPhoto = existingImage.KycPhoto;
-                        kycImageStore.Operation = "Save";
-                        kycImageStore.Refno = Convert.ToString(tGLKYC_Basic.KYCID);
-                        kycImageStore.ContentType = existingImage.ContentType;
-                        kycImageStore.ImageName = existingImage.ImageName;
-                        kycImageStore.CreatedDate = DateTime.Now;
-                        _context.KycImageStores.Add(kycImageStore);
-                        _context.SaveChanges();
-                        HttpContext.Current.Session["KycImageExist"] = null;
-                    }
+                    //if (model.KycPhoto != null)
+                    //{
+                    //    KycImageStore kycImageStore = new KycImageStore();
+                    //    kycImageStore.KycPhoto = model.KycPhoto;
+                    //    kycImageStore.Operation = "Save";
+                    //    kycImageStore.Refno = Convert.ToString(tGLKYC_Basic.KYCID);
+                    //    kycImageStore.ContentType = model.ContentType;
+                    //    kycImageStore.ImageName = model.ImageName;
+                    //    kycImageStore.CreatedDate = DateTime.Now;
+                    //    _context.KycImageStores.Add(kycImageStore);
+                    //    _context.SaveChanges();
+                    //}
+
+                    //else if (IsImageExist && model.KycPhoto == null)
+                    //{
+                    //    //If Image already exist for the current customer and no new image is been uploaded add an existing image
+                    //    KycImageStore kycImageStore = new KycImageStore();
+                    //    var existingImage = _context.KycImageStores.Where(x => x.Refno == refNo).FirstOrDefault();
+                    //    kycImageStore.KycPhoto = existingImage.KycPhoto;
+                    //    kycImageStore.Operation = "Save";
+                    //    kycImageStore.Refno = Convert.ToString(tGLKYC_Basic.KYCID);
+                    //    kycImageStore.ContentType = existingImage.ContentType;
+                    //    kycImageStore.ImageName = existingImage.ImageName;
+                    //    kycImageStore.CreatedDate = DateTime.Now;
+                    //    _context.KycImageStores.Add(kycImageStore);
+                    //    _context.SaveChanges();
+                    //    HttpContext.Current.Session["KycImageExist"] = null;
+                    //}
 
                     foreach (var item in model.Trans_KYCAddresses)
                     {
                         Trans_KYCAddresses trans_KYCAddresses = new Trans_KYCAddresses();
+                        trans_KYCAddresses = _context.Trans_KYCAddresses.Where(x => x.ID == item.ID).FirstOrDefault();
+                        if (trans_KYCAddresses == null)
+                        {
+                            trans_KYCAddresses = new Trans_KYCAddresses();
+                            _context.Trans_KYCAddresses.Add(trans_KYCAddresses);
+                        }
                         trans_KYCAddresses.AddressCategory = item.AddressCategory;
-                        trans_KYCAddresses.Area = item.Area;
                         trans_KYCAddresses.BuildingHouseName = item.BuildingHouseName;
                         trans_KYCAddresses.BuildingPlotNo = item.BuildingPlotNo;
-                        trans_KYCAddresses.CityID = item.CityID;
                         trans_KYCAddresses.CreatedDate = DateTime.Now;
                         trans_KYCAddresses.Distance_km = item.Distance_km;
-                        trans_KYCAddresses.KYCID = tGLKYC_Basic.KYCID;
+                        trans_KYCAddresses.KYCID = (int)model.KYCID;
                         trans_KYCAddresses.NearestLandmark = item.NearestLandmark;
                         trans_KYCAddresses.PinCode = item.PinCode;
                         trans_KYCAddresses.ResidenceCode = item.ResidenceCode;
                         trans_KYCAddresses.Road = item.Road;
                         trans_KYCAddresses.RoomBlockNo = item.RoomBlockNo;
-                        trans_KYCAddresses.StateID = item.StateID;
-                        trans_KYCAddresses.ZoneId = item.ZoneId;
-                        _context.Trans_KYCAddresses.Add(trans_KYCAddresses);
+                        _context.SaveChanges();
+                    }
+                    foreach (var item1 in model.DocumentUploadList)
+                    {
+                        Trn_DocUploadDetails trn_DocUploadDetails = new Trn_DocUploadDetails();
+                        trn_DocUploadDetails.DocumentId = item1.DocumentId.Value;
+                        trn_DocUploadDetails.UploadFile = item1.UploadDocName;
+                        trn_DocUploadDetails.NameonDocument = item1.NameonDocument;
+                        trn_DocUploadDetails.SpecifyOther = item1.SpecifyOther;
+                        trn_DocUploadDetails.ContentType = item1.FileExtension;
+                        trn_DocUploadDetails.FileName = item1.FileName;
+                        trn_DocUploadDetails.DocumentTypeId = item1.DocumentTypeId.Value;
+                        trn_DocUploadDetails.KycId = (int)model.KYCID;
+                        trn_DocUploadDetails.ExpiryDate = item1.ExpiryDate;
+                        trn_DocUploadDetails.Status = "Pending";
+                        _context.Trn_DocUploadDetails.Add(trn_DocUploadDetails);
                         _context.SaveChanges();
                     }
                 }
-
-
             }
             catch (Exception e)
             {
                 throw e;
             }
-
         }
         /// <summary>
         /// get source of application to fill dopdown
@@ -179,8 +184,7 @@ namespace MangalWeb.Repository.Repository
         /// <returns></returns>
         public List<Mst_SourceofApplication> GetSourceOfApplicationList()
         {
-            var list = _context.Mst_SourceofApplication.ToList();
-            return list;
+            return _context.Mst_SourceofApplication.ToList();
         }
         /// <summary>
         /// check if pan already exists
@@ -194,46 +198,37 @@ namespace MangalWeb.Repository.Repository
                 .Where(x => x.PANNo == Pan)
                 .OrderByDescending(x => x.AppliedDate)
                 .FirstOrDefault();
-
             KYCBasicDetailsVM kycVm = new KYCBasicDetailsVM();
             if (kyc != null)
             {
                 kycVm.KYCID = kyc.KYCID;
+                kycVm.KycType = kyc.KycType;
                 kycVm.isPanAdharExist = true;
                 kycVm.Age = kyc.Age;
                 kycVm.AppFName = kyc.AppFName;
-                kycVm.AppliedDate = DateTime.Now;
+                kycVm.ApplicantPrefix = kyc.ApplicantPrefix.Trim();
+                kycVm.FatherPrefix = kyc.FatherPrefix.Trim();
+                kycVm.ResidenceCode = kyc.ResidenceCode;
+                kycVm.AppliedDate = DateTime.Now.ToShortDateString();
                 kycVm.AppLName = kyc.AppLName;
                 kycVm.AppMName = kyc.AppMName;
                 kycVm.AppPhoto = kyc.AppPhoto;
-                kycVm.AppPhotoPath = kyc.AppPhotoPath;
-                kycVm.AppSign = kyc.AppSign;
-                kycVm.AppSignPath = kyc.AppSignPath;
-                kycVm.AreaID = kyc.AreaID;
-                kycVm.BirthDate = kyc.BirthDate;
+                kycVm.BirthDate =kyc.BirthDate.ToShortDateString();
                 kycVm.BldgHouseName = kyc.BldgHouseName;
                 kycVm.BldgPlotNo = kyc.BldgPlotNo;
                 kycVm.BranchID = kyc.BranchID;
-                kycVm.Children = kyc.Children;
-                kycVm.CityID = kyc.CityID;
                 kycVm.CmpID = kyc.CmpID;
                 kycVm.CreatedBy = kyc.CreatedBy;
                 kycVm.CreatedDate = kyc.CreatedDate;
                 kycVm.CustomerID = kyc.CustomerID;
-                kycVm.DealerID = kyc.DealerID;
-                kycVm.DeletedBy = kyc.DeletedBy;
-                kycVm.DeletedDate = kyc.DeletedDate;
                 kycVm.Designation = kyc.Designation;
                 kycVm.EmailID = kyc.EmailID;
-                kycVm.EmploymentType = kyc.EmploymentType;
-                kycVm.ExistingCustomerID = kyc.ExistingCustomerID;
                 kycVm.ExistingPLCaseNo = kyc.ExistingPLCaseNo;
                 kycVm.FYID = kyc.FYID;
                 kycVm.Gender = kyc.Gender;
                 kycVm.IndustriesType = kyc.IndustriesType;
                 kycVm.isActive = true;
                 kycVm.Landmark = kyc.Landmark;
-                kycVm.LoanpurposeID = kyc.LoanpurposeID;
                 kycVm.MaritalStatus = kyc.MaritalStatus;
                 kycVm.MobileNo = kyc.MobileNo;
                 kycVm.NomAddress = kyc.NomAddress;
@@ -242,35 +237,24 @@ namespace MangalWeb.Repository.Repository
                 kycVm.NomMName = kyc.NomMName;
                 kycVm.NomRelation = kyc.NomRelation;
                 kycVm.Occupation = kyc.Occupation;
-                kycVm.OfficeAddress = kyc.OfficeAddress;
                 kycVm.OperatorID = kyc.OperatorID;
                 kycVm.OrganizationName = kyc.OrganizationName;
                 kycVm.PANNo = kyc.PANNo;
                 kycVm.PresentIncome = kyc.PresentIncome;
                 kycVm.Road = kyc.Road;
                 kycVm.RoomBlockNo = kyc.RoomBlockNo;
-                kycVm.SourceofApplication = kyc.SourceofApplication;
                 kycVm.SourceofApplicationID = kyc.SourceofApplicationID;
-                kycVm.SourceSpecification = kyc.SourceSpecification;
-                kycVm.SpecifyEmployment = kyc.SpecifyEmployment;
-                kycVm.SpecifyIndustries = kyc.SpecifyIndustries;
-                kycVm.SpecifyLoanPurpose = kyc.SpecifyLoanPurpose;
+                kycVm.SourceType = _context.Mst_SourceofApplication.Where(x => x.Soa_Id == kycVm.SourceofApplicationID).Select(x => x.Soa_Category).FirstOrDefault();
                 kycVm.Spouse = kyc.Spouse;
-                kycVm.StateID = kyc.StateID;
                 kycVm.TelephoneNo = kyc.TelephoneNo;
                 kycVm.UpdatedBy = kyc.UpdatedBy;
                 kycVm.UpdatedDate = DateTime.Now;
-                kycVm.VerificationCode = kyc.VerificationCode;
-                kycVm.ZoneID = kyc.ZoneID;
                 kycVm.KYCDate = DateTime.Now;
                 kycVm.AdhaarNo = kyc.AdhaarNo;
                 kycVm.ApplicationNo = kyc.ApplicationNo;
-                kycVm.SourceofApplicationID = kyc.SourceofApplicationID;
-                kycVm.ApplicantPrefix = kyc.ApplicantPrefix;
                 kycVm.MotherName = kyc.MotherName;
                 kycVm.Father_Spouse = kyc.Father_Spouse;
                 kycVm.CKYCNo = kyc.CKYCNo;
-                kycVm.SourceType = kyc.SourceType;
                 kycVm.OccupationOther = kyc.OccupationOther;
                 kycVm.IndustryOther = kyc.IndustryOther;
                 kycVm.NomineeMobileNo = kyc.NomineeMobileNo;
@@ -278,16 +262,13 @@ namespace MangalWeb.Repository.Repository
                 kycVm.NomineeAdharNo = kyc.NomineeAdharNo;
                 kycVm.PinCode = kyc.PinCode;
                 kycVm.Distance = kyc.Distance;
-                kycVm.Area = kyc.Area;
                 kycVm.Trans_KYCAddresses = kyc.Trans_KYCAddresses
                     .Select(
                     x => new KYCAddressesVM()
                     {
                         AddressCategory = x.AddressCategory,
-                        Area = x.Area,
                         BuildingHouseName = x.BuildingHouseName,
                         BuildingPlotNo = x.BuildingPlotNo,
-                        CityID = x.CityID,
                         CreatedDate = x.CreatedDate,
                         Distance_km = x.Distance_km,
                         ID = x.ID,
@@ -297,20 +278,41 @@ namespace MangalWeb.Repository.Repository
                         ResidenceCode = x.ResidenceCode,
                         Road = x.Road,
                         RoomBlockNo = x.RoomBlockNo,
-                        StateID = x.StateID,
-                        ZoneId = x.ZoneId
                     }).ToList();
 
-                string kycId = Convert.ToString(kyc.KYCID);
-                kycVm.KycPhoto = _context.KycImageStores.Where(x => x.Refno == kycId)
-                                          .OrderByDescending(x => x.CreatedDate)
-                                          .Select(x => x.KycPhoto).FirstOrDefault();
-                kycVm.ImageName = _context.KycImageStores.Where(x => x.Refno == kycId)
-                                          .OrderByDescending(x => x.CreatedDate)
-                                          .Select(x => x.ImageName).FirstOrDefault();
-                kycVm.ContentType = _context.KycImageStores.Where(x => x.Refno == kycId)
-                                         .OrderByDescending(x => x.CreatedDate)
-                                         .Select(x => x.ContentType).FirstOrDefault();
+                //kycVm.KycPhoto = _context.KycImageStores.Where(x => x.Refno == kycId)
+                //                          .OrderByDescending(x => x.CreatedDate)
+                //                          .Select(x => x.KycPhoto).FirstOrDefault();
+                //kycVm.ImageName = _context.KycImageStores.Where(x => x.Refno == kycId)
+                //                          .OrderByDescending(x => x.CreatedDate)
+                //                          .Select(x => x.ImageName).FirstOrDefault();
+                //kycVm.ContentType = _context.KycImageStores.Where(x => x.Refno == kycId)
+                //                         .OrderByDescending(x => x.CreatedDate)
+                //                         .Select(x => x.ContentType).FirstOrDefault();
+
+                var docuploaddetails = (from a in _context.Trn_DocUploadDetails
+                                        join b in _context.Mst_DocumentType on a.DocumentTypeId equals b.Id
+                                        join c in _context.tblDocumentMasters on a.DocumentId equals c.DocumentID
+                                        where a.KycId == kycVm.KYCID
+                                        select new DocumentUploadDetailsVM()
+                                        {
+                                            ID = a.Id,
+                                            DocumentTypeId = a.DocumentTypeId,
+                                            DocumentTypeName = b.Name,
+                                            DocumentName = c.DocumentName,
+                                            DocumentId = a.DocumentId,
+                                            ExpiryDate = a.ExpiryDate,
+                                            FileName = a.FileName,
+                                            FileExtension = a.ContentType,
+                                            KycId = a.KycId,
+                                            Status = a.Status,
+                                            VerifiedBy = a.VerifiedBy,
+                                            SpecifyOther = a.SpecifyOther,
+                                            NameonDocument = a.NameonDocument,
+                                            ReasonForRejection = a.ReasonForRejection
+                                        }).ToList();
+
+                kycVm.DocumentUploadList = docuploaddetails;
             }
             else
             {
@@ -334,41 +336,33 @@ namespace MangalWeb.Repository.Repository
             if (kyc != null)
             {
                 kycVm.KYCID = kyc.KYCID;
+                kycVm.KycType = kyc.KycType;
                 kycVm.isPanAdharExist = true;
                 kycVm.Age = kyc.Age;
                 kycVm.AppFName = kyc.AppFName;
-                kycVm.AppliedDate = DateTime.Now;
+                kycVm.AppliedDate = DateTime.Now.ToShortDateString();
+                kycVm.ApplicantPrefix = kyc.ApplicantPrefix.Trim();
+                kycVm.FatherPrefix = kyc.FatherPrefix.Trim();
+                kycVm.ResidenceCode = kyc.ResidenceCode;
                 kycVm.AppLName = kyc.AppLName;
                 kycVm.AppMName = kyc.AppMName;
                 kycVm.AppPhoto = kyc.AppPhoto;
-                kycVm.AppPhotoPath = kyc.AppPhotoPath;
-                kycVm.AppSign = kyc.AppSign;
-                kycVm.AppSignPath = kyc.AppSignPath;
-                kycVm.AreaID = kyc.AreaID;
-                kycVm.BirthDate = kyc.BirthDate;
+                kycVm.BirthDate = kyc.BirthDate.ToShortDateString();
                 kycVm.BldgHouseName = kyc.BldgHouseName;
                 kycVm.BldgPlotNo = kyc.BldgPlotNo;
                 kycVm.BranchID = kyc.BranchID;
-                kycVm.Children = kyc.Children;
-                kycVm.CityID = kyc.CityID;
                 kycVm.CmpID = kyc.CmpID;
                 kycVm.CreatedBy = kyc.CreatedBy;
                 kycVm.CreatedDate = kyc.CreatedDate;
                 kycVm.CustomerID = kyc.CustomerID;
-                kycVm.DealerID = kyc.DealerID;
-                kycVm.DeletedBy = kyc.DeletedBy;
-                kycVm.DeletedDate = kyc.DeletedDate;
                 kycVm.Designation = kyc.Designation;
                 kycVm.EmailID = kyc.EmailID;
-                kycVm.EmploymentType = kyc.EmploymentType;
-                kycVm.ExistingCustomerID = kyc.ExistingCustomerID;
                 kycVm.ExistingPLCaseNo = kyc.ExistingPLCaseNo;
                 kycVm.FYID = kyc.FYID;
                 kycVm.Gender = kyc.Gender;
                 kycVm.IndustriesType = kyc.IndustriesType;
                 kycVm.isActive = true;
                 kycVm.Landmark = kyc.Landmark;
-                kycVm.LoanpurposeID = kyc.LoanpurposeID;
                 kycVm.MaritalStatus = kyc.MaritalStatus;
                 kycVm.MobileNo = kyc.MobileNo;
                 kycVm.NomAddress = kyc.NomAddress;
@@ -377,35 +371,24 @@ namespace MangalWeb.Repository.Repository
                 kycVm.NomMName = kyc.NomMName;
                 kycVm.NomRelation = kyc.NomRelation;
                 kycVm.Occupation = kyc.Occupation;
-                kycVm.OfficeAddress = kyc.OfficeAddress;
                 kycVm.OperatorID = kyc.OperatorID;
                 kycVm.OrganizationName = kyc.OrganizationName;
                 kycVm.PANNo = kyc.PANNo;
                 kycVm.PresentIncome = kyc.PresentIncome;
                 kycVm.Road = kyc.Road;
                 kycVm.RoomBlockNo = kyc.RoomBlockNo;
-                kycVm.SourceofApplication = kyc.SourceofApplication;
-                kycVm.SourceofApplicationID = kyc.SourceofApplicationID;
-                kycVm.SourceSpecification = kyc.SourceSpecification;
-                kycVm.SpecifyEmployment = kyc.SpecifyEmployment;
-                kycVm.SpecifyIndustries = kyc.SpecifyIndustries;
-                kycVm.SpecifyLoanPurpose = kyc.SpecifyLoanPurpose;
                 kycVm.Spouse = kyc.Spouse;
-                kycVm.StateID = kyc.StateID;
                 kycVm.TelephoneNo = kyc.TelephoneNo;
                 kycVm.UpdatedBy = kyc.UpdatedBy;
                 kycVm.UpdatedDate = DateTime.Now;
-                kycVm.VerificationCode = kyc.VerificationCode;
-                kycVm.ZoneID = kyc.ZoneID;
                 kycVm.KYCDate = DateTime.Now;
                 kycVm.AdhaarNo = kyc.AdhaarNo;
                 kycVm.ApplicationNo = kyc.ApplicationNo;
                 kycVm.SourceofApplicationID = kyc.SourceofApplicationID;
-                kycVm.ApplicantPrefix = kyc.ApplicantPrefix;
+                kycVm.SourceType = _context.Mst_SourceofApplication.Where(x => x.Soa_Id == kycVm.SourceofApplicationID).Select(x => x.Soa_Category).FirstOrDefault();
                 kycVm.MotherName = kyc.MotherName;
                 kycVm.Father_Spouse = kyc.Father_Spouse;
                 kycVm.CKYCNo = kyc.CKYCNo;
-                kycVm.SourceType = kyc.SourceType;
                 kycVm.OccupationOther = kyc.OccupationOther;
                 kycVm.IndustryOther = kyc.IndustryOther;
                 kycVm.NomineeMobileNo = kyc.NomineeMobileNo;
@@ -413,16 +396,14 @@ namespace MangalWeb.Repository.Repository
                 kycVm.NomineeAdharNo = kyc.NomineeAdharNo;
                 kycVm.PinCode = kyc.PinCode;
                 kycVm.Distance = kyc.Distance;
-                kycVm.Area = kyc.Area;
+                kycVm.FatherPrefix = kyc.FatherPrefix;
                 kycVm.Trans_KYCAddresses = kyc.Trans_KYCAddresses
                    .Select(
                    x => new KYCAddressesVM()
                    {
                        AddressCategory = x.AddressCategory,
-                       Area = x.Area,
                        BuildingHouseName = x.BuildingHouseName,
                        BuildingPlotNo = x.BuildingPlotNo,
-                       CityID = x.CityID,
                        CreatedDate = x.CreatedDate,
                        Distance_km = x.Distance_km,
                        ID = x.ID,
@@ -432,19 +413,31 @@ namespace MangalWeb.Repository.Repository
                        ResidenceCode = x.ResidenceCode,
                        Road = x.Road,
                        RoomBlockNo = x.RoomBlockNo,
-                       StateID = x.StateID,
-                       ZoneId = x.ZoneId
                    }).ToList();
-                string kycId = Convert.ToString(kyc.KYCID);
-                kycVm.KycPhoto = _context.KycImageStores.Where(x => x.Refno == kycId)
-                                          .OrderByDescending(x => x.CreatedDate)
-                                          .Select(x => x.KycPhoto).FirstOrDefault();
-                kycVm.ImageName = _context.KycImageStores.Where(x => x.Refno == kycId)
-                                          .OrderByDescending(x => x.CreatedDate)
-                                          .Select(x => x.ImageName).FirstOrDefault();
-                kycVm.ContentType = _context.KycImageStores.Where(x => x.Refno == kycId)
-                                         .OrderByDescending(x => x.CreatedDate)
-                                         .Select(x => x.ContentType).FirstOrDefault();
+
+                var docuploaddetails = (from a in _context.Trn_DocUploadDetails
+                                        join b in _context.Mst_DocumentType on a.DocumentTypeId equals b.Id
+                                        join c in _context.tblDocumentMasters on a.DocumentId equals c.DocumentID
+                                        where a.KycId == kycVm.KYCID
+                                        select new DocumentUploadDetailsVM()
+                                        {
+                                            ID = a.Id,
+                                            DocumentTypeId = a.DocumentTypeId,
+                                            DocumentTypeName = b.Name,
+                                            DocumentName = c.DocumentName,
+                                            DocumentId = a.DocumentId,
+                                            ExpiryDate = a.ExpiryDate,
+                                            FileName = a.FileName,
+                                            FileExtension = a.ContentType,
+                                            KycId = a.KycId,
+                                            Status = a.Status,
+                                            VerifiedBy = a.VerifiedBy,
+                                            SpecifyOther = a.SpecifyOther,
+                                            NameonDocument = a.NameonDocument,
+                                            ReasonForRejection = a.ReasonForRejection
+                                        }).ToList();
+
+                kycVm.DocumentUploadList = docuploaddetails;
             }
             else
             {
@@ -465,10 +458,9 @@ namespace MangalWeb.Repository.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public KycImageStore GetImageById(int id)
+        public TGLKYC_BasicDetails GetImageById(int id)
         {
-            string strId = Convert.ToString(id);
-            return _context.KycImageStores.Where(x => x.Refno == strId).OrderByDescending(x => x.CreatedDate).FirstOrDefault();
+            return _context.TGLKYC_BasicDetails.Where(x => x.KYCID == id).Where(x => x.isActive == true).FirstOrDefault();
         }
         /// <summary>
         /// verify otp code
@@ -567,6 +559,11 @@ namespace MangalWeb.Repository.Repository
                     _context.SaveChanges();
                 }
             }
+        }
+
+        public string GetSourceType(int id)
+        {
+            return _context.Mst_SourceofApplication.Where(x => x.Soa_Id == id).Select(x => x.Soa_Category).FirstOrDefault();
         }
     }
 }

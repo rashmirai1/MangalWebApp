@@ -73,11 +73,5 @@ namespace MangalWeb.Service.Service
             var product = _documentUploadRepository.SetRecordinEdit(id);
             return product;
         }
-
-        public DocumentUploadDetailsVM AddDocumentinSession(DocumentUploadDetailsVM documentUploadDetailsVM)
-        {
-            return _documentUploadRepository.AddDocumentinSession(documentUploadDetailsVM);
-        }
-
     }
 }

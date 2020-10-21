@@ -111,41 +111,67 @@ namespace MangalWeb.Controllers
         [HttpPost]
         public JsonResult AddValuationImage()
         {
+            var sessionlist = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageList"];
             HttpFileCollectionBase files = Request.Files;
             HttpPostedFileBase postedFile = files[0];
             int id = Convert.ToInt32(Request.Form["ID"]);
-            int SRNO = Convert.ToInt32(Request.Form["SRNO"]);
-            if (id == 0)
-            {
-                id = SRNO;
-            }
             Stream fs = postedFile.InputStream;
             BinaryReader br = new BinaryReader(fs);
             Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
-            //base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
-            ValuatorOneDetailsViewModel docupload = null;
-            var sessionlist = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageList"];
-            docupload = new ValuatorOneDetailsViewModel();
-            if (sessionlist == null)
+            ValuatorOneDetailsViewModel docupload = new ValuatorOneDetailsViewModel();
+            if (sessionlist != null)
+            {
+                docupload = sessionlist.Where(x => x.ID == id).FirstOrDefault();
+                if (docupload != null)
+                {
+                    docupload.ValuationImageFile = bytes;
+                    docupload.ImageName = postedFile.FileName;
+                    docupload.ContentType = postedFile.ContentType;
+                }
+                else
+                {
+                    docupload = new ValuatorOneDetailsViewModel();
+                    int tempid = sessionlist.Max(x => x.ID);
+                    tempid++;
+                    docupload.ID = id == 0 ? tempid : id;
+                    docupload.ValuationImageFile = bytes;
+                    docupload.ImageName = postedFile.FileName;
+                    docupload.ContentType = postedFile.ContentType;
+                    sessionlist.Add(docupload);
+                }
+            }
+            else
             {
                 sessionlist = new List<ValuatorOneDetailsViewModel>();
-                docupload.ID = id;
+                docupload = new ValuatorOneDetailsViewModel();
+                docupload.ID = id == 0 ? 1 : 1;
                 docupload.ValuationImageFile = bytes;
                 docupload.ImageName = postedFile.FileName;
                 docupload.ContentType = postedFile.ContentType;
                 sessionlist.Add(docupload);
             }
-            else
-            {
-                docupload = sessionlist.Where(x => x.ID == id).FirstOrDefault();
-                docupload.ValuationImageFile = bytes;
-                docupload.ImageName = postedFile.FileName;
-                docupload.ContentType = postedFile.ContentType;
-            }
             Session["ValuationImageList"] = sessionlist;
             return Json(docupload, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        public JsonResult SetRateOfSelectedPurity(int ProductId, int PurityId)
+        {
+            double rate = 0;
+            if (ProductId == 1)
+            {
+                rate = Goldrates();
+                if (rate == 0)
+                {
+                    rate = _valuatorOneService.GetRateFromProductRate(ProductId, PurityId);
+                }
+            }
+            else
+            {
+                rate = _valuatorOneService.GetRateFromProductRate(ProductId, PurityId);
+            }
+            return Json(rate, JsonRequestBehavior.AllowGet);
+        }
 
         #region GetCustomerDetails
 
@@ -259,5 +285,10 @@ namespace MangalWeb.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        public double Goldrates()
+        {
+            return _valuatorOneService.Goldrates();
+        }
     }
 }

@@ -3,8 +3,11 @@ using MangalWeb.Model.Transaction;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -68,7 +71,7 @@ namespace MangalWeb.Repository.Repository
                          CustomerId = a.CustomerID,
                          ApplicationNo = a.ApplicationNo,
                          Comments = a.Comments,
-                         ImageName = a.ImageName??"",
+                         ImageName = a.ImageName ?? "",
                          ProductId = b.Product,
                          PreSanctionId = (int)a.PreSanctionId
                      }).FirstOrDefault();
@@ -84,7 +87,7 @@ namespace MangalWeb.Repository.Repository
                                           ValuatorOneId = b.ValuationOneID,
                                           OrnamentId = b.OrnamentId,
                                           OrnamentName = c.ItemName,
-                                          ImageName = b.ImageName??"",
+                                          ImageName = b.ImageName ?? "",
                                           Qty = (int)b.Qty,
                                           PurityId = b.PurityId,
                                           PurityName = d.PurityName,
@@ -275,6 +278,95 @@ namespace MangalWeb.Repository.Repository
         public List<tblItemMaster> GetOrnamentProductWise(int id)
         {
             return _context.tblItemMasters.Where(x => x.Product == id && x.Status != "Not Allowed").ToList();
+        }
+        #endregion
+
+        #region Goldrates
+        public double Goldrates()
+        {
+            double finalrate = 0;
+            string temp = string.Empty;
+            string rate = string.Empty;
+            try
+            {
+                string urlAddress = "https://www.goldpriceindia.com/wmshare-wlifop-002.php";
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    Stream receiveStream = response.GetResponseStream();
+                    StreamReader readStream = null;
+                    if (response.CharacterSet == null)
+                        readStream = new StreamReader(receiveStream);
+                    else
+                        readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                    string data = readStream.ReadToEnd();
+                    response.Close();
+                    readStream.Close();
+
+                    //temp = data.Substring(data.LastIndexOf("10 gram"), 30);
+                    // string ch = "Gold price slips marginally to Rs ";
+                    //string abb = data.Substring(data.LastIndexOf("Gold price slips marginally to Rs"), 40);
+
+                    string abb = data.Substring(data.LastIndexOf("pad-15"), 14);
+                    rate = abb.Substring(8, 6);
+                    //*******************************************************************
+                    temp = rate.Replace(",", "");
+
+                    finalrate = Convert.ToDouble(temp);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return finalrate;
+        }
+        #endregion
+
+        #region GetRateFromProductRate
+        public double GetRateFromProductRate(int pProductId, int pPurityId)
+        {
+            double FinalRate = 0;
+            double pFinalRate = 0;
+            string purityname = "";
+            DateTime ratedate;
+            if (pProductId == 1)
+            {
+                purityname = _context.Mst_PurityMaster.Where(x => x.id == pPurityId).Select(x => x.PurityName).FirstOrDefault();
+                int data = Convert.ToInt32(Regex.Match(purityname, @"\d+").Value);
+
+                var rate = (from a in _context.Mst_ProductRate
+                            join b in _context.Mst_ProductRateDetails on a.Pr_Id equals b.Prd_FkId
+                            where a.Pr_Product == pProductId && b.Prd_Purity == 7
+                            select new
+                            {
+                                FinalRate = b.Prd_NetRate,
+                                ratedate = a.Pr_Date
+                            }).OrderByDescending(x => x.ratedate).FirstOrDefault();
+                if (rate.FinalRate > 0)
+                {
+                    pFinalRate = Convert.ToDouble(rate.FinalRate);
+                    FinalRate = pFinalRate / 24;
+                    FinalRate = FinalRate * data;
+                }
+            }
+            else
+            {
+                var rate = (from a in _context.Mst_ProductRate
+                            join b in _context.Mst_ProductRateDetails on a.Pr_Id equals b.Prd_FkId
+                            where a.Pr_Product == pProductId && b.Prd_Purity == 13
+                            select new
+                            {
+                                FinalRate = b.Prd_NetRate,
+                                ratedate = a.Pr_Date
+                            }).OrderByDescending(x => x.ratedate).FirstOrDefault();
+                if (rate.FinalRate > 0)
+                {
+                    FinalRate = Convert.ToDouble(rate.FinalRate);
+                }
+            }
+            return FinalRate;
         }
         #endregion
     }

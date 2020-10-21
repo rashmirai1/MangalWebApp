@@ -19,7 +19,7 @@ namespace MangalWeb.Model.Transaction
         [Required]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
-        public Nullable<System.DateTime> AppliedDate { get; set; }
+        public string AppliedDate { get; set; }
         [Required]
         public string ApplicationNo { get; set; }
         [Required]

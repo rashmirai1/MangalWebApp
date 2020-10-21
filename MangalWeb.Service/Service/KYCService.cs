@@ -67,7 +67,7 @@ namespace MangalWeb.Service.Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public KycImageStore GetImageById(int id)
+        public TGLKYC_BasicDetails GetImageById(int id)
         {
             return _kycRepository.GetImageById(id);
         }
@@ -149,6 +149,11 @@ namespace MangalWeb.Service.Service
         public void SaveDocument(List<DocumentUploadDetailsVM> lstDocUploadTrn)
         {
             _kycRepository.SaveDocument(lstDocUploadTrn);
+        }
+
+        public string GetSourceType(int id)
+        {
+            return _kycRepository.GetSourceType(id);
         }
     }
 }

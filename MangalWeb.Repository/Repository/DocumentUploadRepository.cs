@@ -292,37 +292,5 @@ namespace MangalWeb.Repository.Repository
         {
             return _context.Trn_DocUploadDetails.Where(x => x.Id == id).FirstOrDefault();
         }
-
-        public DocumentUploadDetailsVM AddDocumentinSession(DocumentUploadDetailsVM docdetails)
-        {
-            var obj = new DocumentUploadViewModel();
-            string pFileName = "";
-            string pFileExtension = "";
-            HttpPostedFileBase postedFile = docdetails.UploadedFile;
-            Stream fs = postedFile.InputStream;
-            pFileName = postedFile.FileName;
-            pFileExtension = postedFile.ContentType;
-            BinaryReader br = new BinaryReader(fs);
-            Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
-            //base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
-            DocumentUploadDetailsVM docupload = null;
-            var sessionlist = obj.DocumentUploadList;
-            if (sessionlist == null)
-            {
-                sessionlist = new List<DocumentUploadDetailsVM>();
-            }
-            docupload = new DocumentUploadDetailsVM();
-            docupload.ID = Convert.ToInt32(docdetails.ID);
-            docupload.DocumentTypeId = Convert.ToInt32(docdetails.DocumentTypeId);
-            docupload.DocumentId = Convert.ToInt32(docdetails.DocumentId);
-            docupload.ExpiryDate = docdetails.ExpiryDate;
-            docupload.UploadDocName = bytes;
-            docupload.FileName = pFileName;
-            docupload.FileExtension = pFileExtension;
-            docupload.SpecifyOther = docupload.SpecifyOther;
-            docupload.NameonDocument = docupload.NameonDocument;
-            sessionlist.Add(docupload);
-            return docupload;
-        }
     }
 }

@@ -24,11 +24,7 @@ namespace MangalWeb.Model.Entity
         public string RoomBlockNo { get; set; }
         public string NearestLandmark { get; set; }
         public string Distance_km { get; set; }
-        public string PinCode { get; set; }
-        public int StateID { get; set; }
-        public int CityID { get; set; }
-        public string Area { get; set; }
-        public string ZoneId { get; set; }
+        public Nullable<int> PinCode { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
     
         public virtual TGLKYC_BasicDetails TGLKYC_BasicDetails { get; set; }

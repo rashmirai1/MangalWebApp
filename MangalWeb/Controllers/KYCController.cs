@@ -13,27 +13,29 @@ namespace MangalWeb.Controllers
         KYCService _kycService = new KYCService();
         DocumentUploadService _documentUploadService = new DocumentUploadService();
 
-        /// <summary>
-        /// Index page
-        /// </summary>
-        /// <returns></returns>
+        #region Index
         public ActionResult Index()
         {
             ButtonVisiblity("Index");
-            ViewBag.SourceList = new SelectList(_kycService.GetSourceOfApplicationList(), "Soa_Name", "Soa_Name");
+            ViewBag.SourceList = new SelectList(_kycService.GetSourceOfApplicationList(), "Soa_Id", "Soa_Name");
             ViewBag.PinCodeList = new SelectList(_kycService.GetAllPincodes(), "Pc_Id", "Pc_Desc");
             ViewBag.PinCodes = _kycService.GetAllPincodes();
             ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
             ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
             KYCBasicDetailsVM kycVM = new KYCBasicDetailsVM();
+            KYCAddressesVM addressvm = new KYCAddressesVM();
+            kycVM.Trans_KYCAddresses.Add(addressvm);
             Random rand = new Random(100);
             int cid = rand.Next(000000000, 999999999) + 1;
             kycVM.CustomerID = "C" + cid.ToString();
             kycVM.ApplicationNo = _kycService.GenerateApplicationNo();
-            kycVM.AppliedDate = DateTime.Now;
+            kycVM.AppliedDate = DateTime.Now.ToShortDateString();
+            Session["sub"] = null;
             return View(kycVM);
         }
+        #endregion
 
+        #region CreateEdit
         /// <summary>
         /// Save KYC
         /// </summary>
@@ -52,6 +54,12 @@ namespace MangalWeb.Controllers
                     model.ContentType = uploadFile.ContentType;
                     model.ImageName = uploadFile.FileName;
                 }
+                model.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
+                model.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
+                model.FYID = Convert.ToInt32(Session["FinancialYearId"]);
+                model.BranchID = Convert.ToInt32(Session["BranchId"]);
+                model.CmpID = Convert.ToInt32(Session["CompanyId"]);
+                model.DocumentUploadList = (List<DocumentUploadDetailsVM>)Session["sub"];
                 if (model.CustomerID != null)
                 {
                     if (Session["KycImageExist"] != null)
@@ -62,10 +70,7 @@ namespace MangalWeb.Controllers
                     {
                         _kycService.SaveRecord(model, false);
                     }
-
-
                 }
-
                 return Json(model);
             }
             catch (Exception ex)
@@ -73,6 +78,9 @@ namespace MangalWeb.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        #endregion
+
+        #region doesPanExist
         /// <summary>
         /// Check if PAN already exist
         /// </summary>
@@ -95,6 +103,9 @@ namespace MangalWeb.Controllers
             }
 
         }
+        #endregion
+
+        #region doesAdharExist
         /// <summary>
         /// check if adhar already exist
         /// </summary>
@@ -109,6 +120,7 @@ namespace MangalWeb.Controllers
                 {
                     Session["KycImageExist"] = true;
                 }
+                Session["sub"] = model.DocumentUploadList;
                 return Json(model);
             }
             catch (Exception ex)
@@ -117,6 +129,9 @@ namespace MangalWeb.Controllers
             }
 
         }
+        #endregion
+
+        #region Download KYC Image
         /// <summary>
         /// download kyc image
         /// </summary>
@@ -125,9 +140,33 @@ namespace MangalWeb.Controllers
         public FileResult Download(int id)
         {
             var file = _kycService.GetImageById(id);
-            return File(file.KycPhoto, file.ContentType);
+            return File(file.AppPhoto, "image/png");
         }
+        #endregion
 
+        #region SendOtp
+        /// <summary>
+        /// send otp to the mobile number
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public JsonResult SendOtp(string mobile, string customerId)
+        {
+            try
+            {
+                var response = _kycService.SendOtp(mobile, customerId);
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+        }
+        #endregion
+
+        #region VerifyOtp
         /// <summary>
         /// verify otp code
         /// </summary>
@@ -148,25 +187,9 @@ namespace MangalWeb.Controllers
             }
 
         }
-        /// <summary>
-        /// send otp to th mobile number
-        /// </summary>
-        /// <param name="mobile"></param>
-        /// <param name="customerId"></param>
-        /// <returns></returns>
-        public JsonResult SendOtp(string mobile, string customerId)
-        {
-            try
-            {
-                var response = _kycService.SendOtp(mobile, customerId);
-                return Json(response);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+        #endregion
 
-        }
+        #region FillAddressByPinCode
         /// <summary>
         /// fill state, city, area, zone by pincode id
         /// </summary>
@@ -185,16 +208,16 @@ namespace MangalWeb.Controllers
             }
 
         }
+        #endregion
 
         #region Insert Document Data
-
         public bool InsertDocumentData(List<DocumentUploadDetailsVM> lstDocUploadTrn)
         {
             bool retVal = false;
             try
             {
                 lstDocUploadTrn = (List<DocumentUploadDetailsVM>)Session["sub"];
-                _kycService.SaveDocument(lstDocUploadTrn);
+                //_kycService.SaveDocument(lstDocUploadTrn);
                 retVal = true;
             }
             catch (Exception ex)
@@ -204,6 +227,67 @@ namespace MangalWeb.Controllers
             return retVal;
         }
         #endregion Insert Data
-    }
 
+        #region AddDocument
+        [HttpPost]
+        public JsonResult AddDocument()
+        {
+            int Id = Convert.ToInt32(Request.Form["Id"]);
+            int DocumentTypeId = Convert.ToInt32(Request.Form["DocumentTypeId"]);
+            int DocumentId = Convert.ToInt32(Request.Form["DocumentId"]);
+            DateTime? ExpiryDate = null;
+            if (Request.Form["ExpiryDate"].ToString() != "")
+            {
+                ExpiryDate = Convert.ToDateTime(Request.Form["ExpiryDate"]);
+            }
+            HttpFileCollectionBase files = Request.Files;
+            string pFileName = "";
+            string pFileExtension = "";
+            HttpPostedFileBase postedFile = files[0];
+            Stream fs = postedFile.InputStream;
+            pFileName = postedFile.FileName;
+            pFileExtension = postedFile.ContentType;
+            BinaryReader br = new BinaryReader(fs);
+            Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
+            //base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
+            DocumentUploadDetailsVM docupload = null;
+            var sessionlist = (List<DocumentUploadDetailsVM>)Session["sub"];
+            if (sessionlist == null)
+            {
+                sessionlist = new List<DocumentUploadDetailsVM>();
+            }
+            docupload = new DocumentUploadDetailsVM();
+            docupload.ID = Id;
+            docupload.DocumentTypeId = DocumentTypeId;
+            docupload.DocumentId = DocumentId;
+            docupload.ExpiryDate = ExpiryDate;
+            docupload.UploadDocName = bytes;
+            docupload.FileName = pFileName;
+            docupload.FileExtension = pFileExtension;
+            docupload.SpecifyOther = Request.Form["SpecifyOther"];
+            docupload.NameonDocument = Request.Form["NameonDocument"];
+            sessionlist.Add(docupload);
+            Session["sub"] = sessionlist;
+            return Json(docupload, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Remove
+        public ActionResult Remove(int id)
+        {
+            //var alist = (List<DocumentUploadDetailsVM>)Session["sub"];
+            //alist.Remove(alist.wh(x => x.ID == id).FirstOrDefault());
+            //Session["sub"] = alist;
+            return Json(1, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region GetSourceType
+        public JsonResult GetSourceType(int id)
+        {
+            var str=_kycService.GetSourceType(id);
+            return Json(str, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+    }
 }

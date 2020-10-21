@@ -22,14 +22,6 @@ namespace MangalWeb.Repository.Repository
             foreach(var item in kYCBasicDetailsVMs)
             {
                 DateTime now = DateTime.Now;
-                if (item.AppliedDate > now.AddHours(-24) && item.AppliedDate <= now)
-                {
-                    item.Status = "";
-                }
-                else
-                {
-                    item.Status = "System Rejected";
-                }
             }
             return kYCBasicDetailsVMs;
         }
@@ -42,7 +34,7 @@ namespace MangalWeb.Repository.Repository
                 residenceVerification.CreatedBy = model.CreatedBy;
                 residenceVerification.CreatedDate = DateTime.Now;
                 residenceVerification.ApplicationNo = model.ApplicationNo;
-                residenceVerification.AppliedDate = model.AppliedDate;
+                residenceVerification.AppliedDate =Convert.ToDateTime(model.AppliedDate);
                 residenceVerification.Comments = model.Comments;
                 residenceVerification.CustomerId = model.CustomerId;
                 residenceVerification.IsActive = true;
