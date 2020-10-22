@@ -147,6 +147,7 @@ namespace MangalWeb.Controllers
             {
                 var response = _kycService.SendOtp(mobile, customerId);
                 return Json(response);
+
             }
             catch (Exception ex)
             {
