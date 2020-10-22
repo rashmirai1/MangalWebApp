@@ -89,6 +89,8 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tbl_PreSanctionDetails> tbl_PreSanctionDetails { get; set; }
         public virtual DbSet<tbl_ResidenceVerification> tbl_ResidenceVerification { get; set; }
         public virtual DbSet<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
+        public virtual DbSet<tblHistory_KYCAddresses> tblHistory_KYCAddresses { get; set; }
+        public virtual DbSet<tblKYC_HistoryDetails> tblKYC_HistoryDetails { get; set; }
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
@@ -933,6 +935,15 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("ClosingBalanceCredit", typeof(double));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertrecordinFCompanyYearEndClosing", iDParameter, financialyearIDParameter, compIDParameter, accountIDParameter, openingBalanceDebitParameter, openingBalanceCreditParameter, currentDebitParameter, currentCreditParameter, closingBalanceDebitParameter, closingBalanceCreditParameter);
+        }
+    
+        public virtual int SP_SaveKYCHistory(Nullable<int> kycid)
+        {
+            var kycidParameter = kycid.HasValue ?
+                new ObjectParameter("kycid", kycid) :
+                new ObjectParameter("kycid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SaveKYCHistory", kycidParameter);
         }
     }
 }

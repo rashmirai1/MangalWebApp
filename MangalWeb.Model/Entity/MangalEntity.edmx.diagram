@@ -90,10 +90,13 @@
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_ResidenceVerification" Width="1.5" PointX="21.875" PointY="35.25" />
         <AssociationConnector Association="MangalDBNewModel.FK__tbl_Resid__PreSa__39AD8A7F" />
         <EntityTypeShape EntityType="MangalDBNewModel.Trans_KYCAddresses" Width="1.5" PointX="19.625" PointY="42.5" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tblHistory_KYCAddresses" Width="1.5" PointX="34.625" PointY="27.375" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tblKYC_HistoryDetails" Width="1.5" PointX="32.375" PointY="22.5" />
+        <AssociationConnector Association="MangalDBNewModel.fk_TtblKYC_historyDetails" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_BasicDetails" Width="1.5" PointX="17.375" PointY="33" />
         <AssociationConnector Association="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" />
         <AssociationConnector Association="MangalDBNewModel.fk_TGLKYC_BasicDetails" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

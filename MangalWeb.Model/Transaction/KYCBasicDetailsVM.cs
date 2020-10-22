@@ -17,9 +17,12 @@ namespace MangalWeb.Model.Transaction
         public string ApplicationNo { get; set; }
         [Required(ErrorMessage = "This Field is Required.")]
         public string ApplicantPrefix { get; set; }
+
         public string CustomerID { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
         public string AppliedDate { get; set; }
+
         public DateTime KYCDate { get; set; }
         public int OperatorID { get; set; }
         public byte[] AppPhoto { get; set; }
@@ -39,11 +42,17 @@ namespace MangalWeb.Model.Transaction
         public short Gender { get; set; }
         [Required(ErrorMessage = "This Field is Required.")]
         public string MaritalStatus { get; set; }
+
+        [Required(ErrorMessage = "This Field is Required.")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
         public string BirthDate { get; set; }
+
         public int Age { get; set; }
+
         [Required(ErrorMessage = "This Field is Required.")]
         public string Spouse { get; set; }
+
         [RegularExpression("^([A-Za-z]){5}([0-9]){4}([A-Za-z]){1}$", ErrorMessage = "Invalid PAN Number")]
         public string PANNo { get; set; }
         [Required(ErrorMessage = "This Field is Required.")]
@@ -51,13 +60,14 @@ namespace MangalWeb.Model.Transaction
         public string VerificationCode { get; set; }
         public string TelephoneNo { get; set; }
         [EmailAddress]
-        [Required(ErrorMessage = "This Field is Required.")]
+        //[Required(ErrorMessage = "This Field is Required.")]
         public string EmailID { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
-        public int SourceofApplicationID { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
+
+        //[Required(ErrorMessage = "This Field is Required.")]
+        public int? SourceofApplicationID { get; set; }
+
         public string SourceSpecification { get; set; }
-        public Nullable<int> DealerID { get; set; }
+
         [Required(ErrorMessage = "This Field is Required.")]
         public string BldgHouseName { get; set; }
         [Required(ErrorMessage = "This Field is Required.")]
@@ -70,35 +80,35 @@ namespace MangalWeb.Model.Transaction
         public int CityID { get; set; }
         public int AreaID { get; set; }
         public int ZoneID { get; set; }
+
         [Required(ErrorMessage = "This Field is Required.")]
         public string Landmark { get; set; }
+
         [Required(ErrorMessage = "This Field is Required.")]
         public string Occupation { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
+
+        //[Required(ErrorMessage = "This Field is Required.")]
         public string OrganizationName { get; set; }
+
         [Required(ErrorMessage = "This Field is Required.")]
         public decimal PresentIncome { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
-        public string EmploymentType { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
-        public string SpecifyEmployment { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
+
+        //[Required(ErrorMessage = "This Field is Required.")]
         public string IndustriesType { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
+
+        //[Required(ErrorMessage = "This Field is Required.")]
         public string SpecifyIndustries { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
+
+        //[Required(ErrorMessage = "This Field is Required.")]
         public string Designation { get; set; }
-        [DataType(DataType.Text)]
-        [Required(ErrorMessage = "This Field is Required.")]
+
+        //[Required(ErrorMessage = "This Field is Required.")]
         public string NomFName { get; set; }
-        [DataType(DataType.Text)]
-        [Required(ErrorMessage = "This Field is Required.")]
+        //[Required(ErrorMessage = "This Field is Required.")]
         public string NomMName { get; set; }
-        [DataType(DataType.Text)]
-        [Required(ErrorMessage = "This Field is Required.")]
+        //[Required(ErrorMessage = "This Field is Required.")]
         public string NomLName { get; set; }
-        [DataType(DataType.Text)]
-        [Required(ErrorMessage = "This Field is Required.")]
+        //[Required(ErrorMessage = "This Field is Required.")]
         public string NomRelation { get; set; }
         public string NomAddress { get; set; }
         public int FYID { get; set; }
@@ -113,6 +123,7 @@ namespace MangalWeb.Model.Transaction
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public Boolean isActive { get; set; }
 
+        [Required(ErrorMessage = "This Field is Required.")]
         public string MotherName { get; set; }
 
         [Required(ErrorMessage = "This Field is Required.")]
@@ -126,10 +137,10 @@ namespace MangalWeb.Model.Transaction
         public string OccupationOther { get; set; }
         public string IndustryOther { get; set; }
 
-        [Required(ErrorMessage = "This Field is Required.")]
+        //[Required(ErrorMessage = "This Field is Required.")]
         public string NomineeMobileNo { get; set; }
 
-        [Required(ErrorMessage = "This Field is Required.")]
+        //[Required(ErrorMessage = "This Field is Required.")]
         [RegularExpression("^([A-Za-z]){5}([0-9]){4}([A-Za-z]){1}$", ErrorMessage = "Invalid PAN Number")]
         public string NomineePanNo { get; set; }
         public string NomineeAdharNo { get; set; }
@@ -148,6 +159,7 @@ namespace MangalWeb.Model.Transaction
         public DocumentUploadDetailsVM DocumentUploadVM { get; set; }
         public List<DocumentUploadDetailsVM> DocumentUploadList { get; set; }
         public virtual IList<KYCAddressesVM> Trans_KYCAddresses { get; set; }
+        [Required(ErrorMessage = "This Field is Required.")]
         public string ResidenceCode { get; set; }
         public string Status { get; set; }
         public string AddressCategory { get; set; }

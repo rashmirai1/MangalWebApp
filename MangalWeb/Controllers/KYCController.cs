@@ -3,6 +3,7 @@ using MangalWeb.Service.Service;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -25,12 +26,13 @@ namespace MangalWeb.Controllers
             KYCBasicDetailsVM kycVM = new KYCBasicDetailsVM();
             KYCAddressesVM addressvm = new KYCAddressesVM();
             kycVM.Trans_KYCAddresses.Add(addressvm);
-            Random rand = new Random(100);
-            int cid = rand.Next(000000000, 999999999) + 1;
-            kycVM.CustomerID = "C" + cid.ToString();
             kycVM.ApplicationNo = _kycService.GenerateApplicationNo();
+            int appno = Convert.ToInt32(kycVM.ApplicationNo);
+            Random rand = new Random(100);
+            int cid = rand.Next(000000000, 999999999) + appno;
+            kycVM.CustomerID = "C" + cid.ToString();
             kycVM.AppliedDate = DateTime.Now.ToShortDateString();
-            Session["sub"] = null;
+            Session["docsub"] = null;
             return View(kycVM);
         }
         #endregion
@@ -59,7 +61,7 @@ namespace MangalWeb.Controllers
                 model.FYID = Convert.ToInt32(Session["FinancialYearId"]);
                 model.BranchID = Convert.ToInt32(Session["BranchId"]);
                 model.CmpID = Convert.ToInt32(Session["CompanyId"]);
-                model.DocumentUploadList = (List<DocumentUploadDetailsVM>)Session["sub"];
+                model.DocumentUploadList = (List<DocumentUploadDetailsVM>)Session["docsub"];
                 if (model.CustomerID != null)
                 {
                     if (Session["KycImageExist"] != null)
@@ -95,6 +97,7 @@ namespace MangalWeb.Controllers
                 {
                     Session["KycImageExist"] = true;
                 }
+                Session["docsub"] = model.DocumentUploadList;
                 return Json(model);
             }
             catch (Exception ex)
@@ -120,7 +123,7 @@ namespace MangalWeb.Controllers
                 {
                     Session["KycImageExist"] = true;
                 }
-                Session["sub"] = model.DocumentUploadList;
+                Session["docsub"] = model.DocumentUploadList;
                 return Json(model);
             }
             catch (Exception ex)
@@ -140,7 +143,7 @@ namespace MangalWeb.Controllers
         public FileResult Download(int id)
         {
             var file = _kycService.GetImageById(id);
-            return File(file.AppPhoto, "image/png");
+            return File(file.AppPhoto, file.ContentType);
         }
         #endregion
 
@@ -216,7 +219,7 @@ namespace MangalWeb.Controllers
             bool retVal = false;
             try
             {
-                lstDocUploadTrn = (List<DocumentUploadDetailsVM>)Session["sub"];
+                lstDocUploadTrn = (List<DocumentUploadDetailsVM>)Session["docsub"];
                 //_kycService.SaveDocument(lstDocUploadTrn);
                 retVal = true;
             }
@@ -251,7 +254,7 @@ namespace MangalWeb.Controllers
             Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
             //base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
             DocumentUploadDetailsVM docupload = null;
-            var sessionlist = (List<DocumentUploadDetailsVM>)Session["sub"];
+            var sessionlist = (List<DocumentUploadDetailsVM>)Session["docsub"];
             if (sessionlist == null)
             {
                 sessionlist = new List<DocumentUploadDetailsVM>();
@@ -267,7 +270,7 @@ namespace MangalWeb.Controllers
             docupload.SpecifyOther = Request.Form["SpecifyOther"];
             docupload.NameonDocument = Request.Form["NameonDocument"];
             sessionlist.Add(docupload);
-            Session["sub"] = sessionlist;
+            Session["docsub"] = sessionlist;
             return Json(docupload, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -275,9 +278,9 @@ namespace MangalWeb.Controllers
         #region Remove
         public ActionResult Remove(int id)
         {
-            //var alist = (List<DocumentUploadDetailsVM>)Session["sub"];
-            //alist.Remove(alist.wh(x => x.ID == id).FirstOrDefault());
-            //Session["sub"] = alist;
+            var list = (List<DocumentUploadDetailsVM>)Session["sub"];
+            list.Remove(list.Where(x => x.ID == id).FirstOrDefault());
+            Session["docsub"] = list;
             return Json(1, JsonRequestBehavior.AllowGet);
         }
         #endregion

@@ -30,27 +30,31 @@ namespace MangalWeb.Repository.Repository
                     if (kycId == 0)
                     {
                         _context.TGLKYC_BasicDetails.Add(tGLKYC_Basic);
+                        tGLKYC_Basic.CreatedBy = model.CreatedBy;
+                        tGLKYC_Basic.CreatedDate = DateTime.Now;
+                        model.KYCID = kycId;
                     }
                     else
                     {
                         tGLKYC_Basic = _context.TGLKYC_BasicDetails.Where(x => x.KYCID == kycId && x.isActive == true).FirstOrDefault();
                         model.KYCID = tGLKYC_Basic.KYCID;
+                        int count = _context.SP_SaveKYCHistory(model.KYCID);
                     }
                     tGLKYC_Basic.AddressCategory = "02";
                     tGLKYC_Basic.KycType = model.KycType;
                     tGLKYC_Basic.Age = model.Age;
+                    tGLKYC_Basic.AppliedDate = Convert.ToDateTime(model.AppliedDate);
                     tGLKYC_Basic.AppFName = model.AppFName;
-                    tGLKYC_Basic.AppliedDate = DateTime.Now;
-                    tGLKYC_Basic.AppLName = model.AppLName;
                     tGLKYC_Basic.AppMName = model.AppMName;
+                    tGLKYC_Basic.AppLName = model.AppLName;
                     tGLKYC_Basic.AppPhoto = model.KycPhoto;
+                    tGLKYC_Basic.ImageName = model.ImageName;
+                    tGLKYC_Basic.ContentType = model.ContentType;
                     tGLKYC_Basic.BirthDate = Convert.ToDateTime(model.BirthDate);
                     tGLKYC_Basic.BldgHouseName = model.BldgHouseName;
                     tGLKYC_Basic.BldgPlotNo = model.BldgPlotNo;
                     tGLKYC_Basic.BranchID = model.BranchID;
                     tGLKYC_Basic.CmpID = model.CmpID;
-                    tGLKYC_Basic.CreatedBy = model.CreatedBy;
-                    tGLKYC_Basic.CreatedDate = DateTime.Now;
                     tGLKYC_Basic.CustomerID = model.CustomerID;
                     tGLKYC_Basic.Designation = model.Designation;
                     tGLKYC_Basic.EmailID = model.EmailID;
@@ -74,7 +78,7 @@ namespace MangalWeb.Repository.Repository
                     tGLKYC_Basic.PresentIncome = model.PresentIncome;
                     tGLKYC_Basic.Road = model.Road;
                     tGLKYC_Basic.RoomBlockNo = model.RoomBlockNo;
-                    tGLKYC_Basic.SourceofApplicationID = model.SourceofApplicationID;
+                    tGLKYC_Basic.SourceofApplicationID =Convert.ToInt32(model.SourceofApplicationID);
                     tGLKYC_Basic.Spouse = model.Spouse;
                     tGLKYC_Basic.TelephoneNo = model.TelephoneNo;
                     tGLKYC_Basic.UpdatedBy = model.UpdatedBy;
@@ -97,41 +101,11 @@ namespace MangalWeb.Repository.Repository
                     tGLKYC_Basic.FatherPrefix = model.FatherPrefix;
                     tGLKYC_Basic.CibilGender = model.Gender == 1 ? "F" : "M";
                     _context.SaveChanges();
-
                     int kycid = _context.TGLKYC_BasicDetails.Max(x => x.KYCID);
                     if (model.KYCID == 0)
                     {
                         model.KYCID = kycid;
                     }
-
-                    //if (model.KycPhoto != null)
-                    //{
-                    //    KycImageStore kycImageStore = new KycImageStore();
-                    //    kycImageStore.KycPhoto = model.KycPhoto;
-                    //    kycImageStore.Operation = "Save";
-                    //    kycImageStore.Refno = Convert.ToString(tGLKYC_Basic.KYCID);
-                    //    kycImageStore.ContentType = model.ContentType;
-                    //    kycImageStore.ImageName = model.ImageName;
-                    //    kycImageStore.CreatedDate = DateTime.Now;
-                    //    _context.KycImageStores.Add(kycImageStore);
-                    //    _context.SaveChanges();
-                    //}
-
-                    //else if (IsImageExist && model.KycPhoto == null)
-                    //{
-                    //    //If Image already exist for the current customer and no new image is been uploaded add an existing image
-                    //    KycImageStore kycImageStore = new KycImageStore();
-                    //    var existingImage = _context.KycImageStores.Where(x => x.Refno == refNo).FirstOrDefault();
-                    //    kycImageStore.KycPhoto = existingImage.KycPhoto;
-                    //    kycImageStore.Operation = "Save";
-                    //    kycImageStore.Refno = Convert.ToString(tGLKYC_Basic.KYCID);
-                    //    kycImageStore.ContentType = existingImage.ContentType;
-                    //    kycImageStore.ImageName = existingImage.ImageName;
-                    //    kycImageStore.CreatedDate = DateTime.Now;
-                    //    _context.KycImageStores.Add(kycImageStore);
-                    //    _context.SaveChanges();
-                    //    HttpContext.Current.Session["KycImageExist"] = null;
-                    //}
 
                     foreach (var item in model.Trans_KYCAddresses)
                     {
@@ -155,6 +129,7 @@ namespace MangalWeb.Repository.Repository
                         trans_KYCAddresses.RoomBlockNo = item.RoomBlockNo;
                         _context.SaveChanges();
                     }
+
                     foreach (var item1 in model.DocumentUploadList)
                     {
                         Trn_DocUploadDetails trn_DocUploadDetails = new Trn_DocUploadDetails();
@@ -186,7 +161,7 @@ namespace MangalWeb.Repository.Repository
         {
             return _context.Mst_SourceofApplication.ToList();
         }
-        /// <summary>
+         /// <summary>
         /// check if pan already exists
         /// </summary>
         /// <param name="Pan"></param>
@@ -209,7 +184,7 @@ namespace MangalWeb.Repository.Repository
                 kycVm.ApplicantPrefix = kyc.ApplicantPrefix.Trim();
                 kycVm.FatherPrefix = kyc.FatherPrefix.Trim();
                 kycVm.ResidenceCode = kyc.ResidenceCode;
-                kycVm.AppliedDate = DateTime.Now.ToShortDateString();
+                kycVm.AppliedDate = kyc.AppliedDate.ToShortDateString();
                 kycVm.AppLName = kyc.AppLName;
                 kycVm.AppMName = kyc.AppMName;
                 kycVm.AppPhoto = kyc.AppPhoto;
@@ -280,16 +255,6 @@ namespace MangalWeb.Repository.Repository
                         RoomBlockNo = x.RoomBlockNo,
                     }).ToList();
 
-                //kycVm.KycPhoto = _context.KycImageStores.Where(x => x.Refno == kycId)
-                //                          .OrderByDescending(x => x.CreatedDate)
-                //                          .Select(x => x.KycPhoto).FirstOrDefault();
-                //kycVm.ImageName = _context.KycImageStores.Where(x => x.Refno == kycId)
-                //                          .OrderByDescending(x => x.CreatedDate)
-                //                          .Select(x => x.ImageName).FirstOrDefault();
-                //kycVm.ContentType = _context.KycImageStores.Where(x => x.Refno == kycId)
-                //                         .OrderByDescending(x => x.CreatedDate)
-                //                         .Select(x => x.ContentType).FirstOrDefault();
-
                 var docuploaddetails = (from a in _context.Trn_DocUploadDetails
                                         join b in _context.Mst_DocumentType on a.DocumentTypeId equals b.Id
                                         join c in _context.tblDocumentMasters on a.DocumentId equals c.DocumentID
@@ -340,7 +305,7 @@ namespace MangalWeb.Repository.Repository
                 kycVm.isPanAdharExist = true;
                 kycVm.Age = kyc.Age;
                 kycVm.AppFName = kyc.AppFName;
-                kycVm.AppliedDate = DateTime.Now.ToShortDateString();
+                kycVm.AppliedDate =kyc.AppliedDate.ToShortDateString();
                 kycVm.ApplicantPrefix = kyc.ApplicantPrefix.Trim();
                 kycVm.FatherPrefix = kyc.FatherPrefix.Trim();
                 kycVm.ResidenceCode = kyc.ResidenceCode;

@@ -46,7 +46,7 @@
                                         <div class="form-group">
                                             <div style="display:none">@Html.ValidationSummary()</div>
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">PAN No.</label>
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">PAN No.<span class="text-danger"> * </span></label>
                                                 <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                                     <span class="text-danger" id="CustomErr"> </span>
                                                     @Html.EditorFor(model => model.PANNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "PAN No.", @autofocus = "autofocus", @maxlength = "10", @autocomplete = "off", @style = "text-transform: uppercase" } })
@@ -63,7 +63,6 @@
                                             </div>
                                             <label id="negativeCustomerErr" class="text-danger"></label>
                                         </div>
-                                        <div id="disabledFields">
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Upload Photo<span class="text-danger"> * </span></label>
@@ -75,7 +74,7 @@
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Type</label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.KycType, new { htmlAttributes = new { @class = "form-control", @placeholder = "Type" } })
+                                                        @Html.EditorFor(model => model.KycType, new { htmlAttributes = new { @class = "form-control", @placeholder = "Type",@readonly=true } })
                                                         @Html.ValidationMessageFor(model => model.KycType, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -87,12 +86,12 @@
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Customer ID<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.CustomerID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer ID", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.CustomerID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer ID"} })
                                                         @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Application No<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.ApplicationNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Application No", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.ApplicationNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Application No"} })
                                                         @Html.ValidationMessageFor(model => model.ApplicationNo, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -101,34 +100,35 @@
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Application Date<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.AppliedDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Application Date", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.AppliedDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Application Date"} })
                                                         @Html.ValidationMessageFor(model => model.AppliedDate, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Applicant Prefix<span class="text-danger"> * </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         @Html.DropDownListFor(model => model.ApplicantPrefix,
-new List<SelectListItem> {
-    new SelectListItem { Value = "" , Text = "Select" },
-new SelectListItem { Value = "Mr" , Text = "Mr" },
-new SelectListItem { Value = "Ms" , Text = "Ms" },
-new SelectListItem { Value = "Mrs" , Text = "Mrs" }
-},
-new { @class = "form-control" })
+                                                        new List<SelectListItem> {
+                                                        new SelectListItem { Value = "" , Text = "Select" },
+                                                        new SelectListItem { Value = "Mr." , Text = "Mr." },
+                                                        new SelectListItem { Value = "Ms." , Text = "Ms." },
+                                                        new SelectListItem { Value = "Mrs." , Text = "Mrs." }
+                                                        },
+                                                        new { @class = "form-control" })
 
                                                         @Html.ValidationMessageFor(model => model.ApplicantPrefix, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div id="disabledFields">
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Applicant Name<span class="text-danger"> * </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.AppFName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Applicant Name", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.AppFName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Applicant Name", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.AppFName, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Middle Name<span class="text-danger"> * </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.AppMName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Middle Name", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.AppMName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Middle Name", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.AppMName, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -137,12 +137,12 @@ new { @class = "form-control" })
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Last Name<span class="text-danger"> * </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.AppLName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Last Name", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.AppLName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Last Name", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.AppLName, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Mother Name<span class="text-danger"> * </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.MotherName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mother Name", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.MotherName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mother Name", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.MotherName, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -165,16 +165,16 @@ new { @class = "form-control" })
                                                         @Html.DropDownListFor(model => model.FatherPrefix,
 new List<SelectListItem> {
     new SelectListItem { Value = "" , Text = "Select" },
-new SelectListItem { Value = "Mr" , Text = "Mr" },
-new SelectListItem { Value = "Ms" , Text = "Ms" },
-new SelectListItem { Value = "Mrs" , Text = "Mrs" }
+new SelectListItem { Value = "Mr." , Text = "Mr." },
+new SelectListItem { Value = "Ms." , Text = "Ms." },
+new SelectListItem { Value = "Mrs." , Text = "Mrs." }
 },
 new { @class = "form-control",@style="width: 80px;" })
 
-                                                        @Html.ValidationMessageFor(model => model.ApplicantPrefix, "", new { @class = "text-danger" })
+                                                        @Html.ValidationMessageFor(model => model.FatherPrefix, "", new { @class = "text-danger" })
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        @Html.EditorFor(model => model.Spouse, new { htmlAttributes = new { @class = "form-control", @placeholder = "Father / Spouse Name" } })
+                                                        @Html.EditorFor(model => model.Spouse, new { htmlAttributes = new { @class = "form-control", @placeholder = "Father / Spouse Name", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.Spouse, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -219,22 +219,22 @@ new { @class = "form-control",@style="width: 80px;" })
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Marital Status<span class="text-danger"> * </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         @Html.DropDownListFor(model => model.MaritalStatus,
-new List<SelectListItem> {
-    new SelectListItem { Value = "" , Text = "Select Marital Status" },
-new SelectListItem { Value = "01" , Text = "Married" },
-new SelectListItem { Value = "02" , Text = "Unmarried" },
-new SelectListItem { Value = "03" , Text = "Divorced" },
-new SelectListItem { Value = "03" , Text = "Widowed" },
-new SelectListItem { Value = "03" , Text = "Engaged" },
-new SelectListItem { Value = "03" , Text = "Separated" },
-new SelectListItem { Value = "03" , Text = "cohabitating" }
-},
-new { @class = "form-control" })
+                                                        new List<SelectListItem> {
+                                                            new SelectListItem { Value = "" , Text = "Select Marital Status" },
+                                                        new SelectListItem { Value = "01" , Text = "Married" },
+                                                        new SelectListItem { Value = "02" , Text = "Unmarried" },
+                                                        new SelectListItem { Value = "03" , Text = "Divorced" },
+                                                        new SelectListItem { Value = "03" , Text = "Widowed" },
+                                                        new SelectListItem { Value = "03" , Text = "Engaged" },
+                                                        new SelectListItem { Value = "03" , Text = "Separated" },
+                                                        new SelectListItem { Value = "03" , Text = "cohabitating" }
+                                                        },
+                                                        new { @class = "form-control" })
                                                         @Html.ValidationMessageFor(model => model.MaritalStatus, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Telephone No</label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.TelephoneNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Telephone No", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.TelephoneNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Telephone No", @maxlength = "12" } })
                                                         @Html.ValidationMessageFor(model => model.TelephoneNo, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -244,7 +244,7 @@ new { @class = "form-control" })
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Mobile No<span class="text-danger"> * </span></label>
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                         <span class="text-danger" id="CustomErr"> </span>
-                                                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mobile No", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mobile No", @maxlength = "10" } })
                                                         @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
                                                         <span class="text-alert" id="otpError"></span>
                                                     </div>
@@ -265,10 +265,10 @@ new { @class = "form-control" })
                                             </div>
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Email id<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Email id<span class="text-danger"> </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         <span class="text-danger" id="CustomErr"> </span>
-                                                        @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email id", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email id", @maxlength = "30" } })
                                                         @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Source Of Application<span class="text-danger"> * </span></label>
@@ -281,16 +281,16 @@ new { @class = "form-control" })
                                             </div>
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Source Type<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Source Type<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         <span class="text-danger" id="CustomErr"> </span>
                                                         @Html.EditorFor(model => model.SourceType, new { htmlAttributes = new { @class = "form-control", @placeholder = "Source Type", @readonly=true } })
                                                         @Html.ValidationMessageFor(model => model.SourceType, "", new { @class = "text-danger" })
                                                     </div>
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Existing PL Case No<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Existing PL Case No<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         <span class="text-danger" id="CustomErr"> </span>
-                                                        @Html.EditorFor(model => model.ExistingPLCaseNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "ExistingPLCaseNo", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.ExistingPLCaseNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "ExistingPLCaseNo"} })
                                                         @Html.ValidationMessageFor(model => model.ExistingPLCaseNo, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -305,7 +305,7 @@ new { @class = "form-control" })
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         <span class="text-danger" id="CustomErr"> </span>
-                                                        @Html.EditorFor(model => model.BldgHouseName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Building/House Name" } })
+                                                        @Html.EditorFor(model => model.BldgHouseName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Building/House Name", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.BldgHouseName, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
@@ -313,7 +313,7 @@ new { @class = "form-control" })
                                                         <span class="text-danger"> * </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <span class="text-danger" id="CustomErr"> </span> @Html.EditorFor(model => model.Road, new { htmlAttributes = new { @class = "form-control", @placeholder = "Road" } })
+                                                        <span class="text-danger" id="CustomErr"> </span> @Html.EditorFor(model => model.Road, new { htmlAttributes = new { @class = "form-control", @placeholder = "Road", @maxlength = "30" } })
                                                         @Html.ValidationMessageFor(model => model.Road, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -325,7 +325,7 @@ new { @class = "form-control" })
                                                         <span class="text-danger"> * </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.BldgPlotNo, new { htmlAttributes = new { @class = "form-control", @placeholder = " Building/ Plot No" } })
+                                                        @Html.EditorFor(model => model.BldgPlotNo, new { htmlAttributes = new { @class = "form-control", @placeholder = " Building/ Plot No", @maxlength = "30" } })
                                                         @Html.ValidationMessageFor(model => model.BldgPlotNo, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
@@ -333,7 +333,7 @@ new { @class = "form-control" })
                                                         <span class="text-danger"> * </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                         @Html.EditorFor(model => model.RoomBlockNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Room/Block No" } })
+                                                        @Html.EditorFor(model => model.RoomBlockNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Room/Block No", @maxlength = "30" } })
                                                         @Html.ValidationMessageFor(model => model.RoomBlockNo, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -341,11 +341,11 @@ new { @class = "form-control" })
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
-                                                        Nearest landmark
+                                                        Nearest Landmark
                                                         <span class="text-danger"> * </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.Landmark, new { htmlAttributes = new { @class = "form-control", @placeholder = "Landmark" } })
+                                                        @Html.EditorFor(model => model.Landmark, new { htmlAttributes = new { @class = "form-control", @placeholder = "Landmark", @maxlength = "30" } })
                                                         @Html.ValidationMessageFor(model => model.Landmark, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
@@ -353,7 +353,7 @@ new { @class = "form-control" })
                                                         <span class="text-danger"> * </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                         @Html.EditorFor(model => model.Distance, new { htmlAttributes = new { @class = "form-control", @placeholder = "Room/Block No"} })
+                                                        @Html.EditorFor(model => model.Distance, new { htmlAttributes = new { @class = "form-control", @placeholder = "Room/Block No", @maxlength = "10" } })
                                                         @Html.ValidationMessageFor(model => model.Distance, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -376,7 +376,7 @@ new { @class = "form-control" })
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         <span class="text-danger" id="CustomErr"> </span>
                                                         @Html.HiddenFor(m => m.StateID)
-                                                        @Html.Editor("state", new { htmlAttributes = new { @class = "form-control", @placeholder = "State", @autofocus = "autofocus", @readonly = "readonly" } })
+                                                        @Html.Editor("state", new { htmlAttributes = new { @class = "form-control", @placeholder = "State",@readonly = "readonly" } })
                                                         @Html.ValidationMessageFor(model => model.StateID, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -437,7 +437,7 @@ new { @class = "form-control" })
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         @Html.HiddenFor(x => x.Trans_KYCAddresses[0].ID)
-                                                        @Html.EditorFor(x => x.Trans_KYCAddresses[0].BuildingHouseName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Building/House Name"} })
+                                                        @Html.EditorFor(x => x.Trans_KYCAddresses[0].BuildingHouseName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Building/House Name", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(x => x.Trans_KYCAddresses[0].BuildingHouseName, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
@@ -445,7 +445,7 @@ new { @class = "form-control" })
                                                         <span class="text-danger"> * </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(x => x.Trans_KYCAddresses[0].Road, new { htmlAttributes = new { @class = "form-control", @placeholder = "Road" } })
+                                                        @Html.EditorFor(x => x.Trans_KYCAddresses[0].Road, new { htmlAttributes = new { @class = "form-control", @placeholder = "Road", @maxlength = "30" } })
                                                         @Html.ValidationMessageFor(x => x.Trans_KYCAddresses[0].Road, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -457,7 +457,7 @@ new { @class = "form-control" })
                                                         <span class="text-danger"> * </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(x => x.Trans_KYCAddresses[0].BuildingPlotNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Building Plot No" } })
+                                                        @Html.EditorFor(x => x.Trans_KYCAddresses[0].BuildingPlotNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Building Plot No", @maxlength = "30" } })
                                                         @Html.ValidationMessageFor(x => x.Trans_KYCAddresses[0].BuildingPlotNo, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-m-2 col-sm-2 col-xs-12 control-label">
@@ -465,7 +465,7 @@ new { @class = "form-control" })
                                                         <span class="text-danger"> * </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(x => x.Trans_KYCAddresses[0].RoomBlockNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Room Block No" } })
+                                                        @Html.EditorFor(x => x.Trans_KYCAddresses[0].RoomBlockNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Room Block No" , @maxlength = "30" } })
                                                         @Html.ValidationMessageFor(x => x.Trans_KYCAddresses[0].RoomBlockNo, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -473,11 +473,11 @@ new { @class = "form-control" })
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
-                                                        Nearest landmark
+                                                        Nearest Landmark
                                                         <span class="text-danger"> * </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(x => x.Trans_KYCAddresses[0].NearestLandmark, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nearest Landmark" } })
+                                                        @Html.EditorFor(x => x.Trans_KYCAddresses[0].NearestLandmark, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nearest Landmark", @maxlength = "30" } })
                                                         @Html.ValidationMessageFor(x => x.Trans_KYCAddresses[0].NearestLandmark, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
@@ -485,7 +485,7 @@ new { @class = "form-control" })
                                                         <span class="text-danger"> * </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(x => x.Trans_KYCAddresses[0].Distance_km, new { htmlAttributes = new { @class = "form-control", @placeholder = "Distance (KM)" } })
+                                                        @Html.EditorFor(x => x.Trans_KYCAddresses[0].Distance_km, new { htmlAttributes = new { @class = "form-control", @placeholder = "Distance (KM)", @maxlength = "10" } })
                                                         @Html.ValidationMessageFor(x => x.Trans_KYCAddresses[0].Distance_km, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -500,7 +500,7 @@ new { @class = "form-control" })
                                                         <select name="Trans_KYCAddresses[0].PinCode" id="Trans_KYCAddresses_0__PinCode" class="form-control">
                                                             @foreach (var item in ViewBag.PinCodes)
                                                             {
-                                                                <option value="@item.Pc_Id">@item.Pc_Desc</option>
+                                                            <option value="@item.Pc_Id">@item.Pc_Desc</option>
                                                             }
                                                         </select>
                                                     </div>
@@ -560,7 +560,7 @@ new { @class = "form-control" })
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Present Annual Income<span class="text-danger"> * </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.PresentIncome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Present Annual Income", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.PresentIncome, new { htmlAttributes = new { @class = "form-control", @placeholder = "Present Annual Income", @maxlength = "10" } })
                                                         @Html.ValidationMessageFor(model => model.PresentIncome, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Occupation Type<span class="text-danger"> * </span></label>
@@ -580,46 +580,46 @@ new { @class = "form-control" })
                                             </div>
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Specify if Other<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Specify if Other<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.OccupationOther, new { htmlAttributes = new { @class = "form-control", @placeholder = "Occupation Other", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.OccupationOther, new { htmlAttributes = new { @class = "form-control", @placeholder = "Occupation Other", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.OccupationOther, "", new { @class = "text-danger" })
                                                     </div>
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Designation<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Designation<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control", @placeholder = "Designation"} })
+                                                        @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control", @placeholder = "Designation", @maxlength = "30" } })
                                                         @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Name of Organization<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Name of Organization<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.OrganizationName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name of Organization" } })
+                                                        @Html.EditorFor(model => model.OrganizationName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name of Organization", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.OrganizationName, "", new { @class = "text-danger" })
                                                     </div>
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Industry Type<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Industry Type<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         @Html.DropDownListFor(model => model.IndustriesType,
 new List<SelectListItem> {
 new SelectListItem { Value = "" , Text = "Select Industry Type" },
 new SelectListItem { Value = "Agriculture" , Text = "Agriculture" },
-new SelectListItem { Value = "consultancy" , Text = "consultancy" },
+new SelectListItem { Value = "Consultancy" , Text = "Consultancy" },
 new SelectListItem { Value = "Banking" , Text = "Banking" },
 new SelectListItem { Value = "Freelancer" , Text = "Freelancer" },
 
-new SelectListItem { Value = "health" , Text = "health" },
-new SelectListItem { Value = "conract worker" , Text = "conract worker" },
-new SelectListItem { Value = "manufacturing" , Text = "manufacturing" },
-new SelectListItem { Value = "professional" , Text = "professional" },
+new SelectListItem { Value = "Health" , Text = "Health" },
+new SelectListItem { Value = "Conract Worker" , Text = "Conract Worker" },
+new SelectListItem { Value = "Manufacturing" , Text = "Manufacturing" },
+new SelectListItem { Value = "Professional" , Text = "Professional" },
 
-new SelectListItem { Value = "retail trading" , Text = "retail trading" },
-new SelectListItem { Value = "small scale industries" , Text = "small scale industries" },
-new SelectListItem { Value = "software" , Text = "software" },
-new SelectListItem { Value = "transport" , Text = "transport" },
+new SelectListItem { Value = "Retail Trading" , Text = "Retail Trading" },
+new SelectListItem { Value = "Small Scale Industries" , Text = "Small Scale Industries" },
+new SelectListItem { Value = "Software" , Text = "Software" },
+new SelectListItem { Value = "Transport" , Text = "Transport" },
 
-new SelectListItem { Value = "others" , Text = "others" }
+new SelectListItem { Value = "Others" , Text = "Others" }
 },
 new { @class = "form-control" })
                                                         @Html.ValidationMessageFor(model => model.IndustriesType, "", new { @class = "text-danger" })
@@ -628,9 +628,9 @@ new { @class = "form-control" })
                                             </div>
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Specify If Other<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Specify If Other<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.IndustryOther, new { htmlAttributes = new { @class = "form-control", @placeholder = "Industry Other", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.IndustryOther, new { htmlAttributes = new { @class = "form-control", @placeholder = "Industry Other", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.IndustryOther, "", new { @class = "text-danger" })
                                                     </div>
 
@@ -642,18 +642,18 @@ new { @class = "form-control" })
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
                                                         Building/House Name
-                                                        <span class="text-danger"> * </span>
+                                                        <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <input type="hidden" id="Trans_KYCAddresses_1__ID"/>
-                                                        <input name="Trans_KYCAddresses[1].BuildingHouseName" class="form-control" id="Trans_KYCAddresses_1__BuildingHouseName" type="text" data-val-required="This field is required." data-val="true">
+                                                        <input type="hidden" id="Trans_KYCAddresses_1__ID" />
+                                                        <input name="Trans_KYCAddresses[1].BuildingHouseName" class="form-control" id="Trans_KYCAddresses_1__BuildingHouseName" type="text" data-val-required="This field is required." data-val="true" maxlength="50">
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
                                                         Road
-                                                        <span class="text-danger"> * </span>
+                                                        <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <input name="Trans_KYCAddresses[1].Road" class="form-control" id="Trans_KYCAddresses_1__Road" type="text" data-val-required="This field is required." data-val="true">
+                                                        <input name="Trans_KYCAddresses[1].Road" class="form-control" id="Trans_KYCAddresses_1__Road" type="text" data-val-required="This field is required." data-val="true" maxlength="30">
                                                     </div>
                                                 </div>
                                             </div>
@@ -661,35 +661,35 @@ new { @class = "form-control" })
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
                                                         Building/ Plot No
-                                                        <span class="text-danger"> * </span>
+                                                        <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <input name="Trans_KYCAddresses[1].BuildingPlotNo" class="form-control" id="Trans_KYCAddresses_1__BuildingPlotNo" type="text" data-val-required="This field is required." data-val="true">
+                                                        <input name="Trans_KYCAddresses[1].BuildingPlotNo" class="form-control" id="Trans_KYCAddresses_1__BuildingPlotNo" type="text" data-val-required="This field is required." data-val="true" maxlength="30">
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
                                                         Room/Block No
-                                                        <span class="text-danger"> * </span>
+                                                        <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <input name="Trans_KYCAddresses[1].RoomBlockNo" class="form-control" id="Trans_KYCAddresses_1__RoomBlockNo" type="text" data-val-required="This field is required." data-val="true">
+                                                        <input name="Trans_KYCAddresses[1].RoomBlockNo" class="form-control" id="Trans_KYCAddresses_1__RoomBlockNo" type="text" data-val-required="This field is required." data-val="true" maxlength="30">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
-                                                        Nearest landmark
-                                                        <span class="text-danger"> * </span>
+                                                        Nearest Landmark
+                                                        <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <input name="Trans_KYCAddresses[1].NearestLandmark" class="form-control" id="Trans_KYCAddresses_1__NearestLandmark" type="text" data-val-required="This field is required." data-val="true">
+                                                        <input name="Trans_KYCAddresses[1].NearestLandmark" class="form-control" id="Trans_KYCAddresses_1__NearestLandmark" type="text" data-val-required="This field is required." data-val="true" maxlength="30">
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
                                                         Distance (km)
-                                                        <span class="text-danger"> * </span>
+                                                        <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <input name="Trans_KYCAddresses[1].Distance_km" class="form-control" id="Trans_KYCAddresses_1__Distance_km" type="text" data-val-required="This field is required." data-val="true">
+                                                        <input name="Trans_KYCAddresses[1].Distance_km" class="form-control" id="Trans_KYCAddresses_1__Distance_km" type="text" data-val-required="This field is required." data-val="true" maxlength="10">
                                                     </div>
                                                 </div>
                                             </div>
@@ -697,19 +697,19 @@ new { @class = "form-control" })
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
                                                         Pin Code
-                                                        <span class="text-danger"> * </span>
+                                                        <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         <select name="Trans_KYCAddresses[1].PinCode" id="Trans_KYCAddresses_1__PinCode" class="form-control">
                                                             @foreach (var item in ViewBag.PinCodes)
                                                             {
-                                                                <option value="@item.Pc_Id">@item.Pc_Desc</option>
+                                                            <option value="@item.Pc_Id">@item.Pc_Desc</option>
                                                             }
                                                         </select>
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
                                                         State
-                                                        <span class="text-danger"> * </span>
+                                                        <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         <input type="hidden" name="Trans_KYCAddresses[1].StateID" id="Trans_KYCAddresses_1__StateID">
@@ -721,7 +721,7 @@ new { @class = "form-control" })
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
                                                         City
-                                                        <span class="text-danger"> * </span>
+                                                        <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         <input type="hidden" name="Trans_KYCAddresses[1].CityID" id="Trans_KYCAddresses_1__CityID">
@@ -729,7 +729,7 @@ new { @class = "form-control" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
                                                         Area
-                                                        <span class="text-danger"> * </span>
+                                                        <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         <input type="hidden" name="Trans_KYCAddresses[1].Area" id="Trans_KYCAddresses_1__Area">
@@ -741,7 +741,7 @@ new { @class = "form-control" })
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
                                                         Zone
-                                                        <span class="text-danger"> * </span>
+                                                        <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         <input type="hidden" name="Trans_KYCAddresses[1].ZoneId" id="Trans_KYCAddresses_1__ZoneId">
@@ -753,76 +753,77 @@ new { @class = "form-control" })
                                             <label style="padding-left:20px;"><b>Nominee Details</b></label>
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee First Name<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee First Name<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.NomFName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee First Name", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.NomFName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee First Name", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.NomFName, "", new { @class = "text-danger" })
                                                     </div>
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee Middle Name<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee Middle Name<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.NomMName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Middle Name", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.NomMName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Middle Name", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.NomMName, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee Last Name<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee Last Name<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.NomLName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Last Name", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.NomLName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Last Name", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.NomLName, "", new { @class = "text-danger" })
                                                     </div>
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee Address<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee Address<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.TextAreaFor(model => model.NomAddress, new { @class = "form-control", @placeholder = "Nominee Address", @autofocus = "autofocus", @cols = "2", @rows = "2" })
+                                                        @Html.TextAreaFor(model => model.NomAddress, new { @class = "form-control", @placeholder = "Nominee Address", @autofocus = "autofocus", @cols = "2", @rows = "2", @maxlength = "200" })
                                                         @Html.ValidationMessageFor(model => model.NomAddress, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee Mobile No<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee Mobile No<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.NomineeMobileNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Mobile No", @autofocus = "autofocus" } })
+                                                        @Html.EditorFor(model => model.NomineeMobileNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Mobile No", @maxlength = "10" } })
                                                         @Html.ValidationMessageFor(model => model.NomineeMobileNo, "", new { @class = "text-danger" })
                                                     </div>
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee Relationship<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee Relationship<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         @Html.DropDownListFor(model => model.NomRelation,
-new List<SelectListItem> {
-new SelectListItem { Value = "Aunt" , Text = "Aunt" },
-new SelectListItem { Value = "Brother" , Text = "Brother" },
-new SelectListItem { Value = "Cousin" , Text = "Cousin" },
-new SelectListItem { Value = "Daughter" , Text = "Daughter" },
+                                                        new List<SelectListItem> {
+                                                            new SelectListItem { Value = "" , Text = "Select Relationship" },
+                                                            new SelectListItem { Value = "Aunt" , Text = "Aunt" },
+                                                        new SelectListItem { Value = "Brother" , Text = "Brother" },
+                                                        new SelectListItem { Value = "Cousin" , Text = "Cousin" },
+                                                        new SelectListItem { Value = "Daughter" , Text = "Daughter" },
 
-new SelectListItem { Value = "Father" , Text = "Father" },
-new SelectListItem { Value = "Grandchildren" , Text = "Grandchildren" },
-new SelectListItem { Value = "Granddaughter" , Text = "Granddaughter" },
-new SelectListItem { Value = " Grandfather" , Text = " Grandfather" },
+                                                        new SelectListItem { Value = "Father" , Text = "Father" },
+                                                        new SelectListItem { Value = "Grandchildren" , Text = "Grandchildren" },
+                                                        new SelectListItem { Value = "Granddaughter" , Text = "Granddaughter" },
+                                                        new SelectListItem { Value = " Grandfather" , Text = " Grandfather" },
 
-new SelectListItem { Value = "Grandmother" , Text = "Grandmother" },
-new SelectListItem { Value = "Grandson" , Text = "Grandson" },
-new SelectListItem { Value = "husband" , Text = "husband" },
-new SelectListItem { Value = "Mother" , Text = "Mother" },
+                                                        new SelectListItem { Value = "Grandmother" , Text = "Grandmother" },
+                                                        new SelectListItem { Value = "Grandson" , Text = "Grandson" },
+                                                        new SelectListItem { Value = "husband" , Text = "husband" },
+                                                        new SelectListItem { Value = "Mother" , Text = "Mother" },
 
-new SelectListItem { Value = "Nephew" , Text = "Nephew" },
-new SelectListItem { Value = "Son" , Text = "Son" },
-new SelectListItem { Value = "Self" , Text = "Self" },
-new SelectListItem { Value = "Sister" , Text = "Sister" },
+                                                        new SelectListItem { Value = "Nephew" , Text = "Nephew" },
+                                                        new SelectListItem { Value = "Son" , Text = "Son" },
+                                                        new SelectListItem { Value = "Self" , Text = "Self" },
+                                                        new SelectListItem { Value = "Sister" , Text = "Sister" },
 
-new SelectListItem { Value = "Uncle" , Text = "Uncle" },
-new SelectListItem { Value = "Wife" , Text = "Wife" },
+                                                        new SelectListItem { Value = "Uncle" , Text = "Uncle" },
+                                                        new SelectListItem { Value = "Wife" , Text = "Wife" },
 
-new SelectListItem { Value = "others" , Text = "others" }
-},
-new { @class = "form-control" })
+                                                        new SelectListItem { Value = "others" , Text = "others" }
+                                                        },
+                                                        new { @class = "form-control" })
                                                         @Html.ValidationMessageFor(model => model.NomRelation, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee Pan No<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Nominee Pan No<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         @Html.EditorFor(model => model.NomineePanNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Nominee Pan No", @maxlength = "10", @autocomplete = "off", @style = "text-transform: uppercase" } })
                                                         @Html.ValidationMessageFor(model => model.NomineePanNo, "", new { @class = "text-danger" })
@@ -866,12 +867,12 @@ new { @class = "form-control" })
                                                     <div class="form-group">
                                                         <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Specify Other</label>
                                                         <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                                                            @Html.EditorFor(model => model.DocumentUploadVM.SpecifyOther, new { htmlAttributes = new { @class = "form-control", @placeholder = "Specify Other", @autocomplete = "Off" } })
+                                                            @Html.EditorFor(model => model.DocumentUploadVM.SpecifyOther, new { htmlAttributes = new { @class = "form-control", @placeholder = "Specify Other", @autocomplete = "Off", @maxlength = "100" } })
                                                             <span class="text-danger small">@Html.ValidationMessageFor(m => m.DocumentUploadVM.SpecifyOther)</span>
                                                         </div>
                                                         <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Name on Document</label>
                                                         <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                                                            @Html.EditorFor(model => model.DocumentUploadVM.NameonDocument, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name on Document", @autocomplete = "Off" } })
+                                                            @Html.EditorFor(model => model.DocumentUploadVM.NameonDocument, new { htmlAttributes = new { @class = "form-control", @placeholder = "Name on Document", @autocomplete = "Off", @maxlength = "100" } })
                                                             <span class="text-danger small">@Html.ValidationMessageFor(m => m.DocumentUploadVM.NameonDocument)</span>
                                                         </div>
                                                     </div>
@@ -1101,8 +1102,10 @@ new { @class = "form-control" })
                         fileData.append('DocumentTypeId', DocumentTypeId);
                         fileData.append('DocumentId', DocumentId);
                         fileData.append('ExpiryDate', ExpiryDate);
+                        fileData.append('SpecifyOther', SpecifyOther);
+                        fileData.append('NameonDocument', NameonDocument);
                         $.ajax({
-                            url: '/DocumentUpload/AddDocument',
+                            url: '/KYC/AddDocument',
                             type: "POST",
                             contentType: false, // Not to set any content header
                             processData: false, // Not to process data
@@ -1113,7 +1116,6 @@ new { @class = "form-control" })
                                 //alert(err.statusText);
                             }
                         });
-
                         $("#DocumentUploadVM_DocumentTypeId").val("");
                         $("#DocumentUploadVM_DocumentId").val("");
                         $("#DocumentUploadVM_ExpiryDate").val("");
@@ -1130,7 +1132,7 @@ new { @class = "form-control" })
                         trid = tr.find('td:eq(0)').html();
                         tr.remove();
                         $.ajax({
-                            url: '/DocumentUpload/Remove?id=' + trid,
+                            url: '/KYC/Remove?id=' + trid,
                             type: "POST",
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
@@ -1511,13 +1513,13 @@ new { @class = "form-control" })
                             var adhar = $("#AdhaarNo").val();
                             if (adhar.length == 0) {
                                 $.each(result, function (key, value) {
-                                    if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
-                                        value = new Date(parseInt(value.replace('/Date(', '')));
-                                        var day = value.getDate();
-                                        var month = value.getMonth() + 1;
-                                        var year = value.getFullYear();
-                                        value = day + "/" + month + "/" + year;
-                                    }
+                                    //if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
+                                    //    value = new Date(parseInt(value.replace('/Date(', '')));
+                                    //    var day = value.getDate();
+                                    //    var month = value.getMonth() + 1;
+                                    //    var year = value.getFullYear();
+                                    //    value = day + "/" + month + "/" + year;
+                                    //}
 
                                     $("#" + key + "").val(value);
                                 });
@@ -1564,6 +1566,27 @@ new { @class = "form-control" })
                                     '<td id=' + val.ID + '' + actions + '</td>' +
                                     '</tr>');
                             });
+
+                            
+                            $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
+                                if (confirm('Are you sure to remove?')) {
+                                    var tr = $(this).closest('tr');
+                                    trid = tr.find('td:eq(0)').html();
+                                    tr.remove();
+                                    $.ajax({
+                                        url: '/KYC/Remove?id=' + trid,
+                                        type: "POST",
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        success: function (result) {
+                                            //$(this).parents('tr').remove();
+                                        },
+                                        error: function (err) {
+                                            alert(err.statusText);
+                                        }
+                                    });
+                                }
+                            })
                         }
 
                     }
@@ -1573,6 +1596,7 @@ new { @class = "form-control" })
                             $('#disabledFields').find(':input').prop('disabled', false);
                             $('#btn_save').prop('disabled', false);
                             $("#KycType").val("New");
+                            $('#disabledFields').find(':input').val('');
                         }
                         else {
                             $('#disabledFields').find(':input').prop('disabled', true);
@@ -1604,13 +1628,13 @@ new { @class = "form-control" })
                             var pan = $("#PANNo").val();
                             if (pan.length == 0) {
                                 $.each(result, function (key, value) {
-                                    if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
-                                        value = new Date(parseInt(value.replace('/Date(', '')));
-                                        var day = value.getDate();
-                                        var month = value.getMonth() + 1;
-                                        var year = value.getFullYear();
-                                        value = day + "/" + month + "/" + year;
-                                    }
+                                    //if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
+                                    //    value = new Date(parseInt(value.replace('/Date(', '')));
+                                    //    var day = value.getDate();
+                                    //    var month = value.getMonth() + 1;
+                                    //    var year = value.getFullYear();
+                                    //    value = day + "/" + month + "/" + year;
+                                    //}
                                     $("#" + key + "").val(value);
                                 });
                                 $.each(result.Trans_KYCAddresses, function (i) {
@@ -1653,6 +1677,26 @@ new { @class = "form-control" })
                                     '<td id=' + val.ID + '' + actions + '</td>' +
                                     '</tr>');
                             });
+                            
+                            $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
+                                if (confirm('Are you sure to remove?')) {
+                                    var tr = $(this).closest('tr');
+                                    trid = tr.find('td:eq(0)').html();
+                                    tr.remove();
+                                    $.ajax({
+                                        url: '/KYC/Remove?id=' + trid,
+                                        type: "POST",
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        success: function (result) {
+                                            //$(this).parents('tr').remove();
+                                        },
+                                        error: function (err) {
+                                            alert(err.statusText);
+                                        }
+                                    });
+                                }
+                            })
                         }
                     }
                     else {
@@ -1661,6 +1705,7 @@ new { @class = "form-control" })
                             $('#disabledFields').find(':input').prop('disabled', false);
                             $('#btn_save').prop('disabled', false);
                             $("#KycType").val("New");
+                            $('#disabledFields').find(':input').val('');
                         }
                         else {
                             $('#disabledFields').find(':input').prop('disabled', true);
@@ -1676,6 +1721,7 @@ new { @class = "form-control" })
         }
     </script>
 }
+
 
 
 

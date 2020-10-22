@@ -551,6 +551,23 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Property Name="ScheduleNo" Type="nvarchar" MaxLength="50" />
           <Property Name="Remark" Type="nvarchar" MaxLength="150" />
         </EntityType>
+        <EntityType Name="tblHistory_KYCAddresses">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="KYCID" Type="int" Nullable="false" />
+          <Property Name="AddressCategory" Type="nvarchar" MaxLength="50" />
+          <Property Name="ResidenceCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="BuildingHouseName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Road" Type="nvarchar" MaxLength="50" />
+          <Property Name="BuildingPlotNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoomBlockNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="NearestLandmark" Type="nvarchar" MaxLength="50" />
+          <Property Name="Distance_km" Type="nvarchar" MaxLength="50" />
+          <Property Name="PinCode" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="tblItemMaster">
           <Key>
             <PropertyRef Name="ItemID" />
@@ -559,6 +576,74 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Property Name="ItemName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Product" Type="int" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblKYC_HistoryDetails">
+          <Key>
+            <PropertyRef Name="KYCID" />
+          </Key>
+          <Property Name="KYCID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="AppliedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="OperatorID" Type="int" Nullable="false" />
+          <Property Name="ExistingPLCaseNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="AppFName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppMName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppLName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppPhoto" Type="image" />
+          <Property Name="ImageName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContentType" Type="nvarchar" MaxLength="50" />
+          <Property Name="KycType" Type="nvarchar" MaxLength="10" />
+          <Property Name="Gender" Type="smallint" Nullable="false" />
+          <Property Name="CibilGender" Type="char" MaxLength="1" />
+          <Property Name="MaritalStatus" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="BirthDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="Spouse" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PANNo" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="TelephoneNo" Type="nvarchar" MaxLength="12" />
+          <Property Name="EmailID" Type="nvarchar" MaxLength="30" />
+          <Property Name="BldgHouseName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Road" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="BldgPlotNo" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="RoomBlockNo" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Landmark" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Occupation" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="OrganizationName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PresentIncome" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="IndustriesType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Designation" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="NomFName" Type="nvarchar" MaxLength="50" />
+          <Property Name="NomMName" Type="nvarchar" MaxLength="50" />
+          <Property Name="NomLName" Type="nvarchar" MaxLength="50" />
+          <Property Name="NomRelation" Type="nvarchar" MaxLength="50" />
+          <Property Name="NomAddress" Type="nvarchar" MaxLength="200" />
+          <Property Name="FYID" Type="int" Nullable="false" />
+          <Property Name="CmpID" Type="int" Nullable="false" />
+          <Property Name="BranchID" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
+          <Property Name="SourceofApplicationID" Type="int" Nullable="false" />
+          <Property Name="KYCDate" Type="datetime" Nullable="false" />
+          <Property Name="ApplicationNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AdhaarNo" Type="nvarchar" MaxLength="12" />
+          <Property Name="ApplicantPrefix" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="FatherPrefix" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="MotherName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Father_Spouse" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CKYCNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="OccupationOther" Type="nvarchar" MaxLength="50" />
+          <Property Name="IndustryOther" Type="nvarchar" MaxLength="50" />
+          <Property Name="NomineeMobileNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="NomineePanNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="NomineeAdharNo" Type="nvarchar" MaxLength="12" />
+          <Property Name="Distance" Type="nvarchar" MaxLength="10" />
+          <Property Name="PinCode" Type="int" Nullable="false" />
+          <Property Name="ResidenceCode" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="AddressCategory" Type="char" MaxLength="2" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPrimaryGroup">
           <Key>
@@ -707,18 +792,18 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInterest_Details' does not have
           <Property Name="Spouse" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PANNo" Type="nvarchar" MaxLength="12" Nullable="false" />
           <Property Name="MobileNo" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="TelephoneNo" Type="nvarchar" MaxLength="10" />
-          <Property Name="EmailID" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TelephoneNo" Type="nvarchar" MaxLength="12" />
+          <Property Name="EmailID" Type="nvarchar" MaxLength="30" />
           <Property Name="BldgHouseName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Road" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="BldgPlotNo" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="RoomBlockNo" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Landmark" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BldgPlotNo" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="RoomBlockNo" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Landmark" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Occupation" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="OrganizationName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="OrganizationName" Type="nvarchar" MaxLength="50" />
           <Property Name="PresentIncome" Type="decimal" Precision="14" Scale="2" Nullable="false" />
-          <Property Name="IndustriesType" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Designation" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IndustriesType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Designation" Type="nvarchar" MaxLength="30" />
           <Property Name="NomFName" Type="nvarchar" MaxLength="50" />
           <Property Name="NomMName" Type="nvarchar" MaxLength="50" />
           <Property Name="NomLName" Type="nvarchar" MaxLength="50" />
@@ -1394,6 +1479,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_TtblKYC_historyDetails">
+          <End Role="tblKYC_HistoryDetails" Type="Self.tblKYC_HistoryDetails" Multiplicity="1" />
+          <End Role="tblHistory_KYCAddresses" Type="Self.tblHistory_KYCAddresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblKYC_HistoryDetails">
+              <PropertyRef Name="KYCID" />
+            </Principal>
+            <Dependent Role="tblHistory_KYCAddresses">
+              <PropertyRef Name="KYCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserDetails_tbl_UserCategory">
           <End Role="tbl_UserCategory" Type="Self.tbl_UserCategory" Multiplicity="1" />
           <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
@@ -1606,6 +1703,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Parameter Name="GoldInwardDate" Type="datetime" Mode="In" />
           <Parameter Name="PreSanctionId" Type="int" Mode="In" />
         </Function>
+        <Function Name="SP_SaveKYCHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="kycid" Type="int" Mode="In" />
+        </Function>
         <Function Name="SplitValue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="String" Type="varchar" Mode="In" />
           <Parameter Name="Delimiter" Type="char" Mode="In" />
@@ -1692,7 +1792,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="tblDocumentMaster" EntityType="Self.tblDocumentMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFinancialyear" EntityType="Self.tblFinancialyear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGroupmaster" EntityType="Self.tblGroupmaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblHistory_KYCAddresses" EntityType="Self.tblHistory_KYCAddresses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblItemMaster" EntityType="Self.tblItemMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblKYC_HistoryDetails" EntityType="Self.tblKYC_HistoryDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPrimaryGroup" EntityType="Self.tblPrimaryGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStandardEndTime" EntityType="Self.tblStandardEndTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStateMaster" EntityType="Self.tblStateMaster" Schema="dbo" store:Type="Tables" />
@@ -1848,6 +1950,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <AssociationSet Name="FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails" Association="Self.FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails">
             <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
             <End Role="TSchemeMaster_EffectiveROI" EntitySet="TSchemeMaster_EffectiveROI" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TtblKYC_historyDetails" Association="Self.fk_TtblKYC_historyDetails">
+            <End Role="tblKYC_HistoryDetails" EntitySet="tblKYC_HistoryDetails" />
+            <End Role="tblHistory_KYCAddresses" EntitySet="tblHistory_KYCAddresses" />
           </AssociationSet>
           <AssociationSet Name="FK_UserDetails_tbl_UserCategory" Association="Self.FK_UserDetails_tbl_UserCategory">
             <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
@@ -2257,6 +2363,15 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <End Role="tbl_ResidenceVerification" EntitySet="tbl_ResidenceVerification" />
           </AssociationSet>
           <EntitySet Name="Trans_KYCAddresses" EntityType="MangalDBNewModel.Trans_KYCAddresses" />
+          <EntitySet Name="tblHistory_KYCAddresses" EntityType="MangalDBNewModel.tblHistory_KYCAddresses" />
+          <EntitySet Name="tblKYC_HistoryDetails" EntityType="MangalDBNewModel.tblKYC_HistoryDetails" />
+          <AssociationSet Name="fk_TtblKYC_historyDetails" Association="MangalDBNewModel.fk_TtblKYC_historyDetails">
+            <End Role="tblKYC_HistoryDetails" EntitySet="tblKYC_HistoryDetails" />
+            <End Role="tblHistory_KYCAddresses" EntitySet="tblHistory_KYCAddresses" />
+          </AssociationSet>
+          <FunctionImport Name="SP_SaveKYCHistory">
+          <Parameter Name="kycid" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
           <AssociationSet Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" Association="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
             <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
@@ -4015,6 +4130,105 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="Trans_KYCAddresses" ToRole="TGLKYC_BasicDetails" />
         </EntityType>
+        <EntityType Name="tblHistory_KYCAddresses">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="KYCID" Type="Int32" Nullable="false" />
+          <Property Name="AddressCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ResidenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingHouseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Road" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingPlotNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoomBlockNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NearestLandmark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Distance_km" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PinCode" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblKYC_HistoryDetails" Relationship="MangalDBNewModel.fk_TtblKYC_historyDetails" FromRole="tblHistory_KYCAddresses" ToRole="tblKYC_HistoryDetails" />
+        </EntityType>
+        <EntityType Name="tblKYC_HistoryDetails">
+          <Key>
+            <PropertyRef Name="KYCID" />
+          </Key>
+          <Property Name="KYCID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AppliedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="OperatorID" Type="Int32" Nullable="false" />
+          <Property Name="ExistingPLCaseNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppFName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppMName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppLName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KycType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Int16" Nullable="false" />
+          <Property Name="CibilGender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="MaritalStatus" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Spouse" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PANNo" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TelephoneNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="EmailID" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="BldgHouseName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Road" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="BldgPlotNo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="RoomBlockNo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Landmark" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Occupation" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrganizationName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PresentIncome" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="IndustriesType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Designation" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="NomFName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NomMName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NomLName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NomRelation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NomAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FYID" Type="Int32" Nullable="false" />
+          <Property Name="CmpID" Type="Int32" Nullable="false" />
+          <Property Name="BranchID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
+          <Property Name="SourceofApplicationID" Type="Int32" Nullable="false" />
+          <Property Name="KYCDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ApplicationNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AdhaarNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicantPrefix" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="FatherPrefix" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="MotherName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Father_Spouse" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CKYCNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OccupationOther" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IndustryOther" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NomineeMobileNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NomineePanNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="NomineeAdharNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Distance" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PinCode" Type="Int32" Nullable="false" />
+          <Property Name="ResidenceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="AddressCategory" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="tblHistory_KYCAddresses" Relationship="MangalDBNewModel.fk_TtblKYC_historyDetails" FromRole="tblKYC_HistoryDetails" ToRole="tblHistory_KYCAddresses" />
+        </EntityType>
+        <Association Name="fk_TtblKYC_historyDetails">
+          <End Type="MangalDBNewModel.tblKYC_HistoryDetails" Role="tblKYC_HistoryDetails" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tblHistory_KYCAddresses" Role="tblHistory_KYCAddresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblKYC_HistoryDetails">
+              <PropertyRef Name="KYCID" />
+            </Principal>
+            <Dependent Role="tblHistory_KYCAddresses">
+              <PropertyRef Name="KYCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="TGLKYC_BasicDetails">
           <Key>
             <PropertyRef Name="KYCID" />
@@ -4039,18 +4253,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="Spouse" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PANNo" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="TelephoneNo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="EmailID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TelephoneNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="EmailID" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="BldgHouseName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Road" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="BldgPlotNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="RoomBlockNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Landmark" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BldgPlotNo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="RoomBlockNo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Landmark" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Occupation" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OrganizationName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrganizationName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PresentIncome" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
-          <Property Name="IndustriesType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Designation" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IndustriesType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Designation" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="NomFName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NomMName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NomLName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -5532,6 +5746,94 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblHistory_KYCAddresses">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblHistory_KYCAddresses">
+              <MappingFragment StoreEntitySet="tblHistory_KYCAddresses">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="Distance_km" ColumnName="Distance_km" />
+                <ScalarProperty Name="NearestLandmark" ColumnName="NearestLandmark" />
+                <ScalarProperty Name="RoomBlockNo" ColumnName="RoomBlockNo" />
+                <ScalarProperty Name="BuildingPlotNo" ColumnName="BuildingPlotNo" />
+                <ScalarProperty Name="Road" ColumnName="Road" />
+                <ScalarProperty Name="BuildingHouseName" ColumnName="BuildingHouseName" />
+                <ScalarProperty Name="ResidenceCode" ColumnName="ResidenceCode" />
+                <ScalarProperty Name="AddressCategory" ColumnName="AddressCategory" />
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblKYC_HistoryDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblKYC_HistoryDetails">
+              <MappingFragment StoreEntitySet="tblKYC_HistoryDetails">
+                <ScalarProperty Name="AddressCategory" ColumnName="AddressCategory" />
+                <ScalarProperty Name="ResidenceCode" ColumnName="ResidenceCode" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="NomineeAdharNo" ColumnName="NomineeAdharNo" />
+                <ScalarProperty Name="NomineePanNo" ColumnName="NomineePanNo" />
+                <ScalarProperty Name="NomineeMobileNo" ColumnName="NomineeMobileNo" />
+                <ScalarProperty Name="IndustryOther" ColumnName="IndustryOther" />
+                <ScalarProperty Name="OccupationOther" ColumnName="OccupationOther" />
+                <ScalarProperty Name="CKYCNo" ColumnName="CKYCNo" />
+                <ScalarProperty Name="Father_Spouse" ColumnName="Father_Spouse" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="FatherPrefix" ColumnName="FatherPrefix" />
+                <ScalarProperty Name="ApplicantPrefix" ColumnName="ApplicantPrefix" />
+                <ScalarProperty Name="AdhaarNo" ColumnName="AdhaarNo" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="KYCDate" ColumnName="KYCDate" />
+                <ScalarProperty Name="SourceofApplicationID" ColumnName="SourceofApplicationID" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="CmpID" ColumnName="CmpID" />
+                <ScalarProperty Name="FYID" ColumnName="FYID" />
+                <ScalarProperty Name="NomAddress" ColumnName="NomAddress" />
+                <ScalarProperty Name="NomRelation" ColumnName="NomRelation" />
+                <ScalarProperty Name="NomLName" ColumnName="NomLName" />
+                <ScalarProperty Name="NomMName" ColumnName="NomMName" />
+                <ScalarProperty Name="NomFName" ColumnName="NomFName" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="IndustriesType" ColumnName="IndustriesType" />
+                <ScalarProperty Name="PresentIncome" ColumnName="PresentIncome" />
+                <ScalarProperty Name="OrganizationName" ColumnName="OrganizationName" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="RoomBlockNo" ColumnName="RoomBlockNo" />
+                <ScalarProperty Name="BldgPlotNo" ColumnName="BldgPlotNo" />
+                <ScalarProperty Name="Road" ColumnName="Road" />
+                <ScalarProperty Name="BldgHouseName" ColumnName="BldgHouseName" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
+                <ScalarProperty Name="Spouse" ColumnName="Spouse" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="CibilGender" ColumnName="CibilGender" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="KycType" ColumnName="KycType" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="AppPhoto" ColumnName="AppPhoto" />
+                <ScalarProperty Name="AppLName" ColumnName="AppLName" />
+                <ScalarProperty Name="AppMName" ColumnName="AppMName" />
+                <ScalarProperty Name="AppFName" ColumnName="AppFName" />
+                <ScalarProperty Name="ExistingPLCaseNo" ColumnName="ExistingPLCaseNo" />
+                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_SaveKYCHistory" FunctionName="MangalDBNewModel.Store.SP_SaveKYCHistory" />
           <EntitySetMapping Name="TGLKYC_BasicDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
               <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
