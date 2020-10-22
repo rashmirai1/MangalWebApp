@@ -16,7 +16,7 @@ namespace MangalWeb.Repository.Repository
         /// Save kyc
         /// </summary>
         /// <param name="model"></param>
-        public void SaveRecord(KYCBasicDetailsVM model, Boolean IsImageExist)
+        public void SaveRecord(KYCBasicDetailsVM model)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace MangalWeb.Repository.Repository
                     tGLKYC_Basic.PresentIncome = model.PresentIncome;
                     tGLKYC_Basic.Road = model.Road;
                     tGLKYC_Basic.RoomBlockNo = model.RoomBlockNo;
-                    tGLKYC_Basic.SourceofApplicationID =Convert.ToInt32(model.SourceofApplicationID);
+                    tGLKYC_Basic.SourceofApplicationID = Convert.ToInt32(model.SourceofApplicationID);
                     tGLKYC_Basic.Spouse = model.Spouse;
                     tGLKYC_Basic.TelephoneNo = model.TelephoneNo;
                     tGLKYC_Basic.UpdatedBy = model.UpdatedBy;
@@ -130,22 +130,60 @@ namespace MangalWeb.Repository.Repository
                         _context.SaveChanges();
                     }
 
-                    foreach (var item1 in model.DocumentUploadList)
+                    List<Trn_DocUploadDetails> NewDocUploadDetails = new List<Trn_DocUploadDetails>();
+                    foreach (var p in model.DocumentUploadList)
                     {
-                        Trn_DocUploadDetails trn_DocUploadDetails = new Trn_DocUploadDetails();
-                        trn_DocUploadDetails.DocumentId = item1.DocumentId.Value;
-                        trn_DocUploadDetails.UploadFile = item1.UploadDocName;
-                        trn_DocUploadDetails.NameonDocument = item1.NameonDocument;
-                        trn_DocUploadDetails.SpecifyOther = item1.SpecifyOther;
-                        trn_DocUploadDetails.ContentType = item1.FileExtension;
-                        trn_DocUploadDetails.FileName = item1.FileName;
-                        trn_DocUploadDetails.DocumentTypeId = item1.DocumentTypeId.Value;
-                        trn_DocUploadDetails.KycId = (int)model.KYCID;
-                        trn_DocUploadDetails.ExpiryDate = item1.ExpiryDate;
-                        trn_DocUploadDetails.Status = "Pending";
-                        _context.Trn_DocUploadDetails.Add(trn_DocUploadDetails);
+                        var Findobject = _context.Trn_DocUploadDetails.Where(x => x.Id == p.ID && x.KycId == model.KYCID).FirstOrDefault();
+                        if (Findobject == null)
+                        {
+                            var trnnew = new Trn_DocUploadDetails
+                            {
+                                KycId = (int)model.KYCID,
+                                DocumentTypeId = (int)p.DocumentTypeId,
+                                DocumentId = (int)p.DocumentId,
+                                ExpiryDate = p.ExpiryDate,
+                                FileName = p.FileName,
+                                ContentType = p.FileExtension,
+                                UploadFile = p.UploadDocName,
+                                SpecifyOther = p.SpecifyOther,
+                                NameonDocument = p.NameonDocument,
+                                Status = "Pending"
+                            };
+                            _context.Trn_DocUploadDetails.Add(trnnew);
+                        }
+                        else
+                        {
+                            Findobject.KycId = (int)model.KYCID;
+                            Findobject.DocumentTypeId = (int)p.DocumentTypeId;
+                            Findobject.DocumentId = (int)p.DocumentId;
+                            Findobject.ExpiryDate = p.ExpiryDate;
+                            Findobject.FileName = p.FileName;
+                            Findobject.ContentType = p.FileExtension;
+                            Findobject.UploadFile = p.UploadDocName;
+                            Findobject.SpecifyOther = p.SpecifyOther;
+                            Findobject.NameonDocument = p.NameonDocument;
+                        }
+                        NewDocUploadDetails.Add(Findobject);
+                    }
+                    #region document details remove
+                    //take the loop of table and check from list if found in list then not remove else remove from table itself
+                    var trnobjlist = _context.Trn_DocUploadDetails.Where(x => x.KycId == model.KYCID).ToList();
+                    if (trnobjlist != null)
+                    {
+                        foreach (Trn_DocUploadDetails item in trnobjlist)
+                        {
+                            if (NewDocUploadDetails.Contains(item))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                _context.Trn_DocUploadDetails.Remove(item);
+                            }
+                        }
                         _context.SaveChanges();
                     }
+                    #endregion document trn remove
                 }
             }
             catch (Exception e)

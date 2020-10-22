@@ -1646,6 +1646,7 @@
     <Content Include="Content\vendor\plugins\zeroclipboard\ZeroClipboard.js" />
     <Content Include="Content\vendor\plugins\zeroclipboard\ZeroClipboard.min.js" />
     <Content Include="Content\vendor\plugins\zeroclipboard\ZeroClipboard.swf" />
+    <Content Include="Custom\PreSanction.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -2030,6 +2031,8 @@
     <Content Include="Content\vendor\plugins\slick\fonts\slick.eot" />
     <Content Include="Content\vendor\plugins\slick\fonts\slick.ttf" />
     <Content Include="Content\vendor\plugins\slick\fonts\slick.woff" />
+    <Content Include="Mangal\bootbox.min.js" />
+    <Content Include="Mangal\Comman.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

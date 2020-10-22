@@ -20,7 +20,7 @@ namespace MangalWeb.Controllers
             ButtonVisiblity("Index");
             ViewBag.SourceList = new SelectList(_kycService.GetSourceOfApplicationList(), "Soa_Id", "Soa_Name");
             ViewBag.PinCodeList = new SelectList(_kycService.GetAllPincodes(), "Pc_Id", "Pc_Desc");
-            ViewBag.PinCodes = _kycService.GetAllPincodes();
+            //ViewBag.PinCodes = _kycService.GetAllPincodes();
             ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
             ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
             KYCBasicDetailsVM kycVM = new KYCBasicDetailsVM();
@@ -56,22 +56,17 @@ namespace MangalWeb.Controllers
                     model.ContentType = uploadFile.ContentType;
                     model.ImageName = uploadFile.FileName;
                 }
+
                 model.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
                 model.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
                 model.FYID = Convert.ToInt32(Session["FinancialYearId"]);
                 model.BranchID = Convert.ToInt32(Session["BranchId"]);
                 model.CmpID = Convert.ToInt32(Session["CompanyId"]);
+
                 model.DocumentUploadList = (List<DocumentUploadDetailsVM>)Session["docsub"];
                 if (model.CustomerID != null)
                 {
-                    if (Session["KycImageExist"] != null)
-                    {
-                        _kycService.SaveRecord(model, true);
-                    }
-                    else
-                    {
-                        _kycService.SaveRecord(model, false);
-                    }
+                    _kycService.SaveRecord(model);
                 }
                 return Json(model);
             }
@@ -93,10 +88,6 @@ namespace MangalWeb.Controllers
             try
             {
                 var model = _kycService.doesPanExist(PanNo);
-                if (model.ImageName != null)
-                {
-                    Session["KycImageExist"] = true;
-                }
                 Session["docsub"] = model.DocumentUploadList;
                 return Json(model);
             }
@@ -119,10 +110,6 @@ namespace MangalWeb.Controllers
             try
             {
                 var model = _kycService.doesAdharExist(AdharNo);
-                if (model.ImageName != null)
-                {
-                    Session["KycImageExist"] = true;
-                }
                 Session["docsub"] = model.DocumentUploadList;
                 return Json(model);
             }
@@ -288,7 +275,7 @@ namespace MangalWeb.Controllers
         #region GetSourceType
         public JsonResult GetSourceType(int id)
         {
-            var str=_kycService.GetSourceType(id);
+            var str = _kycService.GetSourceType(id);
             return Json(str, JsonRequestBehavior.AllowGet);
         }
         #endregion

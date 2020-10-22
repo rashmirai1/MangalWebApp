@@ -87,6 +87,7 @@ namespace MangalWeb.Repository.Repository
                 _context.SaveChanges();
             }
         }
+
         public void SaveUpdateRecord(DocumentUploadViewModel DocUploadViewModel)
         {
             Trn_DocumentUpload tblDocUpload = new Trn_DocumentUpload();
