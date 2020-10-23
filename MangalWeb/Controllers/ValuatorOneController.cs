@@ -197,10 +197,13 @@ namespace MangalWeb.Controllers
         {
             var model = _valuatorOneService.GetValuatorOneDetailsById(Id);
             var file = _valuatorOneService.GetConsolidatedImage(model.ID);
-            Session["ConsolidatedImage"] = file.ConsolidatedImage;
-            Session["ConsolidatedImageName"] = model.ImageName;
-            Session["ConsolidatedImageContentType"] = file.ContentType;
-            string operation = Session["Operation"].ToString();
+            if (file.ConsolidatedImage != null)
+            {
+                Session["ConsolidatedImage"] = file.ConsolidatedImage;
+                Session["ConsolidatedImageName"] = model.ImageName;
+                Session["ConsolidatedImageContentType"] = file.ContentType;
+                string operation = Session["Operation"].ToString();
+            }
 
             var sessionlist = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageList"];
             if (sessionlist == null)
@@ -218,8 +221,6 @@ namespace MangalWeb.Controllers
                 sessionlist.Add(docupload);
                 Session["ValuationImageList"] = sessionlist;
             }
-            model.operation = operation;
-            ButtonVisiblity(operation);
             return Json(model, JsonRequestBehavior.AllowGet);
         }
         #endregion

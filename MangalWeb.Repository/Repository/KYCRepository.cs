@@ -42,12 +42,12 @@ namespace MangalWeb.Repository.Repository
                     }
                     tGLKYC_Basic.AddressCategory = "02";
                     tGLKYC_Basic.KycType = model.KycType;
-                    tGLKYC_Basic.Age = model.Age;
+                    tGLKYC_Basic.Age =Convert.ToInt32(model.Age);
                     tGLKYC_Basic.AppliedDate = Convert.ToDateTime(model.AppliedDate);
                     tGLKYC_Basic.AppFName = model.AppFName;
                     tGLKYC_Basic.AppMName = model.AppMName;
                     tGLKYC_Basic.AppLName = model.AppLName;
-                    tGLKYC_Basic.AppPhoto = model.KycPhoto;
+                    tGLKYC_Basic.AppPhoto = model.ApplicantPhoto;
                     tGLKYC_Basic.ImageName = model.ImageName;
                     tGLKYC_Basic.ContentType = model.ContentType;
                     tGLKYC_Basic.BirthDate = Convert.ToDateTime(model.BirthDate);
@@ -191,6 +191,14 @@ namespace MangalWeb.Repository.Repository
                 throw e;
             }
         }
+
+        #region GetConsolidatedImage
+        public TGLKYC_BasicDetails GetApplicantImage(int id)
+        {
+            return _context.TGLKYC_BasicDetails.Where(x => x.KYCID == id).FirstOrDefault();
+        }
+        #endregion
+
         /// <summary>
         /// get source of application to fill dopdown
         /// </summary>
@@ -225,7 +233,7 @@ namespace MangalWeb.Repository.Repository
                 kycVm.AppliedDate = kyc.AppliedDate.ToShortDateString();
                 kycVm.AppLName = kyc.AppLName;
                 kycVm.AppMName = kyc.AppMName;
-                kycVm.AppPhoto = kyc.AppPhoto;
+                kycVm.ImageName = kyc.ImageName;
                 kycVm.BirthDate =kyc.BirthDate.ToShortDateString();
                 kycVm.BldgHouseName = kyc.BldgHouseName;
                 kycVm.BldgPlotNo = kyc.BldgPlotNo;
@@ -349,7 +357,7 @@ namespace MangalWeb.Repository.Repository
                 kycVm.ResidenceCode = kyc.ResidenceCode;
                 kycVm.AppLName = kyc.AppLName;
                 kycVm.AppMName = kyc.AppMName;
-                kycVm.AppPhoto = kyc.AppPhoto;
+                kycVm.ImageName = kyc.ImageName;
                 kycVm.BirthDate = kyc.BirthDate.ToShortDateString();
                 kycVm.BldgHouseName = kyc.BldgHouseName;
                 kycVm.BldgPlotNo = kyc.BldgPlotNo;

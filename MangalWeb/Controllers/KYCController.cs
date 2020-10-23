@@ -33,6 +33,9 @@ namespace MangalWeb.Controllers
             kycVM.CustomerID = "C" + cid.ToString();
             kycVM.AppliedDate = DateTime.Now.ToShortDateString();
             Session["docsub"] = null;
+            Session["ApplicantImage"]=null;
+            Session["ApplicantImageName"] = null;
+            Session["ApplicantImageContentType"] = null;
             return View(kycVM);
         }
         #endregion
@@ -44,19 +47,17 @@ namespace MangalWeb.Controllers
         /// <param name="model"></param>
         /// <param name="uploadFile"></param>
         /// <returns></returns>
-        public JsonResult CreateEdit(KYCBasicDetailsVM model, HttpPostedFileBase uploadFile)
+        [HttpPost]
+        public JsonResult CreateEdit(KYCBasicDetailsVM model)
         {
             try
             {
-                if (uploadFile != null)
+                if (Session["ApplicantImage"] != null)
                 {
-                    Stream fs1 = uploadFile.InputStream;
-                    BinaryReader br1 = new BinaryReader(fs1);
-                    model.KycPhoto = br1.ReadBytes((Int32)fs1.Length);
-                    model.ContentType = uploadFile.ContentType;
-                    model.ImageName = uploadFile.FileName;
+                    model.ApplicantPhoto = (byte[])Session["ApplicantImage"];
+                    model.ImageName = Session["ApplicantImageName"].ToString();
+                    model.ContentType = Session["ApplicantImageContentType"].ToString();
                 }
-
                 model.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
                 model.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
                 model.FYID = Convert.ToInt32(Session["FinancialYearId"]);
@@ -88,7 +89,18 @@ namespace MangalWeb.Controllers
             try
             {
                 var model = _kycService.doesPanExist(PanNo);
-                Session["docsub"] = model.DocumentUploadList;
+                var file = _kycService.GetApplicantImage(Convert.ToInt32(model.KYCID));
+                Session["docsub"] = null;
+                if (model.DocumentUploadList != null && model.DocumentUploadList.Count > 0)
+                {
+                    Session["docsub"] = model.DocumentUploadList;
+                }
+                if (model.ImageName != null)
+                {
+                    Session["ApplicantImage"] = file.AppPhoto;
+                    Session["ApplicantImageName"] = model.ImageName;
+                    Session["ApplicantImageContentType"] = file.ContentType;
+                }
                 return Json(model);
             }
             catch (Exception ex)
@@ -110,7 +122,18 @@ namespace MangalWeb.Controllers
             try
             {
                 var model = _kycService.doesAdharExist(AdharNo);
-                Session["docsub"] = model.DocumentUploadList;
+                var file = _kycService.GetApplicantImage(Convert.ToInt32(model.KYCID));
+                Session["docsub"] = null;
+                if (model.DocumentUploadList != null && model.DocumentUploadList.Count > 0)
+                {
+                    Session["docsub"] = model.DocumentUploadList;
+                }
+                if (model.ImageName != null)
+                {
+                    Session["ApplicantImage"] = file.AppPhoto;
+                    Session["ApplicantImageName"] = model.ImageName;
+                    Session["ApplicantImageContentType"] = file.ContentType;
+                }
                 return Json(model);
             }
             catch (Exception ex)
@@ -266,7 +289,7 @@ namespace MangalWeb.Controllers
         #region Remove
         public ActionResult Remove(int id)
         {
-            var list = (List<DocumentUploadDetailsVM>)Session["sub"];
+            var list = (List<DocumentUploadDetailsVM>)Session["docsub"];
             list.Remove(list.Where(x => x.ID == id).FirstOrDefault());
             Session["docsub"] = list;
             return Json(1, JsonRequestBehavior.AllowGet);
@@ -278,6 +301,22 @@ namespace MangalWeb.Controllers
         {
             var str = _kycService.GetSourceType(id);
             return Json(str, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region UploadApplicantPhoto
+        [HttpPost]
+        public JsonResult UploadApplicantPhoto()
+        {
+            HttpFileCollectionBase files = Request.Files;
+            HttpPostedFileBase postedFile = files[0];
+            Stream fs = postedFile.InputStream;
+            BinaryReader br = new BinaryReader(fs);
+            Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
+            Session["ApplicantImage"] = bytes;
+            Session["ApplicantImageName"] = postedFile.FileName;
+            Session["ApplicantImageContentType"] = postedFile.ContentType;
+            return Json(1, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

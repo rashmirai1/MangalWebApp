@@ -90,8 +90,8 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tbl_ResidenceVerification> tbl_ResidenceVerification { get; set; }
         public virtual DbSet<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
         public virtual DbSet<tblHistory_KYCAddresses> tblHistory_KYCAddresses { get; set; }
-        public virtual DbSet<tblKYC_HistoryDetails> tblKYC_HistoryDetails { get; set; }
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
+        public virtual DbSet<tblKYC_HistoryDetails> tblKYC_HistoryDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

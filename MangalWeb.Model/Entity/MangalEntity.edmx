@@ -555,7 +555,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="KYCID" Type="int" Nullable="false" />
           <Property Name="AddressCategory" Type="nvarchar" MaxLength="50" />
           <Property Name="ResidenceCode" Type="nvarchar" MaxLength="50" />
@@ -581,7 +581,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Key>
             <PropertyRef Name="KYCID" />
           </Key>
-          <Property Name="KYCID" Type="int" Nullable="false" />
+          <Property Name="KYCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerID" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="AppliedDate" Type="smalldatetime" Nullable="false" />
           <Property Name="OperatorID" Type="int" Nullable="false" />
@@ -609,10 +609,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Property Name="RoomBlockNo" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Landmark" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Occupation" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="OrganizationName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrganizationName" Type="nvarchar" MaxLength="50" />
           <Property Name="PresentIncome" Type="decimal" Precision="14" Scale="2" Nullable="false" />
-          <Property Name="IndustriesType" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Designation" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="IndustriesType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Designation" Type="nvarchar" MaxLength="30" />
           <Property Name="NomFName" Type="nvarchar" MaxLength="50" />
           <Property Name="NomMName" Type="nvarchar" MaxLength="50" />
           <Property Name="NomLName" Type="nvarchar" MaxLength="50" />
@@ -793,7 +793,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInterest_Details' does not have
           <Property Name="PANNo" Type="nvarchar" MaxLength="12" Nullable="false" />
           <Property Name="MobileNo" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="TelephoneNo" Type="nvarchar" MaxLength="12" />
-          <Property Name="EmailID" Type="nvarchar" MaxLength="30" />
+          <Property Name="EmailID" Type="nvarchar" MaxLength="100" />
           <Property Name="BldgHouseName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Road" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="BldgPlotNo" Type="nvarchar" MaxLength="30" Nullable="false" />
@@ -2364,14 +2364,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           </AssociationSet>
           <EntitySet Name="Trans_KYCAddresses" EntityType="MangalDBNewModel.Trans_KYCAddresses" />
           <EntitySet Name="tblHistory_KYCAddresses" EntityType="MangalDBNewModel.tblHistory_KYCAddresses" />
-          <EntitySet Name="tblKYC_HistoryDetails" EntityType="MangalDBNewModel.tblKYC_HistoryDetails" />
-          <AssociationSet Name="fk_TtblKYC_historyDetails" Association="MangalDBNewModel.fk_TtblKYC_historyDetails">
-            <End Role="tblKYC_HistoryDetails" EntitySet="tblKYC_HistoryDetails" />
-            <End Role="tblHistory_KYCAddresses" EntitySet="tblHistory_KYCAddresses" />
-          </AssociationSet>
-          <FunctionImport Name="SP_SaveKYCHistory">
-          <Parameter Name="kycid" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
           <AssociationSet Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" Association="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
             <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
@@ -2380,6 +2372,14 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <AssociationSet Name="fk_TGLKYC_BasicDetails" Association="MangalDBNewModel.fk_TGLKYC_BasicDetails">
             <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
             <End Role="Trans_KYCAddresses" EntitySet="Trans_KYCAddresses" />
+          </AssociationSet>
+          <FunctionImport Name="SP_SaveKYCHistory">
+          <Parameter Name="kycid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="tblKYC_HistoryDetails" EntityType="MangalDBNewModel.tblKYC_HistoryDetails" />
+          <AssociationSet Name="fk_TtblKYC_historyDetails" Association="MangalDBNewModel.fk_TtblKYC_historyDetails">
+            <End Role="tblKYC_HistoryDetails" EntitySet="tblKYC_HistoryDetails" />
+            <End Role="tblHistory_KYCAddresses" EntitySet="tblHistory_KYCAddresses" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
@@ -4134,7 +4134,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="KYCID" Type="Int32" Nullable="false" />
           <Property Name="AddressCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ResidenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -4148,11 +4148,11 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblKYC_HistoryDetails" Relationship="MangalDBNewModel.fk_TtblKYC_historyDetails" FromRole="tblHistory_KYCAddresses" ToRole="tblKYC_HistoryDetails" />
         </EntityType>
-        <EntityType Name="tblKYC_HistoryDetails">
+        <EntityType Name="TGLKYC_BasicDetails">
           <Key>
             <PropertyRef Name="KYCID" />
           </Key>
-          <Property Name="KYCID" Type="Int32" Nullable="false" />
+          <Property Name="KYCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="AppliedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="OperatorID" Type="Int32" Nullable="false" />
@@ -4173,17 +4173,17 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="PANNo" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="TelephoneNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="EmailID" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="EmailID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="BldgHouseName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Road" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="BldgPlotNo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="RoomBlockNo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Landmark" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="Occupation" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="OrganizationName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrganizationName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PresentIncome" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
-          <Property Name="IndustriesType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Designation" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="IndustriesType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Designation" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="NomFName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NomMName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NomLName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -4215,21 +4215,34 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="PinCode" Type="Int32" Nullable="false" />
           <Property Name="ResidenceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="AddressCategory" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="tblHistory_KYCAddresses" Relationship="MangalDBNewModel.fk_TtblKYC_historyDetails" FromRole="tblKYC_HistoryDetails" ToRole="tblHistory_KYCAddresses" />
+          <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="tbl_PreSanctionDetails" />
+          <NavigationProperty Name="Trans_KYCAddresses" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="Trans_KYCAddresses" />
         </EntityType>
-        <Association Name="fk_TtblKYC_historyDetails">
-          <End Type="MangalDBNewModel.tblKYC_HistoryDetails" Role="tblKYC_HistoryDetails" Multiplicity="1" />
-          <End Type="MangalDBNewModel.tblHistory_KYCAddresses" Role="tblHistory_KYCAddresses" Multiplicity="*" />
+        <Association Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+          <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.tbl_PreSanctionDetails" Role="tbl_PreSanctionDetails" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblKYC_HistoryDetails">
+            <Principal Role="TGLKYC_BasicDetails">
               <PropertyRef Name="KYCID" />
             </Principal>
-            <Dependent Role="tblHistory_KYCAddresses">
+            <Dependent Role="tbl_PreSanctionDetails">
+              <PropertyRef Name="KycId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TGLKYC_BasicDetails">
+          <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="1" />
+          <End Type="MangalDBNewModel.Trans_KYCAddresses" Role="Trans_KYCAddresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TGLKYC_BasicDetails">
+              <PropertyRef Name="KYCID" />
+            </Principal>
+            <Dependent Role="Trans_KYCAddresses">
               <PropertyRef Name="KYCID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="TGLKYC_BasicDetails">
+        <EntityType Name="tblKYC_HistoryDetails">
           <Key>
             <PropertyRef Name="KYCID" />
           </Key>
@@ -4296,29 +4309,16 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="PinCode" Type="Int32" Nullable="false" />
           <Property Name="ResidenceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="AddressCategory" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="tbl_PreSanctionDetails" />
-          <NavigationProperty Name="Trans_KYCAddresses" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="Trans_KYCAddresses" />
+          <NavigationProperty Name="tblHistory_KYCAddresses" Relationship="MangalDBNewModel.fk_TtblKYC_historyDetails" FromRole="tblKYC_HistoryDetails" ToRole="tblHistory_KYCAddresses" />
         </EntityType>
-        <Association Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
-          <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="0..1" />
-          <End Type="MangalDBNewModel.tbl_PreSanctionDetails" Role="tbl_PreSanctionDetails" Multiplicity="*" />
+        <Association Name="fk_TtblKYC_historyDetails">
+          <End Type="MangalDBNewModel.tblKYC_HistoryDetails" Role="tblKYC_HistoryDetails" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tblHistory_KYCAddresses" Role="tblHistory_KYCAddresses" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TGLKYC_BasicDetails">
+            <Principal Role="tblKYC_HistoryDetails">
               <PropertyRef Name="KYCID" />
             </Principal>
-            <Dependent Role="tbl_PreSanctionDetails">
-              <PropertyRef Name="KycId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_TGLKYC_BasicDetails">
-          <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="1" />
-          <End Type="MangalDBNewModel.Trans_KYCAddresses" Role="Trans_KYCAddresses" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TGLKYC_BasicDetails">
-              <PropertyRef Name="KYCID" />
-            </Principal>
-            <Dependent Role="Trans_KYCAddresses">
+            <Dependent Role="tblHistory_KYCAddresses">
               <PropertyRef Name="KYCID" />
             </Dependent>
           </ReferentialConstraint>
@@ -5764,9 +5764,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblKYC_HistoryDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.tblKYC_HistoryDetails">
-              <MappingFragment StoreEntitySet="tblKYC_HistoryDetails">
+          <EntitySetMapping Name="TGLKYC_BasicDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
+              <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
                 <ScalarProperty Name="AddressCategory" ColumnName="AddressCategory" />
                 <ScalarProperty Name="ResidenceCode" ColumnName="ResidenceCode" />
                 <ScalarProperty Name="PinCode" ColumnName="PinCode" />
@@ -5834,9 +5834,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_SaveKYCHistory" FunctionName="MangalDBNewModel.Store.SP_SaveKYCHistory" />
-          <EntitySetMapping Name="TGLKYC_BasicDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
-              <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
+          <EntitySetMapping Name="tblKYC_HistoryDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblKYC_HistoryDetails">
+              <MappingFragment StoreEntitySet="tblKYC_HistoryDetails">
                 <ScalarProperty Name="AddressCategory" ColumnName="AddressCategory" />
                 <ScalarProperty Name="ResidenceCode" ColumnName="ResidenceCode" />
                 <ScalarProperty Name="PinCode" ColumnName="PinCode" />

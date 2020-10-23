@@ -52,6 +52,14 @@ namespace MangalWeb.Service.Service
 
             return pincode;
         }
+
+        #region GetConsolidatedImage
+        public TGLKYC_BasicDetails GetApplicantImage(int id)
+        {
+            return _kycRepository.GetApplicantImage(id);
+        }
+        #endregion
+
         /// <summary>
         /// check if pan already exists
         /// </summary>

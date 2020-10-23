@@ -12,20 +12,27 @@ namespace MangalWeb.Model.Transaction
         public int ID { get; set; }
         public int KYCID { get; set; }
         public string AddressCategory { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
+        [Required(ErrorMessage = "Please Select Residence Code")]
         public string ResidenceCode { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
+
+        [Required(ErrorMessage = "Building House Name is required")]
         public string BuildingHouseName { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
+
+        [Required(ErrorMessage = "Road is required")]
         public string Road { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
+
+        [Required(ErrorMessage = "Building Plot No is required")]
         public string BuildingPlotNo { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
+
+        [Required(ErrorMessage = "Room Block No is required")]
         public string RoomBlockNo { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
+
+        [Required(ErrorMessage = "Nearest Landmark is required")]
         public string NearestLandmark { get; set; }
-        [Required(ErrorMessage = "This Field is Required.")]
+
+        //[Required(ErrorMessage = "This Field is Required.")]
         public string Distance_km { get; set; }
+
         public int? PinCode { get; set; }
         public int StateID { get; set; }
         public int CityID { get; set; }

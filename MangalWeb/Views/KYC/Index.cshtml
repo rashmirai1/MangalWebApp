@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
-@using (Ajax.BeginForm("CreateEdit", "KYC", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure",OnBegin= "onBegin" }, new { enctype = "multipart/form-data" }))
+@using (Ajax.BeginForm("CreateEdit", "KYC", new AjaxOptions { HttpMethod = "Post", OnSuccess = "OnSuccess", OnFailure = "OnFailure", OnBegin = "StartValidation" }, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.KYCID, new { @id = "ItemID" })
@@ -67,15 +67,14 @@
                                             <div class="form-group">
                                                 <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Upload Photo<span class="text-danger"> * </span></label>
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                    <input type="file" name="uploadFile" id="uploadFile" class="form-data" accept=".png,.jpg,.jpeg,.gif,.pdf" />
-                                                    @Html.ValidationMessageFor(model => model.KycPhoto, "", new { @class = "text-danger" })
+                                                    @Html.TextBoxFor(x => x.uploadFile, new { @type = "file" })
+                                                    @Html.ValidationMessageFor(model => model.uploadFile, "", new { @class = "text-danger" })
                                                     <div id="kycPhoto">
                                                     </div>
                                                 </div>
                                                 <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Type</label>
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                     @Html.EditorFor(model => model.KycType, new { htmlAttributes = new { @class = "form-control", @placeholder = "Type", @readonly = true } })
-                                                    @Html.ValidationMessageFor(model => model.KycType, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                             <label id="negativeCustomerErr" class="text-danger"></label>
@@ -121,9 +120,9 @@
                                         <div id="disabledFields">
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Applicant Name<span class="text-danger"> * </span></label>
+                                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Applicant First Name<span class="text-danger"> * </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        @Html.EditorFor(model => model.AppFName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Applicant Name", @maxlength = "50" } })
+                                                        @Html.EditorFor(model => model.AppFName, new { htmlAttributes = new { @class = "form-control", @placeholder = "First Name", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.AppFName, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Middle Name<span class="text-danger"> * </span></label>
@@ -268,7 +267,7 @@ new { @class = "form-control", @style = "width: 80px;" })
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Email id<span class="text-danger"> </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         <span class="text-danger" id="CustomErr"> </span>
-                                                        @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email id", @maxlength = "30" } })
+                                                        @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email id", @maxlength = "100" } })
                                                         @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Source Of Application<span class="text-danger"> * </span></label>
@@ -640,14 +639,14 @@ new { @class = "form-control" })
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                         <input type="hidden" id="Trans_KYCAddresses_1__ID" />
-                                                        <input name="Trans_KYCAddresses[1].BuildingHouseName" class="form-control" id="Trans_KYCAddresses_1__BuildingHouseName" type="text" data-val-required="This field is required." data-val="true" maxlength="50">
+                                                        <input name="Trans_KYCAddresses[1].BuildingHouseName" class="form-control" id="Trans_KYCAddresses_1__BuildingHouseName" type="text" maxlength="50">
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
                                                         Road
                                                         <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <input name="Trans_KYCAddresses[1].Road" class="form-control" id="Trans_KYCAddresses_1__Road" type="text" data-val-required="This field is required." data-val="true" maxlength="30">
+                                                        <input name="Trans_KYCAddresses[1].Road" class="form-control" id="Trans_KYCAddresses_1__Road" type="text" maxlength="30">
                                                     </div>
                                                 </div>
                                             </div>
@@ -658,14 +657,14 @@ new { @class = "form-control" })
                                                         <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <input name="Trans_KYCAddresses[1].BuildingPlotNo" class="form-control" id="Trans_KYCAddresses_1__BuildingPlotNo" type="text" data-val-required="This field is required." data-val="true" maxlength="30">
+                                                        <input name="Trans_KYCAddresses[1].BuildingPlotNo" class="form-control" id="Trans_KYCAddresses_1__BuildingPlotNo" type="text" maxlength="30">
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
                                                         Room/Block No
                                                         <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <input name="Trans_KYCAddresses[1].RoomBlockNo" class="form-control" id="Trans_KYCAddresses_1__RoomBlockNo" type="text" data-val-required="This field is required." data-val="true" maxlength="30">
+                                                        <input name="Trans_KYCAddresses[1].RoomBlockNo" class="form-control" id="Trans_KYCAddresses_1__RoomBlockNo" type="text" maxlength="30">
                                                     </div>
                                                 </div>
                                             </div>
@@ -676,14 +675,14 @@ new { @class = "form-control" })
                                                         <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <input name="Trans_KYCAddresses[1].NearestLandmark" class="form-control" id="Trans_KYCAddresses_1__NearestLandmark" type="text" data-val-required="This field is required." data-val="true" maxlength="30">
+                                                        <input name="Trans_KYCAddresses[1].NearestLandmark" class="form-control" id="Trans_KYCAddresses_1__NearestLandmark" type="text" maxlength="30">
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
                                                         Distance (km)
                                                         <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <input name="Trans_KYCAddresses[1].Distance_km" class="form-control" id="Trans_KYCAddresses_1__Distance_km" type="text" data-val-required="This field is required." data-val="true" maxlength="10">
+                                                        <input name="Trans_KYCAddresses[1].Distance_km" class="form-control" id="Trans_KYCAddresses_1__Distance_km" type="text" maxlength="10">
                                                     </div>
                                                 </div>
                                             </div>
@@ -876,7 +875,6 @@ new { @class = "form-control" })
                                                         <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Upload Document<span class="text-danger"> * </span></label>
                                                         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
                                                             <input type="file" id="UploadedFile" name="UploadedFile" accept=".png,.jpg,.jpeg,.gif,.pdf" />
-                                                            <img class="img-responsive" id="targetImg" style="height:20px;width:20px;display:none;" />
                                                         </div>
                                                         <div class="col-md-2">
                                                             <input type="button" style="margin-left: 100px;" value="Add" class="btn btn-sm btn-primary" id="btnAddDocumentDetails" />
@@ -921,32 +919,50 @@ new { @class = "form-control" })
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
-    <script type="text/javascript">
-        function onBegin()
-        {
-            var inp = document.getElementById('uploadFile');
-            if (inp.files.length === 0) {
-                alert("Upload Photo!");
-                inp.focus();
-                return;
-            }
 
+    <script type="text/javascript">
+        function StartValidation() {
             var isMobileVerified = $("#isMobileVerified").val();
             var MobileNo = $("#MobileNo").val();
             debugger;
-            if (isMobileVerified == "0" && MobileNo>0) {
+            if (isMobileVerified == "0" && MobileNo > 0) {
                 alert("Please Verify Your Mobile Number!");
-                return;
+                $("#MobileNo").focus();
+                return false;
             }
-            
-            var length=$('#tblDocumentDetails tbody tr').length;
-            if(length==0)
-            {
+            var length = $('#tblDocumentDetails tbody tr').length;
+            if (length == 0) {
                 alert("Please Click Add Document Details");
                 $("#tblDocumentDetails").focus();
-                return;
+                return false;
             }
         }
+
+        $("#uploadFile").change(function () {
+
+            var fileUpload = $("#uploadFile").get(0);
+            var files = fileUpload.files;
+            // Create FormData object
+            fileData = new FormData();
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append("uploadFile", files[i]);
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UploadApplicantPhoto", "KYC")', // we are calling json method
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (data) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+            return false;
+        })
+
         var urlRedirect = '@Html.Raw(@Url.Action("Index", "KYC"))';
 
         function OnSuccess(response) {
@@ -963,7 +979,7 @@ new { @class = "form-control" })
 
         $(document).ready(function () {
             $('input[type=datetime]').datepicker({
-                dateFormat: "dd/M/yy",
+                dateFormat: "dd/mm/yy",
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "-60:+0",
@@ -975,12 +991,8 @@ new { @class = "form-control" })
                 }
             });
 
-            $("#DocDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
             $("#DocumentUploadVM_ExpiryDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
-            $("#divDocumentDetails").hide();
-            if (@Model.DocumentUploadList.Count() > 0) {
-                $("#divDocumentDetails").show();
-            }
+
             var sr_no = 0;
             var trid = 0;
             currentRow = null;
@@ -988,7 +1000,6 @@ new { @class = "form-control" })
                 if (confirm('Are you sure to remove?')) {
                     var tr = $(this).closest('tr');
                     trid = tr.attr('id'); // table row ID
-                    var tr = $(this).closest('tr');
                     tr.remove();
                     $.ajax({
                         url: '/DocumentUpload/Remove?id=' + trid,
@@ -1029,29 +1040,28 @@ new { @class = "form-control" })
                 var ExpiryDate = $("#DocumentUploadVM_ExpiryDate").val();
                 var SpecifyOther = $("#DocumentUploadVM_SpecifyOther").val();
                 var NameonDocument = $("#DocumentUploadVM_NameonDocument").val();
-                //var filename=$("#UploadedFile").val();
-                var filename = $("#targetImg").val();
 
                 if (currentRow) {
                     $("#tblDocumentDetails tbody").find($(currentRow)).replaceWith(row);
                     $("#DocumentUploadVM_DocumentTypeId").val("");
                     $("#DocumentUploadVM_DocumentId").val("");
                     $("#DocumentUploadVM_ExpiryDate").val("");
+                    $("#DocumentUploadVM_SpecifyOther").val("");
+                    $("#DocumentUploadVM_NameonDocument").val("");
                     $("#UploadedFile").val("");
                     currentRow = null;
                 }
                 else {
-                    if (DocumentTypeId != "" && DocumentId != "") {
-
-                        var fileUpload = $("#UploadedFile").get(0);
-                        var files = fileUpload.files;
-                        // Create FormData object
-                        fileData = new FormData();
-                        // Looping over all files and add it to FormData object
-                        for (var i = 0; i < files.length; i++) {
-                            fileData.append("UploadedFile", files[i]);
-                        }
-                        var row = '<tr id=' + newtrno + '>' +
+                    var fileUpload = $("#UploadedFile").get(0);
+                    var files = fileUpload.files;
+                    // Create FormData object
+                    fileData = new FormData();
+                    // Looping over all files and add it to FormData object
+                    for (var i = 0; i < files.length; i++) {
+                        fileData.append("UploadedFile", files[i]);
+                    }
+                    if (DocumentTypeId != "" && DocumentId != "" && files[0].name != null) {
+                        var row = '<tr id=' + srno + '>' +
                             '<td width="10%">' + srno + '</td>' +
                             '<td width="20%" id="' + DocumentTypeId + '">' + DocumentTypeName + '</td>' +
                             '<td width="20%" id="' + DocumentId + '">' + DocumentName + '</td>' +
@@ -1095,7 +1105,7 @@ new { @class = "form-control" })
                 $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
                     if (confirm('Are you sure to remove?')) {
                         var tr = $(this).closest('tr');
-                        trid = tr.find('td:eq(0)').html();
+                        trid = tr.attr('id'); // table row ID
                         tr.remove();
                         $.ajax({
                             url: '/KYC/Remove?id=' + trid,
@@ -1122,7 +1132,6 @@ new { @class = "form-control" })
 
         $("#CustomerID").attr('readOnly', true);
         $("#ApplicationNo").attr('readOnly', true);
-        $("#ApplicationDate").attr('readOnly', true);
         $("#AppliedDate").attr('readOnly', true);
 
         $("#btnUpdate").click(function () {
@@ -1130,7 +1139,6 @@ new { @class = "form-control" })
             $('#btn_save').prop('disabled', false);
             $("#CustomerID").attr('readOnly', true);
             $("#ApplicationNo").attr('readOnly', true);
-            $("#ApplicationDate").attr('readOnly', true);
             $("#AppliedDate").attr('readOnly', true);
         });
 
@@ -1138,22 +1146,12 @@ new { @class = "form-control" })
             $(this).val($(this).val().toUpperCase());
         });
 
-        $("#AdhaarNo").change(function () {
-            var adhar=$("#AdhaarNo").val();
-            if(adhar.length!=12)
-            {
-                $("#AdhaarNo").val("");
-                alert("Aadhar card not valid");
-                $("#AdhaarNo").focus();
-                return;
-            }
-        });
-
         $("#PANNo").on('change', function () {
             debugger;
+            $("#AdhaarNo").val("");
             var pan = $("#PANNo").val();
             var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-            if(!regex.test(pan)){
+            if (!regex.test(pan)) {
                 $("#PANNo").val("");
                 alert("Invalid PAN no");
                 $("#PANNo").focus();
@@ -1162,16 +1160,21 @@ new { @class = "form-control" })
             CheckPanAvailable(pan);
             $("#CustomerID").attr('readOnly', true);
             $("#ApplicationNo").attr('readOnly', true);
-            $("#ApplicationDate").attr('readOnly', true);
             $("#AppliedDate").attr('readOnly', true);
         });
 
-        $("#AdhaarNo").on('input', function () {
+        $("#AdhaarNo").change(function () {
             var adhar = $("#AdhaarNo").val();
+            $("#PANNo").val("");
+            if (adhar.length != 12) {
+                $("#AdhaarNo").val("");
+                alert("Aadhar card not valid");
+                $("#AdhaarNo").focus();
+                return false;
+            }
             CheckAdharAvailable(adhar);
             $("#CustomerID").attr('readOnly', true);
             $("#ApplicationNo").attr('readOnly', true);
-            $("#ApplicationDate").attr('readOnly', true);
             $("#AppliedDate").attr('readOnly', true);
         });
 
@@ -1185,7 +1188,7 @@ new { @class = "form-control" })
             var mobile = $("#MobileNo").val();
             var otp = $("#verifyText").val();
             var customerId = $("#CustomerID").val();
-            VerifyOtp(mobile, customerId,otp);
+            VerifyOtp(mobile, customerId, otp);
         });
 
         $("#PinCode").on('change', function () {
@@ -1302,9 +1305,8 @@ new { @class = "form-control" })
                 // here we are get value of selected country and passing same value
                 //as inputto json method GetStates.
                 success: function (data) {
-                    $("#DocumentUploadVM_ExpiryDate").attr('disabled','disabled')
-                    if(data==true)
-                    {
+                    $("#DocumentUploadVM_ExpiryDate").attr('disabled', 'disabled')
+                    if (data == true) {
                         $("#DocumentUploadVM_ExpiryDate").removeAttr('disabled')
                     }
                 },
@@ -1344,7 +1346,7 @@ new { @class = "form-control" })
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("SendOtp", "KYC")',
-                data: '{mobile: "' + mobile + '" , customerId: "' + customerId+'"}',
+                data: '{mobile: "' + mobile + '" , customerId: "' + customerId + '"}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
@@ -1356,11 +1358,11 @@ new { @class = "form-control" })
             });
         }
 
-        function VerifyOtp(mobile, customerId,otp) {
+        function VerifyOtp(mobile, customerId, otp) {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("VerifyOtp", "KYC")',
-                data: '{mobile: "' + mobile + '" , customerId: "' + customerId + '", otp:"'+ otp +'"}',
+                data: '{mobile: "' + mobile + '" , customerId: "' + customerId + '", otp:"' + otp + '"}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
@@ -1413,7 +1415,6 @@ new { @class = "form-control" })
                                 });
                                 if (result.ImageName != null) {
                                     $("#kycPhoto").append('<td><a href="/KYC/Download/' + result.KYCID + '" target=_blank>' + result.ImageName + '</a></td>');
-                                    IsImageExist(true);
                                 }
                             }
                             FillAddressByPinCode(result.PinCode);
@@ -1427,6 +1428,7 @@ new { @class = "form-control" })
                             $("#btnUpdate").attr('disabled', false);
                             var actions = "<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>";
                             $("#divDocumentDetails").show();
+
                             debugger;
                             $.each(result.DocumentUploadList, function (key, val) {
                                 debugger;
@@ -1439,6 +1441,7 @@ new { @class = "form-control" })
                                     var year = value.getFullYear();
                                     value = day + "/" + month + "/" + year;
                                 }
+
                                 $('#tblDocumentDetails tbody').append('<tr id=' + val.ID + '><td>' + rowCount +
                                   '<td width="20%" id="' + val.DocumentTypeId + '">' + val.DocumentTypeName + '</td>' +
                                     '<td width="20%" id="' + val.DocumentId + '">' + val.DocumentName + '</td>' +
@@ -1454,7 +1457,7 @@ new { @class = "form-control" })
                             $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
                                 if (confirm('Are you sure to remove?')) {
                                     var tr = $(this).closest('tr');
-                                    trid = tr.find('td:eq(0)').html();
+                                    trid = tr.attr('id'); // table row ID
                                     tr.remove();
                                     $.ajax({
                                         url: '/KYC/Remove?id=' + trid,
@@ -1480,6 +1483,9 @@ new { @class = "form-control" })
                             $('#btn_save').prop('disabled', false);
                             $("#KycType").val("New");
                             $('#disabledFields').find(':input').val('');
+                            $("#btnAddDocumentDetails").val('Add');
+                            $("#tblDocumentDetails tbody").empty();
+                            $("#divDocumentDetails").hide();
                         }
                         else {
                             $('#disabledFields').find(':input').prop('disabled', true);
@@ -1564,7 +1570,7 @@ new { @class = "form-control" })
                             $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
                                 if (confirm('Are you sure to remove?')) {
                                     var tr = $(this).closest('tr');
-                                    trid = tr.find('td:eq(0)').html();
+                                    trid = tr.attr('id'); // table row ID
                                     tr.remove();
                                     $.ajax({
                                         url: '/KYC/Remove?id=' + trid,
@@ -1589,16 +1595,17 @@ new { @class = "form-control" })
                             $('#btn_save').prop('disabled', false);
                             $("#KycType").val("New");
                             $('#disabledFields').find(':input').val('');
+                            $("#btnAddDocumentDetails").val('Add');
+                            $("#tblDocumentDetails tbody").empty();
+                            $("#divDocumentDetails").hide();
                         }
                         else {
                             $('#disabledFields').find(':input').prop('disabled', true);
                             $('#btn_save').prop('disabled', true);
                         }
-                        // CheckPanAvailable(pan);
                     }
                 },
                 error: function (xhr, status, error) {
-                    //alert(error);
                 }
             });
         }
