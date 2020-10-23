@@ -58,6 +58,7 @@ namespace MangalWeb.Controllers
                     model.ImageName = Session["ApplicantImageName"].ToString();
                     model.ContentType = Session["ApplicantImageContentType"].ToString();
                 }
+
                 model.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
                 model.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
                 model.FYID = Convert.ToInt32(Session["FinancialYearId"]);
