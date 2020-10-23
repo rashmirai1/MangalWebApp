@@ -26,6 +26,8 @@ namespace MangalWeb.Controllers
             return View();
         }
 
+
+
         [AllowAnonymous]
         [HttpPost, ValidateInput(false)]
         public ActionResult Login(LoginViewModel login)
