@@ -127,6 +127,7 @@ namespace MangalWeb.Repository.Repository
                         trans_KYCAddresses.ResidenceCode = item.ResidenceCode;
                         trans_KYCAddresses.Road = item.Road;
                         trans_KYCAddresses.RoomBlockNo = item.RoomBlockNo;
+
                         _context.SaveChanges();
                     }
 
