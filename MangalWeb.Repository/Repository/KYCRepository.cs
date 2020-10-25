@@ -107,6 +107,7 @@ namespace MangalWeb.Repository.Repository
                         model.KYCID = kycid;
                     }
 
+
                     foreach (var item in model.Trans_KYCAddresses)
                     {
                         Trans_KYCAddresses trans_KYCAddresses = new Trans_KYCAddresses();
