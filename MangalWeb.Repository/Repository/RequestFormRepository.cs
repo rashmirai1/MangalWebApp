@@ -15,11 +15,6 @@ namespace MangalWeb.Repository.Repository
     {
         MangalDBNewEntities _context = new MangalDBNewEntities();
 
-        public List<Mst_SourceofApplication> GetSourceOfApplicationList()
-        {
-            return _context.Mst_SourceofApplication.ToList();
-        }
-
         public List<RequestFormViewModel> GetKYCList()
         {
             return _context.Database.SqlQuery<RequestFormViewModel>("GetKYCDetailsForDocument").ToList();
@@ -37,26 +32,27 @@ namespace MangalWeb.Repository.Repository
 
         public RequestFormViewModel GetPincodDetails(int id)
         {
-            var branch = new RequestFormViewModel();
-            var pincodemodel = _context.Mst_PinCode.Where(x => x.Pc_Id == id).Select(x => new PincodeViewModel { CityId = x.Pc_CityId, ZoneId = x.Pc_ZoneId, AreaName = x.Pc_AreaName }).FirstOrDefault();
-            var ZoneName = _context.tblZonemasters.Where(x => x.ZoneID == pincodemodel.ZoneId).Select(x => x.Zone).FirstOrDefault();
-            var cityname = _context.tblCityMasters.Where(x => x.CityID == pincodemodel.CityId).Select(x => new CityViewModel { CityName = x.CityName, StateId = (int)x.StateID }).FirstOrDefault();
-            var statename = _context.tblStateMasters.Where(x => x.StateID == cityname.StateId).Select(x => x.StateName).FirstOrDefault();
-            branch.Area = pincodemodel.AreaName;
-            branch.ZoneName = ZoneName;
-            branch.CityName = cityname.CityName;
-            branch.StateName = statename;
-            branch.StateID = cityname.StateId;
-            branch.CityID = pincodemodel.CityId;
-            branch.ZoneID = pincodemodel.ZoneId;
+            var branch = (from aa in _context.Mst_PinCode
+                          join bb in _context.tblZonemasters on aa.Pc_ZoneId equals bb.ZoneID
+                          join cc in _context.tblCityMasters on aa.Pc_CityId equals cc.CityID
+                          join dd in _context.tblStateMasters on cc.StateID equals dd.StateID
+                          where aa.Pc_Id == id 
+                          select new RequestFormViewModel()
+                          {
+                              Area = aa.Pc_AreaName,
+                              ZoneName = bb.Zone,
+                              ZoneID = bb.ZoneID,
+                              CityID = cc.CityID,
+                              CityName = cc.CityName,
+                              StateID = dd.StateID,
+                              StateName = dd.StateName
+                          }).FirstOrDefault();
             return branch;
         }
 
         public RequestFormViewModel GetRequestFormById(int id)
         {
-            RequestFormViewModel documentUploadViewModel = new RequestFormViewModel();
-            //get document upload table
-            //var kycdetails = _context.TGLKYC_BasicDetails.Where(x => x.KYCID == id).FirstOrDefault();
+            var documentUploadViewModel = new RequestFormViewModel();
             var kycdetails = _context.Database.SqlQuery<RequestFormViewModel>("GetKYCDetailsForRequestForm @KycId", new SqlParameter("KycId", id)).FirstOrDefault();
             var docuploaddetails = _context.Trn_DocUploadDetails.Where(x => x.KycId == kycdetails.KycId).ToList();
             var KycAddressDetailsList = _context.Trans_KYCAddresses.Where(x => x.KYCID == kycdetails.KycId).ToList();
@@ -67,27 +63,6 @@ namespace MangalWeb.Repository.Repository
         #region ToViewModelDocUpload
         public RequestFormViewModel ToViewModelDocUpload(RequestFormViewModel model, List<Trn_DocUploadDetails> DocUploadTrnList, List<Trans_KYCAddresses> KycAddressDetailsList)
         {
-            //var model = new RequestFormViewModel
-            //{
-            //    KycId = kycdetails.KycId,
-            //    CreationDate = kycdetails.KYCDate,
-            //    CustomerID = kycdetails.CustomerID,
-            //    ApplicationNo = kycdetails.ApplicationNo,
-            //    LoanAccountNo = kycdetails.LoanAccountNo,
-            //    ID = kycdetails.KycId,
-            //    BldgHouseName=kycdetails.BldgHouseName,
-            //    Road=kycdetails.Road,
-            //    BldgPlotNo=kycdetails.BldgPlotNo,
-            //    RoomBlockNo=kycdetails.RoomBlockNo,
-            //    Landmark=kycdetails.Landmark,
-            //    Distance=kycdetails.Distance,
-            //    PinCode=kycdetails.PinCode,
-            //    StateID=kycdetails.StateID,
-            //    CityID=kycdetails.CityID,
-            //    Area=kycdetails.Area,
-            //    ZoneID=kycdetails.ZoneID
-            //};
-
             List<KYCAddressesVM> AddressDetailsList = new List<KYCAddressesVM>();
             foreach (var c in KycAddressDetailsList)
             {
@@ -102,43 +77,36 @@ namespace MangalWeb.Repository.Repository
                 TrnViewModel.RoomBlockNo = c.RoomBlockNo;
                 TrnViewModel.NearestLandmark = c.NearestLandmark;
                 TrnViewModel.Distance_km = c.Distance_km;
-                TrnViewModel.PinCode = c.PinCode;
-                int zoneid = Convert.ToInt32(TrnViewModel.ZoneId);
-                var cityid= _context.Mst_PinCode.Where(x => x.Pc_CityId == TrnViewModel.PinCode).Select(x => x.Pc_CityId).FirstOrDefault();
-                var stateid = _context.tblCityMasters.Where(x => x.CityID == cityid).Select(x => x.StateID).FirstOrDefault();
-                TrnViewModel.CityName = _context.tblCityMasters.Where(x => x.CityID == cityid).Select(x => x.CityName).FirstOrDefault();
-                TrnViewModel.StateName = _context.tblStateMasters.Where(x => x.StateID == stateid).Select(x => x.StateName).FirstOrDefault();
-                TrnViewModel.ZoneName = _context.tblZonemasters.Where(x => x.ZoneID == zoneid).Select(x => x.Zone).FirstOrDefault();
+                TrnViewModel.PinCode = (int)c.PinCode;
                 TrnViewModel.ResidenceCode = c.ResidenceCode;
                 AddressDetailsList.Add(TrnViewModel);
             }
             model.Trans_KYCAddresses = AddressDetailsList;
 
-            List<DocumentUploadDetailsVM> DocTrnViewModelList = new List<DocumentUploadDetailsVM>();
-            foreach (var c in DocUploadTrnList)
-            {
-                var TrnViewModel = new DocumentUploadDetailsVM
-                {
-                    ID = c.Id,
-                    DocumentTypeId = (int)c.DocumentTypeId,
-                    DocumentTypeName = _context.Mst_DocumentType.Where(x => x.Id == c.DocumentTypeId).Select(x => x.Name).FirstOrDefault(),
-                    DocumentName = _context.tblDocumentMasters.Where(x => x.DocumentID == c.DocumentId).Select(x => x.DocumentName).FirstOrDefault(),
-                    DocumentId = (int)c.DocumentId,
-                    ExpiryDate = c.ExpiryDate,
-                    //UploadDocName = c.UploadFile,
-                    FileName = c.FileName,
-                    FileExtension = c.ContentType,
-                    KycId = c.KycId,
-                    Status = c.Status,
-                    VerifiedBy = c.VerifiedBy,
-                    SpecifyOther = c.SpecifyOther,
-                    NameonDocument = c.NameonDocument,
-                    ReasonForRejection = c.ReasonForRejection
-                };
-                DocTrnViewModelList.Add(TrnViewModel);
-            }
+            var docuploaddetails = (from a in _context.Trn_DocUploadDetails
+                                    join b in _context.Mst_DocumentType on a.DocumentTypeId equals b.Id
+                                    join c in _context.tblDocumentMasters on a.DocumentId equals c.DocumentID
+                                    where a.KycId == model.KycId
+                                    select new DocumentUploadDetailsVM()
+                                    {
+                                        ID = a.Id,
+                                        DocumentTypeId = a.DocumentTypeId,
+                                        DocumentTypeName = b.Name,
+                                        DocumentName = c.DocumentName,
+                                        DocumentId = a.DocumentId,
+                                        ExpiryDate = a.ExpiryDate,
+                                        FileName = a.FileName,
+                                        FileExtension = a.ContentType,
+                                        KycId = a.KycId,
+                                        Status = a.Status,
+                                        VerifiedBy = a.VerifiedBy,
+                                        SpecifyOther = a.SpecifyOther,
+                                        NameonDocument = a.NameonDocument,
+                                        ReasonForRejection = a.ReasonForRejection
+                                    }).ToList();
 
-            model.DocumentUploadList = DocTrnViewModelList;
+            model.DocumentUploadList = docuploaddetails;
+
             return model;
         }
         #endregion
@@ -170,6 +138,7 @@ namespace MangalWeb.Repository.Repository
                     tGLKYC_Basic.UpdatedBy = Convert.ToInt32(HttpContext.Current.Session["UserLoginId"]);
                     tGLKYC_Basic.AddressCategory = "02";
                     _context.SaveChanges();
+
                     foreach (var item in model.Trans_KYCAddresses)
                     {
                         Trans_KYCAddresses trans_KYCAddresses = new Trans_KYCAddresses();
@@ -215,7 +184,7 @@ namespace MangalWeb.Repository.Repository
                         }
                         else
                         {
-                            var uploadfile= _context.Trn_DocUploadDetails.Where(x => x.Id == FindRateobject.Id).Select(x=>x.UploadFile).FirstOrDefault();
+                            var uploadfile = _context.Trn_DocUploadDetails.Where(x => x.Id == FindRateobject.Id).Select(x => x.UploadFile).FirstOrDefault();
                             FindRateobject.KycId = model.KycId;
                             FindRateobject.DocumentTypeId = (int)p.DocumentTypeId;
                             FindRateobject.DocumentId = (int)p.DocumentId;

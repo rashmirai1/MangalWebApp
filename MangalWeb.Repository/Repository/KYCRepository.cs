@@ -107,7 +107,6 @@ namespace MangalWeb.Repository.Repository
                         model.KYCID = kycid;
                     }
 
-
                     foreach (var item in model.Trans_KYCAddresses)
                     {
                         Trans_KYCAddresses trans_KYCAddresses = new Trans_KYCAddresses();
@@ -297,7 +296,7 @@ namespace MangalWeb.Repository.Repository
                         ID = x.ID,
                         KYCID = x.KYCID,
                         NearestLandmark = x.NearestLandmark,
-                        PinCode = x.PinCode,
+                        PinCode = (int)x.PinCode,
                         ResidenceCode = x.ResidenceCode,
                         Road = x.Road,
                         RoomBlockNo = x.RoomBlockNo,
@@ -422,7 +421,7 @@ namespace MangalWeb.Repository.Repository
                        ID = x.ID,
                        KYCID = x.KYCID,
                        NearestLandmark = x.NearestLandmark,
-                       PinCode = x.PinCode,
+                       PinCode = (int)x.PinCode,
                        ResidenceCode = x.ResidenceCode,
                        Road = x.Road,
                        RoomBlockNo = x.RoomBlockNo,
@@ -522,19 +521,22 @@ namespace MangalWeb.Repository.Repository
         /// <returns></returns>
         public FillAddressByPinCode FillAddressByPinCode(int id)
         {
-            var pincode = _context.Mst_PinCode.Where(x => x.Pc_Id == id).FirstOrDefault();
-            var city = _context.tblCityMasters.Where(x => x.CityID == pincode.Pc_CityId).FirstOrDefault();
-            var state = _context.tblStateMasters.Where(x => x.StateID == city.StateID).FirstOrDefault();
-            var zone = _context.tblZonemasters.Where(x => x.ZoneID == pincode.Pc_ZoneId).FirstOrDefault();
-            var areaName = pincode.Pc_AreaName;
-            FillAddressByPinCode fillAddressByPinCode = new FillAddressByPinCode();
-            fillAddressByPinCode.AreaName = areaName;
-            fillAddressByPinCode.CityId = city.CityID;
-            fillAddressByPinCode.CityName = city.CityName;
-            fillAddressByPinCode.StateID = state.StateID;
-            fillAddressByPinCode.StateName = state.StateName;
-            fillAddressByPinCode.ZoneID = pincode.Pc_ZoneId;
-            fillAddressByPinCode.ZoneName = zone.Zone;
+            var fillAddressByPinCode = (from aa in _context.Mst_PinCode
+                          join bb in _context.tblZonemasters on aa.Pc_ZoneId equals bb.ZoneID
+                          join cc in _context.tblCityMasters on aa.Pc_CityId equals cc.CityID
+                          join dd in _context.tblStateMasters on cc.StateID equals dd.StateID
+                          where aa.Pc_Id == id
+                          select new FillAddressByPinCode()
+                          {
+                              AreaName = aa.Pc_AreaName,
+                              ZoneName = bb.Zone,
+                              ZoneID = bb.ZoneID,
+                              CityId = cc.CityID,
+                              CityName = cc.CityName,
+                              StateID = dd.StateID,
+                              StateName = dd.StateName
+                          }).FirstOrDefault();
+
             return fillAddressByPinCode;
         }
         /// <summary>

@@ -13,13 +13,11 @@ namespace MangalWeb.Controllers
         RequestFormService _requestFormService = new RequestFormService();
         DocumentUploadService _documentUploadService = new DocumentUploadService();
 
-
         public void BindList()
         {
             ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
             ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
             ViewBag.PinCodeList = new SelectList(_requestFormService.GetAllPincodes(), "Pc_Id", "Pc_Desc");
-            ViewBag.PinCodes = _requestFormService.GetAllPincodes();
         }
 
         // GET: RequestForm
@@ -29,7 +27,10 @@ namespace MangalWeb.Controllers
             BindList();
             Session["sub"] = null;
             RequestFormViewModel kycVM = new RequestFormViewModel();
+            KYCAddressesVM addressvm = new KYCAddressesVM();
+            kycVM.Trans_KYCAddresses.Add(addressvm);
             kycVM.TransactionId = _requestFormService.GetMaxTransactionId();
+            kycVM.KYCDate = DateTime.Now.ToShortDateString();
             return View(kycVM);
         }
 

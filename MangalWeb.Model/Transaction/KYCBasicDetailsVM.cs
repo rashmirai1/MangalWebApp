@@ -9,10 +9,11 @@ namespace MangalWeb.Model.Transaction
     {
         public KYCBasicDetailsVM()
         {
+            DocumentUploadVM = new DocumentUploadDetailsVM();
             DocumentUploadList = new List<DocumentUploadDetailsVM>();
             Trans_KYCAddresses = new List<KYCAddressesVM>();
         }
-        public Nullable<int> KYCID { get; set; }
+        public int KYCID { get; set; }
         public string KycType { get; set; }
         public string AdhaarNo { get; set; }
         public string ApplicationNo { get; set; }
@@ -62,6 +63,7 @@ namespace MangalWeb.Model.Transaction
 
         [RegularExpression("^([A-Za-z]){5}([0-9]){4}([A-Za-z]){1}$", ErrorMessage = "Invalid PAN Number")]
         public string PANNo { get; set; }
+
         [Required(ErrorMessage = "Mobile No is required")]
         public string MobileNo { get; set; }
 
@@ -92,6 +94,7 @@ namespace MangalWeb.Model.Transaction
         public int CityID { get; set; }
         public int AreaID { get; set; }
         public int ZoneID { get; set; }
+        public string Area { get; set; }
 
         [Required(ErrorMessage = "Landmark is required")]
         public string Landmark { get; set; }
@@ -165,13 +168,16 @@ namespace MangalWeb.Model.Transaction
         public Boolean isPanAdharExist { get; set; }
         public string ImageName { get; set; }
 
-        public string Area { get; set; }
+
+        [Required(ErrorMessage = "Please Select Residence Code")]
+        public string ResidenceCode { get; set; }
+
+        public string Status { get; set; }
+        public string AddressCategory { get; set; }
+
         public DocumentUploadDetailsVM DocumentUploadVM { get; set; }
         public List<DocumentUploadDetailsVM> DocumentUploadList { get; set; }
         public virtual IList<KYCAddressesVM> Trans_KYCAddresses { get; set; }
-        [Required(ErrorMessage = "Please Select Residence Code")]
-        public string ResidenceCode { get; set; }
-        public string Status { get; set; }
-        public string AddressCategory { get; set; }
+
     }
 }

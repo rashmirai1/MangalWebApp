@@ -13,19 +13,9 @@ namespace MangalWeb.Service.Service
     {
         RequestFormRepository _requestFormRepository = new RequestFormRepository();
 
-        /// <summary>
-        /// get source of application list to fill dropdown
-        /// </summary>
-        /// <returns></returns>
-        public List<Mst_SourceofApplication> GetSourceOfApplicationList()
-        {
-            return _requestFormRepository.GetSourceOfApplicationList();
-        }
-
         public RequestFormViewModel GetPincodDetails(int id)
         {
-            var pincodedetails = _requestFormRepository.GetPincodDetails(id);
-            return pincodedetails;
+            return _requestFormRepository.GetPincodDetails(id);
         }
 
         public IList<Mst_PinCode> GetAllPincodes()

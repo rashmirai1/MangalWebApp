@@ -30,10 +30,12 @@ namespace MangalWeb.Model.Transaction
         [Required(ErrorMessage = "Nearest Landmark is required")]
         public string NearestLandmark { get; set; }
 
-        //[Required(ErrorMessage = "This Field is Required.")]
+        [Required(ErrorMessage = "Distance is Required.")]
         public string Distance_km { get; set; }
 
-        public int? PinCode { get; set; }
+        [Required(ErrorMessage = "Please Select Pincode")]
+        public int PinCode { get; set; }
+
         public int StateID { get; set; }
         public int CityID { get; set; }
         public string Area { get; set; }

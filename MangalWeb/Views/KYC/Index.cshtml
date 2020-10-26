@@ -48,7 +48,6 @@
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">PAN No.<span class="text-danger"> * </span></label>
                                                 <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                                    <span class="text-danger" id="CustomErr"> </span>
                                                     @Html.EditorFor(model => model.PANNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "PAN No.", @autofocus = "autofocus", @maxlength = "10", @autocomplete = "off", @style = "text-transform: uppercase" } })
                                                     @Html.ValidationMessageFor(model => model.PANNo, "", new { @class = "text-danger" })
                                                 </div>
@@ -242,7 +241,6 @@ new { @class = "form-control", @style = "width: 80px;" })
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Mobile No<span class="text-danger"> * </span></label>
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                                        <span class="text-danger" id="CustomErr"> </span>
                                                         @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mobile No", @maxlength = "10" } })
                                                         @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
                                                         <span class="text-alert" id="otpError"></span>
@@ -253,7 +251,6 @@ new { @class = "form-control", @style = "width: 80px;" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"> Verification Code <span class="text-danger"> * </span></label>
                                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                                                        <span class="text-danger" id="CustomErr"> </span>
                                                         <input type="text" class="form-control" id="verifyText" placeholder="Enter OTP">
                                                         <span id="verifyError" class="text-alert"></span>
                                                     </div>
@@ -266,13 +263,11 @@ new { @class = "form-control", @style = "width: 80px;" })
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Email id<span class="text-danger"> </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <span class="text-danger" id="CustomErr"> </span>
                                                         @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email id", @maxlength = "100" } })
                                                         @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Source Of Application<span class="text-danger"> * </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <span class="text-danger" id="CustomErr"> </span>
                                                         @Html.DropDownListFor(m => m.SourceofApplicationID, (SelectList)ViewBag.SourceList, "--Select Source--", htmlAttributes: new { @class = "form-control" })
                                                         @Html.ValidationMessageFor(model => model.SourceofApplicationID, "", new { @class = "text-danger" })
                                                     </div>
@@ -282,13 +277,11 @@ new { @class = "form-control", @style = "width: 80px;" })
                                                 <div class="form-group">
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Source Type<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <span class="text-danger" id="CustomErr"> </span>
                                                         @Html.EditorFor(model => model.SourceType, new { htmlAttributes = new { @class = "form-control", @placeholder = "Source Type", @readonly = true } })
                                                         @Html.ValidationMessageFor(model => model.SourceType, "", new { @class = "text-danger" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Existing PL Case No<span class="text-danger">  </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <span class="text-danger" id="CustomErr"> </span>
                                                         @Html.EditorFor(model => model.ExistingPLCaseNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "ExistingPLCaseNo" } })
                                                         @Html.ValidationMessageFor(model => model.ExistingPLCaseNo, "", new { @class = "text-danger" })
                                                     </div>
@@ -303,7 +296,6 @@ new { @class = "form-control", @style = "width: 80px;" })
                                                         <span class="text-danger">* </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <span class="text-danger" id="CustomErr"> </span>
                                                         @Html.EditorFor(model => model.BldgHouseName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Building/House Name", @maxlength = "50" } })
                                                         @Html.ValidationMessageFor(model => model.BldgHouseName, "", new { @class = "text-danger" })
                                                     </div>
@@ -312,7 +304,7 @@ new { @class = "form-control", @style = "width: 80px;" })
                                                         <span class="text-danger"> * </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <span class="text-danger" id="CustomErr"> </span> @Html.EditorFor(model => model.Road, new { htmlAttributes = new { @class = "form-control", @placeholder = "Road", @maxlength = "30" } })
+                                                @Html.EditorFor(model => model.Road, new { htmlAttributes = new { @class = "form-control", @placeholder = "Road", @maxlength = "30" } })
                                                         @Html.ValidationMessageFor(model => model.Road, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -539,11 +531,14 @@ new { @class = "form-control" })
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Residence<span class="text-danger"> * </span></label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <select name="Trans_KYCAddresses[0].ResidenceCode" id="Trans_KYCAddresses_0__ResidenceCode" class="form-control">
-                                                            <option value="">Select Residence Code</option>
-                                                            <option value="01">Owned</option>
-                                                            <option value="02">Rented</option>
-                                                        </select>
+                                                        @Html.DropDownListFor(x => x.Trans_KYCAddresses[0].ResidenceCode,
+                                                new List<SelectListItem> {
+                                                new SelectListItem { Value = "" , Text = "Select Residence Code" },
+                                                new SelectListItem { Value = "01" , Text = "Rented" },
+                                                new SelectListItem { Value = "02" , Text = "Owned" },
+                                                },
+                                                new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(x => x.Trans_KYCAddresses[0].ResidenceCode, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -638,7 +633,7 @@ new { @class = "form-control" })
                                                         <span class="text-danger">  </span>
                                                     </label>
                                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                        <input type="hidden" id="Trans_KYCAddresses_1__ID" />
+                                                        <input type="hidden" id="Trans_KYCAddresses_1__ID" name="Trans_KYCAddresses[1].ID" />
                                                         <input name="Trans_KYCAddresses[1].BuildingHouseName" class="form-control" id="Trans_KYCAddresses_1__BuildingHouseName" type="text" maxlength="50">
                                                     </div>
                                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
