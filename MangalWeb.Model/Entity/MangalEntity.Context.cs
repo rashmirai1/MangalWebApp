@@ -92,6 +92,8 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tblHistory_KYCAddresses> tblHistory_KYCAddresses { get; set; }
         public virtual DbSet<tblKYC_HistoryDetails> tblKYC_HistoryDetails { get; set; }
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
+        public virtual DbSet<Mst_LoanPupose> Mst_LoanPupose { get; set; }
+        public virtual DbSet<TGLPreSanction> TGLPreSanctions { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

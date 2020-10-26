@@ -1,4 +1,5 @@
 ﻿using MangalWeb.Model.Transaction;
+using MangalWeb.Models.Security;
 using MangalWeb.Service.Service;
 using Newtonsoft.Json;
 using System;
@@ -19,30 +20,33 @@ namespace MangalWeb.Controllers
         public ActionResult Index()
         {
             ButtonVisiblity("Index");
-            var model = new PreSanctionDetailsVM();
-            ViewBag.RMList = new SelectList(_preSanctionService.GetAllRMByBranch(), "UserName", "UserName");
-            ViewBag.LoanPurpose = new SelectList(LoanPurposeListMethod(), "Value", "Text");
-            ViewBag.Schemes = new SelectList(_schemeService.GetAllSchemeMasters(), "SID", "SchemeName");
-            ViewBag.ProductList = new SelectList(_productrateService.GetProductList(), "Id", "Name");
+            var model = new TGLPreSanctionVM();
+            model.RMList = new SelectList(_preSanctionService.GetAllRMByBranch(), "UserID", "UserName");
+            model.LoanPurposes = new SelectList(_preSanctionService.GetLoanPurposes(), "LoanPuposeID", "LoanPupose");
+            model.Schemes = new SelectList(_schemeService.GetAllSchemeMasters(), "SID", "SchemeName");
+            model.Products = new SelectList(_productrateService.GetProductList(), "Id", "Name");
             return View(model);
         }
         #endregion
 
         #region Insert
         [HttpPost]
-        public ActionResult Insert(PreSanctionDetailsVM objViewModel)
+        public ActionResult SavePreSanction(TGLPreSanctionVM model)
         {
+            model.CreatedBy = UserInfo.UserID;
+
             try
             {
-                ViewBag.LoanPurpose = new SelectList(LoanPurposeListMethod(), "Value", "Text");
-                ViewBag.Schemes = new SelectList(_schemeService.GetAllSchemeMasters(), "SID", "SchemeName");
-                ViewBag.ProductList = new SelectList(_productrateService.GetProductList(), "Id", "Name");
-                ModelState.Remove("Id");
-                if (objViewModel.Id == 0)
-                {
-                    InsertData(objViewModel);
-                }
-                return Json(objViewModel);
+                //    ViewBag.LoanPurpose = new SelectList(LoanPurposeListMethod(), "Value", "Text");
+                //    ViewBag.Schemes = new SelectList(_schemeService.GetAllSchemeMasters(), "SID", "SchemeName");
+                //    ViewBag.ProductList = new SelectList(_productrateService.GetProductList(), "Id", "Name");
+                //    ModelState.Remove("Id");
+                //    if (objViewModel.Id == 0)
+                //    {
+                //        InsertData(objViewModel);
+                //    }
+                var preSanction = _preSanctionService.SavePreSanction(model);
+                return Json(preSanction);
             }
             catch (Exception ex)
             {
@@ -82,11 +86,12 @@ namespace MangalWeb.Controllers
         public ActionResult GetCustomerById(int Id)
         {
             ButtonVisiblity("Edit");
-            ViewBag.RMList = new SelectList(_preSanctionService.GetAllRMByBranch(), "UserID", "UserName");
-            ViewBag.LoanPurpose = new SelectList(LoanPurposeListMethod(), "Value", "Text");
-            ViewBag.Schemes = new SelectList(_schemeService.GetAllSchemeMasters(), "SID", "SchemeName");
-            ViewBag.ProductList = new SelectList(_productrateService.GetProductList(), "Id", "Name");
+          
             var model = _preSanctionService.GetCustomerById(Id);
+            model.RMList = new SelectList(_preSanctionService.GetAllRMByBranch(), "UserID", "UserName");
+            model.LoanPurposes = new SelectList(_preSanctionService.GetLoanPurposes(), "LoanPuposeID", "LoanPupose");
+            model.Schemes = new SelectList(_schemeService.GetAllSchemeMasters(), "SID", "SchemeName");
+            model.Products = new SelectList(_productrateService.GetProductList(), "Id", "Name");
             return View("Index", model);
         }
         #endregion GetCustomerById

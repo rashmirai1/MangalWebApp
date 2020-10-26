@@ -188,6 +188,9 @@
     <Compile Include="Entity\Mst_GstMaster.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Mst_LoanPupose.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Mst_ParentDeviation.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -317,6 +320,9 @@
     <Compile Include="Entity\TGLKYC_BasicDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\TGLPreSanction.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\TGlReceipt_BasicDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -415,6 +421,7 @@
     <Compile Include="Transaction\SanctionEMICalculatorVM.cs" />
     <Compile Include="Transaction\SanctionTopUpVM.cs" />
     <Compile Include="Transaction\SchemeDetailsVM.cs" />
+    <Compile Include="Transaction\TGLPreSanctionVM.cs" />
     <Compile Include="Transaction\ValuatorOneDetailsViewModel.cs" />
     <Compile Include="Transaction\ValuatorOneViewModel.cs" />
     <Compile Include="Transaction\ValuatorTwoDetailsViewModel.cs" />
