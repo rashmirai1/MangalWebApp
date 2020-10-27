@@ -73,16 +73,16 @@ namespace MangalWeb.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult doesPincodeNameExist(string Pincode, int Id)
+        public JsonResult doesAreaNameExist(string Area, int Id)
         {
-            var data = _pincodeService.CheckPinAreaExists(Pincode, Id);
+            var data = _pincodeService.CheckPinAreaExists(Area, Id);
             var result = "";
             //Check if city name already exists
             if (data != null)
             {
-                if (Pincode == data.ToString())
+                if (Area.ToLower().Equals(data.ToLower()))
                 {
-                    result = "Pincode Already Exists";
+                    result = "Area Already Exists";
                 }
                 else
                 {

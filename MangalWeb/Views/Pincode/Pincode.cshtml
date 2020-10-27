@@ -139,11 +139,11 @@
                 $("#hideState").show();
             }
             //if (document.URL.indexOf("ID") == -1) {
-            $("#Pincode").on('input', function () {
+            $("#AreaName").on('input', function () {
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("doesPincodeNameExist", "Pincode")',
-                    data: '{Pincode: "' + $("#Pincode").val() + '", Id: "' + $("#ItemID").val() + '"}',
+                    url: '@Url.Action("doesAreaNameExist", "Pincode")',
+                    data: '{Area: "' + $("#AreaName").val() + '", Id: "' + $("#ItemID").val() + '"}',
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (result) {

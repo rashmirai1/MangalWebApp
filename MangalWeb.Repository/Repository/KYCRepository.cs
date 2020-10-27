@@ -543,12 +543,21 @@ namespace MangalWeb.Repository.Repository
         /// get list of pincodes from db
         /// </summary>
         /// <returns></returns>
+        public dynamic GetPincodeMasterList()
+        {
+            var pincodelist = _context.Mst_PinCode.Select(x => new
+            {
+                PcId = x.Pc_Id,
+                PincodeWithArea = x.Pc_Desc + "(" + x.Pc_AreaName + ")"
+            }).ToList();
+            return pincodelist;
+        }
+
         public IList<Mst_PinCode> GetAllPincodes()
         {
-            var pincode = _context.Mst_PinCode.ToList();
-
-            return pincode;
+            return _context.Mst_PinCode.ToList();
         }
+
         /// <summary>
         /// Save Kyc Docs
         /// </summary>

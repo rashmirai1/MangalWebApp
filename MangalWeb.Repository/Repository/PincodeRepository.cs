@@ -36,12 +36,12 @@ namespace MangalWeb.Repository.Repository
         public string GetStateName(int id)
         {
             var statename = (from aa in _context.tblCityMasters
-                               join bb in _context.tblStateMasters on aa.StateID equals bb.StateID
-                               where aa.CityID == id
-                               select new
-                               {
-                                   state = bb.StateName
-                               }).FirstOrDefault();
+                             join bb in _context.tblStateMasters on aa.StateID equals bb.StateID
+                             where aa.CityID == id
+                             select new
+                             {
+                                 state = bb.StateName
+                             }).FirstOrDefault();
             return statename.state;
         }
 
@@ -82,15 +82,15 @@ namespace MangalWeb.Repository.Repository
             _context.SaveChanges();
         }
 
-        public string CheckPincodeExists(string pincode, int id)
+        public string CheckPinAreaExists(string area, int id)
         {
             if (id > 0)
             {
-                return _context.Mst_PinCode.Where(x => x.Pc_Desc == pincode && x.Pc_Id != id).Select(x => x.Pc_Desc).FirstOrDefault();
+                return _context.Mst_PinCode.Where(x => x.Pc_AreaName.ToLower() == area.ToLower() && x.Pc_Id != id).Select(x => x.Pc_AreaName).FirstOrDefault();
             }
             else
             {
-                return _context.Mst_PinCode.Where(x => x.Pc_Desc == pincode).Select(x => x.Pc_Desc).FirstOrDefault();
+                return _context.Mst_PinCode.Where(x => x.Pc_AreaName.ToLower() == area.ToLower()).Select(x => x.Pc_AreaName).FirstOrDefault();
             }
         }
 

@@ -14,20 +14,17 @@ namespace MangalWeb.Repository.Repository
 
         public List<Mst_AuditCheckList> GetAllAuditChecklistMasters()
         {
-            var list = _context.Mst_AuditCheckList.ToList();
-            return list;
+            return _context.Mst_AuditCheckList.ToList();
         }
 
         public List<Mst_AuditCategory> GetAuditCategoryList()
         {
-            var list = _context.Mst_AuditCategory.ToList();
-            return list;
+            return _context.Mst_AuditCategory.ToList();
         }
 
         public Mst_AuditCheckList GetAuditCheckListById(int id)
         {
-            var audit = _context.Mst_AuditCheckList.Where(x => x.Acl_Id == id).FirstOrDefault();
-            return audit;
+            return _context.Mst_AuditCheckList.Where(x => x.Acl_Id == id).FirstOrDefault();
         }
 
         public void DeleteRecord(int id)
@@ -64,8 +61,7 @@ namespace MangalWeb.Repository.Repository
 
         public string CheckReasonNameExists(string Name)
         {
-            var source = _context.Mst_Reason.Where(x => x.Re_Desc == Name).Select(x => x.Re_Desc).FirstOrDefault();
-            return source;
+            return _context.Mst_Reason.Where(x => x.Re_Desc == Name).Select(x => x.Re_Desc).FirstOrDefault();
         }
 
         public AuditCheckListViewModel SetRecordinEdit(Mst_AuditCheckList tblAudit)

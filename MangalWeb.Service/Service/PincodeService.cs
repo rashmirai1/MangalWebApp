@@ -15,8 +15,7 @@ namespace MangalWeb.Service.Service
 
         public List<Mst_PinCode> GetAllPincodeMaster()
         {
-            var list = _pincodeRepository.GetAllPincodeMasters();
-            return list;
+            return _pincodeRepository.GetAllPincodeMasters();
         }
 
         public int CheckBranchExistsByPincodeId(int id)
@@ -26,26 +25,22 @@ namespace MangalWeb.Service.Service
 
         public Mst_PinCode GetPincodeById(int id)
         {
-            var pincode = _pincodeRepository.GetPincodeById(id);
-            return pincode;
+            return _pincodeRepository.GetPincodeById(id);
         }
 
-        public string CheckPinAreaExists(string pincode,int id)
+        public string CheckPinAreaExists(string area,int id)
         {
-            var statename = _pincodeRepository.CheckPincodeExists(pincode,id);
-            return statename;
+            return _pincodeRepository.CheckPinAreaExists(area,id);
         }
 
         public PincodeViewModel SetDataOnEdit(Mst_PinCode tblPincode)
         {
-            var item = _pincodeRepository.SetRecordinEdit(tblPincode);
-            return item;
+            return _pincodeRepository.SetRecordinEdit(tblPincode);
         }
 
         public List<tblCityMaster> GetCityMasterList()
         {
-            var list = _pincodeRepository.GetCityMasterList();
-            return list;
+            return _pincodeRepository.GetCityMasterList();
         }
 
         public List<tblZonemaster> GetZoneMasterList()

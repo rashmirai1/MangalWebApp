@@ -14,20 +14,17 @@ namespace MangalWeb.Repository.Repository
 
         public List<Mst_SourceofApplication> GetAllSourceofApplicationMasters()
         {
-            var list = _context.Mst_SourceofApplication.ToList();
-            return list;
+            return _context.Mst_SourceofApplication.ToList();
         }
 
         public Mst_SourceofApplication GetSourceofApplicationById(int id)
         {
-            var source = _context.Mst_SourceofApplication.Where(x => x.Soa_Id == id).FirstOrDefault();
-            return source;
+            return _context.Mst_SourceofApplication.Where(x => x.Soa_Id == id).FirstOrDefault();
         }
 
         public int GetMaxSourceId()
         {
-            int id = _context.Mst_SourceofApplication.Any() ? _context.Mst_SourceofApplication.Max(m => m.Soa_Id) + 1 : 1;
-            return id;
+            return _context.Mst_SourceofApplication.Any() ? _context.Mst_SourceofApplication.Max(m => m.Soa_Id) + 1 : 1;
         }
 
         public void DeleteRecord(int id)

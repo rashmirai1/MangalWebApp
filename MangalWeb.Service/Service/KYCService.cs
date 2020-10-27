@@ -39,8 +39,7 @@ namespace MangalWeb.Service.Service
         /// <returns></returns>
         public FillAddressByPinCode FillAddressByPinCode(int id)
         {
-            var result = _kycRepository.FillAddressByPinCode(id);
-            return result;
+            return _kycRepository.FillAddressByPinCode(id);
         }
         /// <summary>
         /// get all pincodes from pincode master table
@@ -48,9 +47,12 @@ namespace MangalWeb.Service.Service
         /// <returns></returns>
         public IList<Mst_PinCode> GetAllPincodes()
         {
-            var pincode = _kycRepository.GetAllPincodes();
+            return _kycRepository.GetAllPincodes();
+        }
 
-            return pincode;
+        public dynamic GetPincodeWithArea()
+        {
+            return _kycRepository.GetPincodeMasterList();
         }
 
         #region GetConsolidatedImage
@@ -67,8 +69,7 @@ namespace MangalWeb.Service.Service
         /// <returns></returns>
         public KYCBasicDetailsVM doesPanExist(string Pan)
         {
-            var kycVm = _kycRepository.doesPanExist(Pan);
-            return kycVm;
+            return _kycRepository.doesPanExist(Pan);
         }
         /// <summary>
         /// get kyc photo by id

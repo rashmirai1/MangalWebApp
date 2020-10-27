@@ -15,20 +15,17 @@ namespace MangalWeb.Repository
 
         public List<tblDocumentMaster> GetAllDocumentMasters()
         {
-            var list = _context.tblDocumentMasters.ToList();
-            return list;
+            return _context.tblDocumentMasters.ToList();
         }
 
         public tblDocumentMaster GetDocumentById(int id)
         {
-            var source = _context.tblDocumentMasters.Where(x => x.DocumentID == id).FirstOrDefault();
-            return source;
+            return _context.tblDocumentMasters.Where(x => x.DocumentID == id).FirstOrDefault();
         }
 
         public List<Mst_DocumentType> GetDcoumentTypeList()
         {
-            var list = _context.Mst_DocumentType.ToList();
-            return list;
+            return _context.Mst_DocumentType.ToList();
         }
 
         public string CheckDocumentNameExists(string Name, int id)

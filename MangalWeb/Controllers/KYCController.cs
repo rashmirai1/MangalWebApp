@@ -19,8 +19,8 @@ namespace MangalWeb.Controllers
         {
             ButtonVisiblity("Index");
             ViewBag.SourceList = new SelectList(_kycService.GetSourceOfApplicationList(), "Soa_Id", "Soa_Name");
-            ViewBag.PinCodeList = new SelectList(_kycService.GetAllPincodes(), "Pc_Id", "Pc_Desc");
-            //ViewBag.PinCodes = _kycService.GetAllPincodes();
+            var pincodelist = _kycService.GetPincodeWithArea();
+            ViewBag.PinCodeList = new SelectList(pincodelist, "PcId", "PincodeWithArea");
             ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
             ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
             KYCBasicDetailsVM kycVM = new KYCBasicDetailsVM();

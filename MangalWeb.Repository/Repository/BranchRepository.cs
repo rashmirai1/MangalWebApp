@@ -20,8 +20,7 @@ namespace MangalWeb.Repository.Repository
 
         public tblCompanyBranchMaster GetBranchMasterById(int id)
         {
-            var branch = _context.tblCompanyBranchMasters.Where(x => x.BID == id).FirstOrDefault();
-            return branch;
+            return _context.tblCompanyBranchMasters.Where(x => x.BID == id).FirstOrDefault();
         }
 
         public List<BranchViewModel> SetDataofModalList()

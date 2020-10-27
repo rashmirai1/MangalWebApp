@@ -14,20 +14,17 @@ namespace MangalWeb.Repository.Repository
 
         public List<tblItemMaster> GetAllOrnamentMasters()
         {
-            var list = _context.tblItemMasters.ToList();
-            return list;
+            return _context.tblItemMasters.ToList();
         }
 
         public List<Mst_Product> GetProductList()
         {
-            var list = _context.Mst_Product.ToList();
-            return list;
+            return _context.Mst_Product.ToList();
         }
 
         public tblItemMaster GetOrnamentById(int id)
         {
-            var ornament = _context.tblItemMasters.Where(x => x.ItemID == id).FirstOrDefault();
-            return ornament;
+            return _context.tblItemMasters.Where(x => x.ItemID == id).FirstOrDefault();
         }
 
         public void DeleteRecord(int id)

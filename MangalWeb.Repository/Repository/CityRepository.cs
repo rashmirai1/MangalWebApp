@@ -19,26 +19,22 @@ namespace MangalWeb.Repository.Repository
 
         public List<tblCityMaster> GetAllCityMasters()
         {
-            var list = _context.tblCityMasters.ToList();
-            return list;
+            return _context.tblCityMasters.ToList();
         }
 
         public tblCityMaster GetCityMasterById(int id)
         {
-            var city = _context.tblCityMasters.Where(x => x.CityID == id).FirstOrDefault();
-            return city;
+            return _context.tblCityMasters.Where(x => x.CityID == id).FirstOrDefault();
         }
 
         public List<tbl_CountryMaster> GetCountryMasterList()
         {
-            var list = _context.tbl_CountryMaster.ToList();
-            return list;
+            return _context.tbl_CountryMaster.ToList();
         }
 
         public List<tblStateMaster> GetStateMasterList()
         {
-            var statelist = _context.tblStateMasters.ToList();
-            return statelist;
+            return _context.tblStateMasters.ToList();
         }
 
         public string GetCountryName(int id)
