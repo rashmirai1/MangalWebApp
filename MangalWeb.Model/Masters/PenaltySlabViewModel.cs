@@ -11,7 +11,7 @@ namespace MangalWeb.Model.Masters
         public int ID { get; set; }
         public int EditID { get; set; }
 
-        [Required(ErrorMessage = "Date is Required")]
+        [Required(ErrorMessage = "Date is required")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
         public string Datewef { get; set; }

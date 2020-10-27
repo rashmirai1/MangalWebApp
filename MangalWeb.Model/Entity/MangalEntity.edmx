@@ -602,7 +602,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Property Name="PANNo" Type="nvarchar" MaxLength="12" Nullable="false" />
           <Property Name="MobileNo" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="TelephoneNo" Type="nvarchar" MaxLength="12" />
-          <Property Name="EmailID" Type="nvarchar" MaxLength="30" />
+          <Property Name="EmailID" Type="nvarchar" MaxLength="100" />
           <Property Name="BldgHouseName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Road" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="BldgPlotNo" Type="nvarchar" MaxLength="30" Nullable="false" />
@@ -4267,7 +4267,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="PANNo" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="TelephoneNo" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="EmailID" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="EmailID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="BldgHouseName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Road" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="BldgPlotNo" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />

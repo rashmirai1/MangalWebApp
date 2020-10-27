@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
-@using (Ajax.BeginForm("CreateEdit", "Charge", new AjaxOptions { OnSuccess = "OnSuccess" }))
+@using (Ajax.BeginForm("", "", new AjaxOptions { OnSuccess = "OnSuccess" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
@@ -43,18 +43,17 @@
                                                 <span class="text-danger" id="CustomErr"> </span>
                                                 <span class="text-danger" id="CustomErrr"> </span>
                                                 @Html.EditorFor(model => model.ChargeName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Charge Name", @maxlength = "20", @autofocus = "autofocus" } })
-                                                @*@Html.ValidationMessageFor(model => model.ChargeName, "", new { @class = "text-danger" })*@
+                                                @Html.ValidationMessageFor(model => model.ChargeName, "", new { @class = "text-danger" })
                                             </div>
-                                        </div>
-                                        <br />
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Reference Date<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
                                                 <span class="text-danger" id="CustomErr"> </span>
                                                 @Html.EditorFor(model => model.ReferenceDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Reference Date" } })
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
                                                 <div class="section">
@@ -68,7 +67,7 @@
                                                                     }, "Value", "Text");
                                                         }
                                                         @Html.DropDownListFor(m => m.Status, statuslist)
-                                                        @*<span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>*@
+                                                        <span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>
                                                         <i class="arrow"></i>
                                                     </label>
                                                 </div>
@@ -87,19 +86,19 @@
                                         <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                             <div class="section">
                                                 @Html.EditorFor(model => model.chargeDetailsViewModel.LoanAmountGreaterthan, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Loan Amount >=", @maxlength = "10", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                                @*<span class="text-danger">@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.LoanAmountGreaterthan)</span>*@
+                                                <span class="text-danger">@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.LoanAmountGreaterthan)</span>
                                                 <i class="arrow"></i>
                                             </div>
                                         </div>
-                                        <label class="col-md-2 control-label" id="lblSerialNumber"> Loan Amount<= <span class="text-danger"> * </span></label>
+                                        <label class="col-md-2 control-label"> Loan Amount<= <span class="text-danger"> * </span></label>
                                         <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                             @Html.EditorFor(model => model.chargeDetailsViewModel.LoanAmountLessthan, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Loan Amount <=", @maxlength = "10", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                            @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.LoanAmountLessthan, "", new { @class = "text-danger" })*@
+                                            @Html.ValidationMessageFor(model => model.chargeDetailsViewModel.LoanAmountLessthan, "", new { @class = "text-danger" })
                                         </div>
                                         <label class="col-md-2 control-label"> Charges<span class="text-danger"> * </span> </label>
                                         <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                             @Html.EditorFor(model => model.chargeDetailsViewModel.ChargeAmount, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Charges", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                            @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
+                                            @Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <br />
@@ -112,12 +111,14 @@
                                                     @{
                                                         var expiryApplicablelist = new SelectList(new[]
                                                         {
+
+                                                                    new SelectListItem { Text = "Select Charge Type", Value = ""},
                                                                     new SelectListItem { Text = "Amount", Value = "Amount"},
                                                                     new SelectListItem { Text = "Percentage", Value = "Percentage"}
                                                                     }, "Value", "Text");
                                                     }
                                                     @Html.DropDownListFor(model => model.chargeDetailsViewModel.ChargeType, expiryApplicablelist)
-                                                    @*<span class="text-danger">@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeType)</span>*@
+                                                    <span class="text-danger">@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeType)</span>
                                                     <i class="arrow"></i>
                                                 </label>
                                             </div>
@@ -312,7 +313,7 @@
                 }
                 else
                 {
-                    if (LoanAmountGr!="" && LoanAmountLe!="" && ChargeAmount!="" && ChargeType!="") {
+                    if (LoanAmountGr!="" && LoanAmountLe!="" && ChargeAmount!="" && ChargeTypeId!="") {
                         $("#tblChargeDetails tbody").append(row);
                         $("#chargeDetailsViewModel_LoanAmountGreaterthan").val("");
                         $("#chargeDetailsViewModel_LoanAmountLessthan").val("");
@@ -356,40 +357,26 @@
 
         function SaveCharge() {
             debugger;
-            var ChargeName = $("#ChargeName").val();
-            if (ChargeName == "") {
-                $("#CustomErrr").text("Please Enter Charge Name");
-                $("#ChargeName").focus();
-                return;
-            }
-
-            var Status = $("#Status").val();
-            if (Status == "") {
-                $("#CustomErrr").text("Please Select Status");
-                $("#Status").focus();
-                return;
-            }
-            debugger;
-            if ($('#tblChargeDetails tbody tr').length == 0) {
-                var chargegreater= $("#chargeDetailsViewModel_LoanAmountGreaterthan").val();
-                if (chargegreater == "") {
-                    $("#CustomErrr").text("Please Enter Loan Amount >=");
-                    $("#chargeDetailsViewModel_LoanAmountGreaterthan").focus();
-                    return;
-                }
-                var chargeless= $("#chargeDetailsViewModel_LoanAmountLessthan").val();
-                if (chargeless == "") {
-                    $("#CustomErrr").text("Please Enter Loan Amount<=");
-                    $("#chargeDetailsViewModel_LoanAmountLessthan").focus();
-                    return;
-                }
-                var chargegreater= $("#chargeDetailsViewModel_ChargeAmount").val();
-                if (chargegreater == "") {
-                    $("#CustomErrr").text("Please Enter Charge Amount");
-                    $("#chargeDetailsViewModel_ChargeAmount").focus();
-                    return;
-                }
-            }
+            //if ($('#tblChargeDetails tbody tr').length == 0) {
+            //    var chargegreater= $("#chargeDetailsViewModel_LoanAmountGreaterthan").val();
+            //    if (chargegreater == "") {
+            //        $("#CustomErrr").text("Please Enter Loan Amount >=");
+            //        $("#chargeDetailsViewModel_LoanAmountGreaterthan").focus();
+            //        return;
+            //    }
+            //    var chargeless= $("#chargeDetailsViewModel_LoanAmountLessthan").val();
+            //    if (chargeless == "") {
+            //        $("#CustomErrr").text("Please Enter Loan Amount<=");
+            //        $("#chargeDetailsViewModel_LoanAmountLessthan").focus();
+            //        return;
+            //    }
+            //    var chargegreater= $("#chargeDetailsViewModel_ChargeAmount").val();
+            //    if (chargegreater == "") {
+            //        $("#CustomErrr").text("Please Enter Charge Amount");
+            //        $("#chargeDetailsViewModel_ChargeAmount").focus();
+            //        return;
+            //    }
+            //}
             var length=$('#tblChargeDetails tbody tr').length;
             if(length==0)
             {

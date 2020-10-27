@@ -99,8 +99,8 @@
                                                 @Html.DropDownListFor(model => model.ResidenceCode,
                                                 new List<SelectListItem> {
                                                 new SelectListItem { Value = "" , Text = "Select Residence Code" },
-                                                new SelectListItem { Value = "01" , Text = "Rented" },
-                                                new SelectListItem { Value = "02" , Text = "Owned" },
+                                                new SelectListItem { Value = "01" , Text = "Owned" },
+                                                new SelectListItem { Value = "02" , Text = "Rented" },
                                                 },
                                                 new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(model => model.ResidenceCode, "", new { @class = "text-danger" })
@@ -233,8 +233,8 @@
                                                 @Html.DropDownListFor(x=>x.Trans_KYCAddresses[0].ResidenceCode,
                                                 new List<SelectListItem> {
                                                 new SelectListItem { Value = "" , Text = "Select Residence Code" },
-                                                new SelectListItem { Value = "01" , Text = "Rented" },
-                                                new SelectListItem { Value = "02" , Text = "Owned" },
+                                                new SelectListItem { Value = "01" , Text = "Owned" },
+                                                new SelectListItem { Value = "02" , Text = "Rented" },
                                                 },
                                                 new { @class = "form-control" })
                                                 @Html.ValidationMessageFor(x=>x.Trans_KYCAddresses[0].ResidenceCode, "", new { @class = "text-danger" })

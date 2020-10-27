@@ -10,15 +10,15 @@ namespace MangalWeb.Model.Masters
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "State Code is Required")]
-        [StringLength(10)]
+        [Required(ErrorMessage = "State Code is required")]
+        [StringLength(10,ErrorMessage ="State Code can not be more than 10 characters")]
         public string StateCode { get; set; }
 
-        [Required(ErrorMessage = "State Name is Required")]
-        [StringLength(20)]
+        [Required(ErrorMessage = "State Name is required")]
+        [StringLength(20, ErrorMessage = "State Name can not be more than 20 characters")]
         public string StateName { get; set; }
 
-        [Required(ErrorMessage = "Please Select ckyc state")]
+        [Required(ErrorMessage = "Please Select Ckyc state")]
         public int CkycStateId { get; set; }
 
         [Required(ErrorMessage = "Please Select Country")]

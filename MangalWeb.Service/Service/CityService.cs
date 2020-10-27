@@ -15,45 +15,37 @@ namespace MangalWeb.Service.Service
 
         public List<tblCityMaster> GetAllCityMaster()
         {
-            var list = _cityRepository.GetAllCityMasters();
-
-            return list;
+            return _cityRepository.GetAllCityMasters();
         }
 
         public tblCityMaster GetCityById(int id)
         {
-            var city = _cityRepository.GetCityMasterById(id);
-            return city;
+            return _cityRepository.GetCityMasterById(id);
         }
 
         public string CheckCityNameExists(string name,int id)
         {
-            var cityname = _cityRepository.CheckCityNameExists(name,id);
-            return cityname;
+            return _cityRepository.CheckCityNameExists(name,id);
         }
 
         public CityViewModel SetDataOnEdit(tblCityMaster tblCity)
         {
-            var item = _cityRepository.SetRecordinEdit(tblCity);
-            return item;
+            return _cityRepository.SetRecordinEdit(tblCity);
         }
 
         public List<tbl_CountryMaster> GetCountryList()
         {
-            var list = _cityRepository.GetCountryMasterList();
-            return list;
+            return _cityRepository.GetCountryMasterList();
         }
 
         public List<tblStateMaster> GetStateList()
         {
-            var list = _cityRepository.GetStateMasterList();
-            return list;
+            return _cityRepository.GetStateMasterList();
         }
 
         public string GetCountryName(int id)
         {
-            var city = _cityRepository.GetCountryName(id);
-            return city;
+            return _cityRepository.GetCountryName(id);
         }
 
         public void DeleteCityRecord(int id)

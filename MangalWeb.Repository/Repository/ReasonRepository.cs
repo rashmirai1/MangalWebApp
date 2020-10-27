@@ -15,14 +15,12 @@ namespace MangalWeb.Repository
 
         public List<Mst_Reason> GetAllReasonMasters()
         {
-            var list = _context.Mst_Reason.ToList();
-            return list;
+            return _context.Mst_Reason.ToList();
         }
 
         public Mst_Reason GetReasonById(int id)
         {
-            var reason = _context.Mst_Reason.Where(x => x.Re_No == id && x.Re_Status == 1).FirstOrDefault();
-            return reason;
+            return _context.Mst_Reason.Where(x => x.Re_No == id).FirstOrDefault();
         }
 
         public void DeleteRecord(int id)

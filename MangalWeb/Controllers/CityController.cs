@@ -39,7 +39,7 @@ namespace MangalWeb.Controllers
             }
             model.operation = operation;
             ViewBag.StateList = new SelectList(_cityService.GetStateList(), "StateID", "StateName");
-            var country = _cityService.GetCountryName(ID);
+            var country = _cityService.GetCountryName(model.StateId);
             model.CountryName = country;
             return View("City", model);
         }

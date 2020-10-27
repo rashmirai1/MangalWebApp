@@ -10,8 +10,8 @@ namespace MangalWeb.Model.Masters
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Document Name is Required")]
-        [StringLength(50)]
+        [Required(ErrorMessage = "Document Name is required")]
+        [StringLength(50,ErrorMessage ="Document Name can not be greater than 50 characters")]
         //[Remote("doesSourceNameExist", "SourceofApplication", ErrorMessage = "Source Name Already Exists.")]
         public string DocumentName { get; set; }
 

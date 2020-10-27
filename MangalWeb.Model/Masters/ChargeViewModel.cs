@@ -11,11 +11,11 @@ namespace MangalWeb.Model.Masters
 
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Charge Name is Required")]
-        [StringLength(20)]
+        [Required(ErrorMessage = "Charge Name is required")]
+        [StringLength(20,ErrorMessage ="Charge Name can not be greater than 20 characters")]
         public string ChargeName { get; set; }
 
-        [Required(ErrorMessage = "Reference Date is Required")]
+        [Required(ErrorMessage = "Reference Date is required")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
         public DateTime ReferenceDate { get; set; }

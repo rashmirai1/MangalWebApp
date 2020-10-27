@@ -10,8 +10,8 @@ namespace MangalWeb.Model.Masters
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Ornament Name is Required")]
-        [StringLength(20)]
+        [Required(ErrorMessage = "Ornament Name is required")]
+        [StringLength(20, ErrorMessage = "Ornament Name can not be more than 20 characters")]
         public string OrnamentName { get; set; }
 
         [Required(ErrorMessage = "Please Select Product")]

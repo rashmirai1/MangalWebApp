@@ -23,9 +23,9 @@ namespace MangalWeb.Model.Transaction
         public string CustomerID { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
-        public string AppliedDate { get; set; }
+        public DateTime AppliedDate { get; set; }
 
-        [Required(ErrorMessage = "Please Upload Photo !")]
+        //[Required(ErrorMessage = "Please Upload Photo !")]
         [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$", ErrorMessage = "Only Image files allowed.")]
         public HttpPostedFileBase uploadFile { get; set; }
 
@@ -54,7 +54,7 @@ namespace MangalWeb.Model.Transaction
         [Required(ErrorMessage = "Birth Date is required.")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
-        public string BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public int? Age { get; set; }
 

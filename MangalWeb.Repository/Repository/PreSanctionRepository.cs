@@ -74,7 +74,7 @@ namespace MangalWeb.Repository.Repository
             int cid = rand.Next(000000000, 999999999) + 1;
             preSanctionDetailsVM.TransactionId = "T" + cid.ToString();
             preSanctionDetailsVM.ApplicationNo = model.ApplicationNo;
-            preSanctionDetailsVM.AppliedDate = model.AppliedDate;
+            preSanctionDetailsVM.AppliedDate = model.AppliedDate.ToShortDateString();
             preSanctionDetailsVM.CustomerId = model.CustomerID;
             preSanctionDetailsVM.KycId = model.KYCID;
                 return preSanctionDetailsVM;

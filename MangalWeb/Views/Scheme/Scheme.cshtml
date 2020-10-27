@@ -5,7 +5,7 @@
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
 
-@using (Ajax.BeginForm("CreateEdit", "Scheme", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+@using (Ajax.BeginForm("CreateEdit", "Scheme", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure", OnBegin = "SaveValidation" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.SchemeId, new { @id = "ItemID" })
@@ -309,13 +309,21 @@
             type="text/javascript"></script>
     <script type="text/javascript">
 
-
-        $("#btn_save").click(function () {
+        function SaveValidation()
+        {
             if ($('#tbleffectiveroidetails tbody tr').length == 0) {
                 alert("Please Add Effective ROI(%)");
+                $("#SchemeEffectiveROIModel_EffectiveROIPerc").focus();
                 return false;
             }
-        });
+        }
+
+        //$("#btn_save").click(function () {
+        //    if ($('#tbleffectiveroidetails tbody tr').length == 0) {
+        //        alert("Please Add Effective ROI(%)");
+        //        return false;
+        //    }
+        //});
 
         $(document).ready(function () {
             if (document.URL.indexOf("ID") != -1) {

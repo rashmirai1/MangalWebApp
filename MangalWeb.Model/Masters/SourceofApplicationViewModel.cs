@@ -12,8 +12,8 @@ namespace MangalWeb.Model.Masters
         public int ID { get; set; }
         public int EditID { get; set; }
 
-        [Required(ErrorMessage = "Source Name is Required")]
-        [StringLength(30)]
+        [Required(ErrorMessage = "Source Name is required")]
+        [StringLength(30, ErrorMessage = "Source Name can not be more than 30 characters")]
         //[Remote("doesSourceNameExist", "SourceofApplication", ErrorMessage = "Source Name Already Exists.")]
         public string SourceName { get; set; }
 

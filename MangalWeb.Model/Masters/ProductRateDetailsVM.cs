@@ -15,16 +15,16 @@ namespace MangalWeb.Model.Masters
         public int Purity { get; set; }
         public string PurityStr { get; set; }
 
-        [Required(ErrorMessage = "Gross Rate is Required")]
+        [Required(ErrorMessage = "Gross Rate is required")]
         public decimal GrossRate { get; set; }
 
         [Required(ErrorMessage = "Please Select Deduction Type")]
         public string DeductionsType { get; set; }
 
-        [Required(ErrorMessage = "Deduction Amount is Required")]
+        [Required(ErrorMessage = "Deduction Amount is required")]
         public decimal DeductionAmount { get; set; }
 
-        [Required(ErrorMessage = "Net Rate is Required")]
+        [Required(ErrorMessage = "Net Rate is required")]
         public decimal NetRate { get; set; }
 
         public string operation { get; set; }

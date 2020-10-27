@@ -10,8 +10,8 @@ namespace MangalWeb.Model.Masters
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Reason is Required")]
-        [StringLength(150)]
+        [Required(ErrorMessage = "Reason is required")]
+        [StringLength(150,ErrorMessage ="Reason can not be greater than 150 characters")]
         public string ReasonName { get; set; }
 
         [Required(ErrorMessage = "Please Select Status")]

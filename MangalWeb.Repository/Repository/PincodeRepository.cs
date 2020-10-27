@@ -35,9 +35,14 @@ namespace MangalWeb.Repository.Repository
 
         public string GetStateName(int id)
         {
-            var stateid = _context.tblCityMasters.Where(x => x.CityID == id).Select(x => x.StateID).FirstOrDefault();
-            var statename = _context.tblStateMasters.Where(x => x.StateID == stateid).Select(x => x.StateName).FirstOrDefault();
-            return statename;
+            var statename = (from aa in _context.tblCityMasters
+                               join bb in _context.tblStateMasters on aa.StateID equals bb.StateID
+                               where aa.CityID == id
+                               select new
+                               {
+                                   state = bb.StateName
+                               }).FirstOrDefault();
+            return statename.state;
         }
 
         public Mst_PinCode GetPincodeById(int id)

@@ -11,7 +11,7 @@ namespace MangalWeb.Model.Masters
         public int ID { get; set; }
         public int EditID { get; set; }
 
-        [Required(ErrorMessage = "Effective From is Required")]
+        [Required(ErrorMessage = "Effective From is required")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
         public string EffectiveFrom { get; set; }

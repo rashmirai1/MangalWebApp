@@ -43,9 +43,14 @@ namespace MangalWeb.Repository.Repository
 
         public string GetCountryName(int id)
         {
-            var countryid = _context.tblStateMasters.Where(x => x.StateID == id).Select(x => x.countryID).FirstOrDefault();
-            var country = _context.tbl_CountryMaster.Where(x => x.CountryID == countryid).Select(x => x.CountryName).FirstOrDefault();
-            return country;
+            var countryname = (from aa in _context.tblStateMasters
+                               join bb in _context.tbl_CountryMaster on aa.countryID equals bb.CountryID
+                               where aa.StateID==id
+                               select new
+                               {
+                                   country=bb.CountryName
+                               }).FirstOrDefault();
+            return countryname.country;
         }
 
         public void DeleteRecord(int id)

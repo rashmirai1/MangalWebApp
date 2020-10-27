@@ -95,7 +95,7 @@ namespace MangalWeb.Repository.Repository
 
             residenceVerificationVM.TransactionId = "T" + cid.ToString();
             residenceVerificationVM.ApplicationNo = model.ApplicationNo;
-            residenceVerificationVM.AppliedDate = model.AppliedDate;
+            residenceVerificationVM.AppliedDate = model.AppliedDate.ToShortDateString();
             residenceVerificationVM.CustomerId = model.CustomerID;
             residenceVerificationVM.PreSanctionId = _context.tbl_PreSanctionDetails.Where(x => x.KycId == model.KYCID)
                                           .OrderByDescending(x => x.CreatedDate)

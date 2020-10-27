@@ -30,55 +30,55 @@ namespace MangalWeb.Model.Masters
 
         public int EditID { get; set; }
 
-        [Required(ErrorMessage = "Scheme Name is Required")]
-        [StringLength(30, ErrorMessage = "Scheme Name can not be greater than 30 characters")]
+        [Required(ErrorMessage = "Scheme Name is required")]
+        [StringLength(30, ErrorMessage = "Scheme Name can not be more than 30 characters")]
         public string SchemeName { get; set; }
 
-        [Required(ErrorMessage = "Min Tenure is Required")]
+        [Required(ErrorMessage = "Min Tenure is required")]
         [RegularExpression(@"^(\d{1,3})$", ErrorMessage = "error Message")]
         public int MinTenure { get; set; }
 
-        [Required(ErrorMessage = "Max Tenure is Required")]
+        [Required(ErrorMessage = "Max Tenure is required")]
         [RegularExpression(@"^(\d{1,3})$", ErrorMessage = "error Message")]
         public int MaxTenure { get; set; }
 
-        [Required(ErrorMessage = "Min Loan Amount is Required")]
+        [Required(ErrorMessage = "Min Loan Amount is required")]
         public decimal? MinLoanAmount { get; set; }
 
-        [Required(ErrorMessage = "Max Loan Amount is Required")]
+        [Required(ErrorMessage = "Max Loan Amount is required")]
         public decimal? MaxLoanAmount { get; set; }
 
-        [Required(ErrorMessage = "Min LTV % is Required")]
+        [Required(ErrorMessage = "Min LTV % is required")]
         public decimal? MinLTVPerc { get; set; }
 
-        [Required(ErrorMessage = "Max LTV % is Required")]
+        [Required(ErrorMessage = "Max LTV % is required")]
         public decimal? MaxLTVPerc { get; set; }
 
-        [Required(ErrorMessage = "Min ROI % is Required")]
+        [Required(ErrorMessage = "Min ROI % is required")]
         public decimal? MinROIPerc { get; set; }
 
-        [Required(ErrorMessage = "Max ROI % is Required")]
+        [Required(ErrorMessage = "Max ROI % is required")]
         //[RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "error Message")]
         public decimal? MaxROIPerc { get; set; }
 
-        [Required(ErrorMessage = "Grace Period is Required")]
+        [Required(ErrorMessage = "Grace Period is required")]
         [RegularExpression(@"^(\d{1,3})$", ErrorMessage = "error Message")]
         public int? GracePeriod { get; set; }
 
-        [Required(ErrorMessage = "Lock In Period is Required")]
+        [Required(ErrorMessage = "Lock In Period is required")]
         [RegularExpression(@"^(\d{1,2})$", ErrorMessage = "error Message")]
         public int? LockInPeriod { get; set; }
 
-        [Required(ErrorMessage = "Processing Fee Type is Required")]
+        [Required(ErrorMessage = "Processing Fee Type is required")]
         public string ProcessingFeeType { get; set; }
 
-        [Required(ErrorMessage = "Processing Charges is Required")]
+        [Required(ErrorMessage = "Processing Charges is required")]
         public decimal? ProcessingCharges { get; set; }
 
-        [Required(ErrorMessage = "Max Processing Charges is Required")]
+        [Required(ErrorMessage = "Max Processing Charges is required")]
         public decimal? MaxProcessingCharge { get; set; }
 
-        [Required(ErrorMessage = "Status is Required")]
+        [Required(ErrorMessage = "Status is required")]
         public string Status { get; set; }
 
         public string operation { get; set; }

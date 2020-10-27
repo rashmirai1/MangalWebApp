@@ -17,14 +17,12 @@ namespace MangalWeb.Repository.Repository
 
         public List<tblFinancialyear> GetFinancialYearMasters()
         {
-            var list = _context.tblFinancialyears.ToList();
-            return list;
+            return _context.tblFinancialyears.ToList();
         }
 
         public tblFinancialyear GetFinancialYearById(int id)
         {
-            var fyear = _context.tblFinancialyears.Where(x => x.FinancialyearID == id).FirstOrDefault();
-            return fyear;
+            return _context.tblFinancialyears.Where(x => x.FinancialyearID == id).FirstOrDefault();
         }
 
         public void DeleteRecord(int id)

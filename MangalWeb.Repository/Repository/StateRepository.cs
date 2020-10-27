@@ -14,8 +14,7 @@ namespace MangalWeb.Repository.Repository
 
         public List<tblStateMaster> GetAllStateMasters()
         {
-            var list = _context.tblStateMasters.ToList();
-            return list;
+            return _context.tblStateMasters.ToList();
         }
 
         public dynamic GetCKycStateist()
@@ -30,20 +29,17 @@ namespace MangalWeb.Repository.Repository
 
         public List<tbl_CountryMaster> GetCountryMasterList()
         {
-            var country = _context.tbl_CountryMaster.ToList();
-            return country;
+            return _context.tbl_CountryMaster.ToList();
         }
 
         public tblStateMaster GetStateMasterById(int id)
         {
-            var state = _context.tblStateMasters.Where(x => x.StateID == id).FirstOrDefault();
-            return state;
+            return _context.tblStateMasters.Where(x => x.StateID == id).FirstOrDefault();
         }
 
         public int CheckCityExistsByStateId(int id)
         {
-            var city = _context.tblCityMasters.Where(x => x.StateID == id).Select(x => x.CityID).FirstOrDefault();
-            return city;
+            return _context.tblCityMasters.Where(x => x.StateID == id).Select(x => x.CityID).FirstOrDefault();
         }
 
         public void DeleteRecord(int id)

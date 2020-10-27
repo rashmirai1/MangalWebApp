@@ -81,6 +81,7 @@ namespace MangalWeb.Repository.Repository
                 TrnViewModel.ResidenceCode = c.ResidenceCode;
                 AddressDetailsList.Add(TrnViewModel);
             }
+
             model.Trans_KYCAddresses = AddressDetailsList;
 
             var docuploaddetails = (from a in _context.Trn_DocUploadDetails

@@ -31,7 +31,7 @@ namespace MangalWeb.Controllers
             Random rand = new Random(100);
             int cid = rand.Next(000000000, 999999999) + appno;
             kycVM.CustomerID = "C" + cid.ToString();
-            kycVM.AppliedDate = DateTime.Now.ToShortDateString();
+            kycVM.AppliedDate = DateTime.Now;
             Session["docsub"] = null;
             Session["ApplicantImage"]=null;
             Session["ApplicantImageName"] = null;

@@ -10,7 +10,7 @@ namespace MangalWeb.Model.Masters
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Effective Date is Required")]
+        [Required(ErrorMessage = "Effective Date is required")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
         public string EffectiveDate { get; set; }
@@ -19,7 +19,8 @@ namespace MangalWeb.Model.Masters
         public int CategoryAudit { get; set; }
         public string CategoryAuditStr { get; set; }
 
-        [Required(ErrorMessage = "Audit CheckPoint is Required")]
+        [Required(ErrorMessage = "Audit CheckPoint is required")]
+        [StringLength(100,ErrorMessage = "Audit Check Point can not be more than 100 characters")]
         public string AuditCheckPoint { get; set; }
 
         [Required(ErrorMessage = "Please Select Status")]

@@ -58,6 +58,7 @@
                                     </div>
                                 </div>
                             </div>
+                                <span class="text-danger" id="CustomErrr"> </span>
                             <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
                             <hr style="margin-top:0px;" />
                             <label><b>Product Rate Details</b></label><br /><br />
@@ -66,17 +67,15 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label"> Purity <span class="text-danger"> * </span></label>
                                         <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                            <span class="text-danger" id="CustomErr"> </span>
                                             <div class="section">
                                                 <label class="field select">
                                                     @Html.DropDownListFor(m => m.ProductDetailsViewModel.Purity, (SelectList)ViewBag.PurityList, "--Select Purity--", htmlAttributes: new { @class = "form-control" })
                                                     <span class="text-danger small">@Html.ValidationMessageFor(m => m.ProductDetailsViewModel.Purity)</span>
+                                                    <span class="text-danger" id="CustomErr"> </span>
                                                     <i class="arrow"></i>
                                                 </label>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="col-md-2 control-label" id="lblSerialNumber"> Gross Rate <span class="text-danger"> * </span></label>
                                         <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                             @Html.EditorFor(model => model.ProductDetailsViewModel.GrossRate, new
@@ -91,32 +90,31 @@
                                        })
                                             @Html.ValidationMessageFor(model => model.ProductDetailsViewModel.GrossRate, "", new { @class = "text-danger" })
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Charge Type<span class="text-danger"> * </span></label>
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Deduction Type<span class="text-danger"> * </span></label>
                                         <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                             <div class="section">
                                                 <label class="field select">
                                                     @{
                                                         var AmountList = new SelectList(new[]
                                                         {
+                                                                    new SelectListItem { Text = "Select Type", Value = ""},
                                                                     new SelectListItem { Text = "Amount", Value = "Amount"},
                                                                     new SelectListItem { Text = "Percentage", Value = "Percentage"}
                                                                     }, "Value", "Text");
                                                     }
                                                     @Html.DropDownListFor(model => model.ProductDetailsViewModel.DeductionsType, AmountList)
-                                                    <span class="text-danger">@Html.ValidationMessageFor(model => model.ProductDetailsViewModel.DeductionsType)</span>
+                                                    @Html.ValidationMessageFor(model => model.ProductDetailsViewModel.DeductionsType,"",new { @class="text-danger"})
                                                     <i class="arrow"></i>
                                                 </label>
                                             </div>
-
                                         </div>
                                     </div>
-                                    <br /><br />
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label">Deduction Amount<span class="text-danger"> * </span></label>
-                                        <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                            @Html.EditorFor(model => model.ProductDetailsViewModel.DeductionAmount, new
+                                    </div>
+                                <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Deduction Amount<span class="text-danger"> * </span></label>
+                                            <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.ProductDetailsViewModel.DeductionAmount, new
                                        {
                                            htmlAttributes = new
                                            {
@@ -126,24 +124,18 @@
                                                @maxlength = "9"
                                            }
                                        })
-                                            @Html.ValidationMessageFor(model => model.ProductDetailsViewModel.DeductionAmount, "", new { @class = "text-danger" })
+                                                @Html.ValidationMessageFor(model => model.ProductDetailsViewModel.DeductionAmount, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-md-2 control-label">Net Rate</label>
+                                            <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.ProductDetailsViewModel.NetRate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Net Rate", @maxlength = "9", @readonly = true } })
+                                                @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="button" style="margin-top: -5px;" value="Add" class="btn btn-sm btn-primary" id="btnAdd" />
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label">Net Rate</label>
-                                        <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                            @Html.EditorFor(model => model.ProductDetailsViewModel.NetRate, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Net Rate", @maxlength = "9", @readonly = true } })
-                                            @*@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeAmount, "", new { @class = "text-danger" })*@
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <input type="button" style="margin-top: -5px;" value="Add" class="btn btn-sm btn-primary" id="btnAdd" />
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <br />
-                                </div>
                             </div>
                             <div class="panel-body panel-no-padding">
                                 <div id="divProductRate">
@@ -369,7 +361,7 @@
                         currentRow = null;
                     }
                     else {
-                        if (PurityName != "" && DeductionTypeName != "" && GrossRate!="" && DeductionTypeName!="" && DeductionAmt!="") {
+                        if (PurityName != "" && DeductionTypeName != "" && GrossRate!="" && DeductionTypeNo!="" && DeductionAmt!="") {
                             $("#tblProductRateDetails tbody").append(row);
                             $("#ProductDetailsViewModel_Purity").val("");
                             $("#ProductDetailsViewModel_GrossRate").val("");
@@ -416,35 +408,35 @@
 
         function SaveProductRate() {
             debugger;
-            if ($('#tblProductRateDetails tbody tr').length == 0) {
-                var Purity = $("#ProductDetailsViewModel_Purity").val();
-                if (Purity == "") {
-                    $("#CustomErr").text("Please Select Purity");
-                    $("#ProductDetailsViewModel_Purity").focus();
-                    return;
-                }
-                var GrossRate = $("#ProductDetailsViewModel_GrossRate").val();
-                if (GrossRate == "0.00" || GrossRate=="") {
-                    $("#CustomErr").text("Please Enter Gross Rate");
-                    $("#ProductDetailsViewModel_GrossRate").focus();
-                    return;
-                }
-                var DeductionType = $("#ProductDetailsViewModel_DeductionsType").val();
-                if (DeductionType == "") {
-                    $("#CustomErr").text("Please Select Deductions");
-                    $("#ProductDetailsViewModel_DeductionsType").focus();
-                    return;
-                }
-                var DeductionAmount = $("#ProductDetailsViewModel_DeductionAmount").val();
-                if (DeductionAmount == "") {
-                    $("#CustomErr").text("Please Enter Deduction Amount");
-                    $("#ProductDetailsViewModel_DeductionAmount").focus();
-                    return;
-                }
-            }
+            //if ($('#tblProductRateDetails tbody tr').length == 0) {
+            //    var Purity = $("#ProductDetailsViewModel_Purity").val();
+            //    if (Purity == "") {
+            //        $("#CustomErr").text("Please Select Purity");
+            //        $("#ProductDetailsViewModel_Purity").focus();
+            //        return;
+            //    }
+            //    var GrossRate = $("#ProductDetailsViewModel_GrossRate").val();
+            //    if (GrossRate == "0.00" || GrossRate=="") {
+            //        $("#CustomErr").text("Please Enter Gross Rate");
+            //        $("#ProductDetailsViewModel_GrossRate").focus();
+            //        return;
+            //    }
+            //    var DeductionType = $("#ProductDetailsViewModel_DeductionsType").val();
+            //    if (DeductionType == "") {
+            //        $("#CustomErr").text("Please Select Deductions");
+            //        $("#ProductDetailsViewModel_DeductionsType").focus();
+            //        return;
+            //    }
+            //    var DeductionAmount = $("#ProductDetailsViewModel_DeductionAmount").val();
+            //    if (DeductionAmount == "") {
+            //        $("#CustomErr").text("Please Enter Deduction Amount");
+            //        $("#ProductDetailsViewModel_DeductionAmount").focus();
+            //        return;
+            //    }
+            //}
             var length = $('#tblProductRateDetails tbody tr').length;
             if (length == 0) {
-                $("#CustomErr").text("Please fill child record");
+                $("#CustomErrr").text("Please fill child record");
                 $("#tblProductRateDetails").focus();
                 return true;
             }

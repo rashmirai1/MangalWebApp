@@ -534,8 +534,8 @@ new { @class = "form-control" })
                                                         @Html.DropDownListFor(x => x.Trans_KYCAddresses[0].ResidenceCode,
                                                 new List<SelectListItem> {
                                                 new SelectListItem { Value = "" , Text = "Select Residence Code" },
-                                                new SelectListItem { Value = "01" , Text = "Rented" },
-                                                new SelectListItem { Value = "02" , Text = "Owned" },
+                                                new SelectListItem { Value = "01" , Text = "Owned" },
+                                                new SelectListItem { Value = "02" , Text = "Rented" },
                                                 },
                                                 new { @class = "form-control" })
                                                         @Html.ValidationMessageFor(x => x.Trans_KYCAddresses[0].ResidenceCode, "", new { @class = "text-danger" })
@@ -917,6 +917,15 @@ new { @class = "form-control" })
 
     <script type="text/javascript">
         function StartValidation() {
+
+            var inp = document.getElementById('uploadFile');
+            var img = $("#kycPhoto td a").html();
+            if (inp.files.length === 0 && img === undefined) {
+                alert("Upload Photo!");
+                inp.focus();
+                return false;
+            }
+
             var isMobileVerified = $("#isMobileVerified").val();
             var MobileNo = $("#MobileNo").val();
             debugger;
@@ -1393,13 +1402,13 @@ new { @class = "form-control" })
                             var adhar = $("#AdhaarNo").val();
                             if (adhar.length == 0) {
                                 $.each(result, function (key, value) {
-                                    //if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
-                                    //    value = new Date(parseInt(value.replace('/Date(', '')));
-                                    //    var day = value.getDate();
-                                    //    var month = value.getMonth() + 1;
-                                    //    var year = value.getFullYear();
-                                    //    value = day + "/" + month + "/" + year;
-                                    //}
+                                    if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
+                                        value = new Date(parseInt(value.replace('/Date(', '')));
+                                        var day = value.getDate();
+                                        var month = value.getMonth() + 1;
+                                        var year = value.getFullYear();
+                                        value = day + "/" + month + "/" + year;
+                                    }
 
                                     $("#" + key + "").val(value);
                                 });
@@ -1481,6 +1490,7 @@ new { @class = "form-control" })
                             $("#btnAddDocumentDetails").val('Add');
                             $("#tblDocumentDetails tbody").empty();
                             $("#divDocumentDetails").hide();
+                            $("#kycPhoto").empty();
                         }
                         else {
                             $('#disabledFields').find(':input').prop('disabled', true);
@@ -1512,13 +1522,13 @@ new { @class = "form-control" })
                             var pan = $("#PANNo").val();
                             if (pan.length == 0) {
                                 $.each(result, function (key, value) {
-                                    //if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
-                                    //    value = new Date(parseInt(value.replace('/Date(', '')));
-                                    //    var day = value.getDate();
-                                    //    var month = value.getMonth() + 1;
-                                    //    var year = value.getFullYear();
-                                    //    value = day + "/" + month + "/" + year;
-                                    //}
+                                    if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
+                                        value = new Date(parseInt(value.replace('/Date(', '')));
+                                        var day = value.getDate();
+                                        var month = value.getMonth() + 1;
+                                        var year = value.getFullYear();
+                                        value = day + "/" + month + "/" + year;
+                                    }
                                     $("#" + key + "").val(value);
                                 });
                                 $.each(result.Trans_KYCAddresses, function (i) {
@@ -1593,6 +1603,7 @@ new { @class = "form-control" })
                             $("#btnAddDocumentDetails").val('Add');
                             $("#tblDocumentDetails tbody").empty();
                             $("#divDocumentDetails").hide();
+                            $("#kycPhoto").empty();
                         }
                         else {
                             $('#disabledFields').find(':input').prop('disabled', true);
