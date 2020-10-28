@@ -27,10 +27,17 @@ namespace MangalWeb.Repository.Repository
                 //update the data in Charge Details table
                 foreach (var p in DocUploadViewModel.DocumentUploadList)
                 {
-                    var FindRateobject = _context.Trn_DocUploadDetails.Where(x => x.Id == p.ID && x.KycId == DocUploadViewModel.KycId).FirstOrDefault();
-                    FindRateobject.VerifiedBy = Convert.ToInt32(HttpContext.Current.Session["UserLoginId"]); 
-                    FindRateobject.Status = p.Status;
-                    FindRateobject.ReasonForRejection = p.ReasonForRejection;
+                    var Findobject = _context.Trn_DocUploadDetails.Where(x => x.Id == p.ID && x.KycId == DocUploadViewModel.KycId).FirstOrDefault();
+                    if (Findobject != null)
+                    {
+                        Findobject.VerifiedBy = Convert.ToInt32(HttpContext.Current.Session["UserLoginId"]);
+                        Findobject.Status = p.Status;
+                        Findobject.ReasonForRejection = p.ReasonForRejection;
+                    }
+                    //if (p.Status == "Rejected")
+                    //{
+                    //    _context.Trn_DocUploadDetails.Remove(Findobject);
+                    //}
                 }
                 _context.SaveChanges();
             }
@@ -44,53 +51,37 @@ namespace MangalWeb.Repository.Repository
         {
             DocumentUploadViewModel documentUploadViewModel = new DocumentUploadViewModel();
             //get document upload table
-            //var docupload = _context.Trn_DocumentUpload.Where(x => x.KycId == id).FirstOrDefault();
             var docupload = _context.Database.SqlQuery<DocumentUploadViewModel>("GetDocumentUploadById @id", new SqlParameter("@id", id)).FirstOrDefault();
-            var docuploaddetails = _context.Trn_DocUploadDetails.Where(x => x.KycId == docupload.KycId).ToList();
-            documentUploadViewModel = ToViewModelDocUpload(docupload, docuploaddetails);
+            documentUploadViewModel = ToViewModelDocUpload(docupload);
             return documentUploadViewModel;
         }
 
         #region ToViewModelDocUpload
-        public DocumentUploadViewModel ToViewModelDocUpload(DocumentUploadViewModel model, List<Trn_DocUploadDetails> DocUploadTrnList)
+        public DocumentUploadViewModel ToViewModelDocUpload(DocumentUploadViewModel model)
         {
-            //var model = new DocumentUploadViewModel
-            //{
-            //    KycId = docupload.KycId,
-            //    TransactionNumber = docupload.TransactionNumber,
-            //    DocDate = Convert.ToDateTime(docupload.DocDate).ToShortDateString(),
-            //    CustomerId = docupload.CustomerId,
-            //    ApplicationNo = docupload.ApplicationNo,
-            //    LoanAccountNo = docupload.LoanAccountNo,
-            //    TransactionId = docupload.TransactionId,
-            //    ID = docupload.DocId,
-            //    Comments = docupload.Comments
-            //};
+            var docuploaddetails = (from a in _context.Trn_DocUploadDetails
+                                    join b in _context.Mst_DocumentType on a.DocumentTypeId equals b.Id
+                                    join c in _context.tblDocumentMasters on a.DocumentId equals c.DocumentID
+                                    where a.KycId == model.KycId && a.Status != "Rejected"
+                                    select new DocumentUploadDetailsVM()
+                                    {
+                                        ID = a.Id,
+                                        DocumentTypeId = a.DocumentTypeId,
+                                        DocumentTypeName = b.Name,
+                                        DocumentName = c.DocumentName,
+                                        DocumentId = a.DocumentId,
+                                        ExpiryDate = a.ExpiryDate,
+                                        FileName = a.FileName,
+                                        FileExtension = a.ContentType,
+                                        KycId = a.KycId,
+                                        Status = a.Status,
+                                        VerifiedBy = a.VerifiedBy,
+                                        SpecifyOther = a.SpecifyOther,
+                                        NameonDocument = a.NameonDocument,
+                                        ReasonForRejection = a.ReasonForRejection
+                                    }).ToList();
 
-            List<DocumentUploadDetailsVM> DocTrnViewModelList = new List<DocumentUploadDetailsVM>();
-            foreach (var c in DocUploadTrnList)
-            {
-                var TrnViewModel = new DocumentUploadDetailsVM
-                {
-                    ID = c.Id,
-                    DocumentTypeId = (int)c.DocumentTypeId,
-                    DocumentTypeName = _context.Mst_DocumentType.Where(x => x.Id == c.DocumentTypeId).Select(x => x.Name).FirstOrDefault(),
-                    DocumentName = _context.tblDocumentMasters.Where(x => x.DocumentID == c.DocumentId).Select(x => x.DocumentName).FirstOrDefault(),
-                    DocumentId = (int)c.DocumentId,
-                    ExpiryDate = c.ExpiryDate,
-                    UploadDocName = c.UploadFile,
-                    FileName = c.FileName,
-                    FileExtension = c.ContentType,
-                    KycId = c.KycId,
-                    Status=c.Status,
-                    VerifiedBy=c.VerifiedBy,
-                    ReasonForRejection=c.ReasonForRejection,
-                    SpecifyOther=c.SpecifyOther,
-                    NameonDocument=c.NameonDocument
-                };
-                DocTrnViewModelList.Add(TrnViewModel);
-            }
-            model.DocumentUploadList = DocTrnViewModelList;
+            model.DocumentUploadList = docuploaddetails;
             return model;
         }
         #endregion

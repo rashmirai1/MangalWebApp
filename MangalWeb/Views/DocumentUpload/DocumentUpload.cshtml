@@ -4,12 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
-@using (Ajax.BeginForm("", "", new AjaxOptions { }, new { enctype = "multipart/form-data" }))
+@using (Ajax.BeginForm("", "", new AjaxOptions { OnSuccess = "OnSuccess" }, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
     @Html.HiddenFor(x => x.TransactionId)
     @Html.HiddenFor(x => x.KycId)
+    @Html.HiddenFor(x=>x.operation)
     <header id="topbar" class="affix">
         <div class="col-md-5 col-sm-4 col-xs-12">
             <div class="topbar-left">
@@ -18,10 +19,10 @@
         </div><!--end of col-md-5-->
         <div class="col-md-7 col-sm-8 col-xs-12">
             <div class="topbar-right" id="headerbutton" @TempData["headerbutton"]>
-                <button href="#editModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
+                <button href="#editSanctionModal" id="btn_edit" onclick="return ShowEditTableList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
                 <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
                 <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
-                <button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]" type="button" data-toggle="modal">
+                <button href="#editSanctionModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]" type="button" data-toggle="modal">
                     <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
                 </button>
                 <a href="@Html.Raw(@Url.Action("DocumentUpload", "DocumentUpload"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
@@ -75,7 +76,7 @@
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 @Html.EditorFor(model => model.LoanAccountNo, new { htmlAttributes = new { @class = "form-control", @placeholder = "Loan Account No", @readonly = true } })
                                             </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Comments<span class="text-danger">*</span></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Comments<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Comments", @cols = "20", @rows = "2" })
                                                 @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
@@ -130,7 +131,7 @@
                                         <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Expiry Date</label>
                                         <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
                                             @Html.EditorFor(model => model.DocumentUploadVM.ExpiryDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Expiry Date", @autocomplete = "Off" } })
-                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.DocumentUploadVM.ExpiryDate)</span>
+                                            <span class="text-danger small">@*@Html.ValidationMessageFor(m => m.DocumentUploadVM.ExpiryDate)*@</span>
                                         </div>
                                         <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Upload Document<span class="text-danger"> * </span></label>
                                         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
@@ -146,37 +147,46 @@
                             </div>
                             <div class="panel-body panel-no-padding">
                                 <div id="divDocumentDetails">
-                                    <table cellpadding="0" style="width:90%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblDocumentDetails">
+                                    <table cellpadding="0" style="width:100%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblDocumentDetails">
                                         <thead>
                                             <tr>
-                                                <th class="col-sm-2" style="width:2%">Sr. No.</th>
-                                                <th style="text-align:left">Document Type</th>
-                                                <th style="text-align:left">Document Name</th>
-                                                <th style="text-align:left">Specify Other</th>
-                                                <th style="text-align:left">Name on Document</th>
-                                                <th style="text-align:left">Expiry Date</th>
-                                                <th style="text-align:left">Upload File</th>
-                                                <th class="text-center" style="width:8%">Actions</th>
+                                                <th class="col-sm-2" style="width:7%">Sr. No.</th>
+                                                <th style="text-align:left;width:12%;">Document Type</th>
+                                                <th style="text-align:left;width:12%;">Document Name</th>
+                                                <th style="text-align:left;width:12%;">Specify Other</th>
+                                                <th style="text-align:left;width:12%;">Name on Document</th>
+                                                <th style="text-align:left;width:8%;">Expiry Date</th>
+                                                <th style="text-align:left;width:20%;">Upload File</th>
+                                                <th class="text-center" style="width:2%">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @{int j = 1;}
-                                            @foreach (var item in Model.DocumentUploadList)
-                                            {
-                                            <tr id="@item.ID">
-                                                <td>@j</td>
-                                                <td id="@item.DocumentTypeId">@item.DocumentTypeName</td>
-                                                <td id="@item.DocumentId">@item.DocumentName</td>
-                                                <td>@item.SpecifyOther</td>
-                                                <td>@item.NameonDocument</td>
-                                                <td>@item.ExpiryDate</td>
-                                                <td><a href="/DocumentUpload/Download/@item.ID" target=_blank>@item.FileName</a></td>
-                                                <td>
-                                                    <a class="delete"><i class="fa fa-trash"></i></a>
-                                                </td>
-                                            </tr>
-                                                j++;
-                                            }
+                                            @*@{int j = 1;}
+                                                @foreach (var item in Model.DocumentUploadList)
+                                                {
+                                                    <tr id="@item.ID">
+                                                        <td>@j</td>
+                                                        <td id="@item.DocumentTypeId">@item.DocumentTypeName</td>
+                                                        <td id="@item.DocumentId">@item.DocumentName</td>
+                                                        <td>@item.SpecifyOther</td>
+                                                        <td>@item.NameonDocument</td>
+                                                        <td>
+                                                            @{
+                                                                string str = "";
+                                                                if (item.ExpiryDate != null)
+                                                                {
+                                                                    str =Convert.ToDateTime(item.ExpiryDate).ToString("dd/MM/yyyy");
+                                                                }
+                                                                @str;
+                                                            }
+                                                        </td>
+                                                        <td><a href="/DocumentUpload/Download/@item.ID" target=_blank>@item.FileName</a></td>
+                                                        <td>
+                                                            <a class="delete"><i class="fa fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                                    j++;
+                                                                }*@
                                         </tbody>
                                     </table>
                                 </div>
@@ -187,7 +197,7 @@
             </div>
         </div>
     </section>
-                                                }
+}
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -213,47 +223,24 @@
                 $("#divDocumentDetails").show();
             }
 
+            $("#UploadedFile").change(function () {
+                var file = this.files[0];
+                fileName = file.name;
+                size = file.size;
+                type = file.type;
+                if (type.toLowerCase() == "application/pdf" || type.toLowerCase() == "image/png" || type.toLowerCase() == "image/jpg" || type.toLowerCase() == "image/jpeg") { //I just want pdf files and only want to show
+                    //upload button if it is of my desired type
+                }
+                else {
+                    alert("Please select image or pdf file.");
+                    $("#UploadedFile").val("");
+                    return true;
+                }
+            });
+
             var sr_no = 0;
             var trid = 0;
             currentRow = null;
-            //$("#tblDocumentDetails TBODY TR").on("click", ".edit", function () {
-            //    debugger;
-            //    var tr = $(this).closest('tr');
-            //    currentRow= $(this).parents('tr');
-            //    sr_no = tr.find('td:eq(0)').html();
-            //    trid =tr.attr('id'); // table row ID
-
-            //    var DocumentTypeId =tr.find("td").eq(1).attr('id');
-            //    var DocumentId = tr.find("td").eq(2).attr('id');
-            //    var ExpiryDate =tr.find('td:eq(3)').html();
-            //    var FileName =tr.find('td:eq(4)').html();
-
-            //    $("#DocumentUploadVM_DocumentTypeId").val(DocumentTypeId);
-            //    $("#DocumentUploadVM_DocumentId").val(DocumentId);
-            //    $("#DocumentUploadVM_ExpiryDate").val(ExpiryDate);
-            //    $("#UploadedFile").val(FileName);
-            //})
-
-            $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
-                if(confirm('Are you sure to remove?'))
-                {
-                    var tr = $(this).closest('tr');
-                    trid =tr.attr('id'); // table row ID
-                    tr.remove();
-                    $.ajax({
-                        url: '/DocumentUpload/Remove?id='+trid,
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (result) {
-                            //$(this).parents('tr').remove();
-                        },
-                        error: function (err) {
-                            alert(err.statusText);
-                        }
-                    });
-                }
-            })
 
             $("#btnAddDocumentDetails").click(function () {
                 $("#CustomErrr").text("");
@@ -422,7 +409,77 @@
             $("#ApplicationNo").val(ApplicationNo);
             $("#LoanAccountNo").val(LoanAccountNo);
             $("#editModal").hide();
+            getdocumentbyid(KycId);
         })
+
+        function getdocumentbyid(id) {
+            debugger;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetKycDocumentsById", "DocumentUpload")',
+                data: "{Id: " + id + "}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+
+                    var actions = "<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>";
+
+                    $("#ItemID").val(result.ID);
+
+                    $("#divDocumentDetails").show();
+
+                    $.each(result.DocumentUploadList, function (key, val) {
+                        debugger;
+                        var rowCount = $('#tblDocumentDetails >tbody >tr').length + 1;
+                        var value = "";
+                        if (val.ExpiryDate != null) {
+                            value = new Date(parseInt(val.ExpiryDate.replace('/Date(', '')));
+                            var day = value.getDate();
+                            var month = value.getMonth() + 1;
+                            var year = value.getFullYear();
+                            value = day + "/" + month + "/" + year;
+                        }
+                        $('#tblDocumentDetails tbody').append('<tr id=' + val.ID + '><td>' + rowCount +
+                          '<td width="20%" id="' + val.DocumentTypeId + '">' + val.DocumentTypeName + '</td>' +
+                            '<td width="20%" id="' + val.DocumentId + '">' + val.DocumentName + '</td>' +
+                            '<td width="20%">' + val.SpecifyOther + '</td>' +
+                            '<td width="20%">' + val.NameonDocument + '</td>' +
+                            '<td width="20%">' + value + '</td>' +
+                            '<td width="20%"><a href="/DocumentUpload/Download/' + val.ID + '" target=_blank>' + val.FileName + '</a></td>' +
+                            '<td id=' + val.ID + '' + actions + '</td>' +
+                            '</tr>');
+                    });
+
+                    $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
+                        if (confirm('Are you sure to remove?')) {
+                            var tr = $(this).closest('tr');
+                            trid = tr.attr('id'); // table row ID
+                            tr.remove();
+                            $.ajax({
+                                url: '/DocumentUpload/Remove?id=' + trid,
+                                type: "POST",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (result) {
+                                    //$(this).parents('tr').remove();
+                                },
+                                error: function (err) {
+                                    alert(err.statusText);
+                                }
+                            });
+                        }
+                    })
+
+                    $("#divDocumentDetails").show();
+                },
+                error: function (xhr, status, error) {
+                    debugger;
+                    console.log(xhr.responseText);
+                    alert(status.statusText);
+                }
+            });
+        }
 
         $("#btn_save").click(function () {
             SaveDocument();
@@ -433,43 +490,47 @@
             if (DocDate == "") {
                 $("#CustomErr").text("Please Enter Date");
                 $("#DocDate").focus();
-                return;
+                return false;
             }
 
             var CustomerId = $("#CustomerId").val();
             if (CustomerId == "") {
                 $("#CustomErr").text("Please Select Customer Id");
                 $("#CustomerId").focus();
-                return;
+                return false;
             }
             var check=true;
             debugger;
             if ($('#tblDocumentDetails tbody tr').length == 0) {
-                var DocumentTypeId= $("#DocumentTypeId").val();
-                if (DocumentTypeId == "") {
+                var DocumentTypeId= $("#DocumentUploadVM_DocumentTypeId").val();
+                if (DocumentTypeId===undefined || DocumentTypeId == "") {
                     $("#CustomErr").text("Please Select Document Type");
                     $("#DocumentUploadVM_DocumentTypeId").focus();
-                    return;
+                    return false;
                 }
 
-                var DocumentId= $("#DocumentId").val();
-                if (DocumentId == "") {
+                var DocumentId= $("#DocumentUploadVM_DocumentId").val();
+                if (DocumentId===undefined || DocumentId == "") {
                     $("#CustomErr").text("Please Select Document");
                     $("#DocumentUploadVM_DocumentId").focus();
-                    return;
+                    return false;
                 }
 
-                var ExpiryDate= $("#ExpiryDate").val();
-                if (ExpiryDate == "") {
-                    $("#CustomErr").text("Please Enter Expiry Date");
-                    $("#DocumentUploadVM_ExpiryDate").focus();
-                    return;
+                if($("#DocumentUploadVM_ExpiryDate").attr('disabled')===undefined)
+                {
+                    var ExpiryDate= $("#DocumentUploadVM_ExpiryDate").val();
+                    if (ExpiryDate===undefined|| ExpiryDate == "") {
+                        $("#CustomErr").text("Please Enter Expiry Date");
+                        $("#DocumentUploadVM_ExpiryDate").focus();
+                        return false;
+                    }
                 }
 
                 var UploadedFile= $("#UploadedFile").val();
                 if (UploadedFile == "") {
-                    $("#CustomErr").text("Please Select Upload File");
+                    $("#CustomErr").text("Please Select Upload Document");
                     $("#UploadedFile").focus();
+                    return false;
                     check=false;
                 }
             }
@@ -479,6 +540,7 @@
             {
                 $("#CustomErr").text("Please Click Add button then save record");
                 $("#tblDocumentDetails").focus();
+                return false;
             }
 
             var DocUploadViewModel = {};
@@ -509,22 +571,7 @@
             DocUploadViewModel.LoanAccountNo = $('#LoanAccountNo').val();
             DocUploadViewModel.Comments = $('#Comments').val();
             DocUploadViewModel.KycId=$("#KycId").val();
-            //var fileUpload = $("#UploadedFile").get(0);
-            //var files = fileUpload.files;
-            //// Create FormData object
-            //// Looping over all files and add it to FormData object
-            //for (var i = 0; i < files.length; i++) {
-            //    fileData.append("UploadedFile", files[i]);
-            //}
 
-            //fileData.append("DocumentUploadList",lstDocUploadTrn)
-            //fileData.append("ID",$('#ItemID').val())
-            //fileData.append("TransactionNumber",$('#TransactionNumber').val())
-            //fileData.append("DocDate",$('#DocDate').val())
-            //fileData.append("CustomerId",$('#CustomerId').val())
-            //fileData.append("ApplicationNo",$('#ApplicationNo').val())
-            //fileData.append("LoanAccountNo",$('#LoanAccountNo').val())
-            //fileData.append("Comments",$('#Comments').val())
             if(check==true)
             {
                 $("#btn_save").prop("disabled", true);
@@ -611,14 +658,15 @@
 
         function ShowEditTableList() {
             $('#divviewfilldata').empty();
+            $("#operation").val("Edit");
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("GetDocUploadTable", "DocumentUpload")',
                 dataType: "html",
                 data: { Operation: "Edit" },
                 success: function (data) {
-                    $('#diveditfilldata').empty();
-                    $('#diveditfilldata').html(data);
+                    $('#divsanctionfilldata').empty();
+                    $('#divsanctionfilldata').html(data);
                     $('#example').dataTable();
                 },
                 error: function (xhr, status, error) {
@@ -629,14 +677,15 @@
 
         function ShowViewTableList() {
             $('#diveditfilldata').empty();
+            $("#operation").val("View");
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("GetDocUploadTable", "DocumentUpload")',
                 dataType: "html",
                 data: { Operation: "View" },
                 success: function (data) {
-                    $('#divviewfilldata').empty();
-                    $('#divviewfilldata').html(data);
+                    $('#divsanctionfilldata').empty();
+                    $('#divsanctionfilldata').html(data);
                     $('#example').dataTable();
                 },
                 error: function (xhr, status, error) {
@@ -644,6 +693,92 @@
                 }
             });
         }
+
+        $("#divsanctionfilldata").on("click", "tr", function () {
+            var tr = $(this).closest('tr');
+            var Id = tr.find("td").eq(0).attr('id');
+            $("#editSanctionModal").hide();
+            SetDocumentUploadDetails(Id);
+        })
+
+        function SetDocumentUploadDetails(id) {
+            debugger;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetDocUploadDetailsById", "DocumentUpload")',
+                data: "{ID: " + id + "}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    $.each(result, function (key, value) {
+                        $("#" + key + "").val(value);
+                    });
+                    $("#ItemID").val(result.ID);
+                    var actions = "<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>";
+                    var coperation=$("#operation").val();
+                    if(coperation=="Edit")
+                    {
+                        $("#btnDelete").removeClass('disabled')
+                    }
+                    else{
+                        $("#btnDelete").addClass('disabled')
+                    }
+
+                    $("#divDocumentDetails").show();
+
+                    $.each(result.DocumentUploadList, function (key, val) {
+                        debugger;
+                        var rowCount = $('#tblDocumentDetails >tbody >tr').length + 1;
+                        var value = "";
+                        if (val.ExpiryDate != null) {
+                            value = new Date(parseInt(val.ExpiryDate.replace('/Date(', '')));
+                            var day = value.getDate();
+                            var month = value.getMonth() + 1;
+                            var year = value.getFullYear();
+                            value = day + "/" + month + "/" + year;
+                        }
+                        $('#tblDocumentDetails tbody').append('<tr id=' + val.ID + '><td>' + rowCount +
+                          '<td width="20%" id="' + val.DocumentTypeId + '">' + val.DocumentTypeName + '</td>' +
+                            '<td width="20%" id="' + val.DocumentId + '">' + val.DocumentName + '</td>' +
+                            '<td width="20%">' + val.SpecifyOther + '</td>' +
+                            '<td width="20%">' + val.NameonDocument + '</td>' +
+                            '<td width="20%">' + value + '</td>' +
+                            '<td width="20%"><a href="/DocumentUpload/Download/' + val.ID + '" target=_blank>' + val.FileName + '</a></td>' +
+                            '<td id=' + val.ID + '' + actions + '</td>' +
+                            '</tr>');
+                    });
+
+                    $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
+                        if (confirm('Are you sure to remove?')) {
+                            var tr = $(this).closest('tr');
+                            trid = tr.attr('id'); // table row ID
+                            tr.remove();
+                            $.ajax({
+                                url: '/DocumentUpload/Remove?id=' + trid,
+                                type: "POST",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (result) {
+                                    //$(this).parents('tr').remove();
+                                },
+                                error: function (err) {
+                                    alert(err.statusText);
+                                }
+                            });
+                        }
+                    })
+
+                    $("#divDocumentDetails").show();
+                },
+                error: function (xhr, status, error) {
+                    debugger;
+                    console.log(xhr.responseText);
+                    alert(status.statusText);
+                }
+            });
+        }
+
 
         var urlRedirect = '@Html.Raw(@Url.Action("DocumentUpload", "DocumentUpload"))';
 

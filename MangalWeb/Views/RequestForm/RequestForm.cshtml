@@ -579,7 +579,7 @@
                 $("#KYCDate").val('');
                 $("#CustomerID").val('');
                 $("#LoanAccountNo").val('');
-                $("#ApplicationNo").val(''); s
+                $("#ApplicationNo").val(''); 
                 $("#DisburseDate").val('');
                 $("#ResidenceCode").val($("#ResidenceCode option:first").val());
                 $("#BldgHouseName").val('');
@@ -618,10 +618,37 @@
                 $("#Trans_KYCAddresses_1__CityName").val('');
                 $("#Trans_KYCAddresses_1__Area").val('');
                 $("#Trans_KYCAddresses_1__ZoneName").val('');
+                $("#tblDocumentDetails tbody").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("SetDocumentSession","RequestForm")', // we are calling json method
+                    dataType: 'json',
+                    data: {},
+                    success: function (data) {
+                    },
+                    error: function (ex) {
+                    }
+                });
             }
         }
 
+        $("#UploadedFile").change(function () {
+            var file = this.files[0];
+            fileName = file.name;
+            size = file.size;
+            type = file.type;
+            if (type.toLowerCase() == "application/pdf" || type.toLowerCase() == "image/png" || type.toLowerCase() == "image/jpg" || type.toLowerCase() == "image/jpeg") { //I just want pdf files and only want to show
+                //upload button if it is of my desired type
+            }
+            else {
+                alert("Please select image or pdf file.");
+                $("#UploadedFile").val("");
+                return true;
+            }
+        });
+
         $(document).ready(function () {
+
             $("#KYCDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
             $("#DocumentUploadVM_ExpiryDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
 

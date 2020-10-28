@@ -73,5 +73,10 @@ namespace MangalWeb.Service.Service
             var product = _documentUploadRepository.SetRecordinEdit(id);
             return product;
         }
+
+        public DocumentUploadViewModel GetKycDocumentsById(int id)
+        {
+            return _documentUploadRepository.GetKycDocumentsById(id);
+        }
     }
 }

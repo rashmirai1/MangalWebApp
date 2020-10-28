@@ -10,22 +10,27 @@ namespace MangalWeb.Controllers
 {
     public class RequestFormController : BaseController
     {
+        #region constryctor
         RequestFormService _requestFormService = new RequestFormService();
         DocumentUploadService _documentUploadService = new DocumentUploadService();
+        #endregion
 
+        #region BindList
         public void BindList()
         {
             ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
             ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
             ViewBag.PinCodeList = new SelectList(_requestFormService.GetAllPincodes(), "Pc_Id", "Pc_Desc");
         }
+        #endregion
 
+        #region RequestForm
         // GET: RequestForm
         public ActionResult RequestForm()
         {
             ButtonVisiblity("Index");
             BindList();
-            Session["sub"] = null;
+            Session["documentsub"] = null;
             RequestFormViewModel kycVM = new RequestFormViewModel();
             KYCAddressesVM addressvm = new KYCAddressesVM();
             kycVM.Trans_KYCAddresses.Add(addressvm);
@@ -33,14 +38,16 @@ namespace MangalWeb.Controllers
             kycVM.KYCDate = DateTime.Now.ToShortDateString();
             return View(kycVM);
         }
+        #endregion
 
+        #region CreateEdit
         public JsonResult CreateEdit(RequestFormViewModel model)
         {
             try
             {
                 if (model.CustomerID != null)
                 {
-                    model.DocumentUploadList = (List<DocumentUploadDetailsVM>)Session["sub"];
+                    model.DocumentUploadList = (List<DocumentUploadDetailsVM>)Session["documentsub"];
                     _requestFormService.SaveRecord(model);
                 }
                 return Json(model);
@@ -50,8 +57,9 @@ namespace MangalWeb.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        #endregion
 
-
+        #region AddDocument
         [HttpPost]
         public JsonResult AddDocument()
         {
@@ -73,7 +81,7 @@ namespace MangalWeb.Controllers
             Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
             //base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
             DocumentUploadDetailsVM docupload = null;
-            var sessionlist = (List<DocumentUploadDetailsVM>)Session["sub"];
+            var sessionlist = (List<DocumentUploadDetailsVM>)Session["documentsub"];
             if (sessionlist == null)
             {
                 sessionlist = new List<DocumentUploadDetailsVM>();
@@ -89,17 +97,28 @@ namespace MangalWeb.Controllers
             docupload.SpecifyOther = Request.Form["SpecifyOther"];
             docupload.NameonDocument = Request.Form["NameonDocument"];
             sessionlist.Add(docupload);
-            Session["sub"] = sessionlist;
+            Session["documentsub"] = sessionlist;
             return Json(docupload, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region Remove
         public ActionResult Remove(int id)
         {
-            var list = (List<DocumentUploadDetailsVM>)Session["sub"];
+            var list = (List<DocumentUploadDetailsVM>)Session["documentsub"];
             list.Remove(list.Where(x => x.ID == id).FirstOrDefault());
-            Session["sub"] = list;
+            Session["documentsub"] = list;
             return Json(1, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region SetDocumentSession
+        public JsonResult SetDocumentSession()
+        {
+            Session["documentsub"] = null;
+            return Json(JsonRequestBehavior.AllowGet);
+        }
+        #endregion
 
         #region GetCustomerDetails
         public ActionResult GetCustomerDetails()
@@ -108,11 +127,13 @@ namespace MangalWeb.Controllers
         }
         #endregion GetCustomerDetails
 
+        #region GetPincodeDetails
         public JsonResult GetPincodeDetails(int id)
         {
             var branch = _requestFormService.GetPincodDetails(id);
             return Json(branch, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
         #region GetRequestFormById
 
@@ -124,7 +145,7 @@ namespace MangalWeb.Controllers
             var model = _requestFormService.GetRequestFormById(Id);
             model.TransactionId = _requestFormService.GetMaxTransactionId();
             //return View("RequestForm", model);
-            Session["sub"] = model.DocumentUploadList;
+            Session["documentsub"] = model.DocumentUploadList;
             return Json(model,JsonRequestBehavior.AllowGet);
         }
         #endregion GetRequestFormById

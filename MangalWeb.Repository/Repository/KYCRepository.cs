@@ -305,7 +305,7 @@ namespace MangalWeb.Repository.Repository
                 var docuploaddetails = (from a in _context.Trn_DocUploadDetails
                                         join b in _context.Mst_DocumentType on a.DocumentTypeId equals b.Id
                                         join c in _context.tblDocumentMasters on a.DocumentId equals c.DocumentID
-                                        where a.KycId == kycVm.KYCID
+                                        where a.KycId == kycVm.KYCID && a.Status != "Rejected"
                                         select new DocumentUploadDetailsVM()
                                         {
                                             ID = a.Id,
@@ -556,34 +556,7 @@ namespace MangalWeb.Repository.Repository
         public IList<Mst_PinCode> GetAllPincodes()
         {
             return _context.Mst_PinCode.ToList();
-        }
-
-        /// <summary>
-        /// Save Kyc Docs
-        /// </summary>
-        /// <param name="lstDocUploadTrn"></param>
-        public void SaveDocument(List<DocumentUploadDetailsVM> lstDocUploadTrn)
-        {
-            Trn_DocUploadDetails trn_DocUploadDetails = new Trn_DocUploadDetails();
-            if (lstDocUploadTrn != null || lstDocUploadTrn.Count > 0)
-            {
-                foreach (var item in lstDocUploadTrn)
-                {
-                    trn_DocUploadDetails.DocumentId = item.DocumentId.Value;
-                    trn_DocUploadDetails.UploadFile = item.UploadDocName;
-                    trn_DocUploadDetails.NameonDocument = item.NameonDocument;
-                    trn_DocUploadDetails.SpecifyOther = item.SpecifyOther;
-                    trn_DocUploadDetails.ContentType = item.FileExtension;
-                    trn_DocUploadDetails.FileName = item.FileName;
-                    trn_DocUploadDetails.DocumentTypeId = item.DocumentTypeId.Value;
-                    trn_DocUploadDetails.KycId = Convert.ToInt32(HttpContext.Current.Session["KycId"]);
-                    trn_DocUploadDetails.ExpiryDate = item.ExpiryDate;
-                    trn_DocUploadDetails.Status = "Pending";
-                    _context.Trn_DocUploadDetails.Add(trn_DocUploadDetails);
-                    _context.SaveChanges();
-                }
-            }
-        }
+        }        
 
         public string GetSourceType(int id)
         {

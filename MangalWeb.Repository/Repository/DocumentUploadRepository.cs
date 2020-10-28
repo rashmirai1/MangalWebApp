@@ -54,7 +54,7 @@ namespace MangalWeb.Repository.Repository
         public DocumentUploadViewModel GetCustomerById(int id)
         {
             //var tblkyc = _context.TGLKYC_BasicDetails.Where(x => x.KYCID == id).FirstOrDefault();
-            var tblkyc = _context.Database.SqlQuery<DocumentUploadViewModel>("GetKYCDetailsForDocumentById @id",new SqlParameter("@id", id)).FirstOrDefault();
+            var tblkyc = _context.Database.SqlQuery<DocumentUploadViewModel>("GetKYCDetailsForDocumentById @id", new SqlParameter("@id", id)).FirstOrDefault();
             var model = new DocumentUploadViewModel();
             model.CustomerId = tblkyc.CustomerId;
             model.ApplicationNo = tblkyc.ApplicationNo;
@@ -80,7 +80,7 @@ namespace MangalWeb.Repository.Repository
                 }
                 _context.SaveChanges();
             }
-            
+
             if (deleterecord != null)
             {
                 _context.Trn_DocumentUpload.Remove(deleterecord);
@@ -129,8 +129,8 @@ namespace MangalWeb.Repository.Repository
                             ContentType = p.FileExtension,
                             UploadFile = p.UploadDocName,
                             Status = "Pending",
-                            SpecifyOther=p.SpecifyOther,
-                            NameonDocument=p.NameonDocument
+                            SpecifyOther = p.SpecifyOther,
+                            NameonDocument = p.NameonDocument
                         };
                         _context.Trn_DocUploadDetails.Add(docuptrn);
                         _context.SaveChanges();
@@ -170,8 +170,8 @@ namespace MangalWeb.Repository.Repository
                                 FileName = p.FileName,
                                 ContentType = p.FileExtension,
                                 UploadFile = p.UploadDocName,
-                                SpecifyOther=p.SpecifyOther,
-                                NameonDocument=p.NameonDocument,
+                                SpecifyOther = p.SpecifyOther,
+                                NameonDocument = p.NameonDocument,
                                 Status = "Pending"
                             };
                             _context.Trn_DocUploadDetails.Add(ratetrnnew);
@@ -192,7 +192,7 @@ namespace MangalWeb.Repository.Repository
                     }
                     #region product rate details remove
                     //take the loop of table and check from list if found in list then not remove else remove from table itself
-                    var trnobjlist = _context.Trn_DocUploadDetails.Where(x => x.KycId ==DocUploadViewModel.KycId).ToList();
+                    var trnobjlist = _context.Trn_DocUploadDetails.Where(x => x.KycId == DocUploadViewModel.KycId).ToList();
                     if (trnobjlist != null)
                     {
                         foreach (Trn_DocUploadDetails item in trnobjlist)
@@ -222,13 +222,12 @@ namespace MangalWeb.Repository.Repository
             DocumentUploadViewModel documentUploadViewModel = new DocumentUploadViewModel();
             //get document upload table
             var docupload = _context.Trn_DocumentUpload?.Where(x => x.DocId == id)?.FirstOrDefault() ?? new Trn_DocumentUpload();
-            var docuploaddetails = _context.Trn_DocUploadDetails?.Where(x => x.KycId == docupload.KycId)?.ToList() ?? new List<Trn_DocUploadDetails>();
-            documentUploadViewModel = ToViewModelDocUpload(docupload, docuploaddetails);
+            documentUploadViewModel = ToViewModelDocUpload(docupload);
             return documentUploadViewModel;
         }
 
         #region ToViewModelDocUpload
-        public DocumentUploadViewModel ToViewModelDocUpload(Trn_DocumentUpload docupload, List<Trn_DocUploadDetails> DocUploadTrnList)
+        public DocumentUploadViewModel ToViewModelDocUpload(Trn_DocumentUpload docupload)
         {
             var model = new DocumentUploadViewModel
             {
@@ -240,30 +239,32 @@ namespace MangalWeb.Repository.Repository
                 LoanAccountNo = docupload.LoanAccountNo,
                 TransactionId = docupload.TransactionId,
                 ID = docupload.DocId,
-                Comments=docupload.Comments
+                Comments = docupload.Comments
             };
 
-            List<DocumentUploadDetailsVM> DocTrnViewModelList = new List<DocumentUploadDetailsVM>();
-            foreach (var c in DocUploadTrnList)
-            {
-                var TrnViewModel = new DocumentUploadDetailsVM
-                {
-                    ID = c.Id,
-                    DocumentTypeId = (int)c.DocumentTypeId,
-                    DocumentTypeName = _context.Mst_DocumentType.Where(x => x.Id == c.DocumentTypeId).Select(x => x.Name).FirstOrDefault(),
-                    DocumentName = _context.tblDocumentMasters.Where(x => x.DocumentID == c.DocumentId).Select(x => x.DocumentName).FirstOrDefault(),
-                    DocumentId = (int)c.DocumentId,
-                    ExpiryDate = c.ExpiryDate,
-                    UploadDocName = c.UploadFile,
-                    FileName = c.FileName,
-                    FileExtension = c.ContentType,
-                    SpecifyOther=c.SpecifyOther,
-                    NameonDocument=c.NameonDocument,
-                    KycId = c.KycId,
-                };
-                DocTrnViewModelList.Add(TrnViewModel);
-            }
-            model.DocumentUploadList = DocTrnViewModelList;
+            var docuploaddetails = (from a in _context.Trn_DocUploadDetails
+                                    join b in _context.Mst_DocumentType on a.DocumentTypeId equals b.Id
+                                    join c in _context.tblDocumentMasters on a.DocumentId equals c.DocumentID
+                                    where a.KycId == docupload.KycId && a.Status != "Rejected"
+                                    select new DocumentUploadDetailsVM()
+                                    {
+                                        ID = a.Id,
+                                        DocumentTypeId = a.DocumentTypeId,
+                                        DocumentTypeName = b.Name,
+                                        DocumentName = c.DocumentName,
+                                        DocumentId = a.DocumentId,
+                                        ExpiryDate = a.ExpiryDate,
+                                        FileName = a.FileName,
+                                        FileExtension = a.ContentType,
+                                        KycId = a.KycId,
+                                        Status = a.Status,
+                                        VerifiedBy = a.VerifiedBy,
+                                        SpecifyOther = a.SpecifyOther,
+                                        NameonDocument = a.NameonDocument,
+                                        ReasonForRejection = a.ReasonForRejection
+                                    }).ToList();
+
+            model.DocumentUploadList = docuploaddetails;
             return model;
         }
         #endregion
@@ -292,6 +293,35 @@ namespace MangalWeb.Repository.Repository
         public Trn_DocUploadDetails GetUploadDocuments(int id)
         {
             return _context.Trn_DocUploadDetails.Where(x => x.Id == id).FirstOrDefault();
+        }
+
+        public DocumentUploadViewModel GetKycDocumentsById(int id)
+        {
+            var model = new DocumentUploadViewModel();
+            var docuploaddetails = (from a in _context.Trn_DocUploadDetails
+                                    join b in _context.Mst_DocumentType on a.DocumentTypeId equals b.Id
+                                    join c in _context.tblDocumentMasters on a.DocumentId equals c.DocumentID
+                                    where a.KycId == id
+                                    select new DocumentUploadDetailsVM()
+                                    {
+                                        ID = a.Id,
+                                        DocumentTypeId = a.DocumentTypeId,
+                                        DocumentTypeName = b.Name,
+                                        DocumentName = c.DocumentName,
+                                        DocumentId = a.DocumentId,
+                                        ExpiryDate = a.ExpiryDate,
+                                        FileName = a.FileName,
+                                        FileExtension = a.ContentType,
+                                        KycId = a.KycId,
+                                        Status = a.Status,
+                                        VerifiedBy = a.VerifiedBy,
+                                        SpecifyOther = a.SpecifyOther,
+                                        NameonDocument = a.NameonDocument,
+                                        ReasonForRejection = a.ReasonForRejection
+                                    }).ToList();
+
+            model.DocumentUploadList = docuploaddetails;
+            return model;
         }
     }
 }

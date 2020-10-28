@@ -54,14 +54,13 @@ namespace MangalWeb.Repository.Repository
         {
             var documentUploadViewModel = new RequestFormViewModel();
             var kycdetails = _context.Database.SqlQuery<RequestFormViewModel>("GetKYCDetailsForRequestForm @KycId", new SqlParameter("KycId", id)).FirstOrDefault();
-            var docuploaddetails = _context.Trn_DocUploadDetails.Where(x => x.KycId == kycdetails.KycId).ToList();
             var KycAddressDetailsList = _context.Trans_KYCAddresses.Where(x => x.KYCID == kycdetails.KycId).ToList();
-            documentUploadViewModel = ToViewModelDocUpload(kycdetails, docuploaddetails, KycAddressDetailsList);
+            documentUploadViewModel = ToViewModelDocUpload(kycdetails, KycAddressDetailsList);
             return documentUploadViewModel;
         }
 
         #region ToViewModelDocUpload
-        public RequestFormViewModel ToViewModelDocUpload(RequestFormViewModel model, List<Trn_DocUploadDetails> DocUploadTrnList, List<Trans_KYCAddresses> KycAddressDetailsList)
+        public RequestFormViewModel ToViewModelDocUpload(RequestFormViewModel model, List<Trans_KYCAddresses> KycAddressDetailsList)
         {
             List<KYCAddressesVM> AddressDetailsList = new List<KYCAddressesVM>();
             foreach (var c in KycAddressDetailsList)
@@ -87,7 +86,7 @@ namespace MangalWeb.Repository.Repository
             var docuploaddetails = (from a in _context.Trn_DocUploadDetails
                                     join b in _context.Mst_DocumentType on a.DocumentTypeId equals b.Id
                                     join c in _context.tblDocumentMasters on a.DocumentId equals c.DocumentID
-                                    where a.KycId == model.KycId
+                                    where a.KycId == model.KycId && a.Status != "Rejected"
                                     select new DocumentUploadDetailsVM()
                                     {
                                         ID = a.Id,

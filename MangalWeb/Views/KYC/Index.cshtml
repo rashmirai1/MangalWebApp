@@ -942,10 +942,38 @@ new { @class = "form-control" })
             }
         }
 
+        $("#UploadedFile").change(function () {
+            var file = this.files[0];
+            fileName = file.name;
+            size = file.size;
+            type = file.type;
+            if (type.toLowerCase() == "application/pdf" || type.toLowerCase() == "image/png" || type.toLowerCase() == "image/jpg" || type.toLowerCase() == "image/jpeg") { //I just want pdf files and only want to show
+                //upload button if it is of my desired type
+            }
+            else {
+                alert("Please select image or pdf file.");
+                $("#UploadedFile").val("");
+                return true;
+            }
+        });
+
         $("#uploadFile").change(function () {
 
             var fileUpload = $("#uploadFile").get(0);
             var files = fileUpload.files;
+
+            var file = this.files[0];
+            fileName = file.name;
+            size = file.size;
+            type = file.type;
+            if (type.toLowerCase() == "image/png" || type.toLowerCase() == "image/jpg" || type.toLowerCase() == "image/jpeg") { //I just want pdf files and only want to show
+                //upload button if it is of my desired type
+            }
+            else {
+                alert("Please select only image file.");
+                $("#uploadFile").val("");
+                return true;
+            }
             // Create FormData object
             fileData = new FormData();
             // Looping over all files and add it to FormData object
@@ -1303,7 +1331,7 @@ new { @class = "form-control" })
         $("#DocumentUploadVM_DocumentId").change(function () {
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("GetExpiryDate")', // we are calling json method
+                url: '@Url.Action("GetExpiryDate","DocumentUpload")', // we are calling json method
                 dataType: 'json',
                 data: { id: $("#DocumentUploadVM_DocumentId").val() },
                 // here we are get value of selected country and passing same value

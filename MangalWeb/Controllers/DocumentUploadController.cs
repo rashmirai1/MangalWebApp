@@ -18,7 +18,7 @@ namespace MangalWeb.Controllers
         public ActionResult DocumentUpload()
         {
             ButtonVisiblity("Index");
-            Session["sub"] = null;
+            Session["documentupload"] = null;
             var model = _documentUploadService.GetAllDocumentUpload();
             ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
             ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
@@ -102,7 +102,7 @@ namespace MangalWeb.Controllers
             DocUploadViewModel.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
             try
             {
-                DocUploadViewModel.DocumentUploadList = (List<DocumentUploadDetailsVM>)Session["sub"];
+                DocUploadViewModel.DocumentUploadList = (List<DocumentUploadDetailsVM>)Session["documentupload"];
                 _documentUploadService.SaveRecord(DocUploadViewModel);
                 retVal = true;
             }
@@ -138,7 +138,7 @@ namespace MangalWeb.Controllers
             Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
             //base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
             DocumentUploadDetailsVM docupload = null;
-            var sessionlist =(List<DocumentUploadDetailsVM>)Session["sub"];
+            var sessionlist =(List<DocumentUploadDetailsVM>)Session["documentupload"];
             if (sessionlist == null)
             {
                 sessionlist = new List<DocumentUploadDetailsVM>();
@@ -154,7 +154,7 @@ namespace MangalWeb.Controllers
             docupload.SpecifyOther = Request.Form["SpecifyOther"];
             docupload.NameonDocument = Request.Form["NameonDocument"];
             sessionlist.Add(docupload);
-            Session["sub"] = sessionlist;
+            Session["documentupload"] = sessionlist;
             return Json(docupload, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -162,9 +162,9 @@ namespace MangalWeb.Controllers
         #region Remove
         public ActionResult Remove(int id)
         {
-            var list = (List<DocumentUploadDetailsVM>)Session["sub"];
+            var list = (List<DocumentUploadDetailsVM>)Session["documentupload"];
             list.Remove(list.Where(x => x.ID == id).FirstOrDefault());
-            Session["sub"] = list;
+            Session["documentupload"] = list;
             return Json(1, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -221,10 +221,11 @@ namespace MangalWeb.Controllers
                 //get document upload table
                 var documentUploadViewModel = _documentUploadService.GetUploadDocumentById(ID);
                 documentUploadViewModel.operation = operation;
-                Session["sub"] = documentUploadViewModel.DocumentUploadList;
+                Session["documentupload"] = documentUploadViewModel.DocumentUploadList;
                 ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
                 ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
-                return View("DocumentUpload", documentUploadViewModel);
+                //return View("DocumentUpload", documentUploadViewModel);
+                return Json(documentUploadViewModel,JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -253,5 +254,17 @@ namespace MangalWeb.Controllers
             }
         }
         #endregion Delete
+
+        #region GetKycDocumentsById
+
+        //[HttpPost]
+        public ActionResult GetKycDocumentsById(int Id)
+        {
+            ButtonVisiblity("Edit");
+            var model = _documentUploadService.GetKycDocumentsById(Id);
+            Session["documentupload"] = model.DocumentUploadList;
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        #endregion GetRequestFormById
     }
 }

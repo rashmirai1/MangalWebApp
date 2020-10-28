@@ -116,9 +116,13 @@
                                                 <td>@Model.DocumentUploadList[i].NameonDocument</td>
                                                 <td>
                                                     @{
-                                                            string parameterValue =Convert.ToDateTime(Model.DocumentUploadList[i].ExpiryDate).ToString("dd/MM/yyyy");
+                                                        string str = "";
+                                                        if (@Model.DocumentUploadList[i].ExpiryDate != null)
+                                                        {
+                                                            str = Convert.ToDateTime(@Model.DocumentUploadList[i].ExpiryDate).ToString("dd/MM/yyyy");
+                                                        }
+                                                        @str;
                                                     }
-                                                    @Html.DisplayFor(x => parameterValue)
                                                 </td>
                                                 <td><a href="/DocumentUpload/Download/@Model.DocumentUploadList[i].ID" target=_blank>@Model.DocumentUploadList[i].FileName</a></td>
                                                 <td style="width:10%;">
@@ -273,37 +277,5 @@
             alert('Error Occured');
         }
 
-        $(function () {
-            var url = '@Html.Raw(@Url.Action("Delete", "DocumentUpload"))';
-            $("#btnDelete").click(function () {
-                $("#deleteModal").modal('show');
-            });
-            $("#btnDeleteConfirm").click(function () {
-                $.ajax({
-                    type: "POST",
-                    url: url,
-                    data: '{id: "' + $("#ItemID").val() + '" }',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (data) {
-                        if (data != "") {
-                            $("#CustomErr").text(data);
-                            return false;
-                        }
-                        else {
-                            $("#CustomErr").empty();
-                            $("#DeleteSuccessModal").modal('show');
-
-                            $(document).click(function () {
-                                window.location.href = urlRedirect;
-                            });
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        alert(error);
-                    }
-                });
-            });
-        });
     </script>
 }
