@@ -17,7 +17,7 @@ namespace MangalWeb.Repository.Repository
 
         public List<RequestFormViewModel> GetKYCList()
         {
-            return _context.Database.SqlQuery<RequestFormViewModel>("GetKYCDetailsForDocument").ToList();
+            return _context.Database.SqlQuery<RequestFormViewModel>("GetKYCDetailsRequestForm").ToList();
         }
 
         public int GetMaxTransactionId()

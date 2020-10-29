@@ -82,15 +82,15 @@
                                             @{int j = 1;}
                                             @foreach (var item in Model.roiDeviationDetailsList)
                                             {
-                                            <tr id="@item.ID">
-                                                <td>@j</td>
-                                                <td>@item.RoiMinRange</td>
-                                                <td>@item.RoiMaxRange</td>
-                                                <td id="@item.RoiUserNo">@item.RoiUserName</td>
-                                                <td>
-                                                    <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
-                                                </td>
-                                            </tr>
+                                                <tr id="@item.ID">
+                                                    <td>@j</td>
+                                                    <td>@item.RoiMinRange</td>
+                                                    <td>@item.RoiMaxRange</td>
+                                                    <td id="@item.RoiUserNo">@item.RoiUserName</td>
+                                                    <td>
+                                                        <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
                                                 j++;
                                             }
                                         </tbody>
@@ -103,7 +103,7 @@
                                 <div class="form-horizontal">
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <h5>Distance</h5>                                            
+                                            <h5>Distance</h5>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Range of Distance<span class="text-danger"> * </span></label>
                                             <div class="col-lg-3 col-md-3 col-sm-2 col-xs-4">
                                                 @Html.EditorFor(model => model.distanceDeviationDetailsVM.DistanceMinRange, new { htmlAttributes = new { @class = "form-control", @placeholder = "Min Range", @maxlength = "6", @autofocus = "autofocus", @style = "display:inline;width:100px;", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
@@ -149,18 +149,18 @@
                                         <tbody>
                                             @{int j2 = 1;}
                                             @foreach (var item in Model.distanceDeviationDetailsList)
-                                                    {
-                                                    <tr id="@item.ID">
-                                                        <td>@j2</td>
-                                                        <td>@item.DistanceMinRange</td>
-                                                        <td>@item.DistanceMaxRange</td>
-                                                        <td id="@item.DistanceUserNo">@item.DistanceUserNanme</td>
-                                                        <td>
-                                                            <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                        j2++;
-                                                    }
+                                            {
+                                                <tr id="@item.ID">
+                                                    <td>@j2</td>
+                                                    <td>@item.DistanceMinRange</td>
+                                                    <td>@item.DistanceMaxRange</td>
+                                                    <td id="@item.DistanceUserNo">@item.DistanceUserNanme</td>
+                                                    <td>
+                                                        <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                                j2++;
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
@@ -171,7 +171,7 @@
                                 <div class="form-horizontal">
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <h5>Ornament (Prohibited)</h5>
+                                            <h5>Ornament (Not Allowed)</h5>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">User<span class="text-danger"> * </span></label>
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
                                                 <div class="section">
@@ -232,18 +232,18 @@
                                         <tbody>
                                             @{int j3 = 1;}
                                             @foreach (var item in Model.sanctionDeviationList)
-                                                {
-                                            <tr id="@item.ID">
-                                                <td>@j3</td>
-                                                <td>@item.SanctionMinRange</td>
-                                                <td>@item.SanctionMaxRange</td>
-                                                <td id="@item.SanctionedUserNo">@item.SanctionedUserName</td>
-                                                <td>
-                                                    <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
-                                                </td>
-                                            </tr>
-                                                    j3++;
-                                                }
+                                            {
+                                                <tr id="@item.ID">
+                                                    <td>@j3</td>
+                                                    <td>@item.SanctionMinRange</td>
+                                                    <td>@item.SanctionMaxRange</td>
+                                                    <td id="@item.SanctionedUserNo">@item.SanctionedUserName</td>
+                                                    <td>
+                                                        <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                                j3++;
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
@@ -294,18 +294,18 @@
                                         <tbody>
                                             @{int j4 = 1;}
                                             @foreach (var item in Model.tenureDeviationList)
-                                                {
-                                            <tr id="@item.ID">
-                                                <td>@j4</td>
-                                                <td>@item.TenureMinRange</td>
-                                                <td>@item.TenureMaxRange</td>
-                                                <td id="@item.TenureUserNo">@item.TenureUserName</td>
-                                                <td>
-                                                    <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
-                                                </td>
-                                            </tr>
-                                                    j4++;
-                                                }
+                                            {
+                                                <tr id="@item.ID">
+                                                    <td>@j4</td>
+                                                    <td>@item.TenureMinRange</td>
+                                                    <td>@item.TenureMaxRange</td>
+                                                    <td id="@item.TenureUserNo">@item.TenureUserName</td>
+                                                    <td>
+                                                        <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                                j4++;
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
@@ -371,18 +371,18 @@
                                         <tbody>
                                             @{int j5 = 1;}
                                             @foreach (var item in Model.lTVDeviationDetailsList)
-                                                {
-                                            <tr id="@item.ID">
-                                                <td>@j5</td>
-                                                <td>@item.LTVMinRange</td>
-                                                <td>@item.LTVMaxRange</td>
-                                                <td id="@item.LTVUserNo">@item.LTVUserName</td>
-                                                <td>
-                                                    <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
-                                                </td>
-                                            </tr>
-                                                    j5++;
-                                                }
+                                            {
+                                                <tr id="@item.ID">
+                                                    <td>@j5</td>
+                                                    <td>@item.LTVMinRange</td>
+                                                    <td>@item.LTVMaxRange</td>
+                                                    <td id="@item.LTVUserNo">@item.LTVUserName</td>
+                                                    <td>
+                                                        <a class="edit"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class="delete"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                </tr>
+                                                j5++;
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
@@ -460,7 +460,6 @@
                 $('[data-toggle="tooltip"]').tooltip();
                 var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
                 var index = $("#tblRoiDetails tbody tr:last").index();
-                debugger;
                 var srno = 0;
                 var newtrno = trid;
                 if (sr_no == 0) {
@@ -478,7 +477,6 @@
                 var RoiMaxRange = $("#roiDeviationDetailsVM_RoiMaxRange").val();
                 var RoiUserNo = $("#roiDeviationDetailsVM_RoiUserNo").val();
                 var RoiUserText = $("#roiDeviationDetailsVM_RoiUserNo option:selected").text();
-                debugger;
                 var row = '<tr id=' + newtrno + '>' +
                     '<td width="10%">' + srno + '</td>' +
                     '<td width="30%">' + RoiMinRange + '</td>' +
@@ -486,20 +484,52 @@
                     '<td width="20%" id="' + RoiUserNo + '">' + RoiUserText + '</td>' +
                     '<td id=' + srno + '' + actions + '</td>' +
                     '</tr>';
-                if (currentRow) {
-                    $("#tblRoiDetails tbody").find($(currentRow)).replaceWith(row);
-                    $("#roiDeviationDetailsVM_RoiMinRange").val("");
-                    $("#roiDeviationDetailsVM_RoiMaxRange").val("");
-                    $("#roiDeviationDetailsVM_RoiUserNo").val("");
-                    currentRow = null;
+                var isExist = false;
+                $("#tblRoiDetails TBODY tr").each(function() {
+                    // get row
+                    debugger;
+                    var row = $(this);
+                    // get first and second td
+                    var first = row.find('td:nth-child(4)').attr('id');
+                    var second = row.attr('id');
+                    if(second==0)
+                    {
+                        second=row.find('td:nth-child(1)').html();
+                        // if exists, remove the tr
+                        if (first == RoiUserNo && srno!=second) {
+                            isExist = true;
+                        }
+                    }
+                    else
+                    {
+                        // if exists, remove the tr
+                        if (first == RoiUserNo && newtrno!=second) {
+                            isExist = true;
+                        }
+                    }
+                });
+                if(isExist)
+                {
+                    alert("The same User Category already Exist");
+                    return false;
                 }
-                else {
-                    if (RoiMinRange != "" && RoiMaxRange != "" && RoiUserNo!="") {
-                        $("#tblRoiDetails tbody").append(row);
+                else
+                {
+                    if (currentRow) {
+                        $("#tblRoiDetails tbody").find($(currentRow)).replaceWith(row);
                         $("#roiDeviationDetailsVM_RoiMinRange").val("");
                         $("#roiDeviationDetailsVM_RoiMaxRange").val("");
                         $("#roiDeviationDetailsVM_RoiUserNo").val("");
-                        $("#divRoiDetails").show();
+                        currentRow = null;
+                    }
+                    else {
+                        if (RoiMinRange != "" && RoiMaxRange != "" && RoiUserNo!="") {
+                            $("#tblRoiDetails tbody").append(row);
+                            $("#roiDeviationDetailsVM_RoiMinRange").val("");
+                            $("#roiDeviationDetailsVM_RoiMaxRange").val("");
+                            $("#roiDeviationDetailsVM_RoiUserNo").val("");
+                            $("#divRoiDetails").show();
+                        }
                     }
                 }
                 $("#tblRoiDetails TBODY TR").on("click", ".edit", function () {
@@ -587,20 +617,52 @@
                     '<td width="20%" id="' + DistanceUserNo + '">' + DistanceUserText + '</td>' +
                     '<td id=' + srno + '' + actions + '</td>' +
                     '</tr>';
-                if (currentRow) {
-                    $("#tblDistanceDetails tbody").find($(currentRow)).replaceWith(row);
-                    $("#distanceDeviationDetailsVM_DistanceMinRange").val("");
-                    $("#distanceDeviationDetailsVM_DistanceMaxRange").val("");
-                    $("#distanceDeviationDetailsVM_DistanceUserNo").val("");
-                    currentRow = null;
+                var isExist = false;
+                $("#tblDistanceDetails TBODY tr").each(function() {
+                    // get row
+                    debugger;
+                    var row = $(this);
+                    // get first and second td
+                    var first = row.find('td:nth-child(4)').attr('id');
+                    var second = row.attr('id');
+                    if(second==0)
+                    {
+                        second=row.find('td:nth-child(1)').html();
+                        // if exists, remove the tr
+                        if (first == DistanceUserNo && srno!=second) {
+                            isExist = true;
+                        }
+                    }
+                    else
+                    {
+                        // if exists, remove the tr
+                        if (first == DistanceUserNo && newtrno!=second) {
+                            isExist = true;
+                        }
+                    }
+                });
+                if(isExist)
+                {
+                    alert("The same User Category already Exist");
+                    return false;
                 }
-                else {
-                    if (DistanceMinRange != "" && DistanceMaxRange != "" && DistanceUserNo!="") {
-                        $("#tblDistanceDetails tbody").append(row);
+                else
+                {
+                    if (currentRow) {
+                        $("#tblDistanceDetails tbody").find($(currentRow)).replaceWith(row);
                         $("#distanceDeviationDetailsVM_DistanceMinRange").val("");
                         $("#distanceDeviationDetailsVM_DistanceMaxRange").val("");
                         $("#distanceDeviationDetailsVM_DistanceUserNo").val("");
-                        $("#divDistanceDetails").show();
+                        currentRow = null;
+                    }
+                    else {
+                        if (DistanceMinRange != "" && DistanceMaxRange != "" && DistanceUserNo!="") {
+                            $("#tblDistanceDetails tbody").append(row);
+                            $("#distanceDeviationDetailsVM_DistanceMinRange").val("");
+                            $("#distanceDeviationDetailsVM_DistanceMaxRange").val("");
+                            $("#distanceDeviationDetailsVM_DistanceUserNo").val("");
+                            $("#divDistanceDetails").show();
+                        }
                     }
                 }
                 $("#tblDistanceDetails TBODY TR").on("click", ".edit", function () {
@@ -686,20 +748,52 @@
                 '<td width="20%" id="' + sanctionUserNo + '">' + sanctionUserText + '</td>' +
                 '<td id=' + srno + '' + actions + '</td>' +
                 '</tr>';
-            if (currentRow) {
-                $("#tblSanctionDetails tbody").find($(currentRow)).replaceWith(row);
-                $("#sanctionDeviationVM_SanctionMinRange").val("");
-                $("#sanctionDeviationVM_SanctionMaxRange").val("");
-                $("#sanctionDeviationVM_SanctionedUserNo").val("");
-                currentRow = null;
+            var isExist = false;
+            $("#tblSanctionDetails TBODY tr").each(function() {
+                // get row
+                debugger;
+                var row = $(this);
+                // get first and second td
+                var first = row.find('td:nth-child(4)').attr('id');
+                var second = row.attr('id');
+                if(second==0)
+                {
+                    second=row.find('td:nth-child(1)').html();
+                    // if exists, remove the tr
+                    if (first == sanctionUserNo && srno!=second) {
+                        isExist = true;
+                    }
+                }
+                else
+                {
+                    // if exists, remove the tr
+                    if (first == sanctionUserNo && newtrno!=second) {
+                        isExist = true;
+                    }
+                }
+            });
+            if(isExist)
+            {
+                alert("The same User Category already Exist");
+                return false;
             }
-            else {
-                if (sanctionMinRange != "" && sanctionMaxRange != "" && sanctionUserNo!="") {
-                    $("#tblSanctionDetails tbody").append(row);
+            else
+            {
+                if (currentRow) {
+                    $("#tblSanctionDetails tbody").find($(currentRow)).replaceWith(row);
                     $("#sanctionDeviationVM_SanctionMinRange").val("");
                     $("#sanctionDeviationVM_SanctionMaxRange").val("");
                     $("#sanctionDeviationVM_SanctionedUserNo").val("");
-                    $("#divSanctionDetails").show();
+                    currentRow = null;
+                }
+                else {
+                    if (sanctionMinRange != "" && sanctionMaxRange != "" && sanctionUserNo!="") {
+                        $("#tblSanctionDetails tbody").append(row);
+                        $("#sanctionDeviationVM_SanctionMinRange").val("");
+                        $("#sanctionDeviationVM_SanctionMaxRange").val("");
+                        $("#sanctionDeviationVM_SanctionedUserNo").val("");
+                        $("#divSanctionDetails").show();
+                    }
                 }
             }
             $("#tblSanctionDetails TBODY TR").on("click", ".edit", function () {
@@ -782,20 +876,52 @@
                 '<td width="20%" id="' + tenureUserNo + '">' + tenureUserText + '</td>' +
                 '<td id=' + srno + '' + actions + '</td>' +
                 '</tr>';
-            if (currentRow) {
-                $("#tblTenureDetails tbody").find($(currentRow)).replaceWith(row);
-                $("#tenureDeviationVM_TenureMinRange").val("");
-                $("#tenureDeviationVM_TenureMaxRange").val("");
-                $("#tenureDeviationVM_TenureUserNo").val("");
-                currentRow = null;
+            var isExist = false;
+            $("#tblTenureDetails TBODY tr").each(function() {
+                // get row
+                debugger;
+                var row = $(this);
+                // get first and second td
+                var first = row.find('td:nth-child(4)').attr('id');
+                var second = row.attr('id');
+                if(second==0)
+                {
+                    second=row.find('td:nth-child(1)').html();
+                    // if exists, remove the tr
+                    if (first == tenureUserNo && srno!=second) {
+                        isExist = true;
+                    }
+                }
+                else
+                {
+                    // if exists, remove the tr
+                    if (first == tenureUserNo && newtrno!=second) {
+                        isExist = true;
+                    }
+                }
+            });
+            if(isExist)
+            {
+                alert("The same User Category already Exist");
+                return false;
             }
-            else {
-                if (tenureMinRange != "" && tenureMaxRange != "" && tenureUserNo!="") {
-                    $("#tblTenureDetails tbody").append(row);
+            else
+            {
+                if (currentRow) {
+                    $("#tblTenureDetails tbody").find($(currentRow)).replaceWith(row);
                     $("#tenureDeviationVM_TenureMinRange").val("");
                     $("#tenureDeviationVM_TenureMaxRange").val("");
                     $("#tenureDeviationVM_TenureUserNo").val("");
-                    $("#divTenureDetails").show();
+                    currentRow = null;
+                }
+                else {
+                    if (tenureMinRange != "" && tenureMaxRange != "" && tenureUserNo!="") {
+                        $("#tblTenureDetails tbody").append(row);
+                        $("#tenureDeviationVM_TenureMinRange").val("");
+                        $("#tenureDeviationVM_TenureMaxRange").val("");
+                        $("#tenureDeviationVM_TenureUserNo").val("");
+                        $("#divTenureDetails").show();
+                    }
                 }
             }
             $("#tblTenureDetails TBODY TR").on("click", ".edit", function () {
@@ -875,20 +1001,52 @@
                 '<td width="20%" id="' + ltvUserNo + '">' + ltvUserText + '</td>' +
                 '<td id=' + srno + '' + actions + '</td>' +
                 '</tr>';
-            if (currentRow) {
-                $("#tblLTVDetails tbody").find($(currentRow)).replaceWith(row);
-                $("#lTVDeviationDetailsVM_LTVMinRange").val("");
-                $("#lTVDeviationDetailsVM_LTVMaxRange").val("");
-                $("#lTVDeviationDetailsVM_LTVUserNo").val("");
-                currentRow = null;
+            var isExist = false;
+            $("#tblLTVDetails TBODY tr").each(function() {
+                // get row
+                debugger;
+                var row = $(this);
+                // get first and second td
+                var first = row.find('td:nth-child(4)').attr('id');
+                var second = row.attr('id');
+                if(second==0)
+                {
+                    second=row.find('td:nth-child(1)').html();
+                    // if exists, remove the tr
+                    if (first == ltvUserNo && srno!=second) {
+                        isExist = true;
+                    }
+                }
+                else
+                {
+                    // if exists, remove the tr
+                    if (first == ltvUserNo && newtrno!=second) {
+                        isExist = true;
+                    }
+                }
+            });
+            if(isExist)
+            {
+                alert("The same User Category already Exist");
+                return false;
             }
-            else {
-                if (ltvMinRange != "" && ltvMaxRange != "" && ltvUserNo!="") {
-                    $("#tblLTVDetails tbody").append(row);
+            else
+            {
+                if (currentRow) {
+                    $("#tblLTVDetails tbody").find($(currentRow)).replaceWith(row);
                     $("#lTVDeviationDetailsVM_LTVMinRange").val("");
                     $("#lTVDeviationDetailsVM_LTVMaxRange").val("");
                     $("#lTVDeviationDetailsVM_LTVUserNo").val("");
-                    $("#divLTVDetails").show();
+                    currentRow = null;
+                }
+                else {
+                    if (ltvMinRange != "" && ltvMaxRange != "" && ltvUserNo!="") {
+                        $("#tblLTVDetails tbody").append(row);
+                        $("#lTVDeviationDetailsVM_LTVMinRange").val("");
+                        $("#lTVDeviationDetailsVM_LTVMaxRange").val("");
+                        $("#lTVDeviationDetailsVM_LTVUserNo").val("");
+                        $("#divLTVDetails").show();
+                    }
                 }
             }
             $("#tblLTVDetails TBODY TR").on("click", ".edit", function () {
