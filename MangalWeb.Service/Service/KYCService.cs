@@ -95,7 +95,8 @@ namespace MangalWeb.Service.Service
             string Username = "afpl";
             string APIKey = "afpl2014";
             string Sid = "ApheLN";
-            string Message = "Dear Customer, your verification ID is " + OTP + ". Kindly get it verified with our staff to get the registration completed.";
+            //string Message = "Dear Customer, your verification ID is " + OTP + ". Kindly get it verified with our staff to get the registration completed.";
+            string Message = "Dear Customer,thank you for choosing MCFL Gold loan, Please provide OTP " + OTP + " for disbursement. Don't share otp to unknown sources. Thanks and Regards MCFL";
             string URL = "http://smpp.keepintouch.co.in/vendorsms/pushsms.aspx/?user=" + Username + "&password=" + APIKey + "&msisdn=" + mobile + "&sid=" + Sid + "&msg=" + Message + "" + "&fl=0&gwid=2";
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(URL);
             HttpWebResponse resp = (HttpWebResponse)req.GetResponse();

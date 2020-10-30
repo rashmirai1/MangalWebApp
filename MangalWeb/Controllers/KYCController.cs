@@ -122,6 +122,7 @@ namespace MangalWeb.Controllers
         {
             try
             {
+
                 var model = _kycService.doesAdharExist(AdharNo);
                 var file = _kycService.GetApplicantImage(Convert.ToInt32(model.KYCID));
                 Session["docsub"] = null;

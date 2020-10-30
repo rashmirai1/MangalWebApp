@@ -344,7 +344,7 @@ namespace MangalWeb.Repository.Repository
                                 FinalRate = b.Prd_NetRate,
                                 ratedate = a.Pr_Date
                             }).OrderByDescending(x => x.ratedate).FirstOrDefault();
-                if (rate.FinalRate > 0)
+                if (rate!=null && rate.FinalRate > 0)
                 {
                     pFinalRate = Convert.ToDouble(rate.FinalRate);
                     FinalRate = pFinalRate / 24;
@@ -355,13 +355,13 @@ namespace MangalWeb.Repository.Repository
             {
                 var rate = (from a in _context.Mst_ProductRate
                             join b in _context.Mst_ProductRateDetails on a.Pr_Id equals b.Prd_FkId
-                            where a.Pr_Product == pProductId && b.Prd_Purity == 13
+                            where a.Pr_Product == pProductId && b.Prd_Purity == pProductId
                             select new
                             {
                                 FinalRate = b.Prd_NetRate,
                                 ratedate = a.Pr_Date
                             }).OrderByDescending(x => x.ratedate).FirstOrDefault();
-                if (rate.FinalRate > 0)
+                if (rate!=null && rate.FinalRate > 0)
                 {
                     FinalRate = Convert.ToDouble(rate.FinalRate);
                 }

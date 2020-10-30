@@ -65,8 +65,8 @@
                                             </div>
                                             <label class="col-md-2 control-label" id="lblSerialNumber"> Consolidated Image <span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <input type="file" id="ConsolidatedImage" />
-                                                <div id="ConsolidatedPhoto">
+                                                <input type="file" id="ConsolidatedImage" readonly="readonly" />
+                                                <div id="ConsolidatedPhoto" readonly="true">
                                                 </div>
                                             </div>
                                         </div>
@@ -116,7 +116,6 @@
                                                     <th style="text-align:left">Net Weight</th>
                                                     <th style="text-align:left">Rate</th>
                                                     <th style="text-align:left">Total</th>
-                                                    <th class="text-center" style="width:8%">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody></tbody>
@@ -149,244 +148,18 @@
             $("#divValuationDetails").hide();
             $("#headerTotalValuation").css('display', 'none');
 
-            $(document).on('input', "#grossweight", function () {
+            $("table").on("keyup", "input", function () {
                 debugger;
-                var GrossWeight = parseFloat($("#grossweight").val());
-                var Deductions = parseFloat($("#deductions").val());
-                if (Deductions == "")
-                    Deductions = 0;
-                $("#NetWeight").text(GrossWeight - Deductions);
-                var NetWeight = parseFloat($("#NetWeight").text());
-                var Rate = parseFloat($("#Rate").text());
-                $("#Total").text(NetWeight * Rate);
-            });
-
-            $(document).on('input', "#deductions", function () {
-                var GrossWeight = parseFloat($("#grossweight").val());
-                var Deductions = parseFloat($("#deductions").val());
-                if (Deductions == "")
-                    Deductions = 0;
-                $("#NetWeight").text(GrossWeight - Deductions);
-                var NetWeight = parseFloat($("#NetWeight").text());
-                var Rate = parseFloat($("#Rate").text());
-                $("#Total").text(NetWeight * Rate);
+                var row = $(this).closest("tr");
+                var grossweight = parseFloat(row.find(".grossweight").val());
+                var deductions = parseFloat(row.find(".deductions").val());
+                var NetWeight = grossweight - deductions;
+                row.find(".NetWeight").text(isNaN(NetWeight) ? "" : NetWeight);
+                var Rate = parseFloat(row.find(".Rate").text());
+                row.find(".Total").text(NetWeight * Rate);
             });
 
         });
-        var sr_no = 0;
-        var trid = 0;
-        currentRow = null;
-
-        $("#tblValuationDetails TBODY TR").on("click", ".edit", function () {
-            debugger;
-            var tr = $(this).closest('tr');
-            currentRow = $(this).parents('tr');
-            debugger;
-            sr_no = tr.find('td:eq(0)').html();
-            trid = tr.attr('id'); // table row ID
-            var OrnamentId = tr.find("td").eq(1).attr('id');
-            var Qty = tr.find('td:eq(2)').html();
-            var PurityId = tr.find("td").eq(3).attr('id');
-            var GrossWeight = tr.find('td:eq(4)').html();
-            var Deductions = tr.find('td:eq(5)').html();
-            var NetWeight = tr.find('td:eq(6)').html();
-            var Rate = tr.find('td:eq(7)').html();
-            var Total = tr.find('td:eq(8)').html();
-
-            $("#ValuatorTwoDetailsVM_OrnamentId").val(OrnamentId);
-            $("#ValuatorTwoDetailsVM_Qty").val(Qty);
-            $("#ValuatorTwoDetailsVM_PurityId").val(PurityId);
-            $("#ValuatorTwoDetailsVM_GrossWeight").val(GrossWeight);
-            $("#ValuatorTwoDetailsVM_Deductions").val(Deductions);
-            $("#ValuatorTwoDetailsVM_NetWeight").val(NetWeight);
-            $("#ValuatorTwoDetailsVM_Rate").val(Rate);
-            $("#ValuatorTwoDetailsVM_Total").val(Total);
-        })
-
-        $("#tblValuationDetails TBODY TR").on("click", ".delete", function () {
-            if (confirm('Are you sure to remove?')) {
-                var tr = $(this).closest('tr');
-                tr.remove();
-            }
-        })
-        $("#btnAddValuationDetails").click(function () {
-            debugger;
-            $("#CustomErrr").text("");
-            $('[data-toggle="tooltip"]').tooltip();
-            var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
-            var index = $("#tblValuationDetails tbody tr:last").index();
-            debugger;
-            var srno = 0;
-            var newtrno = trid;
-            if (sr_no == 0) {
-                srno = index + 2;
-                newtrno = 0;
-            }
-            else {
-                srno = sr_no;
-            }
-            sr_no = 0;
-            trid = 0;
-
-            var OrnamentId = $("#ValuatorOneDetailsVM_OrnamentId").val();
-            var OrnamentName = $("#ValuatorOneDetailsVM_OrnamentId option:selected").text();
-            var Qty = $("#ValuatorOneDetailsVM_Qty").val();
-            var PurityId = $("#ValuatorOneDetailsVM_PurityId").val();
-            var PurityName = $("#ValuatorOneDetailsVM_PurityId option:selected").text();
-            var GrossWeight = $("#ValuatorOneDetailsVM_GrossWeight").val();
-            var Deductions = $("#ValuatorOneDetailsVM_Deductions").val();
-            var NetWeight = $("#ValuatorOneDetailsVM_NetWeight").val();
-            var Rate = $("#ValuatorOneDetailsVM_Rate").val();
-            var Total = $("#ValuatorOneDetailsVM_Total").val();
-            //var filename=$("#UploadedFile").val();
-            var filename = $("#ValuationImage").val();
-
-            var fileUpload = $("#ValuationImage").get(0);
-            var files = fileUpload.files;
-
-            var row = '<tr id=' + newtrno + '>' +
-                     '<td width="10%">' + srno + '</td>' +
-                     '<td width="20%" id="' + OrnamentId + '">' + OrnamentName + '</td>' +
-                     '<td width="10%"><a href="#">' + filles.FileName + '</a></td>"' +
-                     '<td width="8%">' + Qty + '</td>' +
-                     '<td width="20%" id="' + PurityId + '">' + PurityName + '</td>' +
-                     '<td width="8%">' + GrossWeight + '</td>' +
-                     '<td width="8%">' + Deductions + '</td>' +
-                     '<td width="8%">' + NetWeight + '</td>' +
-                     '<td width="8%">' + Rate + '</td>' +
-                     '<td width="8%">' + Total + '</td>' +
-                     '<td id=' + srno + '' + actions + '</td>' +
-                     '</tr>';
-            debugger;
-            var isExist = false;
-            $("#tblValuationDetails TBODY tr").each(function () {
-                // get row
-                debugger;
-                var row = $(this);
-                // get first and second td
-                var first = row.find('td:nth-child(2)').attr('id');
-                var second = row.find('td:nth-child(5)').attr('id');
-                // if exists, remove the tr
-                if (currentRow == null) {
-                    if (first == OrnamentId && second == PurityId) {
-                        isExist = true;
-                    }
-                }
-            });
-            if (isExist) {
-                alert("The same record already Exist");
-                return false;
-            }
-            else {
-                if (currentRow) {
-                    $("#tblValuationDetails tbody").find($(currentRow)).replaceWith(row);
-                    $("#ValuatorTwoDetailsVM_OrnamentId").val("");
-                    $("#ValuatorTwoDetailsVM_Qty").val("");
-                    $("#ValuatorTwoDetailsVM_PurityId").val("");
-                    $("#ValuatorTwoDetailsVM_GrossWeight").val("");
-                    $("#ValuatorTwoDetailsVM_Deductions").val("");
-                    $("#ValuatorTwoDetailsVM_NetWeight").val("");
-                    $("#ValuatorTwoDetailsVM_Rate").val("");
-                    $("#ValuatorTwoDetailsVM_Total").val("");
-                    currentRow = null;
-                }
-                else {
-                    if (OrnamentId != "" && PurityId != "") {
-                        var fileUpload = $("#ValuationImage").get(0);
-                        var files = fileUpload.files;
-                        // Create FormData object
-                        fileData = new FormData();
-                        // Looping over all files and add it to FormData object
-                        for (var i = 0; i < files.length; i++) {
-                            fileData.append("ValuationImage", files[i]);
-                        }
-                        fileData.append("ID", newtrno)
-                        $("#tblValuationDetails tbody").append(row);
-                        $.ajax({
-                            url: '/ValuatorTwo/AddValuationImage',
-                            type: "POST",
-                            contentType: false, // Not to set any content header
-                            processData: false, // Not to process data
-                            data: fileData,
-                            success: function (result) {
-                            },
-                            error: function (err) {
-                                //alert(err.statusText);
-                            }
-                        });
-                        $("#ValuatorTwoDetailsVM_OrnamentId").val("");
-                        $("#ValuatorTwoDetailsVM_Qty").val("");
-                        $("#ValuatorTwoDetailsVM_PurityId").val("");
-                        $("#ValuatorTwoDetailsVM_GrossWeight").val("");
-                        $("#ValuatorTwoDetailsVM_Deductions").val("");
-                        $("#ValuatorTwoDetailsVM_NetWeight").val("");
-                        $("#ValuatorTwoDetailsVM_Rate").val("");
-                        $("#ValuatorTwoDetailsVM_Total").val("");
-                        $("#divValuationDetails").show();
-                    }
-                }
-
-                $("#tblValuationDetails TBODY TR").on("click", ".edit", function () {
-                    debugger;
-                    var tr = $(this).closest('tr');
-                    currentRow = $(this).parents('tr');
-                    debugger;
-                    sr_no = tr.find('td:eq(0)').html();
-                    trid = tr.attr('id'); // table row ID
-                    var OrnamentId = tr.find("td").eq(1).attr('id');
-                    var imgname = tr.find('td:eq(2)').html();
-                    var Qty = tr.find('td:eq(3)').html();
-                    var PurityId = tr.find("td").eq(4).attr('id');
-                    var GrossWeight = tr.find('td:eq(5)').html();
-                    var Deductions = tr.find('td:eq(6)').html();
-                    var NetWeight = tr.find('td:eq(7)').html();
-                    var Rate = tr.find('td:eq(8)').html();
-                    var Total = tr.find('td:eq(9)').html();
-
-                    $("#ImgPhoto").append('<td><a href="/ValuatorTwo/DownLoadValuationImage/' + result.trid + '" target=_blank>' + imgname + '</a></td>');
-
-                    $("#ValuatorTwoDetailsVM_OrnamentId").val(OrnamentId);
-                    $("#ValuatorTwoDetailsVM_Qty").val(Qty);
-                    $("#ValuatorTwoDetailsVM_PurityId").val(PurityId);
-                    $("#ValuatorTwoDetailsVM_GrossWeight").val(GrossWeight);
-                    $("#ValuatorTwoDetailsVM_Deductions").val(Deductions);
-                    $("#ValuatorTwoDetailsVM_NetWeight").val(NetWeight);
-                    $("#ValuatorTwoDetailsVM_Rate").val(Rate);
-                    $("#ValuatorTwoDetailsVM_Total").val(Total);
-                })
-
-                $("#tblValuationDetails TBODY TR").on("click", ".delete", function () {
-                    if (confirm('Are you sure to remove?')) {
-                        var tr = $(this).closest('tr');
-                        tr.remove();
-                    }
-                })
-            }
-        })
-
-        $("#ConsolidatedImage").change(function () {
-            var fileUpload = $("#ConsolidatedImage").get(0);
-            var files = fileUpload.files;
-            // Create FormData object
-            fileData = new FormData();
-            // Looping over all files and add it to FormData object
-            for (var i = 0; i < files.length; i++) {
-                fileData.append("uploadFile", files[i]);
-            }
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("UploadConsolidatedImage", "ValuatorTwo")', // we are calling json method
-                contentType: false, // Not to set any content header
-                processData: false, // Not to process data
-                data: fileData,
-                success: function (data) {
-                },
-                error: function (ex) {
-                    alert('Failed to retrieve data.' + ex);
-                }
-            });
-            return false;
-        })
 
         $("#btn_save").click(function () {
             SaveValuator1();
@@ -530,9 +303,9 @@
             debugger;
             var tr = $(this).closest('tr');
             var Id = tr.find("td").eq(0).attr('id');
-            var TransactionId = tr.find('td:eq(0)').html();
-            var CustomerId = tr.find('td:eq(1)').html();
-            var ApplicationNo = tr.find('td:eq(2)').html();
+            var TransactionId = tr.find("td").eq(1).attr('id');
+            var CustomerId = tr.find('td:eq(0)').html();
+            var ApplicationNo = tr.find('td:eq(1)').html();
 
             $("#ItemID").val(Id);
             $("#TransactionId").val(TransactionId);
@@ -563,9 +336,34 @@
                     if (result.ImageName != null) {
                         $("#ConsolidatedPhoto").append('<td><a href="/ValuatorTwo/Download/' + result.ID + '" target=_blank>' + result.ImageName + '</a></td>');
                     }
-                    debugger;
-                    var actions = "<a class=\"edit\"><i class=\"fa fa-edit\" title='Edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+                    var purity = "<select class='ProductDetailsViewModel_Purity'>";
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("GetPurity","ProductRate")', // we are calling json method
+                        dataType: 'json',
+                        data: { id: 1 },
+                        // here we are get value of selected country and passing same value
+                        //as inputto json method GetStates.
+                        success: function (data) {
+                            purity = purity + '<option value="">--Select Purity--</option>';
+                            for (var i = 0; i < data.length; i++) {
+                                purity = purity + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                            }
+                            purity = purity + '</select>';
+                            $('.ProductDetailsViewModel_Purity').html(purity);
+                            $(".ProductDetailsViewModel_Purity").removeAttr('disabled')
+                        },
+                        error: function (ex) {
+                            alert('Failed to retrieve states.' + ex);
+                        }
+                    });
+
                     $.each(result.ValuatorTwoDetailsList, function (key, val) {
+                        $("[class*=ProductDetailsViewModel_Purity] option").each(function () {
+                            if ($(this).val() == val.PurityId) {
+                                $(this).attr('selected', 'selected');
+                            }
+                        });
                         var rowCount = $('#tblValuationDetails >tbody >tr').length + 1;
                         $('#divValuationDetails tbody').append('<tr id=' + val.ID + '>' +
                       '<td width="10%">' + rowCount + '</td>' +
@@ -573,48 +371,19 @@
                       '<td width="10%"><a href="/ValuatorTwo/DownLoadValuationImage/' + val.ID + '" target=_blank>' + val.ImageName + '</a>' +
                       '<input type=file></td>' +
                       '<td width="8%">' + val.Qty + '</td>' +
-                      @*'<td>@Html.DropDownList("PurityId", ViewBag.PurityList as SelectList, " -- Select Purity --", new { })</td>' +*@
-                      '<td width="20%" id="' + val.PurityId + '">' + val.PurityName + '</td>' +
-                      '<td width="8%"><input type=text id=grossweight style=width:80px; value="' + val.GrossWeight + '"/></td>' +
-                      '<td width="8%"><input type=text id=deductions style=width:80px; value="' + val.Deductions + '"/></td>' +
-                      '<td width="8%" id=NetWeight>' + val.NetWeight + '</td>' +
-                      '<td width="8%" id=Rate>' + val.Rate + '</td>' +
-                      '<td width="8%" id=Total>' + val.Total + '</td>' +
-                      '<td>' + actions + '</td>' +
+                      '<td> ' + purity + '</td>' +
+                      '<td width="8%"><input type=text class=grossweight style=width:80px; value="' + val.GrossWeight + '"/></td>' +
+                      '<td width="8%"><input type=text class=deductions style=width:80px; value="' + val.Deductions + '"/></td>' +
+                      '<td width="8%" class=NetWeight>' + val.NetWeight + '</td>' +
+                      '<td width="8%" class=Rate>' + val.Rate + '</td>' +
+                      '<td width="8%" class=Total>' + val.Total + '</td>' +
                       '</tr>');
                     });
-                    $("#tblValuationDetails TBODY TR").on("click", ".edit", function () {
-                        debugger;
-                        var tr = $(this).closest('tr');
-                        currentRow = $(this).parents('tr');
-                        sr_no = tr.find('td:eq(0)').html();
-                        trid = tr.attr('id'); // table row ID
-                        var OrnamentId = tr.find("td").eq(1).attr('id');
-                        var imgname = tr.find('td:eq(2)').html();
-                        var Qty = tr.find('td:eq(3)').html();
-                        var PurityId = tr.find("td").eq(4).attr('id');
-                        var GrossWeight = tr.find('td:eq(5)').html();
-                        var Deductions = tr.find('td:eq(6)').html();
-                        var NetWeight = tr.find('td:eq(7)').html();
-                        var Rate = tr.find('td:eq(8)').html();
-                        var Total = tr.find('td:eq(9)').html();
-
-                        $("#ImgPhoto").append('<td><a href="/ValuatorTwo/DownLoadValuationImage/' + result.trid + '" target=_blank>' + imgname + '</a></td>');
-
-                        $("#ValuatorOneDetailsVM_OrnamentId").val(OrnamentId);
-                        $("#ValuatorOneDetailsVM_Qty").val(Qty);
-                        $("#ValuatorOneDetailsVM_PurityId").val(PurityId);
-                        $("#ValuatorOneDetailsVM_GrossWeight").val(GrossWeight);
-                        $("#ValuatorOneDetailsVM_Deductions").val(Deductions);
-                        $("#ValuatorOneDetailsVM_NetWeight").val(NetWeight);
-                        $("#ValuatorOneDetailsVM_Rate").val(Rate);
-                        $("#ValuatorOneDetailsVM_Total").val(Total);
-                    })
 
                     var totamt = 0;
                     $('#tblValuationDetails tbody>tr').each(function () {
                         var row = $(this).closest("tr");
-                        totamt = totamt + parseFloat(row.find('td:eq(9)').html());
+                        totamt = totamt + parseFloat(row.find('.Total').text());
                     });
                     $("#headerTotalValuation").css('display', 'block');
                     $("#lblTotalValuation").text(totamt);
@@ -624,14 +393,7 @@
                     $("#EligibleLoanAmount").val(eligibleamt);
                     $("#SanctionLoanAmount").val(eligibleamt);
                     var ltvperc = eligibleamt / totamt * 100;
-                    $("#LTVPerc").val(ltvperc);
-
-                    $("#tblValuationDetails TBODY TR").on("click", ".delete", function () {
-                        if (confirm('Are you sure to remove?')) {
-                            var tr = $(this).closest('tr');
-                            tr.remove();
-                        }
-                    })
+                    $("#LTVPerc").val(parseFloat(ltvperc).toFixed(2));
                 }
             });
         }
@@ -666,11 +428,13 @@
         //})
 
         var urlRedirect = '@Html.Raw(@Url.Action("ValuatorTwo", "ValuatorTwo"))';
+
         $(function () {
             var url = '@Html.Raw(@Url.Action("Delete", "ValuatorTwo"))';
             $("#btnDelete").click(function () {
                 $("#deleteModal").modal('show');
             });
+
             $("#btnDeleteConfirm").click(function () {
                 $.ajax({
                     type: "POST",

@@ -2,6 +2,7 @@
 using MangalWeb.Model.Transaction;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -42,7 +43,7 @@ namespace MangalWeb.Repository.Repository
                     }
                     tGLKYC_Basic.AddressCategory = "02";
                     tGLKYC_Basic.KycType = model.KycType;
-                    tGLKYC_Basic.Age =Convert.ToInt32(model.Age);
+                    tGLKYC_Basic.Age = Convert.ToInt32(model.Age);
                     tGLKYC_Basic.AppliedDate = Convert.ToDateTime(model.AppliedDate);
                     tGLKYC_Basic.AppFName = model.AppFName;
                     tGLKYC_Basic.AppMName = model.AppMName;
@@ -208,16 +209,21 @@ namespace MangalWeb.Repository.Repository
         {
             return _context.Mst_SourceofApplication.ToList();
         }
-         /// <summary>
+        /// <summary>
         /// check if pan already exists
         /// </summary>
         /// <param name="Pan"></param>
         /// <returns></returns>
         public KYCBasicDetailsVM doesPanExist(string Pan)
         {
+            int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            var fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+
             var kyc = _context.TGLKYC_BasicDetails
                 .Include("Trans_KYCAddresses")
-                .Where(x => x.PANNo == Pan)
+                .Where(x => x.PANNo == Pan &&
+                x.BranchID == branchid &&
+                x.FYID == fyid)
                 .OrderByDescending(x => x.AppliedDate)
                 .FirstOrDefault();
             KYCBasicDetailsVM kycVm = new KYCBasicDetailsVM();
@@ -235,7 +241,7 @@ namespace MangalWeb.Repository.Repository
                 kycVm.AppLName = kyc.AppLName;
                 kycVm.AppMName = kyc.AppMName;
                 kycVm.ImageName = kyc.ImageName;
-                kycVm.BirthDate =kyc.BirthDate;
+                kycVm.BirthDate = kyc.BirthDate;
                 kycVm.BldgHouseName = kyc.BldgHouseName;
                 kycVm.BldgPlotNo = kyc.BldgPlotNo;
                 kycVm.BranchID = kyc.BranchID;
@@ -339,9 +345,14 @@ namespace MangalWeb.Repository.Repository
         /// <returns></returns>
         public KYCBasicDetailsVM doesAdharExist(string AdharNo)
         {
+            int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            var fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+
             var kyc = _context.TGLKYC_BasicDetails
                 .Include("Trans_KYCAddresses")
-                .Where(x => x.AdhaarNo == AdharNo)
+                .Where(x => x.AdhaarNo == AdharNo &&
+                x.BranchID == branchid &&
+                x.FYID == fyid)
                 .OrderByDescending(x => x.AppliedDate)
                 .FirstOrDefault();
             KYCBasicDetailsVM kycVm = new KYCBasicDetailsVM();
@@ -352,7 +363,7 @@ namespace MangalWeb.Repository.Repository
                 kycVm.isPanAdharExist = true;
                 kycVm.Age = kyc.Age;
                 kycVm.AppFName = kyc.AppFName;
-                kycVm.AppliedDate =kyc.AppliedDate;
+                kycVm.AppliedDate = kyc.AppliedDate;
                 kycVm.ApplicantPrefix = kyc.ApplicantPrefix.Trim();
                 kycVm.FatherPrefix = kyc.FatherPrefix.Trim();
                 kycVm.ResidenceCode = kyc.ResidenceCode;
@@ -472,7 +483,13 @@ namespace MangalWeb.Repository.Repository
         /// <returns></returns>
         public TGLKYC_BasicDetails GetImageById(int id)
         {
-            return _context.TGLKYC_BasicDetails.Where(x => x.KYCID == id).Where(x => x.isActive == true).FirstOrDefault();
+            int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            int fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+
+            return _context.TGLKYC_BasicDetails.Where(x => x.KYCID == id &&
+            x.BranchID == branchid &&
+            x.FYID == fyid &&
+            x.isActive == true).FirstOrDefault();
         }
         /// <summary>
         /// verify otp code
@@ -483,14 +500,21 @@ namespace MangalWeb.Repository.Repository
         /// <returns></returns>
         public string VerifyMobileNumber(string mobile, string customerId, string otp)
         {
+            //&& (DateTime.Now - x.CreatedDate.Value).TotalMinutes <= 5
             string response = String.Empty;
-            var storedOTP = _context.tbl_KYCMobileOTP.Where(x => x.Mobile == mobile && x.CustomerId == customerId)
-                .OrderByDescending(x => x.CreatedDate)
-                .Select(x => x.OTP)
-                .FirstOrDefault();
-            if (otp == storedOTP)
+            var storedOTP = _context.tbl_KYCMobileOTP.
+                            Where(x => x.Mobile == mobile && x.CustomerId == customerId)
+                            //&& DbFunctions.DiffMinutes(x.CreatedDate, DateTime.Now) <= 15)
+                            .OrderByDescending(x => x.CreatedDate)
+                            //.Select(x => x.OTP)
+                            .FirstOrDefault();
+
+            if (storedOTP != null)
             {
-                response = "Mobile Verified Successfully!";
+                if (otp == storedOTP.OTP)
+                {
+                    response = "Mobile Verified Successfully!";
+                }
             }
             else
             {
@@ -522,20 +546,20 @@ namespace MangalWeb.Repository.Repository
         public FillAddressByPinCode FillAddressByPinCode(int id)
         {
             var fillAddressByPinCode = (from aa in _context.Mst_PinCode
-                          join bb in _context.tblZonemasters on aa.Pc_ZoneId equals bb.ZoneID
-                          join cc in _context.tblCityMasters on aa.Pc_CityId equals cc.CityID
-                          join dd in _context.tblStateMasters on cc.StateID equals dd.StateID
-                          where aa.Pc_Id == id
-                          select new FillAddressByPinCode()
-                          {
-                              AreaName = aa.Pc_AreaName,
-                              ZoneName = bb.Zone,
-                              ZoneID = bb.ZoneID,
-                              CityId = cc.CityID,
-                              CityName = cc.CityName,
-                              StateID = dd.StateID,
-                              StateName = dd.StateName
-                          }).FirstOrDefault();
+                                        join bb in _context.tblZonemasters on aa.Pc_ZoneId equals bb.ZoneID
+                                        join cc in _context.tblCityMasters on aa.Pc_CityId equals cc.CityID
+                                        join dd in _context.tblStateMasters on cc.StateID equals dd.StateID
+                                        where aa.Pc_Id == id
+                                        select new FillAddressByPinCode()
+                                        {
+                                            AreaName = aa.Pc_AreaName,
+                                            ZoneName = bb.Zone,
+                                            ZoneID = bb.ZoneID,
+                                            CityId = cc.CityID,
+                                            CityName = cc.CityName,
+                                            StateID = dd.StateID,
+                                            StateName = dd.StateName
+                                        }).FirstOrDefault();
 
             return fillAddressByPinCode;
         }
@@ -556,7 +580,7 @@ namespace MangalWeb.Repository.Repository
         public IList<Mst_PinCode> GetAllPincodes()
         {
             return _context.Mst_PinCode.ToList();
-        }        
+        }
 
         public string GetSourceType(int id)
         {

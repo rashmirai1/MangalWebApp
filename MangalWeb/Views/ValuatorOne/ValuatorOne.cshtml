@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
-@using (Ajax.BeginForm("ValuatorOne", "ValuatorOne", new AjaxOptions { }, new { enctype = "multipart/form-data" }))
+@using (Ajax.BeginForm("", "", new AjaxOptions { }, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
@@ -43,7 +43,6 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Transaction Id<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
                                                 @Html.EditorFor(model => model.TransactionId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Id", @readonly = true } })
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Customer Id<span class="text-danger">*</span></label>
@@ -51,8 +50,8 @@
                                                 @Html.EditorFor(model => model.CustomerId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Id", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
                                                 <div class="input-group-btn" style="display:inline;">
                                                     <button type="button" data-toggle="modal" data-target="#editModal" onclick="ShowClientTableList();" class="btn btn-info btn_info1">...</button>
-                                                    @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
                                                 </div>
+                                                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
                                             </div>
 
                                         </div>
@@ -73,10 +72,9 @@
                                     </div>
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Comments<span class="text-danger">*</span></label>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Comments<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                 @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Comments", @cols = "20", @rows = "2", @style = "resize:none;" })
-                                                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
                                     </div>
@@ -84,15 +82,19 @@
                                 <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
                                 <label><b>Valuation Details :</b></label><br /><br />
                                 <hr style="margin-top:0px;" />
+                                <span class="text-danger" id="CustomErr"> </span>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="col-md-2 control-label"> Ornament Name <span class="text-danger"> * </span></label>
                                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
                                                 <div class="section">
-                                                    @Html.DropDownListFor(m => m.ValuatorOneDetailsVM.OrnamentId, (SelectList)ViewBag.OrnamentList, "--Select Ornament--", htmlAttributes: new { @class = "form-control" })
-                                                    <i class="arrow"></i>
-                                                </div>
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.ValuatorOneDetailsVM.OrnamentId, (SelectList)ViewBag.OrnamentList, "--Select Ornament--", htmlAttributes: new { @class = "form-control" })
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                    <span class="text-danger small"> @Html.ValidationMessageFor(model => model.ValuatorOneDetailsVM.OrnamentId, "", new { @class = "text-danger" })</span>
+</div>
                                             </div>
                                             <label class="col-md-2 control-label"> Ornament Image <span class="text-danger"> * </span></label>
                                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -101,33 +103,35 @@
                                             </div>
                                             <label class="col-md-1 control-label"> Qty <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-1 col-md-1 col-sm-5 col-xs-12">
-                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Qty, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Qty", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @min = "0",@style="width:90px;margin-left:-30+px;" } })
+                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Qty, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Qty", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)", @min = "0", @style = "width:90px;margin-left:-30+px;" } })
+                                                @Html.ValidationMessageFor(model => model.ValuatorOneDetailsVM.Qty, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
-                                        <br />
-                                        <br />
+                                    </div>
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="col-md-2 control-label"> Purity <span class="text-danger"> * </span></label>
                                             <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                                 <div class="section">
                                                     <label class="field select">
                                                         @Html.DropDownListFor(m => m.ValuatorOneDetailsVM.PurityId, (SelectList)ViewBag.PurityList, "--Select Purity--", htmlAttributes: new { @class = "form-control" })
-                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.ValuatorOneDetailsVM.PurityId)</span>
                                                         <i class="arrow"></i>
                                                     </label>
+                                                    <span class="text-danger small">@Html.ValidationMessageFor(m => m.ValuatorOneDetailsVM.PurityId)</span>
                                                 </div>
                                             </div>
                                             <label class="col-md-2 control-label"> Gross Weight <span class="text-danger"> * </span> </label>
                                             <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
                                                 @Html.EditorFor(model => model.ValuatorOneDetailsVM.GrossWeight, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Gross Weight", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
+                                                @Html.ValidationMessageFor(model => model.ValuatorOneDetailsVM.GrossWeight, "", new { @class = "text-danger" })
+                                            </div>
+                                            <label class="col-md-1 control-label"> Deductions <span class="text-danger"></span> </label>
+                                            <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
+                                                @Html.EditorFor(model => model.ValuatorOneDetailsVM.Deductions, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Duductions", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
                                             </div>
                                         </div>
-                                        <label class="col-md-1 control-label"> Deductions <span class="text-danger"></span> </label>
-                                        <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                            @Html.EditorFor(model => model.ValuatorOneDetailsVM.Deductions, new { htmlAttributes = new { @class = "form-control input-sm", @placeholder = "Duductions", @maxlength = "8", @onkeypress = "return event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)" } })
-                                        </div>
-                                        <br />
-                                        <br />
+                                    </div>
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="col-md-2 control-label"> Net Weight <span class="text-danger">  </span> </label>
                                             <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
@@ -266,6 +270,22 @@
                 $("#lblTotalValuation").text(totamt)
             }
         })
+
+        $("#ValuationImage").change(function () {
+            var file = this.files[0];
+            fileName = file.name;
+            size = file.size;
+            type = file.type;
+            if (type.toLowerCase() == "image/png" || type.toLowerCase() == "image/jpg" || type.toLowerCase() == "image/jpeg") { //I just want pdf files and only want to show
+                //upload button if it is of my desired type
+            }
+            else {
+                alert("Please select only image file. ");
+                $("#ValuationImage").val("");
+                return true;
+            }
+        });
+
         $("#btnAddValuationDetails").click(function () {
             debugger;
             $("#CustomErr").text("");
@@ -297,22 +317,14 @@
             var Total = $("#ValuatorOneDetailsVM_Total").val();
             var fileUpload = $("#ValuationImage").get(0);
             var files = fileUpload.files;
+            var fname = $("#ImgPhoto td a").text();
             var filename = "";
-            if (files.length > 0 && currentRow==null) {
-                filename = files[0].name;
-                if (typeof (filename) == 'undefined') {
-                    filename = $("#ImgPhoto").find("td:last-child").text()
-                }
-                else {
-                    $("#ImgPhoto").empty();
-                }
+            if (files.length <= 0 || fname != "") {
+                filename = $("#ImgPhoto").find("td:last-child").text()
             }
             else {
-                return;
-            }
-            if (currentRow != null)
-            {
-                filename = $("#ImgPhoto").find("td:last-child").text();
+                filename = files[0].name;
+                $("#ImgPhoto").empty();
             }
             var row = '<tr id=' + newtrno + '>' +
                      '<td width="10%">' + srno + '</td>' +
@@ -353,26 +365,28 @@
                     $("#tblValuationDetails tbody").find($(currentRow)).replaceWith(row);
                     var fileUpload = $("#ValuationImage").get(0);
                     var files = fileUpload.files;
-                    // Create FormData object
-                    fileData = new FormData();
-                    // Looping over all files and add it to FormData object
-                    for (var i = 0; i < files.length; i++) {
-                        fileData.append("ValuationImage", files[i]);
-                    }
-                    fileData.append("ID", newtrno)
-                    fileData.append("SRNO", srno)
-                    $.ajax({
-                        url: '/ValuatorOne/AddValuationImage',
-                        type: "POST",
-                        contentType: false, // Not to set any content header
-                        processData: false, // Not to process data
-                        data: fileData,
-                        success: function (result) {
-                        },
-                        error: function (err) {
-                            //alert(err.statusText);
+                    if (files.length > 0) {
+                        // Create FormData object
+                        fileData = new FormData();
+                        // Looping over all files and add it to FormData object
+                        for (var i = 0; i < files.length; i++) {
+                            fileData.append("ValuationImage", files[i]);
                         }
-                    });
+                        fileData.append("ID", newtrno)
+                        fileData.append("SRNO", srno)
+                        $.ajax({
+                            url: '/ValuatorOne/AddValuationImage',
+                            type: "POST",
+                            contentType: false, // Not to set any content header
+                            processData: false, // Not to process data
+                            data: fileData,
+                            success: function (result) {
+                            },
+                            error: function (err) {
+                                //alert(err.statusText);
+                            }
+                        });
+                    }
                     var totamt = 0;
                     $('#tblValuationDetails tbody>tr').each(function () {
                         var row = $(this).closest("tr");
@@ -390,7 +404,7 @@
                     currentRow = null;
                 }
                 else {
-                    if (OrnamentId != "" && PurityId != "" && Qty > 0 && GrossWeight > 0 && Rate > 0) {
+                    if (OrnamentId != "" && PurityId != "" && Qty > 0 && GrossWeight > 0 && Rate > 0 && filename != "") {
                         var fileUpload = $("#ValuationImage").get(0);
                         var files = fileUpload.files;
                         // Create FormData object
@@ -500,6 +514,18 @@
         })
 
         $("#ConsolidatedImage").change(function () {
+            var file = this.files[0];
+            fileName = file.name;
+            size = file.size;
+            type = file.type;
+            if (type.toLowerCase() == "image/png" || type.toLowerCase() == "image/jpg" || type.toLowerCase() == "image/jpeg") { //I just want pdf files and only want to show
+                //upload button if it is of my desired type
+            }
+            else {
+                alert("Please select only image file. ");
+                $("#ConsolidatedImage").val("");
+                return true;
+            }
             var fileUpload = $("#ConsolidatedImage").get(0);
             var files = fileUpload.files;
             // Create FormData object
@@ -528,41 +554,50 @@
         });
 
         function SaveValuator1() {
-            var CustomerId = $("#CustomerId").val();
-            if (CustomerId == "") {
-                $("#CustomErr").text("Please Select Customer Id");
-                $("#CustomerId").focus();
-                return;
-            }
+            //var CustomerId = $("#CustomerId").val();
+            //if (CustomerId == "") {
+            //    $("#CustomErr").text("Please Select Customer Id");
+            //    $("#CustomerId").focus();
+            //    return;
+            //}
             var check = true;
+            var inp = document.getElementById('ConsolidatedImage');
+            var img = $("#ConsolidatedPhoto td a").html();
+            if (inp.files.length === 0 && img === undefined) {
+                alert("Please Upload Consolidated Image");
+                inp.focus();
+                return false;
+            }
             debugger;
             if ($('#divValuationDetails tbody tr').length == 0) {
-                var OrnamentId = $("#ValuatorOneDetailsVM_OrnamentId").val();
-                if (OrnamentId == "") {
-                    $("#CustomErr").text("Please Select Ornament");
-                    $("#ValuatorOneDetailsVM_OrnamentId").focus();
-                    return;
-                }
-
-                var PurityId = $("#ValuatorOneDetailsVM_PurityId").val();
-                if (PurityId == "") {
-                    $("#CustomErr").text("Please Select Purity");
-                    $("#ValuatorOneDetailsVM_PurityId").focus();
-                    return;
-                }
-
-                //var UploadedFile= $("#UploadedFile").val();
-                //if (UploadedFile == "") {
-                //    $("#CustomErr").text("Please Select Upload File");
-                //    $("#UploadedFile").focus();
-                //    check=false;
+                //var OrnamentId = $("#ValuatorOneDetailsVM_OrnamentId").val();
+                //if (OrnamentId == "") {
+                //    $("#CustomErr").text("Please Select Ornament");
+                //    $("#ValuatorOneDetailsVM_OrnamentId").focus();
+                //    return;
                 //}
+
+                //var PurityId = $("#ValuatorOneDetailsVM_PurityId").val();
+                //if (PurityId == "") {
+                //    $("#CustomErr").text("Please Select Purity");
+                //    $("#ValuatorOneDetailsVM_PurityId").focus();
+                //    return;
+                //}
+
+                var ValuationImage = $("#ValuationImage").val();
+                if (ValuationImage == "") {
+                    $("#CustomErr").text("Please Select Valuation Image");
+                    $("#ValuationImage").focus();
+                    check = false;
+                    return;
+                }
             }
             debugger;
             var length = $('#tblValuationDetails tbody tr').length;
             if (length == 0) {
                 $("#CustomErr").text("Please Click Add button then save record");
                 $("#tblValuationDetails").focus();
+                return;
             }
 
             var ValuatorOneViewModel = {};

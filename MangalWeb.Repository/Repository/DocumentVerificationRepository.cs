@@ -16,7 +16,12 @@ namespace MangalWeb.Repository.Repository
 
         public List<DocumentUploadViewModel> DocumentUploadList()
         {
-            return _context.Database.SqlQuery<DocumentUploadViewModel>("GetDocumentUpload").ToList();
+            int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            int fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+
+            return _context.Database.SqlQuery<DocumentUploadViewModel>("GetDocumentUpload @BranchId,@FYID",
+                new SqlParameter("@BranchId", branchid),
+                new SqlParameter("@FYID", fyid)).ToList();
         }
 
         public void SaveUpdateRecord(DocumentUploadViewModel DocUploadViewModel)
@@ -50,8 +55,16 @@ namespace MangalWeb.Repository.Repository
         public DocumentUploadViewModel GetDoumentUploadById(int id)
         {
             DocumentUploadViewModel documentUploadViewModel = new DocumentUploadViewModel();
+
+            int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            int fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+
             //get document upload table
-            var docupload = _context.Database.SqlQuery<DocumentUploadViewModel>("GetDocumentUploadById @id", new SqlParameter("@id", id)).FirstOrDefault();
+            var docupload = _context.Database.SqlQuery<DocumentUploadViewModel>("GetDocumentUploadById @id,@BranchId,@FYID",
+                new SqlParameter("@id", id),
+                new SqlParameter("@BranchId", branchid),
+                new SqlParameter("@FYID", fyid)
+                ).FirstOrDefault();
             documentUploadViewModel = ToViewModelDocUpload(docupload);
             return documentUploadViewModel;
         }

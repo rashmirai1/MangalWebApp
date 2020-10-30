@@ -1220,7 +1220,14 @@ new { @class = "form-control" })
             var mobile = $("#MobileNo").val();
             var otp = $("#verifyText").val();
             var customerId = $("#CustomerID").val();
-            VerifyOtp(mobile, customerId, otp);
+            if (otp != "") {
+                VerifyOtp(mobile, customerId, otp);
+            }
+            else {
+                alert('Please Enter Verification Code');
+                $("#verifyText").focus();
+                return;
+            }
         });
 
         $("#PinCode").on('change', function () {
@@ -1480,7 +1487,7 @@ new { @class = "form-control" })
                                     '<td width="20%">' + val.SpecifyOther + '</td>' +
                                     '<td width="20%">' + val.NameonDocument + '</td>' +
                                     '<td width="20%">' + value + '</td>' +
-                                    '<td width="20%"><a href="/KYC/Download/' + val.ID + '" target=_blank>' + val.FileName + '</a></td>' +
+                                    '<td width="20%"><a href="/DocumentUpload/Download/' + val.ID + '" target=_blank>' + val.FileName + '</a></td>' +
                                     '<td id=' + val.ID + '' + actions + '</td>' +
                                     '</tr>');
                             });
@@ -1595,7 +1602,7 @@ new { @class = "form-control" })
                                     '<td width="20%">' + val.SpecifyOther + '</td>' +
                                     '<td width="20%">' + val.NameonDocument + '</td>' +
                                     '<td width="20%">' + value + '</td>' +
-                                    '<td width="20%"><a href="/KYC/Download/' + val.ID + '" target=_blank>' + val.FileName + '</a></td>' +
+                                    '<td width="20%"><a href="/DocumentUpload/Download/' + val.ID + '" target=_blank>' + val.FileName + '</a></td>' +
                                     '<td id=' + val.ID + '' + actions + '</td>' +
                                     '</tr>');
                             });
