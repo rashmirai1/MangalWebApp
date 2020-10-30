@@ -23,6 +23,7 @@ namespace MangalWeb.Repository.Repository
             var transactionid = _context.Trn_DocumentUpload.Any() ? _context.Trn_DocumentUpload.Max(x => x.TransactionId) + 1 : 1;
             model.TransactionNumber = "D0000" + transactionid;
             model.DocDate = DateTime.Now.ToShortDateString();
+
             return model;
         }
 
