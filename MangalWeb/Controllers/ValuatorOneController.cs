@@ -155,23 +155,13 @@ namespace MangalWeb.Controllers
         }
         #endregion
 
+        #region SetRateOfSelectedPurity
         public JsonResult SetRateOfSelectedPurity(int ProductId, int PurityId)
         {
-            double rate = 0;
-            if (ProductId == 1)
-            {
-                rate = Goldrates();
-                if (rate == 0)
-                {
-                    rate = _valuatorOneService.GetRateFromProductRate(ProductId, PurityId);
-                }
-            }
-            else
-            {
-                rate = _valuatorOneService.GetRateFromProductRate(ProductId, PurityId);
-            }
+            double rate = _valuatorOneService.GetRateFromProductRate(ProductId, PurityId);
             return Json(rate, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
         #region GetCustomerDetails
 
@@ -184,9 +174,9 @@ namespace MangalWeb.Controllers
 
         #region GetValuatorOneDetails
 
-        public ActionResult GetValuatorOneDetails()
+        public ActionResult GetValuatorOneDetails(string Operation)
         {
-            Session["Operation"] = "Edit";
+            Session["Operation"] = Operation;
             return PartialView("_ValuatorOneDetails", _valuatorOneService.GetValuatorOneList());
         }
 
@@ -202,7 +192,6 @@ namespace MangalWeb.Controllers
                 Session["ConsolidatedImage"] = file.ConsolidatedImage;
                 Session["ConsolidatedImageName"] = model.ImageName;
                 Session["ConsolidatedImageContentType"] = file.ContentType;
-                string operation = Session["Operation"].ToString();
             }
 
             var sessionlist = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageList"];
@@ -221,6 +210,12 @@ namespace MangalWeb.Controllers
                 sessionlist.Add(docupload);
                 Session["ValuationImageList"] = sessionlist;
             }
+            string operation = String.Empty;
+            if (Session["Operation"] != null)
+            {
+                operation = Session["Operation"].ToString();
+            }
+            model.operation = operation;
             return Json(model, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -287,9 +282,22 @@ namespace MangalWeb.Controllers
         }
         #endregion
 
-        public double Goldrates()
+        #region CheckOrnamentStatus
+        public JsonResult CheckOrnamentStatus(int OrnamentId)
         {
-            return _valuatorOneService.Goldrates();
+            string status = _valuatorOneService.CheckOrnamentStatus(OrnamentId);
+            return Json(status, JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region Remove
+        public ActionResult Remove(int id)
+        {
+            var list = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageList"];
+            list.Remove(list.Where(x => x.ID == id).FirstOrDefault());
+            Session["ValuationImageList"] = list;
+            return Json(1, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

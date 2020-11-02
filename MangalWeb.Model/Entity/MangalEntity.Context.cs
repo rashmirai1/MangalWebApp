@@ -84,14 +84,16 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLGoldStock> TGLGoldStocks { get; set; }
         public virtual DbSet<TGLInterest_Details> TGLInterest_Details { get; set; }
         public virtual DbSet<TGlReceipt_BasicDetails> TGlReceipt_BasicDetails { get; set; }
-        public virtual DbSet<tbl_OrnamentValuationOneDetails> tbl_OrnamentValuationOneDetails { get; set; }
-        public virtual DbSet<Tran_ValuationOneDetails> Tran_ValuationOneDetails { get; set; }
         public virtual DbSet<tbl_PreSanctionDetails> tbl_PreSanctionDetails { get; set; }
         public virtual DbSet<tbl_ResidenceVerification> tbl_ResidenceVerification { get; set; }
         public virtual DbSet<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
         public virtual DbSet<tblHistory_KYCAddresses> tblHistory_KYCAddresses { get; set; }
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<tblKYC_HistoryDetails> tblKYC_HistoryDetails { get; set; }
+        public virtual DbSet<tbl_OrnamentValuationOneDetails> tbl_OrnamentValuationOneDetails { get; set; }
+        public virtual DbSet<Tbl_ValuationTwo> Tbl_ValuationTwo { get; set; }
+        public virtual DbSet<tbl_ValuationTwoDetails> tbl_ValuationTwoDetails { get; set; }
+        public virtual DbSet<Tran_ValuationOneDetails> Tran_ValuationOneDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -140,9 +142,17 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetKYCDetailsForDocumentById_Result>("GetKYCDetailsForDocumentById", idParameter);
         }
     
-        public virtual ObjectResult<GetDocumentUpload_Result> GetDocumentUpload()
+        public virtual ObjectResult<GetDocumentUpload_Result> GetDocumentUpload(Nullable<int> branchId, Nullable<int> fYID)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDocumentUpload_Result>("GetDocumentUpload");
+            var branchIdParameter = branchId.HasValue ?
+                new ObjectParameter("BranchId", branchId) :
+                new ObjectParameter("BranchId", typeof(int));
+    
+            var fYIDParameter = fYID.HasValue ?
+                new ObjectParameter("FYID", fYID) :
+                new ObjectParameter("FYID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDocumentUpload_Result>("GetDocumentUpload", branchIdParameter, fYIDParameter);
         }
     
         [DbFunction("MangalDBNewEntities", "SplitValue1")]
@@ -159,13 +169,21 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<string>("[MangalDBNewEntities].[SplitValue1](@String, @Delimiter)", stringParameter, delimiterParameter);
         }
     
-        public virtual ObjectResult<GetDocumentUploadById_Result> GetDocumentUploadById(Nullable<int> id)
+        public virtual ObjectResult<GetDocumentUploadById_Result> GetDocumentUploadById(Nullable<int> id, Nullable<int> branchId, Nullable<int> fYID)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDocumentUploadById_Result>("GetDocumentUploadById", idParameter);
+            var branchIdParameter = branchId.HasValue ?
+                new ObjectParameter("BranchId", branchId) :
+                new ObjectParameter("BranchId", typeof(int));
+    
+            var fYIDParameter = fYID.HasValue ?
+                new ObjectParameter("FYID", fYID) :
+                new ObjectParameter("FYID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDocumentUploadById_Result>("GetDocumentUploadById", idParameter, branchIdParameter, fYIDParameter);
         }
     
         public virtual ObjectResult<T_GetFormDetails_FormIdWise_Result> T_GetFormDetails_FormIdWise(Nullable<int> formId, Nullable<int> userId)

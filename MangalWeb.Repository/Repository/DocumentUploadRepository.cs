@@ -29,7 +29,12 @@ namespace MangalWeb.Repository.Repository
 
         public List<DocumentUploadViewModel> GetKYCList()
         {
-            return _context.Database.SqlQuery<DocumentUploadViewModel>("GetKYCDetailsForDocument").ToList();
+            int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            int fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+
+            return _context.Database.SqlQuery<DocumentUploadViewModel>("GetKYCDetailsForDocument @BranchId,@FyId",
+                new SqlParameter("@BranchId", branchid),
+                new SqlParameter("@FyId", fyid)).ToList();
         }
 
         public List<Mst_DocumentType> GetDocumentTypeList()
@@ -230,6 +235,7 @@ namespace MangalWeb.Repository.Repository
                             x.BranchId == branchid &&
                             x.FinancialYearId == fyid
                             ).FirstOrDefault();
+
             documentUploadViewModel = ToViewModelDocUpload(docupload);
             return documentUploadViewModel;
         }

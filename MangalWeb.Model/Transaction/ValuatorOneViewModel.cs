@@ -18,7 +18,7 @@ namespace MangalWeb.Model.Transaction
         public int ID { get; set; }
 
         public string TransactionId { get; set; }
-        public int KycId { get; set; }
+        public int? KycId { get; set; }
         public int PreSanctionId { get; set; }
         public int ProductId { get; set; }
         [Required(ErrorMessage = "Please Select Customer")]

@@ -9,7 +9,10 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
     @Html.HiddenFor(x => x.KycId)
+    @Html.HiddenFor(x => x.ValuatorOneId)
+    @Html.HiddenFor(x => x.ProductId)
     @Html.HiddenFor(x => x.MaxLtv)
+    @Html.HiddenFor(x => x.operation)
     <header id="topbar" class="affix">
         <div class="col-md-5 col-sm-4 col-xs-12">
             <div class="topbar-left">
@@ -70,37 +73,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> Eligible Loan Amount <span class="text-danger"></span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.EligibleLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Eligible Loan Amount", @readonly = true } })
-                                            </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> LTV % <span class="text-danger">*</span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.LTVPerc, new { htmlAttributes = new { @class = "form-control", @placeholder = "LTV %", @readonly = true } })
-                                                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> SanctionLoanAmount <span class="text-danger"></span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.EditorFor(model => model.SanctionLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Sanction Loan Amount", @readonly = true } })
-                                            </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> Comments <span class="text-danger">*</span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Comments", @cols = "20", @rows = "2", @style = "resize:none;" })
-                                                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>                                    
                                 </div>
                                 <small style="float:right;"><span class="text-danger">* </span>indicates compulsary fields</small>
                                 <label><b>Valuation Details :</b></label><br /><br />
                                 <hr style="margin-top:0px;" />
+                                <br />
                                 <div class="panel-body panel-no-padding">
                                     <div id="divValuationDetails">
                                         <table cellpadding="0" style="width:90%" cellspacing="0" border="0" class="table table-striped table-bordered table-hover table-fixed-header m0" id="tblValuationDetails">
@@ -115,7 +93,9 @@
                                                     <th style="text-align:left">Deductions</th>
                                                     <th style="text-align:left">Net Weight</th>
                                                     <th style="text-align:left">Rate</th>
-                                                    <th style="text-align:left">Total</th>
+                                                    <th style="text-align:left">Val 1 Total</th>
+                                                    <th style="text-align:left">Val 2 Total</th>
+                                                    <th style="text-align:left">Final Total</th>
                                                 </tr>
                                             </thead>
                                             <tbody></tbody>
@@ -125,6 +105,32 @@
                                 <div>
                                     <label id="headerTotalValuation">Total Valuation :</label>
                                     <label id="lblTotalValuation"></label>
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> Eligible Loan Amount <span class="text-danger"></span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            @Html.EditorFor(model => model.EligibleLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Eligible Loan Amount", @readonly = true } })
+                                        </div>
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> LTV % <span class="text-danger">*</span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            @Html.EditorFor(model => model.LTVPerc, new { htmlAttributes = new { @class = "form-control", @placeholder = "LTV %", @readonly = true } })
+                                            @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> Sanction Loan Amount <span class="text-danger"></span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            @Html.EditorFor(model => model.SanctionLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Sanction Loan Amount", @readonly = true } })
+                                        </div>
+                                        <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> Comments <span class="text-danger">*</span></label>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Comments", @cols = "20", @rows = "2", @style = "resize:none;" })
+                                            @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -156,16 +162,44 @@
                 var NetWeight = grossweight - deductions;
                 row.find(".NetWeight").text(isNaN(NetWeight) ? "" : NetWeight);
                 var Rate = parseFloat(row.find(".Rate").text());
-                row.find(".Total").text(NetWeight * Rate);
+                row.find(".Val2Total").text(NetWeight * Rate);
+
+                var totamt = 0;
+                $('#tblValuationDetails tbody>tr').each(function () {
+                    var row = $(this).closest("tr");
+                    totamt = totamt + parseFloat(row.find('.Val2Total').text());
+                });
+                $("#headerTotalValuation").css('display', 'block');
+                $("#lblTotalValuation").text(totamt/2);
             });
 
         });
 
+        $(".ValuatorOneDetailsVM_PurityId").change(function () {
+            var purityid = $(".ValuatorOneDetailsVM_PurityId").val();
+            debugger;
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SetRateOfSelectedPurity", "ValuatorOne")',
+                data: '{ProductId: "' + $("#ProductId").val() + '", PurityId: "' + purityid + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    $(".Rate").val(data);
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+            return false;
+        })
+
+
         $("#btn_save").click(function () {
-            SaveValuator1();
+            SaveValuator2();
         });
 
-        function SaveValuator1() {
+        function SaveValuator2() {
             var CustomerId = $("#CustomerId").val();
             if (CustomerId == "") {
                 $("#CustomErr").text("Please Select Customer Id");
@@ -215,21 +249,22 @@
                 rowValuationDetailsTrn.OrnamentId = row.find("td").eq(1).attr('id');
                 rowValuationDetailsTrn.Qty = row.find("TD").eq(3).html();
                 rowValuationDetailsTrn.PurityId = row.find("td").eq(4).attr('id');
-                rowValuationDetailsTrn.GrossWeight = row.find("TD").eq(5).html();
-                rowValuationDetailsTrn.Deductions = row.find("TD").eq(6).html();
-                rowValuationDetailsTrn.NetWeight = row.find("TD").eq(7).html();
-                rowValuationDetailsTrn.Rate = row.find("TD").eq(8).html();
-                rowValuationDetailsTrn.Total = row.find("TD").eq(9).html();
+                rowValuationDetailsTrn.GrossWeight = row.find(".grossweight").val();
+                rowValuationDetailsTrn.Deductions = row.find(".deductions").val();
+                rowValuationDetailsTrn.NetWeight = row.find(".NetWeight").text();
+                rowValuationDetailsTrn.Rate = row.find(".Rate").text();
+                rowValuationDetailsTrn.FinalTotal = row.find(".FinalTotal").text();
                 lstValuationDetailsTrn.push(rowValuationDetailsTrn);
             });
 
-            ValuatorOneViewModel.ValuatorOneDetailsList = lstValuationDetailsTrn;
+            ValuatorOneViewModel.ValuatorTwoDetailsList = lstValuationDetailsTrn;
             ValuatorOneViewModel.ID = $('#ItemID').val();
             ValuatorOneViewModel.TransactionId = $('#TransactionId').val();
             ValuatorOneViewModel.CustomerId = $('#CustomerId').val();
             ValuatorOneViewModel.ApplicationNo = $('#ApplicationNo').val();
             ValuatorOneViewModel.Comments = $('#Comments').val();
-            ValuatorOneViewModel.PreSanctionId = $("#PreSanctionId").val();
+            ValuatorOneViewModel.KycId = $('#KycId').val();
+            ValuatorOneViewModel.ValuatorOneId = $("#ValuatorOneId").val();
             if (check == true) {
                 $("#btn_save").prop("disabled", true);
                 $.ajax({
@@ -302,17 +337,22 @@
         $("#diveditfilldata").on("click", "tr", function () {
             debugger;
             var tr = $(this).closest('tr');
-            var Id = tr.find("td").eq(0).attr('id');
-            var TransactionId = tr.find("td").eq(1).attr('id');
+
+            var ValuatorOneId = tr.find("td").eq(0).attr('id');
+            var KycId = tr.find("td").eq(1).attr('id');
+            var ProductId = tr.find("td").eq(2).attr('id');
             var CustomerId = tr.find('td:eq(0)').html();
             var ApplicationNo = tr.find('td:eq(1)').html();
 
-            $("#ItemID").val(Id);
-            $("#TransactionId").val(TransactionId);
+            $("#ValuatorOneId").val(ValuatorOneId);
+            $("#KycId").val(KycId);
+            $("#ProductId").val(ProductId);
+
             $("#CustomerId").val(CustomerId);
             $("#ApplicationNo").val(ApplicationNo);
             $("#editModal").hide();
-            GetValuatorOneDetails(Id);
+
+            GetValuatorOneDetails(ValuatorOneId);
         })
 
         function GetValuatorOneDetails(Id) {
@@ -336,7 +376,7 @@
                     if (result.ImageName != null) {
                         $("#ConsolidatedPhoto").append('<td><a href="/ValuatorTwo/Download/' + result.ID + '" target=_blank>' + result.ImageName + '</a></td>');
                     }
-                    var purity = "<select class='ProductDetailsViewModel_Purity'>";
+                    var purity = "<select class='ValuatorOneDetailsVM_PurityId'>";
                     $.ajax({
                         type: 'POST',
                         url: '@Url.Action("GetPurity","ProductRate")', // we are calling json method
@@ -350,22 +390,17 @@
                                 purity = purity + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
                             }
                             purity = purity + '</select>';
-                            $('.ProductDetailsViewModel_Purity').html(purity);
-                            $(".ProductDetailsViewModel_Purity").removeAttr('disabled')
+                            $('.ValuatorOneDetailsVM_PurityId').html(purity);
+                            $(".ValuatorOneDetailsVM_PurityId").removeAttr('disabled')
                         },
                         error: function (ex) {
-                            alert('Failed to retrieve states.' + ex);
+                            alert('Failed to retrieve data .' + ex);
                         }
                     });
 
                     $.each(result.ValuatorTwoDetailsList, function (key, val) {
-                        $("[class*=ProductDetailsViewModel_Purity] option").each(function () {
-                            if ($(this).val() == val.PurityId) {
-                                $(this).attr('selected', 'selected');
-                            }
-                        });
                         var rowCount = $('#tblValuationDetails >tbody >tr').length + 1;
-                        $('#divValuationDetails tbody').append('<tr id=' + val.ID + '>' +
+                        $('#tblValuationDetails tbody').append('<tr id=' + val.ID + '>' +
                       '<td width="10%">' + rowCount + '</td>' +
                       '<td width="20%" id="' + val.OrnamentId + '">' + val.OrnamentName + '</td>' +
                       '<td width="10%"><a href="/ValuatorTwo/DownLoadValuationImage/' + val.ID + '" target=_blank>' + val.ImageName + '</a>' +
@@ -376,17 +411,19 @@
                       '<td width="8%"><input type=text class=deductions style=width:80px; value="' + val.Deductions + '"/></td>' +
                       '<td width="8%" class=NetWeight>' + val.NetWeight + '</td>' +
                       '<td width="8%" class=Rate>' + val.Rate + '</td>' +
-                      '<td width="8%" class=Total>' + val.Total + '</td>' +
+                      '<td width="8%" class=Val1Total>' + val.Total + '</td>' +
+                      '<td width="8%" class=Val2Total>' + val.Total + '</td>' +
+                      '<td width="8%" class=FinalTotal>' + val.Total + '</td>' +
                       '</tr>');
                     });
 
                     var totamt = 0;
                     $('#tblValuationDetails tbody>tr').each(function () {
                         var row = $(this).closest("tr");
-                        totamt = totamt + parseFloat(row.find('.Total').text());
+                        totamt = totamt + parseFloat(row.find('.Val2Total').text());
                     });
                     $("#headerTotalValuation").css('display', 'block');
-                    $("#lblTotalValuation").text(totamt);
+                    $("#lblTotalValuation").text(totamt/2);
 
                     var ltv = parseFloat($("#MaxLtv").val());
                     var eligibleamt = totamt * ltv / 100;

@@ -82,9 +82,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.TGLGoldStock" Width="1.5" PointX="3.375" PointY="15.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLInterest_Details" Width="1.5" PointX="7.375" PointY="15.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGlReceipt_BasicDetails" Width="1.5" PointX="17.375" PointY="0.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tbl_OrnamentValuationOneDetails" Width="1.5" PointX="17.625" PointY="14.125" />
-        <EntityTypeShape EntityType="MangalDBNewModel.Tran_ValuationOneDetails" Width="1.5" PointX="15.375" PointY="47.875" />
-        <AssociationConnector Association="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_PreSanctionDetails" Width="1.5" PointX="19.625" PointY="35.5" />
         <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_ResidenceVerification" Width="1.5" PointX="21.875" PointY="35.25" />
@@ -96,6 +93,11 @@
         <AssociationConnector Association="MangalDBNewModel.fk_TGLKYC_BasicDetails" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblKYC_HistoryDetails" Width="1.5" PointX="32.375" PointY="22.5" />
         <AssociationConnector Association="MangalDBNewModel.fk_TtblKYC_historyDetails" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_OrnamentValuationOneDetails" Width="1.5" PointX="17.625" PointY="15.375" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Tbl_ValuationTwo" Width="1.5" PointX="19.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_ValuationTwoDetails" Width="1.5" PointX="19.375" PointY="6.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Tran_ValuationOneDetails" Width="1.5" PointX="15.375" PointY="15" />
+        <AssociationConnector Association="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
