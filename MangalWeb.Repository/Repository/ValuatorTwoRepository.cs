@@ -114,6 +114,7 @@ namespace MangalWeb.Repository.Repository
             Tbl_ValuationTwo tblValtwo = new Tbl_ValuationTwo();
             try
             {
+
                 if (model.ID <= 0)
                 {
                     //save the data in Document Upload Details table
