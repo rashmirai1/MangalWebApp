@@ -214,11 +214,6 @@ namespace MangalWeb.Controllers
                 {
                     operation = Session["Operation"].ToString();
                 }
-                else
-                {
-                    operation = "Edit";
-                }
-                //get document upload table
                 var documentUploadViewModel = _documentUploadService.GetUploadDocumentById(ID);
                 documentUploadViewModel.operation = operation;
                 Session["documentupload"] = documentUploadViewModel.DocumentUploadList;

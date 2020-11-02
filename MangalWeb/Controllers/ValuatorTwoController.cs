@@ -22,9 +22,14 @@ namespace MangalWeb.Controllers
         {
             ButtonVisiblity("Index");
             var model = new ValuatorTwoViewModel();
+            model = _valuatorTwoService.GetMaxTransactionId();
             model.ValuatorTwoDetailsList = new List<ValuatorTwoDetailsViewModel>();
             ViewBag.PurityList = new SelectList(_valuatorTwoService.GetAllPurityMaster(), "Id", "PurityName");
             ViewBag.OrnamentList = new SelectList(_valuatorTwoService.GetOrnamentList(), "ItemId", "ItemName");
+            Session["ValuationImageTwoList"] = null;
+            Session["ConsolidatedImageTwo"] = null;
+            Session["ConsolidatedImageNameTwo"] = null;
+            Session["ConsolidatedImageContentTypeTwo"] = null;
             return View(model);
         }
         #endregion
@@ -58,7 +63,7 @@ namespace MangalWeb.Controllers
                 objViewModel.ValuatorTwoDetailsList = new List<ValuatorTwoDetailsViewModel>();
                 ViewBag.PurityList = new SelectList(_valuatorTwoService.GetAllPurityMaster(), "Id", "PurityName");
                 ViewBag.OrnamentList = new SelectList(_valuatorTwoService.GetOrnamentList(), "ItemId", "ItemName");
-                return View("ValuatorOne", objViewModel);
+                return View("ValuatoTwo", objViewModel);
             }
             catch (Exception ex)
             {
@@ -76,15 +81,15 @@ namespace MangalWeb.Controllers
             model.UpdatedBy = Convert.ToInt32(Session["UserLoginId"]);
             try
             {
-                if (Session["ConsolidatedImage"] != null)
+                if (Session["ConsolidatedImageTwo"] != null)
                 {
-                    model.ConsolidatedImageFile = (byte[])Session["ConsolidatedImage"];
-                    model.ImageName = Session["ConsolidatedImageName"].ToString();
-                    model.ContentType = Session["ConsolidatedImageContentType"].ToString();
+                    model.ConsolidatedImageFile = (byte[])Session["ConsolidatedImageTwo"];
+                    model.ImageName = Session["ConsolidatedImageNameTwo"].ToString();
+                    model.ContentType = Session["ConsolidatedImageContentTypeTwo"].ToString();
                 }
-                if (Session["ValuationImageList"] != null)
+                if (Session["ValuationImageTwoList"] != null)
                 {
-                    var list = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageList"];
+                    var list = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageTwoList"];
                     if (list != null)
                     {
                         for (int i = 0; i <= list.Count - 1; i++)
@@ -118,7 +123,7 @@ namespace MangalWeb.Controllers
             Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
             //base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
             ValuatorOneDetailsViewModel docupload = null;
-            var sessionlist = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageList"];
+            var sessionlist = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageTwoList"];
             docupload = new ValuatorOneDetailsViewModel();
             if (sessionlist == null)
             {
@@ -129,7 +134,7 @@ namespace MangalWeb.Controllers
             docupload.ImageName = postedFile.FileName;
             docupload.ContentType = postedFile.ContentType;
             sessionlist.Add(docupload);
-            Session["ValuationImageList"] = sessionlist;
+            Session["ValuationImageTwoList"] = sessionlist;
             return Json(docupload, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -158,11 +163,11 @@ namespace MangalWeb.Controllers
         {
             var model = _valuatorTwoService.GetValuatorOneDetailsById(Id);
             var file = _valuatorTwoService.GetConsolidatedImage(model.ID);
-            Session["ConsolidatedImage"] = file.ConsolidatedImage;
-            Session["ConsolidatedImageName"] = model.ImageName;
-            Session["ConsolidatedImageContentType"] = file.ContentType;
+            Session["ConsolidatedImageTwo"] = file.ConsolidatedImage;
+            Session["ConsolidatedImageNameTwo"] = model.ImageName;
+            Session["ConsolidatedImageContentTypeTwo"] = file.ContentType;
 
-            var sessionlist = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageList"];
+            var sessionlist = (List<ValuatorOneDetailsViewModel>)Session["ValuationImageTwoList"];
             var docupload = new ValuatorOneDetailsViewModel();
             if (sessionlist == null)
             {
@@ -176,7 +181,7 @@ namespace MangalWeb.Controllers
                 docupload.ImageName = file1.ImageName;
                 docupload.ContentType = file1.ContentType;
                 sessionlist.Add(docupload);
-                Session["ValuationImageList"] = sessionlist;
+                Session["ValuationImageTwoList"] = sessionlist;
             }
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -213,9 +218,9 @@ namespace MangalWeb.Controllers
             Stream fs = postedFile.InputStream;
             BinaryReader br = new BinaryReader(fs);
             Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
-            Session["ConsolidatedImage"] = bytes;
-            Session["ConsolidatedImageName"] = postedFile.FileName;
-            Session["ConsolidatedImageContentType"] = postedFile.ContentType;
+            Session["ConsolidatedImageTwo"] = bytes;
+            Session["ConsolidatedImageNameTwo"] = postedFile.FileName;
+            Session["ConsolidatedImageContentTypeTwo"] = postedFile.ContentType;
             return Json(1, JsonRequestBehavior.AllowGet);
         }
         #endregion

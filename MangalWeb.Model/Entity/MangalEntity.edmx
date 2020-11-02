@@ -455,6 +455,47 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Property Name="Organhieraechyid" Type="int" />
           <Property Name="status1" Type="bit" />
         </EntityType>
+        <EntityType Name="Tbl_ValuationTwo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ValuatorOneId" Type="int" Nullable="false" />
+          <Property Name="KYCID" Type="int" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApplicationNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ConsolidatedImage" Type="image" Nullable="false" />
+          <Property Name="ContentType" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImageName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="UpdatedDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="CompId" Type="int" Nullable="false" />
+          <Property Name="FinancialYearId" Type="int" Nullable="false" />
+          <Property Name="BranchId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_ValuationTwoDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ValuationTwoID" Type="int" Nullable="false" />
+          <Property Name="OrnamentId" Type="int" Nullable="false" />
+          <Property Name="OrnamentImage" Type="image" />
+          <Property Name="ContentType" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImageName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="PurityId" Type="int" Nullable="false" />
+          <Property Name="GrossWt" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Deduction" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="NtWt" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Rate" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="TotalValuation" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
         <EntityType Name="tblaccountmaster">
           <Key>
             <PropertyRef Name="AccountID" />
@@ -665,8 +706,8 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           </Key>
           <Property Name="StateID" Type="int" Nullable="false" />
           <Property Name="StateName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="StateCode" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="countryID" Type="int" Nullable="false" />
-          <Property Name="StateCode" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="CkycStateId" Type="int" />
         </EntityType>
         <EntityType Name="tblZonemaster">
@@ -1007,13 +1048,14 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PreSanctionId" Type="int" />
+          <Property Name="KYCId" Type="int" />
           <Property Name="TransactionId" Type="nvarchar" MaxLength="50" />
           <Property Name="CustomerID" Type="nvarchar" MaxLength="50" />
           <Property Name="ApplicationNo" Type="nvarchar" MaxLength="50" />
           <Property Name="ConsolidatedImage" Type="image" />
           <Property Name="ContentType" Type="nvarchar" MaxLength="50" />
           <Property Name="ImageName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="50" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="UpdatedDate" Type="datetime" />
@@ -1518,9 +1560,14 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Parameter Name="Message" Type="int" Mode="InOut" />
         </Function>
         <Function Name="GetCustomerRecordinSanction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetDocumentUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetDocumentUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BranchId" Type="int" Mode="In" />
+          <Parameter Name="FYID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetDocumentUploadById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="BranchId" Type="int" Mode="In" />
+          <Parameter Name="FYID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetKYCDetailsForDocument" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetKYCDetailsForDocumentById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1786,6 +1833,8 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="tbl_PreSanctionDetails" EntityType="Self.tbl_PreSanctionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ResidenceVerification" EntityType="Self.tbl_ResidenceVerification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserCategory" EntityType="Self.tbl_UserCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_ValuationTwo" EntityType="Self.Tbl_ValuationTwo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_ValuationTwoDetails" EntityType="Self.tbl_ValuationTwoDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblaccountmaster" EntityType="Self.tblaccountmaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCityMaster" EntityType="Self.tblCityMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCompanyBranchMaster" EntityType="Self.tblCompanyBranchMaster" Schema="dbo" store:Type="Tables" />
@@ -2058,7 +2107,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <FunctionImport Name="GetKYCDetailsForDocumentById" ReturnType="Collection(MangalDBNewModel.GetKYCDetailsForDocumentById_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetDocumentUpload" ReturnType="Collection(MangalDBNewModel.GetDocumentUpload_Result)" />
+          <FunctionImport Name="GetDocumentUpload" ReturnType="Collection(MangalDBNewModel.GetDocumentUpload_Result)" >
+            <Parameter Name="BranchId" Mode="In" Type="Int32" />
+            <Parameter Name="FYID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="Mst_BranchType" EntityType="MangalDBNewModel.Mst_BranchType" />
           <EntitySet Name="User_Category_Hierarchy" EntityType="MangalDBNewModel.User_Category_Hierarchy" />
           <AssociationSet Name="FK_tblCompanyBranchMaster_Mst_BranchType" Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType">
@@ -2072,6 +2124,8 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="tbl_KYCMobileOTP" EntityType="MangalDBNewModel.tbl_KYCMobileOTP" />
           <FunctionImport Name="GetDocumentUploadById" ReturnType="Collection(MangalDBNewModel.GetDocumentUploadById_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="BranchId" Mode="In" Type="Int32" />
+            <Parameter Name="FYID" Mode="In" Type="Int32" />
           </FunctionImport>
           <AssociationSet Name="FK__tbl_UserC__Organ__51BA1E3A" Association="MangalDBNewModel.FK__tbl_UserC__Organ__51BA1E3A">
             <End Role="User_Category_Hierarchy" EntitySet="User_Category_Hierarchy" />
@@ -2346,12 +2400,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <Parameter Name="ClosingBalanceDebit" Mode="In" Type="Double" />
             <Parameter Name="ClosingBalanceCredit" Mode="In" Type="Double" />
           </FunctionImport>
-          <EntitySet Name="tbl_OrnamentValuationOneDetails" EntityType="MangalDBNewModel.tbl_OrnamentValuationOneDetails" />
-          <EntitySet Name="Tran_ValuationOneDetails" EntityType="MangalDBNewModel.Tran_ValuationOneDetails" />
-          <AssociationSet Name="FK__tbl_Ornam__Valua__536D5C82" Association="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82">
-            <End Role="Tran_ValuationOneDetails" EntitySet="Tran_ValuationOneDetails" />
-            <End Role="tbl_OrnamentValuationOneDetails" EntitySet="tbl_OrnamentValuationOneDetails" />
-          </AssociationSet>
           <EntitySet Name="tbl_PreSanctionDetails" EntityType="MangalDBNewModel.tbl_PreSanctionDetails" />
           <AssociationSet Name="FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" Association="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails">
             <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
@@ -2380,6 +2428,14 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <AssociationSet Name="fk_TtblKYC_historyDetails" Association="MangalDBNewModel.fk_TtblKYC_historyDetails">
             <End Role="tblKYC_HistoryDetails" EntitySet="tblKYC_HistoryDetails" />
             <End Role="tblHistory_KYCAddresses" EntitySet="tblHistory_KYCAddresses" />
+          </AssociationSet>
+          <EntitySet Name="tbl_OrnamentValuationOneDetails" EntityType="MangalDBNewModel.tbl_OrnamentValuationOneDetails" />
+          <EntitySet Name="Tbl_ValuationTwo" EntityType="MangalDBNewModel.Tbl_ValuationTwo" />
+          <EntitySet Name="tbl_ValuationTwoDetails" EntityType="MangalDBNewModel.tbl_ValuationTwoDetails" />
+          <EntitySet Name="Tran_ValuationOneDetails" EntityType="MangalDBNewModel.Tran_ValuationOneDetails" />
+          <AssociationSet Name="FK__tbl_Ornam__Valua__536D5C82" Association="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82">
+            <End Role="Tran_ValuationOneDetails" EntitySet="Tran_ValuationOneDetails" />
+            <End Role="tbl_OrnamentValuationOneDetails" EntitySet="tbl_OrnamentValuationOneDetails" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
@@ -3156,7 +3212,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="StateID" Type="Int32" Nullable="false" />
           <Property Name="StateName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="countryID" Type="Int32" Nullable="false" />
-          <Property Name="StateCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StateCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="CkycStateId" Type="Int32" />
           <NavigationProperty Name="tbl_CountryMaster" Relationship="MangalDBNewModel.FK_tblStateMaster_tbl_CountryMaster" FromRole="tblStateMaster" ToRole="tbl_CountryMaster" />
           <NavigationProperty Name="tblCityMasters" Relationship="MangalDBNewModel.FK_tblCityMaster_tblStateMaster" FromRole="tblStateMaster" ToRole="tblCityMaster" />
@@ -3965,60 +4021,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="TotalAdvInterestAmount" Type="Decimal" Precision="11" Scale="2" />
           <Property Name="OSAdvInterestAmount" Type="Decimal" Precision="11" Scale="2" />
         </EntityType>
-        <EntityType Name="tbl_OrnamentValuationOneDetails">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ValuationOneID" Type="Int32" Nullable="false" />
-          <Property Name="OrnamentId" Type="Int32" Nullable="false" />
-          <Property Name="OrnamentImage" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Qty" Type="Int32" />
-          <Property Name="PurityId" Type="Int32" Nullable="false" />
-          <Property Name="GrossWt" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="Deduction" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="NtWt" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="Rate" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="TotalValuation" Type="Decimal" Precision="10" Scale="2" />
-          <NavigationProperty Name="Tran_ValuationOneDetails" Relationship="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82" FromRole="tbl_OrnamentValuationOneDetails" ToRole="Tran_ValuationOneDetails" />
-        </EntityType>
-        <EntityType Name="Tran_ValuationOneDetails">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PreSanctionId" Type="Int32" />
-          <Property Name="TransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ConsolidatedImage" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="CompId" Type="Int32" Nullable="false" />
-          <Property Name="FinancialYearId" Type="Int32" />
-          <Property Name="BranchId" Type="Int32" />
-          <NavigationProperty Name="tbl_OrnamentValuationOneDetails" Relationship="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82" FromRole="Tran_ValuationOneDetails" ToRole="tbl_OrnamentValuationOneDetails" />
-        </EntityType>
-        <Association Name="FK__tbl_Ornam__Valua__536D5C82">
-          <End Type="MangalDBNewModel.Tran_ValuationOneDetails" Role="Tran_ValuationOneDetails" Multiplicity="1" />
-          <End Type="MangalDBNewModel.tbl_OrnamentValuationOneDetails" Role="tbl_OrnamentValuationOneDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tran_ValuationOneDetails">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="tbl_OrnamentValuationOneDetails">
-              <PropertyRef Name="ValuationOneID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tbl_PreSanctionDetails">
           <Key>
             <PropertyRef Name="Id" />
@@ -4320,6 +4322,102 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Principal>
             <Dependent Role="tblHistory_KYCAddresses">
               <PropertyRef Name="KYCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_OrnamentValuationOneDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ValuationOneID" Type="Int32" Nullable="false" />
+          <Property Name="OrnamentId" Type="Int32" Nullable="false" />
+          <Property Name="OrnamentImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="PurityId" Type="Int32" Nullable="false" />
+          <Property Name="GrossWt" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Deduction" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="NtWt" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Rate" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="TotalValuation" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Tran_ValuationOneDetails" Relationship="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82" FromRole="tbl_OrnamentValuationOneDetails" ToRole="Tran_ValuationOneDetails" />
+        </EntityType>
+        <EntityType Name="Tbl_ValuationTwo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ValuatorOneId" Type="Int32" Nullable="false" />
+          <Property Name="KYCID" Type="Int32" />
+          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ConsolidatedImage" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="CompId" Type="Int32" Nullable="false" />
+          <Property Name="FinancialYearId" Type="Int32" Nullable="false" />
+          <Property Name="BranchId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_ValuationTwoDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ValuationTwoID" Type="Int32" Nullable="false" />
+          <Property Name="OrnamentId" Type="Int32" Nullable="false" />
+          <Property Name="OrnamentImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="PurityId" Type="Int32" Nullable="false" />
+          <Property Name="GrossWt" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Deduction" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="NtWt" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Rate" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="TotalValuation" Type="Decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Tran_ValuationOneDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PreSanctionId" Type="Int32" />
+          <Property Name="KYCId" Type="Int32" />
+          <Property Name="TransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ConsolidatedImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="CompId" Type="Int32" Nullable="false" />
+          <Property Name="FinancialYearId" Type="Int32" />
+          <Property Name="BranchId" Type="Int32" />
+          <NavigationProperty Name="tbl_OrnamentValuationOneDetails" Relationship="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82" FromRole="Tran_ValuationOneDetails" ToRole="tbl_OrnamentValuationOneDetails" />
+        </EntityType>
+        <Association Name="FK__tbl_Ornam__Valua__536D5C82">
+          <End Type="MangalDBNewModel.Tran_ValuationOneDetails" Role="Tran_ValuationOneDetails" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tbl_OrnamentValuationOneDetails" Role="tbl_OrnamentValuationOneDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tran_ValuationOneDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_OrnamentValuationOneDetails">
+              <PropertyRef Name="ValuationOneID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5619,48 +5717,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_PRI" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_PRI" />
           <FunctionImportMapping FunctionImportName="DeleteSanctionDisbursementData" FunctionName="MangalDBNewModel.Store.DeleteSanctionDisbursementData" />
           <FunctionImportMapping FunctionImportName="SP_InsertrecordinFCompanyYearEndClosing" FunctionName="MangalDBNewModel.Store.SP_InsertrecordinFCompanyYearEndClosing" />
-          <EntitySetMapping Name="tbl_OrnamentValuationOneDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_OrnamentValuationOneDetails">
-              <MappingFragment StoreEntitySet="tbl_OrnamentValuationOneDetails">
-                <ScalarProperty Name="TotalValuation" ColumnName="TotalValuation" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="NtWt" ColumnName="NtWt" />
-                <ScalarProperty Name="Deduction" ColumnName="Deduction" />
-                <ScalarProperty Name="GrossWt" ColumnName="GrossWt" />
-                <ScalarProperty Name="PurityId" ColumnName="PurityId" />
-                <ScalarProperty Name="Qty" ColumnName="Qty" />
-                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
-                <ScalarProperty Name="OrnamentImage" ColumnName="OrnamentImage" />
-                <ScalarProperty Name="OrnamentId" ColumnName="OrnamentId" />
-                <ScalarProperty Name="ValuationOneID" ColumnName="ValuationOneID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tran_ValuationOneDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.Tran_ValuationOneDetails">
-              <MappingFragment StoreEntitySet="Tran_ValuationOneDetails">
-                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
-                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
-                <ScalarProperty Name="CompId" ColumnName="CompId" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
-                <ScalarProperty Name="ConsolidatedImage" ColumnName="ConsolidatedImage" />
-                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
-                <ScalarProperty Name="PreSanctionId" ColumnName="PreSanctionId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_PreSanctionDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.tbl_PreSanctionDetails">
               <MappingFragment StoreEntitySet="tbl_PreSanctionDetails">
@@ -5900,6 +5956,92 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
                 <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_OrnamentValuationOneDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_OrnamentValuationOneDetails">
+              <MappingFragment StoreEntitySet="tbl_OrnamentValuationOneDetails">
+                <ScalarProperty Name="TotalValuation" ColumnName="TotalValuation" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="NtWt" ColumnName="NtWt" />
+                <ScalarProperty Name="Deduction" ColumnName="Deduction" />
+                <ScalarProperty Name="GrossWt" ColumnName="GrossWt" />
+                <ScalarProperty Name="PurityId" ColumnName="PurityId" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="OrnamentImage" ColumnName="OrnamentImage" />
+                <ScalarProperty Name="OrnamentId" ColumnName="OrnamentId" />
+                <ScalarProperty Name="ValuationOneID" ColumnName="ValuationOneID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_ValuationTwo">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Tbl_ValuationTwo">
+              <MappingFragment StoreEntitySet="Tbl_ValuationTwo">
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
+                <ScalarProperty Name="CompId" ColumnName="CompId" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="ConsolidatedImage" ColumnName="ConsolidatedImage" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+                <ScalarProperty Name="ValuatorOneId" ColumnName="ValuatorOneId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_ValuationTwoDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_ValuationTwoDetails">
+              <MappingFragment StoreEntitySet="tbl_ValuationTwoDetails">
+                <ScalarProperty Name="TotalValuation" ColumnName="TotalValuation" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="NtWt" ColumnName="NtWt" />
+                <ScalarProperty Name="Deduction" ColumnName="Deduction" />
+                <ScalarProperty Name="GrossWt" ColumnName="GrossWt" />
+                <ScalarProperty Name="PurityId" ColumnName="PurityId" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="OrnamentImage" ColumnName="OrnamentImage" />
+                <ScalarProperty Name="OrnamentId" ColumnName="OrnamentId" />
+                <ScalarProperty Name="ValuationTwoID" ColumnName="ValuationTwoID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tran_ValuationOneDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Tran_ValuationOneDetails">
+              <MappingFragment StoreEntitySet="Tran_ValuationOneDetails">
+                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+                <ScalarProperty Name="FinancialYearId" ColumnName="FinancialYearId" />
+                <ScalarProperty Name="CompId" ColumnName="CompId" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="ConsolidatedImage" ColumnName="ConsolidatedImage" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="KYCId" ColumnName="KYCId" />
+                <ScalarProperty Name="PreSanctionId" ColumnName="PreSanctionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

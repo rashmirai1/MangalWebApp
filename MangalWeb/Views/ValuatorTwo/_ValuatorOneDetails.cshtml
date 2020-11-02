@@ -10,14 +10,16 @@
                         <tr>
                             <th style="text-align:left;">Customer ID</th>
                             <th style="text-align:left;">Application No</th>
+                            <th style="text-align:left;">Application Date</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (ValuatorTwoViewModel item in Model)
                         {
                             <tr class="gradeX" style="cursor:pointer;">
-                                <td id="@item.ID">@item.CustomerId</td>
-                                <td id="@item.TransactionId">@item.ApplicationNo</td>
+                                <td id="@item.ValuatorOneId">@item.CustomerId</td>
+                                <td id="@item.KycId">@item.ApplicationNo</td>
+                                <td id="@item.ProductId">@item.AppliedDate</td>
                             </tr>
                         }
                     </tbody>

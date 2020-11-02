@@ -83,5 +83,19 @@ namespace MangalWeb.Service.Service
             return _valuatorTwoRepository.GetValuationImage(id);
         }
         #endregion
+
+        #region GetConsolidatedTwoImage
+        public Tbl_ValuationTwo GetConsolidatedTwoImage(int id)
+        {
+            return _valuatorTwoRepository.GetConsolidatedTwoImage(id);
+        }
+        #endregion
+
+        #region GetValuationTwoImage
+        public tbl_ValuationTwoDetails GetValuationTwoImage(int id)
+        {
+            return _valuatorTwoRepository.GetValuationTwoImage(id);
+        }
+        #endregion
     }
 }

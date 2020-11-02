@@ -302,6 +302,12 @@
     <Compile Include="Entity\tbl_UserCategory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\Tbl_ValuationTwo.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\tbl_ValuationTwoDetails.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\TGLCashInOutDetail.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>

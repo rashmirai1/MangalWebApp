@@ -34,7 +34,12 @@ namespace MangalWeb.Repository.Repository
         #region GetPreSanctionList
         public List<ValuatorOneViewModel> GetPreSanctionList()
         {
-            var list = _context.Database.SqlQuery<ValuatorOneViewModel>("GetPreSanctionListFromValuatorOne").ToList();
+            int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            int fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+
+            var list = _context.Database.SqlQuery<ValuatorOneViewModel>("GetPreSanctionListFromValuatorOne @BranchId,@FYID",
+                new SqlParameter("@BranchId", branchid),
+                new SqlParameter("@FYID", fyid)).ToList();
             return list;
         }
         #endregion
@@ -42,7 +47,13 @@ namespace MangalWeb.Repository.Repository
         #region GetValuatorOneList
         public List<ValuatorOneViewModel> GetValuatorOneList()
         {
-            var list = _context.Database.SqlQuery<ValuatorOneViewModel>("SP_GetValuatorOneRecord").ToList();
+            int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            int fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+             
+            var list = _context.Database.SqlQuery<ValuatorOneViewModel>("SP_GetValuatorOneRecord @BranchId,@FYID",
+                new SqlParameter("@BranchId", branchid),
+                new SqlParameter("@FYID", fyid)).ToList();
+
             return list;
         }
         #endregion
@@ -67,6 +78,7 @@ namespace MangalWeb.Repository.Repository
                      select new ValuatorOneViewModel()
                      {
                          ID = a.Id,
+                         KycId=a.KYCId,
                          TransactionId = a.TransactionId,
                          CustomerId = a.CustomerID,
                          ApplicationNo = a.ApplicationNo,
@@ -112,6 +124,7 @@ namespace MangalWeb.Repository.Repository
                 {
                     //save the data in Document Upload Details table
                     tblValOne.TransactionId = model.TransactionId;
+                    tblValOne.KYCId = model.KycId;
                     tblValOne.PreSanctionId = model.PreSanctionId;
                     tblValOne.CustomerID = model.CustomerId;
                     tblValOne.ApplicationNo = model.ApplicationNo;
@@ -155,6 +168,7 @@ namespace MangalWeb.Repository.Repository
                     //update the data in Charge Details table
                     var tblObj = _context.Tran_ValuationOneDetails.Where(x => x.Id == model.ID).FirstOrDefault();
                     tblObj.PreSanctionId = model.PreSanctionId;
+                    tblObj.KYCId = model.KycId;
                     tblObj.TransactionId = model.TransactionId.ToString();
                     tblObj.CustomerID = model.CustomerId;
                     tblObj.ApplicationNo = model.ApplicationNo;
@@ -245,7 +259,6 @@ namespace MangalWeb.Repository.Repository
         public void DeleteRecord(int id)
         {
             var trndata = _context.tbl_OrnamentValuationOneDetails.Where(x => x.ValuationOneID == id).ToList();
-            //Delete the data from tbl_GLChargeMaster_Details
             if (trndata != null)
             {
                 foreach (var trn in trndata)
@@ -277,12 +290,19 @@ namespace MangalWeb.Repository.Repository
         #region GetOrnamentProductWise
         public List<tblItemMaster> GetOrnamentProductWise(int id)
         {
-            return _context.tblItemMasters.Where(x => x.Product == id && x.Status != "Not Allowed").ToList();
+            return _context.tblItemMasters.Where(x => x.Product == id).ToList();
         }
         #endregion
 
-        #region Goldrates
-        public double Goldrates()
+        #region GetOrnamentProductWise
+        public string CheckOrnamentStatus(int id)
+        {
+            return _context.tblItemMasters.Where(x => x.ItemID == id).Select(x => x.Status).FirstOrDefault();
+        }
+        #endregion
+
+        #region GetGoldrates
+        public double GetGoldrates()
         {
             double finalrate = 0;
             string temp = string.Empty;
@@ -331,24 +351,33 @@ namespace MangalWeb.Repository.Repository
             double pFinalRate = 0;
             string purityname = "";
             DateTime ratedate;
+            int data = 0;
             if (pProductId == 1)
             {
-                purityname = _context.Mst_PurityMaster.Where(x => x.id == pPurityId).Select(x => x.PurityName).FirstOrDefault();
-                int data = Convert.ToInt32(Regex.Match(purityname, @"\d+").Value);
-
-                var rate = (from a in _context.Mst_ProductRate
-                            join b in _context.Mst_ProductRateDetails on a.Pr_Id equals b.Prd_FkId
-                            where a.Pr_Product == pProductId && b.Prd_Purity == 7
-                            select new
-                            {
-                                FinalRate = b.Prd_NetRate,
-                                ratedate = a.Pr_Date
-                            }).OrderByDescending(x => x.ratedate).FirstOrDefault();
-                if (rate!=null && rate.FinalRate > 0)
+                pFinalRate = GetGoldrates();
+                if (pFinalRate > 0)
                 {
-                    pFinalRate = Convert.ToDouble(rate.FinalRate);
+                    purityname = _context.Mst_PurityMaster.Where(x => x.id == pPurityId).Select(x => x.PurityName).FirstOrDefault();
+                    data = Convert.ToInt32(Regex.Match(purityname, @"\d+").Value);
                     FinalRate = pFinalRate / 24;
                     FinalRate = FinalRate * data;
+                }
+                else
+                {
+                    var rate = (from a in _context.Mst_ProductRate
+                                join b in _context.Mst_ProductRateDetails on a.Pr_Id equals b.Prd_FkId
+                                where a.Pr_Product == pProductId && b.Prd_Purity == 7
+                                select new
+                                {
+                                    FinalRate = b.Prd_NetRate,
+                                    ratedate = a.Pr_Date
+                                }).OrderByDescending(x => x.ratedate).FirstOrDefault();
+                    if (rate != null && rate.FinalRate > 0)
+                    {
+                        pFinalRate = Convert.ToDouble(rate.FinalRate);
+                        FinalRate = pFinalRate / 24;
+                        FinalRate = FinalRate * data;
+                    }
                 }
             }
             else
