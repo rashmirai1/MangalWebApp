@@ -22,6 +22,7 @@ namespace MangalWeb.Model.Transaction
         public byte[] ConsolidatedImageFile { get; set; }
         public string ContentType { get; set; }
         public string ImageName { get; set; }
+        [Required(ErrorMessage ="Please Select Customer")]
         public string CustomerId { get; set; }
         public string ApplicationNo { get; set; }
         public decimal EligibleLoanAmount { get; set; }

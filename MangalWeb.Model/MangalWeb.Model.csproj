@@ -143,6 +143,9 @@
     <Compile Include="Entity\GL_SanctionDisburse_KYC_Details_RTR_Result2.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\GL_SanctionDisburse_KYC_Details_RTR_Result3.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\GL_SanctionDisburse_KYC_RTR_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>

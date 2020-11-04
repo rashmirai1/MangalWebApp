@@ -27,7 +27,6 @@ namespace MangalWeb.Model.Entity
         public Nullable<decimal> NtWt { get; set; }
         public Nullable<decimal> Rate { get; set; }
         public Nullable<decimal> Total { get; set; }
-        public Nullable<decimal> TotalValuation { get; set; }
     
         public virtual Tran_ValuationOneDetails Tran_ValuationOneDetails { get; set; }
     }

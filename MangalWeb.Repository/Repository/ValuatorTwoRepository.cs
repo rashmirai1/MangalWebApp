@@ -56,12 +56,12 @@ namespace MangalWeb.Repository.Repository
         #endregion
 
         #region GetMaxTransactionId
-        public ValuatorTwoViewModel GetMaxTransactionId()
+        public string GetMaxTransactionId()
         {
-            var model = new ValuatorTwoViewModel();
+            string TransactionId = "";
             var transactionid = _context.Tbl_ValuationTwo.Any() ? _context.Tbl_ValuationTwo.Max(x => x.Id) + 1 : 1;
-            model.TransactionId = "VT0000" + transactionid;
-            return model;
+            TransactionId = "VT0000" + transactionid;
+            return TransactionId;
         }
         #endregion
 
@@ -75,12 +75,14 @@ namespace MangalWeb.Repository.Repository
                      where a.Id == Id
                      select new ValuatorTwoViewModel()
                      {
-                         ID = a.Id,
+                         ValuatorOneId = a.Id,
+                         KycId = (int)a.KYCId,
                          CustomerId = a.CustomerID,
                          ApplicationNo = a.ApplicationNo,
                          Comments = a.Comments,
                          ImageName = a.ImageName,
-                         MaxLtv = (decimal)c.MaxLtv
+                         MaxLtv = (decimal)c.MaxLtv,
+                         ProductId = b.Product
                      }).FirstOrDefault();
 
             var valuatoronedetails = (from a in _context.Tran_ValuationOneDetails
@@ -108,6 +110,83 @@ namespace MangalWeb.Repository.Repository
         }
         #endregion
 
+        #region GetValuatorTwoDetailsById
+        public ValuatorTwoViewModel GetValuatorTwoDetailsById(int Id)
+        {
+            var model = new ValuatorTwoViewModel();
+            model = (from a in _context.Tbl_ValuationTwo
+                     join b in _context.tbl_ValuationTwoDetails on a.Id equals b.ValuationTwoID
+                     join c in _context.Tran_ValuationOneDetails on a.ValuatorOneId equals c.Id
+                     join d in _context.tbl_PreSanctionDetails on c.PreSanctionId equals d.Id
+                     where a.Id == Id
+                     select new ValuatorTwoViewModel()
+                     {
+                         ID = a.Id,
+                         ValuatorOneId = a.ValuatorOneId,
+                         TransactionId = a.TransactionId,
+                         CustomerId = a.CustomerID,
+                         ApplicationNo = a.ApplicationNo,
+                         Comments = a.Comments,
+                         ImageName = a.ImageName,
+                         LTVPerc = (decimal)a.LTVPerc,
+                         MaxLtv = (decimal)a.LTVPerc,
+                         EligibleLoanAmount = (decimal)a.EligibleLoanAmount,
+                         SanctionLoanAmount = (decimal)a.SanctionLoanAmount,
+                         ProductId = d.Product
+                     }).FirstOrDefault();
+
+            var valuatoronedetails = (from a in _context.Tbl_ValuationTwo
+                                      join b in _context.tbl_ValuationTwoDetails on a.Id equals b.ValuationTwoID
+                                      join c in _context.tblItemMasters on b.OrnamentId equals c.ItemID
+                                      join d in _context.Mst_PurityMaster on b.PurityId equals d.id
+                                      where a.Id == Id
+                                      select new ValuatorTwoDetailsViewModel()
+                                      {
+                                          ID = b.Id,
+                                          OrnamentId = b.OrnamentId,
+                                          OrnamentName = c.ItemName,
+                                          ImageName = b.ImageName,
+                                          Qty = (int)b.Qty,
+                                          PurityId = b.PurityId,
+                                          PurityName = d.PurityName,
+                                          GrossWeight = (decimal)b.GrossWt,
+                                          Deductions = (decimal)b.Deduction,
+                                          NetWeight = (decimal)b.NtWt,
+                                          Rate = (decimal)b.Rate,
+                                          Total = (decimal)b.Total
+                                      }).ToList();
+            model.ValuatorTwoDetailsList = valuatoronedetails;
+            return model;
+        }
+        #endregion
+
+        #region GetValuatorOneData
+        public ValuatorTwoDetailsViewModel GetValuatorOneData(int Id)
+        {
+            var model = (from a in _context.Tran_ValuationOneDetails
+                         join b in _context.tbl_OrnamentValuationOneDetails on a.Id equals b.ValuationOneID
+                         join c in _context.tblItemMasters on b.OrnamentId equals c.ItemID
+                         join d in _context.Mst_PurityMaster on b.PurityId equals d.id
+                         where b.Id == Id
+                         select new ValuatorTwoDetailsViewModel()
+                         {
+                             ID = b.Id,
+                             OrnamentId = b.OrnamentId,
+                             OrnamentName = c.ItemName,
+                             ImageName = b.ImageName,
+                             Qty = (int)b.Qty,
+                             PurityId = b.PurityId,
+                             PurityName = d.PurityName,
+                             GrossWeight = (decimal)b.GrossWt,
+                             Deductions = (decimal)b.Deduction,
+                             NetWeight = (decimal)b.NtWt,
+                             Rate = (decimal)b.Rate,
+                             Total = (decimal)b.Total
+                         }).FirstOrDefault();
+            return model;
+        }
+        #endregion
+
         #region SaveUpdateRecord
         public void SaveUpdateRecord(ValuatorTwoViewModel model)
         {
@@ -127,15 +206,22 @@ namespace MangalWeb.Repository.Repository
                     tblValtwo.BranchId = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
                     tblValtwo.CompId = Convert.ToInt32(HttpContext.Current.Session["CompanyId"]);
                     tblValtwo.FinancialYearId = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
-                    tblValtwo.CreatedBy = model.CreatedBy;
-                    tblValtwo.CreatedDate = DateTime.Now;
                     tblValtwo.ConsolidatedImage = model.ConsolidatedImageFile;
                     tblValtwo.ImageName = model.ImageName;
                     tblValtwo.ContentType = model.ContentType;
+                    tblValtwo.LTVPerc = model.LTVPerc;
+                    tblValtwo.EligibleLoanAmount = model.EligibleLoanAmount;
+                    tblValtwo.SanctionLoanAmount = model.SanctionLoanAmount;
+                    tblValtwo.Comments = model.Comments;
+                    tblValtwo.CreatedBy = model.CreatedBy;
+                    tblValtwo.CreatedDate = DateTime.Now;
+                    tblValtwo.UpdatedBy = model.UpdatedBy;
+                    tblValtwo.CreatedDate = DateTime.Now;
                     _context.Tbl_ValuationTwo.Add(tblValtwo);
                     _context.SaveChanges();
 
                     int maxid = _context.Tbl_ValuationTwo.Any() ? _context.Tbl_ValuationTwo.Max(x => x.Id) : 1;
+
                     foreach (var p in model.ValuatorTwoDetailsList)
                     {
                         var trn = new tbl_ValuationTwoDetails
@@ -151,8 +237,7 @@ namespace MangalWeb.Repository.Repository
                             Deduction = p.Deductions,
                             NtWt = p.NetWeight,
                             Rate = p.Rate,
-                            Total = p.Total,
-                            TotalValuation = p.Total
+                            Total = p.Total
                         };
                         _context.tbl_ValuationTwoDetails.Add(trn);
                         _context.SaveChanges();
@@ -164,9 +249,11 @@ namespace MangalWeb.Repository.Repository
                     var tblObj = _context.Tbl_ValuationTwo.Where(x => x.Id == model.ID).FirstOrDefault();
                     tblObj.TransactionId = model.TransactionId.ToString();
                     tblObj.CustomerID = model.CustomerId;
+                    tblObj.TransactionId = model.TransactionId;
+                    tblObj.KYCID = model.KycId;
                     tblObj.ApplicationNo = model.ApplicationNo;
                     tblObj.Comments = model.Comments;
-                    tblObj.CreatedBy = model.CreatedBy;
+                    tblObj.UpdatedBy = model.UpdatedBy;
                     tblObj.CreatedDate = DateTime.Now;
                     tblObj.BranchId = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
                     tblObj.CompId = Convert.ToInt32(HttpContext.Current.Session["CompanyId"]);
@@ -174,6 +261,10 @@ namespace MangalWeb.Repository.Repository
                     tblObj.ConsolidatedImage = model.ConsolidatedImageFile;
                     tblObj.ImageName = model.ImageName;
                     tblObj.ContentType = model.ContentType;
+                    tblObj.LTVPerc = model.LTVPerc;
+                    tblObj.EligibleLoanAmount = model.EligibleLoanAmount;
+                    tblObj.SanctionLoanAmount = model.SanctionLoanAmount;
+                    tblObj.Comments = model.Comments;
                     _context.SaveChanges();
 
                     List<tbl_ValuationTwoDetails> NewtblDetails = new List<tbl_ValuationTwoDetails>();
@@ -196,8 +287,7 @@ namespace MangalWeb.Repository.Repository
                                 Deduction = p.Deductions,
                                 NtWt = p.NetWeight,
                                 Rate = p.Rate,
-                                Total = p.Total,
-                                TotalValuation = p.Total
+                                Total = p.Total
                             };
                             _context.tbl_ValuationTwoDetails.Add(trn);
                             _context.SaveChanges();
@@ -216,11 +306,10 @@ namespace MangalWeb.Repository.Repository
                             Findobject.NtWt = p.NetWeight;
                             Findobject.Rate = p.Rate;
                             Findobject.Total = p.Total;
-                            Findobject.TotalValuation = p.TotalValuation;
                         }
                         NewtblDetails.Add(Findobject);
                     }
-                    #region product rate details remove
+                    #region valuation table two remove
                     //take the loop of table and check from list if found in list then not remove else remove from table itself
                     var trnobjlist = _context.tbl_ValuationTwoDetails.Where(x => x.ValuationTwoID == model.ID).ToList();
                     if (trnobjlist != null)
