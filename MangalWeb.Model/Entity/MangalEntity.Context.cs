@@ -90,10 +90,10 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tblHistory_KYCAddresses> tblHistory_KYCAddresses { get; set; }
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<tblKYC_HistoryDetails> tblKYC_HistoryDetails { get; set; }
-        public virtual DbSet<tbl_OrnamentValuationOneDetails> tbl_OrnamentValuationOneDetails { get; set; }
+        public virtual DbSet<Tran_ValuationOneDetails> Tran_ValuationOneDetails { get; set; }
         public virtual DbSet<Tbl_ValuationTwo> Tbl_ValuationTwo { get; set; }
         public virtual DbSet<tbl_ValuationTwoDetails> tbl_ValuationTwoDetails { get; set; }
-        public virtual DbSet<Tran_ValuationOneDetails> Tran_ValuationOneDetails { get; set; }
+        public virtual DbSet<tbl_OrnamentValuationOneDetails> tbl_OrnamentValuationOneDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -128,9 +128,17 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("generateFinancialYear", financialYearIdParameter, message);
         }
     
-        public virtual ObjectResult<GetKYCDetailsForDocument_Result> GetKYCDetailsForDocument()
+        public virtual ObjectResult<GetKYCDetailsForDocument_Result> GetKYCDetailsForDocument(Nullable<int> branchId, Nullable<int> fyId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetKYCDetailsForDocument_Result>("GetKYCDetailsForDocument");
+            var branchIdParameter = branchId.HasValue ?
+                new ObjectParameter("BranchId", branchId) :
+                new ObjectParameter("BranchId", typeof(int));
+    
+            var fyIdParameter = fyId.HasValue ?
+                new ObjectParameter("FyId", fyId) :
+                new ObjectParameter("FyId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetKYCDetailsForDocument_Result>("GetKYCDetailsForDocument", branchIdParameter, fyIdParameter);
         }
     
         public virtual ObjectResult<GetKYCDetailsForDocumentById_Result> GetKYCDetailsForDocumentById(Nullable<int> id)
@@ -609,23 +617,6 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_Delete", sDIDParameter);
         }
     
-        public virtual ObjectResult<GL_SanctionDisburse_KYC_Details_RTR_Result2> GL_SanctionDisburse_KYC_Details_RTR(Nullable<int> preSanctionId, Nullable<int> fYID, Nullable<int> branchId)
-        {
-            var preSanctionIdParameter = preSanctionId.HasValue ?
-                new ObjectParameter("PreSanctionId", preSanctionId) :
-                new ObjectParameter("PreSanctionId", typeof(int));
-    
-            var fYIDParameter = fYID.HasValue ?
-                new ObjectParameter("FYID", fYID) :
-                new ObjectParameter("FYID", typeof(int));
-    
-            var branchIdParameter = branchId.HasValue ?
-                new ObjectParameter("BranchId", branchId) :
-                new ObjectParameter("BranchId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_Details_RTR_Result2>("GL_SanctionDisburse_KYC_Details_RTR", preSanctionIdParameter, fYIDParameter, branchIdParameter);
-        }
-    
         public virtual int GLReceipt_GoldLoanDetails_RTR_New(Nullable<System.DateTime> rcvDate, Nullable<int> kYCID, Nullable<int> fYID, Nullable<int> branchId)
         {
             var rcvDateParameter = rcvDate.HasValue ?
@@ -962,6 +953,23 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("kycid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SaveKYCHistory", kycidParameter);
+        }
+    
+        public virtual ObjectResult<GL_SanctionDisburse_KYC_Details_RTR_Result3> GL_SanctionDisburse_KYC_Details_RTR(Nullable<int> preSanctionId, Nullable<int> fYID, Nullable<int> branchId)
+        {
+            var preSanctionIdParameter = preSanctionId.HasValue ?
+                new ObjectParameter("PreSanctionId", preSanctionId) :
+                new ObjectParameter("PreSanctionId", typeof(int));
+    
+            var fYIDParameter = fYID.HasValue ?
+                new ObjectParameter("FYID", fYID) :
+                new ObjectParameter("FYID", typeof(int));
+    
+            var branchIdParameter = branchId.HasValue ?
+                new ObjectParameter("BranchId", branchId) :
+                new ObjectParameter("BranchId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_Details_RTR_Result3>("GL_SanctionDisburse_KYC_Details_RTR", preSanctionIdParameter, fYIDParameter, branchIdParameter);
         }
     }
 }

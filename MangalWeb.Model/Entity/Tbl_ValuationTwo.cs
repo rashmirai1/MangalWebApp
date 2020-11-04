@@ -23,6 +23,9 @@ namespace MangalWeb.Model.Entity
         public byte[] ConsolidatedImage { get; set; }
         public string ContentType { get; set; }
         public string ImageName { get; set; }
+        public Nullable<decimal> LTVPerc { get; set; }
+        public Nullable<decimal> EligibleLoanAmount { get; set; }
+        public Nullable<decimal> SanctionLoanAmount { get; set; }
         public string Comments { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }

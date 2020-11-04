@@ -157,7 +157,6 @@ namespace MangalWeb.Repository.Repository
                             NtWt = p.NetWeight,
                             Rate = p.Rate,
                             Total = p.Total,
-                            TotalValuation = model.TotalValuation
                         };
                         _context.tbl_OrnamentValuationOneDetails.Add(trn);
                         _context.SaveChanges();
@@ -204,8 +203,7 @@ namespace MangalWeb.Repository.Repository
                                 Deduction = p.Deductions,
                                 NtWt = p.NetWeight,
                                 Rate = p.Rate,
-                                Total = p.Total,
-                                TotalValuation = p.Total
+                                Total = p.Total
                             };
                             _context.tbl_OrnamentValuationOneDetails.Add(trn);
                         }
@@ -223,7 +221,6 @@ namespace MangalWeb.Repository.Repository
                             Findobject.NtWt = p.NetWeight;
                             Findobject.Rate = p.Rate;
                             Findobject.Total = p.Total;
-                            Findobject.TotalValuation = model.TotalValuation;
                         }
                         NewtblDetails.Add(Findobject);
                     }

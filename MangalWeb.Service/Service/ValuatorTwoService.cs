@@ -29,7 +29,7 @@ namespace MangalWeb.Service.Service
 
 
         #region GetMaxTransactionId
-        public ValuatorTwoViewModel GetMaxTransactionId()
+        public string GetMaxTransactionId()
         {
             return _valuatorTwoRepository.GetMaxTransactionId();
         }
@@ -60,6 +60,20 @@ namespace MangalWeb.Service.Service
         public ValuatorTwoViewModel GetValuatorOneDetailsById(int Id)
         {
             return _valuatorTwoRepository.GetValuatorOneDetailsById(Id);
+        }
+        #endregion
+
+        #region GetValuatorOneData
+        public ValuatorTwoDetailsViewModel GetValuatorOneData(int Id)
+        {
+            return _valuatorTwoRepository.GetValuatorOneData(Id);
+        }
+        #endregion
+
+        #region GetValuatorTwoDetailsById
+        public ValuatorTwoViewModel GetValuatorTwoDetailsById(int Id)
+        {
+            return _valuatorTwoRepository.GetValuatorTwoDetailsById(Id);
         }
         #endregion
 
