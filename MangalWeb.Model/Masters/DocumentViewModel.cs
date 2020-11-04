@@ -16,6 +16,7 @@ namespace MangalWeb.Model.Masters
         public string DocumentName { get; set; }
 
         [Required(ErrorMessage = "Please Select Document Type")]
+
         public int DocumentType { get; set; }
 
         public bool ExpiryDateApplicable { get; set; }
