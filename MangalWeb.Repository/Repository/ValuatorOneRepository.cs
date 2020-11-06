@@ -62,7 +62,7 @@ namespace MangalWeb.Repository.Repository
         public ValuatorOneViewModel GetMaxTransactionId()
         {
             var model = new ValuatorOneViewModel();
-            var transactionid = _context.Tran_ValuationOneDetails.Any() ? _context.Tran_ValuationOneDetails.Max(x => x.Id) + 1 : 1;
+            var transactionid = _context.tbl_ValuatorOne.Any() ? _context.tbl_ValuatorOne.Max(x => x.Id) + 1 : 1;
             model.TransactionId = "VO0000" + transactionid;
             return model;
         }
@@ -72,7 +72,7 @@ namespace MangalWeb.Repository.Repository
         public ValuatorOneViewModel GetValuatorOneDetailsById(int Id)
         {
             var model = new ValuatorOneViewModel();
-            model = (from a in _context.Tran_ValuationOneDetails
+            model = (from a in _context.tbl_ValuatorOne
                      join b in _context.tbl_PreSanctionDetails on a.PreSanctionId equals b.Id
                      where a.Id == Id
                      select new ValuatorOneViewModel()
@@ -88,8 +88,8 @@ namespace MangalWeb.Repository.Repository
                          PreSanctionId = (int)a.PreSanctionId
                      }).FirstOrDefault();
 
-            var valuatoronedetails = (from a in _context.Tran_ValuationOneDetails
-                                      join b in _context.tbl_OrnamentValuationOneDetails on a.Id equals b.ValuationOneID
+            var valuatoronedetails = (from a in _context.tbl_ValuatorOne
+                                      join b in _context.tbl_ValuatorOneDetails on a.Id equals b.ValuationOneID
                                       join c in _context.tblItemMasters on b.OrnamentId equals c.ItemID
                                       join d in _context.Mst_PurityMaster on b.PurityId equals d.id
                                       where b.ValuationOneID == Id
@@ -117,7 +117,7 @@ namespace MangalWeb.Repository.Repository
         #region SaveUpdateRecord
         public void SaveUpdateRecord(ValuatorOneViewModel model)
         {
-            Tran_ValuationOneDetails tblValOne = new Tran_ValuationOneDetails();
+            tbl_ValuatorOne tblValOne = new tbl_ValuatorOne();
             try
             {
                 if (model.ID <= 0)
@@ -137,13 +137,13 @@ namespace MangalWeb.Repository.Repository
                     tblValOne.ConsolidatedImage = model.ConsolidatedImageFile;
                     tblValOne.ImageName = model.ImageName;
                     tblValOne.ContentType = model.ContentType;
-                    _context.Tran_ValuationOneDetails.Add(tblValOne);
+                    _context.tbl_ValuatorOne.Add(tblValOne);
                     _context.SaveChanges();
 
-                    int maxid = _context.Tran_ValuationOneDetails.Any() ? _context.Tran_ValuationOneDetails.Max(x => x.Id) : 1;
+                    int maxid = _context.tbl_ValuatorOne.Any() ? _context.tbl_ValuatorOne.Max(x => x.Id) : 1;
                     foreach (var p in model.ValuatorOneDetailsList)
                     {
-                        var trn = new tbl_OrnamentValuationOneDetails
+                        var trn = new tbl_ValuatorOneDetails
                         {
                             ValuationOneID = maxid,
                             OrnamentId = p.OrnamentId,
@@ -158,14 +158,14 @@ namespace MangalWeb.Repository.Repository
                             Rate = p.Rate,
                             Total = p.Total,
                         };
-                        _context.tbl_OrnamentValuationOneDetails.Add(trn);
+                        _context.tbl_ValuatorOneDetails.Add(trn);
                         _context.SaveChanges();
                     }
                 }
                 else
                 {
                     //update the data in Charge Details table
-                    var tblObj = _context.Tran_ValuationOneDetails.Where(x => x.Id == model.ID).FirstOrDefault();
+                    var tblObj = _context.tbl_ValuatorOne.Where(x => x.Id == model.ID).FirstOrDefault();
                     tblObj.PreSanctionId = model.PreSanctionId;
                     tblObj.KYCId = model.KycId;
                     tblObj.TransactionId = model.TransactionId.ToString();
@@ -182,15 +182,15 @@ namespace MangalWeb.Repository.Repository
                     tblObj.ContentType = model.ContentType;
                     _context.SaveChanges();
 
-                    List<tbl_OrnamentValuationOneDetails> NewtblDetails = new List<tbl_OrnamentValuationOneDetails>();
+                    List<tbl_ValuatorOneDetails> NewtblDetails = new List<tbl_ValuatorOneDetails>();
 
                     //update the data in Charge Details table
                     foreach (var p in model.ValuatorOneDetailsList)
                     {
-                        var Findobject = _context.tbl_OrnamentValuationOneDetails.Where(x => x.ValuationOneID == model.ID && x.Id == p.ID).FirstOrDefault();
+                        var Findobject = _context.tbl_ValuatorOneDetails.Where(x => x.ValuationOneID == model.ID && x.Id == p.ID).FirstOrDefault();
                         if (Findobject == null)
                         {
-                            var trn = new tbl_OrnamentValuationOneDetails
+                            var trn = new tbl_ValuatorOneDetails
                             {
                                 ValuationOneID = model.ID,
                                 OrnamentId = p.OrnamentId,
@@ -205,7 +205,7 @@ namespace MangalWeb.Repository.Repository
                                 Rate = p.Rate,
                                 Total = p.Total
                             };
-                            _context.tbl_OrnamentValuationOneDetails.Add(trn);
+                            _context.tbl_ValuatorOneDetails.Add(trn);
                         }
                         else
                         {
@@ -226,10 +226,10 @@ namespace MangalWeb.Repository.Repository
                     }
                     #region product rate details remove
                     //take the loop of table and check from list if found in list then not remove else remove from table itself
-                    var trnobjlist = _context.tbl_OrnamentValuationOneDetails.Where(x => x.ValuationOneID == model.ID).ToList();
+                    var trnobjlist = _context.tbl_ValuatorOneDetails.Where(x => x.ValuationOneID == model.ID).ToList();
                     if (trnobjlist != null)
                     {
-                        foreach (tbl_OrnamentValuationOneDetails item in trnobjlist)
+                        foreach (tbl_ValuatorOneDetails item in trnobjlist)
                         {
                             if (NewtblDetails.Contains(item))
                             {
@@ -237,7 +237,7 @@ namespace MangalWeb.Repository.Repository
                             }
                             else
                             {
-                                _context.tbl_OrnamentValuationOneDetails.Remove(item);
+                                _context.tbl_ValuatorOneDetails.Remove(item);
                             }
                         }
                         _context.SaveChanges();
@@ -255,32 +255,32 @@ namespace MangalWeb.Repository.Repository
         #region DeleteRecord
         public void DeleteRecord(int id)
         {
-            var trndata = _context.tbl_OrnamentValuationOneDetails.Where(x => x.ValuationOneID == id).ToList();
+            var trndata = _context.tbl_ValuatorOneDetails.Where(x => x.ValuationOneID == id).ToList();
             if (trndata != null)
             {
                 foreach (var trn in trndata)
                 {
-                    _context.tbl_OrnamentValuationOneDetails.Remove(trn);
+                    _context.tbl_ValuatorOneDetails.Remove(trn);
                 }
                 _context.SaveChanges();
             }
-            var data = _context.Tran_ValuationOneDetails.Find(id);
-            _context.Tran_ValuationOneDetails.Remove(data);
+            var data = _context.tbl_ValuatorOne.Find(id);
+            _context.tbl_ValuatorOne.Remove(data);
             _context.SaveChanges();
         }
         #endregion
 
         #region GetConsolidatedImage
-        public Tran_ValuationOneDetails GetConsolidatedImage(int id)
+        public tbl_ValuatorOne GetConsolidatedImage(int id)
         {
-            return _context.Tran_ValuationOneDetails.Where(x => x.Id == id).FirstOrDefault();
+            return _context.tbl_ValuatorOne.Where(x => x.Id == id).FirstOrDefault();
         }
         #endregion
 
         #region GetValuationImage
-        public tbl_OrnamentValuationOneDetails GetValuationImage(int id)
+        public tbl_ValuatorOneDetails GetValuationImage(int id)
         {
-            return _context.tbl_OrnamentValuationOneDetails.Where(x => x.Id == id).FirstOrDefault();
+            return _context.tbl_ValuatorOneDetails.Where(x => x.Id == id).FirstOrDefault();
         }
         #endregion
 

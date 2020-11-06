@@ -70,14 +70,14 @@ namespace MangalWeb.Service.Service
         #endregion
 
         #region GetConsolidatedImage
-        public Tran_ValuationOneDetails GetConsolidatedImage(int id)
+        public tbl_ValuatorOne GetConsolidatedImage(int id)
         {
             return _valuatorOneRepository.GetConsolidatedImage(id);
         }
         #endregion
 
         #region GetValuationImage
-        public tbl_OrnamentValuationOneDetails GetValuationImage(int id)
+        public tbl_ValuatorOneDetails GetValuationImage(int id)
         {
             return _valuatorOneRepository.GetValuationImage(id);
         }

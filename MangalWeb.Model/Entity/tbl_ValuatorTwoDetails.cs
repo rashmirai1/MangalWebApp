@@ -12,10 +12,11 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_OrnamentValuationOneDetails
+    public partial class tbl_ValuatorTwoDetails
     {
         public int Id { get; set; }
-        public int ValuationOneID { get; set; }
+        public int ValuationTwoID { get; set; }
+        public int ValOneId { get; set; }
         public int OrnamentId { get; set; }
         public byte[] OrnamentImage { get; set; }
         public string ContentType { get; set; }
@@ -26,8 +27,7 @@ namespace MangalWeb.Model.Entity
         public Nullable<decimal> Deduction { get; set; }
         public Nullable<decimal> NtWt { get; set; }
         public Nullable<decimal> Rate { get; set; }
-        public Nullable<decimal> Total { get; set; }
-    
-        public virtual Tran_ValuationOneDetails Tran_ValuationOneDetails { get; set; }
+        public Nullable<decimal> ValOneTotal { get; set; }
+        public Nullable<decimal> ValTwoTotal { get; set; }
     }
 }

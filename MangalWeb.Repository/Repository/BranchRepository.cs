@@ -15,7 +15,6 @@ namespace MangalWeb.Repository.Repository
         public List<tblCompanyBranchMaster> GetAllBranchMasters()
         {
             return _context.tblCompanyBranchMasters.Where(x => x.Status == 1).ToList();
-
         }
 
         public tblCompanyBranchMaster GetBranchMasterById(int id)

@@ -12,10 +12,11 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_ValuationTwoDetails
+    public partial class tbl_OrnamentEvaluationDetails
     {
         public int Id { get; set; }
-        public int ValuationTwoID { get; set; }
+        public int OrnamentEvalId { get; set; }
+        public int ValOneID { get; set; }
         public int OrnamentId { get; set; }
         public byte[] OrnamentImage { get; set; }
         public string ContentType { get; set; }

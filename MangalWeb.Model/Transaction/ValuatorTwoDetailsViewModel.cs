@@ -25,8 +25,7 @@ namespace MangalWeb.Model.Transaction
         public decimal Deductions { get; set; }
         public decimal NetWeight { get; set; }
         public decimal Rate { get; set; }
-        public decimal Total { get; set; }
-        public decimal TotalValuation { get; set; }
-
+        public decimal ValOneTotal { get; set; }
+        public decimal ValTwoTotal { get; set; }
     }
 }
