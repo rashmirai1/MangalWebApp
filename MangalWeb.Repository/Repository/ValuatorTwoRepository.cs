@@ -34,6 +34,7 @@ namespace MangalWeb.Repository.Repository
             int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
             int fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
 
+
             var list = _context.Database.SqlQuery<ValuatorTwoViewModel>("GetValuatorOneList @BranchId,@FYID",
                 new SqlParameter("@BranchId", branchid),
                 new SqlParameter("@FYID", fyid)).ToList();
