@@ -12,7 +12,7 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_ValuationTwo
+    public partial class tbl_OrnamentEvaluation
     {
         public int Id { get; set; }
         public int ValuatorOneId { get; set; }

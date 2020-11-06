@@ -12,33 +12,27 @@ namespace MangalWeb.Model.Entity
     using System;
     using System.Collections.Generic;
     
-    public partial class Tran_ValuationOneDetails
+    public partial class tbl_ValuatorTwo
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Tran_ValuationOneDetails()
-        {
-            this.tbl_OrnamentValuationOneDetails = new HashSet<tbl_OrnamentValuationOneDetails>();
-        }
-    
         public int Id { get; set; }
-        public Nullable<int> PreSanctionId { get; set; }
-        public Nullable<int> KYCId { get; set; }
+        public int ValuatorOneId { get; set; }
+        public Nullable<int> KYCID { get; set; }
         public string TransactionId { get; set; }
         public string CustomerID { get; set; }
         public string ApplicationNo { get; set; }
         public byte[] ConsolidatedImage { get; set; }
         public string ContentType { get; set; }
         public string ImageName { get; set; }
+        public Nullable<decimal> LTVPerc { get; set; }
+        public Nullable<decimal> EligibleLoanAmount { get; set; }
+        public Nullable<decimal> SanctionLoanAmount { get; set; }
         public string Comments { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public int CompId { get; set; }
-        public Nullable<int> FinancialYearId { get; set; }
-        public Nullable<int> BranchId { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_OrnamentValuationOneDetails> tbl_OrnamentValuationOneDetails { get; set; }
+        public int FinancialYearId { get; set; }
+        public int BranchId { get; set; }
     }
 }

@@ -90,10 +90,12 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tblHistory_KYCAddresses> tblHistory_KYCAddresses { get; set; }
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
         public virtual DbSet<tblKYC_HistoryDetails> tblKYC_HistoryDetails { get; set; }
-        public virtual DbSet<Tran_ValuationOneDetails> Tran_ValuationOneDetails { get; set; }
-        public virtual DbSet<Tbl_ValuationTwo> Tbl_ValuationTwo { get; set; }
-        public virtual DbSet<tbl_ValuationTwoDetails> tbl_ValuationTwoDetails { get; set; }
-        public virtual DbSet<tbl_OrnamentValuationOneDetails> tbl_OrnamentValuationOneDetails { get; set; }
+        public virtual DbSet<tbl_OrnamentEvaluation> tbl_OrnamentEvaluation { get; set; }
+        public virtual DbSet<tbl_OrnamentEvaluationDetails> tbl_OrnamentEvaluationDetails { get; set; }
+        public virtual DbSet<tbl_ValuatorOne> tbl_ValuatorOne { get; set; }
+        public virtual DbSet<tbl_ValuatorOneDetails> tbl_ValuatorOneDetails { get; set; }
+        public virtual DbSet<tbl_ValuatorTwo> tbl_ValuatorTwo { get; set; }
+        public virtual DbSet<tbl_ValuatorTwoDetails> tbl_ValuatorTwoDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
