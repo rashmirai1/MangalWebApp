@@ -19,6 +19,7 @@ namespace MangalWeb.Model.Entity
         {
             this.tbl_PreSanctionDetails = new HashSet<tbl_PreSanctionDetails>();
             this.Trans_KYCAddresses = new HashSet<Trans_KYCAddresses>();
+            this.TGLPreSanctions = new HashSet<TGLPreSanction>();
         }
     
         public int KYCID { get; set; }
@@ -89,5 +90,7 @@ namespace MangalWeb.Model.Entity
         public virtual ICollection<tbl_PreSanctionDetails> tbl_PreSanctionDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TGLPreSanction> TGLPreSanctions { get; set; }
     }
 }

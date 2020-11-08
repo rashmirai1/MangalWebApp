@@ -82,24 +82,27 @@
         <EntityTypeShape EntityType="MangalDBNewModel.TGLGoldStock" Width="1.5" PointX="3.375" PointY="15.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLInterest_Details" Width="1.5" PointX="7.375" PointY="15.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGlReceipt_BasicDetails" Width="1.5" PointX="17.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_OrnamentValuationOneDetails" Width="1.5" PointX="17.625" PointY="14.125" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Tran_ValuationOneDetails" Width="1.5" PointX="15.375" PointY="47.875" />
+        <AssociationConnector Association="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_PreSanctionDetails" Width="1.5" PointX="19.625" PointY="35.5" />
         <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_ResidenceVerification" Width="1.5" PointX="21.875" PointY="35.25" />
         <AssociationConnector Association="MangalDBNewModel.FK__tbl_Resid__PreSa__39AD8A7F" />
         <EntityTypeShape EntityType="MangalDBNewModel.Trans_KYCAddresses" Width="1.5" PointX="19.625" PointY="42.5" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblHistory_KYCAddresses" Width="1.5" PointX="34.625" PointY="27.375" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tblKYC_HistoryDetails" Width="1.5" PointX="32.375" PointY="22.5" />
+        <AssociationConnector Association="MangalDBNewModel.fk_TtblKYC_historyDetails" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_BasicDetails" Width="1.5" PointX="17.375" PointY="33" />
         <AssociationConnector Association="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" />
         <AssociationConnector Association="MangalDBNewModel.fk_TGLKYC_BasicDetails" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tblKYC_HistoryDetails" Width="1.5" PointX="32.375" PointY="22.5" />
-        <AssociationConnector Association="MangalDBNewModel.fk_TtblKYC_historyDetails" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tbl_OrnamentEvaluation" Width="1.5" PointX="19.375" PointY="0.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tbl_OrnamentEvaluationDetails" Width="1.5" PointX="19.375" PointY="6.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tbl_ValuatorOne" Width="1.5" PointX="15.375" PointY="15" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tbl_ValuatorOneDetails" Width="1.5" PointX="17.625" PointY="15.375" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tbl_ValuatorTwo" Width="1.5" PointX="7.375" PointY="19.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tbl_ValuatorTwoDetails" Width="1.5" PointX="20.375" PointY="11.75" />
-        <AssociationConnector Association="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Mst_LoanPupose" Width="1.5" PointX="30.625" PointY="14.5" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLPreSanction" Width="1.5" PointX="32.875" PointY="16.125" />
+        <AssociationConnector Association="MangalDBNewModel.FK__TGLPreSan__LoanP__0A888742" />
+        <AssociationConnector Association="MangalDBNewModel.FK__TGLPreSan__Produ__09946309" />
+        <AssociationConnector Association="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97" />
+        <AssociationConnector Association="MangalDBNewModel.FK__TGLPreSan__Schem__0B7CAB7B" />
+        <AssociationConnector Association="MangalDBNewModel.FK__TGLPreSanc__RMID__08A03ED0" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
