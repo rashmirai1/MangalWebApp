@@ -18,6 +18,7 @@ namespace MangalWeb.Model.Entity
         public TSchemeMaster_BasicDetails()
         {
             this.TSchemeMaster_EffectiveROI = new HashSet<TSchemeMaster_EffectiveROI>();
+            this.TGLPreSanctions = new HashSet<TGLPreSanction>();
         }
     
         public int SID { get; set; }
@@ -56,5 +57,7 @@ namespace MangalWeb.Model.Entity
         public virtual Mst_Product Mst_Product { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TSchemeMaster_EffectiveROI> TSchemeMaster_EffectiveROI { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TGLPreSanction> TGLPreSanctions { get; set; }
     }
 }

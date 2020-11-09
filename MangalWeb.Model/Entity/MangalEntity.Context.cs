@@ -95,6 +95,8 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tbl_ValuatorTwo> tbl_ValuatorTwo { get; set; }
         public virtual DbSet<tbl_ValuatorTwoDetails> tbl_ValuatorTwoDetails { get; set; }
         public virtual DbSet<tbl_OrnamentEvaluationDetails> tbl_OrnamentEvaluationDetails { get; set; }
+        public virtual DbSet<Mst_LoanPupose> Mst_LoanPupose { get; set; }
+        public virtual DbSet<TGLPreSanction> TGLPreSanctions { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)

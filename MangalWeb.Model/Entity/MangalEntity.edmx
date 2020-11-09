@@ -144,6 +144,17 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Property Name="Gst_RecordCreatedBy" Type="int" />
           <Property Name="Gst_RecordUpdatedBy" Type="int" />
         </EntityType>
+        <EntityType Name="Mst_LoanPupose">
+          <Key>
+            <PropertyRef Name="LoanPuposeID" />
+          </Key>
+          <Property Name="LoanPuposeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoanPupose" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Mst_ParentDeviation">
           <Key>
             <PropertyRef Name="Id" />
@@ -922,6 +933,28 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInterest_Details' does not have
           <Property Name="ResidenceCode" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="AddressCategory" Type="char" MaxLength="2" Nullable="false" />
         </EntityType>
+        <EntityType Name="TGLPreSanction">
+          <Key>
+            <PropertyRef Name="PreSanctionID" />
+          </Key>
+          <Property Name="PreSanctionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KYCID" Type="int" />
+          <Property Name="LoanType" Type="varchar" MaxLength="20" />
+          <Property Name="RMID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="LoanPurposeID" Type="int" />
+          <Property Name="SchemeID" Type="int" />
+          <Property Name="ReqLoanAmount" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Tenure" Type="int" />
+          <Property Name="ROI" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="LTV" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="ResidenceVerification" Type="varchar" MaxLength="20" />
+          <Property Name="Comments" Type="varchar" MaxLength="500" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="LastUpdatedBy" Type="int" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'ReceiveTime' in the table 'MangalDBNew.dbo.TGlReceipt_BasicDetails' was excluded.-->
         <EntityType Name="TGlReceipt_BasicDetails">
@@ -1277,6 +1310,66 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Principal>
             <Dependent Role="tbl_UserCategory">
               <PropertyRef Name="Organhieraechyid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TGLPreSan__KYCID__07AC1A97">
+          <End Role="TGLKYC_BasicDetails" Type="Self.TGLKYC_BasicDetails" Multiplicity="0..1" />
+          <End Role="TGLPreSanction" Type="Self.TGLPreSanction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TGLKYC_BasicDetails">
+              <PropertyRef Name="KYCID" />
+            </Principal>
+            <Dependent Role="TGLPreSanction">
+              <PropertyRef Name="KYCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TGLPreSan__LoanP__0A888742">
+          <End Role="Mst_LoanPupose" Type="Self.Mst_LoanPupose" Multiplicity="0..1" />
+          <End Role="TGLPreSanction" Type="Self.TGLPreSanction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_LoanPupose">
+              <PropertyRef Name="LoanPuposeID" />
+            </Principal>
+            <Dependent Role="TGLPreSanction">
+              <PropertyRef Name="LoanPurposeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TGLPreSan__Produ__09946309">
+          <End Role="Mst_Product" Type="Self.Mst_Product" Multiplicity="0..1" />
+          <End Role="TGLPreSanction" Type="Self.TGLPreSanction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TGLPreSanction">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TGLPreSan__Schem__0B7CAB7B">
+          <End Role="TSchemeMaster_BasicDetails" Type="Self.TSchemeMaster_BasicDetails" Multiplicity="0..1" />
+          <End Role="TGLPreSanction" Type="Self.TGLPreSanction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TSchemeMaster_BasicDetails">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="TGLPreSanction">
+              <PropertyRef Name="SchemeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TGLPreSanc__RMID__08A03ED0">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="0..1" />
+          <End Role="TGLPreSanction" Type="Self.TGLPreSanction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="TGLPreSanction">
+              <PropertyRef Name="RMID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1838,6 +1931,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="Mst_ChildDeviation" EntityType="Self.Mst_ChildDeviation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_DocumentType" EntityType="Self.Mst_DocumentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_GstMaster" EntityType="Self.Mst_GstMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_LoanPupose" EntityType="Self.Mst_LoanPupose" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_ParentDeviation" EntityType="Self.Mst_ParentDeviation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_PenaltySlab" EntityType="Self.Mst_PenaltySlab" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_PinCode" EntityType="Self.Mst_PinCode" Schema="dbo" store:Type="Tables" />
@@ -1879,6 +1973,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="TGLCashInOutDetails" EntityType="Self.TGLCashInOutDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TGLGoldInOutDetails" EntityType="Self.TGLGoldInOutDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TGLKYC_BasicDetails" EntityType="Self.TGLKYC_BasicDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TGLPreSanction" EntityType="Self.TGLPreSanction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TGlReceipt_BasicDetails" EntityType="Self.TGlReceipt_BasicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TGLSanctionDisburse_BasicDetails" EntityType="Self.TGLSanctionDisburse_BasicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TGLSanctionDisburse_ChargesDetails" EntityType="Self.TGLSanctionDisburse_ChargesDetails" Schema="dbo" store:Type="Tables" />
@@ -1938,6 +2033,26 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <AssociationSet Name="FK__tbl_UserC__Organ__51BA1E3A" Association="Self.FK__tbl_UserC__Organ__51BA1E3A">
             <End Role="User_Category_Hierarchy" EntitySet="User_Category_Hierarchy" />
             <End Role="tbl_UserCategory" EntitySet="tbl_UserCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSan__KYCID__07AC1A97" Association="Self.FK__TGLPreSan__KYCID__07AC1A97">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSan__LoanP__0A888742" Association="Self.FK__TGLPreSan__LoanP__0A888742">
+            <End Role="Mst_LoanPupose" EntitySet="Mst_LoanPupose" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSan__Produ__09946309" Association="Self.FK__TGLPreSan__Produ__09946309">
+            <End Role="Mst_Product" EntitySet="Mst_Product" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSan__Schem__0B7CAB7B" Association="Self.FK__TGLPreSan__Schem__0B7CAB7B">
+            <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSanc__RMID__08A03ED0" Association="Self.FK__TGLPreSanc__RMID__08A03ED0">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanction" />
           </AssociationSet>
           <AssociationSet Name="FK_Mst_AuditCheckList_Mst_AuditCategory" Association="Self.FK_Mst_AuditCheckList_Mst_AuditCategory">
             <End Role="Mst_AuditCategory" EntitySet="Mst_AuditCategory" />
@@ -2468,6 +2583,28 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <End Role="tbl_ValuatorOneDetails" EntitySet="tbl_ValuatorOneDetails" />
           </AssociationSet>
           <EntitySet Name="tbl_OrnamentEvaluationDetails" EntityType="MangalDBNewModel.tbl_OrnamentEvaluationDetails" />
+          <EntitySet Name="Mst_LoanPupose" EntityType="MangalDBNewModel.Mst_LoanPupose" />
+          <EntitySet Name="TGLPreSanctions" EntityType="MangalDBNewModel.TGLPreSanction" />
+          <AssociationSet Name="FK__TGLPreSan__LoanP__0A888742" Association="MangalDBNewModel.FK__TGLPreSan__LoanP__0A888742">
+            <End Role="Mst_LoanPupose" EntitySet="Mst_LoanPupose" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSan__Produ__09946309" Association="MangalDBNewModel.FK__TGLPreSan__Produ__09946309">
+            <End Role="Mst_Product" EntitySet="Mst_Product" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSan__KYCID__07AC1A97" Association="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSan__Schem__0B7CAB7B" Association="MangalDBNewModel.FK__TGLPreSan__Schem__0B7CAB7B">
+            <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSanc__RMID__08A03ED0" Association="MangalDBNewModel.FK__TGLPreSanc__RMID__08A03ED0">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -2805,6 +2942,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <NavigationProperty Name="Mst_ProductRate" Relationship="MangalDBNewModel.FK_Mst_ProductRate_Mst_Product" FromRole="Mst_Product" ToRole="Mst_ProductRate" />
           <NavigationProperty Name="tblItemMasters" Relationship="MangalDBNewModel.FK_tblItemMaster_Mst_Product" FromRole="Mst_Product" ToRole="tblItemMaster" />
           <NavigationProperty Name="TSchemeMaster_BasicDetails" Relationship="MangalDBNewModel.FK_TSchemeMaster_BasicDetails_Mst_Product" FromRole="Mst_Product" ToRole="TSchemeMaster_BasicDetails" />
+          <NavigationProperty Name="TGLPreSanctions" Relationship="MangalDBNewModel.FK__TGLPreSan__Produ__09946309" FromRole="Mst_Product" ToRole="TGLPreSanction" />
         </EntityType>
         <EntityType Name="Mst_ProductRate">
           <Key>
@@ -2934,6 +3072,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="LockInPeriod" Type="Int32" />
           <NavigationProperty Name="Mst_Product" Relationship="MangalDBNewModel.FK_TSchemeMaster_BasicDetails_Mst_Product" FromRole="TSchemeMaster_BasicDetails" ToRole="Mst_Product" />
           <NavigationProperty Name="TSchemeMaster_EffectiveROI" Relationship="MangalDBNewModel.FK_TSchemeMaster_EffectiveROI_TSchemeMaster_BasicDetails" FromRole="TSchemeMaster_BasicDetails" ToRole="TSchemeMaster_EffectiveROI" />
+          <NavigationProperty Name="TGLPreSanctions" Relationship="MangalDBNewModel.FK__TGLPreSan__Schem__0B7CAB7B" FromRole="TSchemeMaster_BasicDetails" ToRole="TGLPreSanction" />
         </EntityType>
         <Association Name="FK_tblCompanyBranchMaster_Mst_PinCode">
           <End Type="MangalDBNewModel.Mst_PinCode" Role="Mst_PinCode" Multiplicity="1" />
@@ -3223,6 +3362,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="updateddate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tbl_UserCategory" Relationship="MangalDBNewModel.FK_UserDetails_tbl_UserCategory" FromRole="UserDetail" ToRole="tbl_UserCategory" />
           <Property Name="IsVerified" Type="Int32" />
+          <NavigationProperty Name="TGLPreSanctions" Relationship="MangalDBNewModel.FK__TGLPreSanc__RMID__08A03ED0" FromRole="UserDetail" ToRole="TGLPreSanction" />
         </EntityType>
         <Association Name="FK_UserDetails_tbl_UserCategory">
           <End Type="MangalDBNewModel.tbl_UserCategory" Role="tbl_UserCategory" Multiplicity="1" />
@@ -4250,6 +4390,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="AddressCategory" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="tbl_PreSanctionDetails" />
           <NavigationProperty Name="Trans_KYCAddresses" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="Trans_KYCAddresses" />
+          <NavigationProperty Name="TGLPreSanctions" Relationship="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97" FromRole="TGLKYC_BasicDetails" ToRole="TGLPreSanction" />
         </EntityType>
         <Association Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
           <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="0..1" />
@@ -4526,6 +4667,105 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="Rate" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
         </EntityType>
+        <EntityType Name="Mst_LoanPupose">
+          <Key>
+            <PropertyRef Name="LoanPuposeID" />
+          </Key>
+          <Property Name="LoanPuposeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoanPupose" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TGLPreSanctions" Relationship="MangalDBNewModel.FK__TGLPreSan__LoanP__0A888742" FromRole="Mst_LoanPupose" ToRole="TGLPreSanction" />
+        </EntityType>
+        <EntityType Name="TGLPreSanction">
+          <Key>
+            <PropertyRef Name="PreSanctionID" />
+          </Key>
+          <Property Name="PreSanctionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KYCID" Type="Int32" />
+          <Property Name="LoanType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RMID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="LoanPurposeID" Type="Int32" />
+          <Property Name="SchemeID" Type="Int32" />
+          <Property Name="ReqLoanAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Tenure" Type="Int32" />
+          <Property Name="ROI" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LTV" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ResidenceVerification" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedBy" Type="Int32" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Mst_LoanPupose" Relationship="MangalDBNewModel.FK__TGLPreSan__LoanP__0A888742" FromRole="TGLPreSanction" ToRole="Mst_LoanPupose" />
+          <NavigationProperty Name="Mst_Product" Relationship="MangalDBNewModel.FK__TGLPreSan__Produ__09946309" FromRole="TGLPreSanction" ToRole="Mst_Product" />
+          <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97" FromRole="TGLPreSanction" ToRole="TGLKYC_BasicDetails" />
+          <NavigationProperty Name="TSchemeMaster_BasicDetails" Relationship="MangalDBNewModel.FK__TGLPreSan__Schem__0B7CAB7B" FromRole="TGLPreSanction" ToRole="TSchemeMaster_BasicDetails" />
+          <NavigationProperty Name="UserDetail" Relationship="MangalDBNewModel.FK__TGLPreSanc__RMID__08A03ED0" FromRole="TGLPreSanction" ToRole="UserDetail" />
+        </EntityType>
+        <Association Name="FK__TGLPreSan__LoanP__0A888742">
+          <End Type="MangalDBNewModel.Mst_LoanPupose" Role="Mst_LoanPupose" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.TGLPreSanction" Role="TGLPreSanction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_LoanPupose">
+              <PropertyRef Name="LoanPuposeID" />
+            </Principal>
+            <Dependent Role="TGLPreSanction">
+              <PropertyRef Name="LoanPurposeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TGLPreSan__Produ__09946309">
+          <End Type="MangalDBNewModel.Mst_Product" Role="Mst_Product" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.TGLPreSanction" Role="TGLPreSanction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mst_Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TGLPreSanction">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TGLPreSan__KYCID__07AC1A97">
+          <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.TGLPreSanction" Role="TGLPreSanction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TGLKYC_BasicDetails">
+              <PropertyRef Name="KYCID" />
+            </Principal>
+            <Dependent Role="TGLPreSanction">
+              <PropertyRef Name="KYCID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TGLPreSan__Schem__0B7CAB7B">
+          <End Type="MangalDBNewModel.TSchemeMaster_BasicDetails" Role="TSchemeMaster_BasicDetails" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.TGLPreSanction" Role="TGLPreSanction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TSchemeMaster_BasicDetails">
+              <PropertyRef Name="SID" />
+            </Principal>
+            <Dependent Role="TGLPreSanction">
+              <PropertyRef Name="SchemeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TGLPreSanc__RMID__08A03ED0">
+          <End Type="MangalDBNewModel.UserDetail" Role="UserDetail" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.TGLPreSanction" Role="TGLPreSanction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="TGLPreSanction">
+              <PropertyRef Name="RMID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6167,6 +6407,41 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
                 <ScalarProperty Name="SDID" ColumnName="SDID" />
                 <ScalarProperty Name="ValTwoId" ColumnName="ValTwoId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_LoanPupose">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_LoanPupose">
+              <MappingFragment StoreEntitySet="Mst_LoanPupose">
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="LoanPupose" ColumnName="LoanPupose" />
+                <ScalarProperty Name="LoanPuposeID" ColumnName="LoanPuposeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TGLPreSanctions">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLPreSanction">
+              <MappingFragment StoreEntitySet="TGLPreSanction">
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ResidenceVerification" ColumnName="ResidenceVerification" />
+                <ScalarProperty Name="LTV" ColumnName="LTV" />
+                <ScalarProperty Name="ROI" ColumnName="ROI" />
+                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
+                <ScalarProperty Name="ReqLoanAmount" ColumnName="ReqLoanAmount" />
+                <ScalarProperty Name="SchemeID" ColumnName="SchemeID" />
+                <ScalarProperty Name="LoanPurposeID" ColumnName="LoanPurposeID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="RMID" ColumnName="RMID" />
+                <ScalarProperty Name="LoanType" ColumnName="LoanType" />
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+                <ScalarProperty Name="PreSanctionID" ColumnName="PreSanctionID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

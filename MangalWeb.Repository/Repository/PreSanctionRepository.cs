@@ -14,15 +14,23 @@ namespace MangalWeb.Repository.Repository
     {
         MangalDBNewEntities _context = new MangalDBNewEntities();
 
-        public List<KYCBasicDetailsVM> GetCustomerList()
+        public IQueryable<TGLKYC_BasicDetails> GetCustomerList()
         {
-            List<KYCBasicDetailsVM> kYCBasicDetailsVMs = new List<KYCBasicDetailsVM>();
-            kYCBasicDetailsVMs = _context.Database.SqlQuery<KYCBasicDetailsVM>("GetPreSanctionCustomerList").ToList();
-            foreach(var item in kYCBasicDetailsVMs)
-            {
-                DateTime now = DateTime.Now;
-            }
-            return kYCBasicDetailsVMs;
+          
+            return _context.TGLKYC_BasicDetails;
+            //foreach(var item in kYCBasicDetailsVMs)
+            //{
+            //    DateTime now = DateTime.Now;
+            //    if (item.AppliedDate > now.AddHours(-24) && item.AppliedDate <= now)
+            //    {
+            //        item.Status = "";
+            //    }
+            //    else
+            //    {
+            //        item.Status = "System Rejected";
+            //    }
+            //}
+            //return kYCBasicDetailsVMs;
         }
 
         public void SaveUpdateRecord(PreSanctionDetailsVM model)
@@ -33,7 +41,7 @@ namespace MangalWeb.Repository.Repository
                 tbl_PreSanctionDetails.CreatedBy = model.CreatedBy;
                 tbl_PreSanctionDetails.CreatedDate = DateTime.Now;
                 tbl_PreSanctionDetails.ApplicationNo = model.ApplicationNo;
-                tbl_PreSanctionDetails.AppliedDate =Convert.ToDateTime(model.AppliedDate);
+                //tbl_PreSanctionDetails.AppliedDate = model.AppliedDate;
                 tbl_PreSanctionDetails.Comments = model.Comments;
                 tbl_PreSanctionDetails.CustomerId = model.CustomerId;
                 tbl_PreSanctionDetails.IsActive = true;
@@ -58,12 +66,16 @@ namespace MangalWeb.Repository.Repository
             }
         }
 
-        public PreSanctionDetailsVM GetCustomerById(int id)
+        public TGLPreSanction AddPreSanction(TGLPreSanction model)
         {
-            PreSanctionDetailsVM preSanctionDetailsVM = new PreSanctionDetailsVM();
-            var kYCBasicDetails = _context.Database.SqlQuery<KYCBasicDetailsVM>("GetCustomerById @id", new SqlParameter("@id", id)).FirstOrDefault();
-            preSanctionDetailsVM = ToViewModelPreSanction(kYCBasicDetails);
-            return preSanctionDetailsVM;
+            var dbRecord = _context.TGLPreSanctions.Add(model);
+            _context.SaveChanges();
+            return dbRecord;
+        }
+
+        public TGLKYC_BasicDetails GetCustomerById(int kycID)
+        {
+            return _context.TGLKYC_BasicDetails.Where(k => k.KYCID == kycID).FirstOrDefault();
         }
 
         #region ToViewModelPreSanction
@@ -84,6 +96,10 @@ namespace MangalWeb.Repository.Repository
         public List<UserDetail> GetAllRMByBranch()
         {
             return _context.UserDetails.ToList();
+        }
+        public List<Mst_LoanPupose> GetLoanPurposes()
+        {
+            return _context.Mst_LoanPupose.ToList();
         }
     }
 }

@@ -20,6 +20,7 @@ namespace MangalWeb.Model.Entity
             this.Mst_ProductRate = new HashSet<Mst_ProductRate>();
             this.tblItemMasters = new HashSet<tblItemMaster>();
             this.TSchemeMaster_BasicDetails = new HashSet<TSchemeMaster_BasicDetails>();
+            this.TGLPreSanctions = new HashSet<TGLPreSanction>();
         }
     
         public int Id { get; set; }
@@ -31,5 +32,7 @@ namespace MangalWeb.Model.Entity
         public virtual ICollection<tblItemMaster> tblItemMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TSchemeMaster_BasicDetails> TSchemeMaster_BasicDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TGLPreSanction> TGLPreSanctions { get; set; }
     }
 }
