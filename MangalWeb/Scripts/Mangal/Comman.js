@@ -1,10 +1,13 @@
 ﻿function cmnShowLoader() {
 
-    $(".bd-loader-modal-lg").modal('show')
+    $("#loaderModal").modal('show')
     $(".modal").unbind("click")
 }
 function cmnHideLoader() {
-    $(".bd-loader-modal-lg").modal('hide')
+    $("#loaderModal").modal('hide');
+    $("#loaderModal").removeClass("in");
+    $(".modal-backdrop").remove();
+    $("#loaderModal").hide();
 }
 
 function cmnConfirmation(msg, callbackResult) {

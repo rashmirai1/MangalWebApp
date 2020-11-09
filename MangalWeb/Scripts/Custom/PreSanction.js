@@ -51,15 +51,19 @@ function ShowClientTableList() {
 }
 
 
-var urlRedirect = '@Html.Raw(@Url.Action("Index", "PreSanction"))';
-
+var urlRedirect = '/PreSanction/Index';
+function OnBegin(e) {
+    cmnShowLoader();
+}
 function OnSuccess(response) {
-    $("#saveModal").modal('show');
+    cmnHideLoader();
+    bootbox.alert("Record saved successfully");
     $(document).click(function () {
         window.location.href = urlRedirect;
     });
 }
 
 function OnFailure(response) {
+    cmnHideLoader();
     alert('Error Occured');
 }
