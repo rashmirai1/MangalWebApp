@@ -1,10 +1,10 @@
 ﻿@model MangalWeb.Model.Transaction.TGLPreSanctionVM
 @{
-    ViewBag.Title = "DocumentVerification";
+    ViewBag.Title = "Pre Sanction";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
-@using (Ajax.BeginForm("SavePreSanction", "PreSanction", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure", LoadingElementId = "loader" }))
+@Styles.Render("~/Content/dataTablescss")
+@using (Ajax.BeginForm("SavePreSanction", "PreSanction", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure", OnBegin= "OnBegin" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.KYCID)
@@ -12,7 +12,7 @@
     <header id="topbar" class="affix">
         <div class="col-md-5 col-sm-4 col-xs-12">
             <div class="topbar-left">
-                <h4>Pre Sanction Form</h4>
+                <h4>Pre Sanction</h4>
             </div><!--end of topbar-left-->
         </div><!--end of col-md-5-->
         <div class="col-md-7 col-sm-8 col-xs-12">
@@ -199,15 +199,9 @@ new { @class= "form-control" })
     </section>
 }
 
-@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-@section javascriptsection{
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
 
+@section javascriptsection{
+
+    @Scripts.Render("~/bundles/jquerydataTablesJS")
     @Scripts.Render("~/bundles/presanction")
 }
