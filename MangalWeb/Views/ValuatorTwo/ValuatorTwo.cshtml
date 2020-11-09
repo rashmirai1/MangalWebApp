@@ -627,9 +627,9 @@
                                 })
                             });
                             var totamt = 0;
-                            $('#tblValuationTwoDetails tbody>tr').each(function () {
+                            $('#tblValuationDetails tbody>tr').each(function () {
                                 var row = $(this).closest("tr");
-                                totamt = totamt + parseFloat(row.find('.Val2Total').text());
+                                totamt = totamt + parseFloat(row.find("TD").eq(9).html());
                             });
                             $("#headerTotalValuation").css('display', 'block');
                             $("#lblTotalValuation").text(parseFloat(totamt).toFixed(2));

@@ -1,5 +1,6 @@
 ﻿using MangalWeb.Model.Entity;
 using MangalWeb.Model.Transaction;
+using MangalWeb;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -73,7 +74,7 @@ namespace MangalWeb.Repository.Repository
         {
             var model = new ValuatorOneViewModel();
             model = (from a in _context.tbl_ValuatorOne
-                     join b in _context.tbl_PreSanctionDetails on a.PreSanctionId equals b.Id
+                     join b in _context.TGLPreSanctions on a.PreSanctionId equals b.PreSanctionID
                      where a.Id == Id
                      select new ValuatorOneViewModel()
                      {
@@ -84,7 +85,7 @@ namespace MangalWeb.Repository.Repository
                          ApplicationNo = a.ApplicationNo,
                          Comments = a.Comments,
                          ImageName = a.ImageName ?? "",
-                         ProductId = b.Product,
+                         ProductId = b.ProductID,
                          PreSanctionId = (int)a.PreSanctionId
                      }).FirstOrDefault();
 
@@ -293,7 +294,7 @@ namespace MangalWeb.Repository.Repository
         }
         #endregion
 
-        #region GetOrnamentProductWise
+        #region CheckOrnamentStatus
         public string CheckOrnamentStatus(int id)
         {
             return _context.tblItemMasters.Where(x => x.ItemID == id).Select(x => x.Status).FirstOrDefault();

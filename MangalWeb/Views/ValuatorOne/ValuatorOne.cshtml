@@ -683,8 +683,10 @@
             fileName = file.name;
             size = file.size;
             type = file.type;
+
             if (type.toLowerCase() == "image/png" || type.toLowerCase() == "image/jpg" || type.toLowerCase() == "image/jpeg") { //I just want pdf files and only want to show
                 //upload button if it is of my desired type
+                $("#ConsolidatedPhoto").empty();
             }
             else {
                 alert("Please select only image file. ");

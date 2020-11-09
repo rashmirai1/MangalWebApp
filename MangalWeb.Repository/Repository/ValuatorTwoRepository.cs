@@ -70,8 +70,8 @@ namespace MangalWeb.Repository.Repository
         {
             var model = new ValuatorTwoViewModel();
             model = (from a in _context.tbl_ValuatorOne
-                     join b in _context.tbl_PreSanctionDetails on a.PreSanctionId equals b.Id
-                     join c in _context.TSchemeMaster_BasicDetails on b.Scheme equals c.SID
+                     join b in _context.TGLPreSanctions on a.PreSanctionId equals b.PreSanctionID
+                     join c in _context.TSchemeMaster_BasicDetails on b.SchemeID equals c.SID
                      where a.Id == Id
                      select new ValuatorTwoViewModel()
                      {
@@ -82,7 +82,7 @@ namespace MangalWeb.Repository.Repository
                          Comments = a.Comments,
                          ImageName = a.ImageName,
                          MaxLtv = (decimal)c.MaxLtv,
-                         ProductId = b.Product
+                         ProductId = b.ProductID
                      }).FirstOrDefault();
 
             var valuatoronedetails = (from a in _context.tbl_ValuatorOne
@@ -119,7 +119,7 @@ namespace MangalWeb.Repository.Repository
             model = (from a in _context.tbl_ValuatorTwo
                      join b in _context.tbl_ValuatorTwoDetails on a.Id equals b.ValuationTwoID
                      join c in _context.tbl_ValuatorOne on a.ValuatorOneId equals c.Id
-                     join d in _context.tbl_PreSanctionDetails on c.PreSanctionId equals d.Id
+                     join d in _context.TGLPreSanctions on c.PreSanctionId equals d.PreSanctionID
                      where a.Id == Id
                      select new ValuatorTwoViewModel()
                      {
@@ -135,7 +135,7 @@ namespace MangalWeb.Repository.Repository
                          MaxLtv = (decimal)a.LTVPerc,
                          EligibleLoanAmount = (decimal)a.EligibleLoanAmount,
                          SanctionLoanAmount = (decimal)a.SanctionLoanAmount,
-                         ProductId = d.Product
+                         ProductId = d.ProductID
                      }).FirstOrDefault();
 
             var valuatortwodetails = (from a in _context.tbl_ValuatorTwo
