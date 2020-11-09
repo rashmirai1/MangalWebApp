@@ -35,6 +35,7 @@ namespace MangalWeb.Model.Transaction
         public int CompanyId { get; set; }
         public decimal TotalValuation { get; set; }
         public string operation { get; set; }
+        public bool RecordExist { get; set; }
 
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }

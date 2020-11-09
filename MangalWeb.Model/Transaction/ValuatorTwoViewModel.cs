@@ -36,6 +36,7 @@ namespace MangalWeb.Model.Transaction
         public int CompanyId { get; set; }
 
         public string operation { get; set; }
+        public bool RecordExist { get; set; }
 
         public int? CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
@@ -45,6 +46,8 @@ namespace MangalWeb.Model.Transaction
         public ValuatorTwoDetailsViewModel ValuatorTwoDetailsVM { get; set; }
 
         public List<ValuatorTwoDetailsViewModel> ValuatorTwoDetailsList { get; set; }
+
+        public List<ValuatorTwoDetailsViewModel> ValuationDetailsList { get; set; }
 
     }
 }

@@ -103,5 +103,12 @@ namespace MangalWeb.Service.Service
             return _valuatorOneRepository.CheckOrnamentStatus(pOrnamentId);
         }
         #endregion
+
+        #region CheckRecordExist
+        public int CheckRecordExist(int id)
+        {
+            return _valuatorOneRepository.CheckRecordExist(id);
+        }
+        #endregion
     }
 }

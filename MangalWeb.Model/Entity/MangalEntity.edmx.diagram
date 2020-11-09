@@ -93,13 +93,12 @@
         <AssociationConnector Association="MangalDBNewModel.fk_TGLKYC_BasicDetails" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblKYC_HistoryDetails" Width="1.5" PointX="32.375" PointY="22.5" />
         <AssociationConnector Association="MangalDBNewModel.fk_TtblKYC_historyDetails" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tbl_OrnamentEvaluation" Width="1.5" PointX="19.375" PointY="0.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tbl_OrnamentEvaluationDetails" Width="1.5" PointX="19.375" PointY="6.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_ValuatorOne" Width="1.5" PointX="15.375" PointY="15" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_ValuatorOneDetails" Width="1.5" PointX="17.625" PointY="15.375" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_ValuatorTwo" Width="1.5" PointX="7.375" PointY="19.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_ValuatorTwoDetails" Width="1.5" PointX="20.375" PointY="11.75" />
         <AssociationConnector Association="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_OrnamentEvaluationDetails" Width="1.5" PointX="19.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

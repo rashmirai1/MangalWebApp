@@ -62,6 +62,5 @@ namespace MangalWeb.Service.Service
         {
             return _cityRepository.CheckPincodeExistsByCityId(id);
         }
-
     }
 }

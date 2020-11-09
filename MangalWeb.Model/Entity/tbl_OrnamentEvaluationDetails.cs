@@ -15,8 +15,9 @@ namespace MangalWeb.Model.Entity
     public partial class tbl_OrnamentEvaluationDetails
     {
         public int Id { get; set; }
-        public int OrnamentEvalId { get; set; }
-        public int ValOneID { get; set; }
+        public int ValTwoId { get; set; }
+        public Nullable<int> SDID { get; set; }
+        public int KycId { get; set; }
         public int OrnamentId { get; set; }
         public byte[] OrnamentImage { get; set; }
         public string ContentType { get; set; }

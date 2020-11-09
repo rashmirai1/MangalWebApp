@@ -47,7 +47,6 @@ namespace MangalWeb.Controllers
         // GETDelete/5
         public ActionResult Delete(int id)
         {
-
             string data = "";
             if (_cityService.CheckPincodeExistsByCityId(id) > 0)
             {

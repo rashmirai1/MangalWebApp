@@ -94,9 +94,14 @@ namespace MangalWeb.Controllers
                     {
                         for (int i = 0; i <= list.Count - 1; i++)
                         {
+                            // for valuator two
                             model.ValuatorTwoDetailsList[i].ValuationImageFile = list[i].ValuationImageFile;
                             model.ValuatorTwoDetailsList[i].ImageName = list[i].ImageName;
                             model.ValuatorTwoDetailsList[i].ContentType = list[i].ContentType;
+                            // for valuation table 
+                            model.ValuationDetailsList[i].ValuationImageFile = list[i].ValuationImageFile;
+                            model.ValuationDetailsList[i].ImageName = list[i].ImageName;
+                            model.ValuationDetailsList[i].ContentType = list[i].ContentType;
                         }
                     }
                 }
@@ -192,6 +197,11 @@ namespace MangalWeb.Controllers
                 operation = Session["Operation"].ToString();
             }
             model.operation = operation;
+            model.RecordExist = false;
+            if (_valuatorTwoService.CheckRecordExist(Id) > 0)
+            {
+                model.RecordExist = true;
+            }
             return Json(model, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -207,8 +217,16 @@ namespace MangalWeb.Controllers
         {
             try
             {
-                _valuatorTwoService.DeleteRecord(id);
-                return Json(JsonRequestBehavior.AllowGet);
+                string data = "";
+                if (_valuatorTwoService.CheckRecordExist(id) > 0)
+                {
+                    data = "Record Cannot Be Deleted Already In Use!";
+                }
+                else
+                {
+                    _valuatorTwoService.DeleteRecord(id);
+                }
+                return Json(data,JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

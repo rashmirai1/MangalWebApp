@@ -210,12 +210,21 @@ namespace MangalWeb.Controllers
                 sessionlist.Add(docupload);
                 Session["ValuationImageList"] = sessionlist;
             }
+
             string operation = String.Empty;
             if (Session["Operation"] != null)
             {
                 operation = Session["Operation"].ToString();
             }
+
             model.operation = operation;
+
+            model.RecordExist = false;
+
+            if (_valuatorOneService.CheckRecordExist(Id) > 0)
+            {
+                model.RecordExist = true;
+            }
             return Json(model, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -231,8 +240,16 @@ namespace MangalWeb.Controllers
         {
             try
             {
-                _valuatorOneService.DeleteRecord(id);
-                return Json(JsonRequestBehavior.AllowGet);
+                string data = "";
+                if (_valuatorOneService.CheckRecordExist(id) > 0)
+                {
+                    data = "Record Cannot Be Deleted Already In Use!";
+                }
+                else
+                {
+                    _valuatorOneService.DeleteRecord(id);
+                }
+                return Json(data,JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

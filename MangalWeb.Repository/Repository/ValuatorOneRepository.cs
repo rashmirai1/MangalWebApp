@@ -49,7 +49,7 @@ namespace MangalWeb.Repository.Repository
         {
             int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
             int fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
-             
+
             var list = _context.Database.SqlQuery<ValuatorOneViewModel>("SP_GetValuatorOneRecord @BranchId,@FYID",
                 new SqlParameter("@BranchId", branchid),
                 new SqlParameter("@FYID", fyid)).ToList();
@@ -78,7 +78,7 @@ namespace MangalWeb.Repository.Repository
                      select new ValuatorOneViewModel()
                      {
                          ID = a.Id,
-                         KycId=a.KYCId,
+                         KycId = a.KYCId,
                          TransactionId = a.TransactionId,
                          CustomerId = a.CustomerID,
                          ApplicationNo = a.ApplicationNo,
@@ -134,6 +134,8 @@ namespace MangalWeb.Repository.Repository
                     tblValOne.FinancialYearId = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
                     tblValOne.CreatedBy = model.CreatedBy;
                     tblValOne.CreatedDate = DateTime.Now;
+                    tblValOne.UpdatedBy = model.UpdatedBy;
+                    tblValOne.UpdatedDate = DateTime.Now;
                     tblValOne.ConsolidatedImage = model.ConsolidatedImageFile;
                     tblValOne.ImageName = model.ImageName;
                     tblValOne.ContentType = model.ContentType;
@@ -172,8 +174,8 @@ namespace MangalWeb.Repository.Repository
                     tblObj.CustomerID = model.CustomerId;
                     tblObj.ApplicationNo = model.ApplicationNo;
                     tblObj.Comments = model.Comments;
-                    tblObj.CreatedBy = model.CreatedBy;
-                    tblObj.CreatedDate = DateTime.Now;
+                    tblObj.UpdatedBy = model.CreatedBy;
+                    tblObj.UpdatedDate = DateTime.Now;
                     tblObj.BranchId = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
                     tblObj.CompId = Convert.ToInt32(HttpContext.Current.Session["CompanyId"]);
                     tblObj.FinancialYearId = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
@@ -387,12 +389,19 @@ namespace MangalWeb.Repository.Repository
                                 FinalRate = b.Prd_NetRate,
                                 ratedate = a.Pr_Date
                             }).OrderByDescending(x => x.ratedate).FirstOrDefault();
-                if (rate!=null && rate.FinalRate > 0)
+                if (rate != null && rate.FinalRate > 0)
                 {
                     FinalRate = Convert.ToDouble(rate.FinalRate);
                 }
             }
             return FinalRate;
+        }
+        #endregion
+
+        #region CheckRecordExist
+        public int CheckRecordExist(int id)
+        {
+            return _context.tbl_ValuatorTwo.Where(x => x.ValuatorOneId == id).Select(x => x.Id).Count();
         }
         #endregion
     }

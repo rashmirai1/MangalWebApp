@@ -12,6 +12,7 @@ namespace MangalWeb.Model.Transaction
     {
         public int ID { get; set; }
         public int ValuatorTwoId { get; set; }
+        public int ValOneDetailsId { get; set; }
         public int OrnamentId { get; set; }
         public string OrnamentName { get; set; }
         public HttpPostedFileBase ValuationImage { get; set; }

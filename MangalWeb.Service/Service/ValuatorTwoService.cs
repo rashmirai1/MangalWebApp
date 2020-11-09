@@ -27,7 +27,6 @@ namespace MangalWeb.Service.Service
         }
         #endregion
 
-
         #region GetMaxTransactionId
         public string GetMaxTransactionId()
         {
@@ -109,6 +108,13 @@ namespace MangalWeb.Service.Service
         public tbl_ValuatorTwoDetails GetValuationTwoImage(int id)
         {
             return _valuatorTwoRepository.GetValuationTwoImage(id);
+        }
+        #endregion
+
+        #region CheckRecordExist
+        public int CheckRecordExist(int id)
+        {
+            return _valuatorTwoRepository.CheckRecordExist(id);
         }
         #endregion
     }

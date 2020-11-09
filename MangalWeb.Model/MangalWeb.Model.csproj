@@ -293,9 +293,6 @@
     <Compile Include="Entity\tbl_KYCMobileOTP.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\tbl_OrnamentEvaluation.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\tbl_OrnamentEvaluationDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
