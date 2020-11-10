@@ -3,7 +3,7 @@
     ViewBag.Title = "ValuatorOneViewModel";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+@Styles.Render("~/Content/dataTablescss")
 @using (Ajax.BeginForm("", "", new AjaxOptions { }, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -29,7 +29,6 @@
                 <a href="@Html.Raw(@Url.Action("ValuatorOne", "ValuatorOne"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
             </div><!--end of topbar-right-->
         </div><!--end of col-md-7-->
-
     </header>
     <!-- Begin: Content -->
     <section id="content" class="animated fadeIn content_height">
@@ -185,14 +184,10 @@
         </div>
     </section>
 }
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 @section javascriptsection{
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+    @Scripts.Render("~/bundles/jquerydataTablesJS")
+
     <script type="text/javascript">
         $(document).ready(function () {
 

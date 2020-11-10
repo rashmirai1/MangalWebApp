@@ -44,8 +44,6 @@ namespace MangalWeb
                      "~/Content/DataTables/css/dataTables.bootstrap.min.css"
                      ));
 
-           
-
             bundles.Add(new StyleBundle("~/Content/mangalcss").Include(
                    "~/Content/bootstrap.min.css",
                    "~/Content/assets/js/utility/highlight/styles/googlecode.css",
@@ -56,7 +54,6 @@ namespace MangalWeb
                    "~/Content/assets/skin/default_skin/css/theme.css",
                    "~/Content/assets/skin/default_skin/css/responsive.css",
                    "~/Content/assets/admin-tools/admin-forms/css/admin-forms.css",
-
                    "~/Content/assets/my-style.css",
                    "~/Content/Site.css"
                    ));

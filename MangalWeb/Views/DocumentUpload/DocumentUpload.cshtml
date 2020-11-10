@@ -3,7 +3,8 @@
     ViewBag.Title = "DocumentUpload";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+@Styles.Render("~/Content/dataTablescss")
+
 @using (Ajax.BeginForm("", "", new AjaxOptions { OnSuccess = "OnSuccess" }, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -198,14 +199,10 @@
         </div>
     </section>
 }
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 @section javascriptsection{
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+    @Scripts.Render("~/bundles/jquerydataTablesJS")
+
     <script type="text/javascript">
         $(document).ready(function () {
             if (document.URL.indexOf("ID") != -1) {

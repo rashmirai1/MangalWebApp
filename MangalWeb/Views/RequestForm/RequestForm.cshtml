@@ -3,7 +3,8 @@
     ViewBag.Title = "ShowRequestForm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+
+@Styles.Render("~/Content/dataTablescss")
 <style type="text/css">
     .modal-open {
         overflow: scroll;
@@ -553,12 +554,8 @@
         <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
     </section>
 }
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 @section javascriptsection{
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
+    @Scripts.Render("~/bundles/jquerydataTablesJS")
     <script type="text/javascript">
 
         var urlRedirect = '@Html.Raw(@Url.Action("RequestForm", "RequestForm"))';
