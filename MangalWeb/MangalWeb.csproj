@@ -433,6 +433,7 @@
     <Content Include="Content\DataTables\js\dataTables.semanticui.min.js" />
     <Content Include="Content\DataTables\js\jquery.dataTables.js" />
     <Content Include="Content\DataTables\js\jquery.dataTables.min.js" />
+    <Content Include="Content\Images\loading-image.gif" />
     <Content Include="Content\vendor\editors\ckeditor\adapters\jquery.js" />
     <Content Include="Content\vendor\editors\ckeditor\build-config.js" />
     <Content Include="Content\vendor\editors\ckeditor\ckeditor.js" />
@@ -2043,6 +2044,9 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery.signalR-2.4.1.js" />
     <Content Include="Scripts\jquery.signalR-2.4.1.min.js" />
     <Content Include="Scripts\jquery.table2excel.js" />

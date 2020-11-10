@@ -7,33 +7,11 @@
     <meta name="description" content="THURAYAM">
     <meta name="author" content="THURAYA">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Font CSS (Via CDN) -->
-    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:400,500,700,300">
-    <!-- Required Plugin CSS -->
-    <link rel="stylesheet" type="text/css" href="~/Content/assets/js/utility/highlight/styles/googlecode.css">
-    <!-- Required Plugin CSS -->
-    <link rel="stylesheet" type="text/css" href="~/Content/vendor/plugins/datepicker/css/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/vendor/plugins/daterange/daterangepicker.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/vendor/plugins/colorpicker/css/bootstrap-colorpicker.min.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/vendor/plugins/tagmanager/tagmanager.css">
-    <!-- Theme CSS -->
-    <link rel="stylesheet" type="text/css" href="~/Content/assets/skin/default_skin/css/theme.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/assets/skin/default_skin/css/responsive.css">
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="~/Content/assets/img/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="~/Content/assets/admin-tools/admin-forms/css/admin-forms.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/assets/my-style.css">
-    <link href="~/Content/Site.css" rel="stylesheet" />
-
+   
+    @Styles.Render("~/Content/mangalcss")
     <script type="text/javascript" src="~/Content/assets/js/includer.js"></script>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+  
 </head>
-
 <body class="dashboard-page sb-l-o sb-r-c">
     <!-- Start: Main -->
     <div id="main">
@@ -43,8 +21,8 @@
         <!-- Start: Sidebar -->
         @Html.Action("Menu", "Base")
         <!--<script type="text/javascript">
-        ajaxinclude("sidebar.html")
-        </script>-->
+    ajaxinclude("sidebar.html")
+    </script>-->
         <!-- End: Sidebar -->
         <section id="content_wrapper">
             <!-- Start: Topbar-Dropdown -->
@@ -215,42 +193,23 @@
             <div class="modal-dialog modal-lg" id="divviewForm">
             </div>
         </div>
+        <div class="modal fade bs-example-modal-lg" id="loaderModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <img src="~/Content/Images/loading-image.gif" style="padding-left:48%;padding-top:25%;"/>
+
+                @*<img src="../Content/Images/loading-image.gif" alt="Loading..." style="padding-left:48%;padding-top:25%;" />*@
+            </div>
+        </div>
         <!-- End: Main -->
         <!-- End: Right Sidebar -->
     </div>
-    <!-- End: Main -->
-    <!-- Google Map API -->
-    <!-- jQuery -->
-    @*<script type="text/javascript" src="~/Content/vendor/jquery/jquery-1.11.1.min.js"></script>*@
-    @Scripts.Render("~/bundles/jquery")
+
+    @Scripts.Render("~/bundles/mangaljquery")
+    @Scripts.Render("~/bundles/unobtrusiveAjaxjs")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript" src="~/Content/vendor/jquery/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="~/Content/vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
-    <!-- Bootstrap -->
-    <script type="text/javascript" src="~/Content/assets/js/bootstrap/bootstrap.min.js"></script>
-    <!-- Sparklines CDN -->
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
-    <!-- Chart Plugins -->
-    <script type="text/javascript" src="~/Content/vendor/plugins/highcharts/highcharts.js"></script>
-    <script type="text/javascript" src="~/Content/vendor/plugins/circles/circles.js"></script>
-    <script type="text/javascript" src="~/Content/vendor/plugins/raphael/raphael.js"></script>
+    @Scripts.Render("~/bundles/mangaljs")
 
-    <!-- Holder js  -->
-    <script type="text/javascript" src="~/Content/assets/js/bootstrap/holder.min.js"></script>
-
-    <!-- Theme Javascript -->
-    <script type="text/javascript" src="~/Content/assets/js/utility/utility.js"></script>
-    <script type="text/javascript" src="~/Content/assets/js/main.js"></script>
-    <script type="text/javascript" src="~/Content/assets/js/demo.js"></script>
-
-    <!-- Admin Panels  -->
-    <script type="text/javascript" src="~/Content/assets/admin-tools/admin-plugins/admin-panels/json2.js"></script>
-    <script type="text/javascript" src="~/Content/assets/admin-tools/admin-plugins/admin-panels/jquery.ui.touch-punch.min.js"></script>
-    <script type="text/javascript" src="~/Content/assets/admin-tools/admin-plugins/admin-panels/adminpanels.js"></script>
-    @*@Styles.Render("~/Content/css")*@
-
-    <!-- Page Javascript -->
-    <script type="text/javascript" src="~/Content/assets/js/pages/widgets.js"></script>
 
     <script type="text/javascript">
         jQuery(document).ready(function () {
@@ -263,7 +222,7 @@
                 sbm: "sb-l-c",
             });
             // Init Demo JS
-            Demo.init();
+            //Demo.init();
             // Init Widget Demo JS
             // demoHighCharts.init();
             // Because we are using Admin Panels we use the OnFinish
@@ -401,9 +360,7 @@
 
 
     </script>
-    <script src="~/Scripts/Mangal/bootbox.min.js"></script>
-    <script src="~/Scripts/Mangal/Comman.js"></script>
-    @*@Scripts.Render("~/bundles/bootstrap")*@
+
     @RenderSection("javascriptsection", false)
 </body>
 
