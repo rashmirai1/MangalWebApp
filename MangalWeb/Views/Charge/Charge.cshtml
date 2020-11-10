@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
-@using (Ajax.BeginForm("", "", new AjaxOptions { OnSuccess = "OnSuccess" }))
+@using (Ajax.BeginForm("InsertData", "Charge", new AjaxOptions { OnSuccess = "OnSuccess" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
