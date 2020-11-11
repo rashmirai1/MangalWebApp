@@ -85,6 +85,7 @@ namespace MangalWeb.Model.Entity
         public int PinCode { get; set; }
         public string ResidenceCode { get; set; }
         public string AddressCategory { get; set; }
+        public string Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_PreSanctionDetails> tbl_PreSanctionDetails { get; set; }

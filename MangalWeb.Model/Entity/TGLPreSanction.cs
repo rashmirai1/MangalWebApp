@@ -31,6 +31,10 @@ namespace MangalWeb.Model.Entity
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastUpdatedBy { get; set; }
         public Nullable<System.DateTime> LastUpdatedDate { get; set; }
+        public Nullable<int> FYID { get; set; }
+        public Nullable<int> CMPID { get; set; }
+        public Nullable<int> BranchID { get; set; }
+        public string TransactionID { get; set; }
     
         public virtual Mst_LoanPupose Mst_LoanPupose { get; set; }
         public virtual Mst_Product Mst_Product { get; set; }

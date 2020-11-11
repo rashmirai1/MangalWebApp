@@ -43,6 +43,7 @@ namespace MangalWeb.Model.Transaction
         public string ResidenceVerification { get; set; }
 
         [Required(ErrorMessage = "Comments is required")]
+        [StringLength(400,ErrorMessage = "Comments length should not be exceeded 400")]
         public string Comments { get; set; }
         public Nullable<int> CreatedBy { get; set; }
 
@@ -59,6 +60,9 @@ namespace MangalWeb.Model.Transaction
         [Required(ErrorMessage = "Applied Date is required")]
         public string AppliedDate { get; set; }
 
+        public Nullable<int> FYID { get; set; }
+        public Nullable<int> CMPID { get; set; }
+        public Nullable<int> BranchID { get; set; }
 
         public IEnumerable<SelectListItem> RMList { get; set; }
         public IEnumerable<SelectListItem> LoanPurposes { get; set; }

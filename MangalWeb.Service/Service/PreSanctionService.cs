@@ -11,32 +11,46 @@ namespace MangalWeb.Service.Service
 {
     public class PreSanctionService
     {
-        DocumentVerificationRepository _documentVerificationRepository = new DocumentVerificationRepository();
+       
         PreSanctionRepository _preSanctionRepository = new PreSanctionRepository();
 
-        public DocumentUploadViewModel GetAllDocumentUpload(int id)
+        #region Public Methods
+        public List<TGLPreSanction> GetPreSanctions()
         {
-            return _documentVerificationRepository.GetDoumentUploadById(id);
+            return _preSanctionRepository.GetPreSanctions().ToList();
         }
-        public void SaveUpdateRecord(PreSanctionDetailsVM model)
+        public TGLPreSanctionVM GetPreSanction(int preSanctionId)
         {
-            _preSanctionRepository.SaveUpdateRecord(model);
+            var preSanction = _preSanctionRepository.GetPreSanction(preSanctionId);
+            return CreateTGLPreSanctionVM(preSanction);
         }
-        public TGLPreSanctionVM SavePreSanction(TGLPreSanctionVM model)
+        public TGLPreSanctionVM SavePreSanction(TGLPreSanctionVM model, out Dictionary<string, string> errors)
         {
+            errors = new Dictionary<string, string>();
+
             var preSanction = CreateTGLPreSanction(model);
 
-            if(model.PreSanctionID<=0)
+            if (model.PreSanctionID <= 0)
             {
                 preSanction.CreatedDate = DateTime.Now;
-                var dbRecord = _preSanctionRepository.AddPreSanction(preSanction);
+                var dbRecord = _preSanctionRepository.AddPreSanction(preSanction,out errors);
 
-                if(dbRecord!=null)
+                if (dbRecord != null)
                 {
-                    return CreateTGLPreSanctionVM(dbRecord);
+                    model.PreSanctionID = dbRecord.PreSanctionID;
+                    return model;
                 }
             }
-            return null;
+            else if (model.PreSanctionID > 0)
+            {
+                _preSanctionRepository.UpdatePreSanction(preSanction, out errors);
+            }
+
+            return model;
+        }
+        public bool DeletePreSanction(int preSanctionID, out Dictionary<string, string> errors)
+        {
+            return _preSanctionRepository.DeletePreSanction(preSanctionID, out errors);
         }
         public List<KYCBasicDetailsVM> GetCustomerList()
         {
@@ -47,10 +61,19 @@ namespace MangalWeb.Service.Service
                 KYCID = s.KYCID,
                 CustomerID = s.CustomerID,
                 ApplicationNo = s.ApplicationNo,
-                AppliedDate = Convert.ToDateTime(s.ApplicationNo),
-                //Status = s.AppliedDate > now.AddHours(-24) && s.AppliedDate <= now ? "" : "System Rejected"
+                AppliedDate = s.AppliedDate,
+                Status = s.AppliedDate > now.AddHours(-24) && s.AppliedDate <= now ? "" : "System Rejected"
             }).ToList();
-            return kycList;
+
+            var rejKYCs = kycList.Where(k => k.Status == "System Rejected").ToList();
+            if(rejKYCs.Count>0)
+            {
+                _preSanctionRepository.UpdateKYCStatus(rejKYCs);
+            }
+
+            var apprKYCs= kycList.Where(k => k.Status != "System Rejected").ToList();
+
+            return apprKYCs;
         }
 
         public List<UserDetail> GetAllRMByBranch()
@@ -80,6 +103,9 @@ namespace MangalWeb.Service.Service
                 KYCID = model.KYCID
             };
         }
+        #endregion Public Methods
+
+        #region Private Methods
         private TGLPreSanction CreateTGLPreSanction(TGLPreSanctionVM model)
         {
             return new TGLPreSanction
@@ -97,7 +123,12 @@ namespace MangalWeb.Service.Service
                 ROI = model.ROI,
                 SchemeID = model.SchemeID,
                 Tenure = model.Tenure,
-                ResidenceVerification=model.ResidenceVerification,                
+                ResidenceVerification=model.ResidenceVerification,
+                TransactionID=model.TransactionID,
+                FYID=model.FYID,
+                CMPID=model.CMPID,
+                BranchID=model.BranchID,
+
 
             };
         }
@@ -106,7 +137,7 @@ namespace MangalWeb.Service.Service
             return new TGLPreSanctionVM
             {
                 PreSanctionID = model.PreSanctionID,
-                KYCID = model.PreSanctionID,
+                KYCID = model.KYCID,
                 LoanType = model.LoanType,
                 LoanPurposeID = model.LoanPurposeID,
                 Comments = model.Comments,
@@ -119,8 +150,14 @@ namespace MangalWeb.Service.Service
                 SchemeID = model.SchemeID,
                 Tenure = model.Tenure,
                 ResidenceVerification = model.ResidenceVerification,
+               CustomerID=model.TGLKYC_BasicDetails.CustomerID,
+               ApplicationNo=model.TGLKYC_BasicDetails.ApplicationNo,
+               AppliedDate= model.TGLKYC_BasicDetails.AppliedDate.ToString("dd/MM/yyyy"),
+               TransactionID=model.TransactionID
+               
 
             };
         }
+        #endregion Private Methods
     }
 }

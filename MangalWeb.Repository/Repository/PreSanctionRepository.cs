@@ -14,71 +14,95 @@ namespace MangalWeb.Repository.Repository
     {
         MangalDBNewEntities _context = new MangalDBNewEntities();
 
+        #region Public Methods
         public IQueryable<TGLKYC_BasicDetails> GetCustomerList()
         {
-          
-            return _context.TGLKYC_BasicDetails;
-            //foreach(var item in kYCBasicDetailsVMs)
-            //{
-            //    DateTime now = DateTime.Now;
-            //    if (item.AppliedDate > now.AddHours(-24) && item.AppliedDate <= now)
-            //    {
-            //        item.Status = "";
-            //    }
-            //    else
-            //    {
-            //        item.Status = "System Rejected";
-            //    }
-            //}
-            //return kYCBasicDetailsVMs;
+            var kycIDs = _context.TGLPreSanctions.Select(p => p.KYCID);
+            return _context.TGLKYC_BasicDetails.Where(k => !kycIDs.Contains(k.KYCID) && k.Status!= "System Rejected").OrderByDescending(order=>order.KYCID);          
         }
-
-        public void SaveUpdateRecord(PreSanctionDetailsVM model)
+        public IQueryable<TGLPreSanction> GetPreSanctions()
         {
+            return _context.TGLPreSanctions;
+        }
+        public TGLPreSanction GetPreSanction(int preSanctionId)
+        {
+            return _context.TGLPreSanctions.Where(ps => ps.PreSanctionID == preSanctionId).FirstOrDefault();
+        }
+       
+        public TGLPreSanction AddPreSanction(TGLPreSanction model, out Dictionary<string, string> errors)
+        {
+            errors = new Dictionary<string, string>();
+
+            var dbRecord = _context.TGLPreSanctions.Add(model);
             try
             {
-                tbl_PreSanctionDetails tbl_PreSanctionDetails = new tbl_PreSanctionDetails();
-                tbl_PreSanctionDetails.CreatedBy = model.CreatedBy;
-                tbl_PreSanctionDetails.CreatedDate = DateTime.Now;
-                tbl_PreSanctionDetails.ApplicationNo = model.ApplicationNo;
-                //tbl_PreSanctionDetails.AppliedDate = model.AppliedDate;
-                tbl_PreSanctionDetails.Comments = model.Comments;
-                tbl_PreSanctionDetails.CustomerId = model.CustomerId;
-                tbl_PreSanctionDetails.IsActive = true;
-                tbl_PreSanctionDetails.KycId = model.KycId;
-                tbl_PreSanctionDetails.LTV = model.LTV;
-                tbl_PreSanctionDetails.NewTopUp = model.NewTopUp;
-                tbl_PreSanctionDetails.Product = model.Product;
-                tbl_PreSanctionDetails.PurposeofLoan = model.PurposeofLoan;
-                tbl_PreSanctionDetails.ReqLoanAmount = model.ReqLoanAmount;
-                tbl_PreSanctionDetails.ResidenceVerification = model.ResidenceVerification;
-                tbl_PreSanctionDetails.RM = model.RM;
-                tbl_PreSanctionDetails.ROI = model.ROI;
-                tbl_PreSanctionDetails.Scheme = model.Scheme;
-                tbl_PreSanctionDetails.Tenure = model.Tenure;
-                tbl_PreSanctionDetails.TransactionId = model.TransactionId;
-                _context.tbl_PreSanctionDetails.Add(tbl_PreSanctionDetails);
+                _context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                errors.Add("PreSanctionError", "Error adding record.");
+            }
+            return dbRecord;
+        }
+        public TGLPreSanction UpdatePreSanction(TGLPreSanction model, out Dictionary<string, string> errors)
+        {
+            errors = new Dictionary<string, string>();
+
+            var dbRecord = _context.TGLPreSanctions.Where(ps => ps.PreSanctionID == model.PreSanctionID).FirstOrDefault();
+            if(dbRecord==null)
+            {
+                errors.Add("NoRecordFound", "No Record Found.");
+                return new TGLPreSanction();
+            }
+
+            ValidateRecord(model, errors);
+            if (errors.Count > 0)
+            {
+                return new TGLPreSanction();
+            }
+
+            UpdatePreSanction(dbRecord, model);
+            try
+            {
                 _context.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw ex;
+                errors.Add("PreSanctionError", "Error updating record.");
             }
-        }
 
-        public TGLPreSanction AddPreSanction(TGLPreSanction model)
-        {
-            var dbRecord = _context.TGLPreSanctions.Add(model);
-            _context.SaveChanges();
             return dbRecord;
         }
 
+        public bool DeletePreSanction(int preSanctionID, out Dictionary<string, string> errors)
+        {
+            errors = new Dictionary<string, string>();
+
+            var dbRecord = _context.TGLPreSanctions.Where(ps => ps.PreSanctionID == preSanctionID).FirstOrDefault();
+            if (dbRecord == null)
+            {
+                errors.Add("NoRecordFound", "No Record Found.");
+                return false;
+            }
+
+            _context.TGLPreSanctions.Remove(dbRecord);
+            try
+            {
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                errors.Add("PreSanctionError", "Error updating record.");
+            }
+
+            return false;
+        }
         public TGLKYC_BasicDetails GetCustomerById(int kycID)
         {
             return _context.TGLKYC_BasicDetails.Where(k => k.KYCID == kycID).FirstOrDefault();
         }
-
-        #region ToViewModelPreSanction
+        
         public PreSanctionDetailsVM ToViewModelPreSanction(KYCBasicDetailsVM model)
         {
             PreSanctionDetailsVM preSanctionDetailsVM = new PreSanctionDetailsVM();
@@ -90,8 +114,7 @@ namespace MangalWeb.Repository.Repository
             preSanctionDetailsVM.CustomerId = model.CustomerID;
             preSanctionDetailsVM.KycId = model.KYCID;
                 return preSanctionDetailsVM;
-        }
-        #endregion
+        }       
 
         public List<UserDetail> GetAllRMByBranch()
         {
@@ -101,5 +124,48 @@ namespace MangalWeb.Repository.Repository
         {
             return _context.Mst_LoanPupose.ToList();
         }
+
+        public void UpdateKYCStatus(List<KYCBasicDetailsVM> kycList)
+        {
+            foreach(var kyc in kycList)
+            {
+                var dbRecord = _context.TGLKYC_BasicDetails.Where(k => k.KYCID == kyc.KYCID && string.IsNullOrEmpty(k.Status)).FirstOrDefault();
+                if(dbRecord!=null)
+                {
+                    dbRecord.Status = kyc.Status;
+                }
+            }
+            _context.SaveChanges();
+        }
+        #endregion Public Methods
+
+        #region Private Methods
+        private void ValidateRecord(TGLPreSanction model,  Dictionary<string, string> errors)
+        {
+            if(_context.TGLSanctionDisburse_BasicDetails.Any(sd=>sd.KYCID== model.KYCID))
+            {
+                errors.Add("InUse", "Record can not be updated,since it is in use.");
+            }
+        }
+        private void UpdatePreSanction(TGLPreSanction dbRecord,TGLPreSanction model)
+        {
+            dbRecord.Comments = model.Comments;
+            dbRecord.KYCID = model.KYCID;
+            dbRecord.LastUpdatedBy = model.CreatedBy;
+            dbRecord.LastUpdatedDate = DateTime.Now;
+            dbRecord.LoanPurposeID = model.LoanPurposeID;
+            dbRecord.LoanType = model.LoanType;
+            dbRecord.LTV = model.LTV;
+            dbRecord.ProductID = model.ProductID;
+            dbRecord.RMID = model.RMID;
+            dbRecord.ROI = model.ROI;
+            dbRecord.SchemeID = model.SchemeID;
+            dbRecord.Tenure = model.Tenure;
+            dbRecord.TransactionID = model.TransactionID;
+            dbRecord.ReqLoanAmount = model.ReqLoanAmount;
+            dbRecord.ResidenceVerification = model.ResidenceVerification;
+            
+        }
+        #endregion Private Methods
     }
 }
