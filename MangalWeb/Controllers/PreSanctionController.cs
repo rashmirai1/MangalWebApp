@@ -4,6 +4,7 @@ using MangalWeb.Service.Service;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 
@@ -15,7 +16,7 @@ namespace MangalWeb.Controllers
         SchemeService _schemeService = new SchemeService();
         ProductRateService _productrateService = new ProductRateService();
 
-        #region PreSanction
+       
         // GET: PreSanction
         public ActionResult Index()
         {
@@ -27,53 +28,34 @@ namespace MangalWeb.Controllers
             model.Products = new SelectList(_productrateService.GetProductList(), "Id", "Name");
             return View(model);
         }
-        #endregion
-
-        #region Insert
+      
         [HttpPost]
         public ActionResult SavePreSanction(TGLPreSanctionVM model)
         {
-            model.CreatedBy = UserInfo.UserID;
+           
 
             try
             {
-                //    ViewBag.LoanPurpose = new SelectList(LoanPurposeListMethod(), "Value", "Text");
-                //    ViewBag.Schemes = new SelectList(_schemeService.GetAllSchemeMasters(), "SID", "SchemeName");
-                //    ViewBag.ProductList = new SelectList(_productrateService.GetProductList(), "Id", "Name");
-                //    ModelState.Remove("Id");
-                //    if (objViewModel.Id == 0)
-                //    {
-                //        InsertData(objViewModel);
-                //    }
-                var preSanction = _preSanctionService.SavePreSanction(model);
+                model.CreatedBy = UserInfo.UserID;
+                model.FYID = UserInfo.FinancialYearId;
+                model.CMPID = UserInfo.CompanyId;
+                model.BranchID = UserInfo.BranchId;
+
+                Dictionary<string, string> errors;
+
+                var preSanction = _preSanctionService.SavePreSanction(model, out errors);
+                if (errors != null && errors.Count > 0)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(errors);
+                }
                 return Json(preSanction);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-        }
-        #endregion Insert
-
-        #region Insert Data
-
-        public bool InsertData(PreSanctionDetailsVM model)
-        {
-            bool retVal = false;
-            model.CreatedBy = Convert.ToInt32(Session["UserLoginId"]);
-            try
-            {
-                _preSanctionService.SaveUpdateRecord(model);
-                retVal = true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return retVal;
-        }
-
-        #endregion Insert Data
+        }        
 
         #region GetCustomerDetails
         public ActionResult GetCustomerDetails()
@@ -95,25 +77,7 @@ namespace MangalWeb.Controllers
             return View("Index", model);
         }
         #endregion GetCustomerById
-
-        public List<ListItem> LoanPurposeListMethod()
-        {
-            List<ListItem> list = new List<ListItem>();
-            list.Add(new ListItem { Text = "Marrige", Value = "Marrige" });
-            list.Add(new ListItem { Text = "house renovation", Value = "house renovation" });
-            list.Add(new ListItem { Text = "Consumer durable", Value = "Consumer durable" });
-            list.Add(new ListItem { Text = "holiday", Value = "holiday" });
-            list.Add(new ListItem { Text = "medical expenses", Value = "medical expenses" });
-            list.Add(new ListItem { Text = "business", Value = "business" });
-            list.Add(new ListItem { Text = "housing loan", Value = "housing loan" });
-            list.Add(new ListItem { Text = "repayments", Value = "repayments" });
-            list.Add(new ListItem { Text = "sister marrige", Value = "sister marrige" });
-            list.Add(new ListItem { Text = "daughters marrige", Value = "daughters marrige" });
-            list.Add(new ListItem { Text = "Purchase Property", Value = "Purchase Property" });
-            list.Add(new ListItem { Text = "Others", Value = "Others" });
-            return list;
-        }
-
+        
 
         /// <summary>
         /// fill scheme details 
@@ -137,6 +101,31 @@ namespace MangalWeb.Controllers
                 throw new Exception(ex.Message);
             }
 
+        }
+
+        public ActionResult GetPreSanctions()
+        {
+            var preSanctionList = _preSanctionService.GetPreSanctions();
+            return PartialView("_PreSanctionList", preSanctionList);
+        }
+        public ActionResult GetPreSanction(int ID)
+        {
+            ButtonVisiblity("Edit");
+            var model = _preSanctionService.GetPreSanction(ID);
+            model.RMList = new SelectList(_preSanctionService.GetAllRMByBranch(), "UserID", "UserName");
+            model.LoanPurposes = new SelectList(_preSanctionService.GetLoanPurposes(), "LoanPuposeID", "LoanPupose");
+            model.Schemes = new SelectList(_schemeService.GetAllSchemeMasters(), "SID", "SchemeName");
+            model.Products = new SelectList(_productrateService.GetProductList(), "Id", "Name");
+            return View("Index", model);
+        }
+
+        public ActionResult DeletePreSanction(int Id)
+        {
+            Dictionary<string, string> errors;
+            var success = false;
+
+            success = _preSanctionService.DeletePreSanction(Id, out errors);
+            return Json(success);
         }
     }
 }

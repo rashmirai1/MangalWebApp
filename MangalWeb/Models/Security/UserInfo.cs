@@ -11,7 +11,7 @@ namespace MangalWeb.Models.Security
         public static string UserName { get { return Convert.ToString(System.Web.HttpContext.Current.Session["UserName"]); } }
         public static string UserCategory { get { return Convert.ToString(System.Web.HttpContext.Current.Session["UserCategory"]); } }
         public static int BranchId { get { return Convert.ToInt32(System.Web.HttpContext.Current.Session["BranchId"]); } }
-        public static int FinancialYearId { get { return Convert.ToInt32(System.Web.HttpContext.Current.Session["BranchId"]); } }
+        public static int FinancialYearId { get { return Convert.ToInt32(System.Web.HttpContext.Current.Session["FinancialYearId"]); } }
         public static int CompanyId { get { return Convert.ToInt32(System.Web.HttpContext.Current.Session["CompanyId"]); } }
     }
 }

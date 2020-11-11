@@ -932,6 +932,7 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInterest_Details' does not have
           <Property Name="PinCode" Type="int" Nullable="false" />
           <Property Name="ResidenceCode" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="AddressCategory" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="TGLPreSanction">
           <Key>
@@ -954,6 +955,10 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInterest_Details' does not have
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="LastUpdatedBy" Type="int" />
           <Property Name="LastUpdatedDate" Type="datetime" />
+          <Property Name="FYID" Type="int" />
+          <Property Name="CMPID" Type="int" />
+          <Property Name="BranchID" Type="int" />
+          <Property Name="TransactionID" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'ReceiveTime' in the table 'MangalDBNew.dbo.TGlReceipt_BasicDetails' was excluded.-->
@@ -4391,6 +4396,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="tbl_PreSanctionDetails" />
           <NavigationProperty Name="Trans_KYCAddresses" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="Trans_KYCAddresses" />
           <NavigationProperty Name="TGLPreSanctions" Relationship="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97" FromRole="TGLKYC_BasicDetails" ToRole="TGLPreSanction" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
           <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="0..1" />
@@ -4705,6 +4711,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97" FromRole="TGLPreSanction" ToRole="TGLKYC_BasicDetails" />
           <NavigationProperty Name="TSchemeMaster_BasicDetails" Relationship="MangalDBNewModel.FK__TGLPreSan__Schem__0B7CAB7B" FromRole="TGLPreSanction" ToRole="TSchemeMaster_BasicDetails" />
           <NavigationProperty Name="UserDetail" Relationship="MangalDBNewModel.FK__TGLPreSanc__RMID__08A03ED0" FromRole="TGLPreSanction" ToRole="UserDetail" />
+          <Property Name="FYID" Type="Int32" />
+          <Property Name="CMPID" Type="Int32" />
+          <Property Name="BranchID" Type="Int32" />
+          <Property Name="TransactionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__TGLPreSan__LoanP__0A888742">
           <End Type="MangalDBNewModel.Mst_LoanPupose" Role="Mst_LoanPupose" Multiplicity="0..1" />
@@ -6109,6 +6119,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySetMapping Name="TGLKYC_BasicDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.TGLKYC_BasicDetails">
               <MappingFragment StoreEntitySet="TGLKYC_BasicDetails">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="AddressCategory" ColumnName="AddressCategory" />
                 <ScalarProperty Name="ResidenceCode" ColumnName="ResidenceCode" />
                 <ScalarProperty Name="PinCode" ColumnName="PinCode" />
@@ -6425,6 +6436,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySetMapping Name="TGLPreSanctions">
             <EntityTypeMapping TypeName="MangalDBNewModel.TGLPreSanction">
               <MappingFragment StoreEntitySet="TGLPreSanction">
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="CMPID" ColumnName="CMPID" />
+                <ScalarProperty Name="FYID" ColumnName="FYID" />
                 <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
                 <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />

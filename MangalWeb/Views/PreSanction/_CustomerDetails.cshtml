@@ -10,7 +10,7 @@
                             <th style="text-align:left;">Customer Id</th>
                             <th style="text-align:left;">Application No</th>
                             <th style="text-align:left;">Applied Date</th>
-                            @*<th style="text-align:left;">Status</th>*@
+                            <th style="text-align:left;">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -19,8 +19,8 @@
                             <tr class="gradeX" style="cursor:pointer;" onclick='window.document.location="/PreSanction/GetCustomerById?Id=@item.KYCID"'>
                                 <td id="@item.KYCID">@item.CustomerID</td>
                                 <td id="@item.ApplicationNo">@item.ApplicationNo</td>
-                                <td id="@item.AppliedDate">@item.AppliedDate</td>
-                                @*<td>@item.Status</td>*@
+                                <td id="@item.AppliedDate"> @item.AppliedDate.ToString("dd/MM/yyyy")</td>
+                                <td>@item.Status</td>
                             </tr>
                         }
                     </tbody>
