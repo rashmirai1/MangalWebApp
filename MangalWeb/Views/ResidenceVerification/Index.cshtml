@@ -6,7 +6,7 @@
 
     var kycid = Request.Params["id"];
 }
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+@Styles.Render("~/Content/dataTablescss")
 @using (Ajax.BeginForm("Insert", "ResidenceVerification", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
 {
     @Html.AntiForgeryToken()
