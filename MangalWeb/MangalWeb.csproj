@@ -138,6 +138,7 @@
     <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\DocumentUploadController.cs" />
     <Compile Include="Controllers\ForgotPasswordController.cs" />
+    <Compile Include="Controllers\GLReceiptController.cs" />
     <Compile Include="Controllers\ResidenceVerificationController.cs" />
     <Compile Include="Controllers\PreSanctionController.cs" />
     <Compile Include="Controllers\DocumentVerificationController.cs" />
@@ -1648,7 +1649,6 @@
     <Content Include="Content\vendor\plugins\zeroclipboard\ZeroClipboard.js" />
     <Content Include="Content\vendor\plugins\zeroclipboard\ZeroClipboard.min.js" />
     <Content Include="Content\vendor\plugins\zeroclipboard\ZeroClipboard.swf" />
-    <Content Include="Custom\PreSanction.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -2033,8 +2033,6 @@
     <Content Include="Content\vendor\plugins\slick\fonts\slick.eot" />
     <Content Include="Content\vendor\plugins\slick\fonts\slick.ttf" />
     <Content Include="Content\vendor\plugins\slick\fonts\slick.woff" />
-    <Content Include="Mangal\bootbox.min.js" />
-    <Content Include="Mangal\Comman.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -2150,6 +2148,7 @@
     <Content Include="Views\ValuatorOne\_ValuatorOneDetails.cshtml" />
     <Content Include="Views\ValuatorTwo\_ValuatorOneDetails.cshtml" />
     <Content Include="Views\ValuatorTwo\_ValuatorTwoDetails.cshtml" />
+    <Content Include="Views\GLReceipt\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

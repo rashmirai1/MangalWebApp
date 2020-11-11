@@ -420,6 +420,7 @@
     <Compile Include="Transaction\ChargeSanctionVM.cs" />
     <Compile Include="Transaction\EligibleLoanAmountValuationDetailsVM.cs" />
     <Compile Include="Transaction\GLBorrowerCopyReport.cs" />
+    <Compile Include="Transaction\GLReceiptViewModel.cs" />
     <Compile Include="Transaction\KYCDocumentUpload.cs" />
     <Compile Include="Transaction\DocumentUploadDetailsVM.cs" />
     <Compile Include="Transaction\DocumentUploadViewModel.cs" />

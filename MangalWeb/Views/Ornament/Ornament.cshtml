@@ -57,13 +57,8 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Product<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @Html.DropDownListFor(m => m.Product, (SelectList)ViewBag.ProductList, "--Select Product --", htmlAttributes: new { @class = "form-control" })
                                                         <span class="text-danger small">@Html.ValidationMessageFor(m => m.Product)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -71,8 +66,6 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @{
                                                             var statuslist = new SelectList(new[]
                                                             {
@@ -82,12 +75,8 @@
                                                                     new SelectListItem { Text = "Prohibited", Value = "Prohibited"}
                                                                     }, "Value", "Text");
                                                         }
-                                                        @Html.DropDownListFor(m => m.Status, statuslist)
+                                                        @Html.DropDownListFor(m => m.Status, statuslist,new { @class="form-control"})
                                                         <span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>

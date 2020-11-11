@@ -68,13 +68,8 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">City<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @Html.DropDownListFor(m => m.CityId, (SelectList)ViewBag.CityList, "--Select City--", htmlAttributes: new { @class = "form-control" })
                                                         <span class="text-danger small">@Html.ValidationMessageFor(m => m.CityId)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -91,14 +86,9 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Zone<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @Html.DropDownListFor(m => m.ZoneId, (SelectList)ViewBag.ZoneList, "--Select Zone--",
                                                            htmlAttributes: new { @class = "form-control" })
                                                         <span class="text-danger small">@Html.ValidationMessageFor(m => m.ZoneId)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

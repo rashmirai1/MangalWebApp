@@ -400,19 +400,14 @@ new { @class= "form-control" })
                     </div>
                 </div>
             </div>
+            </div>
     </section>
 }
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 @section javascriptsection{
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
+@Scripts.Render("~/bundles/jquerydataTablesJS")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.css" type="text/css" />
-    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript">
         $(document).ready(function () {
             $('input[type=datetime]').datepicker({
@@ -499,8 +494,6 @@ new { @class= "form-control" })
                     alert("Please select customer!");
                 }
             });
-
-
         }
 
         function ShowClientTableList() {
@@ -519,11 +512,12 @@ new { @class= "form-control" })
             });
         }
 
-
         var urlRedirect = '@Html.Raw(@Url.Action("Index", "ResidenceVerification"))';
 
         function OnSuccess(response) {
-            $("#saveModal").modal('show');
+
+            bootbox.alert('Record saved successfully')
+
             $(document).click(function () {
                 window.location.href = urlRedirect;
             });

@@ -63,13 +63,8 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Product<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @Html.DropDownListFor(m => m.Product, (SelectList)ViewBag.ProductList, "--Select Product --", htmlAttributes: new { @class = "form-control" })
                                                         <span class="text-danger small">@Html.ValidationMessageFor(m => m.Product)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Purity<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
@@ -83,8 +78,6 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Scheme Type<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @{
                                                             var typelist = new SelectList(new[]
                                                             {
@@ -92,16 +85,11 @@
                                                                     new SelectListItem { Text = "Slabwise", Value = "Slabwise"},
                                                                     }, "Value", "Text");
                                                         }
-                                                        @Html.DropDownListFor(m => m.SchemeType, typelist)
+                                                        @Html.DropDownListFor(m => m.SchemeType, typelist, new { @class = "form-control" })
                                                         <span class="text-danger">@Html.ValidationMessageFor(m => m.SchemeType)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label" style="margin-top: 10px;">Frequency<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @{
                                                             var frequencylist = new SelectList(new[]
                                                             {
@@ -109,12 +97,8 @@
                                                                     new SelectListItem { Text = "Monthly", Value = "Monthly"},
                                                                     }, "Value", "Text");
                                                         }
-                                                        @Html.DropDownListFor(m => m.Frequency, frequencylist)
+                                                        @Html.DropDownListFor(m => m.Frequency, frequencylist, new { @class = "form-control" })
                                                         <span class="text-danger">@Html.ValidationMessageFor(m => m.Frequency)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -196,8 +180,6 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Processing Fees<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @{
                                                                 var processingfeelist = new SelectList(new[]
                                                                 {
@@ -205,10 +187,7 @@
                                                                     new SelectListItem { Text = "Percentage", Value = "Percentage"}
                                                                     }, "Value", "Text");
                                                         }
-                                                        @Html.DropDownListFor(model => model.ProcessingFeeType, processingfeelist)
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
+                                                        @Html.DropDownListFor(model => model.ProcessingFeeType, processingfeelist, new { @class = "form-control" })
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Processing Charges<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
@@ -226,8 +205,6 @@
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @{
                                                             var statuslist = new SelectList(new[]
                                                             {
@@ -236,11 +213,8 @@
                                                     new SelectListItem { Text = "Inactive", Value = "Inactive"},
                                                     }, "Value", "Text");
                                                         }
-                                                        @Html.DropDownListFor(m => m.Status, statuslist)
+                                                        @Html.DropDownListFor(m => m.Status, statuslist, new { @class = "form-control" })
                                                         <span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
                                             </div>
                                         </div>
                                         <br />

@@ -52,6 +52,11 @@ namespace MangalWeb.Repository.Repository
             return pincodelist;
         }
 
+        public List<Mst_BranchType> GetBranchTypeList()
+        {
+            return _context.Mst_BranchType.ToList();
+        }
+
         public void DeleteRecord(int id)
         {
             var deleterecord = _context.tblCompanyBranchMasters.Where(x => x.BID == id).FirstOrDefault();

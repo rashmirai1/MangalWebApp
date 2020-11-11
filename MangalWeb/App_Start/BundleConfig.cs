@@ -78,7 +78,6 @@ namespace MangalWeb
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/DataTables/css/dataTables.bootstrap.min.css",
                       "~/Content/site.css"));
 
         }

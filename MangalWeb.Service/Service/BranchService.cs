@@ -39,6 +39,11 @@ namespace MangalWeb.Service.Service
             return _branchRepository.GetPincodeMasterList();
         }
 
+        public List<Mst_BranchType> GetBranchTypeList()
+        {
+            return _branchRepository.GetBranchTypeList();
+        }
+
         public void DeleteRecord(int id)
         {
             _branchRepository.DeleteRecord(id);

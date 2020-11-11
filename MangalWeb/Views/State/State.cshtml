@@ -68,29 +68,21 @@
                                             <div class="form-group">
                                                 <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">State Name as Per CKYC <span class="text-danger"> * </span></label>
                                                 <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                    <div class="section">
-                                                        <label class="field select">
                                                             @Html.DropDownListFor(m => m.CkycStateId, (SelectList)ViewBag.CkycStateList, "--Select State Name as Per CKYC --", htmlAttributes: new { @class = "form-control" })
-                                                            <i class="arrow"></i>
+                                                            
                                                             <span class="text-danger small">@Html.ValidationMessageFor(m => m.CkycStateId)</span>
-                                                        </label>
-                                                    </div>
+                                                    <i class="arrow"></i>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                             <div class="form-group">
-                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Country<span class="text-danger"> * </span></label>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Country@*<span class="text-danger"> * </span>*@</label>
                                                 <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                    <div class="section">
-                                                        <label class="field select">
                                                             @Html.DropDownListFor(m => m.CountryId, (SelectList)ViewBag.CountryList, "--Select Country--", htmlAttributes: new { @class = "form-control" })
-                                                            <i class="arrow"></i>
 
-                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.CountryId)</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
+                                                            @Html.ValidationMessageFor(m => m.CountryId)
+                                                            <span class="field-validation-valid text-danger" data-valmsg-for="StateName" data-valmsg-replace="true"></span>                                                              </div>
                                             </div>
                                         </div>
                                     </div>
