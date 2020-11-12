@@ -56,6 +56,49 @@
     <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
+                @*<img src="~/Content/assets/img/no-profile-img.gif" alt="avatar" class="mw30 br64 mr15">*@
+
+                <span class="fa fa-bell alert-bell"></span>
+                <span class="alertcounter">2</span>
+                @*<span class="caret caret-tp hidden-xs"></span>*@
+            </a>
+            <ul class="dropdown-menu dropdown-persist pn w250 bg-white" role="menu">
+                <li class="br-t of-h">
+                    <a href="@Url.Action("Logout", "Login")" class="animated animated-short fadeInDown">
+                        <div>
+                            Message 1
+                        </div>
+                    </a>
+
+                </li>
+                <li class="br-t of-h">
+                    <a href="@Url.Action("Logout", "Login")" class="animated animated-short fadeInDown">
+                        <div>
+                            Message 2
+                        </div>
+                    </a>
+
+                </li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
+                @*<img src="~/Content/assets/img/no-profile-img.gif" alt="avatar" class="mw30 br64 mr15">*@
+
+                <span class="fa fa-exclamation-triangle notification-bell"></span>
+                <span class="alertcounter">2</span>
+                @*<span class="caret caret-tp hidden-xs"></span>*@
+            </a>
+            <ul class="dropdown-menu dropdown-persist pn w250 bg-white" role="menu">
+                <li class="br-t of-h">
+                    <a href="@Url.Action("Logout", "Login")" class="animated animated-short fadeInDown">
+                        <i class="fa fa-bell"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
                 <img src="~/Content/assets/img/no-profile-img.gif" alt="avatar" class="mw30 br64 mr15">
                 <span>@Session["UserName"]</span>
                 <span class="caret caret-tp hidden-xs"></span>

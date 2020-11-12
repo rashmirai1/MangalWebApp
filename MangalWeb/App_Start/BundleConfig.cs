@@ -46,6 +46,7 @@ namespace MangalWeb
 
             bundles.Add(new StyleBundle("~/Content/mangalcss").Include(
                    "~/Content/bootstrap.min.css",
+                    "~/Content/Font/css/font-awesome.css",
                    "~/Content/assets/js/utility/highlight/styles/googlecode.css",
                    "~/Content/vendor/plugins/datepicker/css/bootstrap-datetimepicker.min.css",
                    "~/Content/vendor/plugins/daterange/daterangepicker.css",

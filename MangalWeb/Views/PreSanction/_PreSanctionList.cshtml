@@ -10,7 +10,7 @@
                         <tr>
                             <th>Customer ID</th>
                             <th>Loan Type</th>
-                            <th>Country</th>
+                            <th>Loan Purpose</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -19,7 +19,7 @@
                             <tr class="gradeX" onclick='window.document.location="/PreSanction/GetPreSanction?ID=@item.PreSanctionID"'>
                                 <td>@item.TGLKYC_BasicDetails.CustomerID</td>
                                 <td>@item.LoanType</td>
-                                <td>@*@item.Mst_LoanPupose.LoanPupose*@</td>
+                                <td>@item.Mst_LoanPupose.LoanPupose</td>
                             </tr>
                         }
                     </tbody>

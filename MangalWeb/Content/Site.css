@@ -19,3 +19,17 @@ fieldset[disabled] .form-control {
     background-color: rgb(250, 244, 179);
     opacity: 1;
 }
+.alertcounter {
+    margin-left: -2px;
+    font-size: 10px;
+}
+.alert-bell {
+    color: #f39406;
+    font-size: 22px;
+    margin-top: 8px;
+}
+.notification-bell {
+    color: #f7dd26;
+    font-size: 22px;
+    margin-top: 8px;
+}

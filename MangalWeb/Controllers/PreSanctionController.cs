@@ -57,14 +57,11 @@ namespace MangalWeb.Controllers
             }
         }        
 
-        #region GetCustomerDetails
+        
         public ActionResult GetCustomerDetails()
         {
             return PartialView("_CustomerDetails", _preSanctionService.GetCustomerList());
-        }
-        #endregion GetCustomerDetails
-
-        #region GetCustomerById
+        }     
         public ActionResult GetCustomerById(int Id)
         {
             ButtonVisiblity("Edit");
@@ -76,8 +73,6 @@ namespace MangalWeb.Controllers
             model.Products = new SelectList(_productrateService.GetProductList(), "Id", "Name");
             return View("Index", model);
         }
-        #endregion GetCustomerById
-        
 
         /// <summary>
         /// fill scheme details 

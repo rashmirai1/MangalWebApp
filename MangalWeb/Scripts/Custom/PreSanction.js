@@ -1,11 +1,5 @@
 ﻿$(document).ready(function () {
-    //$('#AppliedDate').datepicker({
-    //    dateFormat: "dd/mm/yy",
-    //    changeMonth: true,
-    //    changeYear: true,
-    //    yearRange: "-60:+0"
-    //});
-
+    
     $("#SchemeID").on('change', function () {
         var scheme = $(this).val();
         FillSchemeDetailsById(scheme);
@@ -13,7 +7,7 @@
 });
 
 function FillSchemeDetailsById(scheme) {
-    var url ="/PreSanction/FillSchemeDetailsById"
+    var url = "/PreSanction/FillSchemeDetailsById";
 
     $.ajax({
         type: "POST",
