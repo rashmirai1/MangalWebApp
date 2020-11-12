@@ -19,7 +19,7 @@ namespace MangalWeb.Repository.Repository
         {
             List<KYCBasicDetailsVM> kYCBasicDetailsVMs = new List<KYCBasicDetailsVM>();
             kYCBasicDetailsVMs = _context.Database.SqlQuery<KYCBasicDetailsVM>("GetResidenceVerificationCustomerList").ToList();
-            foreach(var item in kYCBasicDetailsVMs)
+            foreach (var item in kYCBasicDetailsVMs)
             {
                 DateTime now = DateTime.Now;
             }
@@ -30,20 +30,14 @@ namespace MangalWeb.Repository.Repository
         {
             try
             {
-                tbl_ResidenceVerification residenceVerification = new tbl_ResidenceVerification();
-                residenceVerification.CreatedBy = model.CreatedBy;
-                residenceVerification.CreatedDate = DateTime.Now;
-                residenceVerification.ApplicationNo = model.ApplicationNo;
-                residenceVerification.AppliedDate =Convert.ToDateTime(model.AppliedDate);
+                tbl_ResidenceVerification residenceVerification = new tbl_ResidenceVerification();                
+                residenceVerification.TransactionDate = Convert.ToDateTime(model.AppliedDate);
+                residenceVerification.KycId = model.KycId;
                 residenceVerification.Comments = model.Comments;
-                residenceVerification.CustomerId = model.CustomerId;
                 residenceVerification.IsActive = true;
                 residenceVerification.AddressCategory = model.AddressCategory;
-                residenceVerification.Area = model.Area;
-                residenceVerification.AreaID = model.AreaID;
                 residenceVerification.BldgHouseName = model.BldgHouseName;
                 residenceVerification.BldgPlotNo = model.BldgPlotNo;
-                residenceVerification.CityID = model.CityID;
                 residenceVerification.DateofVisit = model.DateofVisit;
                 residenceVerification.Designation = model.Designation;
                 residenceVerification.Distance = model.Distance;
@@ -59,13 +53,32 @@ namespace MangalWeb.Repository.Repository
                 residenceVerification.ResidingAtThisAddress_Years = model.ResidingAtThisAddress_Years;
                 residenceVerification.Road = model.Road;
                 residenceVerification.RoomBlockNo = model.RoomBlockNo;
-                residenceVerification.StateID = model.StateID;
                 residenceVerification.TimeofVisit = model.TimeofVisit;
                 residenceVerification.TransactionId = model.TransactionId;
                 residenceVerification.UserId = model.UserId;
-                residenceVerification.ZoneID = model.ZoneID;
+                residenceVerification.CreatedBy = model.CreatedBy;
+                residenceVerification.CreatedDate = DateTime.Now;
                 _context.tbl_ResidenceVerification.Add(residenceVerification);
                 _context.SaveChanges();
+
+                foreach (var p in model.DocumentUploadList)
+                {
+                    var docuptrn = new Trn_DocUploadDetails
+                    {
+                        KycId = model.KycId,
+                        DocumentTypeId = (int)p.DocumentTypeId,
+                        DocumentId = (int)p.DocumentId,
+                        ExpiryDate = p.ExpiryDate,
+                        FileName = p.FileName,
+                        ContentType = p.FileExtension,
+                        UploadFile = p.UploadDocName,
+                        Status = "Pending",
+                        SpecifyOther = p.SpecifyOther,
+                        NameonDocument = p.NameonDocument
+                    };
+                    _context.Trn_DocUploadDetails.Add(docuptrn);
+                    _context.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -85,38 +98,66 @@ namespace MangalWeb.Repository.Repository
         public ResidenceVerificationVM ToViewModelResidenceVerification(KYCBasicDetailsVM model)
         {
             ResidenceVerificationVM residenceVerificationVM = new ResidenceVerificationVM();
-            Random rand = new Random(100);
-            int cid = rand.Next(000000000, 999999999) + 1;
-            int pin = Convert.ToInt32(model.PinCode);
-            var pincode = _context.Mst_PinCode.Where(x => x.Pc_Id == pin).FirstOrDefault();
-            var city = _context.tblCityMasters.Where(x => x.CityID == pincode.Pc_CityId).FirstOrDefault();
-            var state = _context.tblStateMasters.Where(x => x.StateID == city.StateID).FirstOrDefault();
-            var zone = _context.tblZonemasters.Where(x => x.ZoneID == pincode.Pc_ZoneId).FirstOrDefault();
 
-            residenceVerificationVM.TransactionId = "T" + cid.ToString();
+            var fillAddressByPinCode = (from aa in _context.Mst_PinCode
+                                        join bb in _context.tblZonemasters on aa.Pc_ZoneId equals bb.ZoneID
+                                        join cc in _context.tblCityMasters on aa.Pc_CityId equals cc.CityID
+                                        join dd in _context.tblStateMasters on cc.StateID equals dd.StateID
+                                        where aa.Pc_Id == model.PinCode
+                                        select new FillAddressByPinCode()
+                                        {
+                                            AreaName = aa.Pc_AreaName,
+                                            ZoneName = bb.Zone,
+                                            ZoneID = bb.ZoneID,
+                                            CityId = cc.CityID,
+                                            CityName = cc.CityName,
+                                            StateID = dd.StateID,
+                                            StateName = dd.StateName
+                                        }).FirstOrDefault();
+
             residenceVerificationVM.ApplicationNo = model.ApplicationNo;
             residenceVerificationVM.AppliedDate = model.AppliedDate.ToShortDateString();
             residenceVerificationVM.CustomerId = model.CustomerID;
-            residenceVerificationVM.PreSanctionId = _context.tbl_PreSanctionDetails.Where(x => x.KycId == model.KYCID)
+            residenceVerificationVM.PreSanctionId = _context.TGLPreSanctions.Where(x => x.KYCID == model.KYCID)
                                           .OrderByDescending(x => x.CreatedDate)
-                                          .Select(x => x.Id).FirstOrDefault();
+                                          .Select(x => x.PreSanctionID).FirstOrDefault();
             residenceVerificationVM.AddressCategory = "02";
-            residenceVerificationVM.Area = model.Area;
-            residenceVerificationVM.AreaID = model.AreaID;
             residenceVerificationVM.BldgHouseName = model.BldgHouseName;
             residenceVerificationVM.BldgPlotNo = model.BldgPlotNo;
-            residenceVerificationVM.CityID = model.CityID;
             residenceVerificationVM.Distance = model.Distance;
             residenceVerificationVM.Landmark = model.Landmark;
             residenceVerificationVM.PinCode = model.PinCode;
             residenceVerificationVM.ResidenceCode = model.ResidenceCode;
             residenceVerificationVM.Road = model.Road;
             residenceVerificationVM.RoomBlockNo = model.RoomBlockNo;
-            residenceVerificationVM.StateID = model.StateID;
-            residenceVerificationVM.ZoneID = model.ZoneID;
-            residenceVerificationVM.city = city.CityName;
-            residenceVerificationVM.zone = zone.Zone;
-            residenceVerificationVM.state = state.StateName;
+            residenceVerificationVM.city = fillAddressByPinCode.CityName;
+            residenceVerificationVM.zone = fillAddressByPinCode.ZoneName;
+            residenceVerificationVM.state =fillAddressByPinCode.StateName;
+            residenceVerificationVM.Area = fillAddressByPinCode.AreaName;
+
+            var docuploaddetails = (from a in _context.Trn_DocUploadDetails
+                                    join b in _context.Mst_DocumentType on a.DocumentTypeId equals b.Id
+                                    join c in _context.tblDocumentMasters on a.DocumentId equals c.DocumentID
+                                    where a.KycId == model.KYCID && a.Status != "Rejected"
+                                    select new DocumentUploadDetailsVM()
+                                    {
+                                        ID = a.Id,
+                                        DocumentTypeId = a.DocumentTypeId,
+                                        DocumentTypeName = b.Name,
+                                        DocumentName = c.DocumentName,
+                                        DocumentId = a.DocumentId,
+                                        ExpiryDate = a.ExpiryDate,
+                                        FileName = a.FileName,
+                                        FileExtension = a.ContentType,
+                                        KycId = a.KycId,
+                                        Status = a.Status,
+                                        VerifiedBy = a.VerifiedBy,
+                                        SpecifyOther = a.SpecifyOther,
+                                        NameonDocument = a.NameonDocument,
+                                        ReasonForRejection = a.ReasonForRejection
+                                    }).ToList();
+
+            residenceVerificationVM.DocumentUploadList = docuploaddetails;
             return residenceVerificationVM;
         }
         #endregion
@@ -126,10 +167,15 @@ namespace MangalWeb.Repository.Repository
             return _context.UserDetails.ToList();
         }
 
+        public int GetMaxId()
+        {
+            return _context.tbl_ResidenceVerification.Any() ? _context.tbl_ResidenceVerification.Max(x => x.Id) + 1 : 1;
+        }
+
         public int GetDocumentID(int kycId)
         {
             int docId;
-            docId =  _context.Trn_DocumentUpload.Where(x => x.KycId == kycId)
+            docId = _context.Trn_DocumentUpload.Where(x => x.KycId == kycId)
                                           .OrderByDescending(x => x.DocId)
                                           .Select(x => x.DocId).FirstOrDefault();
             return docId;
@@ -137,10 +183,10 @@ namespace MangalWeb.Repository.Repository
 
         public UserViewModel FillEmployeeDetailsById(int Id)
         {
-           var result =  _context.UserDetails.Include("tbl_UserCategory").Where(x => x.UserID == Id).FirstOrDefault();
+            var result = _context.UserDetails.Include("tbl_UserCategory").Where(x => x.UserID == Id).FirstOrDefault();
             UserViewModel user = new UserViewModel();
             user.EmployeeCode = result.EmployeeCode;
-            user.tbl_UserCategory.Name = result.tbl_UserCategory.Name;
+            user.UserName = result.tbl_UserCategory.Name;
             return user;
         }
     }

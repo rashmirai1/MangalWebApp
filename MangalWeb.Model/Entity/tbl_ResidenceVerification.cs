@@ -15,13 +15,12 @@ namespace MangalWeb.Model.Entity
     public partial class tbl_ResidenceVerification
     {
         public int Id { get; set; }
+        public Nullable<int> KycId { get; set; }
         public int PreSanctionId { get; set; }
         public string TransactionId { get; set; }
-        public string ApplicationNo { get; set; }
         public Nullable<System.DateTime> DateofVisit { get; set; }
         public Nullable<System.TimeSpan> TimeofVisit { get; set; }
-        public string CustomerId { get; set; }
-        public Nullable<System.DateTime> AppliedDate { get; set; }
+        public Nullable<System.DateTime> TransactionDate { get; set; }
         public string PersonVisitedName { get; set; }
         public string RelationWithCustomer { get; set; }
         public string FamilyMemberDetails { get; set; }
@@ -35,14 +34,9 @@ namespace MangalWeb.Model.Entity
         public string Road { get; set; }
         public string BldgPlotNo { get; set; }
         public string RoomBlockNo { get; set; }
-        public Nullable<int> StateID { get; set; }
-        public Nullable<int> CityID { get; set; }
-        public Nullable<int> AreaID { get; set; }
-        public Nullable<int> ZoneID { get; set; }
         public string Landmark { get; set; }
         public string Distance { get; set; }
         public Nullable<int> PinCode { get; set; }
-        public string Area { get; set; }
         public string ResidenceCode { get; set; }
         public string AddressCategory { get; set; }
         public string IsApproved { get; set; }
@@ -50,6 +44,6 @@ namespace MangalWeb.Model.Entity
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<bool> IsActive { get; set; }
     
-        public virtual tbl_PreSanctionDetails tbl_PreSanctionDetails { get; set; }
+        public virtual TGLPreSanction TGLPreSanction { get; set; }
     }
 }

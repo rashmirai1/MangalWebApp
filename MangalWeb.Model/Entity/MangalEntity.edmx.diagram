@@ -84,8 +84,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.TGlReceipt_BasicDetails" Width="1.5" PointX="17.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_PreSanctionDetails" Width="1.5" PointX="19.625" PointY="35.5" />
         <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tbl_ResidenceVerification" Width="1.5" PointX="21.875" PointY="35.25" />
-        <AssociationConnector Association="MangalDBNewModel.FK__tbl_Resid__PreSa__39AD8A7F" />
         <EntityTypeShape EntityType="MangalDBNewModel.Trans_KYCAddresses" Width="1.5" PointX="19.625" PointY="42.5" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblHistory_KYCAddresses" Width="1.5" PointX="34.625" PointY="27.375" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_BasicDetails" Width="1.5" PointX="17.375" PointY="33" />
@@ -106,6 +104,8 @@
         <AssociationConnector Association="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97" />
         <AssociationConnector Association="MangalDBNewModel.FK__TGLPreSan__Schem__0B7CAB7B" />
         <AssociationConnector Association="MangalDBNewModel.FK__TGLPreSanc__RMID__08A03ED0" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tbl_ResidenceVerification" Width="1.5" PointX="35.125" PointY="15.875" />
+        <AssociationConnector Association="MangalDBNewModel.FK_tbl_ResidenceVerification_TGLPreSanction" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

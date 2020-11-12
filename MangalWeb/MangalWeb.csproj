@@ -2149,6 +2149,7 @@
     <Content Include="Views\ValuatorTwo\_ValuatorOneDetails.cshtml" />
     <Content Include="Views\ValuatorTwo\_ValuatorTwoDetails.cshtml" />
     <Content Include="Views\GLReceipt\Index.cshtml" />
+    <Content Include="Views\Shared\_DocumentUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

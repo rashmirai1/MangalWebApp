@@ -30,6 +30,11 @@ namespace MangalWeb.Service.Service
             return _residenceVerificationRepository.GetAllRMByBranch();
         }
 
+        public int GenerateApplicationNo()
+        {
+            return _residenceVerificationRepository.GetMaxId();
+        }
+
         public ResidenceVerificationVM GetCustomerById(int id)
         {
             return _residenceVerificationRepository.GetCustomerById(id);

@@ -99,15 +99,9 @@
                                         </div>
                                         <label class="col-md-2 control-label" id="lblSerialNumber"> Document Name <span class="text-danger"> * </span></label>
                                         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                            <div class="section">
-                                                <label class="field select">
                                                     @Html.DropDownListFor(m => m.DocumentUploadVM.DocumentId, (SelectList)ViewBag.DocumentList, "--Select Document Name --", htmlAttributes: new { @class = "form-control" })
                                                     <span class="text-danger small">@Html.ValidationMessageFor(m => m.DocumentUploadVM.DocumentId)</span>
-                                                    <i class="arrow"></i>
-                                                </label>
-                                            </div>
                                         </div>
-                                        <br />
                                     </div>
                                     <br />
                                     <div class="form-group">
@@ -781,6 +775,7 @@
             $("#btnDelete").click(function () {
                 $("#deleteModal").modal('show');
             });
+
             $("#btnDeleteConfirm").click(function () {
                 $.ajax({
                     type: "POST",

@@ -64,13 +64,14 @@ namespace MangalWeb.Controllers
                 model.FYID = Convert.ToInt32(Session["FinancialYearId"]);
                 model.BranchID = Convert.ToInt32(Session["BranchId"]);
                 model.CmpID = Convert.ToInt32(Session["CompanyId"]);
-
+                bool check = false;
                 model.DocumentUploadList = (List<DocumentUploadDetailsVM>)Session["docsub"];
                 if (model.CustomerID != null)
                 {
                     _kycService.SaveRecord(model);
+                    check = true;
                 }
-                return Json(model);
+                return Json(check);
             }
             catch (Exception ex)
             {
