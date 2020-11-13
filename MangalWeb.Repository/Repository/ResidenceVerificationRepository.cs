@@ -30,35 +30,33 @@ namespace MangalWeb.Repository.Repository
         {
             try
             {
-                tbl_ResidenceVerification residenceVerification = new tbl_ResidenceVerification();                
+                tblResidenceVerification residenceVerification = new tblResidenceVerification();
+                residenceVerification.TransactionId = model.TransactionId;
                 residenceVerification.TransactionDate = Convert.ToDateTime(model.AppliedDate);
                 residenceVerification.KycId = model.KycId;
-                residenceVerification.Comments = model.Comments;
-                residenceVerification.IsActive = true;
-                residenceVerification.AddressCategory = model.AddressCategory;
+                residenceVerification.PreSanctionId = model.PreSanctionId;
+                residenceVerification.DateofVisit = model.DateofVisit;
+                residenceVerification.TimeofVisit = model.TimeofVisit;
+                residenceVerification.PersonVisitedName = model.PersonVisitedName;
+                residenceVerification.RelationWithCustomer = model.RelationWithCustomer;
+                residenceVerification.FamilyMemberDetails = model.FamilyMemberDetails;
+                residenceVerification.AddressCategory = "02";
+                residenceVerification.ResidenceCode = model.ResidenceCode;
                 residenceVerification.BldgHouseName = model.BldgHouseName;
                 residenceVerification.BldgPlotNo = model.BldgPlotNo;
-                residenceVerification.DateofVisit = model.DateofVisit;
-                residenceVerification.Designation = model.Designation;
-                residenceVerification.Distance = model.Distance;
-                residenceVerification.EmployeeCode = model.EmployeeCode;
-                residenceVerification.FamilyMemberDetails = model.FamilyMemberDetails;
-                residenceVerification.Landmark = model.Landmark;
-                residenceVerification.PersonVisitedName = model.PersonVisitedName;
-                residenceVerification.PinCode = model.PinCode;
-                residenceVerification.PreSanctionId = model.PreSanctionId;
-                residenceVerification.RelationWithCustomer = model.RelationWithCustomer;
-                residenceVerification.ResidenceCode = model.ResidenceCode;
-                residenceVerification.ResidingAtThisAddress_Months = model.ResidingAtThisAddress_Months;
-                residenceVerification.ResidingAtThisAddress_Years = model.ResidingAtThisAddress_Years;
                 residenceVerification.Road = model.Road;
                 residenceVerification.RoomBlockNo = model.RoomBlockNo;
-                residenceVerification.TimeofVisit = model.TimeofVisit;
-                residenceVerification.TransactionId = model.TransactionId;
+                residenceVerification.Landmark = model.Landmark;
+                residenceVerification.Distance = model.Distance;
+                residenceVerification.PinCode = model.PinCode;
+                residenceVerification.ResidingAtThisAddress_Months = model.ResidingAtThisAddress_Months;
+                residenceVerification.ResidingAtThisAddress_Years = model.ResidingAtThisAddress_Years;
                 residenceVerification.UserId = model.UserId;
                 residenceVerification.CreatedBy = model.CreatedBy;
                 residenceVerification.CreatedDate = DateTime.Now;
-                _context.tbl_ResidenceVerification.Add(residenceVerification);
+                residenceVerification.Comments = model.Comments;
+                residenceVerification.IsActive = true;
+                _context.tblResidenceVerifications.Add(residenceVerification);
                 _context.SaveChanges();
 
                 foreach (var p in model.DocumentUploadList)
@@ -89,7 +87,13 @@ namespace MangalWeb.Repository.Repository
         public ResidenceVerificationVM GetCustomerById(int id)
         {
             ResidenceVerificationVM residenceVerificationVM = new ResidenceVerificationVM();
-            var kYCBasicDetails = _context.Database.SqlQuery<KYCBasicDetailsVM>("GetCustomerById @id", new SqlParameter("@id", id)).FirstOrDefault();
+            int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            int fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+
+            var kYCBasicDetails = _context.Database.SqlQuery<KYCBasicDetailsVM>("GetCustomerById @id,@BranchId,@FyId",
+                new SqlParameter("@id", id),
+                new SqlParameter("@BranchId", branchid),
+                new SqlParameter("@FyId", fyid)).FirstOrDefault();
             residenceVerificationVM = ToViewModelResidenceVerification(kYCBasicDetails);
             return residenceVerificationVM;
         }
@@ -118,9 +122,7 @@ namespace MangalWeb.Repository.Repository
             residenceVerificationVM.ApplicationNo = model.ApplicationNo;
             residenceVerificationVM.AppliedDate = model.AppliedDate.ToShortDateString();
             residenceVerificationVM.CustomerId = model.CustomerID;
-            residenceVerificationVM.PreSanctionId = _context.TGLPreSanctions.Where(x => x.KYCID == model.KYCID)
-                                          .OrderByDescending(x => x.CreatedDate)
-                                          .Select(x => x.PreSanctionID).FirstOrDefault();
+            residenceVerificationVM.PreSanctionId = model.PreSanctionId;
             residenceVerificationVM.AddressCategory = "02";
             residenceVerificationVM.BldgHouseName = model.BldgHouseName;
             residenceVerificationVM.BldgPlotNo = model.BldgPlotNo;
@@ -162,6 +164,21 @@ namespace MangalWeb.Repository.Repository
         }
         #endregion
 
+        public ResidenceVerificationVM GetResidenceVerificationById(int id)
+        {
+            ResidenceVerificationVM residenceVerificationVM = new ResidenceVerificationVM();
+            int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            int fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+
+            var kYCBasicDetails = _context.Database.SqlQuery<KYCBasicDetailsVM>("GetResidenceVerificationById @id,@BranchId,@FyId",
+                new SqlParameter("@id", id),
+                new SqlParameter("@BranchId", branchid),
+                new SqlParameter("@FyId", fyid)).FirstOrDefault();
+
+            residenceVerificationVM = ToViewModelResidenceVerification(kYCBasicDetails);
+            return residenceVerificationVM;
+        }
+
         public List<UserDetail> GetAllRMByBranch()
         {
             return _context.UserDetails.ToList();
@@ -169,7 +186,7 @@ namespace MangalWeb.Repository.Repository
 
         public int GetMaxId()
         {
-            return _context.tbl_ResidenceVerification.Any() ? _context.tbl_ResidenceVerification.Max(x => x.Id) + 1 : 1;
+            return 1;// _context.tbl_ResidenceVerification.Any() ? _context.tbl_ResidenceVerification.Max(x => x.Id) + 1 : 1;
         }
 
         public int GetDocumentID(int kycId)

@@ -17,7 +17,7 @@ namespace MangalWeb.Model.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TGLPreSanction()
         {
-            this.tbl_ResidenceVerification = new HashSet<tbl_ResidenceVerification>();
+            this.tblResidenceVerifications = new HashSet<tblResidenceVerification>();
         }
     
         public int PreSanctionID { get; set; }
@@ -48,6 +48,6 @@ namespace MangalWeb.Model.Entity
         public virtual TSchemeMaster_BasicDetails TSchemeMaster_BasicDetails { get; set; }
         public virtual UserDetail UserDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_ResidenceVerification> tbl_ResidenceVerification { get; set; }
+        public virtual ICollection<tblResidenceVerification> tblResidenceVerifications { get; set; }
     }
 }

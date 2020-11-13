@@ -19,7 +19,7 @@ namespace MangalWeb.Model.Transaction
         public string ApplicationNo { get; set; }
         [Required(ErrorMessage = "Prefix is required.")]
         public string ApplicantPrefix { get; set; }
-
+        public int PreSanctionId { get; set; }
         public string CustomerID { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]

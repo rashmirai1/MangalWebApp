@@ -96,10 +96,9 @@ namespace MangalWeb.Controllers
         #region GetCustomerById
         public ActionResult GetCustomerById(int Id)
         {
-            ButtonVisiblity("Edit");
+            ButtonVisiblity("Index");
             ViewBag.RMList = new SelectList(_residenceVerificationService.GetAllRMByBranch(), "UserID", "UserName");
             ViewBag.PinCodeList = new SelectList(_kycService.GetAllPincodes(), "Pc_Id", "Pc_Desc");
-            ViewBag.PinCodes = _kycService.GetAllPincodes();
             var model = _residenceVerificationService.GetCustomerById(Id);
             int id = _residenceVerificationService.GenerateApplicationNo();
             Random rand = new Random(100);
@@ -108,6 +107,27 @@ namespace MangalWeb.Controllers
             model.AppliedDate = DateTime.Now.ToShortDateString();
             ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
             ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
+            Session["resdocupload"] = model.DocumentUploadList;
+            return View("Index", model);
+        }
+        #endregion GetCustomerById
+
+        #region ResidenceVerificationDetails
+        public ActionResult ResidenceVerificationDetails()
+        {
+            return PartialView("_ResidenceVerificationDetails", _residenceVerificationService.GetCustomerList());
+        }
+        #endregion GetCustomerDetails
+
+        #region GetResidenceVerificationById
+        public ActionResult GetResidenceVerificationById(int Id)
+        {
+            ButtonVisiblity("View");
+            ViewBag.RMList = new SelectList(_residenceVerificationService.GetAllRMByBranch(), "UserID", "UserName");
+            ViewBag.PinCodeList = new SelectList(_kycService.GetAllPincodes(), "Pc_Id", "Pc_Desc");
+            ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
+            ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
+            var model = _residenceVerificationService.GetResidenceVerificationById(Id);
             Session["resdocupload"] = model.DocumentUploadList;
             return View("Index", model);
         }

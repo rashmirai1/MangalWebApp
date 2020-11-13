@@ -272,6 +272,9 @@
     <Compile Include="Entity\tblPrimaryGroup.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\tblResidenceVerification.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\tblStandardEndTime.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -300,9 +303,6 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tbl_PreSanctionDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\tbl_ResidenceVerification.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tbl_UserCategory.cs">

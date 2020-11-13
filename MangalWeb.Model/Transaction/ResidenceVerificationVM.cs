@@ -23,9 +23,9 @@ namespace MangalWeb.Model.Transaction
         [Required(ErrorMessage = "Date of Visit is required")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
-        public Nullable<System.DateTime> DateofVisit { get; set; }
+        public DateTime DateofVisit { get; set; }
         [Required(ErrorMessage ="Time of Visit is required")]
-        public Nullable<System.TimeSpan> TimeofVisit { get; set; }
+        public string TimeofVisit { get; set; }
         [Required(ErrorMessage ="Please Select Customer")]
         public string CustomerId { get; set; }
         [Required(ErrorMessage ="Transaction Date is required")]
@@ -39,11 +39,11 @@ namespace MangalWeb.Model.Transaction
         [Required(ErrorMessage ="Please Select Family Member Details")]
         public string FamilyMemberDetails { get; set; }
         [Required(ErrorMessage = "Residing At This Address(Years) is required")]
-        public Nullable<int> ResidingAtThisAddress_Years { get; set; }
+        public int ResidingAtThisAddress_Years { get; set; }
         [Required(ErrorMessage = "Residing At This Address(Months) is required")]
-        public Nullable<int> ResidingAtThisAddress_Months { get; set; }
+        public int ResidingAtThisAddress_Months { get; set; }
         [Required(ErrorMessage ="Please Select Employee")]
-        public Nullable<int> UserId { get; set; }
+        public int UserId { get; set; }
         public string Designation { get; set; }
         public string EmployeeCode { get; set; }
         public string Comments { get; set; }
@@ -64,7 +64,7 @@ namespace MangalWeb.Model.Transaction
         [Required(ErrorMessage ="Distance is required")]
         public string Distance { get; set; }
         [Required(ErrorMessage ="Please Select Pincode")]
-        public int? PinCode { get; set; }
+        public int PinCode { get; set; }
         public string Area { get; set; }
         public string city { get; set; }
         public string state { get; set; }

@@ -92,11 +92,14 @@ namespace MangalWeb.Controllers
             {
                 var model = _kycService.doesPanExist(PanNo);
                 var file = _kycService.GetApplicantImage(Convert.ToInt32(model.KYCID));
+
                 Session["docsub"] = null;
+
                 if (model.DocumentUploadList != null && model.DocumentUploadList.Count > 0)
                 {
                     Session["docsub"] = model.DocumentUploadList;
                 }
+
                 if (model.ImageName != null)
                 {
                     Session["ApplicantImage"] = file.AppPhoto;

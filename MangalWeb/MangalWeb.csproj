@@ -2037,6 +2037,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Custom\PreSanction.js" />
+    <Content Include="Scripts\Custom\ResidenceVerification.js" />
     <Content Include="Scripts\datepicker.js" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

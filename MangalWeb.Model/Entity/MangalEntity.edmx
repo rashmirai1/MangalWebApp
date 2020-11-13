@@ -418,40 +418,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="CreatedBy" Type="int" />
         </EntityType>
-        <EntityType Name="tbl_ResidenceVerification">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="KycId" Type="int" />
-          <Property Name="PreSanctionId" Type="int" Nullable="false" />
-          <Property Name="TransactionId" Type="nvarchar" MaxLength="50" />
-          <Property Name="DateofVisit" Type="datetime" />
-          <Property Name="TimeofVisit" Type="time" Precision="7" />
-          <Property Name="TransactionDate" Type="datetime" />
-          <Property Name="PersonVisitedName" Type="nvarchar" MaxLength="50" />
-          <Property Name="RelationWithCustomer" Type="nvarchar" MaxLength="50" />
-          <Property Name="FamilyMemberDetails" Type="nvarchar" MaxLength="50" />
-          <Property Name="ResidingAtThisAddress_Years" Type="int" />
-          <Property Name="ResidingAtThisAddress_Months" Type="int" />
-          <Property Name="UserId" Type="int" />
-          <Property Name="Designation" Type="nvarchar" MaxLength="50" />
-          <Property Name="EmployeeCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="500" />
-          <Property Name="BldgHouseName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Road" Type="nvarchar" MaxLength="50" />
-          <Property Name="BldgPlotNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="RoomBlockNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="Landmark" Type="nvarchar" MaxLength="50" />
-          <Property Name="Distance" Type="nvarchar" MaxLength="50" />
-          <Property Name="PinCode" Type="int" />
-          <Property Name="ResidenceCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="AddressCategory" Type="nvarchar" MaxLength="50" />
-          <Property Name="IsApproved" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="IsActive" Type="bit" />
-        </EntityType>
         <EntityType Name="tbl_UserCategory">
           <Key>
             <PropertyRef Name="refid" />
@@ -742,6 +708,37 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           </Key>
           <Property Name="PgID" Type="int" Nullable="false" />
           <Property Name="PgName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblResidenceVerification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+          <Property Name="KycId" Type="int" Nullable="false" />
+          <Property Name="PreSanctionId" Type="int" Nullable="false" />
+          <Property Name="DateofVisit" Type="datetime" Nullable="false" />
+          <Property Name="TimeofVisit" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="PersonVisitedName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RelationWithCustomer" Type="varchar" MaxLength="50" />
+          <Property Name="FamilyMemberDetails" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="AddressCategory" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="ResidenceCode" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="BldgHouseName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BldgPlotNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Road" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoomBlockNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Landmark" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Distance" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="PinCode" Type="int" Nullable="false" />
+          <Property Name="ResidingAtThisAddress_Months" Type="int" Nullable="false" />
+          <Property Name="ResidingAtThisAddress_Years" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="Comments" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblStandardEndTime">
           <Key>
@@ -1468,18 +1465,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbl_ResidenceVerification_TGLPreSanction">
-          <End Role="TGLPreSanction" Type="Self.TGLPreSanction" Multiplicity="1" />
-          <End Role="tbl_ResidenceVerification" Type="Self.tbl_ResidenceVerification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TGLPreSanction">
-              <PropertyRef Name="PreSanctionID" />
-            </Principal>
-            <Dependent Role="tbl_ResidenceVerification">
-              <PropertyRef Name="PreSanctionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblCityMaster_tblStateMaster">
           <End Role="tblStateMaster" Type="Self.tblStateMaster" Multiplicity="1" />
           <End Role="tblCityMaster" Type="Self.tblCityMaster" Multiplicity="*" />
@@ -1537,6 +1522,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Principal>
             <Dependent Role="tblItemMaster">
               <PropertyRef Name="Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblResidenceVerification_TGLPreSanction">
+          <End Role="TGLPreSanction" Type="Self.TGLPreSanction" Multiplicity="1" />
+          <End Role="tblResidenceVerification" Type="Self.tblResidenceVerification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TGLPreSanction">
+              <PropertyRef Name="PreSanctionID" />
+            </Principal>
+            <Dependent Role="tblResidenceVerification">
+              <PropertyRef Name="PreSanctionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1950,7 +1947,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="tbl_KYCMobileOTP" EntityType="Self.tbl_KYCMobileOTP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_OrnamentEvaluationDetails" EntityType="Self.tbl_OrnamentEvaluationDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_PreSanctionDetails" EntityType="Self.tbl_PreSanctionDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tbl_ResidenceVerification" EntityType="Self.tbl_ResidenceVerification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserCategory" EntityType="Self.tbl_UserCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ValuatorOne" EntityType="Self.tbl_ValuatorOne" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ValuatorOneDetails" EntityType="Self.tbl_ValuatorOneDetails" Schema="dbo" store:Type="Tables" />
@@ -1966,6 +1962,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="tblItemMaster" EntityType="Self.tblItemMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblKYC_HistoryDetails" EntityType="Self.tblKYC_HistoryDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPrimaryGroup" EntityType="Self.tblPrimaryGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblResidenceVerification" EntityType="Self.tblResidenceVerification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStandardEndTime" EntityType="Self.tblStandardEndTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStateMaster" EntityType="Self.tblStateMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblZonemaster" EntityType="Self.tblZonemaster" Schema="dbo" store:Type="Tables" />
@@ -2085,10 +2082,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
             <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_ResidenceVerification_TGLPreSanction" Association="Self.FK_tbl_ResidenceVerification_TGLPreSanction">
-            <End Role="TGLPreSanction" EntitySet="TGLPreSanction" />
-            <End Role="tbl_ResidenceVerification" EntitySet="tbl_ResidenceVerification" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblCityMaster_tblStateMaster" Association="Self.FK_tblCityMaster_tblStateMaster">
             <End Role="tblStateMaster" EntitySet="tblStateMaster" />
             <End Role="tblCityMaster" EntitySet="tblCityMaster" />
@@ -2108,6 +2101,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <AssociationSet Name="FK_tblItemMaster_Mst_Product" Association="Self.FK_tblItemMaster_Mst_Product">
             <End Role="Mst_Product" EntitySet="Mst_Product" />
             <End Role="tblItemMaster" EntitySet="tblItemMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblResidenceVerification_TGLPreSanction" Association="Self.FK_tblResidenceVerification_TGLPreSanction">
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanction" />
+            <End Role="tblResidenceVerification" EntitySet="tblResidenceVerification" />
           </AssociationSet>
           <AssociationSet Name="FK_tblStateMaster_tbl_CountryMaster" Association="Self.FK_tblStateMaster_tbl_CountryMaster">
             <End Role="tbl_CountryMaster" EntitySet="tbl_CountryMaster" />
@@ -2599,10 +2596,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <End Role="UserDetail" EntitySet="UserDetails" />
             <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
           </AssociationSet>
-          <EntitySet Name="tbl_ResidenceVerification" EntityType="MangalDBNewModel.tbl_ResidenceVerification" />
-          <AssociationSet Name="FK_tbl_ResidenceVerification_TGLPreSanction" Association="MangalDBNewModel.FK_tbl_ResidenceVerification_TGLPreSanction">
+          <EntitySet Name="tblResidenceVerifications" EntityType="MangalDBNewModel.tblResidenceVerification" />
+          <AssociationSet Name="FK_tblResidenceVerification_TGLPreSanction" Association="MangalDBNewModel.FK_tblResidenceVerification_TGLPreSanction">
             <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
-            <End Role="tbl_ResidenceVerification" EntitySet="tbl_ResidenceVerification" />
+            <End Role="tblResidenceVerification" EntitySet="tblResidenceVerifications" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
@@ -4655,7 +4652,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="CMPID" Type="Int32" />
           <Property Name="BranchID" Type="Int32" />
           <Property Name="TransactionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tbl_ResidenceVerification" Relationship="MangalDBNewModel.FK_tbl_ResidenceVerification_TGLPreSanction" FromRole="TGLPreSanction" ToRole="tbl_ResidenceVerification" />
+          <NavigationProperty Name="tblResidenceVerifications" Relationship="MangalDBNewModel.FK_tblResidenceVerification_TGLPreSanction" FromRole="TGLPreSanction" ToRole="tblResidenceVerification" />
         </EntityType>
         <Association Name="FK__TGLPreSan__LoanP__0A888742">
           <End Type="MangalDBNewModel.Mst_LoanPupose" Role="Mst_LoanPupose" Multiplicity="0..1" />
@@ -4717,49 +4714,46 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="tbl_ResidenceVerification">
+        <EntityType Name="tblResidenceVerification">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="KycId" Type="Int32" />
+          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="KycId" Type="Int32" Nullable="false" />
           <Property Name="PreSanctionId" Type="Int32" Nullable="false" />
-          <Property Name="TransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DateofVisit" Type="DateTime" Precision="3" />
-          <Property Name="TimeofVisit" Type="Time" Precision="7" />
-          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
-          <Property Name="PersonVisitedName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RelationWithCustomer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FamilyMemberDetails" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ResidingAtThisAddress_Years" Type="Int32" />
-          <Property Name="ResidingAtThisAddress_Months" Type="Int32" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="BldgHouseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Road" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BldgPlotNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RoomBlockNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Landmark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Distance" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PinCode" Type="Int32" />
-          <Property Name="ResidenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AddressCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsApproved" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="TGLPreSanction" Relationship="MangalDBNewModel.FK_tbl_ResidenceVerification_TGLPreSanction" FromRole="tbl_ResidenceVerification" ToRole="TGLPreSanction" />
+          <Property Name="DateofVisit" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeofVisit" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PersonVisitedName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RelationWithCustomer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FamilyMemberDetails" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="AddressCategory" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ResidenceCode" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="BldgHouseName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BldgPlotNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Road" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoomBlockNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Landmark" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Distance" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PinCode" Type="Int32" Nullable="false" />
+          <Property Name="ResidingAtThisAddress_Months" Type="Int32" Nullable="false" />
+          <Property Name="ResidingAtThisAddress_Years" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Comments" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TGLPreSanction" Relationship="MangalDBNewModel.FK_tblResidenceVerification_TGLPreSanction" FromRole="tblResidenceVerification" ToRole="TGLPreSanction" />
         </EntityType>
-        <Association Name="FK_tbl_ResidenceVerification_TGLPreSanction">
+        <Association Name="FK_tblResidenceVerification_TGLPreSanction">
           <End Type="MangalDBNewModel.TGLPreSanction" Role="TGLPreSanction" Multiplicity="1" />
-          <End Type="MangalDBNewModel.tbl_ResidenceVerification" Role="tbl_ResidenceVerification" Multiplicity="*" />
+          <End Type="MangalDBNewModel.tblResidenceVerification" Role="tblResidenceVerification" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TGLPreSanction">
               <PropertyRef Name="PreSanctionID" />
             </Principal>
-            <Dependent Role="tbl_ResidenceVerification">
+            <Dependent Role="tblResidenceVerification">
               <PropertyRef Name="PreSanctionId" />
             </Dependent>
           </ReferentialConstraint>
@@ -6407,37 +6401,34 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_ResidenceVerification">
-            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_ResidenceVerification">
-              <MappingFragment StoreEntitySet="tbl_ResidenceVerification">
+          <EntitySetMapping Name="tblResidenceVerifications">
+            <EntityTypeMapping TypeName="MangalDBNewModel.tblResidenceVerification">
+              <MappingFragment StoreEntitySet="tblResidenceVerification">
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IsApproved" ColumnName="IsApproved" />
-                <ScalarProperty Name="AddressCategory" ColumnName="AddressCategory" />
-                <ScalarProperty Name="ResidenceCode" ColumnName="ResidenceCode" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ResidingAtThisAddress_Years" ColumnName="ResidingAtThisAddress_Years" />
+                <ScalarProperty Name="ResidingAtThisAddress_Months" ColumnName="ResidingAtThisAddress_Months" />
                 <ScalarProperty Name="PinCode" ColumnName="PinCode" />
                 <ScalarProperty Name="Distance" ColumnName="Distance" />
                 <ScalarProperty Name="Landmark" ColumnName="Landmark" />
                 <ScalarProperty Name="RoomBlockNo" ColumnName="RoomBlockNo" />
-                <ScalarProperty Name="BldgPlotNo" ColumnName="BldgPlotNo" />
                 <ScalarProperty Name="Road" ColumnName="Road" />
+                <ScalarProperty Name="BldgPlotNo" ColumnName="BldgPlotNo" />
                 <ScalarProperty Name="BldgHouseName" ColumnName="BldgHouseName" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="EmployeeCode" ColumnName="EmployeeCode" />
-                <ScalarProperty Name="Designation" ColumnName="Designation" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ResidingAtThisAddress_Months" ColumnName="ResidingAtThisAddress_Months" />
-                <ScalarProperty Name="ResidingAtThisAddress_Years" ColumnName="ResidingAtThisAddress_Years" />
+                <ScalarProperty Name="ResidenceCode" ColumnName="ResidenceCode" />
+                <ScalarProperty Name="AddressCategory" ColumnName="AddressCategory" />
                 <ScalarProperty Name="FamilyMemberDetails" ColumnName="FamilyMemberDetails" />
                 <ScalarProperty Name="RelationWithCustomer" ColumnName="RelationWithCustomer" />
                 <ScalarProperty Name="PersonVisitedName" ColumnName="PersonVisitedName" />
-                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
                 <ScalarProperty Name="TimeofVisit" ColumnName="TimeofVisit" />
                 <ScalarProperty Name="DateofVisit" ColumnName="DateofVisit" />
-                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
                 <ScalarProperty Name="PreSanctionId" ColumnName="PreSanctionId" />
                 <ScalarProperty Name="KycId" ColumnName="KycId" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -40,6 +40,12 @@ namespace MangalWeb.Service.Service
             return _residenceVerificationRepository.GetCustomerById(id);
         }
 
+        public ResidenceVerificationVM GetResidenceVerificationById(int id)
+        {
+            return _residenceVerificationRepository.GetResidenceVerificationById(id);
+        }
+
+
         public int GetDocumentID(int id)
         {
             return _residenceVerificationRepository.GetDocumentID(id);
