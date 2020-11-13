@@ -3,7 +3,7 @@
     ViewBag.Title = "ProductRate";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+@Styles.Render("~/Content/dataTablescss")
 @using (Ajax.BeginForm("", "", new AjaxOptions { }))
 {
     @Html.AntiForgeryToken()
@@ -46,13 +46,8 @@
                                             <div class="form-group">
                                                 <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Product<span class="text-danger"> * </span></label>
                                                 <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @Html.DropDownListFor(m => m.Product, (SelectList)ViewBag.ProductList, "--Select Product --", htmlAttributes: new { @class = "form-control" })
                                                         <span class="text-danger small">@Html.ValidationMessageFor(m => m.Product)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -67,14 +62,9 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label"> Purity <span class="text-danger"> * </span></label>
                                         <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                            <div class="section">
-                                                <label class="field select">
                                                     @Html.DropDownListFor(m => m.ProductDetailsViewModel.Purity, (SelectList)ViewBag.PurityList, "--Select Purity--", htmlAttributes: new { @class = "form-control" })
                                                     <span class="text-danger small">@Html.ValidationMessageFor(m => m.ProductDetailsViewModel.Purity)</span>
                                                     <span class="text-danger" id="CustomErr"> </span>
-                                                    <i class="arrow"></i>
-                                                </label>
-                                            </div>
                                         </div>
                                         <label class="col-md-2 control-label" id="lblSerialNumber"> Gross Rate <span class="text-danger"> * </span></label>
                                         <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
@@ -92,8 +82,6 @@
                                         </div>
                                         <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Deduction Type<span class="text-danger"> * </span></label>
                                         <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
-                                            <div class="section">
-                                                <label class="field select">
                                                     @{
                                                         var AmountList = new SelectList(new[]
                                                         {
@@ -102,11 +90,8 @@
                                                                     new SelectListItem { Text = "Percentage", Value = "Percentage"}
                                                                     }, "Value", "Text");
                                                     }
-                                                    @Html.DropDownListFor(model => model.ProductDetailsViewModel.DeductionsType, AmountList)
+                                                    @Html.DropDownListFor(model => model.ProductDetailsViewModel.DeductionsType, AmountList, new { @class = "form-control" })
                                                     @Html.ValidationMessageFor(model => model.ProductDetailsViewModel.DeductionsType,"",new { @class="text-danger"})
-                                                    <i class="arrow"></i>
-                                                </label>
-                                            </div>
                                         </div>
                                     </div>
                                     </div>
@@ -181,14 +166,9 @@
     </section>
                                                 }
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 @section javascriptsection{
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    @Scripts.Render("~/bundles/jquerydataTablesJS")
+
     <script type="text/javascript">
         $(document).ready(function () {
             if (document.URL.indexOf("ID") != -1) {

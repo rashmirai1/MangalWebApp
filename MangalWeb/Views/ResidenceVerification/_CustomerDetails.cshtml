@@ -17,9 +17,9 @@
                         @foreach (KYCBasicDetailsVM item in Model)
                         {
                             <tr class="gradeX" style="cursor:pointer;" onclick='window.document.location="/ResidenceVerification/GetCustomerById?Id=@item.KYCID"'>
-                                <td id="@item.KYCID">@item.CustomerID</td>
-                                <td id="@item.ApplicationNo">@item.ApplicationNo</td>
-                                <td id="@item.AppliedDate">@item.AppliedDate</td>
+                                <td>@item.CustomerID</td>
+                                <td>@item.ApplicationNo</td>
+                                <td>@item.AppliedDate.ToShortDateString()</td>
                                 @*<td>@item.Status</td>*@
                             </tr>
                         }

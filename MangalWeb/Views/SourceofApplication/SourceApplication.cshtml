@@ -3,7 +3,7 @@
     ViewBag.Title = "ShowSourceApplication";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+@Styles.Render("~/Content/dataTablescss")
 
 @using (Ajax.BeginForm("CreateEdit", "SourceofApplication", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
 {
@@ -68,8 +68,6 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Source Category<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @{
                                                             var selectList = new SelectList(new[]
                                                             {
@@ -78,12 +76,9 @@
                                                                     new SelectListItem { Text = "Offline", Value = "Offline"}
                                                                     }, "Value", "Text");
                                                         }
-                                                        @Html.DropDownListFor(m => m.SourceCategory, selectList)
+                                                        @Html.DropDownListFor(m => m.SourceCategory, selectList, new { @class = "form-control" })
 
                                                         <span class="text-danger">@Html.ValidationMessageFor(m => m.SourceCategory)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>                                    
@@ -91,8 +86,6 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @{
                                                             var statuslist = new SelectList(new[]
                                                             {
@@ -101,11 +94,8 @@
                                                                     new SelectListItem { Text = "Inactive", Value = "Inactive"}
                                                                     }, "Value", "Text");
                                                         }
-                                                        @Html.DropDownListFor(m => m.SourceStatus, statuslist)
+                                                        @Html.DropDownListFor(m => m.SourceStatus, statuslist, new { @class = "form-control" })
                                                         <span class="text-danger">@Html.ValidationMessageFor(m => m.SourceStatus)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
 
                                             </div>
                                         </div>

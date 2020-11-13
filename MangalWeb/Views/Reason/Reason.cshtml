@@ -3,7 +3,7 @@
     ViewBag.Title = "ShowReason";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+@Styles.Render("~/Content/dataTablescss")
 
 @using (Ajax.BeginForm("CreateEdit", "Reason", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
 {
@@ -53,12 +53,10 @@
                                         </div>
                                         <br />
                                     </div>
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top: 10px;">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @{
                                                             var statuslist = new SelectList(new[]
                                                             {
@@ -67,11 +65,8 @@
                                                                     new SelectListItem { Text = "Inactive", Value = "2"},
                                                                     }, "Value", "Text");
                                                         }
-                                                        @Html.DropDownListFor(m => m.Status, statuslist)
+                                                        @Html.DropDownListFor(m => m.Status, statuslist, new { @class = "form-control" })
                                                         <span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

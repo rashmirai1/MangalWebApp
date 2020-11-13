@@ -826,25 +826,15 @@ new { @class = "form-control" })
                                                     <div class="form-group">
                                                         <label class="col-md-2 control-label">Document Type<span class="text-danger"> * </span></label>
                                                         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                            <div class="section">
-                                                                <label class="field select">
                                                                     @Html.DropDownListFor(m => m.DocumentUploadVM.DocumentTypeId, (SelectList)ViewBag.DocumentTypeList, "--Select Document Type--", htmlAttributes: new { @class = "form-control" })
                                                                     <span class="text-danger small">@Html.ValidationMessageFor(m => m.DocumentUploadVM.DocumentTypeId)</span>
-                                                                    <i class="arrow"></i>
-                                                                </label>
-                                                            </div>
                                                         </div>
                                                         <label class="col-md-2 control-label" id="lblSerialNumber"> Document Name <span class="text-danger"> * </span></label>
                                                         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                                            <div class="section">
-                                                                <label class="field select">
                                                                     @Html.DropDownListFor(m => m.DocumentUploadVM.DocumentId, (SelectList)ViewBag.DocumentList, "--Select Document Name --", htmlAttributes: new { @class = "form-control" })
                                                                     <span class="text-danger small">@Html.ValidationMessageFor(m => m.DocumentUploadVM.DocumentId)</span>
                                                                     <i class="arrow"></i>
-                                                                </label>
-                                                            </div>
                                                         </div>
-                                                        <br />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -1019,6 +1009,8 @@ new { @class = "form-control" })
                     $("#Age").val(age);
                 }
             });
+
+            $("#divDocumentDetails").hide();
 
             $("#DocumentUploadVM_ExpiryDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
 

@@ -101,7 +101,7 @@ namespace MangalWeb.Repository.Repository
                             model.CashAccountNo, model.CashAmount, model.BankCashAccID, model.BankAmount, model.PaymentMode, 0, strBankPaymentDate, model.LockerNo,
                             model.PacketWeight, model.RackNo, model.Remark, GoldInwardDate, model.PreSanctionId);
                         //update gold item details
-                        var tblgolditem = _context.TGLSanctionDisburse_GoldItemDetails.Where(x => x.KycId == model.KYCID).ToList();
+                        var tblgolditem = _context.tbl_OrnamentEvaluationDetails.Where(x => x.KycId == model.KYCID).ToList();
                         foreach (var golditem in tblgolditem)
                         {
                             golditem.SDID = Convert.ToInt32(value);
@@ -1130,8 +1130,8 @@ namespace MangalWeb.Repository.Repository
                             }
                             //Delete record from FLedgerMaster,TBankCash_PaymentDetails,FSystemGeneratedEntryMaster,tblaccountmaster,TGLSanctionDisburse_ChargesDetails,TGLSanctionDisburse_ChargesPostingDetails
                             var count = _context.DeleteSanctionDisbursementData(accid, refno, model.LoanAccountNo, model.ID);
-                            //update sdid TGLSanctionDisburse_GoldItemDetails
-                            var tblgolditem = _context.TGLSanctionDisburse_GoldItemDetails.Where(x => x.SDID == model.ID).ToList();
+                            //update sdid tbl_OrnamentEvaluationDetails
+                            var tblgolditem = _context.tbl_OrnamentEvaluationDetails.Where(x => x.SDID == model.ID).ToList();
                             if (tblgolditem != null && tblgolditem.Count > 0)
                             {
                                 foreach (var item5 in tblgolditem)
@@ -1775,23 +1775,23 @@ namespace MangalWeb.Repository.Repository
             #endregion
 
             #region Gold Item Details
-            var golddetails = (from a in _context.TGLSanctionDisburse_GoldItemDetails
-                               join b in _context.tblItemMasters on a.ItemID equals b.ItemID
-                               join c in _context.Mst_PurityMaster on a.Purity equals c.id
+            var golddetails = (from a in _context.tbl_OrnamentEvaluationDetails
+                               join b in _context.tblItemMasters on a.OrnamentId equals b.ItemID
+                               join c in _context.Mst_PurityMaster on a.PurityId equals c.id
                                where a.KycId == model.KYCID
                                select new EligibleLoanAmountValuationDetailsVM()
                                {
-                                   ID = a.GID,
+                                   ID = a.Id,
                                    SDID = a.SDID,
-                                   OrnamentId = a.ItemID,
+                                   OrnamentId = a.OrnamentId,
                                    OrnamentName = b.ItemName,
-                                   PurityNo = a.Purity,
+                                   PurityNo = a.PurityId,
                                    PurityName = c.PurityName,
-                                   Qty = a.Quantity,
-                                   NetWeight = a.NetWeight,
-                                   GrossWeight = a.GrossWeight,
-                                   RatePerGram = a.RateperGram,
-                                   Value = a.Value,
+                                   Qty = a.Qty,
+                                   NetWeight = a.NtWt,
+                                   GrossWeight = a.GrossWt,
+                                   RatePerGram = a.Rate,
+                                   Value = a.Total,
                                    Deductions = a.Deduction
                                }).ToList();
 
@@ -1961,23 +1961,23 @@ namespace MangalWeb.Repository.Repository
             }
             #endregion
 
-            var golddetails = (from a in _context.TGLSanctionDisburse_GoldItemDetails
-                               join b in _context.tblItemMasters on a.ItemID equals b.ItemID
-                               join c in _context.Mst_PurityMaster on a.Purity equals c.id
-                               where a.SDID == SId
+            var golddetails = (from a in _context.tbl_OrnamentEvaluationDetails
+                               join b in _context.tblItemMasters on a.OrnamentId equals b.ItemID
+                               join c in _context.Mst_PurityMaster on a.PurityId equals c.id
+                               where a.KycId == model.KYCID
                                select new EligibleLoanAmountValuationDetailsVM()
                                {
-                                   ID = a.GID,
+                                   ID = a.Id,
                                    SDID = a.SDID,
-                                   OrnamentId = a.ItemID,
+                                   OrnamentId = a.OrnamentId,
                                    OrnamentName = b.ItemName,
-                                   PurityNo = a.Purity,
+                                   PurityNo = a.PurityId,
                                    PurityName = c.PurityName,
-                                   Qty = a.Quantity,
-                                   NetWeight = a.NetWeight,
-                                   GrossWeight = a.GrossWeight,
-                                   RatePerGram = a.RateperGram,
-                                   Value = a.Value,
+                                   Qty = a.Qty,
+                                   NetWeight = a.NtWt,
+                                   GrossWeight = a.GrossWt,
+                                   RatePerGram = a.Rate,
+                                   Value = a.Total,
                                    Deductions = a.Deduction
                                }).ToList();
 

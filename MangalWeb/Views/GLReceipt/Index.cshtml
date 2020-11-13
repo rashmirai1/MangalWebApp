@@ -1,0 +1,1087 @@
+﻿@model MangalWeb.Model.Transaction.GLReceiptViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+
+@using (Ajax.BeginForm("CreateEdit", "GLReceipt", new AjaxOptions { HttpMethod = "Post", OnSuccess = "OnSuccess", OnFailure = "OnFailure", OnBegin = "StartValidation" }, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.glreceiptid, new { @id = "ItemID" })
+    <header id="topbar" class="affix">
+        <div class="col-md-5 col-sm-4 col-xs-12">
+            <div class="topbar-left">
+                <h4>GL Receipt</h4>
+            </div><!--end of topbar-left-->
+        </div><!--end of col-md-5-->
+        <div class="col-md-7 col-sm-8 col-xs-12">
+            <div class="topbar-right" id="headerbutton">
+                <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]" disabled="disabled"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
+                <a href="@Html.Raw(@Url.Action("Index", "KYC"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+            </div><!--end of topbar-right-->
+        </div><!--end of col-md-7-->
+    </header>
+    <section id="content" class="animated fadeIn">
+        <input id="isMobileVerified" name="isMobileVerified" type="hidden" value="0">
+        <input name="Trans_KYCAddresses[0].AddressCategory" id="Trans_KYCAddresses_0__AddressCategory" type="hidden" value="01" />
+        <input name="Trans_KYCAddresses[1].AddressCategory" id="Trans_KYCAddresses_1__AddressCategory" type="hidden" value="03" />
+        <!-- Start: Topbar -->
+        <!-- End: Topbar -->
+        <!-- Begin: Content -->
+        <!-- Dashboard Tiles -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel1 panel-primary">
+                    <div class="admin-form">
+                        <div class="panel-body">
+                            <div class="section row mbn">
+                                <div class="form-horizontal">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <div style="display:none">@Html.ValidationSummary()</div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+
+
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Voucher Date<span class="text-danger"> * </span></label>
+                                                <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.receiptDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Receipt Date", @autofocus = "autofocus", @maxlength = "10", @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(model => model.receiptDate, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-5 col-xs-12">
+                                                    @*<button id="btnUpdate" type="button" class="mb -xs mt-xs mr-xs btn btn-primary" style="padding: 5px;"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Update Details</span></button>*@
+                                                </div>
+                                                @*<label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Transaction ID</label>
+                                                    <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                        @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Id", @maxlength = "12", @autocomplete = "off", @min = "0" } })
+                                                        @Html.ValidationMessageFor(model => model.transactionid, "", new { @class = "text-danger" })
+                                                    </div>*@
+                                            </div>
+                                            <label id="negativeCustomerErr" class="text-danger"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Transaction ID</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Id", @maxlength = "12", @autocomplete = "off", @min = "0" } })
+                                                    @Html.ValidationMessageFor(model => model.transactionid, "", new { @class = "text-danger" })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Transaction Date</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.receiptDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Transaction Date", @autofocus = "autofocus", @maxlength = "10", @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(model => model.receiptDate, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <label id="negativeCustomerErr" class="text-danger"></label>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Gold Loan No<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Gold Loan No", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
+                                                    <div class="input-group-btn" style="display:inline;">
+                                                        <button type="button" data-toggle="modal" data-target="#editModal" onclick="ShowClientTableList();" class="btn btn-info btn_info1">...</button>
+                                                        @Html.ValidationMessageFor(model => model.transactionid, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Loan Date</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.receiptDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Loan Date", @autofocus = "autofocus", @maxlength = "10", @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(model => model.receiptDate, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Scheme Name<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Scheme Name", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:480px;" } })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Loan Amount<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Loan Amount", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:180px;" } })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">ROI</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.receiptDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "ROI", @autofocus = "autofocus", @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(model => model.receiptDate, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" title="OS Details" style="border: double">
+                                            <div><label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">OS Details<span class="text-danger"></span></label></div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Principla<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Principla", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:180px;" } })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Interest</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.receiptDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Interest", @autofocus = "autofocus", @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(model => model.receiptDate, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Jump Interest<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Jump Interest", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:180px;" } })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Penalty</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.receiptDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Penalty", @autofocus = "autofocus", @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(model => model.receiptDate, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Balance Loan Eligibility<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Balance Loan Eligibility", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:180px;" } })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Type of Closure</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.receiptDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Type of Closure ", @autofocus = "autofocus", @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(model => model.receiptDate, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" title="Received Details" style="border: double">
+                                            <div><label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Received Details<span class="text-danger"></span></label></div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Principal- current Loan<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Principal- current Loan ", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:180px;" } })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Interest- Current Loan<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Interest- Current Loan", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:180px;" } })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Narration</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            @Html.DropDownListFor(m => m.transactionid, (SelectList)ViewBag.narration, "--Select Narration--", htmlAttributes: new { @class = "form-control" })
+                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.transactionid)</span>
+                                                            <i class="arrow"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Narration</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            @Html.DropDownListFor(m => m.transactionid, (SelectList)ViewBag.narration, "--Select Narration--", htmlAttributes: new { @class = "form-control" })
+                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.transactionid)</span>
+                                                            <i class="arrow"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Jump Interest<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Jump Interest", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:180px;" } })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Charges Name</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.receiptDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Charges Name ", @autofocus = "autofocus", @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(model => model.receiptDate, "", new { @class = "text-danger" })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Amount<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:180px;" } })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">GST<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "GST", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:180px;" } })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Narration<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            @Html.DropDownListFor(m => m.transactionid, (SelectList)ViewBag.narration, "--Select Narration--", htmlAttributes: new { @class = "form-control" })
+                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.transactionid)</span>
+                                                            <i class="arrow"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Advance Interest- current loan<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Advance Interest- current loan", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Amount<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">list of next due dates</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "list of next due dates", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
+                                                </div>
+                                            </div>
+                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">   Narration<span class="text-danger">*</span></label>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        @Html.DropDownListFor(m => m.transactionid, (SelectList)ViewBag.narration, "--Select Narration--", htmlAttributes: new { @class = "form-control" })
+                                                        <span class="text-danger small">@Html.ValidationMessageFor(m => m.transactionid)</span>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Penalty Amount<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">   Narration<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            @Html.DropDownListFor(m => m.transactionid, (SelectList)ViewBag.narration, "--Select Narration--", htmlAttributes: new { @class = "form-control" })
+                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.transactionid)</span>
+                                                            <i class="arrow"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Discount<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Discount", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Amount<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Amount", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> Reason<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Discount", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Payment Mode<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            @Html.DropDownListFor(model => model.transactionid, new SelectList(new List<Object> { new { value = 0, text = "Select" }, new { value = 1, text = "Cash" }, new { value = 2, text = "Chq / DD / NEFT" }, new { value = 3, text = "Both" } }, "value", "text"), new { @class = "form-control", style = "width: 300px;" })
+                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.transactionid)</span>
+                                                            <i class="arrow"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> Select Bank Account<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            @Html.DropDownListFor(m => m.transactionid, (SelectList)ViewBag.narration, "--Select Bank Account--", htmlAttributes: new { @class = "form-control" })
+                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.transactionid)</span>
+                                                            <i class="arrow"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> Cheque / NEFT / DD / Online<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            @Html.DropDownListFor(model => model.transactionid, new SelectList(new List<Object> { new { value = 0, text = "Select" }, new { value = 1, text = "Cheque" }, new { value = 2, text = "NEFT" }, new { value = 3, text = "DD" }, new { value = 4, text = "Online" }, new { value = 5, text = "UPI" } }, "value", "text"), new { @class = "form-control", style = "width: 300px;" })
+                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.transactionid)</span>
+                                                            <i class="arrow"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Chq/DD/NEFT No.</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Chq/DD/NEFT No.", @maxlength = "12", @autocomplete = "off", @min = "0" } })
+                                                    @Html.ValidationMessageFor(model => model.transactionid, "", new { @class = "text-danger" })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Chq/DD/NEFT Date</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.receiptDate, new { htmlAttributes = new { @class = "form-control", @placeholder = "Chq/DD/NEFT Date", @autofocus = "autofocus", @maxlength = "10", @autocomplete = "off" } })
+                                                    @Html.ValidationMessageFor(model => model.receiptDate, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> Bank Name<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            @Html.DropDownListFor(m => m.transactionid, (SelectList)ViewBag.narration, "--Select Bank Account--", htmlAttributes: new { @class = "form-control" })
+                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.transactionid)</span>
+                                                            <i class="arrow"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label"> Select Cash Account<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="section">
+                                                        <label class="field select">
+                                                            @Html.DropDownListFor(m => m.transactionid, (SelectList)ViewBag.narration, "--Select Cash Account--", htmlAttributes: new { @class = "form-control" })
+                                                            <span class="text-danger small">@Html.ValidationMessageFor(m => m.transactionid)</span>
+                                                            <i class="arrow"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" title="OS Details" style="border: double">
+                                            <div><label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Office Details<span class="text-danger"></span></label></div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Receipt Book No<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Receipt Book No ", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:180px;" } })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Receipt No</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Receipt No ", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:180px;" } })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Received From<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Received From ", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:180px;" } })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">Collected By</label>
+                                                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                                    @Html.EditorFor(model => model.transactionid, new { htmlAttributes = new { @class = "form-control", @placeholder = "Collected By", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:180px;" } })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <small style="float:right"><span class="text-danger">* </span>indicates compulsary fields</small>
+                    </div>
+                </div>
+    </section>
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@section javascriptsection{
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+
+    <script type="text/javascript">
+        function StartValidation() {
+            var isMobileVerified = $("#isMobileVerified").val();
+            var MobileNo = $("#MobileNo").val();
+            debugger;
+            if (isMobileVerified == "0" && MobileNo > 0) {
+                alert("Please Verify Your Mobile Number!");
+                $("#MobileNo").focus();
+                return false;
+            }
+            var length = $('#tblDocumentDetails tbody tr').length;
+            if (length == 0) {
+                alert("Please Click Add Document Details");
+                $("#tblDocumentDetails").focus();
+                return false;
+            }
+        }
+
+        $("#uploadFile").change(function () {
+
+            var fileUpload = $("#uploadFile").get(0);
+            var files = fileUpload.files;
+            // Create FormData object
+            fileData = new FormData();
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append("uploadFile", files[i]);
+            }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UploadApplicantPhoto", "KYC")', // we are calling json method
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (data) {
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+            return false;
+        })
+
+        var urlRedirect = '@Html.Raw(@Url.Action("Index", "KYC"))';
+
+        function OnSuccess(response) {
+
+            $("#saveModal").modal('show');
+            $(document).click(function () {
+                window.location.href = urlRedirect;
+            });
+        }
+
+        function OnFailure(response) {
+            alert("Error occured.");
+        }
+
+        $(document).ready(function () {
+            $('input[type=datetime]').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-60:+0",
+                onClose: function (date) {
+                    var dob = new Date($("#BirthDate").val());
+                    var today = new Date();
+                    var age = Math.floor((today - dob) / (365.25 * 24 * 60 * 60 * 1000));
+                    $("#Age").val(age);
+                }
+            });
+
+            $("#DocumentUploadVM_ExpiryDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
+
+            var sr_no = 0;
+            var trid = 0;
+            currentRow = null;
+            $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
+                if (confirm('Are you sure to remove?')) {
+                    var tr = $(this).closest('tr');
+                    trid = tr.attr('id'); // table row ID
+                    tr.remove();
+                    $.ajax({
+                        url: '/DocumentUpload/Remove?id=' + trid,
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            //$(this).parents('tr').remove();
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    });
+                }
+            })
+
+            $("#btnAddDocumentDetails").click(function () {
+                $("#CustomErrr").text("");
+                $('[data-toggle="tooltip"]').tooltip();
+                var actions = "<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>"
+                var index = $("#tblDocumentDetails tbody tr:last").index();
+                var srno = 0;
+                var newtrno = trid;
+                if (sr_no == 0) {
+                    srno = index + 2;
+                    newtrno = 0;
+                }
+                else {
+                    srno = sr_no;
+                }
+                sr_no = 0;
+                trid = 0;
+
+                var DocumentTypeId = $("#DocumentUploadVM_DocumentTypeId").val();
+                var DocumentTypeName = $("#DocumentUploadVM_DocumentTypeId option:selected").text();
+                var DocumentId = $("#DocumentUploadVM_DocumentId").val();
+                var DocumentName = $("#DocumentUploadVM_DocumentId option:selected").text();
+                var ExpiryDate = $("#DocumentUploadVM_ExpiryDate").val();
+                var SpecifyOther = $("#DocumentUploadVM_SpecifyOther").val();
+                var NameonDocument = $("#DocumentUploadVM_NameonDocument").val();
+
+                if (currentRow) {
+                    $("#tblDocumentDetails tbody").find($(currentRow)).replaceWith(row);
+                    $("#DocumentUploadVM_DocumentTypeId").val("");
+                    $("#DocumentUploadVM_DocumentId").val("");
+                    $("#DocumentUploadVM_ExpiryDate").val("");
+                    $("#DocumentUploadVM_SpecifyOther").val("");
+                    $("#DocumentUploadVM_NameonDocument").val("");
+                    $("#UploadedFile").val("");
+                    currentRow = null;
+                }
+                else {
+                    var fileUpload = $("#UploadedFile").get(0);
+                    var files = fileUpload.files;
+                    // Create FormData object
+                    fileData = new FormData();
+                    // Looping over all files and add it to FormData object
+                    for (var i = 0; i < files.length; i++) {
+                        fileData.append("UploadedFile", files[i]);
+                    }
+                    if (DocumentTypeId != "" && DocumentId != "" && files[0].name != null) {
+                        var row = '<tr id=' + srno + '>' +
+                            '<td width="10%">' + srno + '</td>' +
+                            '<td width="20%" id="' + DocumentTypeId + '">' + DocumentTypeName + '</td>' +
+                            '<td width="20%" id="' + DocumentId + '">' + DocumentName + '</td>' +
+                            '<td width="20%">' + SpecifyOther + '</td>' +
+                            '<td width="20%">' + NameonDocument + '</td>' +
+                            '<td width="20%">' + ExpiryDate + '</td>' +
+                            '<td width="20%"><a href="#">' + files[0].name + '</a></td>"' +
+                            '<td id=' + srno + '' + actions + '</td>' +
+                            '</tr>';
+                        $("#tblDocumentDetails tbody").append(row);
+
+                        // Adding one more key to FormData object
+                        fileData.append('Id', srno);
+                        fileData.append('DocumentTypeId', DocumentTypeId);
+                        fileData.append('DocumentId', DocumentId);
+                        fileData.append('ExpiryDate', ExpiryDate);
+                        fileData.append('SpecifyOther', SpecifyOther);
+                        fileData.append('NameonDocument', NameonDocument);
+                        $.ajax({
+                            url: '/KYC/AddDocument',
+                            type: "POST",
+                            contentType: false, // Not to set any content header
+                            processData: false, // Not to process data
+                            data: fileData,
+                            success: function (result) {
+                            },
+                            error: function (err) {
+                                //alert(err.statusText);
+                            }
+                        });
+                        $("#DocumentUploadVM_DocumentTypeId").val("");
+                        $("#DocumentUploadVM_DocumentId").val("");
+                        $("#DocumentUploadVM_ExpiryDate").val("");
+                        $("#DocumentUploadVM_SpecifyOther").val("");
+                        $("#DocumentUploadVM_NameonDocument").val("");
+                        $("#UploadedFile").val("");
+                        $("#divDocumentDetails").show();
+                    }
+                }
+
+                $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
+                    if (confirm('Are you sure to remove?')) {
+                        var tr = $(this).closest('tr');
+                        trid = tr.attr('id'); // table row ID
+                        tr.remove();
+                        $.ajax({
+                            url: '/KYC/Remove?id=' + trid,
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (result) {
+                                //$(this).parents('tr').remove();
+                            },
+                            error: function (err) {
+                                alert(err.statusText);
+                            }
+                        });
+                    }
+                })
+            })
+        });
+
+        var pan = $("#PANNo").val();
+        var adhar = $("#AdhaarNo").val();
+        $('#disabledFields').find(':input').prop('disabled', true);
+        $("#btnUpdate").prop('disabled', false);
+        $("#btnUpdate").hide();
+
+        $("#CustomerID").attr('readOnly', true);
+        $("#ApplicationNo").attr('readOnly', true);
+        $("#AppliedDate").attr('readOnly', true);
+
+        $("#btnUpdate").click(function () {
+            $('#disabledFields').find(':input').prop('disabled', false);
+            $('#btn_save').prop('disabled', false);
+            $("#CustomerID").attr('readOnly', true);
+            $("#ApplicationNo").attr('readOnly', true);
+            $("#AppliedDate").attr('readOnly', true);
+        });
+
+        $("#PANNo").keyup(function () {
+            $(this).val($(this).val().toUpperCase());
+        });
+
+        $("#PANNo").on('change', function () {
+            debugger;
+            $("#AdhaarNo").val("");
+            var pan = $("#PANNo").val();
+            var regex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+            if (!regex.test(pan)) {
+                $("#PANNo").val("");
+                alert("Invalid PAN no");
+                $("#PANNo").focus();
+                return regex.test(pan);
+            }
+            CheckPanAvailable(pan);
+            $("#CustomerID").attr('readOnly', true);
+            $("#ApplicationNo").attr('readOnly', true);
+            $("#AppliedDate").attr('readOnly', true);
+        });
+
+        $("#AdhaarNo").change(function () {
+            var adhar = $("#AdhaarNo").val();
+            $("#PANNo").val("");
+            if (adhar.length != 12) {
+                $("#AdhaarNo").val("");
+                alert("Aadhar card not valid");
+                $("#AdhaarNo").focus();
+                return false;
+            }
+            CheckAdharAvailable(adhar);
+            $("#CustomerID").attr('readOnly', true);
+            $("#ApplicationNo").attr('readOnly', true);
+            $("#AppliedDate").attr('readOnly', true);
+        });
+
+        $("#sendVerificationCode").click(function () {
+            var mobile = $("#MobileNo").val();
+            var customerId = $("#CustomerID").val();
+            SendOtp(mobile, customerId);
+        });
+
+        $("#btnVerifyMobile").click(function () {
+            var mobile = $("#MobileNo").val();
+            var otp = $("#verifyText").val();
+            var customerId = $("#CustomerID").val();
+            VerifyOtp(mobile, customerId, otp);
+        });
+
+        $("#PinCode").on('change', function () {
+            var pin = $(this).val();
+            FillAddressByPinCode(pin);
+        });
+
+        $("#Trans_KYCAddresses_0__PinCode").on('change', function () {
+            var pin = $(this).val();
+            FillAddressByPinCodePermanentAdd(pin);
+        });
+
+        $("#Trans_KYCAddresses_1__PinCode").on('change', function () {
+            var pin = $(this).val();
+            FillAddressByPinCodeOfficeAdd(pin);
+        });
+
+        function FillAddressByPinCodePermanentAdd(pin) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("FillAddressByPinCode", "KYC")',
+                data: '{id: "' + pin + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    $("#cityPermanentAdd").val(result.CityName);
+                    $("#statePermanentAdd").val(result.StateName);
+                    $("#areaPermanentAdd").val(result.AreaName);
+                    $("#zonePermanentAdd").val(result.ZoneName);
+                    $("#Trans_KYCAddresses_0__StateID").val(result.StateID);
+                    $("#Trans_KYCAddresses_0__CityID").val(result.CityId);
+                    $("#Trans_KYCAddresses_0__Area").val(result.AreaName);
+                    $("#Trans_KYCAddresses_0__ZoneId").val(result.ZoneID);
+
+                },
+                error: function (xhr, status, error) {
+                    alert("something went wrong!");
+                }
+            });
+        }
+
+        function FillAddressByPinCodeOfficeAdd(pin) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("FillAddressByPinCode", "KYC")',
+                data: '{id: "' + pin + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    $("#cityOfficeAdd").val(result.CityName);
+                    $("#stateOfficeAdd").val(result.StateName);
+                    $("#areaOfficeAdd").val(result.AreaName);
+                    $("#zoneOfficeAdd").val(result.ZoneName);
+                    $("#Trans_KYCAddresses_1__StateID").val(result.StateID);
+                    $("#Trans_KYCAddresses_1__CityID").val(result.CityId);
+                    $("#Trans_KYCAddresses_1__Area").val(result.AreaName);
+                    $("#Trans_KYCAddresses_1__ZoneId").val(result.ZoneID);
+
+                },
+                error: function (xhr, status, error) {
+                    alert("something went wrong!");
+                }
+            });
+        }
+
+        $("#DocumentUploadVM_DocumentTypeId").change(function () {
+            $("#DocumentUploadVM_DocumentId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetDcoument","DocumentUpload")', // we are calling json method
+                dataType: 'json',
+                data: { id: $("#DocumentUploadVM_DocumentTypeId").val() },
+                // here we are get value of selected country and passing same value
+                //as inputto json method GetStates.
+                success: function (data) {
+                    var doc = "<select id='DocumentUploadVM_DocumentId'>";
+                    doc = doc + '<option value="">--Select Document--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        doc = doc + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                    }
+                    doc = doc + '</select>';
+                    $('#DocumentUploadVM_DocumentId').html(doc);
+                    $("#DocumentUploadVM_DocumentId").removeAttr('disabled')
+                },
+                error: function (ex) {
+                    //alert('Failed to retrieve data.' + ex);
+                }
+            });
+            return false;
+        })
+
+        $("#SourceofApplicationID").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetSourceType","KYC")', // we are calling json method
+                dataType: 'json',
+                data: { id: $("#SourceofApplicationID").val() },
+                success: function (data) {
+                    $('#SourceType').val(data);
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+            return false;
+        })
+
+        $("#DocumentUploadVM_DocumentId").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetExpiryDate")', // we are calling json method
+                dataType: 'json',
+                data: { id: $("#DocumentUploadVM_DocumentId").val() },
+                // here we are get value of selected country and passing same value
+                //as inputto json method GetStates.
+                success: function (data) {
+                    $("#DocumentUploadVM_ExpiryDate").attr('disabled', 'disabled')
+                    if (data == true) {
+                        $("#DocumentUploadVM_ExpiryDate").removeAttr('disabled')
+                    }
+                },
+                error: function (ex) {
+                    //alert('Failed to retrieve data.' + ex);
+                }
+            });
+            return false;
+        })
+
+        function FillAddressByPinCode(pin) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("FillAddressByPinCode", "KYC")',
+                data: '{id: "' + pin + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    $("#city").val(result.CityName);
+                    $("#state").val(result.StateName);
+                    $("#area").val(result.AreaName);
+                    $("#zone").val(result.ZoneName);
+                    $("#StateID").val(result.StateID);
+                    $("#CityID").val(result.CityId);
+                    $("#Area").val(result.AreaName);
+                    $("#ZoneID").val(result.ZoneID);
+
+                },
+                error: function (xhr, status, error) {
+                    alert("something went wrong!");
+                }
+            });
+        }
+
+
+        function SendOtp(mobile, customerId) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SendOtp", "KYC")',
+                data: '{mobile: "' + mobile + '" , customerId: "' + customerId + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    $("#otpError").text(result).fadeOut(10000);
+                },
+                error: function (xhr, status, error) {
+                    alert("something went wrong!");
+                }
+            });
+        }
+
+        function VerifyOtp(mobile, customerId, otp) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("VerifyOtp", "KYC")',
+                data: '{mobile: "' + mobile + '" , customerId: "' + customerId + '", otp:"' + otp + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    $("#verifyError").text(result);
+                    if (result != "Invalid OTP!") {
+                        $("#isMobileVerified").val("1");
+                    }
+                    else {
+                        $("#isMobileVerified").val("0");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("something went wrong!");
+                }
+            });
+        }
+
+        function CheckPanAvailable(pan) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("doesPanExist", "KYC")',
+                data: '{PanNo: "' + pan + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result.isPanAdharExist == true) {
+                        if (result.isNegativeCustomer) {
+                            $("#negativeCustomerErr").text("Your account has been blocked ! Please contact customer care for further details");
+                            $("#disabledFields").hide();
+                        }
+                        else {
+                            $("#negativeCustomerErr").text("");
+                            var adhar = $("#AdhaarNo").val();
+                            if (adhar.length == 0) {
+                                $.each(result, function (key, value) {
+                                    //if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
+                                    //    value = new Date(parseInt(value.replace('/Date(', '')));
+                                    //    var day = value.getDate();
+                                    //    var month = value.getMonth() + 1;
+                                    //    var year = value.getFullYear();
+                                    //    value = day + "/" + month + "/" + year;
+                                    //}
+
+                                    $("#" + key + "").val(value);
+                                });
+                                $.each(result.Trans_KYCAddresses, function (i) {
+                                    $.each(result.Trans_KYCAddresses[i], function (key, val) {
+                                        $("#Trans_KYCAddresses_" + i + "__" + key + "").val(val);
+                                    });
+                                });
+                                if (result.ImageName != null) {
+                                    $("#kycPhoto").append('<td><a href="/KYC/Download/' + result.KYCID + '" target=_blank>' + result.ImageName + '</a></td>');
+                                }
+                            }
+                            FillAddressByPinCode(result.PinCode);
+                            FillAddressByPinCodePermanentAdd(result.Trans_KYCAddresses[0].PinCode);
+                            FillAddressByPinCodeOfficeAdd(result.Trans_KYCAddresses[1].PinCode);
+                            $("#KycType").val("Existing");
+                            $('#disabledFields').find(':input').prop('disabled', true);
+                            $('#btn_save').prop('disabled', true);
+                            $("#disabledFields").show();
+                            $("#btnUpdate").show();
+                            $("#btnUpdate").attr('disabled', false);
+                            var actions = "<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>";
+                            $("#divDocumentDetails").show();
+
+                            debugger;
+                            $.each(result.DocumentUploadList, function (key, val) {
+                                debugger;
+                                var rowCount = $('#tblDocumentDetails >tbody >tr').length + 1;
+                                var value = "";
+                                if (val.ExpiryDate != null) {
+                                    value = new Date(parseInt(val.ExpiryDate.replace('/Date(', '')));
+                                    var day = value.getDate();
+                                    var month = value.getMonth() + 1;
+                                    var year = value.getFullYear();
+                                    value = day + "/" + month + "/" + year;
+                                }
+
+                                $('#tblDocumentDetails tbody').append('<tr id=' + val.ID + '><td>' + rowCount +
+                                  '<td width="20%" id="' + val.DocumentTypeId + '">' + val.DocumentTypeName + '</td>' +
+                                    '<td width="20%" id="' + val.DocumentId + '">' + val.DocumentName + '</td>' +
+                                    '<td width="20%">' + val.SpecifyOther + '</td>' +
+                                    '<td width="20%">' + val.NameonDocument + '</td>' +
+                                    '<td width="20%">' + value + '</td>' +
+                                    '<td width="20%"><a href="/KYC/Download/' + val.ID + '" target=_blank>' + val.FileName + '</a></td>' +
+                                    '<td id=' + val.ID + '' + actions + '</td>' +
+                                    '</tr>');
+                            });
+
+
+                            $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
+                                if (confirm('Are you sure to remove?')) {
+                                    var tr = $(this).closest('tr');
+                                    trid = tr.attr('id'); // table row ID
+                                    tr.remove();
+                                    $.ajax({
+                                        url: '/KYC/Remove?id=' + trid,
+                                        type: "POST",
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        success: function (result) {
+                                            //$(this).parents('tr').remove();
+                                        },
+                                        error: function (err) {
+                                            alert(err.statusText);
+                                        }
+                                    });
+                                }
+                            })
+                        }
+
+                    }
+                    else {
+                        var adhar = $("#AdhaarNo").val();
+                        if (pan.length > 0 || adhar.length > 0) {
+                            $('#disabledFields').find(':input').prop('disabled', false);
+                            $('#btn_save').prop('disabled', false);
+                            $("#KycType").val("New");
+                            $('#disabledFields').find(':input').val('');
+                            $("#btnAddDocumentDetails").val('Add');
+                            $("#tblDocumentDetails tbody").empty();
+                            $("#divDocumentDetails").hide();
+                        }
+                        else {
+                            $('#disabledFields').find(':input').prop('disabled', true);
+                            $('#btn_save').prop('disabled', true);
+                        }
+
+                    }
+                },
+                error: function (xhr, status, error) {
+                }
+            });
+        }
+
+        function CheckAdharAvailable(adhar) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("doesAdharExist", "KYC")',
+                data: '{AdharNo: "' + adhar + '" }',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    debugger;
+                    if (result.isPanAdharExist == true) {
+                        if (result.isNegativeCustomer) {
+                            $("#negativeCustomerErr").text("Your account has been blocked ! Please contact customer care for further details");
+                            $("#disabledFields").hide();
+                        }
+                        else {
+                            var pan = $("#PANNo").val();
+                            if (pan.length == 0) {
+                                $.each(result, function (key, value) {
+                                    //if (key == "AppliedDate" || key == "BirthDate" || key == "Expirydate") {
+                                    //    value = new Date(parseInt(value.replace('/Date(', '')));
+                                    //    var day = value.getDate();
+                                    //    var month = value.getMonth() + 1;
+                                    //    var year = value.getFullYear();
+                                    //    value = day + "/" + month + "/" + year;
+                                    //}
+                                    $("#" + key + "").val(value);
+                                });
+                                $.each(result.Trans_KYCAddresses, function (i) {
+                                    $.each(result.Trans_KYCAddresses[i], function (key, val) {
+                                        $("#Trans_KYCAddresses_" + i + "__" + key + "").val(val);
+                                    });
+                                });
+                                if (result.ImageName != null) {
+                                    $("#kycPhoto").append('<td><a href="/KYC/Download/' + result.KYCID + '" target=_blank>' + result.ImageName + '</a></td>');
+                                }
+                            }
+                            $("#KycType").val("Existing");
+                            $("#area").val(result.Area);
+                            $('#disabledFields').find(':input').prop('disabled', true);
+                            $('#btn_save').prop('disabled', true);
+                            $("#btnUpdate").show();
+                            $("#btnUpdate").attr('disabled', false);
+
+                            var actions = "<a class=\"delete\"><i class=\"fa fa-trash\" title='Delete'></i></a>";
+                            $("#divDocumentDetails").show();
+                            debugger;
+                            $.each(result.DocumentUploadList, function (key, val) {
+                                debugger;
+                                var rowCount = $('#tblDocumentDetails >tbody >tr').length + 1;
+                                var value = "";
+                                if (val.ExpiryDate != null) {
+                                    value = new Date(parseInt(val.ExpiryDate.replace('/Date(', '')));
+                                    var day = value.getDate();
+                                    var month = value.getMonth() + 1;
+                                    var year = value.getFullYear();
+                                    value = day + "/" + month + "/" + year;
+                                }
+                                $('#tblDocumentDetails tbody').append('<tr id=' + val.ID + '><td>' + rowCount +
+                                  '<td width="20%" id="' + val.DocumentTypeId + '">' + val.DocumentTypeName + '</td>' +
+                                    '<td width="20%" id="' + val.DocumentId + '">' + val.DocumentName + '</td>' +
+                                    '<td width="20%">' + val.SpecifyOther + '</td>' +
+                                    '<td width="20%">' + val.NameonDocument + '</td>' +
+                                    '<td width="20%">' + value + '</td>' +
+                                    '<td width="20%"><a href="/KYC/Download/' + val.ID + '" target=_blank>' + val.FileName + '</a></td>' +
+                                    '<td id=' + val.ID + '' + actions + '</td>' +
+                                    '</tr>');
+                            });
+
+                            $("#tblDocumentDetails TBODY TR").on("click", ".delete", function () {
+                                if (confirm('Are you sure to remove?')) {
+                                    var tr = $(this).closest('tr');
+                                    trid = tr.attr('id'); // table row ID
+                                    tr.remove();
+                                    $.ajax({
+                                        url: '/KYC/Remove?id=' + trid,
+                                        type: "POST",
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        success: function (result) {
+                                            //$(this).parents('tr').remove();
+                                        },
+                                        error: function (err) {
+                                            alert(err.statusText);
+                                        }
+                                    });
+                                }
+                            })
+                        }
+                    }
+                    else {
+                        var pan = $("#PANNo").val();
+                        if (adhar.length > 0 || pan.length > 0) {
+                            $('#disabledFields').find(':input').prop('disabled', false);
+                            $('#btn_save').prop('disabled', false);
+                            $("#KycType").val("New");
+                            $('#disabledFields').find(':input').val('');
+                            $("#btnAddDocumentDetails").val('Add');
+                            $("#tblDocumentDetails tbody").empty();
+                            $("#divDocumentDetails").hide();
+                        }
+                        else {
+                            $('#disabledFields').find(':input').prop('disabled', true);
+                            $('#btn_save').prop('disabled', true);
+                        }
+                    }
+                },
+                error: function (xhr, status, error) {
+                }
+            });
+        }
+    </script>
+}
+
+

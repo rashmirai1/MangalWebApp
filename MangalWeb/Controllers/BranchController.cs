@@ -41,6 +41,7 @@ namespace MangalWeb.Controllers
             }
             var pincodelist = _branchService.GetPincodeMasterList();
             ViewBag.PincodeList = new SelectList(pincodelist, "PcId", "PincodeWithArea");
+            branch.BranchTypeList = new SelectList(_branchService.GetBranchTypeList(), "Id", "Name");
 
             return View("Branch", branch);
         }
@@ -83,6 +84,7 @@ namespace MangalWeb.Controllers
             var model = new BranchViewModel();
             var pincodelist = _branchService.GetPincodeMasterList();
             ViewBag.PincodeList = new SelectList(pincodelist, "PcId", "PincodeWithArea");
+            model.BranchTypeList = new SelectList(_branchService.GetBranchTypeList(), "Id", "Name");
             return View(model);
         }
 

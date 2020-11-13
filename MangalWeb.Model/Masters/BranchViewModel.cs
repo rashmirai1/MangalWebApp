@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Web;
+using System.Web.Mvc;
 
 namespace MangalWeb.Model.Masters
 {
@@ -74,6 +74,8 @@ namespace MangalWeb.Model.Masters
         public DateTime? CreatedDate { get; set; }
         public int? UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
+
+        public IEnumerable<SelectListItem> BranchTypeList { get; set; }
 
     }
 }

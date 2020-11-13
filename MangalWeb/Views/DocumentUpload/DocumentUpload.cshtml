@@ -62,8 +62,8 @@
                                                 @Html.EditorFor(model => model.CustomerId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Customer Id", @autofocus = "autofocus", @readonly = true, @style = "display:inline;width:280px;" } })
                                                 <div class="input-group-btn" style="display:inline;">
                                                     <button type="button" data-toggle="modal" data-target="#editModal" onclick="ShowClientTableList();" class="btn btn-info btn_info1">...</button>
-                                                    @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
                                                 </div>
+                                                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
                                             </div>
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Application No<span class="text-danger"></span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -94,25 +94,14 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">Document Type<span class="text-danger"> * </span></label>
                                         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                            <div class="section">
-                                                <label class="field select">
                                                     @Html.DropDownListFor(m => m.DocumentUploadVM.DocumentTypeId, (SelectList)ViewBag.DocumentTypeList, "--Select Document Type--", htmlAttributes: new { @class = "form-control" })
                                                     <span class="text-danger small">@Html.ValidationMessageFor(m => m.DocumentUploadVM.DocumentTypeId)</span>
-                                                    <i class="arrow"></i>
-                                                </label>
-                                            </div>
                                         </div>
                                         <label class="col-md-2 control-label" id="lblSerialNumber"> Document Name <span class="text-danger"> * </span></label>
                                         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
-                                            <div class="section">
-                                                <label class="field select">
                                                     @Html.DropDownListFor(m => m.DocumentUploadVM.DocumentId, (SelectList)ViewBag.DocumentList, "--Select Document Name --", htmlAttributes: new { @class = "form-control" })
                                                     <span class="text-danger small">@Html.ValidationMessageFor(m => m.DocumentUploadVM.DocumentId)</span>
-                                                    <i class="arrow"></i>
-                                                </label>
-                                            </div>
                                         </div>
-                                        <br />
                                     </div>
                                     <br />
                                     <div class="form-group">
@@ -489,13 +478,6 @@
                 $("#DocDate").focus();
                 return false;
             }
-
-            var CustomerId = $("#CustomerId").val();
-            if (CustomerId == "") {
-                $("#CustomErr").text("Please Select Customer Id");
-                $("#CustomerId").focus();
-                return false;
-            }
             var check=true;
             debugger;
             if ($('#tblDocumentDetails tbody tr').length == 0) {
@@ -793,6 +775,7 @@
             $("#btnDelete").click(function () {
                 $("#deleteModal").modal('show');
             });
+
             $("#btnDeleteConfirm").click(function () {
                 $.ajax({
                     type: "POST",

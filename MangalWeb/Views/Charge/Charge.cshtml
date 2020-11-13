@@ -3,8 +3,8 @@
     ViewBag.Title = "Charge";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
-@using (Ajax.BeginForm("InsertData", "Charge", new AjaxOptions { OnSuccess = "OnSuccess" }))
+@Styles.Render("~/Content/dataTablescss")
+@using (Ajax.BeginForm("", "", new AjaxOptions { OnSuccess = "OnSuccess" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.ID, new { @id = "ItemID" })
@@ -56,8 +56,6 @@
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Status<span class="text-danger"> * </span></label>
                                             <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                                                <div class="section">
-                                                    <label class="field select">
                                                         @{
                                                             var statuslist = new SelectList(new[]
                                                             {
@@ -66,11 +64,8 @@
                                                                     new SelectListItem { Text = "Inactive", Value = "Inactive"}
                                                                     }, "Value", "Text");
                                                         }
-                                                        @Html.DropDownListFor(m => m.Status, statuslist)
+                                                        @Html.DropDownListFor(m => m.Status, statuslist, new { @class = "form-control" })
                                                         <span class="text-danger">@Html.ValidationMessageFor(m => m.Status)</span>
-                                                        <i class="arrow"></i>
-                                                    </label>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -106,22 +101,18 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Charge Type<span class="text-danger"> * </span></label>
                                         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
-                                            <div class="section">
-                                                <label class="field select">
                                                     @{
                                                         var expiryApplicablelist = new SelectList(new[]
                                                         {
 
-                                                                    new SelectListItem { Text = "Select Charge Type", Value = ""},
+                                                                    new SelectListItem { Text = "Select Type", Value = ""},
                                                                     new SelectListItem { Text = "Amount", Value = "Amount"},
                                                                     new SelectListItem { Text = "Percentage", Value = "Percentage"}
                                                                     }, "Value", "Text");
                                                     }
-                                                    @Html.DropDownListFor(model => model.chargeDetailsViewModel.ChargeType, expiryApplicablelist)
+                                                    @Html.DropDownListFor(model => model.chargeDetailsViewModel.ChargeType, expiryApplicablelist, new { @class = "form-control" })
                                                     <span class="text-danger">@Html.ValidationMessageFor(model => model.chargeDetailsViewModel.ChargeType)</span>
                                                     <i class="arrow"></i>
-                                                </label>
-                                            </div>
                                         </div>
                                         <input type="button" value="Add" class="btn btn-sm btn-primary" id="btnAddChargeDetails" />
                                     </div>
@@ -169,14 +160,9 @@
     </section>
                                                 }
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 @section javascriptsection{
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+@Scripts.Render("~/bundles/jquerydataTablesJS")
+
     <script type="text/javascript">
         $(document).ready(function () {
             $("#ReferenceDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });

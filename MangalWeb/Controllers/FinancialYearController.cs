@@ -19,6 +19,7 @@ namespace MangalWeb.Controllers
             try
             {
                status=_financialYearService.SaveUpdateRecord();
+
             }
             catch (Exception ex)
             {
