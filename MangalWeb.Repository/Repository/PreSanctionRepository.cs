@@ -56,7 +56,7 @@ namespace MangalWeb.Repository.Repository
                 return new TGLPreSanction();
             }
 
-            //ValidateRecord(model, errors);
+            ValidateRecord(model, errors);
             if (errors.Count > 0)
             {
                 return new TGLPreSanction();
@@ -157,15 +157,7 @@ namespace MangalWeb.Repository.Repository
            return  _context.GetDeviationRange(parentId, range).FirstOrDefault();
 
         }
-        //public int AddMessageAction(int? messageActionID, string message, string remarks, string pageUrl, int? userCategoryID, bool? isControl, int? createdBy)
-        //{
-        //    System.Data.Entity.Core.Objects.ObjectParameter output = new System.Data.Entity.Core.Objects.ObjectParameter("OutputMessageActionID", typeof(int));
-        //    _context.AddMessageAction(messageActionID, message, remarks, pageUrl, userCategoryID, isControl, createdBy, output);
-
-        //    messageActionID = (int)output.Value;
-
-        //    return messageActionID ?? 0;
-        //}
+       
         public void UpdateActionIDToPreSanction(int preSanctionId, int messageActionId)
         {
             var dbRecord = _context.TGLPreSanctions.Where(p => p.PreSanctionID == preSanctionId).FirstOrDefault();

@@ -18,7 +18,7 @@ namespace MangalWeb.Model.Entity
         public Nullable<int> UserID { get; set; }
         public Nullable<int> BranchID { get; set; }
     
-        public virtual UserDetail UserDetail { get; set; }
         public virtual tblCompanyBranchMaster tblCompanyBranchMaster { get; set; }
+        public virtual UserDetail UserDetail { get; set; }
     }
 }

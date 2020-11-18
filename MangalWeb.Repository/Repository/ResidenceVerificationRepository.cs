@@ -15,17 +15,7 @@ namespace MangalWeb.Repository.Repository
     {
         MangalDBNewEntities _context = new MangalDBNewEntities();
 
-        public List<KYCBasicDetailsVM> GetCustomerList()
-        {
-            List<KYCBasicDetailsVM> kYCBasicDetailsVMs = new List<KYCBasicDetailsVM>();
-            kYCBasicDetailsVMs = _context.Database.SqlQuery<KYCBasicDetailsVM>("GetResidenceVerificationCustomerList").ToList();
-            foreach (var item in kYCBasicDetailsVMs)
-            {
-                DateTime now = DateTime.Now;
-            }
-            return kYCBasicDetailsVMs;
-        }
-
+        #region SaveUpdateRecord
         public void SaveUpdateRecord(ResidenceVerificationVM model)
         {
             try
@@ -35,7 +25,7 @@ namespace MangalWeb.Repository.Repository
                 residenceVerification.TransactionDate = Convert.ToDateTime(model.AppliedDate);
                 residenceVerification.KycId = model.KycId;
                 residenceVerification.PreSanctionId = model.PreSanctionId;
-                residenceVerification.DateofVisit = model.DateofVisit;
+                residenceVerification.DateofVisit =Convert.ToDateTime(model.DateofVisit);
                 residenceVerification.TimeofVisit = model.TimeofVisit;
                 residenceVerification.PersonVisitedName = model.PersonVisitedName;
                 residenceVerification.RelationWithCustomer = model.RelationWithCustomer;
@@ -83,7 +73,41 @@ namespace MangalWeb.Repository.Repository
                 throw ex;
             }
         }
+        #endregion
 
+        #region GetCustomerList
+        public List<KYCBasicDetailsVM> GetCustomerList()
+        {
+            List<KYCBasicDetailsVM> kYCBasicDetailsVMs = new List<KYCBasicDetailsVM>();
+
+            int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            int fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+
+            kYCBasicDetailsVMs = _context.Database.SqlQuery<KYCBasicDetailsVM>("GetResidenceVerificationCustomerList @BranchId,@FyId",
+                 new SqlParameter("@BranchId", branchid),
+                new SqlParameter("@FyId", fyid)).ToList();
+
+            return kYCBasicDetailsVMs;
+        }
+        #endregion
+
+        #region ResidenceVerificationDetails
+        public List<ResidenceVerificationVM> ResidenceVerificationDetails()
+        {
+            List<ResidenceVerificationVM> residenceVerificationVM = new List<ResidenceVerificationVM>();
+
+            int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            int fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+
+            residenceVerificationVM = _context.Database.SqlQuery<ResidenceVerificationVM>("GetResidenceVerificationList @BranchId,@FyId",
+                 new SqlParameter("@BranchId", branchid),
+                new SqlParameter("@FyId", fyid)).ToList();
+
+            return residenceVerificationVM;
+        }
+        #endregion
+
+        #region GetCustomerById
         public ResidenceVerificationVM GetCustomerById(int id)
         {
             ResidenceVerificationVM residenceVerificationVM = new ResidenceVerificationVM();
@@ -97,8 +121,9 @@ namespace MangalWeb.Repository.Repository
             residenceVerificationVM = ToViewModelResidenceVerification(kYCBasicDetails);
             return residenceVerificationVM;
         }
+        #endregion
 
-        #region ToViewModelPreSanction
+        #region ToViewModelResidenceVerification
         public ResidenceVerificationVM ToViewModelResidenceVerification(KYCBasicDetailsVM model)
         {
             ResidenceVerificationVM residenceVerificationVM = new ResidenceVerificationVM();
@@ -170,25 +195,82 @@ namespace MangalWeb.Repository.Repository
             int branchid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
             int fyid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
 
-            var kYCBasicDetails = _context.Database.SqlQuery<KYCBasicDetailsVM>("GetResidenceVerificationById @id,@BranchId,@FyId",
+            var residenveVerificationDetails = _context.Database.SqlQuery<ResidenceVerificationVM>("GetResidenceVerificationById @id,@BranchId,@FyId",
                 new SqlParameter("@id", id),
                 new SqlParameter("@BranchId", branchid),
                 new SqlParameter("@FyId", fyid)).FirstOrDefault();
 
-            residenceVerificationVM = ToViewModelResidenceVerification(kYCBasicDetails);
+            residenceVerificationVM = ToEditModelResidenceVerification(residenveVerificationDetails);
             return residenceVerificationVM;
         }
 
+        #region ToEditModelResidenceVerification
+        public ResidenceVerificationVM ToEditModelResidenceVerification(ResidenceVerificationVM residenceVerificationVM)
+        {
+
+            var fillAddressByPinCode = (from aa in _context.Mst_PinCode
+                                        join bb in _context.tblZonemasters on aa.Pc_ZoneId equals bb.ZoneID
+                                        join cc in _context.tblCityMasters on aa.Pc_CityId equals cc.CityID
+                                        join dd in _context.tblStateMasters on cc.StateID equals dd.StateID
+                                        where aa.Pc_Id == residenceVerificationVM.PinCode
+                                        select new FillAddressByPinCode()
+                                        {
+                                            AreaName = aa.Pc_AreaName,
+                                            ZoneName = bb.Zone,
+                                            ZoneID = bb.ZoneID,
+                                            CityId = cc.CityID,
+                                            CityName = cc.CityName,
+                                            StateID = dd.StateID,
+                                            StateName = dd.StateName
+                                        }).FirstOrDefault();
+
+            residenceVerificationVM.city = fillAddressByPinCode.CityName;
+            residenceVerificationVM.zone = fillAddressByPinCode.ZoneName;
+            residenceVerificationVM.state = fillAddressByPinCode.StateName;
+            residenceVerificationVM.Area = fillAddressByPinCode.AreaName;
+
+            var docuploaddetails = (from a in _context.Trn_DocUploadDetails
+                                    join b in _context.Mst_DocumentType on a.DocumentTypeId equals b.Id
+                                    join c in _context.tblDocumentMasters on a.DocumentId equals c.DocumentID
+                                    where a.KycId == residenceVerificationVM.KycId && a.Status != "Rejected"
+                                    select new DocumentUploadDetailsVM()
+                                    {
+                                        ID = a.Id,
+                                        DocumentTypeId = a.DocumentTypeId,
+                                        DocumentTypeName = b.Name,
+                                        DocumentName = c.DocumentName,
+                                        DocumentId = a.DocumentId,
+                                        ExpiryDate = a.ExpiryDate,
+                                        FileName = a.FileName,
+                                        FileExtension = a.ContentType,
+                                        KycId = a.KycId,
+                                        Status = a.Status,
+                                        VerifiedBy = a.VerifiedBy,
+                                        SpecifyOther = a.SpecifyOther,
+                                        NameonDocument = a.NameonDocument,
+                                        ReasonForRejection = a.ReasonForRejection
+                                    }).ToList();
+
+            residenceVerificationVM.DocumentUploadList = docuploaddetails;
+            return residenceVerificationVM;
+        }
+        #endregion
+
+        #region GetAllRMByBranch
         public List<UserDetail> GetAllRMByBranch()
         {
             return _context.UserDetails.ToList();
         }
+        #endregion
 
+        #region GetMaxId
         public int GetMaxId()
         {
-            return 1;// _context.tbl_ResidenceVerification.Any() ? _context.tbl_ResidenceVerification.Max(x => x.Id) + 1 : 1;
+            return _context.tblResidenceVerifications.Any() ? _context.tblResidenceVerifications.Max(x => x.Id) + 1 : 1;
         }
+        #endregion
 
+        #region GetDocumentID
         public int GetDocumentID(int kycId)
         {
             int docId;
@@ -197,7 +279,9 @@ namespace MangalWeb.Repository.Repository
                                           .Select(x => x.DocId).FirstOrDefault();
             return docId;
         }
+        #endregion
 
+        #region FillEmployeeDetailsById
         public UserViewModel FillEmployeeDetailsById(int Id)
         {
             var result = _context.UserDetails.Include("tbl_UserCategory").Where(x => x.UserID == Id).FirstOrDefault();
@@ -206,5 +290,6 @@ namespace MangalWeb.Repository.Repository
             user.UserName = result.tbl_UserCategory.Name;
             return user;
         }
+        #endregion
     }
 }

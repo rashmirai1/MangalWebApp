@@ -20,13 +20,6 @@ namespace MangalWeb.Service.Service
         }
         #endregion
 
-        #region GetLoanDate
-        public string GetLoanDate()
-        {
-            return _sanctionRepository.GetLoanDate();
-        }
-        #endregion
-
         #region GetLoanNo
         public string GetLoanNo()
         {
@@ -140,7 +133,7 @@ namespace MangalWeb.Service.Service
         #endregion
 
         #region GetImageById
-        public byte[] GetImageById(int id)
+        public TGLSanctionDisburse_BasicDetails GetImageById(int id)
         {
             return _sanctionRepository.GetImageById(id);
         }

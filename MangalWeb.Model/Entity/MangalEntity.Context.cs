@@ -42,6 +42,7 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tbl_GLChargeMaster_BasicInfo> tbl_GLChargeMaster_BasicInfo { get; set; }
         public virtual DbSet<tbl_GLChargeMaster_Details> tbl_GLChargeMaster_Details { get; set; }
         public virtual DbSet<tblFinancialyear> tblFinancialyears { get; set; }
+        public virtual DbSet<tblCompanyBranchMaster> tblCompanyBranchMasters { get; set; }
         public virtual DbSet<Mst_PenaltySlab> Mst_PenaltySlab { get; set; }
         public virtual DbSet<Mst_SourceofApplication> Mst_SourceofApplication { get; set; }
         public virtual DbSet<Mst_AuditCategory> Mst_AuditCategory { get; set; }
@@ -82,7 +83,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLGoldStock> TGLGoldStocks { get; set; }
         public virtual DbSet<TGLInterest_Details> TGLInterest_Details { get; set; }
         public virtual DbSet<TGlReceipt_BasicDetails> TGlReceipt_BasicDetails { get; set; }
-        public virtual DbSet<tbl_PreSanctionDetails> tbl_PreSanctionDetails { get; set; }
         public virtual DbSet<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
         public virtual DbSet<tblHistory_KYCAddresses> tblHistory_KYCAddresses { get; set; }
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
@@ -93,13 +93,12 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tbl_ValuatorTwoDetails> tbl_ValuatorTwoDetails { get; set; }
         public virtual DbSet<tbl_OrnamentEvaluationDetails> tbl_OrnamentEvaluationDetails { get; set; }
         public virtual DbSet<Mst_LoanPupose> Mst_LoanPupose { get; set; }
-        public virtual DbSet<TGLPreSanction> TGLPreSanctions { get; set; }
         public virtual DbSet<tblResidenceVerification> tblResidenceVerifications { get; set; }
+        public virtual DbSet<TGLSanctionDisburse_BasicDetails> TGLSanctionDisburse_BasicDetails { get; set; }
+        public virtual DbSet<TGLPreSanction> TGLPreSanctions { get; set; }
         public virtual DbSet<MessageAction> MessageActions { get; set; }
         public virtual DbSet<MessageActionUser> MessageActionUsers { get; set; }
         public virtual DbSet<Mst_UserBranch> Mst_UserBranch { get; set; }
-        public virtual DbSet<tblCompanyBranchMaster> tblCompanyBranchMasters { get; set; }
-        public virtual DbSet<TGLSanctionDisburse_BasicDetails> TGLSanctionDisburse_BasicDetails { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -788,7 +787,7 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SaveKYCHistory", kycidParameter);
         }
     
-        public virtual ObjectResult<GL_SanctionDisburse_KYC_Details_RTR_Result3> GL_SanctionDisburse_KYC_Details_RTR(Nullable<int> preSanctionId, Nullable<int> fYID, Nullable<int> branchId)
+        public virtual int GL_SanctionDisburse_KYC_Details_RTR(Nullable<int> preSanctionId, Nullable<int> fYID, Nullable<int> branchId)
         {
             var preSanctionIdParameter = preSanctionId.HasValue ?
                 new ObjectParameter("PreSanctionId", preSanctionId) :
@@ -802,62 +801,24 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("BranchId", branchId) :
                 new ObjectParameter("BranchId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_Details_RTR_Result3>("GL_SanctionDisburse_KYC_Details_RTR", preSanctionIdParameter, fYIDParameter, branchIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GL_SanctionDisburse_KYC_Details_RTR", preSanctionIdParameter, fYIDParameter, branchIdParameter);
         }
     
-        public virtual int AddMessageAction(Nullable<int> messageActionID, string message, string remarks, string pageUrl, Nullable<int> userCategoryID, Nullable<bool> isControl, Nullable<int> createdBy, ObjectParameter outputMessageActionID)
+        public virtual ObjectResult<GL_SanctionDisburse_KYC_Details_RTR1_Result> GL_SanctionDisburse_KYC_Details_RTR1(Nullable<int> preSanctionId, Nullable<int> fYID, Nullable<int> branchId)
         {
-            var messageActionIDParameter = messageActionID.HasValue ?
-                new ObjectParameter("MessageActionID", messageActionID) :
-                new ObjectParameter("MessageActionID", typeof(int));
+            var preSanctionIdParameter = preSanctionId.HasValue ?
+                new ObjectParameter("PreSanctionId", preSanctionId) :
+                new ObjectParameter("PreSanctionId", typeof(int));
     
-            var messageParameter = message != null ?
-                new ObjectParameter("Message", message) :
-                new ObjectParameter("Message", typeof(string));
+            var fYIDParameter = fYID.HasValue ?
+                new ObjectParameter("FYID", fYID) :
+                new ObjectParameter("FYID", typeof(int));
     
-            var remarksParameter = remarks != null ?
-                new ObjectParameter("Remarks", remarks) :
-                new ObjectParameter("Remarks", typeof(string));
+            var branchIdParameter = branchId.HasValue ?
+                new ObjectParameter("BranchId", branchId) :
+                new ObjectParameter("BranchId", typeof(int));
     
-            var pageUrlParameter = pageUrl != null ?
-                new ObjectParameter("PageUrl", pageUrl) :
-                new ObjectParameter("PageUrl", typeof(string));
-    
-            var userCategoryIDParameter = userCategoryID.HasValue ?
-                new ObjectParameter("UserCategoryID", userCategoryID) :
-                new ObjectParameter("UserCategoryID", typeof(int));
-    
-            var isControlParameter = isControl.HasValue ?
-                new ObjectParameter("IsControl", isControl) :
-                new ObjectParameter("IsControl", typeof(bool));
-    
-            var createdByParameter = createdBy.HasValue ?
-                new ObjectParameter("CreatedBy", createdBy) :
-                new ObjectParameter("CreatedBy", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddMessageAction", messageActionIDParameter, messageParameter, remarksParameter, pageUrlParameter, userCategoryIDParameter, isControlParameter, createdByParameter, outputMessageActionID);
-        }
-    
-        public virtual int DeleteMessageAction(Nullable<int> messageActionID)
-        {
-            var messageActionIDParameter = messageActionID.HasValue ?
-                new ObjectParameter("MessageActionID", messageActionID) :
-                new ObjectParameter("MessageActionID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteMessageAction", messageActionIDParameter);
-        }
-    
-        public virtual ObjectResult<GetMessageAction_Result> GetMessageAction(Nullable<int> userID, Nullable<int> branchID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var branchIDParameter = branchID.HasValue ?
-                new ObjectParameter("BranchID", branchID) :
-                new ObjectParameter("BranchID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMessageAction_Result>("GetMessageAction", userIDParameter, branchIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GL_SanctionDisburse_KYC_Details_RTR1_Result>("GL_SanctionDisburse_KYC_Details_RTR1", preSanctionIdParameter, fYIDParameter, branchIdParameter);
         }
     
         public virtual int SP_SanctionDisburse_PRI(string operation, Nullable<int> sDID, string loanType, Nullable<System.DateTime> loanDate, string goldLoanNo, Nullable<int> kYCID, Nullable<decimal> eligibleLoanAmt, Nullable<decimal> netLoanAmtSanctioned, Nullable<decimal> chargesTotal, Nullable<decimal> netLoanPayable, string cheqNEFTDD, string cheqNEFTDDNo, Nullable<System.DateTime> cheqNEFTDDDate, Nullable<decimal> totalGrossWeight, Nullable<decimal> totalNetWeight, Nullable<decimal> totalQuantity, Nullable<decimal> totalvalue, Nullable<decimal> totalRate, Nullable<int> sID, Nullable<System.DateTime> dueDate, byte[] proofOfOwnerShipImageFile, string fileName, string contentType, string cIBILScore, Nullable<int> bCPID, Nullable<int> cashOutWardById, Nullable<int> goldInWardById, Nullable<int> createdBy, Nullable<int> fYID, Nullable<int> branchID, Nullable<int> cMPID, Nullable<int> cashAccID, Nullable<decimal> cashAmount, Nullable<int> bankCashAccID, Nullable<decimal> bankAmount, string paymentMode, Nullable<int> lineno, Nullable<System.DateTime> bankPaymentDate, string lockerNo, string packetWeight, string rackNo, string remark, Nullable<System.DateTime> goldInwardDate, Nullable<int> preSanctionId)
@@ -1041,6 +1002,48 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_PRI", operationParameter, sDIDParameter, loanTypeParameter, loanDateParameter, goldLoanNoParameter, kYCIDParameter, eligibleLoanAmtParameter, netLoanAmtSanctionedParameter, chargesTotalParameter, netLoanPayableParameter, cheqNEFTDDParameter, cheqNEFTDDNoParameter, cheqNEFTDDDateParameter, totalGrossWeightParameter, totalNetWeightParameter, totalQuantityParameter, totalvalueParameter, totalRateParameter, sIDParameter, dueDateParameter, proofOfOwnerShipImageFileParameter, fileNameParameter, contentTypeParameter, cIBILScoreParameter, bCPIDParameter, cashOutWardByIdParameter, goldInWardByIdParameter, createdByParameter, fYIDParameter, branchIDParameter, cMPIDParameter, cashAccIDParameter, cashAmountParameter, bankCashAccIDParameter, bankAmountParameter, paymentModeParameter, linenoParameter, bankPaymentDateParameter, lockerNoParameter, packetWeightParameter, rackNoParameter, remarkParameter, goldInwardDateParameter, preSanctionIdParameter);
         }
     
+        public virtual int AddMessageAction(Nullable<int> messageActionID, string message, string remarks, string pageUrl, Nullable<int> userCategoryID, Nullable<bool> isControl, Nullable<int> createdBy, ObjectParameter outputMessageActionID)
+        {
+            var messageActionIDParameter = messageActionID.HasValue ?
+                new ObjectParameter("MessageActionID", messageActionID) :
+                new ObjectParameter("MessageActionID", typeof(int));
+    
+            var messageParameter = message != null ?
+                new ObjectParameter("Message", message) :
+                new ObjectParameter("Message", typeof(string));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var pageUrlParameter = pageUrl != null ?
+                new ObjectParameter("PageUrl", pageUrl) :
+                new ObjectParameter("PageUrl", typeof(string));
+    
+            var userCategoryIDParameter = userCategoryID.HasValue ?
+                new ObjectParameter("UserCategoryID", userCategoryID) :
+                new ObjectParameter("UserCategoryID", typeof(int));
+    
+            var isControlParameter = isControl.HasValue ?
+                new ObjectParameter("IsControl", isControl) :
+                new ObjectParameter("IsControl", typeof(bool));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddMessageAction", messageActionIDParameter, messageParameter, remarksParameter, pageUrlParameter, userCategoryIDParameter, isControlParameter, createdByParameter, outputMessageActionID);
+        }
+    
+        public virtual int DeleteMessageAction(Nullable<int> messageActionID)
+        {
+            var messageActionIDParameter = messageActionID.HasValue ?
+                new ObjectParameter("MessageActionID", messageActionID) :
+                new ObjectParameter("MessageActionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteMessageAction", messageActionIDParameter);
+        }
+    
         public virtual ObjectResult<GetDeviationRange_Result> GetDeviationRange(Nullable<int> parentID, Nullable<decimal> range)
         {
             var parentIDParameter = parentID.HasValue ?
@@ -1052,6 +1055,19 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("Range", typeof(decimal));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDeviationRange_Result>("GetDeviationRange", parentIDParameter, rangeParameter);
+        }
+    
+        public virtual ObjectResult<GetMessageAction_Result> GetMessageAction(Nullable<int> userID, Nullable<int> branchID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var branchIDParameter = branchID.HasValue ?
+                new ObjectParameter("BranchID", branchID) :
+                new ObjectParameter("BranchID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMessageAction_Result>("GetMessageAction", userIDParameter, branchIDParameter);
         }
     }
 }

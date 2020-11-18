@@ -25,6 +25,11 @@ namespace MangalWeb.Service.Service
             return _residenceVerificationRepository.GetCustomerList();
         }
 
+        public List<ResidenceVerificationVM> ResidenceVerificationDetails()
+        {
+            return _residenceVerificationRepository.ResidenceVerificationDetails();
+        }
+
         public List<UserDetail> GetAllRMByBranch()
         {
             return _residenceVerificationRepository.GetAllRMByBranch();

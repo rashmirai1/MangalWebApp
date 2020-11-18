@@ -40,8 +40,8 @@ namespace MangalWeb.Model.Entity
         public Nullable<int> RecordCreatedBy { get; set; }
         public Nullable<int> RecordUpdatedBy { get; set; }
     
-        public virtual Mst_BranchType Mst_BranchType { get; set; }
         public virtual Mst_PinCode Mst_PinCode { get; set; }
+        public virtual Mst_BranchType Mst_BranchType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mst_UserBranch> Mst_UserBranch { get; set; }
     }

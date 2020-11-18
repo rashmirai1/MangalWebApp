@@ -140,6 +140,9 @@
     <Compile Include="Entity\GL_SanctionDisburse_Charges_RTR_Result1.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entity\GL_SanctionDisburse_KYC_Details_RTR1_Result.cs">
+      <DependentUpon>MangalEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entity\GL_SanctionDisburse_KYC_Details_RTR_Result.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
@@ -147,9 +150,6 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\GL_SanctionDisburse_KYC_Details_RTR_Result2.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\GL_SanctionDisburse_KYC_Details_RTR_Result3.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\GL_SanctionDisburse_KYC_RTR_Result.cs">
@@ -315,9 +315,6 @@
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tbl_OrnamentEvaluationDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entity\tbl_PreSanctionDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Entity\tbl_UserCategory.cs">
