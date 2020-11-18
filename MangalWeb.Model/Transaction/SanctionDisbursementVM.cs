@@ -43,14 +43,13 @@ namespace MangalWeb.Model.Transaction
         public string TelephoneNo { get; set; }
         public string NomineeName { get; set; }
         public string NomineeRelation { get; set; }
-        public decimal GoldItemDetails { get; set; }
         public string SchemeName { get; set; }
         public int SchemeId { get; set; }
         public string SchemeProcessingType { get; set; }
         public decimal SchemeProcessingCharge { get; set; }
         public decimal SchemeProcessingLimit { get; set; }
-        public string Tenure { get; set; }
-        public string MaximumLoanAmount { get; set; }
+        public int Tenure { get; set; }
+        public decimal MaximumLoanAmount { get; set; }
         
         //gold item details
         public int? TotalQuantity { get; set; }
@@ -82,9 +81,12 @@ namespace MangalWeb.Model.Transaction
         public decimal NetPayable { get; set; }
         public string InterestRepaymentDate { get; set; }
         public string GoldItemImage { get; set; }
+        public int ValuatorOneId { get; set; }
         [Required]
         public HttpPostedFileBase ProofOfOwnerShipFile { get; set; }
         public byte[] ProofOfOwnerShipImageFile { get; set; }
+        public string FileName { get; set; }
+        public string ContentType { get; set; }
         public string PacketWeight { get; set; }
         public string LockerNo { get; set; }
         //accounting part

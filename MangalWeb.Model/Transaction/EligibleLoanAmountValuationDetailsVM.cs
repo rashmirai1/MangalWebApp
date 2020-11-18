@@ -20,5 +20,7 @@ namespace MangalWeb.Model.Transaction
         public decimal? NetWeight { get; set; }
         public decimal? RatePerGram { get; set; }
         public decimal? Value { get; set; }
+        public string ImageName { get; set; }
+        public string ContentType { get; set; }
     }
 }

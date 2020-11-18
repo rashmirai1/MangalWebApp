@@ -318,6 +318,24 @@ function ShowClientTableList() {
     });
 }
 
+function ShowViewTableList() {
+    $('#diveditfilldata').empty();
+    $.ajax({
+        type: "POST",
+        url: '/ResidenceVerification/ResidenceVerificationDetails',
+        dataType: "html",
+        data: { Operation: "View" },
+        success: function (data) {
+            $('#divviewfilldata').empty();
+            $('#divviewfilldata').html(data);
+            $('#example').dataTable();
+        },
+        error: function (xhr, status, error) {
+            alert(error);
+        }
+    });
+}
+
 var urlRedirect = '/ResidenceVerification/Index';
 
 function OnBegin(e) {

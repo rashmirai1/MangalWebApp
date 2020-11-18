@@ -16690,6 +16690,7 @@ ol.timeline-list li.timeline-item .timeline-date {
 }
 .modal-backdrop.in {
   opacity: 0.5;
+  z-index:-1;
   filter: alpha(opacity=50);
 }
 .modal-header {

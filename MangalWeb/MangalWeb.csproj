@@ -2041,6 +2041,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Custom\PreSanction.js" />
     <Content Include="Scripts\Custom\ResidenceVerification.js" />
+    <Content Include="Scripts\Custom\SanctionDisbursement.js" />
     <Content Include="Scripts\datepicker.js" />
     <Content Include="Content\Font\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\Font\fonts\fontawesome-webfont.ttf" />
@@ -2185,6 +2186,8 @@
     <Content Include="Views\ValuatorOne\_ValuatorOneDetails.cshtml" />
     <Content Include="Views\ValuatorTwo\_ValuatorOneDetails.cshtml" />
     <Content Include="Views\ValuatorTwo\_ValuatorTwoDetails.cshtml" />
+    <Content Include="Views\GLReceipt\Index.cshtml" />
+    <Content Include="Views\ResidenceVerification\_ResidenceVerificationDetails.cshtml" />
     <Content Include="Views\PreSanction\_PreSanctionList.cshtml" />
   </ItemGroup>
   <ItemGroup>

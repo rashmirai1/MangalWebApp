@@ -950,6 +950,9 @@ warning 6002: The table/view 'MangalDBNew.dbo.TGLInterest_Details' does not have
           <Property Name="CMPID" Type="int" />
           <Property Name="BranchID" Type="int" />
           <Property Name="TransactionID" Type="varchar" MaxLength="50" />
+          <Property Name="MessageActionID" Type="int" />
+          <Property Name="Status" Type="varchar" MaxLength="20" />
+          <Property Name="ApproverComments" Type="varchar" MaxLength="500" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6005: The data type 'sql_variant' is currently not supported for the target Entity Framework version; the column 'ReceiveTime' in the table 'MangalDBNew.dbo.TGlReceipt_BasicDetails' was excluded.-->
@@ -1046,9 +1049,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="TotalRate" Type="decimal" Precision="11" Scale="2" />
           <Property Name="SID" Type="int" />
           <Property Name="DueDate" Type="smalldatetime" />
-          <Property Name="OwnershipProofImagePath" Type="varbinary(max)" />
+          <Property Name="OwnershipProofofImage" Type="varbinary(max)" />
+          <Property Name="ImageName" Type="varchar" MaxLength="50" />
+          <Property Name="ContentType" Type="varchar" MaxLength="50" />
           <Property Name="CIBILScore" Type="nvarchar" MaxLength="20" />
-          <Property Name="ItemImage" Type="image" />
           <Property Name="BCPID" Type="int" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedDate" Type="smalldatetime" />
@@ -1842,7 +1846,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Parameter Name="TotalRate" Type="numeric" Mode="In" />
           <Parameter Name="SID" Type="int" Mode="In" />
           <Parameter Name="DueDate" Type="datetime" Mode="In" />
-          <Parameter Name="OwnershipProofImagePath" Type="varbinary(max)" Mode="In" />
+          <Parameter Name="ProofOfOwnerShipImageFile" Type="varbinary(max)" Mode="In" />
+          <Parameter Name="FileName" Type="varchar" Mode="In" />
+          <Parameter Name="ContentType" Type="varchar" Mode="In" />
           <Parameter Name="CIBILScore" Type="nvarchar" Mode="In" />
           <Parameter Name="BCPID" Type="int" Mode="In" />
           <Parameter Name="CashOutWardById" Type="int" Mode="In" />
@@ -2405,7 +2411,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <Parameter Name="Narration" Mode="In" Type="String" />
             <Parameter Name="FinancialYearId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="TGLSanctionDisburse_BasicDetails" EntityType="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" />
           <FunctionImport Name="SP_InsertRecordInSanctionChargeDetails">
             <Parameter Name="CHID" Mode="In" Type="Int32" />
             <Parameter Name="SDID" Mode="In" Type="Int32" />
@@ -2474,6 +2479,95 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <Parameter Name="CalculateToDate" Mode="In" Type="DateTime" />
             <Parameter Name="LastROIID" Mode="In" Type="Decimal" />
           </FunctionImport>
+          <FunctionImport Name="DeleteSanctionDisbursementData">
+            <Parameter Name="AccountID" Mode="In" Type="Int32" />
+            <Parameter Name="ReferenceNo" Mode="In" Type="String" />
+            <Parameter Name="LoanAccountNo" Mode="In" Type="String" />
+            <Parameter Name="SDID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_InsertrecordinFCompanyYearEndClosing">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="FinancialyearID" Mode="In" Type="Int32" />
+            <Parameter Name="CompID" Mode="In" Type="Int32" />
+            <Parameter Name="AccountID" Mode="In" Type="Int32" />
+            <Parameter Name="OpeningBalanceDebit" Mode="In" Type="Double" />
+            <Parameter Name="OpeningBalanceCredit" Mode="In" Type="Double" />
+            <Parameter Name="CurrentDebit" Mode="In" Type="Double" />
+            <Parameter Name="CurrentCredit" Mode="In" Type="Double" />
+            <Parameter Name="ClosingBalanceDebit" Mode="In" Type="Double" />
+            <Parameter Name="ClosingBalanceCredit" Mode="In" Type="Double" />
+          </FunctionImport>
+          <EntitySet Name="tbl_PreSanctionDetails" EntityType="MangalDBNewModel.tbl_PreSanctionDetails" />
+          <EntitySet Name="Trans_KYCAddresses" EntityType="MangalDBNewModel.Trans_KYCAddresses" />
+          <EntitySet Name="tblHistory_KYCAddresses" EntityType="MangalDBNewModel.tblHistory_KYCAddresses" />
+          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
+          <AssociationSet Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" Association="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TGLKYC_BasicDetails" Association="MangalDBNewModel.fk_TGLKYC_BasicDetails">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="Trans_KYCAddresses" EntitySet="Trans_KYCAddresses" />
+          </AssociationSet>
+          <FunctionImport Name="SP_SaveKYCHistory">
+          <Parameter Name="kycid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="tblKYC_HistoryDetails" EntityType="MangalDBNewModel.tblKYC_HistoryDetails" />
+          <AssociationSet Name="fk_TtblKYC_historyDetails" Association="MangalDBNewModel.fk_TtblKYC_historyDetails">
+            <End Role="tblKYC_HistoryDetails" EntitySet="tblKYC_HistoryDetails" />
+            <End Role="tblHistory_KYCAddresses" EntitySet="tblHistory_KYCAddresses" />
+          </AssociationSet>
+          <FunctionImport Name="GL_SanctionDisburse_KYC_Details_RTR">
+            <Parameter Name="PreSanctionId" Mode="In" Type="Int32" />
+            <Parameter Name="FYID" Mode="In" Type="Int32" />
+            <Parameter Name="BranchId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="tbl_ValuatorOne" EntityType="MangalDBNewModel.tbl_ValuatorOne" />
+          <EntitySet Name="tbl_ValuatorOneDetails" EntityType="MangalDBNewModel.tbl_ValuatorOneDetails" />
+          <EntitySet Name="tbl_ValuatorTwo" EntityType="MangalDBNewModel.tbl_ValuatorTwo" />
+          <EntitySet Name="tbl_ValuatorTwoDetails" EntityType="MangalDBNewModel.tbl_ValuatorTwoDetails" />
+          <AssociationSet Name="FK__tbl_Ornam__Valua__536D5C82" Association="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82">
+            <End Role="tbl_ValuatorOne" EntitySet="tbl_ValuatorOne" />
+            <End Role="tbl_ValuatorOneDetails" EntitySet="tbl_ValuatorOneDetails" />
+          </AssociationSet>
+          <EntitySet Name="tbl_OrnamentEvaluationDetails" EntityType="MangalDBNewModel.tbl_OrnamentEvaluationDetails" />
+          <EntitySet Name="Mst_LoanPupose" EntityType="MangalDBNewModel.Mst_LoanPupose" />
+          <EntitySet Name="tblResidenceVerifications" EntityType="MangalDBNewModel.tblResidenceVerification" />
+          <FunctionImport Name="GL_SanctionDisburse_KYC_Details_RTR1" ReturnType="Collection(MangalDBNewModel.GL_SanctionDisburse_KYC_Details_RTR1_Result)">
+            <Parameter Name="PreSanctionId" Mode="In" Type="Int32" />
+            <Parameter Name="FYID" Mode="In" Type="Int32" />
+            <Parameter Name="BranchId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="TGLSanctionDisburse_BasicDetails" EntityType="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" />
+          <AssociationSet Name="FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" Association="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails">
+            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
+            <End Role="TGLSanctionDisburse_BasicDetails" EntitySet="TGLSanctionDisburse_BasicDetails" />
+          </AssociationSet>
+          <EntitySet Name="TGLPreSanctions" EntityType="MangalDBNewModel.TGLPreSanction" />
+          <AssociationSet Name="FK__TGLPreSan__LoanP__0A888742" Association="MangalDBNewModel.FK__TGLPreSan__LoanP__0A888742">
+            <End Role="Mst_LoanPupose" EntitySet="Mst_LoanPupose" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSan__Produ__09946309" Association="MangalDBNewModel.FK__TGLPreSan__Produ__09946309">
+            <End Role="Mst_Product" EntitySet="Mst_Product" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblResidenceVerification_TGLPreSanction" Association="MangalDBNewModel.FK_tblResidenceVerification_TGLPreSanction">
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
+            <End Role="tblResidenceVerification" EntitySet="tblResidenceVerifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSan__KYCID__07AC1A97" Association="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97">
+            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSan__Schem__0B7CAB7B" Association="MangalDBNewModel.FK__TGLPreSan__Schem__0B7CAB7B">
+            <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSanc__RMID__08A03ED0" Association="MangalDBNewModel.FK__TGLPreSanc__RMID__08A03ED0">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
+          </AssociationSet>
           <FunctionImport Name="SP_SanctionDisburse_PRI">
             <Parameter Name="Operation" Mode="In" Type="String" />
             <Parameter Name="SDID" Mode="In" Type="Int32" />
@@ -2495,7 +2589,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <Parameter Name="TotalRate" Mode="In" Type="Decimal" />
             <Parameter Name="SID" Mode="In" Type="Int32" />
             <Parameter Name="DueDate" Mode="In" Type="DateTime" />
-            <Parameter Name="OwnershipProofImagePath" Mode="In" Type="Binary" />
+            <Parameter Name="ProofOfOwnerShipImageFile" Mode="In" Type="Binary" />
+            <Parameter Name="FileName" Mode="In" Type="String" />
+            <Parameter Name="ContentType" Mode="In" Type="String" />
             <Parameter Name="CIBILScore" Mode="In" Type="String" />
             <Parameter Name="BCPID" Mode="In" Type="Int32" />
             <Parameter Name="CashOutWardById" Mode="In" Type="Int32" />
@@ -2518,89 +2614,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <Parameter Name="GoldInwardDate" Mode="In" Type="DateTime" />
             <Parameter Name="PreSanctionId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="DeleteSanctionDisbursementData">
-            <Parameter Name="AccountID" Mode="In" Type="Int32" />
-            <Parameter Name="ReferenceNo" Mode="In" Type="String" />
-            <Parameter Name="LoanAccountNo" Mode="In" Type="String" />
-            <Parameter Name="SDID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SP_InsertrecordinFCompanyYearEndClosing">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
-            <Parameter Name="FinancialyearID" Mode="In" Type="Int32" />
-            <Parameter Name="CompID" Mode="In" Type="Int32" />
-            <Parameter Name="AccountID" Mode="In" Type="Int32" />
-            <Parameter Name="OpeningBalanceDebit" Mode="In" Type="Double" />
-            <Parameter Name="OpeningBalanceCredit" Mode="In" Type="Double" />
-            <Parameter Name="CurrentDebit" Mode="In" Type="Double" />
-            <Parameter Name="CurrentCredit" Mode="In" Type="Double" />
-            <Parameter Name="ClosingBalanceDebit" Mode="In" Type="Double" />
-            <Parameter Name="ClosingBalanceCredit" Mode="In" Type="Double" />
-          </FunctionImport>
-          <EntitySet Name="tbl_PreSanctionDetails" EntityType="MangalDBNewModel.tbl_PreSanctionDetails" />
-          <AssociationSet Name="FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" Association="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails">
-            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
-            <End Role="TGLSanctionDisburse_BasicDetails" EntitySet="TGLSanctionDisburse_BasicDetails" />
-          </AssociationSet>
-          <EntitySet Name="Trans_KYCAddresses" EntityType="MangalDBNewModel.Trans_KYCAddresses" />
-          <EntitySet Name="tblHistory_KYCAddresses" EntityType="MangalDBNewModel.tblHistory_KYCAddresses" />
-          <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
-          <AssociationSet Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" Association="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
-            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
-            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
-          </AssociationSet>
-          <AssociationSet Name="fk_TGLKYC_BasicDetails" Association="MangalDBNewModel.fk_TGLKYC_BasicDetails">
-            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
-            <End Role="Trans_KYCAddresses" EntitySet="Trans_KYCAddresses" />
-          </AssociationSet>
-          <FunctionImport Name="SP_SaveKYCHistory">
-          <Parameter Name="kycid" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="tblKYC_HistoryDetails" EntityType="MangalDBNewModel.tblKYC_HistoryDetails" />
-          <AssociationSet Name="fk_TtblKYC_historyDetails" Association="MangalDBNewModel.fk_TtblKYC_historyDetails">
-            <End Role="tblKYC_HistoryDetails" EntitySet="tblKYC_HistoryDetails" />
-            <End Role="tblHistory_KYCAddresses" EntitySet="tblHistory_KYCAddresses" />
-          </AssociationSet>
-          <FunctionImport Name="GL_SanctionDisburse_KYC_Details_RTR" ReturnType="Collection(MangalDBNewModel.GL_SanctionDisburse_KYC_Details_RTR_Result3)">
-            <Parameter Name="PreSanctionId" Mode="In" Type="Int32" />
-            <Parameter Name="FYID" Mode="In" Type="Int32" />
-            <Parameter Name="BranchId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="tbl_ValuatorOne" EntityType="MangalDBNewModel.tbl_ValuatorOne" />
-          <EntitySet Name="tbl_ValuatorOneDetails" EntityType="MangalDBNewModel.tbl_ValuatorOneDetails" />
-          <EntitySet Name="tbl_ValuatorTwo" EntityType="MangalDBNewModel.tbl_ValuatorTwo" />
-          <EntitySet Name="tbl_ValuatorTwoDetails" EntityType="MangalDBNewModel.tbl_ValuatorTwoDetails" />
-          <AssociationSet Name="FK__tbl_Ornam__Valua__536D5C82" Association="MangalDBNewModel.FK__tbl_Ornam__Valua__536D5C82">
-            <End Role="tbl_ValuatorOne" EntitySet="tbl_ValuatorOne" />
-            <End Role="tbl_ValuatorOneDetails" EntitySet="tbl_ValuatorOneDetails" />
-          </AssociationSet>
-          <EntitySet Name="tbl_OrnamentEvaluationDetails" EntityType="MangalDBNewModel.tbl_OrnamentEvaluationDetails" />
-          <EntitySet Name="Mst_LoanPupose" EntityType="MangalDBNewModel.Mst_LoanPupose" />
-          <EntitySet Name="TGLPreSanctions" EntityType="MangalDBNewModel.TGLPreSanction" />
-          <AssociationSet Name="FK__TGLPreSan__LoanP__0A888742" Association="MangalDBNewModel.FK__TGLPreSan__LoanP__0A888742">
-            <End Role="Mst_LoanPupose" EntitySet="Mst_LoanPupose" />
-            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TGLPreSan__Produ__09946309" Association="MangalDBNewModel.FK__TGLPreSan__Produ__09946309">
-            <End Role="Mst_Product" EntitySet="Mst_Product" />
-            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TGLPreSan__KYCID__07AC1A97" Association="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97">
-            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
-            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TGLPreSan__Schem__0B7CAB7B" Association="MangalDBNewModel.FK__TGLPreSan__Schem__0B7CAB7B">
-            <End Role="TSchemeMaster_BasicDetails" EntitySet="TSchemeMaster_BasicDetails" />
-            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TGLPreSanc__RMID__08A03ED0" Association="MangalDBNewModel.FK__TGLPreSanc__RMID__08A03ED0">
-            <End Role="UserDetail" EntitySet="UserDetails" />
-            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
-          </AssociationSet>
-          <EntitySet Name="tblResidenceVerifications" EntityType="MangalDBNewModel.tblResidenceVerification" />
-          <AssociationSet Name="FK_tblResidenceVerification_TGLPreSanction" Association="MangalDBNewModel.FK_tblResidenceVerification_TGLPreSanction">
-            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
-            <End Role="tblResidenceVerification" EntitySet="tblResidenceVerifications" />
-          </AssociationSet>
           </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
           <Key>
@@ -3692,63 +3705,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Type="Decimal" Name="SchemeProcessingCharge" Nullable="false" Precision="11" Scale="2" />
           <Property Type="Decimal" Name="SchemeProcessingLimit" Nullable="false" Precision="11" Scale="2" />
         </ComplexType>
-        <EntityType Name="TGLSanctionDisburse_BasicDetails">
-          <Key>
-            <PropertyRef Name="SDID" />
-          </Key>
-          <Property Name="SDID" Type="Int32" Nullable="false" />
-          <Property Name="RefType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RefMon" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="RefYr" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="RefID" Type="Int32" />
-          <Property Name="LoanType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="LoanDate" Type="DateTime" Precision="0" />
-          <Property Name="GoldLoanNo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="KYCID" Type="Int32" />
-          <Property Name="OperatorID" Type="Int32" />
-          <Property Name="EligibleLoanAmt" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanAmtSanctioned" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanPayable" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="BankCashAccID" Type="Int32" />
-          <Property Name="CheqNEFTDD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CheqNEFTDDNo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="CheqNEFTDDDate" Type="DateTime" Precision="0" />
-          <Property Name="TotalGrossWeight" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="TotalNetWeight" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="TotalQuantity" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="Totalvalue" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="TotalRate" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="SID" Type="Int32" />
-          <Property Name="DueDate" Type="DateTime" Precision="0" />
-          <Property Name="OwnershipProofImagePath" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="CIBILScore" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="ItemImage" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="BCPID" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <Property Name="DeletedBy" Type="Int32" />
-          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
-          <Property Name="FYID" Type="Int32" />
-          <Property Name="BranchID" Type="Int32" />
-          <Property Name="CMPID" Type="Int32" />
-          <Property Name="isActive" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CashInOutID" Type="Int32" />
-          <Property Name="GLInOutID" Type="Int32" />
-          <Property Name="CashOutWardById" Type="Int32" />
-          <Property Name="GoldInWardById" Type="Int32" />
-          <Property Name="CashAccID" Type="Int32" />
-          <Property Name="BankAmount" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="CashAmount" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BankPaymentDate" Type="DateTime" Precision="3" />
-          <Property Name="Packetweight" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LockerNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="PreSanctionId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" FromRole="TGLSanctionDisburse_BasicDetails" ToRole="tbl_PreSanctionDetails" />
-        </EntityType>
         <EntityType Name="TGLSanctionDisburse_ChargesDetails">
           <Key>
             <PropertyRef Name="CHID" />
@@ -4212,21 +4168,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" />
-          <NavigationProperty Name="TGLSanctionDisburse_BasicDetails" Relationship="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" FromRole="tbl_PreSanctionDetails" ToRole="TGLSanctionDisburse_BasicDetails" />
           <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="tbl_PreSanctionDetails" ToRole="TGLKYC_BasicDetails" />
+          <NavigationProperty Name="TGLSanctionDisburse_BasicDetails" Relationship="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" FromRole="tbl_PreSanctionDetails" ToRole="TGLSanctionDisburse_BasicDetails" />
         </EntityType>
-        <Association Name="FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails">
-          <End Type="MangalDBNewModel.tbl_PreSanctionDetails" Role="tbl_PreSanctionDetails" Multiplicity="1" />
-          <End Type="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" Role="TGLSanctionDisburse_BasicDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_PreSanctionDetails">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TGLSanctionDisburse_BasicDetails">
-              <PropertyRef Name="PreSanctionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Trans_KYCAddresses">
           <Key>
             <PropertyRef Name="ID" />
@@ -4332,8 +4276,8 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="AddressCategory" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="tbl_PreSanctionDetails" />
           <NavigationProperty Name="Trans_KYCAddresses" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="Trans_KYCAddresses" />
-          <NavigationProperty Name="TGLPreSanctions" Relationship="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97" FromRole="TGLKYC_BasicDetails" ToRole="TGLPreSanction" />
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TGLPreSanctions" Relationship="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97" FromRole="TGLKYC_BasicDetails" ToRole="TGLPreSanction" />
         </EntityType>
         <Association Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
           <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="0..1" />
@@ -4440,57 +4384,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="GL_SanctionDisburse_KYC_Details_RTR_Result3">
-          <Property Type="Int32" Name="KYCID" Nullable="false" />
-          <Property Type="String" Name="CustomerID" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="AppliedDate" Nullable="true" MaxLength="12" />
-          <Property Type="String" Name="ExistingPLCaseNo" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Cdate" Nullable="true" MaxLength="12" />
-          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="152" />
-          <Property Type="String" Name="CustomerAddress" Nullable="false" MaxLength="175" />
-          <Property Type="String" Name="MaritalStatus" Nullable="false" MaxLength="12" />
-          <Property Type="String" Name="Gender" Nullable="false" MaxLength="11" />
-          <Property Type="String" Name="BirthDate" Nullable="true" MaxLength="12" />
-          <Property Type="Int32" Name="Age" Nullable="false" />
-          <Property Type="String" Name="Spouse" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="PANNo" Nullable="false" MaxLength="12" />
-          <Property Type="String" Name="MobileNo" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="TelephoneNo" Nullable="false" MaxLength="12" />
-          <Property Type="String" Name="EmailId" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="AreaId" Nullable="true" />
-          <Property Type="String" Name="Landmark" Nullable="false" MaxLength="30" />
-          <Property Type="String" Name="NomineeName" Nullable="true" MaxLength="152" />
-          <Property Type="String" Name="NomineeRelation" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="NomAddress" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="GID" Nullable="true" />
-          <Property Type="Int32" Name="SDID" Nullable="true" />
-          <Property Type="Int32" Name="ItemID" Nullable="true" />
-          <Property Type="Decimal" Name="GrossWeight" Nullable="true" Precision="11" Scale="2" />
-          <Property Type="Int32" Name="Quantity" Nullable="true" />
-          <Property Type="Decimal" Name="NetWeight" Nullable="true" Precision="11" Scale="2" />
-          <Property Type="Decimal" Name="RateperGram" Nullable="true" Precision="11" Scale="2" />
-          <Property Type="Decimal" Name="Value" Nullable="true" Precision="11" Scale="2" />
-          <Property Type="Int32" Name="Purity" Nullable="true" />
-          <Property Type="Decimal" Name="TotalGrossWeight" Nullable="true" Precision="11" Scale="2" />
-          <Property Type="Decimal" Name="TotalNetWeight" Nullable="true" Precision="11" Scale="2" />
-          <Property Type="Int32" Name="TotalQuantity" Nullable="true" />
-          <Property Type="Decimal" Name="Totalvalue" Nullable="true" Precision="11" Scale="2" />
-          <Property Type="Decimal" Name="TotalRate" Nullable="true" Precision="11" Scale="2" />
-          <Property Type="Decimal" Name="EligibleLoanAmt" Nullable="true" Precision="11" Scale="2" />
-          <Property Type="Decimal" Name="NetLoanAmtSanctioned" Nullable="true" Precision="11" Scale="2" />
-          <Property Type="Decimal" Name="NetLoanPayable" Nullable="true" Precision="11" Scale="2" />
-          <Property Type="String" Name="LoanType" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="SchemeId" Nullable="true" />
-          <Property Type="String" Name="SchemeName" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="MaximumLoanAmount" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Tenure" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="EligibleLoanAmount" Nullable="true" Precision="11" Scale="2" />
-          <Property Type="String" Name="SchemeProcessingType" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="SchemeProcessingCharge" Nullable="false" Precision="11" Scale="2" />
-          <Property Type="Decimal" Name="SchemeProcessingLimit" Nullable="false" Precision="11" Scale="2" />
-          <Property Type="Int32" Name="PreSanctionId" Nullable="true" />
-        </ComplexType>
         <EntityType Name="tbl_ValuatorOne">
           <Key>
             <PropertyRef Name="Id" />
@@ -4622,6 +4515,160 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="TGLPreSanctions" Relationship="MangalDBNewModel.FK__TGLPreSan__LoanP__0A888742" FromRole="Mst_LoanPupose" ToRole="TGLPreSanction" />
         </EntityType>
+        <EntityType Name="tblResidenceVerification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="KycId" Type="Int32" Nullable="false" />
+          <Property Name="PreSanctionId" Type="Int32" Nullable="false" />
+          <Property Name="DateofVisit" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TimeofVisit" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PersonVisitedName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RelationWithCustomer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FamilyMemberDetails" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="AddressCategory" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ResidenceCode" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="BldgHouseName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BldgPlotNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Road" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoomBlockNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Landmark" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Distance" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PinCode" Type="Int32" Nullable="false" />
+          <Property Name="ResidingAtThisAddress_Months" Type="Int32" Nullable="false" />
+          <Property Name="ResidingAtThisAddress_Years" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Comments" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TGLPreSanction" Relationship="MangalDBNewModel.FK_tblResidenceVerification_TGLPreSanction" FromRole="tblResidenceVerification" ToRole="TGLPreSanction" />
+        </EntityType>
+        <ComplexType Name="GL_SanctionDisburse_KYC_Details_RTR1_Result">
+          <Property Type="Int32" Name="KYCID" Nullable="false" />
+          <Property Type="String" Name="CustomerID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ApplicationNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="AppliedDate" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="ExistingPLCaseNo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Cdate" Nullable="true" MaxLength="12" />
+          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="152" />
+          <Property Type="String" Name="CustomerAddress" Nullable="false" MaxLength="175" />
+          <Property Type="String" Name="MaritalStatus" Nullable="false" MaxLength="12" />
+          <Property Type="String" Name="Gender" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="BirthDate" Nullable="true" MaxLength="12" />
+          <Property Type="Int32" Name="Age" Nullable="false" />
+          <Property Type="String" Name="Spouse" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PANNo" Nullable="false" MaxLength="12" />
+          <Property Type="String" Name="MobileNo" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="TelephoneNo" Nullable="false" MaxLength="12" />
+          <Property Type="String" Name="EmailId" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="AreaId" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="NomineeName" Nullable="true" MaxLength="152" />
+          <Property Type="String" Name="NomineeRelation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="NomAddress" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="GID" Nullable="false" />
+          <Property Type="Int32" Name="SDID" Nullable="false" />
+          <Property Type="Int32" Name="ItemID" Nullable="false" />
+          <Property Type="Decimal" Name="GrossWeight" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="Decimal" Name="NetWeight" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="RateperGram" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="Value" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Int32" Name="Purity" Nullable="false" />
+          <Property Type="Decimal" Name="TotalGrossWeight" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="TotalNetWeight" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Int32" Name="TotalQuantity" Nullable="false" />
+          <Property Type="Decimal" Name="Totalvalue" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="TotalRate" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="EligibleLoanAmt" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="NetLoanAmtSanctioned" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="NetLoanPayable" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="String" Name="LoanType" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="SchemeId" Nullable="true" />
+          <Property Type="String" Name="SchemeName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="MaximumLoanAmount" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="Tenure" Nullable="true" />
+          <Property Type="Decimal" Name="EligibleLoanAmount" Nullable="true" Precision="11" Scale="2" />
+          <Property Type="String" Name="SchemeProcessingType" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="SchemeProcessingCharge" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Decimal" Name="SchemeProcessingLimit" Nullable="false" Precision="11" Scale="2" />
+          <Property Type="Int32" Name="PreSanctionId" Nullable="true" />
+          <Property Type="String" Name="GoldItemImage" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="TGLSanctionDisburse_BasicDetails">
+          <Key>
+            <PropertyRef Name="SDID" />
+          </Key>
+          <Property Name="SDID" Type="Int32" Nullable="false" />
+          <Property Name="RefType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RefMon" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="RefYr" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="RefID" Type="Int32" />
+          <Property Name="LoanType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LoanDate" Type="DateTime" Precision="0" />
+          <Property Name="GoldLoanNo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="KYCID" Type="Int32" />
+          <Property Name="OperatorID" Type="Int32" />
+          <Property Name="EligibleLoanAmt" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NetLoanAmtSanctioned" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NetLoanPayable" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="BankCashAccID" Type="Int32" />
+          <Property Name="CheqNEFTDD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CheqNEFTDDNo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="CheqNEFTDDDate" Type="DateTime" Precision="0" />
+          <Property Name="TotalGrossWeight" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="TotalNetWeight" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="TotalQuantity" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="Totalvalue" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="TotalRate" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="SID" Type="Int32" />
+          <Property Name="DueDate" Type="DateTime" Precision="0" />
+          <Property Name="OwnershipProofofImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ContentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CIBILScore" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BCPID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="0" />
+          <Property Name="FYID" Type="Int32" />
+          <Property Name="BranchID" Type="Int32" />
+          <Property Name="CMPID" Type="Int32" />
+          <Property Name="isActive" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CashInOutID" Type="Int32" />
+          <Property Name="GLInOutID" Type="Int32" />
+          <Property Name="CashOutWardById" Type="Int32" />
+          <Property Name="GoldInWardById" Type="Int32" />
+          <Property Name="CashAccID" Type="Int32" />
+          <Property Name="BankAmount" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="CashAmount" Type="Decimal" Precision="11" Scale="2" />
+          <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BankPaymentDate" Type="DateTime" Precision="3" />
+          <Property Name="Packetweight" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LockerNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PreSanctionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" FromRole="TGLSanctionDisburse_BasicDetails" ToRole="tbl_PreSanctionDetails" />
+        </EntityType>
+        <Association Name="FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails">
+          <End Type="MangalDBNewModel.tbl_PreSanctionDetails" Role="tbl_PreSanctionDetails" Multiplicity="1" />
+          <End Type="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" Role="TGLSanctionDisburse_BasicDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_PreSanctionDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TGLSanctionDisburse_BasicDetails">
+              <PropertyRef Name="PreSanctionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="TGLPreSanction">
           <Key>
             <PropertyRef Name="PreSanctionID" />
@@ -4643,15 +4690,19 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="LastUpdatedBy" Type="Int32" />
           <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Mst_LoanPupose" Relationship="MangalDBNewModel.FK__TGLPreSan__LoanP__0A888742" FromRole="TGLPreSanction" ToRole="Mst_LoanPupose" />
-          <NavigationProperty Name="Mst_Product" Relationship="MangalDBNewModel.FK__TGLPreSan__Produ__09946309" FromRole="TGLPreSanction" ToRole="Mst_Product" />
-          <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97" FromRole="TGLPreSanction" ToRole="TGLKYC_BasicDetails" />
-          <NavigationProperty Name="TSchemeMaster_BasicDetails" Relationship="MangalDBNewModel.FK__TGLPreSan__Schem__0B7CAB7B" FromRole="TGLPreSanction" ToRole="TSchemeMaster_BasicDetails" />
-          <NavigationProperty Name="UserDetail" Relationship="MangalDBNewModel.FK__TGLPreSanc__RMID__08A03ED0" FromRole="TGLPreSanction" ToRole="UserDetail" />
           <Property Name="FYID" Type="Int32" />
           <Property Name="CMPID" Type="Int32" />
           <Property Name="BranchID" Type="Int32" />
           <Property Name="TransactionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MessageActionID" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ApproverComments" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Mst_LoanPupose" Relationship="MangalDBNewModel.FK__TGLPreSan__LoanP__0A888742" FromRole="TGLPreSanction" ToRole="Mst_LoanPupose" />
+          <NavigationProperty Name="Mst_Product" Relationship="MangalDBNewModel.FK__TGLPreSan__Produ__09946309" FromRole="TGLPreSanction" ToRole="Mst_Product" />
+          <NavigationProperty Name="tblResidenceVerifications" Relationship="MangalDBNewModel.FK_tblResidenceVerification_TGLPreSanction" FromRole="TGLPreSanction" ToRole="tblResidenceVerification" />
+          <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97" FromRole="TGLPreSanction" ToRole="TGLKYC_BasicDetails" />
+          <NavigationProperty Name="TSchemeMaster_BasicDetails" Relationship="MangalDBNewModel.FK__TGLPreSan__Schem__0B7CAB7B" FromRole="TGLPreSanction" ToRole="TSchemeMaster_BasicDetails" />
+          <NavigationProperty Name="UserDetail" Relationship="MangalDBNewModel.FK__TGLPreSanc__RMID__08A03ED0" FromRole="TGLPreSanction" ToRole="UserDetail" />
         </EntityType>
         <Association Name="FK__TGLPreSan__LoanP__0A888742">
           <End Type="MangalDBNewModel.Mst_LoanPupose" Role="Mst_LoanPupose" Multiplicity="0..1" />
@@ -4674,6 +4725,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Principal>
             <Dependent Role="TGLPreSanction">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblResidenceVerification_TGLPreSanction">
+          <End Type="MangalDBNewModel.TGLPreSanction" Role="TGLPreSanction" Multiplicity="1" />
+          <End Type="MangalDBNewModel.tblResidenceVerification" Role="tblResidenceVerification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TGLPreSanction">
+              <PropertyRef Name="PreSanctionID" />
+            </Principal>
+            <Dependent Role="tblResidenceVerification">
+              <PropertyRef Name="PreSanctionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4710,50 +4773,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Principal>
             <Dependent Role="TGLPreSanction">
               <PropertyRef Name="RMID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="tblResidenceVerification">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="KycId" Type="Int32" Nullable="false" />
-          <Property Name="PreSanctionId" Type="Int32" Nullable="false" />
-          <Property Name="DateofVisit" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="TimeofVisit" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="PersonVisitedName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RelationWithCustomer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FamilyMemberDetails" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="AddressCategory" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="ResidenceCode" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="BldgHouseName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="BldgPlotNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Road" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RoomBlockNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Landmark" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Distance" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="PinCode" Type="Int32" Nullable="false" />
-          <Property Name="ResidingAtThisAddress_Months" Type="Int32" Nullable="false" />
-          <Property Name="ResidingAtThisAddress_Years" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Comments" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="TGLPreSanction" Relationship="MangalDBNewModel.FK_tblResidenceVerification_TGLPreSanction" FromRole="tblResidenceVerification" ToRole="TGLPreSanction" />
-        </EntityType>
-        <Association Name="FK_tblResidenceVerification_TGLPreSanction">
-          <End Type="MangalDBNewModel.TGLPreSanction" Role="TGLPreSanction" Multiplicity="1" />
-          <End Type="MangalDBNewModel.tblResidenceVerification" Role="tblResidenceVerification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TGLPreSanction">
-              <PropertyRef Name="PreSanctionID" />
-            </Principal>
-            <Dependent Role="tblResidenceVerification">
-              <PropertyRef Name="PreSanctionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5555,63 +5574,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <FunctionImportMapping FunctionImportName="SP_InsertRecordInFSystemGeneratedEntryMaster" FunctionName="MangalDBNewModel.Store.SP_InsertRecordInFSystemGeneratedEntryMaster" />
           <FunctionImportMapping FunctionImportName="SP_InsertRecordInChargePostingDetails" FunctionName="MangalDBNewModel.Store.SP_InsertRecordInChargePostingDetails" />
           <FunctionImportMapping FunctionImportName="SP_InsertRecordInTBankCashPaymentDetails" FunctionName="MangalDBNewModel.Store.SP_InsertRecordInTBankCashPaymentDetails" />
-          <EntitySetMapping Name="TGLSanctionDisburse_BasicDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.TGLSanctionDisburse_BasicDetails">
-              <MappingFragment StoreEntitySet="TGLSanctionDisburse_BasicDetails">
-                <ScalarProperty Name="PreSanctionId" ColumnName="PreSanctionId" />
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="LockerNo" ColumnName="LockerNo" />
-                <ScalarProperty Name="Packetweight" ColumnName="Packetweight" />
-                <ScalarProperty Name="BankPaymentDate" ColumnName="BankPaymentDate" />
-                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
-                <ScalarProperty Name="CashAmount" ColumnName="CashAmount" />
-                <ScalarProperty Name="BankAmount" ColumnName="BankAmount" />
-                <ScalarProperty Name="CashAccID" ColumnName="CashAccID" />
-                <ScalarProperty Name="GoldInWardById" ColumnName="GoldInWardById" />
-                <ScalarProperty Name="CashOutWardById" ColumnName="CashOutWardById" />
-                <ScalarProperty Name="GLInOutID" ColumnName="GLInOutID" />
-                <ScalarProperty Name="CashInOutID" ColumnName="CashInOutID" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
-                <ScalarProperty Name="CMPID" ColumnName="CMPID" />
-                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
-                <ScalarProperty Name="FYID" ColumnName="FYID" />
-                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="BCPID" ColumnName="BCPID" />
-                <ScalarProperty Name="ItemImage" ColumnName="ItemImage" />
-                <ScalarProperty Name="CIBILScore" ColumnName="CIBILScore" />
-                <ScalarProperty Name="OwnershipProofImagePath" ColumnName="OwnershipProofImagePath" />
-                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
-                <ScalarProperty Name="SID" ColumnName="SID" />
-                <ScalarProperty Name="TotalRate" ColumnName="TotalRate" />
-                <ScalarProperty Name="Totalvalue" ColumnName="Totalvalue" />
-                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
-                <ScalarProperty Name="TotalNetWeight" ColumnName="TotalNetWeight" />
-                <ScalarProperty Name="TotalGrossWeight" ColumnName="TotalGrossWeight" />
-                <ScalarProperty Name="CheqNEFTDDDate" ColumnName="CheqNEFTDDDate" />
-                <ScalarProperty Name="CheqNEFTDDNo" ColumnName="CheqNEFTDDNo" />
-                <ScalarProperty Name="CheqNEFTDD" ColumnName="CheqNEFTDD" />
-                <ScalarProperty Name="BankCashAccID" ColumnName="BankCashAccID" />
-                <ScalarProperty Name="NetLoanPayable" ColumnName="NetLoanPayable" />
-                <ScalarProperty Name="NetLoanAmtSanctioned" ColumnName="NetLoanAmtSanctioned" />
-                <ScalarProperty Name="EligibleLoanAmt" ColumnName="EligibleLoanAmt" />
-                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
-                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
-                <ScalarProperty Name="GoldLoanNo" ColumnName="GoldLoanNo" />
-                <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
-                <ScalarProperty Name="LoanType" ColumnName="LoanType" />
-                <ScalarProperty Name="RefID" ColumnName="RefID" />
-                <ScalarProperty Name="RefYr" ColumnName="RefYr" />
-                <ScalarProperty Name="RefMon" ColumnName="RefMon" />
-                <ScalarProperty Name="RefType" ColumnName="RefType" />
-                <ScalarProperty Name="SDID" ColumnName="SDID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_InsertRecordInSanctionChargeDetails" FunctionName="MangalDBNewModel.Store.SP_InsertRecordInSanctionChargeDetails" />
           <EntitySetMapping Name="TGLSanctionDisburse_ChargesDetails">
             <EntityTypeMapping TypeName="MangalDBNewModel.TGLSanctionDisburse_ChargesDetails">
@@ -5991,7 +5953,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GL_EmiCalculator_RTR" FunctionName="MangalDBNewModel.Store.GL_EmiCalculator_RTR" />
-          <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_PRI" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_PRI" />
           <FunctionImportMapping FunctionImportName="DeleteSanctionDisbursementData" FunctionName="MangalDBNewModel.Store.DeleteSanctionDisbursementData" />
           <FunctionImportMapping FunctionImportName="SP_InsertrecordinFCompanyYearEndClosing" FunctionName="MangalDBNewModel.Store.SP_InsertrecordinFCompanyYearEndClosing" />
           <EntitySetMapping Name="tbl_PreSanctionDetails">
@@ -6196,61 +6157,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GL_SanctionDisburse_KYC_Details_RTR" FunctionName="MangalDBNewModel.Store.GL_SanctionDisburse_KYC_Details_RTR">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MangalDBNewModel.GL_SanctionDisburse_KYC_Details_RTR_Result3">
-                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
-                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
-                <ScalarProperty Name="ExistingPLCaseNo" ColumnName="ExistingPLCaseNo" />
-                <ScalarProperty Name="Cdate" ColumnName="Cdate" />
-                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
-                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
-                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="Age" ColumnName="Age" />
-                <ScalarProperty Name="Spouse" ColumnName="Spouse" />
-                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
-                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
-                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
-                <ScalarProperty Name="NomineeName" ColumnName="NomineeName" />
-                <ScalarProperty Name="NomineeRelation" ColumnName="NomineeRelation" />
-                <ScalarProperty Name="NomAddress" ColumnName="NomAddress" />
-                <ScalarProperty Name="GID" ColumnName="GID" />
-                <ScalarProperty Name="SDID" ColumnName="SDID" />
-                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
-                <ScalarProperty Name="GrossWeight" ColumnName="GrossWeight" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="NetWeight" ColumnName="NetWeight" />
-                <ScalarProperty Name="RateperGram" ColumnName="RateperGram" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="Purity" ColumnName="Purity" />
-                <ScalarProperty Name="TotalGrossWeight" ColumnName="TotalGrossWeight" />
-                <ScalarProperty Name="TotalNetWeight" ColumnName="TotalNetWeight" />
-                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
-                <ScalarProperty Name="Totalvalue" ColumnName="Totalvalue" />
-                <ScalarProperty Name="TotalRate" ColumnName="TotalRate" />
-                <ScalarProperty Name="EligibleLoanAmt" ColumnName="EligibleLoanAmt" />
-                <ScalarProperty Name="NetLoanAmtSanctioned" ColumnName="NetLoanAmtSanctioned" />
-                <ScalarProperty Name="NetLoanPayable" ColumnName="NetLoanPayable" />
-                <ScalarProperty Name="LoanType" ColumnName="LoanType" />
-                <ScalarProperty Name="SchemeId" ColumnName="SchemeId" />
-                <ScalarProperty Name="SchemeName" ColumnName="SchemeName" />
-                <ScalarProperty Name="MaximumLoanAmount" ColumnName="MaximumLoanAmount" />
-                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
-                <ScalarProperty Name="EligibleLoanAmount" ColumnName="EligibleLoanAmount" />
-                <ScalarProperty Name="SchemeProcessingType" ColumnName="SchemeProcessingType" />
-                <ScalarProperty Name="SchemeProcessingCharge" ColumnName="SchemeProcessingCharge" />
-                <ScalarProperty Name="SchemeProcessingLimit" ColumnName="SchemeProcessingLimit" />
-                <ScalarProperty Name="PreSanctionId" ColumnName="PreSanctionId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="tbl_ValuatorOne">
             <EntityTypeMapping TypeName="MangalDBNewModel.tbl_ValuatorOne">
               <MappingFragment StoreEntitySet="tbl_ValuatorOne">
@@ -6373,33 +6279,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TGLPreSanctions">
-            <EntityTypeMapping TypeName="MangalDBNewModel.TGLPreSanction">
-              <MappingFragment StoreEntitySet="TGLPreSanction">
-                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
-                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
-                <ScalarProperty Name="CMPID" ColumnName="CMPID" />
-                <ScalarProperty Name="FYID" ColumnName="FYID" />
-                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
-                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="ResidenceVerification" ColumnName="ResidenceVerification" />
-                <ScalarProperty Name="LTV" ColumnName="LTV" />
-                <ScalarProperty Name="ROI" ColumnName="ROI" />
-                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
-                <ScalarProperty Name="ReqLoanAmount" ColumnName="ReqLoanAmount" />
-                <ScalarProperty Name="SchemeID" ColumnName="SchemeID" />
-                <ScalarProperty Name="LoanPurposeID" ColumnName="LoanPurposeID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="RMID" ColumnName="RMID" />
-                <ScalarProperty Name="LoanType" ColumnName="LoanType" />
-                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
-                <ScalarProperty Name="PreSanctionID" ColumnName="PreSanctionID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblResidenceVerifications">
             <EntityTypeMapping TypeName="MangalDBNewModel.tblResidenceVerification">
               <MappingFragment StoreEntitySet="tblResidenceVerification">
@@ -6432,6 +6311,151 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GL_SanctionDisburse_KYC_Details_RTR1" FunctionName="MangalDBNewModel.Store.GL_SanctionDisburse_KYC_Details_RTR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.GL_SanctionDisburse_KYC_Details_RTR1_Result">
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="ExistingPLCaseNo" ColumnName="ExistingPLCaseNo" />
+                <ScalarProperty Name="Cdate" ColumnName="Cdate" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Spouse" ColumnName="Spouse" />
+                <ScalarProperty Name="PANNo" ColumnName="PANNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="NomineeName" ColumnName="NomineeName" />
+                <ScalarProperty Name="NomineeRelation" ColumnName="NomineeRelation" />
+                <ScalarProperty Name="NomAddress" ColumnName="NomAddress" />
+                <ScalarProperty Name="GID" ColumnName="GID" />
+                <ScalarProperty Name="SDID" ColumnName="SDID" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="GrossWeight" ColumnName="GrossWeight" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="NetWeight" ColumnName="NetWeight" />
+                <ScalarProperty Name="RateperGram" ColumnName="RateperGram" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Purity" ColumnName="Purity" />
+                <ScalarProperty Name="TotalGrossWeight" ColumnName="TotalGrossWeight" />
+                <ScalarProperty Name="TotalNetWeight" ColumnName="TotalNetWeight" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="Totalvalue" ColumnName="Totalvalue" />
+                <ScalarProperty Name="TotalRate" ColumnName="TotalRate" />
+                <ScalarProperty Name="EligibleLoanAmt" ColumnName="EligibleLoanAmt" />
+                <ScalarProperty Name="NetLoanAmtSanctioned" ColumnName="NetLoanAmtSanctioned" />
+                <ScalarProperty Name="NetLoanPayable" ColumnName="NetLoanPayable" />
+                <ScalarProperty Name="LoanType" ColumnName="LoanType" />
+                <ScalarProperty Name="SchemeId" ColumnName="SchemeId" />
+                <ScalarProperty Name="SchemeName" ColumnName="SchemeName" />
+                <ScalarProperty Name="MaximumLoanAmount" ColumnName="MaximumLoanAmount" />
+                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
+                <ScalarProperty Name="EligibleLoanAmount" ColumnName="EligibleLoanAmount" />
+                <ScalarProperty Name="SchemeProcessingType" ColumnName="SchemeProcessingType" />
+                <ScalarProperty Name="SchemeProcessingCharge" ColumnName="SchemeProcessingCharge" />
+                <ScalarProperty Name="SchemeProcessingLimit" ColumnName="SchemeProcessingLimit" />
+                <ScalarProperty Name="PreSanctionId" ColumnName="PreSanctionId" />
+                <ScalarProperty Name="GoldItemImage" ColumnName="GoldItemImage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="TGLSanctionDisburse_BasicDetails">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLSanctionDisburse_BasicDetails">
+              <MappingFragment StoreEntitySet="TGLSanctionDisburse_BasicDetails">
+                <ScalarProperty Name="PreSanctionId" ColumnName="PreSanctionId" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="LockerNo" ColumnName="LockerNo" />
+                <ScalarProperty Name="Packetweight" ColumnName="Packetweight" />
+                <ScalarProperty Name="BankPaymentDate" ColumnName="BankPaymentDate" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="CashAmount" ColumnName="CashAmount" />
+                <ScalarProperty Name="BankAmount" ColumnName="BankAmount" />
+                <ScalarProperty Name="CashAccID" ColumnName="CashAccID" />
+                <ScalarProperty Name="GoldInWardById" ColumnName="GoldInWardById" />
+                <ScalarProperty Name="CashOutWardById" ColumnName="CashOutWardById" />
+                <ScalarProperty Name="GLInOutID" ColumnName="GLInOutID" />
+                <ScalarProperty Name="CashInOutID" ColumnName="CashInOutID" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="CMPID" ColumnName="CMPID" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="FYID" ColumnName="FYID" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="BCPID" ColumnName="BCPID" />
+                <ScalarProperty Name="CIBILScore" ColumnName="CIBILScore" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="OwnershipProofofImage" ColumnName="OwnershipProofofImage" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="TotalRate" ColumnName="TotalRate" />
+                <ScalarProperty Name="Totalvalue" ColumnName="Totalvalue" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="TotalNetWeight" ColumnName="TotalNetWeight" />
+                <ScalarProperty Name="TotalGrossWeight" ColumnName="TotalGrossWeight" />
+                <ScalarProperty Name="CheqNEFTDDDate" ColumnName="CheqNEFTDDDate" />
+                <ScalarProperty Name="CheqNEFTDDNo" ColumnName="CheqNEFTDDNo" />
+                <ScalarProperty Name="CheqNEFTDD" ColumnName="CheqNEFTDD" />
+                <ScalarProperty Name="BankCashAccID" ColumnName="BankCashAccID" />
+                <ScalarProperty Name="NetLoanPayable" ColumnName="NetLoanPayable" />
+                <ScalarProperty Name="NetLoanAmtSanctioned" ColumnName="NetLoanAmtSanctioned" />
+                <ScalarProperty Name="EligibleLoanAmt" ColumnName="EligibleLoanAmt" />
+                <ScalarProperty Name="OperatorID" ColumnName="OperatorID" />
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+                <ScalarProperty Name="GoldLoanNo" ColumnName="GoldLoanNo" />
+                <ScalarProperty Name="LoanDate" ColumnName="LoanDate" />
+                <ScalarProperty Name="LoanType" ColumnName="LoanType" />
+                <ScalarProperty Name="RefID" ColumnName="RefID" />
+                <ScalarProperty Name="RefYr" ColumnName="RefYr" />
+                <ScalarProperty Name="RefMon" ColumnName="RefMon" />
+                <ScalarProperty Name="RefType" ColumnName="RefType" />
+                <ScalarProperty Name="SDID" ColumnName="SDID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TGLPreSanctions">
+            <EntityTypeMapping TypeName="MangalDBNewModel.TGLPreSanction">
+              <MappingFragment StoreEntitySet="TGLPreSanction">
+                <ScalarProperty Name="ApproverComments" ColumnName="ApproverComments" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MessageActionID" ColumnName="MessageActionID" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="CMPID" ColumnName="CMPID" />
+                <ScalarProperty Name="FYID" ColumnName="FYID" />
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ResidenceVerification" ColumnName="ResidenceVerification" />
+                <ScalarProperty Name="LTV" ColumnName="LTV" />
+                <ScalarProperty Name="ROI" ColumnName="ROI" />
+                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
+                <ScalarProperty Name="ReqLoanAmount" ColumnName="ReqLoanAmount" />
+                <ScalarProperty Name="SchemeID" ColumnName="SchemeID" />
+                <ScalarProperty Name="LoanPurposeID" ColumnName="LoanPurposeID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="RMID" ColumnName="RMID" />
+                <ScalarProperty Name="LoanType" ColumnName="LoanType" />
+                <ScalarProperty Name="KYCID" ColumnName="KYCID" />
+                <ScalarProperty Name="PreSanctionID" ColumnName="PreSanctionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_PRI" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_PRI" />
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

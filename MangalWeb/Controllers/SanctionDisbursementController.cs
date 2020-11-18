@@ -74,8 +74,9 @@ namespace MangalWeb.Controllers
             sanctionViewModel.CompanyId = Convert.ToInt32(Session["CompanyId"]);
             if (Session["Proofofownership"] != null)
             {
-                // sanctionViewModel.ProofOfOwnerShipFile = (HttpPostedFileBase)Session["Proofofownership"];
                 sanctionViewModel.ProofOfOwnerShipImageFile = (byte[])Session["Proofofownership"];
+                sanctionViewModel.FileName = Session["ProofofownershipImageName"].ToString();
+                sanctionViewModel.ContentType = Session["ProofofownershipContentType"].ToString();
             }
             _sanctionService.SanctionDisbursment_PRI("Save", sanctionViewModel);
             retVal = true;
@@ -96,8 +97,9 @@ namespace MangalWeb.Controllers
             sanctionViewModel.CompanyId = Convert.ToInt32(Session["CompanyId"]);
             if (Session["Proofofownership"] != null)
             {
-                // sanctionViewModel.ProofOfOwnerShipFile = (HttpPostedFileBase)Session["Proofofownership"];
                 sanctionViewModel.ProofOfOwnerShipImageFile = (byte[])Session["Proofofownership"];
+                sanctionViewModel.FileName = Session["ProofofownershipImageName"].ToString();
+                sanctionViewModel.ContentType = Session["ProofofownershipContentType"].ToString();
             }
             _sanctionService.SanctionDisbursment_PRI("Update", sanctionViewModel);
             retVal = true;
@@ -114,10 +116,9 @@ namespace MangalWeb.Controllers
             Stream fs = postedFile.InputStream;
             BinaryReader br = new BinaryReader(fs);
             Byte[] bytes = br.ReadBytes(postedFile.ContentLength);
-            ////base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
-            //var docupload = new SanctionDisbursementVM();
-            //docupload.ProofOfOwnerShipImageFile = bytes;
             Session["Proofofownership"] = bytes;
+            Session["ProofofownershipImageName"] = postedFile.FileName;
+            Session["ProofofownershipContentType"] = postedFile.ContentType;
             return Json(1, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -141,19 +142,21 @@ namespace MangalWeb.Controllers
             model.TransactionId = _sanctionService.GetMaxTransactionId();
             model.InterestRepaymentDate = DateTime.Now.AddMonths(1).ToShortDateString();
             model.EmployeeName = Session["UserName"].ToString();
-            model.TransactionDate = _sanctionService.GetLoanDate();
+            model.TransactionDate = DateTime.Now.ToShortDateString();
             model.LoanAccountNo = _sanctionService.GetLoanNo();
             BindList();
             Session["Proofofownership"] = null;
+            Session["ProofofownershipImageName"] = null;
+            Session["ProofofownershipContentType"] = null;
             Session["ChargeDetails"] = null;
             return View(model);
         }
         #endregion
 
         #region GetChargeDetails
-        public JsonResult GetChargeDetails(int ChargeId, decimal SanctionLoanAmount,string SchemeProcessingType,double SchemeProcessingCharge)
+        public JsonResult GetChargeDetails(int ChargeId, decimal SanctionLoanAmount, string SchemeProcessingType, double SchemeProcessingCharge)
         {
-            var data = _sanctionService.GetChargeDetails(ChargeId, SanctionLoanAmount,SchemeProcessingType,SchemeProcessingCharge);
+            var data = _sanctionService.GetChargeDetails(ChargeId, SanctionLoanAmount, SchemeProcessingType, SchemeProcessingCharge);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -183,7 +186,7 @@ namespace MangalWeb.Controllers
             model.TransactionId = _sanctionService.GetMaxTransactionId();
             model.InterestRepaymentDate = DateTime.Now.AddMonths(1).ToShortDateString();
             model.EmployeeName = Session["UserName"].ToString();
-            model.TransactionDate = _sanctionService.GetLoanDate();
+            model.TransactionDate = DateTime.Now.ToShortDateString();
             model.LoanAccountNo = _sanctionService.GetLoanNo();
             BindList();
             string operation = Session["Operation"].ToString();
@@ -284,7 +287,7 @@ namespace MangalWeb.Controllers
         public FileResult Download(int id)
         {
             var file = _sanctionService.GetImageById(id);
-            return File(file, "image/jpeg,image/png");
+            return File(file.ImageName, file.ContentType);
         }
         #endregion
     }

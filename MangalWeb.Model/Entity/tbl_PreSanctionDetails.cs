@@ -41,8 +41,8 @@ namespace MangalWeb.Model.Entity
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
     
+        public virtual TGLKYC_BasicDetails TGLKYC_BasicDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TGLSanctionDisburse_BasicDetails> TGLSanctionDisburse_BasicDetails { get; set; }
-        public virtual TGLKYC_BasicDetails TGLKYC_BasicDetails { get; set; }
     }
 }

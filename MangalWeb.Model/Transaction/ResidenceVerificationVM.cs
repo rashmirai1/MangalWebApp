@@ -23,7 +23,7 @@ namespace MangalWeb.Model.Transaction
         [Required(ErrorMessage = "Date of Visit is required")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
-        public DateTime DateofVisit { get; set; }
+        public string DateofVisit { get; set; }
         [Required(ErrorMessage ="Time of Visit is required")]
         public string TimeofVisit { get; set; }
         [Required(ErrorMessage ="Please Select Customer")]

@@ -11,7 +11,7 @@ namespace MangalWeb.Model.Entity
 {
     using System;
     
-    public partial class GL_SanctionDisburse_KYC_Details_RTR_Result3
+    public partial class GL_SanctionDisburse_KYC_Details_RTR1_Result
     {
         public int KYCID { get; set; }
         public string CustomerID { get; set; }
@@ -35,32 +35,33 @@ namespace MangalWeb.Model.Entity
         public string NomineeName { get; set; }
         public string NomineeRelation { get; set; }
         public string NomAddress { get; set; }
-        public Nullable<int> GID { get; set; }
-        public Nullable<int> SDID { get; set; }
-        public Nullable<int> ItemID { get; set; }
-        public Nullable<decimal> GrossWeight { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public Nullable<decimal> NetWeight { get; set; }
-        public Nullable<decimal> RateperGram { get; set; }
-        public Nullable<decimal> Value { get; set; }
-        public Nullable<int> Purity { get; set; }
-        public Nullable<decimal> TotalGrossWeight { get; set; }
-        public Nullable<decimal> TotalNetWeight { get; set; }
-        public Nullable<int> TotalQuantity { get; set; }
-        public Nullable<decimal> Totalvalue { get; set; }
-        public Nullable<decimal> TotalRate { get; set; }
-        public Nullable<decimal> EligibleLoanAmt { get; set; }
-        public Nullable<decimal> NetLoanAmtSanctioned { get; set; }
-        public Nullable<decimal> NetLoanPayable { get; set; }
+        public int GID { get; set; }
+        public int SDID { get; set; }
+        public int ItemID { get; set; }
+        public decimal GrossWeight { get; set; }
+        public int Quantity { get; set; }
+        public decimal NetWeight { get; set; }
+        public decimal RateperGram { get; set; }
+        public decimal Value { get; set; }
+        public int Purity { get; set; }
+        public decimal TotalGrossWeight { get; set; }
+        public decimal TotalNetWeight { get; set; }
+        public int TotalQuantity { get; set; }
+        public decimal Totalvalue { get; set; }
+        public decimal TotalRate { get; set; }
+        public decimal EligibleLoanAmt { get; set; }
+        public decimal NetLoanAmtSanctioned { get; set; }
+        public decimal NetLoanPayable { get; set; }
         public string LoanType { get; set; }
         public Nullable<int> SchemeId { get; set; }
         public string SchemeName { get; set; }
-        public string MaximumLoanAmount { get; set; }
-        public string Tenure { get; set; }
+        public Nullable<decimal> MaximumLoanAmount { get; set; }
+        public Nullable<int> Tenure { get; set; }
         public Nullable<decimal> EligibleLoanAmount { get; set; }
         public string SchemeProcessingType { get; set; }
         public decimal SchemeProcessingCharge { get; set; }
         public decimal SchemeProcessingLimit { get; set; }
         public Nullable<int> PreSanctionId { get; set; }
+        public string GoldItemImage { get; set; }
     }
 }

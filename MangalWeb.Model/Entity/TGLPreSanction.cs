@@ -41,13 +41,16 @@ namespace MangalWeb.Model.Entity
         public Nullable<int> CMPID { get; set; }
         public Nullable<int> BranchID { get; set; }
         public string TransactionID { get; set; }
+        public Nullable<int> MessageActionID { get; set; }
+        public string Status { get; set; }
+        public string ApproverComments { get; set; }
     
         public virtual Mst_LoanPupose Mst_LoanPupose { get; set; }
         public virtual Mst_Product Mst_Product { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblResidenceVerification> tblResidenceVerifications { get; set; }
         public virtual TGLKYC_BasicDetails TGLKYC_BasicDetails { get; set; }
         public virtual TSchemeMaster_BasicDetails TSchemeMaster_BasicDetails { get; set; }
         public virtual UserDetail UserDetail { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblResidenceVerification> tblResidenceVerifications { get; set; }
     }
 }
