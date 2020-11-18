@@ -38,8 +38,8 @@ namespace MangalWeb
                    ));
 
             bundles.Add(new ScriptBundle("~/bundles/presanction").Include(
-                   "~/Scripts/Custom/PreSanction.js",
-                   "~/Scripts/Custom/ResidenceVerification.js"));
+                   "~/Scripts/Custom/PreSanction.js"
+                   ));
 
             bundles.Add(new StyleBundle("~/Content/dataTablescss").Include(
                      "~/Content/DataTables/css/dataTables.bootstrap.min.css"

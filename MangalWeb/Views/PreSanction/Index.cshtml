@@ -4,11 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Styles.Render("~/Content/dataTablescss")
-@using (Ajax.BeginForm("SavePreSanction", "PreSanction", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure", OnBegin= "OnBegin" }))
+@using (Ajax.BeginForm("SavePreSanction", "PreSanction", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure", OnBegin = "OnBegin" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.KYCID)
     @Html.HiddenFor(x => x.PreSanctionID)
+    @Html.HiddenFor(x => x.IsApproval)
+
     <header id="topbar" class="affix">
         <div class="col-md-5 col-sm-4 col-xs-12">
             <div class="topbar-left">
@@ -19,10 +21,16 @@
             <div class="topbar-right" id="headerbutton" @TempData["headerbutton"]>
                 <button href="#editModal" id="btn_edit" onclick="return GetPreSanctionList();" type="button" class="@TempData["btn_editclass"]" data-toggle="modal"><span class="fa fa-pencil pr5"></span> <span class="hidden-xs">Edit</span></button>
                 <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
-                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]" onclick="DeletePreSanction(@Model.PreSanctionID)"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button> 
-               <a href="@Html.Raw(@Url.Action("Index", "PreSanction"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
-            </div><!--end of topbar-right-->
-        </div><!--end of col-md-7-->
+                <button type="button" id="btnDelete" class="@TempData["btn_deleteclass"]" onclick="DeletePreSanction(@Model.PreSanctionID)"><span class="fa fa-trash pr5"></span> <span class="hidden-xs">Delete</span></button>
+                <a href="@Html.Raw(@Url.Action("Index", "PreSanction"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
+            </div>
+            <div class="topbar-right" id="approveButton" style="display:none;">
+                <button type="submit" id="btn_save" class="mb-xs mt-xs mr-xs btn btn-success"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Approve</span></button>
+
+            </div>
+            <!--end of topbar-right-->
+        </div>
+        <!--end of col-md-7-->
 
     </header>
     <!-- Begin: Content -->
@@ -67,127 +75,156 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="PreSanction">
+                                        <hr />
 
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
-                                                New/Top Up
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
-                                                @Html.DropDownListFor(model => model.LoanType,
-                                                                                        new List<SelectListItem> {
-                                                                                        new SelectListItem { Value = "New" , Text = "New" },
-                                                                                        new SelectListItem { Value = "Top Up" , Text = "Top Up" }
-                                                                                        }, "Select a value",
-                                                                                        new { @class= "form-control" })
-                                                @Html.ValidationMessageFor(model => model.LoanType, "", new { @class = "text-danger" })
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                    New/Top Up
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <span class="text-danger" id="CustomErr"> </span>
+                                                    @Html.DropDownListFor(model => model.LoanType,
+                                                                                            new List<SelectListItem> {
+                                                                                            new SelectListItem { Value = "New" , Text = "New" },
+                                                                                            new SelectListItem { Value = "Top Up" , Text = "Top Up" }
+                                                                                            }, "Select a value",
+                                                                                            new { @class= "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.LoanType, "", new { @class = "text-danger" })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">RM Name<span class="text-danger"> * </span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                    @Html.DropDownListFor(model => model.RMID, Model.RMList, "Select a value", htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.RMID, "", new { @class = "text-danger" })
+                                                </div>
                                             </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">RM Name<span class="text-danger"> * </span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                                                @Html.DropDownListFor(model => model.RMID, Model.RMList, "Select a value", htmlAttributes: new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.RMID, "", new { @class = "text-danger" })
+                                        </div>
+
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                    Product
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.ProductID, Model.Products, "Select a value", htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Purpose Of Loan<span class="text-danger"> * </span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                    @Html.DropDownListFor(model => model.LoanPurposeID, Model.LoanPurposes, "Select a value", new { @class = "form-control select2" })
+                                                    @Html.ValidationMessageFor(model => model.LoanPurposeID, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                    Scheme name
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <span class="text-danger" id="CustomErr"> </span>  @Html.DropDownListFor(model => model.SchemeID, Model.Schemes, "Select a value", htmlAttributes: new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.SchemeID, "", new { @class = "text-danger" })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                    Req. loan Amount
+                                                    <span class="text-danger"> * </span>
+                                                </label>
+                                                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                    @Html.EditorFor(model => model.ReqLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Req. loan Amount", @maxlength = "10" } })
+                                                    @Html.ValidationMessageFor(model => model.ReqLoanAmount, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                    Tenure
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <span class="text-danger" id="CustomErr"> </span>
+                                                    @Html.EditorFor(model => model.Tenure, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tenure", @maxlength = "2" } })
+                                                    @Html.ValidationMessageFor(model => model.Tenure, "", new { @class = "text-danger" })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                    Residence Verification
+                                                    <span class="text-danger"> * </span>
+                                                </label>
+                                                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                    @Html.DropDownListFor(model => model.ResidenceVerification,
+                                                            new List<SelectListItem> {
+                                                            new SelectListItem { Value = "Yes" , Text = "Yes" },
+                                                            new SelectListItem { Value = "NO" , Text = "NO" },
+                                                            new SelectListItem { Value = "Not Applicable" , Text = "Not Applicable" }
+                                                            },
+                                                            new { @class= "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.ResidenceVerification, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                    ROI%
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <span class="text-danger" id="CustomErr"> </span>
+                                                    @Html.EditorFor(model => model.ROI, new { htmlAttributes = new { @class = "form-control", @placeholder = "ROI", @maxlength = "5" } })
+                                                    @Html.ValidationMessageFor(model => model.ROI, "", new { @class = "text-danger" })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                    LTV%
+                                                    <span class="text-danger"> * </span>
+                                                </label>
+                                                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                    @Html.EditorFor(model => model.LTV, new { htmlAttributes = new { @class = "form-control", @placeholder = "LTV", @maxlength = "5" } })
+                                                    @Html.ValidationMessageFor(model => model.LTV, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Comments<span class="text-danger">*</span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Comments", @cols = "20", @rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
-                                                Product
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>@Html.DropDownListFor(model => model.ProductID, Model.Products, "Select a value", htmlAttributes: new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
-                                            </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Purpose Of Loan<span class="text-danger"> * </span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                                                @Html.DropDownListFor(model => model.LoanPurposeID, Model.LoanPurposes, "Select a value", new { @class = "form-control select2" })
-                                                @Html.ValidationMessageFor(model => model.LoanPurposeID, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
-                                                Scheme name
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>  @Html.DropDownListFor(model => model.SchemeID, Model.Schemes, "Select a value", htmlAttributes: new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.SchemeID, "", new { @class = "text-danger" })
-                                            </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
-                                                Req. loan Amount
-                                                <span class="text-danger"> * </span>
-                                            </label>
-                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                                                @Html.EditorFor(model => model.ReqLoanAmount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Req. loan Amount", @maxlength = "10" } })
-                                                @Html.ValidationMessageFor(model => model.ReqLoanAmount, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
-                                                Tenure
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
-                                                @Html.EditorFor(model => model.Tenure, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tenure", @maxlength = "2" } })
-                                                @Html.ValidationMessageFor(model => model.Tenure, "", new { @class = "text-danger" })
-                                            </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
-                                                Residence Verification
-                                                <span class="text-danger"> * </span>
-                                            </label>
-                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                                                @Html.DropDownListFor(model => model.ResidenceVerification,
-                                                        new List<SelectListItem> {
-                                                        new SelectListItem { Value = "Yes" , Text = "Yes" },
-                                                        new SelectListItem { Value = "NO" , Text = "NO" },
-                                                        new SelectListItem { Value = "Not Applicable" , Text = "Not Applicable" }
-                                                        },
-                                                        new { @class= "form-control" })
-                                                @Html.ValidationMessageFor(model => model.ResidenceVerification, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
-                                                ROI%
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                <span class="text-danger" id="CustomErr"> </span>
-                                                @Html.EditorFor(model => model.ROI, new { htmlAttributes = new { @class = "form-control", @placeholder = "ROI", @maxlength = "5" } })
-                                                @Html.ValidationMessageFor(model => model.ROI, "", new { @class = "text-danger" })
-                                            </div>
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
-                                                LTV%
-                                                <span class="text-danger"> * </span>
-                                            </label>
-                                            <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-                                                @Html.EditorFor(model => model.LTV, new { htmlAttributes = new { @class = "form-control", @placeholder = "LTV" ,@maxlength="5"} })
-                                                @Html.ValidationMessageFor(model => model.LTV, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Comments<span class="text-danger">*</span></label>
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                @Html.TextAreaFor(model => model.Comments, new { @class = "form-control", @placeholder = "Comments", @cols = "20", @rows = "2" })
-                                                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" id="ApproveSection" style="display:none;">
+                                        <hr />
+                                        <h4>Approval Section</h4>
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">
+                                                    Approve/Reject
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <span class="text-danger" id="CustomErr"> </span>
+                                                    @Html.DropDownListFor(model => model.DeviationApprove,
+                                                                                            new List<SelectListItem> {
+                                                                                            new SelectListItem { Value = "Approve" , Text = "Approve" },
+                                                                                            new SelectListItem { Value = "Reject" , Text = "Reject" }
+                                                                                            }, "Select a value",
+                                                                                            new { @class= "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.LoanType, "", new { @class = "text-danger" })
+                                                </div>
+                                                <label class="col-lg-2 col-md-2 col-sm-3 col-xs-12 control-label">Approver Comment<span class="text-danger"> * </span></label>
+                                                <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+                                                    @Html.TextAreaFor(model => model.ApproverComment, new { @class = "form-control", @placeholder = "Approver Comment", @cols = "20", @rows = "2" })
+                                                    @Html.ValidationMessageFor(model => model.ApproverComment, "", new { @class = "text-danger" })
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

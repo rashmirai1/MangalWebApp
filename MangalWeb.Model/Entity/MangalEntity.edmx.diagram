@@ -24,7 +24,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_GLChargeMaster_BasicInfo" Width="1.5" PointX="12.375" PointY="29" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_GLChargeMaster_Details" Width="1.5" PointX="14.625" PointY="29.625" />
         <AssociationConnector Association="MangalDBNewModel.FK_tbl_GLChargeMaster_Details_tbl_GLChargeMaster_BasicInfo" />
-        <EntityTypeShape EntityType="MangalDBNewModel.tblCompanyBranchMaster" Width="1.5" PointX="3.375" PointY="24.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_PenaltySlab" Width="1.5" PointX="3.375" PointY="20.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_SourceofApplication" Width="1.5" PointX="11.375" PointY="23.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_AuditCategory" Width="1.5" PointX="28.375" PointY="18.625" />
@@ -38,13 +37,11 @@
         <EntityTypeShape EntityType="MangalDBNewModel.tblItemMaster" Width="1.5" PointX="27.625" PointY="21.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_tblItemMaster_Mst_Product" />
         <EntityTypeShape EntityType="MangalDBNewModel.TSchemeMaster_BasicDetails" Width="1.5" PointX="27.625" PointY="28.125" />
-        <AssociationConnector Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_PinCode" />
         <AssociationConnector Association="MangalDBNewModel.FK_TSchemeMaster_BasicDetails_Mst_Product" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_UserCategory" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Trn_DocumentUpload" Width="1.5" PointX="21.375" PointY="29.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.Mst_BranchType" Width="1.5" PointX="5.375" PointY="18.875" />
         <EntityTypeShape EntityType="MangalDBNewModel.User_Category_Hierarchy" Width="1.5" PointX="28.375" PointY="24.75" />
-        <AssociationConnector Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_KYCMobileOTP" Width="1.5" PointX="30.375" PointY="0.75" />
         <AssociationConnector Association="MangalDBNewModel.FK__tbl_UserC__Organ__51BA1E3A" />
         <EntityTypeShape EntityType="MangalDBNewModel.Menu" Width="1.5" PointX="7.375" PointY="30.75" />
@@ -66,7 +63,6 @@
         <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_GoldItemDetails_Mst_PurityMaster" />
         <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_GoldItemDetails_tblItemMaster" />
         <EntityTypeShape EntityType="MangalDBNewModel.FSystemGeneratedEntryMaster" Width="1.5" PointX="10.375" PointY="3.75" />
-        <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" Width="1.5" PointX="0.75" PointY="11.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_ChargesDetails" Width="1.5" PointX="5.375" PointY="11.75" />
         <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_ChargesDetails_TGLSanctionDisburse_ChargesDetails" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblGroupmaster" Width="1.5" PointX="7.375" PointY="11.75" />
@@ -83,7 +79,6 @@
         <EntityTypeShape EntityType="MangalDBNewModel.TGLInterest_Details" Width="1.5" PointX="7.375" PointY="15.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGlReceipt_BasicDetails" Width="1.5" PointX="17.375" PointY="0.75" />
         <EntityTypeShape EntityType="MangalDBNewModel.tbl_PreSanctionDetails" Width="1.5" PointX="19.625" PointY="35.5" />
-        <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" />
         <EntityTypeShape EntityType="MangalDBNewModel.Trans_KYCAddresses" Width="1.5" PointX="19.625" PointY="42.5" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblHistory_KYCAddresses" Width="1.5" PointX="34.625" PointY="27.375" />
         <EntityTypeShape EntityType="MangalDBNewModel.TGLKYC_BasicDetails" Width="1.5" PointX="17.375" PointY="33" />
@@ -106,6 +101,18 @@
         <AssociationConnector Association="MangalDBNewModel.FK__TGLPreSanc__RMID__08A03ED0" />
         <EntityTypeShape EntityType="MangalDBNewModel.tblResidenceVerification" Width="1.5" PointX="35.125" PointY="8.25" />
         <AssociationConnector Association="MangalDBNewModel.FK_tblResidenceVerification_TGLPreSanction" />
+        <EntityTypeShape EntityType="MangalDBNewModel.MessageAction" Width="1.5" PointX="22.375" PointY="17" />
+        <EntityTypeShape EntityType="MangalDBNewModel.MessageActionUser" Width="1.5" PointX="24.625" PointY="17.25" />
+        <EntityTypeShape EntityType="MangalDBNewModel.Mst_UserBranch" Width="1.5" PointX="19.875" PointY="16.375" />
+        <AssociationConnector Association="MangalDBNewModel.FK__MessageAc__Messa__29CC2871" />
+        <AssociationConnector Association="MangalDBNewModel.FK__Mst_UserB__UserI__3726238F" />
+        <AssociationConnector Association="MangalDBNewModel.FK__TGLPreSan__Messa__4FF1D159" />
+        <EntityTypeShape EntityType="MangalDBNewModel.tblCompanyBranchMaster" Width="1.5" PointX="32.375" PointY="4.25" />
+        <AssociationConnector Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType" />
+        <AssociationConnector Association="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_PinCode" />
+        <AssociationConnector Association="MangalDBNewModel.FK__Mst_UserB__Branc__381A47C8" />
+        <EntityTypeShape EntityType="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" Width="1.5" PointX="21.875" PointY="35.5" />
+        <AssociationConnector Association="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

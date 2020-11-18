@@ -33,3 +33,40 @@ fieldset[disabled] .form-control {
     font-size: 22px;
     margin-top: 8px;
 }
+.removenowrap {
+    white-space: inherit !important;
+    font-size: 11px;
+}
+.approved i {
+    
+    color: #54ca18;
+}
+.notapproved i {
+    color: #ef2323;
+}
+.nadet {
+    background-color: #888282;
+    border: #fff solid 1px;
+    color: #eaeac4;
+}
+.naundet {
+    background-color: #4a5b80;
+    border: #fff solid 1px;
+    color: #eaeac4;
+}
+.seeall {
+    background-color: #111b63;
+    color: #fff;
+}
+    .seeall a {
+        background-color: #111b63;
+        color: #fff !important;
+        text-align: center;
+        font-size: 12px;
+    }
+    .seeall a:hover {
+        background-color: #111b63;
+        color: #fff !important;
+        text-align: center;
+        font-size: 12px;
+    }

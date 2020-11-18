@@ -37,3 +37,22 @@ function getExtension(path) {
 
     return "." + basename.slice(pos + 1);            // extract extension ignoring `.`
 }
+
+function UpdateMessageAction(messageActionUserId) {
+
+    var url = "/MessageAction/UpdateMessageAction?messageActionUserId=" + messageActionUserId;
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        //data: '{id: "' + scheme + '"}',
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+           
+        },
+        error: function (xhr, status, error) {
+            //alert("something went wrong!");
+        }
+    });
+}

@@ -100,6 +100,7 @@
     <Compile Include="Service\DeviationService.cs" />
     <Compile Include="Service\DocumentService.cs" />
     <Compile Include="Service\DocumentUploadService.cs" />
+    <Compile Include="Service\MessageActionService.cs" />
     <Compile Include="Service\ResidenceVerificationService.cs" />
     <Compile Include="Service\PreSanctionService.cs" />
     <Compile Include="Service\DocumentVerificationService.cs" />

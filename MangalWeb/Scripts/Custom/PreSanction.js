@@ -1,5 +1,15 @@
 ﻿$(document).ready(function () {
-    
+    var isApproval = $("#IsApproval").val();
+
+    if (isApproval == "1") {
+        $('#PreSanction *').prop('disabled', true);
+        $("#ApproveSection").css("display", "block");
+        $("#headerbutton").css("display", "none");
+        $("#approveButton").css("display", "block");
+        $("#Tenure").removeAttr("disabled")
+        $("#ROI").removeAttr("disabled")
+    }
+
     $("#SchemeID").on('change', function () {
         var scheme = $(this).val();
         FillSchemeDetailsById(scheme);
@@ -52,7 +62,14 @@ function OnBegin(e) {
 function OnSuccess(response) {
     cmnHideLoader();
     if (response.PreSanctionID > 0) {
-        bootbox.alert("Record saved successfully", function () {
+        var message = "Record saved successfully";
+        var isApproval = $("#IsApproval").val();
+        if (isApproval) {
+            urlRedirect = "/Home/Index";
+            message = "Record approved successfully";
+        }
+
+        bootbox.alert(message, function () {
             window.location.href = urlRedirect;
         });
     }

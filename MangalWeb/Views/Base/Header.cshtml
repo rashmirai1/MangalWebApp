@@ -1,4 +1,8 @@
 ﻿@using System.Collections;
+@using MangalWeb.Service.Service;
+@using MangalWeb.Model.Entity;
+@using MangalWeb.Models.Security;
+
 <header class="navbar navbar-fixed-top bg-danger">
     <div class="navbar-branding">
         <a class="navbar-brand" href="~/Home/Index">
@@ -57,44 +61,112 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
                 @*<img src="~/Content/assets/img/no-profile-img.gif" alt="avatar" class="mw30 br64 mr15">*@
-
+                @{ 
+                    MessageActionService service = new MessageActionService();
+                    List<GetMessageAction_Result> messageActionList = service.GetTop5MessageActions(UserInfo.UserID, UserInfo.BranchId);
+                }
                 <span class="fa fa-bell alert-bell"></span>
-                <span class="alertcounter">2</span>
+                <span class="alertcounter">@messageActionList.Count</span>
                 @*<span class="caret caret-tp hidden-xs"></span>*@
             </a>
             <ul class="dropdown-menu dropdown-persist pn w250 bg-white" role="menu">
-                <li class="br-t of-h">
-                    <a href="@Url.Action("Logout", "Login")" class="animated animated-short fadeInDown">
-                        <div>
-                            Message 1
-                        </div>
-                    </a>
+                @{
 
-                </li>
-                <li class="br-t of-h">
-                    <a href="@Url.Action("Logout", "Login")" class="animated animated-short fadeInDown">
-                        <div>
-                            Message 2
-                        </div>
-                    </a>
+                    if (messageActionList.Count > 0)
+                    {
+                        for (int index = 0; index < messageActionList.Count; index++)
+                        {
+                            <li class="br-t of-h" style="display:flex;">
 
-                </li>
+                                @if (!messageActionList[index].IsRead ?? false)
+                                {
+                                    <a href="/MessageAction/MessageActionIndex?isControl=true" class="animated animated-short fadeInDown removenowrap">
+                                        <span class="fw700">
+                                            @messageActionList[index].Message
+                                        </span>
+                                    </a><a role="button" href="@messageActionList[index].PageUrl" class="notapproved"><i class="fa fa-check"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="/MessageAction/MessageActionIndex?isControl=true" class="animated animated-short fadeInDown removenowrap">
+                                        <span>
+                                            @messageActionList[index].Message
+                                        </span>
+
+                                    </a><a role="button" href="#" class="approved"><i class="fa fa-check"></i></a>
+                                }
+                            </li>
+
+                        }
+                        <li class="seeall">
+                            <a href="/MessageAction/MessageActionIndex?isControl=true">See All</a>
+                        </li>
+                    }
+                }
+                @*<li class="br-t of-h">
+            <a href="@Url.Action("Logout", "Login")" class="animated animated-short fadeInDown">
+                <div>
+                    Message 1
+                </div>
+            </a>
+
+        </li>
+        <li class="br-t of-h">
+            <a href="@Url.Action("Logout", "Login")" class="animated animated-short fadeInDown">
+                <div>
+                    Message 2
+                </div>
+            </a>
+
+        </li>*@
             </ul>
         </li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
-                @*<img src="~/Content/assets/img/no-profile-img.gif" alt="avatar" class="mw30 br64 mr15">*@
-
+                @{ 
+                    List<GetMessageAction_Result> messageList = service.GeTop5tMessageNotificatins(UserInfo.UserID, UserInfo.BranchId);
+                }
                 <span class="fa fa-exclamation-triangle notification-bell"></span>
-                <span class="alertcounter">2</span>
+                <span class="alertcounter">@messageList.Count</span>
                 @*<span class="caret caret-tp hidden-xs"></span>*@
             </a>
             <ul class="dropdown-menu dropdown-persist pn w250 bg-white" role="menu">
+                @{
+
+                    if (messageList.Count > 0)
+                    {
+                        for (int index = 0; index < messageList.Count; index++)
+                        {
                 <li class="br-t of-h">
+                    @if (!messageList[index].IsRead??false)
+                    {
+                        <a href="#" class="animated animated-short fadeInDown" onclick="UpdateMessageAction(@messageList[index].MessageActionUserID)">
+                            <span class="fw700">
+                                @messageList[index].Message
+                            </span>
+                        </a>
+                    }
+                    else
+                    {
+                    <a href="#" class="animated animated-short fadeInDown">
+                        <span>
+                            @messageList[index].Message
+                        </span>
+                    </a>
+                    }
+
+                </li>
+                            }
+                   <li class="seeall">
+                       <a href="/MessageAction/MessageActionIndex?isControl=false">See All</a>
+                   </li>
+                        }
+                    }
+                @*<li class="br-t of-h">
                     <a href="@Url.Action("Logout", "Login")" class="animated animated-short fadeInDown">
                         <i class="fa fa-bell"></i> Logout
                     </a>
-                </li>
+                </li>*@
             </ul>
         </li>
         <li class="dropdown">

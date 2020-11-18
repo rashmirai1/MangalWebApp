@@ -60,6 +60,16 @@ namespace MangalWeb.Model.Transaction
         [Required(ErrorMessage = "Applied Date is required")]
         public string AppliedDate { get; set; }
 
+        [Required(ErrorMessage = "Approve/Reject is required")]
+        public string DeviationApprove { get; set; }
+
+        [Required(ErrorMessage = "Approver Comment is required")]
+        public string ApproverComment { get; set; }
+
+        public string IsApproval { get; set; }
+
+
+
         public Nullable<int> FYID { get; set; }
         public Nullable<int> CMPID { get; set; }
         public Nullable<int> BranchID { get; set; }

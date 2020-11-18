@@ -139,6 +139,7 @@
     <Compile Include="Controllers\DocumentUploadController.cs" />
     <Compile Include="Controllers\ForgotPasswordController.cs" />
     <Compile Include="Controllers\GLReceiptController.cs" />
+    <Compile Include="Controllers\MessageActionController.cs" />
     <Compile Include="Controllers\ResidenceVerificationController.cs" />
     <Compile Include="Controllers\PreSanctionController.cs" />
     <Compile Include="Controllers\DocumentVerificationController.cs" />
@@ -2186,6 +2187,7 @@
     <Content Include="Views\ValuatorTwo\_ValuatorOneDetails.cshtml" />
     <Content Include="Views\ValuatorTwo\_ValuatorTwoDetails.cshtml" />
     <Content Include="Views\PreSanction\_PreSanctionList.cshtml" />
+    <Content Include="Views\MessageAction\MessageActionIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

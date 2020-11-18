@@ -13,12 +13,13 @@ namespace MangalWeb.Repository.Repository
     public class PreSanctionRepository
     {
         MangalDBNewEntities _context = new MangalDBNewEntities();
+        MessageActionRepository _MessageActionRepository = new MessageActionRepository();
 
         #region Public Methods
         public IQueryable<TGLKYC_BasicDetails> GetCustomerList()
         {
             var kycIDs = _context.TGLPreSanctions.Select(p => p.KYCID);
-            return _context.TGLKYC_BasicDetails.Where(k => !kycIDs.Contains(k.KYCID) && k.Status!= "System Rejected").OrderByDescending(order=>order.KYCID);          
+            return _context.TGLKYC_BasicDetails.Where(k => !kycIDs.Contains(k.KYCID) && k.Status != "System Rejected").OrderByDescending(order => order.KYCID);
         }
         public IQueryable<TGLPreSanction> GetPreSanctions()
         {
@@ -28,7 +29,7 @@ namespace MangalWeb.Repository.Repository
         {
             return _context.TGLPreSanctions.Where(ps => ps.PreSanctionID == preSanctionId).FirstOrDefault();
         }
-       
+
         public TGLPreSanction AddPreSanction(TGLPreSanction model, out Dictionary<string, string> errors)
         {
             errors = new Dictionary<string, string>();
@@ -38,7 +39,7 @@ namespace MangalWeb.Repository.Repository
             {
                 _context.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 errors.Add("PreSanctionError", "Error adding record.");
             }
@@ -49,19 +50,20 @@ namespace MangalWeb.Repository.Repository
             errors = new Dictionary<string, string>();
 
             var dbRecord = _context.TGLPreSanctions.Where(ps => ps.PreSanctionID == model.PreSanctionID).FirstOrDefault();
-            if(dbRecord==null)
+            if (dbRecord == null)
             {
                 errors.Add("NoRecordFound", "No Record Found.");
                 return new TGLPreSanction();
             }
 
-            ValidateRecord(model, errors);
+            //ValidateRecord(model, errors);
             if (errors.Count > 0)
             {
                 return new TGLPreSanction();
             }
 
             UpdatePreSanction(dbRecord, model);
+            
             try
             {
                 _context.SaveChanges();
@@ -97,6 +99,82 @@ namespace MangalWeb.Repository.Repository
             }
 
             return false;
+        }
+        public TGLPreSanction UpdatePreSanctionApprove(TGLPreSanction model, out Dictionary<string, string> errors)
+        {
+            errors = new Dictionary<string, string>();
+
+            var dbRecord = _context.TGLPreSanctions.Where(ps => ps.PreSanctionID == model.PreSanctionID).FirstOrDefault();
+            if (dbRecord == null)
+            {
+                errors.Add("NoRecordFound", "No Record Found.");
+                return new TGLPreSanction();
+            }
+            var messageRecords = _context.MessageActionUsers.Where(mes => mes.MessageActionID == dbRecord.MessageActionID).ToList();
+            if (messageRecords.Count <= 0)
+            {
+                errors.Add("NoRecordFound", "No Record Found.");
+                return new TGLPreSanction();
+            }
+
+            messageRecords.ForEach(e => e.IsRead = true);
+
+            dbRecord.ApproverComments = model.ApproverComments;
+            dbRecord.Status = model.Status;
+            dbRecord.LastUpdatedDate = DateTime.Now;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                errors.Add("PreSanctionError", "Error updating record.");
+            }
+
+            return dbRecord;
+        }
+        
+        public int DeleteMessageAction(int messageActionId)
+        {
+            var dbRecord = _context.TGLPreSanctions.Where(p => p.MessageActionID == messageActionId).FirstOrDefault();
+            if(dbRecord!=null)
+            {
+                dbRecord.MessageActionID = null;
+                dbRecord.Status = null;
+                dbRecord.ApproverComments = null;
+
+                _context.SaveChanges();
+                return _context.DeleteMessageAction(messageActionId);
+
+            }
+
+            
+            return 0;
+        }
+        public GetDeviationRange_Result GetDeviationRange(int parentId, decimal range)
+        {            
+           return  _context.GetDeviationRange(parentId, range).FirstOrDefault();
+
+        }
+        //public int AddMessageAction(int? messageActionID, string message, string remarks, string pageUrl, int? userCategoryID, bool? isControl, int? createdBy)
+        //{
+        //    System.Data.Entity.Core.Objects.ObjectParameter output = new System.Data.Entity.Core.Objects.ObjectParameter("OutputMessageActionID", typeof(int));
+        //    _context.AddMessageAction(messageActionID, message, remarks, pageUrl, userCategoryID, isControl, createdBy, output);
+
+        //    messageActionID = (int)output.Value;
+
+        //    return messageActionID ?? 0;
+        //}
+        public void UpdateActionIDToPreSanction(int preSanctionId, int messageActionId)
+        {
+            var dbRecord = _context.TGLPreSanctions.Where(p => p.PreSanctionID == preSanctionId).FirstOrDefault();
+
+            if(dbRecord!=null)
+            {
+                dbRecord.MessageActionID = messageActionId;
+                _context.SaveChanges();
+            }
         }
         public TGLKYC_BasicDetails GetCustomerById(int kycID)
         {

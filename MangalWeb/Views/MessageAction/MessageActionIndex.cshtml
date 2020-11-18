@@ -1,0 +1,63 @@
+﻿@using System.Collections;
+@using MangalWeb.Service.Service;
+@using MangalWeb.Model.Entity;
+@using MangalWeb.Models.Security;
+@model List<GetMessageAction_Result>
+@{
+    ViewBag.Title = "Message Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header id="topbar" class="affix">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="topbar-left">
+            <h4>Pre Sanction</h4>
+        </div>
+    </div>
+</header>
+<!-- Begin: Content -->
+<section id="content" class="animated fadeIn content_height">
+    <!-- Dashboard Tiles -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel1 panel-primary">
+                <div class="admin-form">
+                    <div class="panel-body">
+                        <div class="section row mbn">
+                            @{
+                               
+                                List<GetMessageAction_Result> messageActionList = Model;
+                                if (messageActionList.Count > 0)
+                                {
+                                    for (int index = 0; index < messageActionList.Count; index++)
+                                    {
+                           
+                                        <a href="@messageActionList[index].PageUrl">
+
+                                            @if (!messageActionList[index].IsRead ?? false)
+                                            {
+                                                <div class="col-md-12 p7 naundet">                                                
+                                                    @messageActionList[index].Remarks;                                                     
+                                                </div>
+                                           }
+                                           else
+                                           {
+                                                <div class="col-md-12 p7 nadet">
+                                                    @messageActionList[index].Remarks
+                                                </div>
+                                            }
+
+                                        </a>
+
+                          
+                                    }
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
