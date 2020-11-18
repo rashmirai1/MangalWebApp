@@ -20,6 +20,10 @@
         <div class="col-md-7 col-sm-8 col-xs-12">
             <div class="topbar-right" id="headerbutton" @TempData["headerbutton"]>
                 <button type="submit" id="btn_save" class="@TempData["btn_saveclass"]"><span class="fa fa-save pr5"></span> <span class="hidden-xs">Save</span></button>
+                <button href="#viewModal" id="btn_view" onclick="return ShowViewTableList();" class="@TempData["btn_viewclass"]"
+                        type="button" data-toggle="modal">
+                    <span class="fa fa-eye pr5"></span> <span class="hidden-xs">View</span>
+                </button>
                 <a href="@Html.Raw(@Url.Action("Index", "ResidenceVerification"))" type="button" data-toggle="modal" class="btn btn-alert btn-md light fw600 ml10" title="Cancel" alt="Cancel"><span class="fa fa-close pr5"></span><span class="hidden-xs">Cancel</span></a>
             </div><!--end of topbar-right-->
         </div><!--end of col-md-7-->
@@ -133,7 +137,7 @@
                                         </div>
                                     </div>
                                     <hr style="border: 1px solid #DDD;margin-bottom: 20px;">
-                                    <label style="padding-left:20px;"><b>Address Details 1(Present Address)</b></label>
+                                    <label style="padding-left:20px;"><b>Address Details 1 (Present Address)</b></label>
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="margin-top:15px;">
                                         <div class="form-group">
                                             <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">
@@ -429,5 +433,5 @@ new { @class = "form-control" })
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.css" type="text/css" />
     
-@Scripts.Render("~/bundles/presanction")
+@Scripts.Render("~/bundles/ResidenceVerification")
 }

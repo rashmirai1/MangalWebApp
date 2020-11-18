@@ -195,24 +195,6 @@
                 $("#EligibleLoanAmount").val(0);
                 $("#SanctionLoanAmount").val(0);
                 $("#LTVPerc").val(0);
-                //var val1tot = parseFloat(row.find(".Val1Total").text()).toFixed(2);
-                //var val2tot = parseFloat(row.find(".Val2Total").text()).toFixed(2);
-
-                //var totamt = 0;
-                //$('#tblValuationTwoDetails tbody>tr').each(function () {
-                //    var row = $(this).closest("tr");
-                //    totamt = totamt + parseFloat(row.find('.Val2Total').text());
-                //});
-                //$("#headerTotalValuation").css('display', 'block');
-                //$("#lblTotalValuation").text(parseFloat(totamt).toFixed(2));
-
-                //var ltv = parseFloat($("#MaxLtv").val());
-                //var eligibleamt = totamt * ltv / 100;
-                //$("#EligibleLoanAmount").val(parseFloat(eligibleamt).toFixed(2));
-                ////$("#SanctionLoanAmount").val(parseFloat(eligibleamt).toFixed(2));
-                //$("#SanctionLoanAmount").val(0);
-                //var ltvperc = eligibleamt / totamt * 100;
-                //$("#LTVPerc").val(parseFloat(ltvperc).toFixed(2));
             });
 
             $("table").on("change", "select", function () {
@@ -242,24 +224,6 @@
                         $("#EligibleLoanAmount").val(0);
                         $("#SanctionLoanAmount").val(0);
                         $("#LTVPerc").val(0);
-                        //var val1tot = parseFloat(row.find(".Val1Total").text()).toFixed(2);
-                        //var val2tot = parseFloat(row.find(".Val2Total").text()).toFixed(2);
-
-                        //var totamt = 0;
-                        //$('#tblValuationTwoDetails tbody>tr').each(function () {
-                        //    var row = $(this).closest("tr");
-                        //    totamt = totamt + parseFloat(row.find('.Val2Total').text());
-                        //});
-                        //$("#headerTotalValuation").css('display', 'block');
-                        //$("#lblTotalValuation").text(parseFloat(totamt).toFixed(2));
-
-                        //var ltv = parseFloat($("#MaxLtv").val());
-                        //var eligibleamt = totamt * ltv / 100;
-                        //$("#EligibleLoanAmount").val(parseFloat(eligibleamt).toFixed(2));
-                        ////$("#SanctionLoanAmount").val(parseFloat(eligibleamt).toFixed(2));
-                        //$("#SanctionLoanAmount").val(0);
-                        //var ltvperc = eligibleamt / totamt * 100;
-                        //$("#LTVPerc").val(parseFloat(ltvperc).toFixed(2));
                     },
                     error: function (ex) {
                         alert('Failed to retrieve data.' + ex);

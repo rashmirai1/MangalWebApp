@@ -31,6 +31,7 @@ namespace MangalWeb.Controllers
             int cid = rand.Next(000000000, 999999999) + id;
             model.TransactionId = "RV" + cid.ToString();
             model.AppliedDate = DateTime.Now.ToShortDateString();
+            model.DateofVisit = DateTime.Now.ToShortDateString();
             ViewBag.DocumentTypeList = new SelectList(_documentUploadService.GetDocumentTypeList(), "Id", "Name");
             ViewBag.DocumentList = new SelectList(_documentUploadService.GetDocumentMasterList(), "DocumentID", "DocumentName");
             Session["resdocupload"] = null;
@@ -115,7 +116,7 @@ namespace MangalWeb.Controllers
         #region ResidenceVerificationDetails
         public ActionResult ResidenceVerificationDetails()
         {
-            return PartialView("_ResidenceVerificationDetails", _residenceVerificationService.GetCustomerList());
+            return PartialView("_ResidenceVerificationDetails", _residenceVerificationService.ResidenceVerificationDetails());
         }
         #endregion GetCustomerDetails
 

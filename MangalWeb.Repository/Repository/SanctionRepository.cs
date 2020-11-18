@@ -1,6 +1,7 @@
 ﻿using MangalWeb.Model;
 using MangalWeb.Model.Entity;
 using MangalWeb.Model.Transaction;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,15 +10,26 @@ using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
 
 namespace MangalWeb.Repository.Repository
 {
     public class SanctionRepository
     {
         MangalDBNewEntities _context = new MangalDBNewEntities();
+
+        #region GetMaxTransactionId
+        public int GetMaxTransactionId()
+        {
+            return _context.TGLSanctionDisburse_BasicDetails.Any() ? _context.TGLSanctionDisburse_BasicDetails.Max(x => (int)x.SDID) + 1 : 1;
+        }
+        #endregion        
 
         #region GetChargeDetails
         public ChargeSanctionVM GetChargeDetails(int chargeid, decimal sanctionloanamt, string ptype, double pcharge)
@@ -29,20 +41,20 @@ namespace MangalWeb.Repository.Repository
             {
                 ModelReflection.MapObjects(data, model);
             }
-            //if (ptype == "Amount")
-            //{
-            //    if (model.Amount > pcharge)
-            //    {
-            //        model.Amount = pcharge;
-            //    }
-            //}
-            //else if (ptype == "Percentage")
-            //{
-            //    if (model.Amount > pcharge)
-            //    {
-            //        model.Amount =Convert.ToDouble(sanctionloanamt) * pcharge / 100;
-            //    }
-            //}
+            if (ptype == "Amount")
+            {
+                if (model.Amount > pcharge)
+                {
+                    model.Amount = pcharge;
+                }
+            }
+            else if (ptype == "Percentage")
+            {
+                if (model.Amount > pcharge)
+                {
+                    model.Amount = Convert.ToDouble(sanctionloanamt) * pcharge / 100;
+                }
+            }
             return model;
         }
         #endregion
@@ -60,7 +72,7 @@ namespace MangalWeb.Repository.Repository
         }
         #endregion
 
-        #region [SanctionDisbursment_PRI]
+        #region SanctionDisbursment_PRI
         public void SanctionDisbursment_PRI(string operation, SanctionDisbursementVM model)
         {
             using (DbContextTransaction transaction = _context.Database.BeginTransaction())
@@ -92,11 +104,11 @@ namespace MangalWeb.Repository.Repository
                         {
                             GoldInwardDate = Convert.ToDateTime(model.GoldInwardDate);
                         }
-                        //insert record in sanction disbursement details table
+                        //insert or update record in sanction disbursement, cash inout and gold in out details table
                         var count = _context.SP_SanctionDisburse_PRI(operation, value, model.LoanType, Convert.ToDateTime(model.TransactionDate),
                             model.LoanAccountNo, model.KYCID, model.EligibleLoanAmount, model.SanctionLoanAmount, 0, model.NetPayable, model.CheqNEFTDD, model.CheqNEFTDDNo,
                            strChqDate, model.TotalGrossWeight, model.TotalNetWeight, model.TotalQuantity, model.TotalValue, model.TotalRatePerGram,
-                           model.SchemeId, Convert.ToDateTime(model.InterestRepaymentDate), model.ProofOfOwnerShipImageFile,
+                           model.SchemeId, Convert.ToDateTime(model.InterestRepaymentDate), model.ProofOfOwnerShipImageFile, model.FileName, model.ContentType,
                             "", 0, model.CashOutwardbyNo, model.GoldInwardByNo, model.CreatedBy, model.FinancialYearId, model.BranchId, model.CompanyId,
                             model.CashAccountNo, model.CashAmount, model.BankCashAccID, model.BankAmount, model.PaymentMode, 0, strBankPaymentDate, model.LockerNo,
                             model.PacketWeight, model.RackNo, model.Remark, GoldInwardDate, model.PreSanctionId);
@@ -141,7 +153,7 @@ namespace MangalWeb.Repository.Repository
                             int VoucherNo = 0;
                             int BankCashAccID = 0;
                             string DJEReferenceNo = string.Empty;
-                            double Amount = 0, DebitAmount = 0, CreditAmount = 0, BankAmount = 0, CashAmount = 0;
+                            double DebitAmount = 0, CreditAmount = 0, BankAmount = 0, CashAmount = 0;
                             string Narration = "";
                             int ContraAccID = 0;
                             //insert record in account master and fsystemgenerated entry master
@@ -163,22 +175,21 @@ namespace MangalWeb.Repository.Repository
                                 CashAmount = (double)model.CashAmount;
                                 ContraAccID = Convert.ToInt32(model.CashAccountNo);
                             }
-                            if (model.BankCashAccID > 0)
+                            if (model.BankCashAccID > 0 && HttpContext.Current.Session["BranchName"].ToString() == "Head Office")
                             {
                                 BankCashAccID = (int)model.BankCashAccID;
                                 BankAmount = (double)model.BankAmount;
                                 ContraAccID = Convert.ToInt32(model.BankCashAccID);
                             }
                             Narration = "Payment made against New Gold Loan sanctioned"; //for debit only
-                            Amount = Convert.ToDouble(model.NetPayable);
+                            DebitAmount = Convert.ToDouble(model.NetPayable);
                             DJEReferenceNo = DJERefType + "/" + Convert.ToString(DJERefNo);//1st entry
                             //Insert record in Bank Payment details
                             var count = _context.SP_InsertRecordInTBankCashPaymentDetails(BCPID, DJERefType, DJERefNo, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), VoucherNo,
-                                 BankCashAccID, AccountID, Amount, model.CheqNEFTDDNo, strChqDate, Narration, model.FinancialYearId);
+                                 BankCashAccID, AccountID, DebitAmount, model.CheqNEFTDDNo, strChqDate, Narration, model.FinancialYearId);
                             //Entry in fledger master
                             //Debit Entry in FLedger(Main Ledger Entry)
                             int AccID = AccountID;
-                            DebitAmount = Convert.ToDouble(model.NetPayable); //for entry in closing A/C
                             //insert record in fledger master of debit entry of Net Payable of customer to cash/bank
                             bool datasaved = false;
                             LedgerID = CreateNormalLedgerEntries(DJERefType, DJEReferenceNo, Convert.ToDateTime(model.TransactionDate), AccID, DebitAmount, CreditAmount, ContraAccID, Narration, model.FinancialYearId);
@@ -201,7 +212,7 @@ namespace MangalWeb.Repository.Repository
                             _context.SaveChanges();
                             //Ledger Account for Bank Entry
                             //credit start
-                            if (model.BankAmount > 0)
+                            if (model.BankAmount > 0 && HttpContext.Current.Session["BranchName"].ToString() == "Head Office")
                             {
                                 DJERefNo = _context.FSystemGeneratedEntryMasters.Any() ? _context.FSystemGeneratedEntryMasters.Max(x => x.DJEID) + 1 : 1;
                                 //insert record in FSystemGeneratedEntryMaster table
@@ -240,7 +251,7 @@ namespace MangalWeb.Repository.Repository
                                 _context.SaveChanges();
                             }
                             //Ledger Account for cash entry
-                            if (model.CashAmount > 0)
+                            if (model.CashAmount > 0 && HttpContext.Current.Session["BranchName"].ToString() != "Head Office")
                             {
                                 DJERefNo = _context.FSystemGeneratedEntryMasters.Any() ? _context.FSystemGeneratedEntryMasters.Max(x => x.DJEID) + 1 : 1;
                                 //insert record in FSystemGeneratedEntryMaster table
@@ -388,13 +399,14 @@ namespace MangalWeb.Repository.Repository
                             //***************************** Accounting Entries for Other Charges End *********************************
                             _context.SaveChanges();
                             transaction.Commit();
+                            SendMessage(model.MobileNo, model.SanctionLoanAmount, model.LoanAccountNo);
+                            SendEmail(model.EmailId, model.SanctionLoanAmount, model.LoanAccountNo);
                             #endregion
                         }
                         else
                         {
                             #region save method
-                            //insert record in charge details table
-                            //insert record in charge details table
+                            //insert record in charge details table                            
                             int i = 0;
                             int tempchargeid = 0;
                             foreach (var citem in model.ChargeDetailList)
@@ -550,7 +562,7 @@ namespace MangalWeb.Repository.Repository
                                 CashAmount = (double)model.CashAmount;
                                 ContraAccID = Convert.ToInt32(model.CashAccountNo);
                             }
-                            if (model.BankCashAccID > 0)
+                            if (model.BankCashAccID > 0 && HttpContext.Current.Session["BranchName"].ToString() == "Head Office")
                             {
                                 BankCashAccID = (int)model.BankCashAccID;
                                 BankAmount = (double)model.BankAmount;
@@ -589,7 +601,7 @@ namespace MangalWeb.Repository.Repository
                             _context.SaveChanges();
                             //Ledger Account for Bank Entry
                             //credit start
-                            if (model.BankAmount > 0)
+                            if (model.BankAmount > 0 && HttpContext.Current.Session["BranchName"].ToString() == "Head Office")
                             {
                                 DJERefNo = _context.FSystemGeneratedEntryMasters.Any() ? _context.FSystemGeneratedEntryMasters.Max(x => x.DJEID) + 1 : 1;
                                 //insert record in FSystemGeneratedEntryMaster table
@@ -625,7 +637,7 @@ namespace MangalWeb.Repository.Repository
                                 _context.SaveChanges();
                             }
                             //Ledger Account for cash entry
-                            if (model.CashAmount > 0)
+                            if (model.CashAmount > 0 && HttpContext.Current.Session["BranchName"].ToString() != "Head Office")
                             {
                                 DJERefNo = _context.FSystemGeneratedEntryMasters.Any() ? _context.FSystemGeneratedEntryMasters.Max(x => x.DJEID) + 1 : 1;
                                 //insert record in FSystemGeneratedEntryMaster table
@@ -840,7 +852,7 @@ namespace MangalWeb.Repository.Repository
                             BankCashAccID = (int)model.CashAccountNo;
                             CashAmount = (double)model.CashAmount;
                         }
-                        if (model.BankCashAccID > 0)
+                        if (model.BankCashAccID > 0 && HttpContext.Current.Session["BranchName"].ToString() == "Head Office")
                         {
                             BankCashAccID = (int)model.BankCashAccID;
                             BankAmount = (double)model.BankAmount;
@@ -906,7 +918,7 @@ namespace MangalWeb.Repository.Repository
                         {
                             datasaved = CompanyWiseYearEndAccountClosingonSave(model.FinancialYearId, model.CompanyId, model.BranchId, accountID, DebitAmount, CreditAmount);
                         }
-                        if (model.BankAmount > 0)
+                        if (model.BankAmount > 0 && HttpContext.Current.Session["BranchName"].ToString() == "Head Office")
                         {
                             #region Bank Entry
                             ContraAccID = accountID;
@@ -947,7 +959,7 @@ namespace MangalWeb.Repository.Repository
                             }
                             #endregion
                         }
-                        if (model.CashAmount > 0)
+                        if (model.CashAmount > 0 && HttpContext.Current.Session["BranchName"].ToString() != "Head Office")
                         {
                             #region Cash Entry
                             ContraAccID = accountID;
@@ -1153,9 +1165,9 @@ namespace MangalWeb.Repository.Repository
                 }
             }
         }
-        #endregion [SanctionDisbursment_PRI]
+        #endregion SanctionDisbursment_PR
 
-        #region [CreateNormalLedgerEntries]
+        #region CreateNormalLedgerEntries
         protected int CreateNormalLedgerEntries(string Reftype, string ReferenceNo, DateTime RefDate, int AccID, double DebitAmount, double CreditAmount, int ContraAccID, string Narration, int FinancialYearId)
         {
             int LedgerID = 0;
@@ -1182,9 +1194,9 @@ namespace MangalWeb.Repository.Repository
             }
             return LedgerID;
         }
-        #endregion [CreateNormalLedgerEntries]
+        #endregion CreateNormalLedgerEntries
 
-        #region [CompanyWiseYearEndAccountClosingonSave]
+        #region CompanyWiseYearEndAccountClosingonSave
         public bool CompanyWiseYearEndAccountClosingonSave(int FYID, int compID, int branchID, int accountID, double debit, double credit)
         {
             bool datasaved = false;
@@ -1336,9 +1348,9 @@ namespace MangalWeb.Repository.Repository
             }
             return datasaved;
         }
-        #endregion [CompanyWiseYearEndAccountClosingonSave]
+        #endregion CompanyWiseYearEndAccountClosingonSave
 
-        #region [CompanyWiseYearEndAccountClosingonDelete]
+        #region CompanyWiseYearEndAccountClosingonDelete
         public bool CompanyWiseYearEndAccountClosingonDelete(int FYID, int compID, int branchID, int accountID, double debit, double credit)
         {
             bool datasaved = false;
@@ -1490,37 +1502,22 @@ namespace MangalWeb.Repository.Repository
             }
             return datasaved;
         }
-        #endregion [CompanyWiseYearEndAccountClosingonDelete]
+        #endregion CompanyWiseYearEndAccountClosingonDelete        
 
-        #region GetLoanDate
-        public string GetLoanDate()
+        #region GetLoanNo
+        public string GetLoanNo()
         {
-            return DateTime.Now.ToShortDateString();
+            var result = _context.Gl_SanctionDisburse_GoldLoanNo_RTR(Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))).FirstOrDefault();
+            return result;
         }
         #endregion
 
-        #region GetMaxTransactionId
-        public int GetMaxTransactionId()
-        {
-            return _context.TGLSanctionDisburse_BasicDetails.Any() ? _context.TGLSanctionDisburse_BasicDetails.Max(x => (int)x.SDID) + 1 : 1;
-        }
-        #endregion
+        #region Fill List from database
 
         #region GetChargeList
         public List<tbl_GLChargeMaster_BasicInfo> GetChargeList()
         {
             return _context.tbl_GLChargeMaster_BasicInfo.Where(x => x.CID != 5 && x.Status == "Active").OrderBy(x => x.ChargeName).ToList();
-        }
-        #endregion
-
-        #region GetLoanNo
-        public string GetLoanNo()
-        {
-            //var localPar = new SqlParameter("@LoanDate", DateTime.Now.ToString("yyyy-MM-dd"));
-            //var result = _context.Database.SqlQuery<string>("EXEC Gl_SanctionDisburse_GoldLoanNo_RTR @LoanDate=@LoanDate", localPar).FirstOrDefault();
-
-            var result = _context.Gl_SanctionDisburse_GoldLoanNo_RTR(Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))).FirstOrDefault();
-            return result;
         }
         #endregion
 
@@ -1559,6 +1556,22 @@ namespace MangalWeb.Repository.Repository
         }
         #endregion
 
+        #region GetAccountName
+        public string GetAccountName(int id)
+        {
+            return _context.tblaccountmasters.Where(x => x.AccountID == id).Select(x => x.Name).FirstOrDefault();
+        }
+        #endregion
+
+        #region GetImageById
+        public TGLSanctionDisburse_BasicDetails GetImageById(int id)
+        {
+            return _context.TGLSanctionDisburse_BasicDetails.Where(x => x.SDID == id).FirstOrDefault();
+        }
+        #endregion
+
+        #endregion
+
         #region GetKycDetailsList
         public List<SanctionDisbursementVM> GetKycDetailsList()
         {
@@ -1570,52 +1583,21 @@ namespace MangalWeb.Repository.Repository
             var parameters = new List<SqlParameter>();
             parameters.Add(FyIdPar);
             parameters.Add(BranchIdPar);
-            var tablelist = _context.Database.SqlQuery<SanctionDisbursementVM>("EXEC GL_SanctionDisburse_KYC_RTR @FYID=@FYID,@BranchId=@BranchId", parameters.ToArray()).ToList();
-            foreach (var item in tablelist)
-            {
-                var model = new SanctionDisbursementVM();
-                model.PreSanctionId = item.PreSanctionId;
-                model.KYCID = item.KYCID;
-                model.CustomerID = item.CustomerID;
-                model.AppliedDate = item.AppliedDate;
-                model.LoanAccountNo = item.LoanAccountNo;
-                model.CustomerName = item.CustomerName;
-                model.PANNo = item.PANNo;
-                model.MobileNo = item.MobileNo;
-                model.LoanType = item.LoanType;
-                list.Add(model);
-            }
-            return list;
-        }
-        #endregion
-
-        #region GetSanctionDisbursementList
-        public List<SanctionDisbursementVM> GetSanctionDisbursementList()
-        {
-            var list = new List<SanctionDisbursementVM>();
-            int fyid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
-            int branchid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
-            var FyIdPar = new SqlParameter("@FYID", fyid);
-            var BranchIdPar = new SqlParameter("@BranchId", branchid);
-            var parameters = new List<SqlParameter>();
-            parameters.Add(FyIdPar);
-            parameters.Add(BranchIdPar);
-
-            var tablelist = _context.Database.SqlQuery<SanctionDisbursementVM>("EXEC GL_SanctionDisburse_RTR @FYID=@FYID,@BranchId=@BranchId", parameters.ToArray()).ToList();
-            foreach (var item in tablelist)
-            {
-                var model = new SanctionDisbursementVM();
-                model.ID = item.ID;
-                model.KYCID = item.KYCID;
-                model.CustomerID = item.CustomerID;
-                model.LoanType = item.LoanType;
-                model.LoanAccountNo = item.LoanAccountNo;
-                model.TransactionDate = item.TransactionDate;
-                model.CustomerName = item.CustomerName;
-                model.PANNo = item.PANNo;
-                model.MobileNo = item.MobileNo;
-                list.Add(model);
-            }
+            list = _context.Database.SqlQuery<SanctionDisbursementVM>("EXEC GL_SanctionDisburse_KYC_RTR @FYID=@FYID,@BranchId=@BranchId", parameters.ToArray()).ToList();
+            //foreach (var item in tablelist)
+            //{
+            //    var model = new SanctionDisbursementVM();
+            //    model.PreSanctionId = item.PreSanctionId;
+            //    model.KYCID = item.KYCID;
+            //    model.CustomerID = item.CustomerID;
+            //    model.AppliedDate = item.AppliedDate;
+            //    model.LoanAccountNo = item.LoanAccountNo;
+            //    model.CustomerName = item.CustomerName;
+            //    model.PANNo = item.PANNo;
+            //    model.MobileNo = item.MobileNo;
+            //    model.LoanType = item.LoanType;
+            //    list.Add(model);
+            //}
             return list;
         }
         #endregion
@@ -1628,11 +1610,15 @@ namespace MangalWeb.Repository.Repository
             var interestcalculation = new List<SanctionEMICalculatorVM>();
             int fyid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
             int branchid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
-            var result = _context.GL_SanctionDisburse_KYC_Details_RTR(PreSanctionId, fyid, branchid).FirstOrDefault();
-            if (result != null)
-            {
-                ModelReflection.MapObjects(result, model);
-            }
+            //var result = _context.GL_SanctionDisburse_KYC_Details_RTR(PreSanctionId, fyid, branchid);
+            model = _context.Database.SqlQuery<SanctionDisbursementVM>("GL_SanctionDisburse_KYC_Details_RTR @PreSanctionId,@FYID,@BranchId",
+                new SqlParameter("PreSanctionId", PreSanctionId),
+                new SqlParameter("FYID", fyid),
+                new SqlParameter("BranchId", branchid)).FirstOrDefault();
+            //if (result > 0)
+            //{
+            //    ModelReflection.MapObjects(result, model);
+            //}
             if (model.LoanType == "Top Up")
             {
                 int neworold = 0;
@@ -1720,6 +1706,7 @@ namespace MangalWeb.Repository.Repository
                 model.Total = 0;
                 #endregion
             }
+
             double Amount = Convert.ToDouble(model.SchemeProcessingCharge);
             if (model.SchemeProcessingType == "Percentage")
             {
@@ -1792,7 +1779,8 @@ namespace MangalWeb.Repository.Repository
                                    GrossWeight = a.GrossWt,
                                    RatePerGram = a.Rate,
                                    Value = a.Total,
-                                   Deductions = a.Deduction
+                                   Deductions = a.Deduction,
+                                   ImageName = a.ImageName
                                }).ToList();
 
             model.EligibleLoanAmountValuationDetailsVMList = golddetails;
@@ -1819,6 +1807,37 @@ namespace MangalWeb.Repository.Repository
             return model;
         }
         #endregion
+
+        #region GetSanctionDisbursementList
+        public List<SanctionDisbursementVM> GetSanctionDisbursementList()
+        {
+            var list = new List<SanctionDisbursementVM>();
+            int fyid = Convert.ToInt32(HttpContext.Current.Session["BranchId"]);
+            int branchid = Convert.ToInt32(HttpContext.Current.Session["FinancialYearId"]);
+            var FyIdPar = new SqlParameter("@FYID", fyid);
+            var BranchIdPar = new SqlParameter("@BranchId", branchid);
+            var parameters = new List<SqlParameter>();
+            parameters.Add(FyIdPar);
+            parameters.Add(BranchIdPar);
+
+            var tablelist = _context.Database.SqlQuery<SanctionDisbursementVM>("EXEC GL_SanctionDisburse_RTR @FYID=@FYID,@BranchId=@BranchId", parameters.ToArray()).ToList();
+            foreach (var item in tablelist)
+            {
+                var model = new SanctionDisbursementVM();
+                model.ID = item.ID;
+                model.KYCID = item.KYCID;
+                model.CustomerID = item.CustomerID;
+                model.LoanType = item.LoanType;
+                model.LoanAccountNo = item.LoanAccountNo;
+                model.TransactionDate = item.TransactionDate;
+                model.CustomerName = item.CustomerName;
+                model.PANNo = item.PANNo;
+                model.MobileNo = item.MobileNo;
+                list.Add(model);
+            }
+            return list;
+        }
+        #endregion        
 
         #region OutStanding
         public SanctionTopUpVM OutStanding(SanctionDisbursementVM model)
@@ -1978,7 +1997,8 @@ namespace MangalWeb.Repository.Repository
                                    GrossWeight = a.GrossWt,
                                    RatePerGram = a.Rate,
                                    Value = a.Total,
-                                   Deductions = a.Deduction
+                                   Deductions = a.Deduction,
+                                   ImageName = a.ImageName
                                }).ToList();
 
             model.EligibleLoanAmountValuationDetailsVMList = golddetails;
@@ -2050,17 +2070,80 @@ namespace MangalWeb.Repository.Repository
         }
         #endregion
 
-        #region GetAccountName
-        public string GetAccountName(int id)
+        #region SendMessage
+        public string SendMessage(string mobile, decimal pSanctionAmount, string LoanAccountNo)
         {
-            return _context.tblaccountmasters.Where(x => x.AccountID == id).Select(x => x.Name).FirstOrDefault();
+            //Send message
+            string Username = "afpl";
+            string APIKey = "afpl2014";
+            string Sid = "ApheLN";
+            string Message = "Thank you for choosing MCFL. Loan amount for Rs. " + pSanctionAmount + " has been successfully Disbursed to your account Number " + LoanAccountNo + "." +
+                " For any queries please do call us on 1800.......... or email us on .............@mangalfincorp.com.";
+            string URL = "http://smpp.keepintouch.co.in/vendorsms/pushsms.aspx/?user=" + Username + "&password=" + APIKey + "&msisdn=" + mobile + "&sid=" + Sid + "&msg=" + Message + "" + "&fl=0&gwid=2";
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(URL);
+            HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+            StreamReader sr = new StreamReader(resp.GetResponseStream());
+            string results = sr.ReadToEnd();
+            dynamic result = JsonConvert.DeserializeObject(results);
+            sr.Close();
+            string response = String.Empty;
+            if (result.ErrorMessage == "Success")
+            {
+                response = "success";
+            }
+            else
+            {
+                response = "Please check if the mobile number entered is correct! or contact our customer care.";
+            }
+            return response;
         }
         #endregion
 
-        #region GetImageById
-        public byte[] GetImageById(int id)
+        #region SendEmail
+        public void SendEmail(string EmailId, decimal pSanctionAmount, string LoanAccountNo)
         {
-            return _context.TGLSanctionDisburse_BasicDetails.Where(x => x.SDID == id).Select(x => x.OwnershipProofImagePath).FirstOrDefault();
+            //Send message
+            string Message = "Thank you for choosing MCFL.Loan amount for Rs. " + pSanctionAmount + "  has been successfully disbursed to your loan account Number " + LoanAccountNo + "." +
+                            " Please mention your Loan Account Number for all your queries.Call us on 1800..........or email us on.............@mangalfincorp.com." +
+                            " For any queries please do call us on 1800.......... or email us on .............@mangalfincorp.com.";
+            try
+            {
+                SmtpClient mailClient = new SmtpClient();
+                //SmtpClient mailClient = new SmtpClient();
+                //Create the mail message
+                System.Configuration.Configuration config = WebConfigurationManager.OpenWebConfiguration(HttpContext.Current.Request.ApplicationPath);
+                System.Net.Configuration.MailSettingsSectionGroup settings = (System.Net.Configuration.MailSettingsSectionGroup)config.GetSectionGroup("system.net/mailSettings");
+
+                mailClient.Credentials = new NetworkCredential(settings.Smtp.Network.UserName, settings.Smtp.Network.Password);
+                //mailClient.UseDefaultCredentials = true;
+                mailClient.Host = settings.Smtp.Network.Host;
+                mailClient.Port = settings.Smtp.Network.Port;
+                mailClient.DeliveryMethod = settings.Smtp.DeliveryMethod;
+                mailClient.EnableSsl = settings.Smtp.Network.EnableSsl;
+                MailMessage mailMessage = new MailMessage(settings.Smtp.Network.UserName, EmailId, "Email Confirmation", Message);
+                mailMessage.From = new MailAddress(settings.Smtp.Network.UserName, "Mangal");
+                mailMessage.Body = Message;
+                mailMessage.IsBodyHtml = true;
+
+                //string[] bccid = bcc.Split(',');
+
+                //foreach (string bccEmailId in bccid)
+                //{
+                //    MailAddress SendBCC = new MailAddress(bccEmailId);
+                //    mailMessage.Bcc.Add(new MailAddress(bccEmailId)); //Adding Multiple BCC email Id
+                //}
+                Thread threadSendMails;
+                threadSendMails = new Thread(delegate ()
+                {
+                    mailClient.Send(mailMessage);
+                });
+                threadSendMails.IsBackground = true;
+                threadSendMails.Start();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         #endregion
     }

@@ -41,6 +41,9 @@ namespace MangalWeb.Model.Entity
         public Nullable<int> CMPID { get; set; }
         public Nullable<int> BranchID { get; set; }
         public string TransactionID { get; set; }
+        public Nullable<int> MessageActionID { get; set; }
+        public string Status { get; set; }
+        public string ApproverComments { get; set; }
     
         public virtual Mst_LoanPupose Mst_LoanPupose { get; set; }
         public virtual Mst_Product Mst_Product { get; set; }

@@ -56,6 +56,7 @@ namespace MangalWeb.Controllers
                     Session["UserName"] = user.UserName;
                     Session["UserCategory"] = user.UserTypeID;
                     Session["BranchId"] = login.BranchId;
+                    Session["BranchName"] = _context.tblCompanyBranchMasters.Where(x => x.BID == login.BranchId && x.Status == 1).Select(x => x.BranchName).FirstOrDefault();
                     Session["FinancialYearId"] = login.FinancialYearId;
                     Session["CompanyId"] = 1;
                     return RedirectToAction("Index", "Home");

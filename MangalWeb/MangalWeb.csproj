@@ -2038,6 +2038,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Custom\PreSanction.js" />
     <Content Include="Scripts\Custom\ResidenceVerification.js" />
+    <Content Include="Scripts\Custom\SanctionDisbursement.js" />
     <Content Include="Scripts\datepicker.js" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -2150,7 +2151,7 @@
     <Content Include="Views\ValuatorTwo\_ValuatorOneDetails.cshtml" />
     <Content Include="Views\ValuatorTwo\_ValuatorTwoDetails.cshtml" />
     <Content Include="Views\GLReceipt\Index.cshtml" />
-    <Content Include="Views\Shared\_DocumentUpload.cshtml" />
+    <Content Include="Views\ResidenceVerification\_ResidenceVerificationDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
