@@ -52,5 +52,6 @@ namespace MangalWeb.Model.Entity
         public virtual TGLKYC_BasicDetails TGLKYC_BasicDetails { get; set; }
         public virtual TSchemeMaster_BasicDetails TSchemeMaster_BasicDetails { get; set; }
         public virtual UserDetail UserDetail { get; set; }
+        public virtual MessageAction MessageAction { get; set; }
     }
 }

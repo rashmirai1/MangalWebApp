@@ -101,6 +101,7 @@
     <Compile Include="Repository\ChargeRepository.cs" />
     <Compile Include="Repository\DocumentRepository.cs" />
     <Compile Include="Repository\DocumentUploadRepository.cs" />
+    <Compile Include="Repository\MessageActionRepository.cs" />
     <Compile Include="Repository\ResidenceVerificationRepository.cs" />
     <Compile Include="Repository\PreSanctionRepository.cs" />
     <Compile Include="Repository\DocumentVerificationRepository.cs" />

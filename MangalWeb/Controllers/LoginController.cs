@@ -37,7 +37,19 @@ namespace MangalWeb.Controllers
             {
                 login.Password = PasswordEncryptionDecryption.Encrypt(login.Password);
 
-                var user = _context.UserDetails.Where(x => x.UserName.ToLower() == login.UserName.ToLower() &&
+                ViewBag.BranchList = new SelectList(_branchService.GetAllBranchMasters(), "BID", "BranchName");
+                ViewBag.FinancialYearList = new SelectList(_financialYearService.GetFinancialYearMasters(), "FinancialyearID", "Financialyear");
+
+                var branch = _context.Mst_UserBranch.Where(b => b.BranchID == login.BranchId && b.UserDetail.UserName.ToLower() == login.UserName.ToLower()).FirstOrDefault();
+
+                if(branch==null)
+                {
+                    ModelState.AddModelError("", "Selected branch is not assigned to you.");
+
+                    return View(login);
+                }
+
+                var user = _context.UserDetails.Where(x => x.UserID== branch.UserID &&
                                                         x.Password == login.Password
                                                         ).FirstOrDefault();
                 if (user != null)
@@ -66,8 +78,7 @@ namespace MangalWeb.Controllers
                     ModelState.AddModelError("", "Please check user name and password.");
                 }
             }
-            ViewBag.BranchList = new SelectList(_branchService.GetAllBranchMasters(), "BID", "BranchName");
-            ViewBag.FinancialYearList = new SelectList(_financialYearService.GetFinancialYearMasters(), "FinancialyearID", "Financialyear");
+            
             return View(login);
         }
 

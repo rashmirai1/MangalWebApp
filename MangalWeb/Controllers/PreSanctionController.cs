@@ -122,5 +122,18 @@ namespace MangalWeb.Controllers
             success = _preSanctionService.DeletePreSanction(Id, out errors);
             return Json(success);
         }
+
+        public ActionResult GetPreSanctionForApprove(int ID)
+        {
+           
+            var model = _preSanctionService.GetPreSanction(ID);
+            model.RMList = new SelectList(_preSanctionService.GetAllRMByBranch(), "UserID", "UserName");
+            model.LoanPurposes = new SelectList(_preSanctionService.GetLoanPurposes(), "LoanPuposeID", "LoanPupose");
+            model.Schemes = new SelectList(_schemeService.GetAllSchemeMasters(), "SID", "SchemeName");
+            model.Products = new SelectList(_productrateService.GetProductList(), "Id", "Name");
+
+            model.IsApproval = "1";
+            return View("Index", model);
+        }
     }
 }

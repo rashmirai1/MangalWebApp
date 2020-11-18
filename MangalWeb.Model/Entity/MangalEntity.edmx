@@ -77,6 +77,28 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="isActive" Type="char" MaxLength="2" />
         </EntityType>
+        <EntityType Name="MessageAction">
+          <Key>
+            <PropertyRef Name="MessageActionID" />
+          </Key>
+          <Property Name="MessageActionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Message" Type="varchar" MaxLength="5000" />
+          <Property Name="PageUrl" Type="varchar" MaxLength="200" />
+          <Property Name="UserCategoryID" Type="int" />
+          <Property Name="IsControl" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="Remarks" Type="varchar" MaxLength="5000" />
+        </EntityType>
+        <EntityType Name="MessageActionUser">
+          <Key>
+            <PropertyRef Name="MessageActionUserID" />
+          </Key>
+          <Property Name="MessageActionUserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MessageActionID" Type="int" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="IsRead" Type="bit" />
+        </EntityType>
         <EntityType Name="Mst_AuditCategory">
           <Key>
             <PropertyRef Name="Id" />
@@ -265,6 +287,14 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Property Name="Soa_RecordCreatedBy" Type="int" />
           <Property Name="Soa_RecordUpdatedBy" Type="int" />
         </EntityType>
+        <EntityType Name="Mst_UserBranch">
+          <Key>
+            <PropertyRef Name="UserBranch" />
+          </Key>
+          <Property Name="UserBranch" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="BranchID" Type="int" />
+        </EntityType>
         <EntityType Name="TBankCash_PaymentDetails">
           <Key>
             <PropertyRef Name="BCPID" />
@@ -392,31 +422,6 @@ warning 6002: The table/view 'MangalDBNew.dbo.Imagestore' does not have a primar
           <Property Name="NtWt" Type="decimal" Precision="10" Scale="2" />
           <Property Name="Rate" Type="decimal" Precision="10" Scale="2" />
           <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
-        </EntityType>
-        <EntityType Name="tbl_PreSanctionDetails">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="KycId" Type="int" />
-          <Property Name="TransactionId" Type="nvarchar" MaxLength="50" />
-          <Property Name="NewTopUp" Type="nvarchar" MaxLength="50" />
-          <Property Name="CustomerId" Type="nvarchar" MaxLength="50" />
-          <Property Name="AppliedDate" Type="datetime" />
-          <Property Name="ResidenceVerification" Type="nvarchar" MaxLength="50" />
-          <Property Name="ApplicationNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="RM" Type="int" Nullable="false" />
-          <Property Name="Product" Type="int" Nullable="false" />
-          <Property Name="PurposeofLoan" Type="nvarchar" MaxLength="50" />
-          <Property Name="Scheme" Type="int" />
-          <Property Name="ReqLoanAmount" Type="nvarchar" MaxLength="50" />
-          <Property Name="Tenure" Type="nvarchar" MaxLength="50" />
-          <Property Name="ROI" Type="nvarchar" MaxLength="50" />
-          <Property Name="LTV" Type="nvarchar" MaxLength="50" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="50" />
-          <Property Name="IsActive" Type="bit" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="tbl_UserCategory">
           <Key>
@@ -1035,9 +1040,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="GoldLoanNo" Type="nvarchar" MaxLength="40" />
           <Property Name="KYCID" Type="int" />
           <Property Name="OperatorID" Type="int" />
-          <Property Name="EligibleLoanAmt" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanPayable" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="EligibleLoanAmt" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="NetLoanAmtSanctioned" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="NetLoanPayable" Type="decimal" Precision="18" Scale="2" />
           <Property Name="BankCashAccID" Type="int" />
           <Property Name="CheqNEFTDD" Type="nvarchar" MaxLength="50" />
           <Property Name="CheqNEFTDDNo" Type="nvarchar" MaxLength="40" />
@@ -1063,7 +1068,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="FYID" Type="int" />
           <Property Name="BranchID" Type="int" />
           <Property Name="CMPID" Type="int" />
-          <Property Name="isActive" Type="nvarchar" MaxLength="100" />
+          <Property Name="isActive" Type="char" MaxLength="1" />
           <Property Name="CashInOutID" Type="int" />
           <Property Name="GLInOutID" Type="int" />
           <Property Name="CashOutWardById" Type="int" />
@@ -1071,7 +1076,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="CashAccID" Type="int" />
           <Property Name="BankAmount" Type="decimal" Precision="11" Scale="2" />
           <Property Name="CashAmount" Type="decimal" Precision="11" Scale="2" />
-          <Property Name="PaymentMode" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
           <Property Name="BankPaymentDate" Type="datetime" />
           <Property Name="Packetweight" Type="nvarchar" MaxLength="50" />
           <Property Name="LockerNo" Type="nvarchar" MaxLength="50" />
@@ -1277,6 +1282,42 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="updateddate" Type="datetime" />
           <Property Name="IsVerified" Type="int" />
         </EntityType>
+        <Association Name="FK__MessageAc__Messa__29CC2871">
+          <End Role="MessageAction" Type="Self.MessageAction" Multiplicity="0..1" />
+          <End Role="MessageActionUser" Type="Self.MessageActionUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageAction">
+              <PropertyRef Name="MessageActionID" />
+            </Principal>
+            <Dependent Role="MessageActionUser">
+              <PropertyRef Name="MessageActionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mst_UserB__Branc__381A47C8">
+          <End Role="tblCompanyBranchMaster" Type="Self.tblCompanyBranchMaster" Multiplicity="0..1" />
+          <End Role="Mst_UserBranch" Type="Self.Mst_UserBranch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCompanyBranchMaster">
+              <PropertyRef Name="BID" />
+            </Principal>
+            <Dependent Role="Mst_UserBranch">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mst_UserB__UserI__3726238F">
+          <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="0..1" />
+          <End Role="Mst_UserBranch" Type="Self.Mst_UserBranch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetails">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Mst_UserBranch">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__tbl_Ornam__Valua__536D5C82">
           <End Role="tbl_ValuatorOne" Type="Self.tbl_ValuatorOne" Multiplicity="1" />
           <End Role="tbl_ValuatorOneDetails" Type="Self.tbl_ValuatorOneDetails" Multiplicity="*" />
@@ -1322,6 +1363,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Principal>
             <Dependent Role="TGLPreSanction">
               <PropertyRef Name="LoanPurposeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TGLPreSan__Messa__4FF1D159">
+          <End Role="MessageAction" Type="Self.MessageAction" Multiplicity="0..1" />
+          <End Role="TGLPreSanction" Type="Self.TGLPreSanction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageAction">
+              <PropertyRef Name="MessageActionID" />
+            </Principal>
+            <Dependent Role="TGLPreSanction">
+              <PropertyRef Name="MessageActionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1457,18 +1510,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
-          <End Role="TGLKYC_BasicDetails" Type="Self.TGLKYC_BasicDetails" Multiplicity="0..1" />
-          <End Role="tbl_PreSanctionDetails" Type="Self.tbl_PreSanctionDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TGLKYC_BasicDetails">
-              <PropertyRef Name="KYCID" />
-            </Principal>
-            <Dependent Role="tbl_PreSanctionDetails">
-              <PropertyRef Name="KycId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblCityMaster_tblStateMaster">
           <End Role="tblStateMaster" Type="Self.tblStateMaster" Multiplicity="1" />
           <End Role="tblCityMaster" Type="Self.tblCityMaster" Multiplicity="*" />
@@ -1565,18 +1606,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails">
-          <End Role="tbl_PreSanctionDetails" Type="Self.tbl_PreSanctionDetails" Multiplicity="1" />
-          <End Role="TGLSanctionDisburse_BasicDetails" Type="Self.TGLSanctionDisburse_BasicDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_PreSanctionDetails">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TGLSanctionDisburse_BasicDetails">
-              <PropertyRef Name="PreSanctionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TGLSanctionDisburse_ChargesDetails_TGLSanctionDisburse_ChargesDetails">
           <End Role="TGLSanctionDisburse_ChargesDetails" Type="Self.TGLSanctionDisburse_ChargesDetails" Multiplicity="1" />
           <End Role="TGLSanctionDisburse_ChargesDetails1" Type="Self.TGLSanctionDisburse_ChargesDetails" Multiplicity="0..1" />
@@ -1661,6 +1690,19 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="AddMessageAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MessageActionID" Type="int" Mode="In" />
+          <Parameter Name="Message" Type="varchar" Mode="In" />
+          <Parameter Name="Remarks" Type="varchar" Mode="In" />
+          <Parameter Name="PageUrl" Type="varchar" Mode="In" />
+          <Parameter Name="UserCategoryID" Type="int" Mode="In" />
+          <Parameter Name="IsControl" Type="bit" Mode="In" />
+          <Parameter Name="CreatedBy" Type="int" Mode="In" />
+          <Parameter Name="OutputMessageActionID" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="DeleteMessageAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MessageActionID" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteSanctionDisbursementData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="AccountID" Type="int" Mode="In" />
           <Parameter Name="ReferenceNo" Type="varchar" Mode="In" />
@@ -1676,6 +1718,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Parameter Name="Message" Type="int" Mode="InOut" />
         </Function>
         <Function Name="GetCustomerRecordinSanction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetDeviationRange" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ParentID" Type="int" Mode="In" />
+          <Parameter Name="Range" Type="numeric" Mode="In" />
+        </Function>
         <Function Name="GetDocumentUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BranchId" Type="int" Mode="In" />
           <Parameter Name="FYID" Type="int" Mode="In" />
@@ -1694,6 +1740,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
         </Function>
         <Function Name="GetKYCDetailsForRequestForm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="KycId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetMessageAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="BranchID" Type="int" Mode="In" />
         </Function>
         <Function Name="GL_EmiCalculator_RTR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LoanDate" Type="datetime" Mode="In" />
@@ -1927,6 +1977,8 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="FLedgerMaster" EntityType="Self.FLedgerMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FSystemGeneratedEntryMaster" EntityType="Self.FSystemGeneratedEntryMaster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menus" EntityType="Self.Menus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MessageAction" EntityType="Self.MessageAction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MessageActionUser" EntityType="Self.MessageActionUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_AuditCategory" EntityType="Self.Mst_AuditCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_AuditCheckList" EntityType="Self.Mst_AuditCheckList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_BranchType" EntityType="Self.Mst_BranchType" Schema="dbo" store:Type="Tables" />
@@ -1944,6 +1996,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="Mst_Reason" EntityType="Self.Mst_Reason" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_SchemePurity" EntityType="Self.Mst_SchemePurity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mst_SourceofApplication" EntityType="Self.Mst_SourceofApplication" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mst_UserBranch" EntityType="Self.Mst_UserBranch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TBankCash_PaymentDetails" EntityType="Self.TBankCash_PaymentDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TBankCash_ReceiptDetails" EntityType="Self.TBankCash_ReceiptDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_CKycState" EntityType="Self.tbl_CKycState" Schema="dbo" store:Type="Tables" />
@@ -1952,7 +2005,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <EntitySet Name="tbl_GLChargeMaster_Details" EntityType="Self.tbl_GLChargeMaster_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_KYCMobileOTP" EntityType="Self.tbl_KYCMobileOTP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_OrnamentEvaluationDetails" EntityType="Self.tbl_OrnamentEvaluationDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tbl_PreSanctionDetails" EntityType="Self.tbl_PreSanctionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserCategory" EntityType="Self.tbl_UserCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ValuatorOne" EntityType="Self.tbl_ValuatorOne" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_ValuatorOneDetails" EntityType="Self.tbl_ValuatorOneDetails" Schema="dbo" store:Type="Tables" />
@@ -2024,6 +2076,18 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
     [TGLInterest_Details].[ROIRowID] AS [ROIRowID]
     FROM [dbo].[TGLInterest_Details] AS [TGLInterest_Details]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK__MessageAc__Messa__29CC2871" Association="Self.FK__MessageAc__Messa__29CC2871">
+            <End Role="MessageAction" EntitySet="MessageAction" />
+            <End Role="MessageActionUser" EntitySet="MessageActionUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mst_UserB__Branc__381A47C8" Association="Self.FK__Mst_UserB__Branc__381A47C8">
+            <End Role="tblCompanyBranchMaster" EntitySet="tblCompanyBranchMaster" />
+            <End Role="Mst_UserBranch" EntitySet="Mst_UserBranch" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mst_UserB__UserI__3726238F" Association="Self.FK__Mst_UserB__UserI__3726238F">
+            <End Role="UserDetails" EntitySet="UserDetails" />
+            <End Role="Mst_UserBranch" EntitySet="Mst_UserBranch" />
+          </AssociationSet>
           <AssociationSet Name="FK__tbl_Ornam__Valua__536D5C82" Association="Self.FK__tbl_Ornam__Valua__536D5C82">
             <End Role="tbl_ValuatorOne" EntitySet="tbl_ValuatorOne" />
             <End Role="tbl_ValuatorOneDetails" EntitySet="tbl_ValuatorOneDetails" />
@@ -2038,6 +2102,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           </AssociationSet>
           <AssociationSet Name="FK__TGLPreSan__LoanP__0A888742" Association="Self.FK__TGLPreSan__LoanP__0A888742">
             <End Role="Mst_LoanPupose" EntitySet="Mst_LoanPupose" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSan__Messa__4FF1D159" Association="Self.FK__TGLPreSan__Messa__4FF1D159">
+            <End Role="MessageAction" EntitySet="MessageAction" />
             <End Role="TGLPreSanction" EntitySet="TGLPreSanction" />
           </AssociationSet>
           <AssociationSet Name="FK__TGLPreSan__Produ__09946309" Association="Self.FK__TGLPreSan__Produ__09946309">
@@ -2084,10 +2152,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <End Role="tbl_GLChargeMaster_BasicInfo" EntitySet="tbl_GLChargeMaster_BasicInfo" />
             <End Role="tbl_GLChargeMaster_Details" EntitySet="tbl_GLChargeMaster_Details" />
           </AssociationSet>
-          <AssociationSet Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" Association="Self.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
-            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
-            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblCityMaster_tblStateMaster" Association="Self.FK_tblCityMaster_tblStateMaster">
             <End Role="tblStateMaster" EntitySet="tblStateMaster" />
             <End Role="tblCityMaster" EntitySet="tblCityMaster" />
@@ -2119,10 +2183,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <AssociationSet Name="fk_TGLKYC_BasicDetails" Association="Self.fk_TGLKYC_BasicDetails">
             <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
             <End Role="Trans_KYCAddresses" EntitySet="Trans_KYCAddresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" Association="Self.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails">
-            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
-            <End Role="TGLSanctionDisburse_BasicDetails" EntitySet="TGLSanctionDisburse_BasicDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_TGLSanctionDisburse_ChargesDetails_TGLSanctionDisburse_ChargesDetails" Association="Self.FK_TGLSanctionDisburse_ChargesDetails_TGLSanctionDisburse_ChargesDetails">
             <End Role="TGLSanctionDisburse_ChargesDetails" EntitySet="TGLSanctionDisburse_ChargesDetails" />
@@ -2497,14 +2557,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <Parameter Name="ClosingBalanceDebit" Mode="In" Type="Double" />
             <Parameter Name="ClosingBalanceCredit" Mode="In" Type="Double" />
           </FunctionImport>
-          <EntitySet Name="tbl_PreSanctionDetails" EntityType="MangalDBNewModel.tbl_PreSanctionDetails" />
           <EntitySet Name="Trans_KYCAddresses" EntityType="MangalDBNewModel.Trans_KYCAddresses" />
           <EntitySet Name="tblHistory_KYCAddresses" EntityType="MangalDBNewModel.tblHistory_KYCAddresses" />
           <EntitySet Name="TGLKYC_BasicDetails" EntityType="MangalDBNewModel.TGLKYC_BasicDetails" />
-          <AssociationSet Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" Association="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
-            <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
-            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
-          </AssociationSet>
           <AssociationSet Name="fk_TGLKYC_BasicDetails" Association="MangalDBNewModel.fk_TGLKYC_BasicDetails">
             <End Role="TGLKYC_BasicDetails" EntitySet="TGLKYC_BasicDetails" />
             <End Role="Trans_KYCAddresses" EntitySet="Trans_KYCAddresses" />
@@ -2539,10 +2594,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <Parameter Name="BranchId" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="TGLSanctionDisburse_BasicDetails" EntityType="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" />
-          <AssociationSet Name="FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" Association="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails">
-            <End Role="tbl_PreSanctionDetails" EntitySet="tbl_PreSanctionDetails" />
-            <End Role="TGLSanctionDisburse_BasicDetails" EntitySet="TGLSanctionDisburse_BasicDetails" />
-          </AssociationSet>
           <EntitySet Name="TGLPreSanctions" EntityType="MangalDBNewModel.TGLPreSanction" />
           <AssociationSet Name="FK__TGLPreSan__LoanP__0A888742" Association="MangalDBNewModel.FK__TGLPreSan__LoanP__0A888742">
             <End Role="Mst_LoanPupose" EntitySet="Mst_LoanPupose" />
@@ -2613,6 +2664,46 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             <Parameter Name="Remark" Mode="In" Type="String" />
             <Parameter Name="GoldInwardDate" Mode="In" Type="DateTime" />
             <Parameter Name="PreSanctionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="MessageActions" EntityType="MangalDBNewModel.MessageAction" />
+          <EntitySet Name="MessageActionUsers" EntityType="MangalDBNewModel.MessageActionUser" />
+          <EntitySet Name="Mst_UserBranch" EntityType="MangalDBNewModel.Mst_UserBranch" />
+          <AssociationSet Name="FK__MessageAc__Messa__29CC2871" Association="MangalDBNewModel.FK__MessageAc__Messa__29CC2871">
+            <End Role="MessageAction" EntitySet="MessageActions" />
+            <End Role="MessageActionUser" EntitySet="MessageActionUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TGLPreSan__Messa__4FF1D159" Association="MangalDBNewModel.FK__TGLPreSan__Messa__4FF1D159">
+            <End Role="MessageAction" EntitySet="MessageActions" />
+            <End Role="TGLPreSanction" EntitySet="TGLPreSanctions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mst_UserB__Branc__381A47C8" Association="MangalDBNewModel.FK__Mst_UserB__Branc__381A47C8">
+            <End Role="tblCompanyBranchMaster" EntitySet="tblCompanyBranchMasters" />
+            <End Role="Mst_UserBranch" EntitySet="Mst_UserBranch" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Mst_UserB__UserI__3726238F" Association="MangalDBNewModel.FK__Mst_UserB__UserI__3726238F">
+            <End Role="UserDetail" EntitySet="UserDetails" />
+            <End Role="Mst_UserBranch" EntitySet="Mst_UserBranch" />
+          </AssociationSet>
+          <FunctionImport Name="AddMessageAction">
+            <Parameter Name="MessageActionID" Mode="In" Type="Int32" />
+            <Parameter Name="Message" Mode="In" Type="String" />
+            <Parameter Name="Remarks" Mode="In" Type="String" />
+            <Parameter Name="PageUrl" Mode="In" Type="String" />
+            <Parameter Name="UserCategoryID" Mode="In" Type="Int32" />
+            <Parameter Name="IsControl" Mode="In" Type="Boolean" />
+            <Parameter Name="CreatedBy" Mode="In" Type="Int32" />
+            <Parameter Name="OutputMessageActionID" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteMessageAction">
+          <Parameter Name="MessageActionID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetDeviationRange" ReturnType="Collection(MangalDBNewModel.GetDeviationRange_Result)">
+            <Parameter Name="ParentID" Mode="In" Type="Int32" />
+            <Parameter Name="Range" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="GetMessageAction" ReturnType="Collection(MangalDBNewModel.GetMessageAction_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="BranchID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="tbl_CountryMaster">
@@ -2892,6 +2983,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="RecordUpdatedBy" Type="Int32" />
           <NavigationProperty Name="Mst_PinCode" Relationship="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_PinCode" FromRole="tblCompanyBranchMaster" ToRole="Mst_PinCode" />
           <NavigationProperty Name="Mst_BranchType" Relationship="MangalDBNewModel.FK_tblCompanyBranchMaster_Mst_BranchType" FromRole="tblCompanyBranchMaster" ToRole="Mst_BranchType" />
+          <NavigationProperty Name="Mst_UserBranch" Relationship="MangalDBNewModel.FK__Mst_UserB__Branc__381A47C8" FromRole="tblCompanyBranchMaster" ToRole="Mst_UserBranch" />
         </EntityType>
         <EntityType Name="Mst_PenaltySlab">
           <Key>
@@ -3372,6 +3464,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <NavigationProperty Name="tbl_UserCategory" Relationship="MangalDBNewModel.FK_UserDetails_tbl_UserCategory" FromRole="UserDetail" ToRole="tbl_UserCategory" />
           <Property Name="IsVerified" Type="Int32" />
           <NavigationProperty Name="TGLPreSanctions" Relationship="MangalDBNewModel.FK__TGLPreSanc__RMID__08A03ED0" FromRole="UserDetail" ToRole="TGLPreSanction" />
+          <NavigationProperty Name="Mst_UserBranch" Relationship="MangalDBNewModel.FK__Mst_UserB__UserI__3726238F" FromRole="UserDetail" ToRole="Mst_UserBranch" />
         </EntityType>
         <Association Name="FK_UserDetails_tbl_UserCategory">
           <End Type="MangalDBNewModel.tbl_UserCategory" Role="tbl_UserCategory" Multiplicity="1" />
@@ -4144,33 +4237,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="TotalAdvInterestAmount" Type="Decimal" Precision="11" Scale="2" />
           <Property Name="OSAdvInterestAmount" Type="Decimal" Precision="11" Scale="2" />
         </EntityType>
-        <EntityType Name="tbl_PreSanctionDetails">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="KycId" Type="Int32" />
-          <Property Name="TransactionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NewTopUp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AppliedDate" Type="DateTime" Precision="3" />
-          <Property Name="ResidenceVerification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ApplicationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RM" Type="Int32" Nullable="false" />
-          <Property Name="Product" Type="Int32" Nullable="false" />
-          <Property Name="PurposeofLoan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Scheme" Type="Int32" />
-          <Property Name="ReqLoanAmount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Tenure" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ROI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LTV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="tbl_PreSanctionDetails" ToRole="TGLKYC_BasicDetails" />
-          <NavigationProperty Name="TGLSanctionDisburse_BasicDetails" Relationship="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" FromRole="tbl_PreSanctionDetails" ToRole="TGLSanctionDisburse_BasicDetails" />
-        </EntityType>
         <EntityType Name="Trans_KYCAddresses">
           <Key>
             <PropertyRef Name="ID" />
@@ -4274,23 +4340,10 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="PinCode" Type="Int32" Nullable="false" />
           <Property Name="ResidenceCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="AddressCategory" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="tbl_PreSanctionDetails" />
           <NavigationProperty Name="Trans_KYCAddresses" Relationship="MangalDBNewModel.fk_TGLKYC_BasicDetails" FromRole="TGLKYC_BasicDetails" ToRole="Trans_KYCAddresses" />
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TGLPreSanctions" Relationship="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97" FromRole="TGLKYC_BasicDetails" ToRole="TGLPreSanction" />
         </EntityType>
-        <Association Name="FK_tbl_PreSanctionDetails_TGLKYC_BasicDetails">
-          <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="0..1" />
-          <End Type="MangalDBNewModel.tbl_PreSanctionDetails" Role="tbl_PreSanctionDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TGLKYC_BasicDetails">
-              <PropertyRef Name="KYCID" />
-            </Principal>
-            <Dependent Role="tbl_PreSanctionDetails">
-              <PropertyRef Name="KycId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_TGLKYC_BasicDetails">
           <End Type="MangalDBNewModel.TGLKYC_BasicDetails" Role="TGLKYC_BasicDetails" Multiplicity="1" />
           <End Type="MangalDBNewModel.Trans_KYCAddresses" Role="Trans_KYCAddresses" Multiplicity="*" />
@@ -4613,9 +4666,9 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="GoldLoanNo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="KYCID" Type="Int32" />
           <Property Name="OperatorID" Type="Int32" />
-          <Property Name="EligibleLoanAmt" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanAmtSanctioned" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="NetLoanPayable" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="EligibleLoanAmt" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="NetLoanAmtSanctioned" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="NetLoanPayable" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="BankCashAccID" Type="Int32" />
           <Property Name="CheqNEFTDD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CheqNEFTDDNo" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
@@ -4641,7 +4694,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="FYID" Type="Int32" />
           <Property Name="BranchID" Type="Int32" />
           <Property Name="CMPID" Type="Int32" />
-          <Property Name="isActive" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="CashInOutID" Type="Int32" />
           <Property Name="GLInOutID" Type="Int32" />
           <Property Name="CashOutWardById" Type="Int32" />
@@ -4649,26 +4702,13 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <Property Name="CashAccID" Type="Int32" />
           <Property Name="BankAmount" Type="Decimal" Precision="11" Scale="2" />
           <Property Name="CashAmount" Type="Decimal" Precision="11" Scale="2" />
-          <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="BankPaymentDate" Type="DateTime" Precision="3" />
           <Property Name="Packetweight" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LockerNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="PreSanctionId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tbl_PreSanctionDetails" Relationship="MangalDBNewModel.FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails" FromRole="TGLSanctionDisburse_BasicDetails" ToRole="tbl_PreSanctionDetails" />
         </EntityType>
-        <Association Name="FK_TGLSanctionDisburse_BasicDetails_tbl_PreSanctionDetails">
-          <End Type="MangalDBNewModel.tbl_PreSanctionDetails" Role="tbl_PreSanctionDetails" Multiplicity="1" />
-          <End Type="MangalDBNewModel.TGLSanctionDisburse_BasicDetails" Role="TGLSanctionDisburse_BasicDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_PreSanctionDetails">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TGLSanctionDisburse_BasicDetails">
-              <PropertyRef Name="PreSanctionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="TGLPreSanction">
           <Key>
             <PropertyRef Name="PreSanctionID" />
@@ -4703,6 +4743,7 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <NavigationProperty Name="TGLKYC_BasicDetails" Relationship="MangalDBNewModel.FK__TGLPreSan__KYCID__07AC1A97" FromRole="TGLPreSanction" ToRole="TGLKYC_BasicDetails" />
           <NavigationProperty Name="TSchemeMaster_BasicDetails" Relationship="MangalDBNewModel.FK__TGLPreSan__Schem__0B7CAB7B" FromRole="TGLPreSanction" ToRole="TSchemeMaster_BasicDetails" />
           <NavigationProperty Name="UserDetail" Relationship="MangalDBNewModel.FK__TGLPreSanc__RMID__08A03ED0" FromRole="TGLPreSanction" ToRole="UserDetail" />
+          <NavigationProperty Name="MessageAction" Relationship="MangalDBNewModel.FK__TGLPreSan__Messa__4FF1D159" FromRole="TGLPreSanction" ToRole="MessageAction" />
         </EntityType>
         <Association Name="FK__TGLPreSan__LoanP__0A888742">
           <End Type="MangalDBNewModel.Mst_LoanPupose" Role="Mst_LoanPupose" Multiplicity="0..1" />
@@ -4776,6 +4817,112 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="MessageAction">
+          <Key>
+            <PropertyRef Name="MessageActionID" />
+          </Key>
+          <Property Name="MessageActionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="PageUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserCategoryID" Type="Int32" />
+          <Property Name="IsControl" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="Remarks" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MessageActionUsers" Relationship="MangalDBNewModel.FK__MessageAc__Messa__29CC2871" FromRole="MessageAction" ToRole="MessageActionUser" />
+          <NavigationProperty Name="TGLPreSanctions" Relationship="MangalDBNewModel.FK__TGLPreSan__Messa__4FF1D159" FromRole="MessageAction" ToRole="TGLPreSanction" />
+        </EntityType>
+        <EntityType Name="MessageActionUser">
+          <Key>
+            <PropertyRef Name="MessageActionUserID" />
+          </Key>
+          <Property Name="MessageActionUserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageActionID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="IsRead" Type="Boolean" />
+          <NavigationProperty Name="MessageAction" Relationship="MangalDBNewModel.FK__MessageAc__Messa__29CC2871" FromRole="MessageActionUser" ToRole="MessageAction" />
+        </EntityType>
+        <EntityType Name="Mst_UserBranch">
+          <Key>
+            <PropertyRef Name="UserBranch" />
+          </Key>
+          <Property Name="UserBranch" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="BranchID" Type="Int32" />
+          <NavigationProperty Name="tblCompanyBranchMaster" Relationship="MangalDBNewModel.FK__Mst_UserB__Branc__381A47C8" FromRole="Mst_UserBranch" ToRole="tblCompanyBranchMaster" />
+          <NavigationProperty Name="UserDetail" Relationship="MangalDBNewModel.FK__Mst_UserB__UserI__3726238F" FromRole="Mst_UserBranch" ToRole="UserDetail" />
+        </EntityType>
+        <Association Name="FK__MessageAc__Messa__29CC2871">
+          <End Type="MangalDBNewModel.MessageAction" Role="MessageAction" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.MessageActionUser" Role="MessageActionUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageAction">
+              <PropertyRef Name="MessageActionID" />
+            </Principal>
+            <Dependent Role="MessageActionUser">
+              <PropertyRef Name="MessageActionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TGLPreSan__Messa__4FF1D159">
+          <End Type="MangalDBNewModel.MessageAction" Role="MessageAction" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.TGLPreSanction" Role="TGLPreSanction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageAction">
+              <PropertyRef Name="MessageActionID" />
+            </Principal>
+            <Dependent Role="TGLPreSanction">
+              <PropertyRef Name="MessageActionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mst_UserB__Branc__381A47C8">
+          <End Type="MangalDBNewModel.tblCompanyBranchMaster" Role="tblCompanyBranchMaster" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.Mst_UserBranch" Role="Mst_UserBranch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCompanyBranchMaster">
+              <PropertyRef Name="BID" />
+            </Principal>
+            <Dependent Role="Mst_UserBranch">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Mst_UserB__UserI__3726238F">
+          <End Type="MangalDBNewModel.UserDetail" Role="UserDetail" Multiplicity="0..1" />
+          <End Type="MangalDBNewModel.Mst_UserBranch" Role="Mst_UserBranch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDetail">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Mst_UserBranch">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetDeviationRange_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="ParentId" Nullable="false" />
+          <Property Type="Decimal" Name="ApproveDistanceLimit" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="MinRange" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="MaxRange" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="UserCategoryId" Nullable="true" />
+          <Property Type="Decimal" Name="ThreasoldLimit" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="IsDeviation" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetMessageAction_Result">
+          <Property Type="Int32" Name="MessageActionID" Nullable="false" />
+          <Property Type="String" Name="Message" Nullable="true" MaxLength="5000" />
+          <Property Type="String" Name="Remarks" Nullable="false" MaxLength="8000" />
+          <Property Type="String" Name="PageUrl" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="UserCategoryID" Nullable="true" />
+          <Property Type="Boolean" Name="IsControl" Nullable="true" />
+          <Property Type="Int32" Name="CreatedBy" Nullable="true" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="MessageActionUserID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="true" />
+          <Property Type="Boolean" Name="IsRead" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5955,32 +6102,6 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
           <FunctionImportMapping FunctionImportName="GL_EmiCalculator_RTR" FunctionName="MangalDBNewModel.Store.GL_EmiCalculator_RTR" />
           <FunctionImportMapping FunctionImportName="DeleteSanctionDisbursementData" FunctionName="MangalDBNewModel.Store.DeleteSanctionDisbursementData" />
           <FunctionImportMapping FunctionImportName="SP_InsertrecordinFCompanyYearEndClosing" FunctionName="MangalDBNewModel.Store.SP_InsertrecordinFCompanyYearEndClosing" />
-          <EntitySetMapping Name="tbl_PreSanctionDetails">
-            <EntityTypeMapping TypeName="MangalDBNewModel.tbl_PreSanctionDetails">
-              <MappingFragment StoreEntitySet="tbl_PreSanctionDetails">
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="LTV" ColumnName="LTV" />
-                <ScalarProperty Name="ROI" ColumnName="ROI" />
-                <ScalarProperty Name="Tenure" ColumnName="Tenure" />
-                <ScalarProperty Name="ReqLoanAmount" ColumnName="ReqLoanAmount" />
-                <ScalarProperty Name="Scheme" ColumnName="Scheme" />
-                <ScalarProperty Name="PurposeofLoan" ColumnName="PurposeofLoan" />
-                <ScalarProperty Name="Product" ColumnName="Product" />
-                <ScalarProperty Name="RM" ColumnName="RM" />
-                <ScalarProperty Name="ApplicationNo" ColumnName="ApplicationNo" />
-                <ScalarProperty Name="ResidenceVerification" ColumnName="ResidenceVerification" />
-                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="NewTopUp" ColumnName="NewTopUp" />
-                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
-                <ScalarProperty Name="KycId" ColumnName="KycId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Trans_KYCAddresses">
             <EntityTypeMapping TypeName="MangalDBNewModel.Trans_KYCAddresses">
               <MappingFragment StoreEntitySet="Trans_KYCAddresses">
@@ -6456,6 +6577,72 @@ warning 6005: The data type 'sql_variant' is currently not supported for the tar
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_SanctionDisburse_PRI" FunctionName="MangalDBNewModel.Store.SP_SanctionDisburse_PRI" />
+          <EntitySetMapping Name="MessageActions">
+            <EntityTypeMapping TypeName="MangalDBNewModel.MessageAction">
+              <MappingFragment StoreEntitySet="MessageAction">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsControl" ColumnName="IsControl" />
+                <ScalarProperty Name="UserCategoryID" ColumnName="UserCategoryID" />
+                <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="MessageActionID" ColumnName="MessageActionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MessageActionUsers">
+            <EntityTypeMapping TypeName="MangalDBNewModel.MessageActionUser">
+              <MappingFragment StoreEntitySet="MessageActionUser">
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="MessageActionID" ColumnName="MessageActionID" />
+                <ScalarProperty Name="MessageActionUserID" ColumnName="MessageActionUserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mst_UserBranch">
+            <EntityTypeMapping TypeName="MangalDBNewModel.Mst_UserBranch">
+              <MappingFragment StoreEntitySet="Mst_UserBranch">
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserBranch" ColumnName="UserBranch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddMessageAction" FunctionName="MangalDBNewModel.Store.AddMessageAction" />
+          <FunctionImportMapping FunctionImportName="DeleteMessageAction" FunctionName="MangalDBNewModel.Store.DeleteMessageAction" />
+          <FunctionImportMapping FunctionImportName="GetDeviationRange" FunctionName="MangalDBNewModel.Store.GetDeviationRange">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.GetDeviationRange_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ApproveDistanceLimit" ColumnName="ApproveDistanceLimit" />
+                <ScalarProperty Name="MinRange" ColumnName="MinRange" />
+                <ScalarProperty Name="MaxRange" ColumnName="MaxRange" />
+                <ScalarProperty Name="UserCategoryId" ColumnName="UserCategoryId" />
+                <ScalarProperty Name="ThreasoldLimit" ColumnName="ThreasoldLimit" />
+                <ScalarProperty Name="IsDeviation" ColumnName="IsDeviation" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetMessageAction" FunctionName="MangalDBNewModel.Store.GetMessageAction">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MangalDBNewModel.GetMessageAction_Result">
+                <ScalarProperty Name="MessageActionID" ColumnName="MessageActionID" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
+                <ScalarProperty Name="UserCategoryID" ColumnName="UserCategoryID" />
+                <ScalarProperty Name="IsControl" ColumnName="IsControl" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="MessageActionUserID" ColumnName="MessageActionUserID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

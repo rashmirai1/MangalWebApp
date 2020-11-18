@@ -83,7 +83,6 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<TGLGoldStock> TGLGoldStocks { get; set; }
         public virtual DbSet<TGLInterest_Details> TGLInterest_Details { get; set; }
         public virtual DbSet<TGlReceipt_BasicDetails> TGlReceipt_BasicDetails { get; set; }
-        public virtual DbSet<tbl_PreSanctionDetails> tbl_PreSanctionDetails { get; set; }
         public virtual DbSet<Trans_KYCAddresses> Trans_KYCAddresses { get; set; }
         public virtual DbSet<tblHistory_KYCAddresses> tblHistory_KYCAddresses { get; set; }
         public virtual DbSet<TGLKYC_BasicDetails> TGLKYC_BasicDetails { get; set; }
@@ -97,6 +96,9 @@ namespace MangalWeb.Model.Entity
         public virtual DbSet<tblResidenceVerification> tblResidenceVerifications { get; set; }
         public virtual DbSet<TGLSanctionDisburse_BasicDetails> TGLSanctionDisburse_BasicDetails { get; set; }
         public virtual DbSet<TGLPreSanction> TGLPreSanctions { get; set; }
+        public virtual DbSet<MessageAction> MessageActions { get; set; }
+        public virtual DbSet<MessageActionUser> MessageActionUsers { get; set; }
+        public virtual DbSet<Mst_UserBranch> Mst_UserBranch { get; set; }
     
         [DbFunction("MangalDBNewEntities", "SplitValue")]
         public virtual IQueryable<SplitValue_Result> SplitValue(string @string, string delimiter)
@@ -998,6 +1000,74 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("PreSanctionId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SanctionDisburse_PRI", operationParameter, sDIDParameter, loanTypeParameter, loanDateParameter, goldLoanNoParameter, kYCIDParameter, eligibleLoanAmtParameter, netLoanAmtSanctionedParameter, chargesTotalParameter, netLoanPayableParameter, cheqNEFTDDParameter, cheqNEFTDDNoParameter, cheqNEFTDDDateParameter, totalGrossWeightParameter, totalNetWeightParameter, totalQuantityParameter, totalvalueParameter, totalRateParameter, sIDParameter, dueDateParameter, proofOfOwnerShipImageFileParameter, fileNameParameter, contentTypeParameter, cIBILScoreParameter, bCPIDParameter, cashOutWardByIdParameter, goldInWardByIdParameter, createdByParameter, fYIDParameter, branchIDParameter, cMPIDParameter, cashAccIDParameter, cashAmountParameter, bankCashAccIDParameter, bankAmountParameter, paymentModeParameter, linenoParameter, bankPaymentDateParameter, lockerNoParameter, packetWeightParameter, rackNoParameter, remarkParameter, goldInwardDateParameter, preSanctionIdParameter);
+        }
+    
+        public virtual int AddMessageAction(Nullable<int> messageActionID, string message, string remarks, string pageUrl, Nullable<int> userCategoryID, Nullable<bool> isControl, Nullable<int> createdBy, ObjectParameter outputMessageActionID)
+        {
+            var messageActionIDParameter = messageActionID.HasValue ?
+                new ObjectParameter("MessageActionID", messageActionID) :
+                new ObjectParameter("MessageActionID", typeof(int));
+    
+            var messageParameter = message != null ?
+                new ObjectParameter("Message", message) :
+                new ObjectParameter("Message", typeof(string));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var pageUrlParameter = pageUrl != null ?
+                new ObjectParameter("PageUrl", pageUrl) :
+                new ObjectParameter("PageUrl", typeof(string));
+    
+            var userCategoryIDParameter = userCategoryID.HasValue ?
+                new ObjectParameter("UserCategoryID", userCategoryID) :
+                new ObjectParameter("UserCategoryID", typeof(int));
+    
+            var isControlParameter = isControl.HasValue ?
+                new ObjectParameter("IsControl", isControl) :
+                new ObjectParameter("IsControl", typeof(bool));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddMessageAction", messageActionIDParameter, messageParameter, remarksParameter, pageUrlParameter, userCategoryIDParameter, isControlParameter, createdByParameter, outputMessageActionID);
+        }
+    
+        public virtual int DeleteMessageAction(Nullable<int> messageActionID)
+        {
+            var messageActionIDParameter = messageActionID.HasValue ?
+                new ObjectParameter("MessageActionID", messageActionID) :
+                new ObjectParameter("MessageActionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteMessageAction", messageActionIDParameter);
+        }
+    
+        public virtual ObjectResult<GetDeviationRange_Result> GetDeviationRange(Nullable<int> parentID, Nullable<decimal> range)
+        {
+            var parentIDParameter = parentID.HasValue ?
+                new ObjectParameter("ParentID", parentID) :
+                new ObjectParameter("ParentID", typeof(int));
+    
+            var rangeParameter = range.HasValue ?
+                new ObjectParameter("Range", range) :
+                new ObjectParameter("Range", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDeviationRange_Result>("GetDeviationRange", parentIDParameter, rangeParameter);
+        }
+    
+        public virtual ObjectResult<GetMessageAction_Result> GetMessageAction(Nullable<int> userID, Nullable<int> branchID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var branchIDParameter = branchID.HasValue ?
+                new ObjectParameter("BranchID", branchID) :
+                new ObjectParameter("BranchID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMessageAction_Result>("GetMessageAction", userIDParameter, branchIDParameter);
         }
     }
 }

@@ -14,6 +14,12 @@ namespace MangalWeb.Model.Entity
     
     public partial class tblCompanyBranchMaster
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblCompanyBranchMaster()
+        {
+            this.Mst_UserBranch = new HashSet<Mst_UserBranch>();
+        }
+    
         public int BID { get; set; }
         public string BranchName { get; set; }
         public int CompID { get; set; }
@@ -36,5 +42,7 @@ namespace MangalWeb.Model.Entity
     
         public virtual Mst_PinCode Mst_PinCode { get; set; }
         public virtual Mst_BranchType Mst_BranchType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Mst_UserBranch> Mst_UserBranch { get; set; }
     }
 }

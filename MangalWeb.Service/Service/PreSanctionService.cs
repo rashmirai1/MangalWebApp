@@ -13,6 +13,7 @@ namespace MangalWeb.Service.Service
     {
        
         PreSanctionRepository _preSanctionRepository = new PreSanctionRepository();
+        MessageActionRepository _MessageActionRepository = new MessageActionRepository();
 
         #region Public Methods
         public List<TGLPreSanction> GetPreSanctions()
@@ -33,18 +34,38 @@ namespace MangalWeb.Service.Service
             if (model.PreSanctionID <= 0)
             {
                 preSanction.CreatedDate = DateTime.Now;
-                var dbRecord = _preSanctionRepository.AddPreSanction(preSanction,out errors);
+                var dbRecord = _preSanctionRepository.AddPreSanction(preSanction, out errors);
 
                 if (dbRecord != null)
                 {
                     model.PreSanctionID = dbRecord.PreSanctionID;
-                    return model;
+                    if (errors.Count <= 0)
+                    {
+                        AddDeviationRange(model);
+                    }
                 }
+            }
+            else if (model.PreSanctionID > 0 && model.IsApproval == "1")
+            {
+
+                preSanction.Status = model.DeviationApprove;
+                preSanction.ApproverComments = model.ApproverComment;
+
+                var dbRecord = _preSanctionRepository.UpdatePreSanctionApprove(preSanction, out errors);
             }
             else if (model.PreSanctionID > 0)
             {
-                _preSanctionRepository.UpdatePreSanction(preSanction, out errors);
+
+                var dbRecod = _preSanctionRepository.UpdatePreSanction(preSanction, out errors);
+                if (errors.Count <= 0)
+                {
+                    _preSanctionRepository.DeleteMessageAction(dbRecod.MessageActionID ?? 0);
+                    AddDeviationRange(model);
+                }
+
             }
+
+            
 
             return model;
         }
@@ -89,6 +110,36 @@ namespace MangalWeb.Service.Service
             var customer = _preSanctionRepository.GetCustomerById(id);
             return ToViewModelPreSanctionVM(customer);
         }
+        public void AddDeviationRange(TGLPreSanctionVM model)
+        {
+            string pageUrl = "/PreSanction/GetPreSanctionForApprove/" + model.PreSanctionID;
+            string message = string.Format("Deviation raised on presanction-Customer({0})", model.CustomerID);
+            string remarks = string.Empty;
+
+            var roiDeviation = _preSanctionRepository.GetDeviationRange(1, model.ROI ?? 0);
+            if(roiDeviation.IsDeviation??false)
+            {
+                remarks = string.Format("Deviation raised for ROI which is beyond the range");             
+
+            }
+
+            var tenureDeviation = _preSanctionRepository.GetDeviationRange(5, model.Tenure ?? 0);
+            if(tenureDeviation.IsDeviation??false)
+            {
+                remarks += string.Format(", Deviation raised for Tenure which is beyond the range");
+            }
+
+            if(!string.IsNullOrEmpty(remarks))
+            {
+                var actionId = _MessageActionRepository.AddMessageAction(0, message, remarks, pageUrl, roiDeviation.UserCategoryId ?? 0, true, model.CreatedBy ?? 0);
+                _preSanctionRepository.UpdateActionIDToPreSanction(model.PreSanctionID, actionId);
+            }
+
+
+        }
+        #endregion Public Methods
+
+        #region Private Methods
         private TGLPreSanctionVM ToViewModelPreSanctionVM(TGLKYC_BasicDetails model)
         {
             Random rand = new Random(100);
@@ -103,9 +154,6 @@ namespace MangalWeb.Service.Service
                 KYCID = model.KYCID
             };
         }
-        #endregion Public Methods
-
-        #region Private Methods
         private TGLPreSanction CreateTGLPreSanction(TGLPreSanctionVM model)
         {
             return new TGLPreSanction
@@ -123,12 +171,11 @@ namespace MangalWeb.Service.Service
                 ROI = model.ROI,
                 SchemeID = model.SchemeID,
                 Tenure = model.Tenure,
-                ResidenceVerification=model.ResidenceVerification,
-                TransactionID=model.TransactionID,
-                FYID=model.FYID,
-                CMPID=model.CMPID,
-                BranchID=model.BranchID,
-
+                ResidenceVerification = model.ResidenceVerification,
+                TransactionID = model.TransactionID,
+                FYID = model.FYID,
+                CMPID = model.CMPID,
+                BranchID = model.BranchID,
 
             };
         }
@@ -153,8 +200,9 @@ namespace MangalWeb.Service.Service
                CustomerID=model.TGLKYC_BasicDetails.CustomerID,
                ApplicationNo=model.TGLKYC_BasicDetails.ApplicationNo,
                AppliedDate= model.TGLKYC_BasicDetails.AppliedDate.ToString("dd/MM/yyyy"),
-               TransactionID=model.TransactionID
-               
+               TransactionID=model.TransactionID,
+               ApproverComment=model.ApproverComments,
+               DeviationApprove=model.Status
 
             };
         }

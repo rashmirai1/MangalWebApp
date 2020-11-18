@@ -18,6 +18,7 @@ namespace MangalWeb.Model.Entity
         public UserDetail()
         {
             this.TGLPreSanctions = new HashSet<TGLPreSanction>();
+            this.Mst_UserBranch = new HashSet<Mst_UserBranch>();
         }
     
         public int UserID { get; set; }
@@ -38,5 +39,7 @@ namespace MangalWeb.Model.Entity
         public virtual tbl_UserCategory tbl_UserCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TGLPreSanction> TGLPreSanctions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Mst_UserBranch> Mst_UserBranch { get; set; }
     }
 }
