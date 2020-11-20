@@ -66,5 +66,10 @@ namespace MangalWeb.Model.Entity
         public string LockerNo { get; set; }
         public string Remark { get; set; }
         public int PreSanctionId { get; set; }
+        public Nullable<int> GstId { get; set; }
+        public Nullable<decimal> CGSTAmount { get; set; }
+        public Nullable<decimal> SGSTAmount { get; set; }
+        public Nullable<int> ProcessingFeeAccountId { get; set; }
+        public Nullable<decimal> ProcessingChargeAmount { get; set; }
     }
 }

@@ -545,7 +545,7 @@ namespace MangalWeb.Model.Entity
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertRecordInTBankCashPaymentDetails", bCPIDParameter, refTypeParameter, refNoParameter, referenceNoParameter, refDateParameter, voucherNoParameter, bankCashAccIDParameter, paidToParameter, amountParameter, chqNoParameter, chqDateParameter, narrationParameter, financialYearIdParameter);
         }
     
-        public virtual int SP_InsertRecordInSanctionChargeDetails(Nullable<int> cHID, Nullable<int> sDID, Nullable<int> chargeDetailsID, Nullable<double> charges, Nullable<double> amount, Nullable<int> accountId, Nullable<int> chargeId)
+        public virtual int SP_InsertRecordInSanctionChargeDetails(Nullable<int> cHID, Nullable<int> sDID, Nullable<int> chargeDetailsID, Nullable<double> charges, Nullable<double> amount, Nullable<int> accountId, Nullable<int> chargeId, Nullable<int> gstId)
         {
             var cHIDParameter = cHID.HasValue ?
                 new ObjectParameter("CHID", cHID) :
@@ -575,7 +575,11 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("ChargeId", chargeId) :
                 new ObjectParameter("ChargeId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertRecordInSanctionChargeDetails", cHIDParameter, sDIDParameter, chargeDetailsIDParameter, chargesParameter, amountParameter, accountIdParameter, chargeIdParameter);
+            var gstIdParameter = gstId.HasValue ?
+                new ObjectParameter("GstId", gstId) :
+                new ObjectParameter("GstId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_InsertRecordInSanctionChargeDetails", cHIDParameter, sDIDParameter, chargeDetailsIDParameter, chargesParameter, amountParameter, accountIdParameter, chargeIdParameter, gstIdParameter);
         }
     
         public virtual ObjectResult<GL_SanctionDisburse_Charges_RTR_Result1> GL_SanctionDisburse_Charges_RTR(Nullable<int> cID, Nullable<decimal> sanctionAmt)
@@ -1068,6 +1072,203 @@ namespace MangalWeb.Model.Entity
                 new ObjectParameter("BranchID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetMessageAction_Result>("GetMessageAction", userIDParameter, branchIDParameter);
+        }
+    
+        public virtual int SP_SaveSanctionDisbursement(string operation, Nullable<int> sDID, string loanType, Nullable<System.DateTime> loanDate, string goldLoanNo, Nullable<int> kYCID, Nullable<decimal> eligibleLoanAmt, Nullable<decimal> netLoanAmtSanctioned, Nullable<decimal> netLoanPayable, string cheqNEFTDD, string cheqNEFTDDNo, Nullable<System.DateTime> cheqNEFTDDDate, Nullable<decimal> totalGrossWeight, Nullable<decimal> totalNetWeight, Nullable<decimal> totalQuantity, Nullable<decimal> totalvalue, Nullable<decimal> totalRate, Nullable<int> sID, Nullable<System.DateTime> dueDate, byte[] proofOfOwnerShipImageFile, string fileName, string contentType, string cIBILScore, Nullable<int> bCPID, Nullable<int> cashOutWardById, Nullable<int> goldInWardById, Nullable<int> createdBy, Nullable<int> fYID, Nullable<int> branchID, Nullable<int> cMPID, Nullable<int> cashAccID, Nullable<decimal> cashAmount, Nullable<int> bankCashAccID, Nullable<decimal> bankAmount, string paymentMode, Nullable<int> lineno, Nullable<System.DateTime> bankPaymentDate, string lockerNo, string packetWeight, string rackNo, string remark, Nullable<System.DateTime> goldInwardDate, Nullable<int> preSanctionId, Nullable<int> gstId, Nullable<decimal> cGSTAmount, Nullable<decimal> sGSTAmount, Nullable<int> processingFeeAccountId, Nullable<decimal> schemeProcessingCharge)
+        {
+            var operationParameter = operation != null ?
+                new ObjectParameter("Operation", operation) :
+                new ObjectParameter("Operation", typeof(string));
+    
+            var sDIDParameter = sDID.HasValue ?
+                new ObjectParameter("SDID", sDID) :
+                new ObjectParameter("SDID", typeof(int));
+    
+            var loanTypeParameter = loanType != null ?
+                new ObjectParameter("LoanType", loanType) :
+                new ObjectParameter("LoanType", typeof(string));
+    
+            var loanDateParameter = loanDate.HasValue ?
+                new ObjectParameter("LoanDate", loanDate) :
+                new ObjectParameter("LoanDate", typeof(System.DateTime));
+    
+            var goldLoanNoParameter = goldLoanNo != null ?
+                new ObjectParameter("GoldLoanNo", goldLoanNo) :
+                new ObjectParameter("GoldLoanNo", typeof(string));
+    
+            var kYCIDParameter = kYCID.HasValue ?
+                new ObjectParameter("KYCID", kYCID) :
+                new ObjectParameter("KYCID", typeof(int));
+    
+            var eligibleLoanAmtParameter = eligibleLoanAmt.HasValue ?
+                new ObjectParameter("EligibleLoanAmt", eligibleLoanAmt) :
+                new ObjectParameter("EligibleLoanAmt", typeof(decimal));
+    
+            var netLoanAmtSanctionedParameter = netLoanAmtSanctioned.HasValue ?
+                new ObjectParameter("NetLoanAmtSanctioned", netLoanAmtSanctioned) :
+                new ObjectParameter("NetLoanAmtSanctioned", typeof(decimal));
+    
+            var netLoanPayableParameter = netLoanPayable.HasValue ?
+                new ObjectParameter("NetLoanPayable", netLoanPayable) :
+                new ObjectParameter("NetLoanPayable", typeof(decimal));
+    
+            var cheqNEFTDDParameter = cheqNEFTDD != null ?
+                new ObjectParameter("CheqNEFTDD", cheqNEFTDD) :
+                new ObjectParameter("CheqNEFTDD", typeof(string));
+    
+            var cheqNEFTDDNoParameter = cheqNEFTDDNo != null ?
+                new ObjectParameter("CheqNEFTDDNo", cheqNEFTDDNo) :
+                new ObjectParameter("CheqNEFTDDNo", typeof(string));
+    
+            var cheqNEFTDDDateParameter = cheqNEFTDDDate.HasValue ?
+                new ObjectParameter("CheqNEFTDDDate", cheqNEFTDDDate) :
+                new ObjectParameter("CheqNEFTDDDate", typeof(System.DateTime));
+    
+            var totalGrossWeightParameter = totalGrossWeight.HasValue ?
+                new ObjectParameter("TotalGrossWeight", totalGrossWeight) :
+                new ObjectParameter("TotalGrossWeight", typeof(decimal));
+    
+            var totalNetWeightParameter = totalNetWeight.HasValue ?
+                new ObjectParameter("TotalNetWeight", totalNetWeight) :
+                new ObjectParameter("TotalNetWeight", typeof(decimal));
+    
+            var totalQuantityParameter = totalQuantity.HasValue ?
+                new ObjectParameter("TotalQuantity", totalQuantity) :
+                new ObjectParameter("TotalQuantity", typeof(decimal));
+    
+            var totalvalueParameter = totalvalue.HasValue ?
+                new ObjectParameter("Totalvalue", totalvalue) :
+                new ObjectParameter("Totalvalue", typeof(decimal));
+    
+            var totalRateParameter = totalRate.HasValue ?
+                new ObjectParameter("TotalRate", totalRate) :
+                new ObjectParameter("TotalRate", typeof(decimal));
+    
+            var sIDParameter = sID.HasValue ?
+                new ObjectParameter("SID", sID) :
+                new ObjectParameter("SID", typeof(int));
+    
+            var dueDateParameter = dueDate.HasValue ?
+                new ObjectParameter("DueDate", dueDate) :
+                new ObjectParameter("DueDate", typeof(System.DateTime));
+    
+            var proofOfOwnerShipImageFileParameter = proofOfOwnerShipImageFile != null ?
+                new ObjectParameter("ProofOfOwnerShipImageFile", proofOfOwnerShipImageFile) :
+                new ObjectParameter("ProofOfOwnerShipImageFile", typeof(byte[]));
+    
+            var fileNameParameter = fileName != null ?
+                new ObjectParameter("FileName", fileName) :
+                new ObjectParameter("FileName", typeof(string));
+    
+            var contentTypeParameter = contentType != null ?
+                new ObjectParameter("ContentType", contentType) :
+                new ObjectParameter("ContentType", typeof(string));
+    
+            var cIBILScoreParameter = cIBILScore != null ?
+                new ObjectParameter("CIBILScore", cIBILScore) :
+                new ObjectParameter("CIBILScore", typeof(string));
+    
+            var bCPIDParameter = bCPID.HasValue ?
+                new ObjectParameter("BCPID", bCPID) :
+                new ObjectParameter("BCPID", typeof(int));
+    
+            var cashOutWardByIdParameter = cashOutWardById.HasValue ?
+                new ObjectParameter("CashOutWardById", cashOutWardById) :
+                new ObjectParameter("CashOutWardById", typeof(int));
+    
+            var goldInWardByIdParameter = goldInWardById.HasValue ?
+                new ObjectParameter("GoldInWardById", goldInWardById) :
+                new ObjectParameter("GoldInWardById", typeof(int));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var fYIDParameter = fYID.HasValue ?
+                new ObjectParameter("FYID", fYID) :
+                new ObjectParameter("FYID", typeof(int));
+    
+            var branchIDParameter = branchID.HasValue ?
+                new ObjectParameter("BranchID", branchID) :
+                new ObjectParameter("BranchID", typeof(int));
+    
+            var cMPIDParameter = cMPID.HasValue ?
+                new ObjectParameter("CMPID", cMPID) :
+                new ObjectParameter("CMPID", typeof(int));
+    
+            var cashAccIDParameter = cashAccID.HasValue ?
+                new ObjectParameter("CashAccID", cashAccID) :
+                new ObjectParameter("CashAccID", typeof(int));
+    
+            var cashAmountParameter = cashAmount.HasValue ?
+                new ObjectParameter("CashAmount", cashAmount) :
+                new ObjectParameter("CashAmount", typeof(decimal));
+    
+            var bankCashAccIDParameter = bankCashAccID.HasValue ?
+                new ObjectParameter("BankCashAccID", bankCashAccID) :
+                new ObjectParameter("BankCashAccID", typeof(int));
+    
+            var bankAmountParameter = bankAmount.HasValue ?
+                new ObjectParameter("BankAmount", bankAmount) :
+                new ObjectParameter("BankAmount", typeof(decimal));
+    
+            var paymentModeParameter = paymentMode != null ?
+                new ObjectParameter("PaymentMode", paymentMode) :
+                new ObjectParameter("PaymentMode", typeof(string));
+    
+            var linenoParameter = lineno.HasValue ?
+                new ObjectParameter("Lineno", lineno) :
+                new ObjectParameter("Lineno", typeof(int));
+    
+            var bankPaymentDateParameter = bankPaymentDate.HasValue ?
+                new ObjectParameter("BankPaymentDate", bankPaymentDate) :
+                new ObjectParameter("BankPaymentDate", typeof(System.DateTime));
+    
+            var lockerNoParameter = lockerNo != null ?
+                new ObjectParameter("LockerNo", lockerNo) :
+                new ObjectParameter("LockerNo", typeof(string));
+    
+            var packetWeightParameter = packetWeight != null ?
+                new ObjectParameter("PacketWeight", packetWeight) :
+                new ObjectParameter("PacketWeight", typeof(string));
+    
+            var rackNoParameter = rackNo != null ?
+                new ObjectParameter("RackNo", rackNo) :
+                new ObjectParameter("RackNo", typeof(string));
+    
+            var remarkParameter = remark != null ?
+                new ObjectParameter("Remark", remark) :
+                new ObjectParameter("Remark", typeof(string));
+    
+            var goldInwardDateParameter = goldInwardDate.HasValue ?
+                new ObjectParameter("GoldInwardDate", goldInwardDate) :
+                new ObjectParameter("GoldInwardDate", typeof(System.DateTime));
+    
+            var preSanctionIdParameter = preSanctionId.HasValue ?
+                new ObjectParameter("PreSanctionId", preSanctionId) :
+                new ObjectParameter("PreSanctionId", typeof(int));
+    
+            var gstIdParameter = gstId.HasValue ?
+                new ObjectParameter("GstId", gstId) :
+                new ObjectParameter("GstId", typeof(int));
+    
+            var cGSTAmountParameter = cGSTAmount.HasValue ?
+                new ObjectParameter("CGSTAmount", cGSTAmount) :
+                new ObjectParameter("CGSTAmount", typeof(decimal));
+    
+            var sGSTAmountParameter = sGSTAmount.HasValue ?
+                new ObjectParameter("SGSTAmount", sGSTAmount) :
+                new ObjectParameter("SGSTAmount", typeof(decimal));
+    
+            var processingFeeAccountIdParameter = processingFeeAccountId.HasValue ?
+                new ObjectParameter("ProcessingFeeAccountId", processingFeeAccountId) :
+                new ObjectParameter("ProcessingFeeAccountId", typeof(int));
+    
+            var schemeProcessingChargeParameter = schemeProcessingCharge.HasValue ?
+                new ObjectParameter("SchemeProcessingCharge", schemeProcessingCharge) :
+                new ObjectParameter("SchemeProcessingCharge", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_SaveSanctionDisbursement", operationParameter, sDIDParameter, loanTypeParameter, loanDateParameter, goldLoanNoParameter, kYCIDParameter, eligibleLoanAmtParameter, netLoanAmtSanctionedParameter, netLoanPayableParameter, cheqNEFTDDParameter, cheqNEFTDDNoParameter, cheqNEFTDDDateParameter, totalGrossWeightParameter, totalNetWeightParameter, totalQuantityParameter, totalvalueParameter, totalRateParameter, sIDParameter, dueDateParameter, proofOfOwnerShipImageFileParameter, fileNameParameter, contentTypeParameter, cIBILScoreParameter, bCPIDParameter, cashOutWardByIdParameter, goldInWardByIdParameter, createdByParameter, fYIDParameter, branchIDParameter, cMPIDParameter, cashAccIDParameter, cashAmountParameter, bankCashAccIDParameter, bankAmountParameter, paymentModeParameter, linenoParameter, bankPaymentDateParameter, lockerNoParameter, packetWeightParameter, rackNoParameter, remarkParameter, goldInwardDateParameter, preSanctionIdParameter, gstIdParameter, cGSTAmountParameter, sGSTAmountParameter, processingFeeAccountIdParameter, schemeProcessingChargeParameter);
         }
     }
 }

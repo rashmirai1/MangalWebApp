@@ -1,16 +1,14 @@
 ﻿$(document).ready(function () {
 
-    $(':input[readonly]').css({'background-color':'#faf4b3'});
-
-    if ($("#ItemID").val() ==0) {
-        $("#CashAccountNo").attr('disabled','disabled');
-        $("#CashAmount").attr('disabled','disabled');
-        $("#BankCashAccID").attr('disabled','disabled');
-        $("#BankPaymentDate").attr('disabled','disabled');
-        $("#CheqNEFTDD").attr('disabled','disabled');
-        $("#CheqNEFTDDNo").attr('disabled','disabled');
-        $("#CheqNEFTDDDate").attr('disabled','disabled');
-        $("#BankAmount").attr('disabled','disabled');
+    if ($("#ItemID").val() == 0) {
+        $("#CashAccountNo").attr('disabled', 'disabled');
+        $("#CashAmount").attr('disabled', 'disabled');
+        $("#BankCashAccID").attr('disabled', 'disabled');
+        $("#BankPaymentDate").attr('disabled', 'disabled');
+        $("#CheqNEFTDD").attr('disabled', 'disabled');
+        $("#CheqNEFTDDNo").attr('disabled', 'disabled');
+        $("#CheqNEFTDDDate").attr('disabled', 'disabled');
+        $("#BankAmount").attr('disabled', 'disabled');
     }
 
     $("#CashAmount").on('keyup', function () {
@@ -45,8 +43,8 @@
     //    $("#divChargeDetails").show();
     //}
 
-    $("#TransactionDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,maxDate:new Date() });
-    $("#BankPaymentDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true,maxDate:new Date() });
+    $("#TransactionDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true, maxDate: new Date() });
+    $("#BankPaymentDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true, maxDate: new Date() });
     $("#CheqNEFTDDDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
     $("#GoldInwardDate").datepicker({ dateFormat: 'dd/mm/yy', changeMonth: true, changeYear: true });
 });
@@ -66,83 +64,82 @@ $("#SanctionLoanAmount").on('keyup', function () {
         $("#NetPayable").val(0);
     }
     else {
-        var discountamount=$("#DiscountAmount").val();
-        var chargetype=$("#SchemeProcessingType").val();
-        if(chargetype=="Amount")
-        {
-            $("#NetPayable").val(parseFloat(sanctionamount).toFixed(0)-parseFloat(discountamount).toFixed(0));
+        var discountamount = $("#DiscountAmount").val();
+        var chargetype = $("#SchemeProcessingType").val();
+        if (chargetype == "Amount") {
+            $("#NetPayable").val(parseFloat(sanctionamount).toFixed(0) - parseFloat(discountamount).toFixed(0));
         }
-        else{
-            $("#NetPayable").val(parseFloat(sanctionamount).toFixed(0)-parseFloat(discountamount).toFixed(0));
+        else {
+            $("#NetPayable").val(parseFloat(sanctionamount).toFixed(0) - parseFloat(discountamount).toFixed(0));
         }
     }
 });
 
 $("#btn_save").click(function () {
+    cmnShowLoader();
     SaveSanctionDisbursement();
+    cmnHideLoader();
 });
 
 function SaveSanctionDisbursement() {
     debugger;
     var SanctionViewModel = {};
-    var check=true;
+    var check = true;
     SanctionViewModel.TransactionId = $("#TransactionId").val();
     SanctionViewModel.CustomerId = $("#CustomerID").val();
     SanctionViewModel.KYCID = $("#KYCID").val();
-    SanctionViewModel.AreaId=$("#AreaId").val();
-    SanctionViewModel.MobileNo=$("#MobileNo").val();
-    SanctionViewModel.TelephoneNo=$("#TelephoneNo").val();
-    SanctionViewModel.EmailId=$("#EmailId").val();
+    SanctionViewModel.AreaId = $("#AreaId").val();
+    SanctionViewModel.MobileNo = $("#MobileNo").val();
+    SanctionViewModel.TelephoneNo = $("#TelephoneNo").val();
+    SanctionViewModel.EmailId = $("#EmailId").val();
     SanctionViewModel.TransactionDate = $("#TransactionDate").val();
     SanctionViewModel.LoanType = $("#LoanType").val();
     SanctionViewModel.LoanAccountNo = $("#LoanAccountNo").val();
     SanctionViewModel.CustomerName = $("#CustomerName").val();
     SanctionViewModel.PANNo = $("#PANNo").val();
-    SanctionViewModel.CustomerAddress=$("#CustomerAddress").val();
+    SanctionViewModel.CustomerAddress = $("#CustomerAddress").val();
     SanctionViewModel.EligibleLoanAmount = $("#EligibleLoanAmount").val();
     SanctionViewModel.SanctionLoanAmount = $("#SanctionLoanAmount").val();
     SanctionViewModel.NetPayable = $("#NetPayable").val();
     SanctionViewModel.InterestRepaymentDate = $("#InterestRepaymentDate").val();
-    SanctionViewModel.PacketWeight=$("#PacketWeight").val();
-    SanctionViewModel.LockerNo=$("#LockerNo").val();
-    SanctionViewModel.SchemeId=$("#SchemeId").val();
+    SanctionViewModel.PacketWeight = $("#PacketWeight").val();
+    SanctionViewModel.LockerNo = $("#LockerNo").val();
+    SanctionViewModel.SchemeId = $("#SchemeId").val();
     SanctionViewModel.PaymentMode = $("#PaymentMode").val();
     SanctionViewModel.BankCashAccID = $("#BankCashAccID").val();
-    SanctionViewModel.BankPaymentDate=$("#BankPaymentDate").val();
-    SanctionViewModel.CheqNEFTDD=$("#CheqNEFTDD").val();
-    SanctionViewModel.CheqNEFTDDNo=$("#CheqNEFTDDNo").val();
+    SanctionViewModel.BankPaymentDate = $("#BankPaymentDate").val();
+    SanctionViewModel.CheqNEFTDD = $("#CheqNEFTDD").val();
+    SanctionViewModel.CheqNEFTDDNo = $("#CheqNEFTDDNo").val();
     SanctionViewModel.CheqNEFTDDDate = $("#CheqNEFTDDDate").val();
     SanctionViewModel.BankAmount = $("#BankAmount").val();
-    SanctionViewModel.CashAccountNo=$("#CashAccountNo").val();
-    SanctionViewModel.CashAmount=$("#CashAmount").val();
-    SanctionViewModel.CashOutwardbyNo=$("#CashOutwardbyNo").val();
+    SanctionViewModel.CashAccountNo = $("#CashAccountNo").val();
+    SanctionViewModel.CashAmount = $("#CashAmount").val();
+    SanctionViewModel.CashOutwardbyNo = $("#CashOutwardbyNo").val();
     SanctionViewModel.GoldInwardByNo = $("#GoldInwardByNo").val();
     SanctionViewModel.RackNo = $("#RackNo").val();
-    SanctionViewModel.Remark=$("#Remark").val();
-    SanctionViewModel.GoldInwardDate=$("#GoldInwardDate").val();
+    SanctionViewModel.Remark = $("#Remark").val();
+    SanctionViewModel.GoldInwardDate = $("#GoldInwardDate").val();
     SanctionViewModel.StateID = $("#StateID").val();
     SanctionViewModel.SchemeProcessingType = $("#SchemeProcessingType").val();
-    SanctionViewModel.SchemeProcessingCharge=$("#SchemeProcessingCharge").val();
-    SanctionViewModel.SchemeProcessingLimit=$("#SchemeProcessingLimit").val();
+    SanctionViewModel.SchemeProcessingCharge = $("#SchemeProcessingCharge").val();
+    SanctionViewModel.SchemeProcessingLimit = $("#SchemeProcessingLimit").val();
     SanctionViewModel.CGSTAmount = $("#CGSTAmount").val();
     SanctionViewModel.SGSTAmount = $("#SGSTAmount").val();
-    SanctionViewModel.CGSTAccountId=$("#CGSTAccountId").val();
-    SanctionViewModel.SGSTAccountId=$("#SGSTAccountId").val();
+    SanctionViewModel.CGSTAccountId = $("#CGSTAccountId").val();
+    SanctionViewModel.SGSTAccountId = $("#SGSTAccountId").val();
     SanctionViewModel.CGSTTax = $("#CGSTTax").val();
     SanctionViewModel.SGSTTax = $("#SGSTTax").val();
     SanctionViewModel.PreSanctionId = $("#PreSanctionId").val();
-    SanctionViewModel.Interest=$("#Interest").text();
-    SanctionViewModel.PenalInterest=$("#PenalInterest").text();
-    SanctionViewModel.Charges=$("#Charges").text();
-    SanctionViewModel.Total=$("#Total").text();
+    SanctionViewModel.Interest = $("#Interest").text();
+    SanctionViewModel.PenalInterest = $("#PenalInterest").text();
+    SanctionViewModel.Charges = $("#Charges").text();
+    SanctionViewModel.Total = $("#Total").text();
     debugger;
-    if(SanctionViewModel.PaymentMode=="Cash")
-    {
-        if(SanctionViewModel.CashAmount<SanctionViewModel.NetPayable || SanctionViewModel.NetPayable<SanctionViewModel.CashAmount)
-        {
+    if (SanctionViewModel.PaymentMode == "Cash") {
+        if (SanctionViewModel.CashAmount < SanctionViewModel.NetPayable || SanctionViewModel.NetPayable < SanctionViewModel.CashAmount) {
             alert("Cash Amount and Net Payable must be equal");
             $("#CashAmount").focus();
-            check=false;
+            check = false;
             return;
         }
     }
@@ -150,131 +147,115 @@ function SaveSanctionDisbursement() {
     if (SanctionViewModel.CustomerId == 0) {
         $("#CustomErr").text("Please Select Customer");
         $("#CustomerID").focus();
-        check=false;
+        check = false;
         return;
     }
     $("#CustomErr").text("");
     if (SanctionViewModel.SanctionLoanAmount == 0) {
         $("#SanctionErrorMessage").text("Please Enter Sanction Loan Amount");
         $("#SanctionLoanAmount").focus();
-        check=false;
+        check = false;
         return;
     }
     debugger;
-    if(SanctionViewModel.PaymentMode=="")
-    {
+    if (SanctionViewModel.PaymentMode == "") {
         $("#PaymentModeErrorMessage").text("Please Select Payment Mode");
         $("#PaymentMode").focus();
-        check=false;
+        check = false;
         return;
     }
     $("#PaymentModeErrorMessage").text("");
-    if(SanctionViewModel.PaymentMode=="Chq/DD/NEFT" || SanctionViewModel.PaymentMode=="Both")
-    {
-        if(SanctionViewModel.BankAccountNo=="")
-        {
-            $("#BankAccountNo").css('border-color','red');
+    if (SanctionViewModel.PaymentMode == "Chq/DD/NEFT" || SanctionViewModel.PaymentMode == "Both") {
+        if (SanctionViewModel.BankAccountNo == "") {
+            $("#BankAccountNo").css('border-color', 'red');
             $("#BankAccountNo").focus();
-            check=false;
+            check = false;
             return;
         }
-        $("#BankAccountNo").css('border-color','');
-        if(SanctionViewModel.BankPaymentDate=="")
-        {
-            $("#BankPaymentDate").css('border-color','red');
+        $("#BankAccountNo").css('border-color', '');
+        if (SanctionViewModel.BankPaymentDate == "") {
+            $("#BankPaymentDate").css('border-color', 'red');
             $("#BankPaymentDate").focus();
-            check=false;
+            check = false;
             return;
         }
-        $("#BankPaymentDate").css('border-color','');
-        if(SanctionViewModel.ChqDDNEFT=="")
-        {
-            $("#ChqDDNEFT").css('border-color','red');
+        $("#BankPaymentDate").css('border-color', '');
+        if (SanctionViewModel.ChqDDNEFT == "") {
+            $("#ChqDDNEFT").css('border-color', 'red');
             $("#ChqDDNEFT").focus();
-            check=false;
+            check = false;
             return;
         }
-        $("#ChqDDNEFT").css('border-color','');
-        if(SanctionViewModel.ChqDDNEFT=="Cheque")
-        {
-            if(SanctionViewModel.ChqDDNEFTNo=="")
-            {
-                $("#ChqDDNEFTNo").css('border-color','red');
+        $("#ChqDDNEFT").css('border-color', '');
+        if (SanctionViewModel.ChqDDNEFT == "Cheque") {
+            if (SanctionViewModel.ChqDDNEFTNo == "") {
+                $("#ChqDDNEFTNo").css('border-color', 'red');
                 $("#ChqDDNEFTNo").focus();
-                check=false;
+                check = false;
                 return;
             }
-            $("#ChqDDNEFTNo").css('border-color','');
-            if (SanctionViewModel.CheqNEFTDDDate == "")
-            {
+            $("#ChqDDNEFTNo").css('border-color', '');
+            if (SanctionViewModel.CheqNEFTDDDate == "") {
                 $("#CheqNEFTDDDate").css('border-color', 'red');
                 $("#CheqNEFTDDDate").focus();
-                check=false;
+                check = false;
                 return;
             }
             $("#CheqNEFTDDDate").css('border-color', '');
         }
-        if(SanctionViewModel.BankAmount=="0.00" || SanctionViewModel.BankAmount=="0")
-        {
-            $("#BankAmount").css('border-color','red');
+        if (SanctionViewModel.BankAmount == "0.00" || SanctionViewModel.BankAmount == "0") {
+            $("#BankAmount").css('border-color', 'red');
             $("#BankAmount").focus();
-            check=false;
+            check = false;
             return;
         }
-        $("#BankAmount").css('border-color','');
+        $("#BankAmount").css('border-color', '');
     }
 
-    if(SanctionViewModel.PaymentMode=="Cash")
-    {
-        if(SanctionViewModel.CashAccountNo=="")
-        {
-            $("#CashAccountNo").css('border-color','red');
+    if (SanctionViewModel.PaymentMode == "Cash") {
+        if (SanctionViewModel.CashAccountNo == "") {
+            $("#CashAccountNo").css('border-color', 'red');
             $("#CashAccountNo").focus();
-            check=false;
+            check = false;
             return;
         }
-        $("#CashAccountNo").css('border-color','');
-        if(SanctionViewModel.CashAmount=="0.00" || SanctionViewModel.CashAmount=="0")
-        {
-            $("#CashAmount").css('border-color','red');
+        $("#CashAccountNo").css('border-color', '');
+        if (SanctionViewModel.CashAmount == "0.00" || SanctionViewModel.CashAmount == "0") {
+            $("#CashAmount").css('border-color', 'red');
             $("#CashAmount").focus();
-            check=false;
+            check = false;
             return;
         }
-        $("#CashAmount").css('border-color','');
-        if(SanctionViewModel.CashOutwardbyNo=="")
-        {
-            $("#CashOutwardbyNo").css('border-color','red');
+        $("#CashAmount").css('border-color', '');
+        if (SanctionViewModel.CashOutwardbyNo == "") {
+            $("#CashOutwardbyNo").css('border-color', 'red');
             $("#CashOutwardbyNo").focus();
-            check=false;
+            check = false;
             return;
         }
-        $("#CashOutwardbyNo").css('border-color','');
+        $("#CashOutwardbyNo").css('border-color', '');
     }
-    if(SanctionViewModel.GoldInwardByNo=="")
-    {
-        $("#GoldInwardByNo").css('border-color','red');
+    if (SanctionViewModel.GoldInwardByNo == "") {
+        $("#GoldInwardByNo").css('border-color', 'red');
         $("#GoldInwardByNo").focus();
-        check=false;
+        check = false;
         return;
     }
-    $("#GoldInwardByNo").css('border-color','');
-    if(SanctionViewModel.RackNo=="")
-    {
-        $("#RackNo").css('border-color','red');
+    $("#GoldInwardByNo").css('border-color', '');
+    if (SanctionViewModel.RackNo == "") {
+        $("#RackNo").css('border-color', 'red');
         $("#RackNo").focus();
-        check=false;
+        check = false;
         return;
     }
-    $("#RackNo").css('border-color','');
-    if(SanctionViewModel.GoldInwardDate=="")
-    {
-        $("#GoldInwardDate").css('border-color','red');
+    $("#RackNo").css('border-color', '');
+    if (SanctionViewModel.GoldInwardDate == "") {
+        $("#GoldInwardDate").css('border-color', 'red');
         $("#GoldInwardDate").focus();
-        check=false;
+        check = false;
         return;
     }
-    $("#GoldInwardDate").css('border-color','');
+    $("#GoldInwardDate").css('border-color', '');
     //var inp = document.getElementById('ProofOfOwnerShipFile');
     //if (inp.files.length === 0) {
     //    $("#CustomErr").text("Upload Proof Of OwnerShip Image!");
@@ -320,6 +301,7 @@ function SaveSanctionDisbursement() {
         rowChargeTrn.CDetailsID = row.find("td").eq(2).attr('id');
         rowChargeTrn.Charges = row.find("TD").eq(2).html();
         rowChargeTrn.ChargeType = row.find("TD").eq(3).html();
+        rowChargeTrn.GstId = row.find("td").eq(3).attr('id');
         rowChargeTrn.Amount = row.find("TD").eq(4).html();
         rowChargeTrn.AccountId = row.find("td").eq(5).attr('id');
         lstChargeTrn.push(rowChargeTrn);
@@ -336,7 +318,7 @@ function SaveSanctionDisbursement() {
         rowGoldItemTrn.GrossWeight = row.find("TD").eq(5).html();
         rowGoldItemTrn.Deductions = row.find("TD").eq(6).html();
         rowGoldItemTrn.NetWeight = row.find("TD").eq(7).html();
-        rowGoldItemTrn.RatePerGram =  row.find("TD").eq(8).html();
+        rowGoldItemTrn.RatePerGram = row.find("TD").eq(8).html();
         rowGoldItemTrn.Value = row.find("TD").eq(9).html();
         lstGoldItemTrn.push(rowGoldItemTrn);
     });
@@ -348,16 +330,15 @@ function SaveSanctionDisbursement() {
         SanctionViewModel.TotalGrossWeight = row.find("TD").eq(5).text();
         SanctionViewModel.TotalDeductions = row.find("TD").eq(6).text();
         SanctionViewModel.TotalNetWeight = row.find("TD").eq(7).text();
-        SanctionViewModel.TotalRatePerGram =  row.find("TD").eq(8).text();
-        SanctionViewModel.TotalValue =  row.find("TD").eq(9).text();
+        SanctionViewModel.TotalRatePerGram = row.find("TD").eq(8).text();
+        SanctionViewModel.TotalValue = row.find("TD").eq(9).text();
     });
     debugger;
     SanctionViewModel.ChargeDetailList = lstChargeTrn;
     SanctionViewModel.EligibleLoanAmountValuationDetailsVMList = lstGoldItemTrn;
 
     SanctionViewModel.ID = $('#ItemID').val();
-    if(check==true)
-    {
+    if (check == true) {
         $.ajax({
             type: "POST",
             url: "/SanctionDisbursement/Insert",
@@ -372,14 +353,14 @@ function SaveSanctionDisbursement() {
                         window.location.href = urlRedirect;
                     });
                 }
-                else if(r==2){
+                else if (r == 2) {
                     $("#saveModal").modal('show');
                     $(document).click(function () {
                         window.location.href = urlRedirect;
                     });
                 }
-                else
-                {   $("#CustomErr").text(r);
+                else {
+                    $("#CustomErr").text(r);
                     $("#btn_save").prop("disabled", false);
                     return false;
                 }
@@ -482,14 +463,14 @@ $("#uploadFile").change(function () {
 //Dropdownlist Selectedchange event of payment mode
 $("#PaymentMode").change(function () {
     var paymentmode = $("#PaymentMode").val();
-    $("#CashAccountNo").attr('disabled','disabled');
-    $("#CashAmount").attr('disabled','disabled');
-    $("#BankCashAccID").attr('disabled','disabled');
-    $("#BankPaymentDate").attr('disabled','disabled');
-    $("#CheqNEFTDD").attr('disabled','disabled');
-    $("#CheqNEFTDDNo").attr('disabled','disabled');
-    $("#CheqNEFTDDDate").attr('disabled','disabled');
-    $("#BankAmount").attr('disabled','disabled');
+    $("#CashAccountNo").attr('disabled', 'disabled');
+    $("#CashAmount").attr('disabled', 'disabled');
+    $("#BankCashAccID").attr('disabled', 'disabled');
+    $("#BankPaymentDate").attr('disabled', 'disabled');
+    $("#CheqNEFTDD").attr('disabled', 'disabled');
+    $("#CheqNEFTDDNo").attr('disabled', 'disabled');
+    $("#CheqNEFTDDDate").attr('disabled', 'disabled');
+    $("#BankAmount").attr('disabled', 'disabled');
 
     if (paymentmode == "Chq/DD/NEFT") {
         $("#BankCashAccID").removeAttr('disabled');
@@ -499,8 +480,7 @@ $("#PaymentMode").change(function () {
         $("#CheqNEFTDDDate").removeAttr('disabled');
         $("#BankAmount").removeAttr('disabled');
     }
-    else if(paymentmode=="Both")
-    {
+    else if (paymentmode == "Both") {
         $("#BankCashAccID").removeAttr('disabled');
         $("#BankPaymentDate").removeAttr('disabled');
         $("#CheqNEFTDD").removeAttr('disabled');
@@ -510,8 +490,7 @@ $("#PaymentMode").change(function () {
         $("#CashAccountNo").removeAttr('disabled');
         $("#CashAmount").removeAttr('disabled');
     }
-    else
-    {
+    else {
         $("#CashAccountNo").removeAttr('disabled');
         $("#CashAmount").removeAttr('disabled');
     }
@@ -531,18 +510,16 @@ $("#ChargeVM_ChargeId").change(function () {
             type: 'POST',
             url: '/SanctionDisbursement/GetChargeDetails', // we are calling json method
             dataType: 'json',
-            data: { ChargeId: $("#ChargeVM_ChargeId").val(), SanctionLoanAmount: sanctionamount,SchemeProcessingType:$("#SchemeProcessingType").val(), SchemeProcessingCharge:$("#SchemeProcessingCharge").val() },
+            data: { ChargeId: $("#ChargeVM_ChargeId").val(), SanctionLoanAmount: sanctionamount, SchemeProcessingType: $("#SchemeProcessingType").val(), SchemeProcessingCharge: $("#SchemeProcessingCharge").val() },
             //as inputto json method GetStatesfr
             success: function (data) {
-                if(data.ID>0)
-                {
+                if (data.ID > 0) {
                     $("#ChargeVM_CDetailsID").val(data.CDetailsID);
                     $("#ChargeVM_Charges").val(data.Charges);
                     $("#ChargeVM_ChargeType").val(data.ChargeType);
                     $("#ChargeVM_Amount").val(data.Amount);
                 }
-                else
-                {
+                else {
                     alert('Can not apply charge for selected Sanction Loan Amount');
                     return;
                 }
@@ -597,28 +574,25 @@ $("#btnAddChargeDetails").click(function () {
     }
     else {
         srno = sr_no;
-        //var no = parseInt(srno) - 1;
-        //$("#tblChargeDetails tbody tr:eq(" + no + ")").remove();
     }
     sr_no = 0;
     trid = 0;
     var row = '<tr id=' + srno + '>' +
         '<td width="10%">' + srno + '</td>' +
         '<td width="30%" id="' + ChargeId + '">' + ChargeName + '</td>' +
-        '<td width="10%" id="'+ChargeDetailsId+'">' + Charges + '</td>' +
+        '<td width="10%" id="' + ChargeDetailsId + '">' + Charges + '</td>' +
         '<td width="10%">' + ChargeType + '</td>' +
         '<td width="10%">' + Amount + '</td>' +
         '<td width="30%" id="' + AccountId + '">' + AccountName + '</td>' +
-        '<td '+ actions + '</td>' +
+        '<td ' + actions + '</td>' +
         '</tr>';
     var isExist = false;
     if (ChargeId != "" && AccountId != "") {
-        $("#tblChargeDetails TBODY tr").each(function() {
+        $("#tblChargeDetails TBODY tr").each(function () {
             // get row
             var row = $(this);
             // get first and second td
-            if(currentRow==null)
-            {
+            if (currentRow == null) {
                 var first = row.find('td:nth-child(2)').attr('id');
                 // if exists, remove the tr
                 if (first == ChargeId) {
@@ -626,14 +600,12 @@ $("#btnAddChargeDetails").click(function () {
                 }
             }
         });
-        if(isExist)
-        {
+        if (isExist) {
             alert("The same Charge already Exist");
             return false;
         }
-        else
-        {
-            if(currentRow){
+        else {
+            if (currentRow) {
                 $("#tblChargeDetails tbody").find($(currentRow)).replaceWith(row);
                 debugger;
                 //ID which want to compare
@@ -645,9 +617,9 @@ $("#btnAddChargeDetails").click(function () {
                     if (id == $(this).attr('id')) {
                         if (first == 0) {
                             amount = row1.find("td:eq(4)").text();
-                            var oldchgamt=currentRow.find("td:eq(4)").text();
-                            var netpayable =parseFloat($("#NetPayable").val());
-                            $("#NetPayable").val(netpayable+parseFloat(oldchgamt));
+                            var oldchgamt = currentRow.find("td:eq(4)").text();
+                            var netpayable = parseFloat($("#NetPayable").val());
+                            $("#NetPayable").val(netpayable + parseFloat(oldchgamt));
                         }
                         else {
                             var percentValue = row1.find("td:eq(2)").text();
@@ -660,14 +632,14 @@ $("#btnAddChargeDetails").click(function () {
                     }
                 });
                 debugger;
-                var totamt=0;
+                var totamt = 0;
                 $('#tblChargeDetails tbody>tr').each(function () {
                     var row = $(this).closest("tr");
-                    totamt=totamt+parseFloat(row.find('td:eq(4)').html());
+                    totamt = totamt + parseFloat(row.find('td:eq(4)').html());
                 });
                 var SanctionLoanAmount = parseFloat($("#SanctionLoanAmount").val());
                 var netpayable = parseFloat($("#NetPayable").val());
-                $("#NetPayable").val(parseFloat(SanctionLoanAmount)-(parseFloat(totamt)).toFixed(2));
+                $("#NetPayable").val(parseFloat(SanctionLoanAmount) - (parseFloat(totamt)).toFixed(2));
 
                 $("#ChargeVM_ChargeId").val("");
                 $("#ChargeVM_Charges").val("");
@@ -678,16 +650,16 @@ $("#btnAddChargeDetails").click(function () {
                 $("#tblChargeDetails TBODY TR").on("click", ".edit", function () {
                     debugger;
                     var tr = $(this).closest('tr');
-                    currentRow= $(this).parents('tr');
+                    currentRow = $(this).parents('tr');
                     sr_no = tr.find('td:eq(0)').html();
-                    trid =tr.attr('id'); // table row ID
-                    var ChargeId =tr.find("td").eq(1).attr('id');
-                    var ChargeName =  tr.find('td:eq(1)').html();
-                    var Charges =  tr.find('td:eq(2)').html();
+                    trid = tr.attr('id'); // table row ID
+                    var ChargeId = tr.find("td").eq(1).attr('id');
+                    var ChargeName = tr.find('td:eq(1)').html();
+                    var Charges = tr.find('td:eq(2)').html();
                     var ChargeType = tr.find('td:eq(3)').html();
                     var Amount = tr.find('td:eq(4)').html();
-                    var AccountId =tr.find("td").eq(5).attr('id');
-                    var AccountName =tr.find('td:eq(5)').html();
+                    var AccountId = tr.find("td").eq(5).attr('id');
+                    var AccountName = tr.find('td:eq(5)').html();
 
                     $("#ChargeVM_ChargeId").val(ChargeId);
                     $("#ChargeVM_Charges").val(Charges);
@@ -704,16 +676,13 @@ $("#btnAddChargeDetails").click(function () {
                                 $(this).closest('tr').remove();
                             }
                         });
-                        var totamt=0;
+                        var totamt = 0;
                         $('#tblChargeDetails tbody>tr').each(function () {
                             var row = $(this).closest("tr");
-                            totamt=totamt+parseFloat(row.find('td:eq(4)').html());
+                            totamt = totamt + parseFloat(row.find('td:eq(4)').html());
                         });
-                        //var gstamount=parseFloat($("#CGSTAmount").val())+parseFloat($("#SGSTAmount").val());
                         var SanctionLoanAmount = parseFloat($("#SanctionLoanAmount").val());
-                        //Amount=parseFloat(Amount);
-                        //$("#NetPayable").val(netpayable + (Amount+gstamount));
-                        $("#NetPayable").val(parseFloat(SanctionLoanAmount)-(parseFloat(totamt)));
+                        $("#NetPayable").val(parseFloat(SanctionLoanAmount) - (parseFloat(totamt)));
                         $("#ChargeVM_ChargeId").val("");
                         $("#ChargeVM_Charges").val("");
                         $("#ChargeVM_ChargeType").val("");
@@ -723,8 +692,7 @@ $("#btnAddChargeDetails").click(function () {
                     }
                 })
             }
-            else
-            {
+            else {
                 fileData = new FormData();
                 fileData.append('Id', srno);
                 fileData.append('CDetailsID', ChargeDetailsId);
@@ -745,9 +713,8 @@ $("#btnAddChargeDetails").click(function () {
                     success: function (result) {
                         debugger;
                         $.each(result.ChargeDetailList, function (key, val) {
-                            if(val.CDetailsID==0)
-                            {
-                                actions='';
+                            if (val.CDetailsID == 0) {
+                                actions = '';
                                 $("#CGSTAmount").val(val.Amount);
                                 $("#SGSTAmount").val(val.Amount);
                             }
@@ -755,36 +722,36 @@ $("#btnAddChargeDetails").click(function () {
                             $('#tblChargeDetails tbody').append('<tr id=' + val.ID + '><td width="10%">' + rowCount +
                              '<td width="20%" id="' + val.ChargeId + '">' + val.ChargeName + '</td>' +
                              '<td width="10%" id="' + val.CDetailsID + '">' + val.Charges + '</td>' +
-                             '<td width="10%">' + val.ChargeType + '</td>' +
+                             '<td width="10%" id="' + val.GstId + '">' + val.ChargeType + '</td>' +
                              '<td width="10%">' + val.Amount + '</td>' +
                              '<td width="10%" id="' + val.AccountId + '">' + val.AccountName + '</td>' +
-                             '<td  '+ actions + '</td>' +
+                             '<td  ' + actions + '</td>' +
                              '</tr>');
                         });
-                        var totamt=0;
+                        var totamt = 0;
                         $('#tblChargeDetails tbody>tr').each(function () {
                             var row = $(this).closest("tr");
-                            totamt=totamt+parseFloat(row.find('td:eq(4)').html());
+                            totamt = totamt + parseFloat(row.find('td:eq(4)').html());
                         });
                         //var gstamount=parseFloat($("#CGSTAmount").val())+parseFloat($("#SGSTAmount").val());
                         var SanctionLoanAmount = parseFloat($("#SanctionLoanAmount").val());
-                        var totalamt=parseFloat(totamt.toFixed(2));
+                        var totalamt = parseFloat(totamt.toFixed(2));
                         //Amount=parseFloat(Amount);
                         //$("#NetPayable").val(netpayable + (Amount+gstamount));
-                        $("#NetPayable").val(parseFloat(SanctionLoanAmount-totalamt).toFixed(2));
+                        $("#NetPayable").val(parseFloat(SanctionLoanAmount - totalamt).toFixed(2));
                         $("#tblChargeDetails TBODY TR").on("click", ".edit", function () {
                             debugger;
                             var tr = $(this).closest('tr');
-                            currentRow= $(this).parents('tr');
+                            currentRow = $(this).parents('tr');
                             sr_no = tr.find('td:eq(0)').html();
-                            trid =tr.attr('id'); // table row ID
-                            var ChargeId =tr.find("td").eq(1).attr('id');
-                            var ChargeName =  tr.find('td:eq(1)').html();
-                            var Charges =  tr.find('td:eq(2)').html();
+                            trid = tr.attr('id'); // table row ID
+                            var ChargeId = tr.find("td").eq(1).attr('id');
+                            var ChargeName = tr.find('td:eq(1)').html();
+                            var Charges = tr.find('td:eq(2)').html();
                             var ChargeType = tr.find('td:eq(3)').html();
                             var Amount = tr.find('td:eq(4)').html();
-                            var AccountId =tr.find("td").eq(5).attr('id');
-                            var AccountName =tr.find('td:eq(5)').html();
+                            var AccountId = tr.find("td").eq(5).attr('id');
+                            var AccountName = tr.find('td:eq(5)').html();
 
                             $("#ChargeVM_ChargeId").val(ChargeId);
                             $("#ChargeVM_Charges").val(Charges);
@@ -802,16 +769,14 @@ $("#btnAddChargeDetails").click(function () {
                                         $(this).closest('tr').remove();
                                     }
                                 });
-                                var totamt=0;
+                                var totamt = 0;
                                 $('#tblChargeDetails tbody>tr').each(function () {
                                     var row = $(this).closest("tr");
-                                    totamt=totamt+parseFloat(row.find('td:eq(4)').html());
+                                    totamt = totamt + parseFloat(row.find('td:eq(4)').html());
                                 });
                                 var totalamt = parseFloat(totamt.toFixed(2));
-                                var netpayable = $("#NetPayable").val();
-                                //Amount=parseFloat(Amount);
-                                //$("#NetPayable").val(netpayable + (Amount+gstamount));
-                                $("#NetPayable").val(parseFloat(parseFlaot(netpayable) + totalamt).toFixed(2));
+                                var SanctionLoanAmount = parseFloat($("#SanctionLoanAmount").val());
+                                $("#NetPayable").val(parseFloat(parseFloat(SanctionLoanAmount) - totalamt).toFixed(2));
                                 $("#ChargeVM_ChargeId").val("");
                                 $("#ChargeVM_Charges").val("");
                                 $("#ChargeVM_ChargeType").val("");
@@ -892,10 +857,10 @@ function SetKycDetails(PresanctionId) {
                 $('#tblChargeDetails tbody').append('<tr id=' + val.ID + '><td width="10%">' + rowCount +
                  '<td width="20%" id="' + val.ChargeId + '">' + val.ChargeName + '</td>' +
                  '<td width="10%" id="' + val.CDetailsID + '">' + val.Charges + '</td>' +
-                   '<td width="10%">' + val.ChargeType + '</td>' +
+                   '<td width="10%" id="' + val.GstId + '">' + val.ChargeType + '</td>' +
                    '<td width="10%">' + val.Amount + '</td>' +
                    '<td width="10%" id="' + val.AccountId + '">' + val.AccountName + '</td>' +
-                   '<td id=' + val.ID + '' +  + '</td>' +
+                   '<td id=' + val.ID + '' + + '</td>' +
                    '</tr>');
             });
 
@@ -957,10 +922,19 @@ function SetSanctionDisbursementDetails(id) {
             $("#Total").text(result.Total);
             $("#ItemID").val(result.ID);
 
+            var coperation = $("#operation").val();
+            if (coperation == "Edit") {
+                $("#btnDelete").removeClass('disabled')
+            }
+            else {
+                $("#btnDelete").addClass('disabled')
+                $("#btn_save").addClass('disabled')
+            }
+
             $("#ProofPhoto").empty();
 
             if (result.ProofOfOwnerShipImageFile != null) {
-                $("#ProofPhoto").append('<td><a href="/SanctionDisbursement/Download/' + result.ID + '" target=_blank>Show Ownership Photo</a></td>');
+                $("#ProofPhoto").append('<td><a href="/SanctionDisbursement/Download/' + result.ID + '" target=_blank>' + result.FileName + '</a></td>');
             }
             $("#GoldItemImage").empty();
 
@@ -968,7 +942,7 @@ function SetSanctionDisbursementDetails(id) {
                 $("#GoldItemImage").append('<td><a href="/ValuatorOne/Download/' + result.ValuatorOneId + '" target=_blank>' + result.GoldItemImage + '</a></td>');
             }
 
-            if ($("#ItemID").val() >0) {
+            if ($("#ItemID").val() > 0) {
                 $("#CashAccountNo").removeAttr('disabled');
                 $("#CashAmount").removeAttr('disabled');
                 $("#BankCashAccID").removeAttr('disabled');
@@ -982,16 +956,15 @@ function SetSanctionDisbursementDetails(id) {
 
             $.each(result.ChargeDetailList, function (key, val) {
                 var rowCount = $('#tblChargeDetails >tbody >tr').length + 1;
-                if(val.ChargeId==0)
-                {
-                    actions='';
+                if (val.ChargeId == 0) {
+                    actions = '';
                     $("#CGSTAmount").val(val.Amount);
                     $("#SGSTAmount").val(val.Amount);
                 }
                 $('#tblChargeDetails tbody').append('<tr id=' + val.ID + '><td width="10%">' + rowCount +
                    '<td width="20%" id="' + val.ChargeId + '">' + val.ChargeName + '</td>' +
                    '<td width="10%" id="' + val.CDetailsID + '">' + val.Charges + '</td>' +
-                   '<td width="10%">' + val.ChargeType + '</td>' +
+                   '<td width="10%" id="' + val.GstId + '">' + val.ChargeType + '</td>' +
                    '<td width="10%">' + val.Amount + '</td>' +
                    '<td width="10%" id="' + val.AccountId + '">' + val.AccountName + '</td>' +
                    '<td ' + actions + '</td>' +
@@ -1001,16 +974,16 @@ function SetSanctionDisbursementDetails(id) {
             $("#tblChargeDetails TBODY TR").on("click", ".edit", function () {
                 debugger;
                 var tr = $(this).closest('tr');
-                currentRow= $(this).parents('tr');
+                currentRow = $(this).parents('tr');
                 sr_no = tr.find('td:eq(0)').html();
-                trid =tr.attr('id'); // table row ID
-                var ChargeId =tr.find("td").eq(1).attr('id');
-                var ChargeName =  tr.find('td:eq(1)').html();
-                var Charges =  tr.find('td:eq(2)').html();
+                trid = tr.attr('id'); // table row ID
+                var ChargeId = tr.find("td").eq(1).attr('id');
+                var ChargeName = tr.find('td:eq(1)').html();
+                var Charges = tr.find('td:eq(2)').html();
                 var ChargeType = tr.find('td:eq(3)').html();
                 var Amount = tr.find('td:eq(4)').html();
-                var AccountId =tr.find("td").eq(5).attr('id');
-                var AccountName =tr.find('td:eq(5)').html();
+                var AccountId = tr.find("td").eq(5).attr('id');
+                var AccountName = tr.find('td:eq(5)').html();
 
                 $("#ChargeVM_ChargeId").val(ChargeId);
                 $("#ChargeVM_Charges").val(Charges);
@@ -1030,14 +1003,14 @@ function SetSanctionDisbursementDetails(id) {
                         }
                     });
 
-                    var totamt=0;
+                    var totamt = 0;
                     $('#tblChargeDetails tbody>tr').each(function () {
                         var row = $(this).closest("tr");
-                        totamt=totamt+parseFloat(row.find('td:eq(4)').html());
+                        totamt = totamt + parseFloat(row.find('td:eq(4)').html());
                     });
                     var SanctionLoanAmount = parseFloat($("#SanctionLoanAmount").val());
                     var netpayable = parseFloat($("#NetPayable").val());
-                    $("#NetPayable").val(parseFloat(SanctionLoanAmount)-(parseFloat(totamt)));
+                    $("#NetPayable").val(parseFloat(SanctionLoanAmount) - (parseFloat(totamt)));
                     $("#ChargeVM_ChargeId").val("");
                     $("#ChargeVM_Charges").val("");
                     $("#ChargeVM_ChargeType").val("");

@@ -33,7 +33,7 @@ namespace MangalWeb.Repository.Repository
         public TGLPreSanction AddPreSanction(TGLPreSanction model, out Dictionary<string, string> errors)
         {
             errors = new Dictionary<string, string>();
-
+          
             var dbRecord = _context.TGLPreSanctions.Add(model);
             try
             {
@@ -90,6 +90,27 @@ namespace MangalWeb.Repository.Repository
             _context.TGLPreSanctions.Remove(dbRecord);
             try
             {
+                //tbl_PreSanctionDetails tbl_PreSanctionDetails = new tbl_PreSanctionDetails();
+                //tbl_PreSanctionDetails.CreatedBy = model.CreatedBy;
+                //tbl_PreSanctionDetails.CreatedDate = DateTime.Now;
+                //tbl_PreSanctionDetails.ApplicationNo = model.ApplicationNo;
+                ////tbl_PreSanctionDetails.AppliedDate = model.AppliedDate;
+                //tbl_PreSanctionDetails.Comments = model.Comments;
+                //tbl_PreSanctionDetails.CustomerId = model.CustomerId;
+                //tbl_PreSanctionDetails.IsActive = true;
+                //tbl_PreSanctionDetails.KycId = model.KycId;
+                //tbl_PreSanctionDetails.LTV = model.LTV;
+                //tbl_PreSanctionDetails.NewTopUp = model.NewTopUp;
+                //tbl_PreSanctionDetails.Product = model.Product;
+                //tbl_PreSanctionDetails.PurposeofLoan = model.PurposeofLoan;
+                //tbl_PreSanctionDetails.ReqLoanAmount = model.ReqLoanAmount;
+                //tbl_PreSanctionDetails.ResidenceVerification = model.ResidenceVerification;
+                //tbl_PreSanctionDetails.RM = model.RM;
+                //tbl_PreSanctionDetails.ROI = model.ROI;
+                //tbl_PreSanctionDetails.Scheme = model.Scheme;
+                //tbl_PreSanctionDetails.Tenure = model.Tenure;
+                //tbl_PreSanctionDetails.TransactionId = model.TransactionId;
+                //_context.tbl_PreSanctionDetails.Add(tbl_PreSanctionDetails);
                 _context.SaveChanges();
                 return true;
             }
@@ -115,7 +136,7 @@ namespace MangalWeb.Repository.Repository
             {
                 errors.Add("NoRecordFound", "No Record Found.");
                 return new TGLPreSanction();
-            }
+        }
 
             messageRecords.ForEach(e => e.IsRead = true);
 
@@ -124,8 +145,8 @@ namespace MangalWeb.Repository.Repository
             dbRecord.LastUpdatedDate = DateTime.Now;
 
             try
-            {
-                _context.SaveChanges();
+        {
+            _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -134,7 +155,7 @@ namespace MangalWeb.Repository.Repository
 
             return dbRecord;
         }
-        
+
         public int DeleteMessageAction(int messageActionId)
         {
             var dbRecord = _context.TGLPreSanctions.Where(p => p.MessageActionID == messageActionId).FirstOrDefault();
@@ -172,7 +193,7 @@ namespace MangalWeb.Repository.Repository
         {
             return _context.TGLKYC_BasicDetails.Where(k => k.KYCID == kycID).FirstOrDefault();
         }
-        
+
         public PreSanctionDetailsVM ToViewModelPreSanction(KYCBasicDetailsVM model)
         {
             PreSanctionDetailsVM preSanctionDetailsVM = new PreSanctionDetailsVM();
@@ -184,7 +205,7 @@ namespace MangalWeb.Repository.Repository
             preSanctionDetailsVM.CustomerId = model.CustomerID;
             preSanctionDetailsVM.KycId = model.KYCID;
                 return preSanctionDetailsVM;
-        }       
+        }
 
         public List<UserDetail> GetAllRMByBranch()
         {
@@ -216,7 +237,7 @@ namespace MangalWeb.Repository.Repository
             {
                 errors.Add("InUse", "Record can not be updated,since it is in use.");
             }
-        }
+    }
         private void UpdatePreSanction(TGLPreSanction dbRecord,TGLPreSanction model)
         {
             dbRecord.Comments = model.Comments;

@@ -154,7 +154,7 @@ namespace MangalWeb.Controllers
         #endregion
 
         #region GetChargeDetails
-        public JsonResult GetChargeDetails(int ChargeId, decimal SanctionLoanAmount, string SchemeProcessingType, double SchemeProcessingCharge)
+        public JsonResult GetChargeDetails(int ChargeId, decimal SanctionLoanAmount, string SchemeProcessingType, decimal SchemeProcessingCharge)
         {
             var data = _sanctionService.GetChargeDetails(ChargeId, SanctionLoanAmount, SchemeProcessingType, SchemeProcessingCharge);
             return Json(data, JsonRequestBehavior.AllowGet);
@@ -231,8 +231,8 @@ namespace MangalWeb.Controllers
             chargeSanctionVM.AccountId = Convert.ToInt32(Request.Form["AccountId"]);
             chargeSanctionVM.AccountName = Request.Form["AccountName"];
             chargeSanctionVM.ChargeName = Request.Form["ChargeName"];
-            chargeSanctionVM.Charges = Convert.ToDouble(Request.Form["Charges"]);
-            chargeSanctionVM.Amount = Convert.ToDouble(Request.Form["Amount"]);
+            chargeSanctionVM.Charges = Convert.ToDecimal(Request.Form["Charges"]);
+            chargeSanctionVM.Amount = Convert.ToDecimal(Request.Form["Amount"]);
             chargeSanctionVM.ChargeType = Request.Form["ChargeType"];
             int StateID = Convert.ToInt32(Request.Form["StateID"]);
             model.ChargeDetailList.Add(chargeSanctionVM);
@@ -240,18 +240,20 @@ namespace MangalWeb.Controllers
             double SGSTTax = 0;
             int CGSTAccountNo = 0;
             int? SGSTAccountNo = 0;
-            _sanctionService.GetGSTRecord(StateID, ref CGSTAccountNo, ref SGSTAccountNo, ref CGSTTax, ref SGSTTax);
+            int? GstId = 0;
+            _sanctionService.GetGSTRecord(StateID, ref CGSTAccountNo, ref SGSTAccountNo, ref CGSTTax, ref SGSTTax,ref GstId);
             model.ChargeDetailList.Add(new ChargeSanctionVM()
             {
                 ID = chargeSanctionVM.ID,
-                ChargeId = chargeSanctionVM.ID,
+                ChargeId = 0,
                 CDetailsID = 0,
                 ChargeName = SGSTAccountNo > 0 ? "CGST" : "IGST",
-                Charges = Convert.ToDouble(CGSTTax),
+                Charges = Convert.ToDecimal(CGSTTax),
                 ChargeType = "Percentage",
-                Amount = chargeSanctionVM.Amount * Convert.ToDouble(CGSTTax) / 100,
+                Amount = chargeSanctionVM.Amount * Convert.ToDecimal(CGSTTax) / 100,
                 AccountId = CGSTAccountNo,
-                AccountName = _sanctionService.GetAccountName(CGSTAccountNo)
+                AccountName = _sanctionService.GetAccountName(CGSTAccountNo),
+                GstId = GstId
             });
             if (SGSTAccountNo > 0)
             {
@@ -259,14 +261,15 @@ namespace MangalWeb.Controllers
                 model.ChargeDetailList.Add(new ChargeSanctionVM()
                 {
                     ID = chargeSanctionVM.ID,
-                    ChargeId = chargeSanctionVM.ID,
+                    ChargeId = 0,
                     CDetailsID = 0,
                     ChargeName = "SGST",
-                    Charges = Convert.ToDouble(SGSTTax),
+                    Charges = Convert.ToDecimal(SGSTTax),
                     ChargeType = "Percentage",
-                    Amount = chargeSanctionVM.Amount * Convert.ToDouble(SGSTTax) / 100,
+                    Amount = chargeSanctionVM.Amount * Convert.ToDecimal(SGSTTax) / 100,
                     AccountId = SGSTAccountNo,
-                    AccountName = _sanctionService.GetAccountName(sgstaccid)
+                    AccountName = _sanctionService.GetAccountName(sgstaccid),
+                    GstId = GstId
                 });
             }
             return Json(model, JsonRequestBehavior.AllowGet);
@@ -287,7 +290,7 @@ namespace MangalWeb.Controllers
         public FileResult Download(int id)
         {
             var file = _sanctionService.GetImageById(id);
-            return File(file.ImageName, file.ContentType);
+            return File(file.OwnershipProofofImage, file.ContentType);
         }
         #endregion
     }
