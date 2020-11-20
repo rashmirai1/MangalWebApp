@@ -21,6 +21,7 @@ namespace MangalWeb.Model.Entity
         public Nullable<decimal> Amount { get; set; }
         public Nullable<int> AccountID { get; set; }
         public Nullable<int> ChargeID { get; set; }
+        public Nullable<int> Gstid { get; set; }
     
         public virtual TGLSanctionDisburse_ChargesDetails TGLSanctionDisburse_ChargesDetails1 { get; set; }
         public virtual TGLSanctionDisburse_ChargesDetails TGLSanctionDisburse_ChargesDetails2 { get; set; }

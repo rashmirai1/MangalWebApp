@@ -302,9 +302,6 @@
     <Compile Include="Entity\tbl_OrnamentEvaluationDetails.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entity\tbl_PreSanctionDetails.cs">
-      <DependentUpon>MangalEntity.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entity\tbl_UserCategory.cs">
       <DependentUpon>MangalEntity.tt</DependentUpon>
     </Compile>

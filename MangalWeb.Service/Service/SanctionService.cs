@@ -77,7 +77,7 @@ namespace MangalWeb.Service.Service
         #endregion
 
         #region GetChargeDetails
-        public ChargeSanctionVM GetChargeDetails(int chargeid,decimal sanctionloanamt,string schemeproctype,double schemepcharge)
+        public ChargeSanctionVM GetChargeDetails(int chargeid,decimal sanctionloanamt,string schemeproctype,decimal schemepcharge)
         {
             return _sanctionRepository.GetChargeDetails(chargeid,sanctionloanamt,schemeproctype,schemepcharge);
         }
@@ -119,9 +119,9 @@ namespace MangalWeb.Service.Service
         #endregion
 
         #region GetGSTRecord
-        public void GetGSTRecord(int pStateId,ref int CGSTAccountNo,ref int? SGSTAccountNo,ref double CGSTTax,ref double SGSTTax)
+        public void GetGSTRecord(int pStateId,ref int CGSTAccountNo,ref int? SGSTAccountNo,ref double CGSTTax,ref double SGSTTax,ref int? GstId)
         {
-            _sanctionRepository.GetGSTRecord(pStateId,ref CGSTAccountNo,ref SGSTAccountNo,ref CGSTTax,ref SGSTTax);
+            _sanctionRepository.GetGSTRecord(pStateId,ref CGSTAccountNo,ref SGSTAccountNo,ref CGSTTax,ref SGSTTax,ref GstId);
         }
         #endregion
 

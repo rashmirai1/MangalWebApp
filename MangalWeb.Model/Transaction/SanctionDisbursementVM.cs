@@ -47,6 +47,7 @@ namespace MangalWeb.Model.Transaction
         public int SchemeId { get; set; }
         public string SchemeProcessingType { get; set; }
         public decimal SchemeProcessingCharge { get; set; }
+        public int ProcessingFeeAccountId { get; set; }
         public decimal SchemeProcessingLimit { get; set; }
         public int Tenure { get; set; }
         public decimal MaximumLoanAmount { get; set; }
@@ -59,11 +60,12 @@ namespace MangalWeb.Model.Transaction
         public decimal? TotalRatePerGram { get; set; }
         public decimal? TotalValue { get; set; }
         public decimal? DiscountAmount { get; set; }
-        public double CGSTTax { get; set; }
-        public double SGSTTax { get; set; }
-        public double CGSTAmount { get; set; }
-        public double? SGSTAmount { get; set; }
+        public decimal CGSTTax { get; set; }
+        public decimal SGSTTax { get; set; }
+        public decimal CGSTAmount { get; set; }
+        public decimal? SGSTAmount { get; set; }
         public int? CGSTAccountId { get; set; }
+        public int? GSTId { get; set; }
         public int? SGSTAccountId { get; set; }
         public string CGSTAccountName { get; set; }
         public string SGSTAccountName { get; set; }
